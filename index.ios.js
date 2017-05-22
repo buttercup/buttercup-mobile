@@ -11,26 +11,42 @@ import {
   Text,
   View
 } from 'react-native';
-import Test from "./app/components/Test";
+
+import ButtercupMirror from "./source/components/ButtercupMirror.js";
+import { waitForInit, testLoadArchive } from "./source/library/buttercup.js";
 
 export default class Buttercup extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Test />
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
-  }
+
+    componentWillMount() {
+        waitForInit()
+            .then(() => {
+                console.log("Init'd!");
+                // now do stuff!
+                return testLoadArchive()
+                    .then(function(archive) {
+                        console.log(archive.toObject());
+                    });
+            });
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <ButtercupMirror />
+                <Text style={styles.welcome}>
+                    Welcome to React Native!
+                </Text>
+                <Text style={styles.instructions}>
+                    To get started, edit index.ios.js
+                </Text>
+                <Text style={styles.instructions}>
+                    Press Cmd+R to reload,{'\n'}
+                    Cmd+D or shake for dev menu
+                </Text>
+            </View>
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
