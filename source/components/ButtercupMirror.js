@@ -4,7 +4,6 @@ import {
     View,
     WebView
 } from "react-native";
-import RNFS from "react-native-fs";
 
 let __currentMirror = null;
 
@@ -12,6 +11,7 @@ export default class ButtercupMirror extends Component {
 
     constructor(...args) {
         super(...args);
+        console.log("SET MIRROR");
         __currentMirror = this;
         this._jobs = {};
     }
@@ -23,13 +23,15 @@ export default class ButtercupMirror extends Component {
             this._jobs[jobID][1] = resolve;
         });
         setTimeout(() => {
+            console.log("send message", this.webView);
+            console.time("hooray");
             this.webView.postMessage(JSON.stringify({
                 command: "decode",
                 content,
                 credentials: credentials.toInsecureString(),
                 jobID
             }));
-        }, 25);
+        }, 2025);
         return this._jobs[jobID][0];
     }
 
@@ -43,10 +45,11 @@ export default class ButtercupMirror extends Component {
         if (msg && msg.command) {
             switch(msg.command) {
                 case "decodeComplete": {
+                    console.timeEnd("hooray");
                     const jobID = msg.jobID
                     const cb = this._jobs[jobID][1];
                     delete this._jobs[jobID];
-                    alert("History: " + msg.history.length);
+                    // alert("History: " + msg.history.length);
                     cb(msg.history);
                     break;
                 }
@@ -82,6 +85,9 @@ export default class ButtercupMirror extends Component {
                 ref={webview => { this.webView = webview; }}
                 onMessage={evt => this.onMessage(evt)}
                 source={require("./buttercup.html")}
+                style={{ width: 600, height: 200 }}
+                automaticallyAdjustContentInsets={false}
+                scrollEnabled={true}
                 />
         );
     }
