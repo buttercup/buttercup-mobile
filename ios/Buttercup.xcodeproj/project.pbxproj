@@ -38,6 +38,7 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		C23C4D811ED58FD7008B5786 /* BCDerivation.m in Sources */ = {isa = PBXBuildFile; fileRef = C23C4D801ED58FD7008B5786 /* BCDerivation.m */; };
+		C2927E121ED5954700B06285 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C2927E111ED5954700B06285 /* CryptoBridge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -267,6 +268,8 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		C23C4D7F1ED58FD7008B5786 /* BCDerivation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCDerivation.h; sourceTree = "<group>"; };
 		C23C4D801ED58FD7008B5786 /* BCDerivation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCDerivation.m; sourceTree = "<group>"; };
+		C2927E101ED5954700B06285 /* CryptoBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoBridge.h; sourceTree = "<group>"; };
+		C2927E111ED5954700B06285 /* CryptoBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoBridge.m; sourceTree = "<group>"; };
 		C9530BC6E32B40638F301F89 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -406,6 +409,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				C23C4D7F1ED58FD7008B5786 /* BCDerivation.h */,
 				C23C4D801ED58FD7008B5786 /* BCDerivation.m */,
+				C2927E101ED5954700B06285 /* CryptoBridge.h */,
+				C2927E111ED5954700B06285 /* CryptoBridge.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -944,6 +949,7 @@
 				C23C4D811ED58FD7008B5786 /* BCDerivation.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				C2927E121ED5954700B06285 /* CryptoBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
