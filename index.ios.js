@@ -4,35 +4,31 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View
-} from 'react-native';
+} from "react-native";
 
-import ButtercupMirror from "./source/components/ButtercupMirror.js";
-import { waitForInit, testLoadArchive } from "./source/library/buttercup.js";
+import { loadTest, patchKeyDerivation } from "./source/library/buttercup.js";
 
 export default class Buttercup extends Component {
 
-    componentWillMount() {
-        waitForInit()
-            .then(() => {
-                console.log("Init'd!");
-                // now do stuff!
-                return testLoadArchive()
-                    .then(function(archive) {
-                        console.log(archive.toObject());
-                    });
-            });
+    constructor(...args) {
+        super(...args);
+        patchKeyDerivation();
+        console.time("archive");
+        loadTest().then(function(archive) {
+            console.timeEnd("archive");
+            console.log("Archive", archive);
+        });
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <ButtercupMirror />
                 <Text style={styles.welcome}>
                     Welcome to React Native!
                 </Text>
