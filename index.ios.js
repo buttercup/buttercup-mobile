@@ -12,18 +12,13 @@ import {
   View
 } from "react-native";
 
-import { loadTest, patchKeyDerivation } from "./source/library/buttercup.js";
+import { patchKeyDerivation } from "./source/library/buttercup.js";
 
 export default class Buttercup extends Component {
 
     constructor(...args) {
         super(...args);
         patchKeyDerivation();
-        console.time("archive");
-        loadTest().then(function(archive) {
-            console.timeEnd("archive");
-            console.log("Archive", archive);
-        });
     }
 
     render() {

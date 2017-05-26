@@ -10,7 +10,9 @@
   "dependencies": {
     "buttercup-web": "~0.28.0",
     "react": "16.0.0-alpha.6",
-    "react-native": "0.44.0"
+    "react-native": "0.44.0",
+    "react-native-elements": "^0.12.2",
+    "react-native-vector-icons": "^4.1.1"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
