@@ -1,5 +1,5 @@
 import { NativeModules } from "react-native";
-import { TextDatasource, createCredentials, Web } from "buttercup-web/build/buttercup.js";
+import { TextDatasource, createCredentials, Web } from "buttercup-web";
 
 const { CryptoBridge } = NativeModules;
 

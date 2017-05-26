@@ -8,7 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "buttercup-web": "~0.28.0",
+    "buttercup-web": "~0.28.1",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-elements": "^0.12.2",
