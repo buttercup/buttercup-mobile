@@ -1,6 +1,8 @@
 const STATE_KEY = "addArchive";
 
 export function getAdditionStage(state) {
-    // archiveType
+    if (state[STATE_KEY].archiveType !== null) {
+        return "enterConnectionDetails";
+    }
     return "chooseType";
 };

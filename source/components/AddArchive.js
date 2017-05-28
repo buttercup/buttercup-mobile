@@ -9,7 +9,7 @@ import {
     ListItem
 } from "react-native-elements";
 import PropTypes from "prop-types";
-// import { Actions } from "react-native-router-flux";
+import ArchiveSourceForm from "../containers/ArchiveSourceForm.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -35,7 +35,11 @@ const ARCHIVE_TYPES = [
 class AddArchive extends Component {
 
     getMenuContents() {
-
+        if (this.props.stage === "enterConnectionDetails") {
+            return (
+                <ArchiveSourceForm />
+            );
+        }
         return (
             <List style={styles.menuList}>
                 {ARCHIVE_TYPES.map(({type, title}) =>
@@ -43,7 +47,7 @@ class AddArchive extends Component {
                         key={type}
                         title={title}
                         avatar={{ uri: `https://placeholdit.imgix.net/~text?txtsize=33&txt=${title}&w=128&h=128` }}
-                        onPress={() => {}}
+                        onPress={() => this.props.onArchiveTypeSelected(type)}
                         />
                 )}
             </List>
@@ -61,11 +65,12 @@ class AddArchive extends Component {
 }
 
 AddArchive.propTypes = {
-    stage:          PropTypes.string.isRequired
+    onArchiveTypeSelected:      PropTypes.func.isRequired,
+    stage:                      PropTypes.string.isRequired
 };
 
 AddArchive.defaultProps = {
-    stage:          "chooseType"
+    stage:                      "chooseType"
 };
 
 export default AddArchive;
