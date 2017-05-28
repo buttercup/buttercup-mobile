@@ -13,9 +13,9 @@ import { Actions } from "react-native-router-flux";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "transparent",
         paddingTop: 30
     },
     menuList: {

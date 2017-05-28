@@ -1,14 +1,28 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   View
 } from "react-native";
 import {
+    Button,
     FormInput,
-    FormLabel
+    FormLabel,
+    Text
 } from "react-native-elements";
 import PropTypes from "prop-types";
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        backgroundColor: "transparent"
+    },
+    connectButton: {
+        backgroundColor: "rgb(0, 183, 172)",
+        marginTop: 15
+    }
+});
 
 class ArchiveSourceForm extends Component {
 
@@ -24,9 +38,22 @@ class ArchiveSourceForm extends Component {
 
     renderWebDAV() {
         return (
-            <View>
-                <FormLabel>Remote URL</FormLabel>
-                <FormInput />
+            <View style={styles.container}>
+                <Text h3>WebDAV</Text>
+                <View>
+                    <FormLabel>Remote URL</FormLabel>
+                    <FormInput />
+                    <FormLabel>Username</FormLabel>
+                    <FormInput />
+                    <FormLabel>Password</FormLabel>
+                    <FormInput />
+                    <Button
+                        buttonStyle={styles.connectButton}
+                        large
+                        icon={{ name: "cloud" }}
+                        title="Connect"
+                        />
+                </View>
             </View>
         );
     }

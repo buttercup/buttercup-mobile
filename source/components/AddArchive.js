@@ -14,9 +14,9 @@ import ArchiveSourceForm from "../containers/ArchiveSourceForm.js";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "transparent",
         marginTop: 64
     },
     menuList: {
