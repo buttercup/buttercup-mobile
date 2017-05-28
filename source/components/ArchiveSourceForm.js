@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
-  View
+    Keyboard,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    View
 } from "react-native";
 import {
     Button,
@@ -38,24 +40,32 @@ class ArchiveSourceForm extends Component {
 
     renderWebDAV() {
         return (
-            <View style={styles.container}>
-                <Text h3>WebDAV</Text>
-                <View>
-                    <FormLabel>Remote URL</FormLabel>
-                    <FormInput value={this.props.url} onChangeText={this.props.onChangeURL} />
-                    <FormLabel>Username</FormLabel>
-                    <FormInput value={this.props.username} onChangeText={this.props.onChangeUsername} />
-                    <FormLabel>Password</FormLabel>
-                    <FormInput value={this.props.password} onChangeText={this.props.onChangePassword} />
-                    <Button
-                        buttonStyle={styles.connectButton}
-                        large
-                        icon={{ name: "cloud" }}
-                        title="Connect"
-                        />
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <Text h3>WebDAV</Text>
+                    <View>
+                        <FormLabel>Remote URL</FormLabel>
+                        <FormInput value={this.props.url} onChangeText={this.props.onChangeURL} />
+                        <FormLabel>Username</FormLabel>
+                        <FormInput value={this.props.username} onChangeText={this.props.onChangeUsername} />
+                        <FormLabel>Password</FormLabel>
+                        <FormInput value={this.props.password} onChangeText={this.props.onChangePassword} />
+                        <Button
+                            buttonStyle={styles.connectButton}
+                            large
+                            icon={{ name: "cloud" }}
+                            title="Connect"
+                            onPress={() => this.submit()}
+                            />
+                    </View>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         );
+    }
+
+    submit() {
+        Keyboard.dismiss();
+
     }
 
 }
