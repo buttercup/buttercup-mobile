@@ -42,11 +42,11 @@ class ArchiveSourceForm extends Component {
                 <Text h3>WebDAV</Text>
                 <View>
                     <FormLabel>Remote URL</FormLabel>
-                    <FormInput />
+                    <FormInput value={this.props.url} onChangeText={this.props.onChangeURL} />
                     <FormLabel>Username</FormLabel>
-                    <FormInput />
+                    <FormInput value={this.props.username} onChangeText={this.props.onChangeUsername} />
                     <FormLabel>Password</FormLabel>
-                    <FormInput />
+                    <FormInput value={this.props.password} onChangeText={this.props.onChangePassword} />
                     <Button
                         buttonStyle={styles.connectButton}
                         large
@@ -61,7 +61,13 @@ class ArchiveSourceForm extends Component {
 }
 
 ArchiveSourceForm.propTypes = {
-    archiveType:            PropTypes.string
+    archiveType:            PropTypes.string,
+    onChangePassword:       PropTypes.func,
+    onChangeURL:            PropTypes.func,
+    onChangeUsername:       PropTypes.func,
+    password:               PropTypes.string,
+    url:                    PropTypes.string,
+    username:               PropTypes.string
 };
 
 export default ArchiveSourceForm;
