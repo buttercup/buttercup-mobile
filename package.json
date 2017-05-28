@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "buttercup-web": "~0.29.0",
+    "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-elements": "^0.12.2",
@@ -16,7 +17,8 @@
     "react-native-router-flux": "^3.39.1",
     "react-native-vector-icons": "^4.1.1",
     "react-redux": "^5.0.5",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-actions": "^2.0.3"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
