@@ -9,7 +9,7 @@ import {
     onChangePassword,
     onChangeURL,
     onChangeUsername
-} from "../actions/AddArchive.js";
+} from "../actions/AddArchivePage.js";
 
 export default connect(
     (state, ownProps) => ({

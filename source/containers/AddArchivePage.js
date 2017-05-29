@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
-import AddArchive from "../components/AddArchive.js";
+import AddArchivePage from "../components/AddArchivePage.js";
 import {
     getAdditionStage
 } from "../selectors/AddArchivePage.js";
-import { onArchiveTypeSelected } from "../actions/AddArchive.js";
+import { onArchiveTypeSelected } from "../actions/AddArchivePage.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -12,4 +12,4 @@ export default connect(
     {
         onArchiveTypeSelected
     }
-)(AddArchive);
+)(AddArchivePage);
