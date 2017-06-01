@@ -4,6 +4,7 @@ import {
 import {
     ADD_ARCHIVE_CLEAR_PROGRESS,
     ADD_ARCHIVE_SET_ARCHIVE_TYPE,
+    ADD_ARCHIVE_SET_CONNECTING,
     ADD_ARCHIVE_SET_PASSWORD,
     ADD_ARCHIVE_SET_URL,
     ADD_ARCHIVE_SET_USERNAME
@@ -18,11 +19,17 @@ const INITIAL = {
 };
 
 export default function addArchiveReducer(state = INITIAL, action = {}) {
+    console.log("ACTION", action.type, action.payload);
     switch (action.type) {
         case ADD_ARCHIVE_SET_ARCHIVE_TYPE:
             return {
                 ...state,
                 archiveType: action.payload
+            };
+        case ADD_ARCHIVE_SET_CONNECTING:
+            return {
+                ...state,
+                connection: "connecting"
             };
         case ADD_ARCHIVE_SET_PASSWORD:
             return {

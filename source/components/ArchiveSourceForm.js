@@ -11,6 +11,7 @@ import {
     FormLabel,
     Text
 } from "react-native-elements";
+import Spinner from "react-native-loading-spinner-overlay";
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
@@ -58,6 +59,12 @@ class ArchiveSourceForm extends Component {
                             onPress={() => this.submit()}
                             />
                     </View>
+                    <Spinner
+                        visible={this.props.connecting}
+                        textContent="Connecting"
+                        textStyle={{ color: "#FFF" }}
+                        overlayColor="rgba(0, 0, 0, 0.75)"
+                        />
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -65,16 +72,20 @@ class ArchiveSourceForm extends Component {
 
     submit() {
         Keyboard.dismiss();
-
+        this.props.onConnectPressed();
+        this.props.initiateConnection();
     }
 
 }
 
 ArchiveSourceForm.propTypes = {
     archiveType:            PropTypes.string,
+    connecting:             PropTypes.bool,
+    initiateConnection:     PropTypes.func,
     onChangePassword:       PropTypes.func,
     onChangeURL:            PropTypes.func,
     onChangeUsername:       PropTypes.func,
+    onConnectPressed:       PropTypes.func,
     password:               PropTypes.string,
     url:                    PropTypes.string,
     username:               PropTypes.string
