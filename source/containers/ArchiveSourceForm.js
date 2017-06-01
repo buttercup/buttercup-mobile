@@ -16,10 +16,10 @@ import {
 } from "../actions/ArchiveSourceForm.js";
 import { createRemoteConnection } from "../library/remote.js";
 
-function handleConnectionCreation(state) {
-    return createRemoteConnection(getRemoteConnectionInfo(state))
+function handleConnectionCreation(dispatch, getState) {
+    return createRemoteConnection(getRemoteConnectionInfo(getState()))
         .then(function __onConnected() {
-            onConnected();
+            dispatch(onConnected());
         })
         .catch(function __handleError(err) {
             throw err; // @todo fix
@@ -34,7 +34,7 @@ export default connect(
         ...getRemoteCredentials(state)
     }),
     {
-        initiateConnection:     () => handleConnectionCreation(state),
+        initiateConnection:     () => (...args) => handleConnectionCreation(...args),
         onChangePassword,
         onChangeURL,
         onChangeUsername,

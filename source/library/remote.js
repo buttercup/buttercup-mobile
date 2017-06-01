@@ -1,12 +1,11 @@
-import {
-    createWebDAVFSAdapter,
+import test, {
+    createWebDAVAdapter,
     createAnyFSAdapter
 } from "@buttercup/mobile-compat";
 
 let __remoteFSConnection = null;
 
 export function createRemoteConnection(connectionInfo) {
-    console.log("Connected", connectionInfo);
     const {
         archiveType,
         remoteUsername,
@@ -28,15 +27,15 @@ export function createSharedWebDAVConnection(remoteURL, username, password) {
 
 export function getWebDAVConnection(remoteURL, username, password) {
     const webdavFs = username ?
-        createWebDAVFSAdapter(remoteURL, username, password) :
-        createWebDAVFSAdapter(remoteURL);
-    return testRemoteFSConnection(fsInstance)
+        createWebDAVAdapter(remoteURL, username, password) :
+        createWebDAVAdapter(remoteURL);
+    return testRemoteFSConnection(webdavFs)
         .then(() => createAnyFSAdapter(webdavFs));
 }
 
 export function testRemoteFSConnection(fsInstance) {
     return new Promise(function __testFSWithStat(resolve, reject) {
-        fsInstance.stat("/", function __handleStatResponse(err, stat) {
+        fsInstance.readdir("/", function __handleStatResponse(err, stat) {
             if (err) {
                 return reject(err);
             }

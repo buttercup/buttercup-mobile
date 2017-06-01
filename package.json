@@ -8,7 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@buttercup/mobile-compat": "0.1.0-prerelease2",
+    "@buttercup/mobile-compat": "0.1.0-prerelease4",
     "buttercup-web": "~0.29.0",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",
@@ -20,7 +20,8 @@
     "react-native-vector-icons": "^4.1.1",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
-    "redux-actions": "^2.0.3"
+    "redux-actions": "^2.0.3",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",

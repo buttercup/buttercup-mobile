@@ -40,17 +40,33 @@ class ArchiveSourceForm extends Component {
     }
 
     renderWebDAV() {
+        const base = { spellCheck: false };
+        const urlInputOptions = { ...base, keyboardType: "url" };
+        const usernameInputOptions = { ...base, keyboardType: "email-address" };
+        const passwordInputOptions = { ...base, keyboardType: "ascii-capable", secureTextEntry: true };
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <Text h3>WebDAV</Text>
                     <View>
                         <FormLabel>Remote URL</FormLabel>
-                        <FormInput value={this.props.url} onChangeText={this.props.onChangeURL} />
+                        <FormInput
+                            value={this.props.url}
+                            onChangeText={this.props.onChangeURL}
+                            {...urlInputOptions}
+                            />
                         <FormLabel>Username</FormLabel>
-                        <FormInput value={this.props.username} onChangeText={this.props.onChangeUsername} />
+                        <FormInput
+                            value={this.props.username}
+                            onChangeText={this.props.onChangeUsername}
+                            {...usernameInputOptions}
+                            />
                         <FormLabel>Password</FormLabel>
-                        <FormInput value={this.props.password} onChangeText={this.props.onChangePassword} />
+                        <FormInput
+                            value={this.props.password}
+                            onChangeText={this.props.onChangePassword}
+                            {...passwordInputOptions}
+                            />
                         <Button
                             buttonStyle={styles.connectButton}
                             large
