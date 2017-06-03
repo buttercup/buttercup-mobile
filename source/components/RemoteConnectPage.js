@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-start",
         alignItems: "center",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        marginTop: 64
     },
     connectButton: {
         backgroundColor: "rgb(0, 183, 172)",
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     }
 });
 
-class ArchiveSourceForm extends Component {
+class RemoteConnectPage extends Component {
 
     render() {
         switch (this.props.archiveType) {
@@ -94,7 +95,7 @@ class ArchiveSourceForm extends Component {
 
 }
 
-ArchiveSourceForm.propTypes = {
+RemoteConnectPage.propTypes = {
     archiveType:            PropTypes.string,
     connecting:             PropTypes.bool,
     initiateConnection:     PropTypes.func,
@@ -107,4 +108,4 @@ ArchiveSourceForm.propTypes = {
     username:               PropTypes.string
 };
 
-export default ArchiveSourceForm;
+export default RemoteConnectPage;

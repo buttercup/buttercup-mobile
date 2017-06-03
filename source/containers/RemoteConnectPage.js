@@ -1,19 +1,19 @@
 import { connect } from "react-redux";
-import ArchiveSourceForm from "../components/ArchiveSourceForm.js";
+import RemoteConnectPage from "../components/RemoteConnectPage.js";
 import {
     getArchiveType,
     getRemoteConnectionInfo,
     getRemoteCredentials,
     getRemoteURL,
     isConnecting
-} from "../selectors/ArchiveSourceForm.js";
+} from "../selectors/RemoteConnectPage.js";
 import {
     onChangePassword,
     onChangeURL,
     onChangeUsername,
     onConnected,
     onConnectPressed
-} from "../actions/ArchiveSourceForm.js";
+} from "../actions/RemoteConnectPage.js";
 import { createRemoteConnection } from "../shared/explorerConnection.js";
 import { Actions } from "react-native-router-flux";
 
@@ -42,4 +42,4 @@ export default connect(
         onChangeUsername,
         onConnectPressed
     }
-)(ArchiveSourceForm);
+)(RemoteConnectPage);

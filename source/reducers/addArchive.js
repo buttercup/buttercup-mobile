@@ -52,7 +52,10 @@ export default function addArchiveReducer(state = INITIAL, action = {}) {
                 remoteUsername: action.payload
             };
         case ActionConst.BACK_ACTION:
-            /* falls-through */
+            return {
+                ...INITIAL,
+                archiveType: state.archiveType
+            };
         case ADD_ARCHIVE_CLEAR_PROGRESS:
             return INITIAL;
 

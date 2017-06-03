@@ -9,8 +9,8 @@ import {
     ListItem
 } from "react-native-elements";
 import PropTypes from "prop-types";
-import ArchiveSourceForm from "../containers/ArchiveSourceForm.js";
-// import RemoteExplorer from "../containers/RemoteExplorer.js";
+// import ArchiveSourceForm from "../containers/ArchiveSourceForm.js";
+import { Actions } from "react-native-router-flux";
 
 const styles = StyleSheet.create({
     container: {
@@ -36,11 +36,11 @@ const ARCHIVE_TYPES = [
 class AddArchive extends Component {
 
     getMenuContents() {
-        if (this.props.stage === "enterConnectionDetails") {
-            return (
-                <ArchiveSourceForm />
-            );
-        }
+        // if (this.props.stage === "enterConnectionDetails") {
+        //     return (
+        //         <ArchiveSourceForm />
+        //     );
+        // }
         return (
             <List style={styles.menuList}>
                 {ARCHIVE_TYPES.map(({type, title}) =>
@@ -48,11 +48,16 @@ class AddArchive extends Component {
                         key={type}
                         title={title}
                         avatar={{ uri: `https://placeholdit.imgix.net/~text?txtsize=33&txt=${title}&w=128&h=128` }}
-                        onPress={() => this.props.onArchiveTypeSelected(type)}
+                        onPress={() => this.handleTypeSelected(type)}
                         />
                 )}
             </List>
         );
+    }
+
+    handleTypeSelected(type) {
+        this.props.onArchiveTypeSelected(type);
+        Actions.remoteConnect();
     }
 
     render() {
