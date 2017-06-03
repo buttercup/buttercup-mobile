@@ -14,12 +14,14 @@ import {
     onConnected,
     onConnectPressed
 } from "../actions/ArchiveSourceForm.js";
-import { createRemoteConnection } from "../library/remote.js";
+import { createRemoteConnection } from "../shared/explorerConnection.js";
+import { Actions } from "react-native-router-flux";
 
 function handleConnectionCreation(dispatch, getState) {
     return createRemoteConnection(getRemoteConnectionInfo(getState()))
         .then(function __onConnected() {
             dispatch(onConnected());
+            Actions.remoteExplorer();
         })
         .catch(function __handleError(err) {
             throw err; // @todo fix

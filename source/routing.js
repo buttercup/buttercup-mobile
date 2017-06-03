@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Router, Scene } from "react-native-router-flux";
 import Archives from "./components/Archives.js";
 import AddArchivePage from "./containers/AddArchivePage.js";
+import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 
 const RouterWithRedux = connect()(Router);
 
@@ -12,6 +13,7 @@ export function getRouter() {
             <Scene key="root">
                 <Scene key="archives" component={Archives} initial={true} hideNavBar={true} />
                 <Scene key="addArchive" component={AddArchivePage} hideNavBar={false} title="Add Archive" />
+                <Scene key="remoteExplorer" component={RemoteExplorerPage} hideNavBar={false} title="Choose Archive" />
             </Scene>
         </RouterWithRedux>
     );
