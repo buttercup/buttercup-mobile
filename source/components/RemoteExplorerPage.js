@@ -9,6 +9,7 @@ import {
     List,
     ListItem
 } from "react-native-elements";
+import Spinner from "react-native-loading-spinner-overlay";
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
@@ -22,35 +23,35 @@ const styles = StyleSheet.create({
         height: "100%",
         width: "100%"
     }
-    // container: {
-    //     flex: 1,
-    //     justifyContent: "center",
-    //     alignItems: "stretch",
-    //     backgroundColor: "transparent",
-    //     marginTop: 64
-    // },
-    // fileList: {
-    //     width: "100%",
-    //     flex: 1,
-    //     justifyContent: "flex-start",
-    //     alignItems: "stretch"
-    // }
 });
 
 class RemoteExplorer extends Component {
 
     componentDidMount() {
-        this.props.onPathSelected("");
+        this.handlePathSelected("/");
+    }
+
+    handlePathSelected(newPath) {
+        const scrollResetCB = () => {
+            this.refs.directoryScrollView.scrollTo({ y: 0, animated: false })
+        };
+        this.props.onPathSelected(newPath, scrollResetCB);
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView styles={styles.scrollContainer}>
+                <ScrollView styles={styles.scrollContainer} ref="directoryScrollView">
                     <List>
                         {this.props.items.map(item => this.renderItem(item))}
                     </List>
                 </ScrollView>
+                <Spinner
+                    visible={this.props.loading}
+                    textContent="Fetching Contents"
+                    textStyle={{ color: "#FFF" }}
+                    overlayColor="rgba(0, 0, 0, 0.75)"
+                    />
             </View>
         );
     }
@@ -64,7 +65,8 @@ class RemoteExplorer extends Component {
                 key={item.name}
                 title={item.name}
                 avatar={{ uri: image }}
-                onPress={() => this.props.onPathSelected(item.path)}
+                onPress={() => this.handlePathSelected(item.path)}
+                hideChevron={true}
                 />
         );
     }

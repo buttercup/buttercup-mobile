@@ -10,17 +10,30 @@ import {
     onReceiveItems,
     setLoading
 } from "../actions/RemoteExplorerPage.js";
-import { joinRemotePath } from "../library/remote.js";
 import { getDirectoryContents } from "../shared/explorerConnection.js";
 
-function handlePathSelection(nextItem, dispatch, getState) {
+function handlePathSelection(nextItem, resetScroll, dispatch, getState) {
+    console.log("JAND", ...arguments);
+    const currentPath = getCurrentPath(getState());
+    const nextPath = nextItem === ".." ?
+        removeLastPathItem(currentPath) :
+        nextItem;
     dispatch(setLoading(true));
-    getDirectoryContents(nextItem)
+    getDirectoryContents(nextPath)
         .then(contents => dispatch(onReceiveItems(contents)))
         .then(function __afterContentsLoaded() {
-            dispatch(onChangeDirectory(nextItem));
+            resetScroll();
+            dispatch(onChangeDirectory(nextPath));
             dispatch(setLoading(false));
         });
+}
+
+function removeLastPathItem(pathStr) {
+    const parts = pathStr.split("/");
+    const newPath = parts.slice(0, parts.length - 1).join("/").trim();
+    return newPath.length > 0 ?
+        newPath :
+        "/";
 }
 
 export default connect(
@@ -30,6 +43,7 @@ export default connect(
         remoteDirectory:                getCurrentPath(state)
     }),
     {
-        onPathSelected:                 (remoteItem) => (...args) => handlePathSelection(remoteItem, ...args)
+        onPathSelected:                 (remoteItem, scrollResetCB) => (dispatch, getState) =>
+                                            handlePathSelection(remoteItem, scrollResetCB, dispatch, getState)
     }
 )(RemoteExplorer);

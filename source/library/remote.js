@@ -14,35 +14,18 @@ export function getWebDAVConnection(remoteURL, username, password) {
         .then(() => createAnyFSAdapter(webdavFs));
 }
 
-export function joinRemotePath(base, join) {
-    console.log("JOIN", base, join);
-    // if (PATH_ABS.test(base) !== true) {
-    //     throw new Error(`Invalid path (expected absolute): ${base}`);
-    // }
-    const baseParts = base.split("\/");
-    const output = [...baseParts, join]
-        .join("/")
-        .replace(/\/{2,}/, "/")
-        .replace(/\/$/, "");
-    return /^\//.test(output) ?
-        output :
-        `/${output}`;
-    // const baseParts = base.split("\/");
-    // if (PATH_PARENT.test(join)) {
-    //     baseParts.pop();
-    // } else {
-    //     const appendItem = PATH_ABS.test(join) ?
-    //         join.substr(1) :
-    //         join;
-    //     if (appendItem.length > 0) {
-    //         baseParts.push(appendItem);
-    //     }
-    // }
-    // if (baseParts.length <= 0 || baseParts[0] !== "") {
-    //     baseParts.unshift("");
-    // }
-    // return baseParts.join("/");
-}
+// export function joinRemotePath(base, join) {
+//     const baseParts = base.split("\/");
+//     const output = (PATH_PARENT.test(join)) ?
+//         baseParts.slice(0, baseParts.length - 1) :
+//         [...baseParts, join]
+//             .join("/")
+//             .replace(/\/{2,}/, "/")
+//             .replace(/\/$/, "");
+//     return /^\//.test(output) ?
+//         output :
+//         `/${output}`;
+// }
 
 export function testRemoteFSConnection(fsInstance) {
     return new Promise(function __testFSWithStat(resolve, reject) {

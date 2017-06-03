@@ -21,8 +21,14 @@ export function createRemoteConnection(connectionInfo) {
 export function getDirectoryContents(remoteDir) {
     return getSharedConnection()
         .readDirectory(remoteDir)
-        .then(function(items) {
-            console.log("GOT", items, remoteDir);
+        .then(function __appendNavUp(items) {
+            if (remoteDir !== "/") {
+                items.unshift({
+                    name: ".. (Up)",
+                    path: "..",
+                    isDirectory: () => true
+                });
+            }
             return items;
         })
         .then(items => items.map(item => ({
