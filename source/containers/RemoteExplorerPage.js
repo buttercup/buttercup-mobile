@@ -3,17 +3,32 @@ import RemoteExplorer from "../components/RemoteExplorerPage.js";
 import {
     getCurrentItems,
     getCurrentPath,
-    isLoading
+    isCreatingFile,
+    isLoading,
+    shouldShowNewFilePrompt,
+    shouldShowPasswordPrompt
 } from "../selectors/RemoteExplorerPage.js";
 import {
+    cancelNewPrompt,
     onChangeDirectory,
     onReceiveItems,
-    setLoading
+    setLoading,
+    setNewFilename,
+    setNewMasterPassword,
+    showNewMasterPasswordPrompt
 } from "../actions/RemoteExplorerPage.js";
 import { getDirectoryContents } from "../shared/explorerConnection.js";
 
+function handleNewFile(filename, dispatch, getState) {
+    dispatch(setNewFilename(filename));
+    dispatch(showNewMasterPasswordPrompt());
+}
+
+function handleNewMasterPassword(password, dispatch, getState) {
+    dispatch(setNewMasterPassword(password));
+}
+
 function handlePathSelection(nextItem, resetScroll, dispatch, getState) {
-    console.log("JAND", ...arguments);
     const currentPath = getCurrentPath(getState());
     const nextPath = nextItem === ".." ?
         removeLastPathItem(currentPath) :
@@ -38,11 +53,20 @@ function removeLastPathItem(pathStr) {
 
 export default connect(
     (state, ownProps) => ({
+        creatingFile:                   isCreatingFile(state),
         items:                          getCurrentItems(state),
         loading:                        isLoading(state),
-        remoteDirectory:                getCurrentPath(state)
+        remoteDirectory:                getCurrentPath(state),
+        showNewPassword:                shouldShowPasswordPrompt(state),
+        showNewPrompt:                  shouldShowNewFilePrompt(state)
     }),
     {
+        cancelNewPrompt,
+        // onNewFilename:                  (...args) => { console.log("onNewFilename", ...args); },
+        onNewFilename:                  (filename) => (dispatch, getState) =>
+                                            handleNewFile(filename, dispatch, getState),
+        onNewMasterPassword:            (password) => (dispatch, getState) =>
+                                            handleNewMasterPassword(password, dispatch, getState),
         onPathSelected:                 (remoteItem, scrollResetCB) => (dispatch, getState) =>
                                             handlePathSelection(remoteItem, scrollResetCB, dispatch, getState)
     }

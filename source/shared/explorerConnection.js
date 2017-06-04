@@ -1,8 +1,19 @@
 import { getWebDAVConnection } from "../library/remote.js";
+import { createNewArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
+import { createCredentials } from "buttercup-web";
 
 const PATH_PARENT = /^\.\./;
 
 let __remoteFSConnection = null;
+
+export function createNewArchiveFile(filePath, password) {
+    const archive = createNewArchive();
+    return getArchiveEncryptedContent(archive, createCredentials.fromPassword(password))
+        .then(function __handleEncryptedContents(encText) {
+            // alert("SAVE! " + encText.length);
+            // return __remoteFSConnection.writeFile()
+        });
+}
 
 export function createRemoteConnection(connectionInfo) {
     const {

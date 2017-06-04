@@ -1,9 +1,38 @@
 import { NativeModules } from "react-native";
-import { TextDatasource, createCredentials, Web } from "buttercup-web";
+import {
+    Archive,
+    TextDatasource,
+    createCredentials,
+    Web
+} from "buttercup-web";
 
 const { CryptoBridge } = NativeModules;
 
-function hexKeyToBuffer(key) {
+export function createNewArchive() {
+    return Archive.createWithDefaults();
+}
+
+export function deriveKeyNatively(password, salt, rounds) {
+    const callBridge = (new Promise(function(resolve, reject) {
+        CryptoBridge.deriveKeyFromPassword(password, salt, rounds, (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(result);
+        });
+    }));
+    return callBridge
+        .then(function __mapHexToBuff(derivedKeyHex) {
+            return hexKeyToBuffer(derivedKeyHex);
+        });
+}
+
+export function getArchiveEncryptedContent(archive, credentials) {
+    const tds = new TextDatasource();
+    return tds.save(archive, credentials);
+}
+
+export function hexKeyToBuffer(key) {
     let hexKey = key;
     const hexArr = [];
     while (hexKey.length > 0) {
@@ -25,21 +54,6 @@ function hexKeyToBuffer(key) {
         return oldToString.call(buff, mode);
     };
     return buff;
-}
-
-export function deriveKeyNatively(password, salt, rounds) {
-    const callBridge = (new Promise(function(resolve, reject) {
-        CryptoBridge.deriveKeyFromPassword(password, salt, rounds, (err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            return resolve(result);
-        });
-    }));
-    return callBridge
-        .then(function __mapHexToBuff(derivedKeyHex) {
-            return hexKeyToBuffer(derivedKeyHex);
-        });
 }
 
 export function patchKeyDerivation() {
