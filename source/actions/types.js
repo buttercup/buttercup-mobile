@@ -5,6 +5,9 @@ export const ADD_ARCHIVE_SET_CONNECTING =               "addArchive/setConnectin
 export const ADD_ARCHIVE_SET_PASSWORD =                 "addArchive/setPassword";
 export const ADD_ARCHIVE_SET_URL =                      "addArchive/setURL";
 export const ADD_ARCHIVE_SET_USERNAME =                 "addArchive/setUsername";
+
+export const ARCHIVES_ADD_UNLOCKED_SOURCE =             "archives/addUnlockedSource";
+
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR =                    "remoteExplorer/clear";
 export const REMOTE_EXPLORER_CREATE_NEW =               "remoteExplorer/createNew";

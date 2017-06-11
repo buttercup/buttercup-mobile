@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     }
 });
 
-class Archives extends Component {
+class ArchivesPage extends Component {
 
     render() {
         return (
@@ -48,4 +48,4 @@ class Archives extends Component {
 
 }
 
-export default Archives;
+export default ArchivesPage;

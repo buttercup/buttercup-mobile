@@ -1,12 +1,17 @@
 import { NativeModules } from "react-native";
 import {
     Archive,
+    ArchiveManager,
     TextDatasource,
     createCredentials,
     Web
 } from "buttercup-web";
 
 const { CryptoBridge } = NativeModules;
+const { LocalStorageInterface } = Web;
+const { SourceStatus: ArchiveSourceStatus } = ArchiveManager;
+
+let __sharedManager = null;
 
 export function createNewArchive() {
     return Archive.createWithDefaults();
@@ -30,6 +35,13 @@ export function deriveKeyNatively(password, salt, rounds) {
 export function getArchiveEncryptedContent(archive, credentials) {
     const tds = new TextDatasource();
     return tds.save(archive, credentials);
+}
+
+export function getSharedArchiveManager() {
+    if (__sharedManager === null) {
+        __sharedManager = new ArchiveManager(new LocalStorageInterface());
+    }
+    return __sharedManager;
 }
 
 export function hexKeyToBuffer(key) {
@@ -62,3 +74,7 @@ export function patchKeyDerivation() {
             deriveKeyNatively(password, salt, rounds)
     );
 }
+
+export {
+    ArchiveSourceStatus
+};

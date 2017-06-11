@@ -8,6 +8,14 @@ export function getCurrentPath(state) {
     return state[STATE_KEY].remotePath;
 }
 
+export function getNewFilename(state) {
+    return state[STATE_KEY].newPromptFilename;
+}
+
+export function getNewPassword(state) {
+    return state[STATE_KEY].newPromptPassword;
+}
+
 export function isCreatingFile(state) {
     return state[STATE_KEY].creatingFile;
 }

@@ -1,16 +1,19 @@
+import { createCredentials } from "buttercup-web";
 import { getWebDAVConnection } from "../library/remote.js";
 import { createNewArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
-import { createCredentials } from "buttercup-web";
+import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 
 const PATH_PARENT = /^\.\./;
 
 let __remoteFSConnection = null;
 
-export function createNewArchiveFile(filePath, password) {
+export function createNewArchiveFile(currentDir, filename, password) {
     const archive = createNewArchive();
+    const filePath = addBCUPExtension(joinPathAndFilename(currentDir, filename));
     return getArchiveEncryptedContent(archive, createCredentials.fromPassword(password))
         .then(function __handleEncryptedContents(encText) {
             // alert("SAVE! " + encText.length);
+            console.log("WRITE!", currentDir, filename, filePath);
             // return __remoteFSConnection.writeFile()
         });
 }
