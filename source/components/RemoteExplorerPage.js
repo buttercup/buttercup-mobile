@@ -53,7 +53,7 @@ class RemoteExplorer extends Component {
                     visible={this.props.showNewPrompt}
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewFilename(value)}
-                    textInputProps={{ spellCheck: false, keyboardType: "ascii-capable" }}
+                    textInputProps={{ autoCapitalize: "none", spellCheck: false, keyboardType: "default" }}
                     />
                 <Prompt
                     title="Archive Password"
