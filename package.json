@@ -8,7 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@buttercup/mobile-compat": "~0.2.0",
+    "@buttercup/mobile-compat": "~0.3.0",
     "buttercup-web": "~0.31.0",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",

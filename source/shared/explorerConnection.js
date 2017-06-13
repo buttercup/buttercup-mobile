@@ -12,9 +12,7 @@ export function createNewArchiveFile(currentDir, filename, password) {
     const filePath = addBCUPExtension(joinPathAndFilename(currentDir, filename));
     return getArchiveEncryptedContent(archive, createCredentials.fromPassword(password))
         .then(function __handleEncryptedContents(encText) {
-            // alert("SAVE! " + encText.length);
-            console.log("WRITE!", currentDir, filename, filePath);
-            // return __remoteFSConnection.writeFile()
+            return getSharedConnection().writeFile(filePath, encText, "utf8");
         });
 }
 
