@@ -8,6 +8,19 @@ export function getCurrentPath(state) {
     return state[STATE_KEY].remotePath;
 }
 
+export function getNewArchiveDetails(state) {
+    const {
+        newPromptArchiveName: archiveName,
+        newPromptPassword: archivePassword,
+        selectedArchivePath: archivePath,
+    } = state[STATE_KEY];
+    return {
+        archiveName,
+        archivePassword,
+        archivePath
+    };
+}
+
 export function getNewFilename(state) {
     return state[STATE_KEY].newPromptFilename;
 }
@@ -26,6 +39,10 @@ export function isLoading(state) {
 
 export function shouldShowNewFilePrompt(state) {
     return state[STATE_KEY].showNewPrompt;
+}
+
+export function shouldShowNewNamePrompt(state) {
+    return state[STATE_KEY].showNewNamePrompt;
 }
 
 export function shouldShowPasswordPrompt(state) {

@@ -41,10 +41,10 @@ class RemoteConnectPage extends Component {
     }
 
     renderWebDAV() {
-        const base = { spellCheck: false };
+        const base = { autoCapitalize: "none", keyboardType: "default", spellCheck: false };
         const urlInputOptions = { ...base, keyboardType: "url" };
         const usernameInputOptions = { ...base, keyboardType: "email-address" };
-        const passwordInputOptions = { ...base, keyboardType: "ascii-capable", secureTextEntry: true };
+        const passwordInputOptions = { ...base, secureTextEntry: true };
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>

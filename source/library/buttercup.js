@@ -6,15 +6,48 @@ import {
     createCredentials,
     Web
 } from "buttercup-web";
+import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
 
 const { CryptoBridge } = NativeModules;
-const { LocalStorageInterface } = Web;
 const { SourceStatus: ArchiveSourceStatus } = ArchiveManager;
 
 let __sharedManager = null;
 
-export function createNewArchive() {
+export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
+    const manager = getSharedArchiveManager();
+    console.log(sourceCreds, archiveCreds);
+    return manager.addSource(
+        name,
+        sourceCreds,
+        archiveCreds
+    );
+}
+
+export function createEmptyArchive() {
     return Archive.createWithDefaults();
+}
+
+export function createArchiveCredentials(password) {
+    return createCredentials.fromPassword(password);
+}
+
+export function createRemoteCredentials(archiveType, options) {
+    const credentials = createCredentials(archiveType);
+    switch (archiveType) {
+        case "webdav": {
+            credentials.username = options.username;
+            credentials.password = options.password;
+            credentials.setValue("datasource", JSON.stringify({
+                type: archiveType,
+                endpoint: options.url,
+                path: options.path
+            }));
+            return credentials;
+        }
+
+        default:
+            throw new Error(`Unrecognised archive type: ${archiveType}`);
+    }
 }
 
 export function deriveKeyNatively(password, salt, rounds) {
@@ -39,7 +72,7 @@ export function getArchiveEncryptedContent(archive, credentials) {
 
 export function getSharedArchiveManager() {
     if (__sharedManager === null) {
-        __sharedManager = new ArchiveManager(new LocalStorageInterface());
+        __sharedManager = new ArchiveManager(new AsyncStorageInterface());
     }
     return __sharedManager;
 }

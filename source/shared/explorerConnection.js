@@ -1,20 +1,39 @@
 import { createCredentials } from "buttercup-web";
 import { getWebDAVConnection } from "../library/remote.js";
-import { createNewArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
+import { createEmptyArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
+import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
+import { /*cancelNewPrompt,*/ selectArchive, setCreatingArchive, showNewNamePrompt } from "../actions/RemoteExplorerPage.js";
 
 const PATH_PARENT = /^\.\./;
 
 let __remoteFSConnection = null;
 
+export function createNewArchive(state, dispatch) {
+    const currentPath = getCurrentPath(state);
+    const newPromptFilename = getNewFilename(state);
+    const newPromptPassword = getNewPassword(state);
+    if (newPromptFilename.length > 0 && newPromptPassword.length > 0) {
+        // clear state for new item
+        // dispatch(cancelNewPrompt());
+        dispatch(setCreatingArchive(true));
+        createNewArchiveFile(currentPath, newPromptFilename, newPromptPassword)
+            .then(function __handleCreated(filePath) {
+                dispatch(setCreatingArchive(false));
+                dispatch(selectArchive(filePath));
+                dispatch(showNewNamePrompt());
+            });
+    }
+}
+
 export function createNewArchiveFile(currentDir, filename, password) {
-    const archive = createNewArchive();
+    const archive = createEmptyArchive();
     const filePath = addBCUPExtension(joinPathAndFilename(currentDir, filename));
     return getArchiveEncryptedContent(archive, createCredentials.fromPassword(password))
         .then(function __handleEncryptedContents(encText) {
-            // alert("SAVE! " + encText.length);
-            console.log("WRITE!", currentDir, filename, filePath);
-            // return __remoteFSConnection.writeFile()
+            return getSharedConnection()
+                .writeFile(filePath, encText, "utf8")
+                .then(() => filePath);
         });
 }
 
