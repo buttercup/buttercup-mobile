@@ -9,19 +9,23 @@ import {
     ListItem
 } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
+import ArchivesList from "../containers/ArchivesList.js";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "transparent",
+        // justifyContent: "space-between",
+        // alignItems: "center",
+        // backgroundColor: "transparent",
         paddingTop: 30
     },
-    menuList: {
-        marginBottom: 20,
+    listContainer: {
         width: "100%"
     }
+    // menuList: {
+    //     // marginBottom: 20,
+    //     // width: "100%"
+    // }
 });
 
 class ArchivesPage extends Component {
@@ -29,19 +33,24 @@ class ArchivesPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <List style={styles.menuList}>
-                    <ListItem
-                        key="add"
-                        title="Add Archive"
-                        avatar={{ uri: "https://placeholdit.imgix.net/~text?txtsize=33&txt=Face&w=128&h=128" }}
-                        onPress={Actions.addArchive}
-                        />
-                    <ListItem
-                        key="settings"
-                        title="Settings"
-                        avatar={{ uri: "https://placeholdit.imgix.net/~text?txtsize=33&txt=Face&w=128&h=128" }}
-                        />
-                </List>
+                <View style={styles.listContainer}>
+                    <ArchivesList />
+                </View>
+                <View style={styles.listContainer}>
+                    <List>
+                        <ListItem
+                            key="add"
+                            title="Add Archive"
+                            avatar={{ uri: "https://placeholdit.imgix.net/~text?txtsize=33&txt=Face&w=128&h=128" }}
+                            onPress={Actions.addArchive}
+                            />
+                        <ListItem
+                            key="settings"
+                            title="Settings"
+                            avatar={{ uri: "https://placeholdit.imgix.net/~text?txtsize=33&txt=Face&w=128&h=128" }}
+                            />
+                    </List>
+                </View>
             </View>
         );
     }
