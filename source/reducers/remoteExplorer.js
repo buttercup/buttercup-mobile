@@ -32,7 +32,6 @@ const INITIAL = {
 };
 
 export default function remoteExplorerReducer(state = INITIAL, action = {}) {
-    console.log("EXEC", action.type, action.payload);
     switch (action.type) {
         case REMOTE_EXPLORER_SET_ITEMS:
             return {
