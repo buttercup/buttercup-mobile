@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
 class RemoteExplorer extends Component {
 
     componentDidMount() {
-        this.handlePathSelected("/");
+        this.handlePathSelected("/", /* is dir */ true);
     }
 
-    handlePathSelected(newPath) {
+    handlePathSelected(newPath, isDir) {
         const scrollResetCB = () => {
             this.refs.directoryScrollView.scrollTo({ y: 0, animated: false })
         };
-        this.props.onPathSelected(newPath, scrollResetCB);
+        this.props.onPathSelected(newPath, isDir, scrollResetCB);
     }
 
     render() {
@@ -63,6 +63,14 @@ class RemoteExplorer extends Component {
                     onSubmit={value => this.props.onNewMasterPassword(value)}
                     textInputProps={{ secureTextEntry: true }}
                     />
+                <Prompt
+                    title="Archive Name"
+                    placeholder=""
+                    visible={this.props.showNewName}
+                    onCancel={() => this.props.cancelNewPrompt()}
+                    onSubmit={value => this.props.onNewArchiveName(value)}
+                    textInputProps={{ keyboardType: "default" }}
+                    />
                 <Spinner
                     visible={this.props.creatingFile}
                     textContent="Creating Archive"
@@ -88,7 +96,7 @@ class RemoteExplorer extends Component {
                 key={item.name}
                 title={item.name}
                 avatar={{ uri: image }}
-                onPress={() => this.handlePathSelected(item.path)}
+                onPress={() => this.handlePathSelected(item.path, item.isDir)}
                 hideChevron={true}
                 />
         );
@@ -100,10 +108,12 @@ RemoteExplorer.propTypes = {
     cancelNewPrompt:            PropTypes.func.isRequired,
     items:                      PropTypes.array.isRequired,
     loading:                    PropTypes.bool.isRequired,
+    onNewArchiveName:           PropTypes.func.isRequired,
     onNewFilename:              PropTypes.func.isRequired,
     onNewMasterPassword:        PropTypes.func.isRequired,
     onPathSelected:             PropTypes.func.isRequired,
     remoteDirectory:            PropTypes.string.isRequired,
+    showNewName:                PropTypes.bool.isRequired,
     showNewPassword:            PropTypes.bool.isRequired,
     showNewPrompt:              PropTypes.bool.isRequired
 };

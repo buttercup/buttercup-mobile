@@ -10,11 +10,14 @@ export const ARCHIVES_ADD_UNLOCKED_SOURCE =             "archives/addUnlockedSou
 
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR =                    "remoteExplorer/clear";
-export const REMOTE_EXPLORER_CREATE_NEW =               "remoteExplorer/createNew";
+export const REMOTE_EXPLORER_CREATE_NEW_FILENAME =      "remoteExplorer/createNewFilename";
 export const REMOTE_EXPLORER_CREATE_NEW_MASTERPASS =    "remoteExplorer/createNewMasterPassword";
+export const REMOTE_EXPLORER_CREATE_NEW_NAME =          "remoteExplorer/createNewName";
+export const REMOTE_EXPLORER_SELECT_ARCHIVE =           "remoteExplorer/selectArchive";
 export const REMOTE_EXPLORER_SET_CREATING_ARCHIVE =     "remoteExplorer/setCreatingArchive";
 export const REMOTE_EXPLORER_SET_CURRENT_DIR =          "remoteExplorer/setCurrentDir";
 export const REMOTE_EXPLORER_SET_ITEMS =                "remoteExplorer/setItems";
 export const REMOTE_EXPLORER_SET_NEW_FILENAME =         "remoteExplorer/setNewFilename";
 export const REMOTE_EXPLORER_SET_NEW_MASTERPASS =       "remoteExplorer/setNewMasterPassword";
+export const REMOTE_EXPLORER_SET_NEW_NAME =             "remoteExplorer/setNewName";
 export const REMOTE_EXPLORER_SET_LOADING =              "remoteExplorer/setLoading";

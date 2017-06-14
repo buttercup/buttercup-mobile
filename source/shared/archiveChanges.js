@@ -17,6 +17,7 @@ export function linkArchiveManagerToStore(store) {
     const archiveManager = getSharedArchiveManager();
     // listen for new archives
     archiveManager.on("sourceAdded", function __handleNewSource(sourceInfo) {
+        console.log("Source added", sourceInfo);
         const source = normaliseSourceInfo(sourceInfo);
         dispatch(addUnlockedSource(source));
     });
