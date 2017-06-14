@@ -1,5 +1,6 @@
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import {
+    addLockedSource,
     addUnlockedSource
 } from "../actions/archives.js";
 
@@ -20,5 +21,10 @@ export function linkArchiveManagerToStore(store) {
         console.log("Source added", sourceInfo);
         const source = normaliseSourceInfo(sourceInfo);
         dispatch(addUnlockedSource(source));
+    });
+    archiveManager.on("sourceRehydrated", function __handleRehydratedSource(sourceInfo) {
+        console.log("Source rehydrated", sourceInfo);
+        const source = normaliseSourceInfo(sourceInfo);
+        dispatch(addLockedSource(source));
     });
 }
