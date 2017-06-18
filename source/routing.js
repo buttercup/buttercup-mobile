@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Router, Scene } from "react-native-router-flux";
+import { Actions, Router, Scene } from "react-native-router-flux";
 import ArchivesPage from "./components/ArchivesPage.js";
 import AddArchivePage from "./containers/AddArchivePage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
@@ -21,6 +21,10 @@ export function getRouter() {
                     initial={true}
                     hideNavBar={false}
                     title="Buttercup"
+                    rightTitle="🔐"
+                    onRight={() => Actions.addArchive()}
+                    leftTitle="⚙️"
+                    onLeft={() => alert("Settings - WIP")}
                     />
                 <Scene
                     key="addArchive"
