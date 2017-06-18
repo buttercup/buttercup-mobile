@@ -15,9 +15,25 @@ export function getRouter() {
     return (
         <RouterWithRedux>
             <Scene key="root">
-                <Scene key="archives" component={ArchivesPage} initial={true} hideNavBar={true} />
-                <Scene key="addArchive" component={AddArchivePage} hideNavBar={false} title="Add Archive" />
-                <Scene key="remoteConnect" component={RemoteConnectPage} hideNavBar={false} title="Remote Connection" />
+                <Scene
+                    key="archives"
+                    component={ArchivesPage}
+                    initial={true}
+                    hideNavBar={false}
+                    title="Buttercup"
+                    />
+                <Scene
+                    key="addArchive"
+                    component={AddArchivePage}
+                    hideNavBar={false}
+                    title="Add Archive"
+                    />
+                <Scene
+                    key="remoteConnect"
+                    component={RemoteConnectPage}
+                    hideNavBar={false}
+                    title="Remote Connection"
+                    />
                 <Scene
                     key="remoteExplorer"
                     component={RemoteExplorerPage}

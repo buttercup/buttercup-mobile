@@ -14,18 +14,11 @@ import ArchivesList from "../containers/ArchivesList.js";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: "space-between",
-        // alignItems: "center",
-        // backgroundColor: "transparent",
-        paddingTop: 30
+        marginTop: 64
     },
     listContainer: {
         width: "100%"
     }
-    // menuList: {
-    //     // marginBottom: 20,
-    //     // width: "100%"
-    // }
 });
 
 class ArchivesPage extends Component {
