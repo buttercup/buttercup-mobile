@@ -8,7 +8,6 @@ import {
     List,
     ListItem
 } from "react-native-elements";
-import { Actions } from "react-native-router-flux";
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
@@ -27,6 +26,11 @@ const styles = StyleSheet.create({
 
 class ArchivesList extends Component {
 
+    handleArchiveSelection(sourceID) {
+        this.props.selectArchiveSource(sourceID);
+        // Actions.archiveContents();
+    }
+
     render() {
         return (
             <View>
@@ -35,8 +39,8 @@ class ArchivesList extends Component {
                         <ListItem
                             key={archive.id}
                             title={archive.name}
-                            avatar={{ uri: "https://placeholdit.imgix.net/~text?txtsize=33&txt=Face&w=128&h=128" }}
-                            onPress={() => alert(`You selected "${archive.name}"`)}
+                            avatar={{ uri: "https://placeholdit.imgix.net/~text?txtsize=33&txt=A&w=128&h=128" }}
+                            onPress={() => this.handleArchiveSelection(archive.id)}
                             />
                     )}
                 </List>
@@ -47,7 +51,8 @@ class ArchivesList extends Component {
 }
 
 ArchivesList.propTypes = {
-    archives:           PropTypes.arrayOf(PropTypes.object)
+    archives:               PropTypes.arrayOf(PropTypes.object),
+    selectArchiveSource:    PropTypes.func.isRequired
 };
 
 export default ArchivesList;

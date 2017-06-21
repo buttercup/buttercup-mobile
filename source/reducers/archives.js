@@ -11,6 +11,7 @@ const INITIAL = {
 };
 
 export default function archivesReducer(state = INITIAL, action = {}) {
+    console.log("exec=>", action.type, action);
     switch (action.type) {
         case ARCHIVES_ADD_UNLOCKED_SOURCE:
             return {
