@@ -11,6 +11,10 @@ import {
 import { Actions } from "react-native-router-flux";
 import PropTypes from "prop-types";
 
+const ARCHIVE_IMAGE_PENDING = require("../../resources/images/pending-256.png");
+const ARCHIVE_IMAGE_LOCKED = require("../../resources/images/locked-256.png");
+const ARCHIVE_IMAGE_UNLOCKED = require("../../resources/images/unlocked-256.png");
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -31,16 +35,26 @@ class ArchivesList extends Component {
         return (
             <View>
                 <List style={styles.archivesList}>
-                    {this.props.archives.map(archive =>
-                        <ListItem
-                            key={archive.id}
-                            title={archive.name}
-                            avatar={{ uri: "https://placeholdit.imgix.net/~text?txtsize=33&txt=Face&w=128&h=128" }}
-                            onPress={() => alert(`You selected "${archive.name}"`)}
-                            />
-                    )}
+                    {this.props.archives.map(archive => this.renderListItem(archive))}
                 </List>
             </View>
+        );
+    }
+
+    renderListItem(archiveInfo) {
+        let image = ARCHIVE_IMAGE_PENDING;
+        if (archiveInfo.status === "locked") {
+            image = ARCHIVE_IMAGE_LOCKED;
+        } else if (archiveInfo.status === "unlocked") {
+            image = ARCHIVE_IMAGE_UNLOCKED;
+        }
+        return (
+            <ListItem
+                key={archiveInfo.id}
+                title={archiveInfo.name}
+                avatar={image}
+                onPress={() => alert(`You selected "${archive.name}"`)}
+                />
         );
     }
 
