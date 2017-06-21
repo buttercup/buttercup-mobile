@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
 });
 
 const ARCHIVE_TYPES = [
-    { type: "dropbox", title: "Dropbox" },
-    { type: "owncloud", title: "ownCloud" },
-    { type: "nextcloud", title: "Nextcloud" },
-    { type: "webdav", title: "WebDAV" }
+    { type: "dropbox", title: "Dropbox", image: require("../../resources/images/dropbox-256.png") },
+    { type: "owncloud", title: "ownCloud", image: require("../../resources/images/owncloud-256.png") },
+    { type: "nextcloud", title: "Nextcloud", image: require("../../resources/images/nextcloud-256.png") },
+    { type: "webdav", title: "WebDAV", image: require("../../resources/images/webdav-256.png") }
 ];
 
 class AddArchive extends Component {
@@ -37,11 +37,11 @@ class AddArchive extends Component {
     getMenuContents() {
         return (
             <List style={styles.menuList}>
-                {ARCHIVE_TYPES.map(({type, title}) =>
+                {ARCHIVE_TYPES.map(({type, title, image}) =>
                     <ListItem
                         key={type}
                         title={title}
-                        avatar={{ uri: `https://placeholdit.imgix.net/~text?txtsize=33&txt=${title}&w=128&h=128` }}
+                        avatar={image}
                         onPress={() => this.handleTypeSelected(type)}
                         />
                 )}
