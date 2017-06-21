@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
-  Text,
-  View
+    StyleSheet,
+    Text,
+    View
 } from "react-native";
 import {
     List,
     ListItem
 } from "react-native-elements";
 import PropTypes from "prop-types";
+import Prompt from "react-native-prompt";
 
 const ARCHIVE_IMAGE_PENDING = require("../../resources/images/pending-256.png");
 const ARCHIVE_IMAGE_LOCKED = require("../../resources/images/locked-256.png");
@@ -30,9 +31,14 @@ const styles = StyleSheet.create({
 
 class ArchivesList extends Component {
 
-    handleArchiveSelection(sourceID) {
-        this.props.selectArchiveSource(sourceID);
-        // Actions.archiveContents();
+    handleArchiveSelection(sourceID, status) {
+        if (status === "unlocked") {
+            this.props.selectArchiveSource(sourceID);
+        } else if (status === "locked") {
+            // unlock
+        } else {
+            alert("Uhh.. seems that's not working right now :(");
+        }
     }
 
     render() {
@@ -41,6 +47,14 @@ class ArchivesList extends Component {
                 <List style={styles.archivesList}>
                     {this.props.archives.map(archive => this.renderListItem(archive))}
                 </List>
+                <Prompt
+                    title="Archive Password"
+                    placeholder=""
+                    visible={false}
+                    onCancel={() => this.props.cancelNewPrompt()}
+                    onSubmit={value => this.props.onNewMasterPassword(value)}
+                    textInputProps={{ secureTextEntry: true }}
+                    />
             </View>
         );
     }
@@ -57,7 +71,7 @@ class ArchivesList extends Component {
                 key={archiveInfo.id}
                 title={archiveInfo.name}
                 avatar={image}
-                onPress={() => alert(`You selected "${archive.name}"`)}
+                onPress={() => this.handleArchiveSelection(archiveInfo.id, archiveInfo.status)}
                 />
         );
     }
