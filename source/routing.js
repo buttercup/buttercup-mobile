@@ -5,6 +5,7 @@ import ArchivesPage from "./components/ArchivesPage.js";
 import AddArchivePage from "./containers/AddArchivePage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
+import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
 import { showNewPrompt } from "./actions/RemoteExplorerPage.js";
 
 import { dispatch } from "./store.js";
@@ -45,6 +46,12 @@ export function getRouter() {
                     rightTitle="New"
                     onRight={() => dispatch(showNewPrompt())}
                     title="Choose Archive"
+                    />
+                <Scene
+                    key="archiveContents"
+                    component={ArchiveContentsPage}
+                    hideNavBar={false}
+                    title="Archive"
                     />
             </Scene>
         </RouterWithRedux>

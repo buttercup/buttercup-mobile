@@ -8,7 +8,6 @@ import {
     List,
     ListItem
 } from "react-native-elements";
-import { Actions } from "react-native-router-flux";
 import PropTypes from "prop-types";
 
 const ARCHIVE_IMAGE_PENDING = require("../../resources/images/pending-256.png");
@@ -30,6 +29,11 @@ const styles = StyleSheet.create({
 });
 
 class ArchivesList extends Component {
+
+    handleArchiveSelection(sourceID) {
+        this.props.selectArchiveSource(sourceID);
+        // Actions.archiveContents();
+    }
 
     render() {
         return (
@@ -61,7 +65,8 @@ class ArchivesList extends Component {
 }
 
 ArchivesList.propTypes = {
-    archives:           PropTypes.arrayOf(PropTypes.object)
+    archives:               PropTypes.arrayOf(PropTypes.object),
+    selectArchiveSource:    PropTypes.func.isRequired
 };
 
 export default ArchivesList;
