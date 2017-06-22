@@ -10,7 +10,7 @@ const INITIAL = {
     selectedSourceID: null
 };
 
-export default function archivesReducer(state = INITIAL, action = {}) {
+export default function archiveContentsReducer(state = INITIAL, action = {}) {
     switch (action.type) {
         case ARCHIVE_CONTENTS_SET_CHILD_GROUPS:
             return {
