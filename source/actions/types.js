@@ -12,6 +12,9 @@ export const ARCHIVE_CONTENTS_SET_SOURCE =              "archiveContentsPage/set
 
 export const ARCHIVES_ADD_LOCKED_SOURCE =               "archives/addLockedSource";
 export const ARCHIVES_ADD_UNLOCKED_SOURCE =             "archives/addUnlockedSource";
+export const ARCHIVES_TOGGLE_IS_UNLOCKING =             "archives/toggleIsUnlocking";
+export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT =       "archives/toggleUnlockPasswordPrompt";
+export const ARCHIVES_UNLOCK_SOURCE =                   "archives/unlockSource";
 
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR =                    "remoteExplorer/clear";

@@ -10,6 +10,7 @@ import {
 } from "react-native-elements";
 import PropTypes from "prop-types";
 import Prompt from "react-native-prompt";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const ARCHIVE_IMAGE_PENDING = require("../../resources/images/pending-256.png");
 const ARCHIVE_IMAGE_LOCKED = require("../../resources/images/locked-256.png");
@@ -31,14 +32,25 @@ const styles = StyleSheet.create({
 
 class ArchivesList extends Component {
 
+    constructor(...args) {
+        super(...args);
+        this.lastSelectedSourceID = null;
+    }
+
     handleArchiveSelection(sourceID, status) {
         if (status === "unlocked") {
             this.props.selectArchiveSource(sourceID);
         } else if (status === "locked") {
-            // unlock
+            this.lastSelectedSourceID = sourceID;
+            this.props.showUnlockPasswordPrompt(true);
         } else {
             alert("Uhh.. seems that's not working right now :(");
         }
+    }
+
+    handlePasswordEntered(password) {
+        this.props.setIsUnlocking(true);
+        this.props.unlockArchive(this.lastSelectedSourceID, password)
     }
 
     render() {
@@ -50,10 +62,16 @@ class ArchivesList extends Component {
                 <Prompt
                     title="Archive Password"
                     placeholder=""
-                    visible={false}
-                    onCancel={() => this.props.cancelNewPrompt()}
-                    onSubmit={value => this.props.onNewMasterPassword(value)}
+                    visible={this.props.showUnlockPrompt}
+                    onCancel={() => this.props.showUnlockPasswordPrompt(false)}
+                    onSubmit={pass => this.handlePasswordEntered(pass)}
                     textInputProps={{ secureTextEntry: true }}
+                    />
+                <Spinner
+                    visible={this.props.isUnlocking}
+                    textContent="Unlocking"
+                    textStyle={{ color: "#FFF" }}
+                    overlayColor="rgba(0, 0, 0, 0.75)"
                     />
             </View>
         );
@@ -79,8 +97,12 @@ class ArchivesList extends Component {
 }
 
 ArchivesList.propTypes = {
-    archives:               PropTypes.arrayOf(PropTypes.object),
-    selectArchiveSource:    PropTypes.func.isRequired
+    archives:                   PropTypes.arrayOf(PropTypes.object),
+    isUnlocking:                PropTypes.bool.isRequired,
+    selectArchiveSource:        PropTypes.func.isRequired,
+    showUnlockPrompt:           PropTypes.bool.isRequired,
+    showUnlockPasswordPrompt:   PropTypes.func.isRequired,
+    unlockArchive:              PropTypes.func.isRequired
 };
 
 export default ArchivesList;

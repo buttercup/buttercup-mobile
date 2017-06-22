@@ -16,8 +16,9 @@ export function getUpdatedGroups(sourceID, parentGroupID) {
         ...list,
         [group.getID()]: group.getTitle()
     }), {});
-    // return groups.map(group => ({
-    //     title: group.getTitle(),
-    //     id: group.getID()
-    // }));
+}
+
+export function unlockSource(sourceID, password) {
+    const archiveManager = getSharedArchiveManager();
+    return archiveManager.unlock(sourceID, password);
 }

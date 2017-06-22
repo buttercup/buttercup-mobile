@@ -1,18 +1,27 @@
 import {
     ARCHIVES_ADD_LOCKED_SOURCE,
-    ARCHIVES_ADD_UNLOCKED_SOURCE
+    ARCHIVES_ADD_UNLOCKED_SOURCE,
+    ARCHIVES_TOGGLE_IS_UNLOCKING,
+    ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT,
+    ARCHIVES_UNLOCK_SOURCE
 } from "../actions/types.js";
 import { ArchiveSourceStatus } from "../library/buttercup.js";
 
 const { LOCKED, UNLOCKED } = ArchiveSourceStatus;
 
 const INITIAL = {
-    archives: []
+    archives: [],
+    isUnlockingSelected: false,
+    showUnlockPasswordPrompt: false
 };
 
 export default function archivesReducer(state = INITIAL, action = {}) {
-    console.log("exec=>", action.type, action);
     switch (action.type) {
+        case ARCHIVES_TOGGLE_IS_UNLOCKING:
+            return {
+                ...state,
+                isUnlockingSelected: !!action.payload
+            };
         case ARCHIVES_ADD_UNLOCKED_SOURCE:
             return {
                 ...state,
@@ -27,6 +36,21 @@ export default function archivesReducer(state = INITIAL, action = {}) {
                 archives: [...state.archives,
                     // ensure locked
                     { ...action.payload, status: LOCKED }
+                ]
+            };
+        case ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT:
+            return {
+                ...state,
+                showUnlockPasswordPrompt: !!action.payload
+            };
+        case ARCHIVES_UNLOCK_SOURCE:
+            const replacementSource = action.payload;
+            const existingArchives = state.archives.filter(source => source.id !== replacementSource.id);
+            return {
+                ...state,
+                archives: [
+                    ...existingArchives,
+                    { ...replacementSource, status: UNLOCKED }
                 ]
             };
 
