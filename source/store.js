@@ -10,10 +10,10 @@ const store = createStore(
     applyMiddleware(thunk)
 );
 
-const { dispatch } = store;
+const { dispatch, getState } = store;
 store.subscribe(() => onStateChange(store, dispatch));
 linkArchiveManagerToStore(store);
 
 export default store;
 
-export { dispatch };
+export { dispatch, getState };

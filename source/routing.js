@@ -51,7 +51,7 @@ export function getRouter() {
                     key="archiveContents"
                     component={ArchiveContentsPage}
                     hideNavBar={false}
-                    title="Archive"
+                    title=""
                     />
             </Scene>
         </RouterWithRedux>
