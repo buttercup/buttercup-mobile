@@ -1,9 +1,9 @@
 // import { createNewArchiveFile } from "./explorerConnection.js";
 // import { cancelNewPrompt, selectArchive, setCreatingArchive, showNewNamePrompt } from "../actions/RemoteExplorerPage.js";
 // import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
-import { getGroups, getSelectedGroupID, getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
-import { getUpdatedGroups } from "./archiveContents.js";
-import { setChildGroups } from "../actions/ArchiveContentsPage.js";
+// import { getGroups, getSelectedGroupID, getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
+// import { getUpdatedGroups } from "./archiveContents.js";
+// import { setChildGroups } from "../actions/ArchiveContentsPage.js";
 // import { Actions } from "react-native-router-flux";
 
 // function checkForNewFile(state, dispatch) {
@@ -27,10 +27,10 @@ export default function handleStateChange(store, dispatch) {
     const state = store.getState();
 
     // Check group selection
-    const groupID = getSelectedGroupID(state);
-    const sourceID = getSelectedSourceID(state);
-    const groups = getGroups(state);
-    if (groupID && sourceID && Object.keys(groups).length <= 0) {
-        dispatch(setChildGroups(getUpdatedGroups(sourceID, groupID)));
-    }
+    // const groupID = getSelectedGroupID(state);
+    // const sourceID = getSelectedSourceID(state);
+    // const groups = getGroups(state);
+    // if (groupID && sourceID && Object.keys(groups).length <= 0) {
+    //     dispatch(setChildGroups(getUpdatedGroups(sourceID, groupID)));
+    // }
 }

@@ -6,11 +6,16 @@ import {
 } from "../actions/archives.js";
 
 function normaliseSourceInfo(sourceInfo) {
+    const archiveManager = getSharedArchiveManager();
+    const sourceIndex = archiveManager.indexOfSource(sourceInfo.id);
+    const source = archiveManager.sources[sourceIndex];
+    const workspace = source.workspace || null;
     return {
         id: sourceInfo.id,
         name: sourceInfo.name,
         status: sourceInfo.status,
-        type: sourceInfo.type
+        type: sourceInfo.type,
+        workspace
     };
 }
 

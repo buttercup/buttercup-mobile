@@ -11,10 +11,10 @@ import {
     showUnlockPasswordPrompt
 } from "../actions/archives.js";
 import {
-    setSelectedGroup,
+    // setSelectedGroup,
     setSelectedSource
 } from "../actions/ArchiveContentsPage.js";
-import { unlockSource } from "../shared/archiveContents.js";
+import { unlockSource, updateCurrentArchive } from "../shared/archiveContents.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -25,7 +25,8 @@ export default connect(
     {
         selectArchiveSource:        id => dispatch => {
             dispatch(setSelectedSource(id));
-            dispatch(setSelectedGroup("0"));
+            // populate groups
+            updateCurrentArchive();
             // run action
             Actions.archiveContents();
         },

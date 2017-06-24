@@ -6,6 +6,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { Actions } from "react-native-router-flux";
+import GroupsList from "../containers/GroupsList.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -34,9 +35,7 @@ class ArchiveContentsPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                {Object.values(this.props.groups).map(title =>
-                    <Text key={title}>{title}</Text>
-                )}
+                <GroupsList groupID="0" />
             </View>
         );
     }
@@ -44,12 +43,7 @@ class ArchiveContentsPage extends Component {
 }
 
 ArchiveContentsPage.propTypes = {
-    groups:             PropTypes.object.isRequired,
     title:              PropTypes.string.isRequired
 };
-
-// ArchiveContentsPage.defaultProps = {
-//     stage:                      "chooseType"
-// };
 
 export default ArchiveContentsPage;

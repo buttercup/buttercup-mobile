@@ -6,8 +6,9 @@ export const ADD_ARCHIVE_SET_PASSWORD =                 "addArchive/setPassword"
 export const ADD_ARCHIVE_SET_URL =                      "addArchive/setURL";
 export const ADD_ARCHIVE_SET_USERNAME =                 "addArchive/setUsername";
 
-export const ARCHIVE_CONTENTS_SET_CHILD_GROUPS =        "archiveContentsPage/setChildGroups";
-export const ARCHIVE_CONTENTS_SET_GROUP =               "archiveContentsPage/setGroup";
+// export const ARCHIVE_CONTENTS_SET_CHILD_GROUPS =        "archiveContentsPage/setChildGroups";
+// export const ARCHIVE_CONTENTS_SET_GROUP =               "archiveContentsPage/setGroup";
+export const ARCHIVE_CONTENTS_SET_GROUPS =              "archiveContents/setGroups";
 export const ARCHIVE_CONTENTS_SET_SOURCE =              "archiveContentsPage/setSource";
 
 export const ARCHIVES_ADD_LOCKED_SOURCE =               "archives/addLockedSource";

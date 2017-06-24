@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
-  View
+    StyleSheet,
+    View
 } from "react-native";
 import ArchivesList from "../containers/ArchivesList.js";
 
