@@ -3,6 +3,7 @@ import {
     Image,
     StyleSheet,
     Text,
+    TouchableHighlight,
     View
 } from "react-native";
 import {
@@ -151,13 +152,18 @@ class ArchivesList extends Component {
                         onPress: () => this.handleSwipeoutButtonPress(info, archiveInfo)
                     }))}
                     >
-                        <View style={styles.itemView}>
-                            <Image
-                                source={image}
-                                style={styles.archiveIcon}
-                                />
-                            <Text style={styles.archiveText}>{archiveInfo.name}</Text>
-                        </View>
+                        <TouchableHighlight
+                            onPress={() => this.handleArchiveSelection(archiveInfo.id, archiveInfo.status)}
+                            underlayColor="white"
+                            >
+                                <View style={styles.itemView}>
+                                    <Image
+                                        source={image}
+                                        style={styles.archiveIcon}
+                                        />
+                                    <Text style={styles.archiveText}>{archiveInfo.name}</Text>
+                                </View>
+                        </TouchableHighlight>
                 </Swipeout>
             </View>
         );
