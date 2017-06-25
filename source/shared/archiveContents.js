@@ -25,6 +25,11 @@ export function archiveToObject(archive) {
     return archive.toObject();
 }
 
+export function removeSource(sourceID) {
+    const archiveManager = getSharedArchiveManager();
+    return archiveManager.remove(sourceID);
+}
+
 export function unlockSource(sourceID, password) {
     const archiveManager = getSharedArchiveManager();
     return archiveManager.unlock(sourceID, password);

@@ -50,6 +50,22 @@ export default class AsyncStorageInterface extends StorageInterface {
     }
 
     /**
+     * Remove a key from the storage
+     * @param {String} key The key to remove
+     * @returns {Promise} A promise that resolves once the item has been removed
+     */
+    removeKey(key) {
+        return new Promise((resolve, reject) => {
+            this.storage.removeItem(key, err => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve();
+            });
+        });
+    }
+
+    /**
      * Set the value for a key
      * @param {String} name The key name
      * @param {String} value The value to set

@@ -1,6 +1,7 @@
 import {
     ARCHIVES_ADD_LOCKED_SOURCE,
     ARCHIVES_ADD_UNLOCKED_SOURCE,
+    ARCHIVES_REMOVE_SOURCE,
     ARCHIVES_TOGGLE_IS_UNLOCKING,
     ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT,
     ARCHIVES_UNLOCK_SOURCE
@@ -52,6 +53,11 @@ export default function archivesReducer(state = INITIAL, action = {}) {
                     ...existingArchives,
                     { ...replacementSource, status: UNLOCKED }
                 ]
+            };
+        case ARCHIVES_REMOVE_SOURCE:
+            return {
+                ...state,
+                archives: state.archives.filter(archive => archive.id !== action.payload)
             };
 
         default:

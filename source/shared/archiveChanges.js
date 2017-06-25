@@ -2,6 +2,7 @@ import { getSharedArchiveManager } from "../library/buttercup.js";
 import {
     addLockedSource,
     addUnlockedSource,
+    removeSourceWithID,
     setSourceUnlocked
 } from "../actions/archives.js";
 
@@ -37,5 +38,10 @@ export function linkArchiveManagerToStore(store) {
         console.log("Source unlocked", sourceInfo);
         const source = normaliseSourceInfo(sourceInfo);
         dispatch(setSourceUnlocked(source));
+    });
+    archiveManager.on("sourceRemoved", function __handleRemovedSource(sourceInfo) {
+        console.log("Source removed", sourceInfo);
+        const { id } = sourceInfo;
+        dispatch(removeSourceWithID(id));
     });
 }
