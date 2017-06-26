@@ -8,7 +8,8 @@ import {
     isLoading,
     shouldShowNewFilePrompt,
     shouldShowNewNamePrompt,
-    shouldShowPasswordPrompt
+    shouldShowPasswordPrompt,
+    willCreateNewArchive
 } from "../selectors/RemoteExplorerPage.js";
 import { getRemoteConnectionInfo } from "../selectors/RemoteConnectPage.js";
 import {
@@ -16,10 +17,12 @@ import {
     onChangeDirectory,
     onReceiveItems,
     selectArchive,
+    setCreateNew,
     setLoading,
     setNewArchiveName,
     setNewFilename,
     setNewMasterPassword,
+    showNewNamePrompt,
     showNewMasterPasswordPrompt
 } from "../actions/RemoteExplorerPage.js";
 import { createNewArchive, getDirectoryContents } from "../shared/explorerConnection.js";
@@ -60,12 +63,18 @@ function handleNewArchiveName(name, dispatch, getState) {
 
 function handleNewFile(filename, dispatch, getState) {
     dispatch(setNewFilename(filename));
+    dispatch(setCreateNew(true));
     dispatch(showNewMasterPasswordPrompt());
 }
 
 function handleNewMasterPassword(password, dispatch, getState) {
     dispatch(setNewMasterPassword(password));
-    createNewArchive(getState(), dispatch);
+    const state = getState();
+    if (willCreateNewArchive(state)) {
+        createNewArchive(state, dispatch);
+    } else {
+        dispatch(showNewNamePrompt());
+    }
 }
 
 function handlePathSelection(nextItem, isDir, resetScroll, dispatch, getState) {
@@ -85,8 +94,9 @@ function handlePathSelection(nextItem, isDir, resetScroll, dispatch, getState) {
             });
     }
     // file
-    // needs password first
-    // dispatch(selectArchive(nextItem));
+    dispatch(setCreateNew(false));
+    dispatch(selectArchive(nextPath));
+    dispatch(showNewMasterPasswordPrompt());
 }
 
 function removeLastPathItem(pathStr) {

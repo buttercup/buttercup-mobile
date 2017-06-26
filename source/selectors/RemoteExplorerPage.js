@@ -48,3 +48,7 @@ export function shouldShowNewNamePrompt(state) {
 export function shouldShowPasswordPrompt(state) {
     return state[STATE_KEY].showNewPasswordPrompt;
 }
+
+export function willCreateNewArchive(state) {
+    return state[STATE_KEY].createNew;
+}

@@ -23,6 +23,8 @@ export function createNewArchive(state, dispatch) {
                 dispatch(selectArchive(filePath));
                 dispatch(showNewNamePrompt());
             });
+    } else {
+        throw new Error("Failed creating new archive: Missing filename and/or password");
     }
 }
 

@@ -24,6 +24,7 @@ export const REMOTE_EXPLORER_CREATE_NEW_FILENAME =      "remoteExplorer/createNe
 export const REMOTE_EXPLORER_CREATE_NEW_MASTERPASS =    "remoteExplorer/createNewMasterPassword";
 export const REMOTE_EXPLORER_CREATE_NEW_NAME =          "remoteExplorer/createNewName";
 export const REMOTE_EXPLORER_SELECT_ARCHIVE =           "remoteExplorer/selectArchive";
+export const REMOTE_EXPLORER_SET_CREATE_NEW =           "remoteExplorer/setCreateNew";
 export const REMOTE_EXPLORER_SET_CREATING_ARCHIVE =     "remoteExplorer/setCreatingArchive";
 export const REMOTE_EXPLORER_SET_CURRENT_DIR =          "remoteExplorer/setCurrentDir";
 export const REMOTE_EXPLORER_SET_ITEMS =                "remoteExplorer/setItems";
