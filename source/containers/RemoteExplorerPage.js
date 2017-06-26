@@ -5,6 +5,7 @@ import {
     getCurrentItems,
     getCurrentPath,
     getNewArchiveDetails,
+    isAddingArchive,
     isCreatingFile,
     isLoading,
     shouldShowNewFilePrompt,
@@ -18,6 +19,7 @@ import {
     onChangeDirectory,
     onReceiveItems,
     selectArchive,
+    setAddingArchive,
     setCreateNew,
     setLoading,
     setNewArchiveName,
@@ -55,10 +57,16 @@ function addToArchiveManager(state) {
 
 function handleNewArchiveName(name, dispatch, getState) {
     dispatch(setNewArchiveName(name));
+    dispatch(setAddingArchive(true));
     // call to add with new state
     addToArchiveManager({ ...getState(), archiveName: name })
         .then(function __getOuttaHere() {
+            dispatch(setAddingArchive(false));
             Actions.popTo("archives");
+        })
+        .catch(function __handleAddError(err) {
+            dispatch(setAddingArchive(false));
+            throw err;
         });
 }
 
@@ -110,6 +118,7 @@ function removeLastPathItem(pathStr) {
 
 export default connect(
     (state, ownProps) => ({
+        addingArchive:                  isAddingArchive(state),
         creatingFile:                   isCreatingFile(state),
         items:                          getCurrentItems(state),
         loading:                        isLoading(state),

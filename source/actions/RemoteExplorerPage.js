@@ -6,6 +6,7 @@ import {
     REMOTE_EXPLORER_CREATE_NEW_MASTERPASS,
     REMOTE_EXPLORER_CREATE_NEW_NAME,
     REMOTE_EXPLORER_SELECT_ARCHIVE,
+    REMOTE_EXPLORER_SET_ADDING_ARCHIVE,
     REMOTE_EXPLORER_SET_CREATE_NEW,
     REMOTE_EXPLORER_SET_CREATING_ARCHIVE,
     REMOTE_EXPLORER_SET_CURRENT_DIR,
@@ -20,6 +21,7 @@ export const cancelNewPrompt =                  createAction(REMOTE_EXPLORER_CAN
 export const onChangeDirectory =                createAction(REMOTE_EXPLORER_SET_CURRENT_DIR);
 export const onReceiveItems =                   createAction(REMOTE_EXPLORER_SET_ITEMS);
 export const selectArchive =                    createAction(REMOTE_EXPLORER_SELECT_ARCHIVE);
+export const setAddingArchive =                 createAction(REMOTE_EXPLORER_SET_ADDING_ARCHIVE);
 export const setCreateNew =                     createAction(REMOTE_EXPLORER_SET_CREATE_NEW);
 export const setCreatingArchive =               createAction(REMOTE_EXPLORER_SET_CREATING_ARCHIVE);
 export const setLoading =                       createAction(REMOTE_EXPLORER_SET_LOADING);

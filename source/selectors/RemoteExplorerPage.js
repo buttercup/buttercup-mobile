@@ -29,6 +29,10 @@ export function getNewPassword(state) {
     return state[STATE_KEY].newPromptPassword;
 }
 
+export function isAddingArchive(state) {
+    return state[STATE_KEY].adding;
+}
+
 export function isCreatingFile(state) {
     return state[STATE_KEY].creatingFile;
 }

@@ -8,6 +8,7 @@ import {
     REMOTE_EXPLORER_CREATE_NEW_MASTERPASS,
     REMOTE_EXPLORER_CREATE_NEW_NAME,
     REMOTE_EXPLORER_SELECT_ARCHIVE,
+    REMOTE_EXPLORER_SET_ADDING_ARCHIVE,
     REMOTE_EXPLORER_SET_CREATE_NEW,
     REMOTE_EXPLORER_SET_CREATING_ARCHIVE,
     REMOTE_EXPLORER_SET_CURRENT_DIR,
@@ -19,6 +20,7 @@ import {
 } from "../actions/types.js";
 
 const INITIAL = {
+    adding: false,
     createNew: true,
     creatingFile: false,
     items: [],
@@ -107,6 +109,11 @@ export default function remoteExplorerReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 createNew: !!action.payload
+            };
+        case REMOTE_EXPLORER_SET_ADDING_ARCHIVE:
+            return {
+                ...state,
+                adding: !!action.payload
             };
         case ActionConst.POP_TO:
             /* falls-through */

@@ -83,6 +83,12 @@ class RemoteExplorer extends Component {
                     textStyle={{ color: "#FFF" }}
                     overlayColor="rgba(0, 0, 0, 0.75)"
                     />
+                <Spinner
+                    visible={this.props.addingArchive}
+                    textContent="Adding Archive"
+                    textStyle={{ color: "#FFF" }}
+                    overlayColor="rgba(0, 0, 0, 0.75)"
+                    />
             </View>
         );
     }
@@ -105,6 +111,7 @@ class RemoteExplorer extends Component {
 }
 
 RemoteExplorer.propTypes = {
+    addingArchive:              PropTypes.bool.isRequired,
     cancelNewPrompt:            PropTypes.func.isRequired,
     items:                      PropTypes.array.isRequired,
     loading:                    PropTypes.bool.isRequired,
