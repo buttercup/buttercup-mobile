@@ -108,6 +108,8 @@ export default function remoteExplorerReducer(state = INITIAL, action = {}) {
                 ...state,
                 createNew: !!action.payload
             };
+        case ActionConst.POP_TO:
+            /* falls-through */
         case ActionConst.BACK_ACTION:
             /* falls-through */
         case REMOTE_EXPLORER_CLEAR:
