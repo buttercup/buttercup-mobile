@@ -13,7 +13,8 @@ import { getGroupsUnderID } from "../selectors/ArchiveContentsPage.js";
 
 export default connect(
     (state, ownProps) => ({
-        groups:                 getGroupsUnderID(state, ownProps.groupID)
+        groups:                 ownProps.groups || getGroupsUnderID(state, ownProps.groupID),
+        level:                  ownProps.level || 0
     }),
     {
 
