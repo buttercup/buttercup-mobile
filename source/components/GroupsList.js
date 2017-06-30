@@ -1,15 +1,24 @@
 import React, { Component } from "react";
 import Accordion from "react-native-collapsible/Accordion";
 import {
+    Image,
     StyleSheet,
     Text,
     View
 } from "react-native";
 import PropTypes from "prop-types";
 
+const ACCORDION_ITEM_HEIGHT = 48;
+const GROUP_ICON = require("../../resources/images/group-256.png");
+const ICON_SIZE = ACCORDION_ITEM_HEIGHT - 8;
+
 const styles = StyleSheet.create({
     accordionHeaderView: {
-        height: 40,
+        flex: 0,
+        justifyContent: "flex-start",
+        flexDirection: "row",
+        alignItems: "center",
+        height: ACCORDION_ITEM_HEIGHT,
         width: "100%"
     },
     accordionView: {
@@ -18,12 +27,21 @@ const styles = StyleSheet.create({
 });
 
 function renderHeader(section) {
+    const imageLeft = 5 + (20 * this.level);
+    const textLeft = imageLeft + 8;
     const textStyle = {
-        top: 13,
-        left: 5 + (20 * this.level)
+        flex: 1,
+        marginLeft: 8
     };
+    const imageStyle = {
+        flex: 0,
+        marginLeft: imageLeft,
+        width: ICON_SIZE,
+        height: ICON_SIZE
+    }
     return (
         <View style={styles.accordionHeaderView}>
+            <Image style={imageStyle} source={GROUP_ICON} />
             <Text style={textStyle}>{section.title}</Text>
         </View>
     );
