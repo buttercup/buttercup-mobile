@@ -8,6 +8,14 @@ import {
     View
 } from "react-native";
 import PropTypes from "prop-types";
+import { Button } from "react-native-elements";
+import {
+    Card,
+    // CardImage,
+    CardTitle,
+    CardContent,
+    CardAction
+} from "react-native-card-view";
 
 const ACCORDION_ITEM_HEIGHT = 48;
 const ENTRY_ICON = require("../../resources/images/entry-256.png");
@@ -24,6 +32,50 @@ const styles = StyleSheet.create({
         width: "100%"
     }
 });
+
+function renderEntry(entry) {
+    const {
+        title
+    } = entry.properties;
+    const dict = [
+        ["Username", entry.properties.username],
+        ["Password", entry.properties.password],
+        ...Object.keys(entry.meta || {}).map(key => [
+            key, entry.meta[key]
+        ])
+    ];
+    return (
+        <Card style={{ width: "100%" }}>
+            <CardContent style={{ width: "100%" }}>
+                {dict.map(([key, value], index) =>
+                    <View
+                        key={key}
+                        style={{
+                            width: "100%",
+                            height: 32,
+                            marginTop: (index === 0 ? 0 : 10)
+                        }}
+                        >
+                            <Text style={{ fontSize: 14, color: "#444" }}>{key}</Text>
+                            <Text style={{ fontSize: 12 }}>{value}</Text>
+                    </View>
+                )}
+            </CardContent>
+            <CardAction>
+                <Button
+                    title="Edit"
+                    icon={{ name: "create" }}
+                    backgroundColor="rgb(0, 183, 172)"
+                    />
+                <Button
+                    title="Copy"
+                    icon={{ name: "assignment" }}
+                    backgroundColor="rgb(0, 183, 172)"
+                    />
+            </CardAction>
+        </Card>
+    );
+}
 
 function renderHeader(section) {
     const imageLeft = 5 + (20 * this.level);
@@ -52,14 +104,14 @@ function renderHeader(section) {
 function renderSection(section) {
     const GroupsListContainer = require("../containers/GroupsList.js").default;
     return (
-        <View>
+        <View style={{ width: "100%" }}>
             {section.type === "group" ?
                 <GroupsListContainer
                     groups={section.content.groups}
                     entries={section.content.entries}
                     level={this.level + 1}
                     /> :
-                <Text>Entry here</Text>
+                renderEntry(section.content)
             }
         </View>
     );
