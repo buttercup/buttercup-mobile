@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Accordion from "react-native-collapsible/Accordion";
 import {
     Image,
+    ScrollView,
     StyleSheet,
     Text,
     View
@@ -9,6 +10,7 @@ import {
 import PropTypes from "prop-types";
 
 const ACCORDION_ITEM_HEIGHT = 48;
+const ENTRY_ICON = require("../../resources/images/entry-256.png");
 const GROUP_ICON = require("../../resources/images/group-256.png");
 const ICON_SIZE = ACCORDION_ITEM_HEIGHT - 8;
 
@@ -20,10 +22,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: ACCORDION_ITEM_HEIGHT,
         width: "100%"
-    },
-    accordionView: {
-        width: "100%"
     }
+    // accordionView: {
+    //     width: "100%"
+    // }
 });
 
 function renderHeader(section) {
@@ -41,7 +43,10 @@ function renderHeader(section) {
     }
     return (
         <View style={styles.accordionHeaderView}>
-            <Image style={imageStyle} source={GROUP_ICON} />
+            <Image
+                style={imageStyle}
+                source={section.type === "group" ? GROUP_ICON : ENTRY_ICON}
+                />
             <Text style={textStyle}>{section.title}</Text>
         </View>
     );
@@ -51,10 +56,14 @@ function renderSection(section) {
     const GroupsListContainer = require("../containers/GroupsList.js").default;
     return (
         <View>
-            <GroupsListContainer
-                groups={section.content.groups}
-                level={this.level + 1}
-                />
+            {section.type === "group" ?
+                <GroupsListContainer
+                    groups={section.content.groups}
+                    entries={section.content.entries}
+                    level={this.level + 1}
+                    /> :
+                <Text>Entry here</Text>
+            }
         </View>
     );
 }
@@ -62,23 +71,40 @@ function renderSection(section) {
 class GroupsList extends Component {
 
     getSections() {
-        return this.props.groups.map(group => ({
-            title: group.title,
-            content: group
-        }));
+        return [
+            ...this.props.groups.map(group => ({
+                title: group.title,
+                content: group,
+                type: "group"
+            })),
+            ...this.props.entries.map(entry => ({
+                title: entry.properties.title,
+                content: entry,
+                type: "entry"
+            }))
+        ];
     }
 
     render() {
         // console.log("GROUPSLIST", this.props);
         const { level } = this.props;
+        const accordionStyles = {
+            width: "100%"
+        };
+        if (level === 0) {
+            accordionStyles.height = "100%";
+        }
+        const RootElement = (level === 0) ?
+            ScrollView :
+            View;
         return (
-            <View style={styles.accordionView}>
+            <RootElement style={accordionStyles}>
                 <Accordion
                     sections={this.getSections()}
                     renderHeader={renderHeader.bind({ level })}
                     renderContent={renderSection.bind({ level })}
                     />
-            </View>
+            </RootElement>
         );
     }
 
