@@ -23,9 +23,6 @@ const styles = StyleSheet.create({
         height: ACCORDION_ITEM_HEIGHT,
         width: "100%"
     }
-    // accordionView: {
-    //     width: "100%"
-    // }
 });
 
 function renderHeader(section) {
@@ -86,11 +83,8 @@ class GroupsList extends Component {
     }
 
     render() {
-        // console.log("GROUPSLIST", this.props);
         const { level } = this.props;
-        const accordionStyles = {
-            width: "100%"
-        };
+        const accordionStyles = { width: "100%" };
         if (level === 0) {
             accordionStyles.height = "100%";
         }
