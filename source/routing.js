@@ -6,6 +6,7 @@ import AddArchivePage from "./containers/AddArchivePage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
+import EntryPage from "./containers/EntryPage.js";
 import { showNewPrompt } from "./actions/RemoteExplorerPage.js";
 
 import { dispatch } from "./store.js";
@@ -50,6 +51,12 @@ export function getRouter() {
                 <Scene
                     key="archiveContents"
                     component={ArchiveContentsPage}
+                    hideNavBar={false}
+                    title=""
+                    />
+                <Scene
+                    key="entry"
+                    component={EntryPage}
                     hideNavBar={false}
                     title=""
                     />
