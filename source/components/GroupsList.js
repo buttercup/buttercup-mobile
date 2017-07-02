@@ -5,6 +5,7 @@ import {
     ScrollView,
     StyleSheet,
     Text,
+    TouchableHighlight,
     View
 } from "react-native";
 import PropTypes from "prop-types";
@@ -39,7 +40,7 @@ function renderItem(section) {
         width: ICON_SIZE,
         height: ICON_SIZE
     }
-    return (
+    const itemElement = (
         <View style={styles.accordionHeaderView} key={section.id}>
             <Image
                 style={imageStyle}
@@ -48,6 +49,15 @@ function renderItem(section) {
             <Text style={textStyle}>{section.title}</Text>
         </View>
     );
+    return section.type === "group" ?
+        itemElement :
+        <TouchableHighlight
+            key={section.id}
+            onPress={() => this.onPress(section.id)}
+            underlayColor="white"
+            >
+                {itemElement}
+        </TouchableHighlight>
 }
 
 function renderSection(section) {
@@ -100,7 +110,10 @@ class GroupsList extends Component {
                         renderHeader={renderItem.bind({ level })}
                         renderContent={renderSection.bind({ level })}
                         />
-                    {this.getEntrySections().map(section => renderItem.call({ level }, section))}
+                    {this.getEntrySections().map(section => renderItem.call({
+                        level,
+                        onPress: id => this.props.loadEntry(id)
+                    }, section))}
                 </View>
             </RootElement>
         );
@@ -110,7 +123,8 @@ class GroupsList extends Component {
 
 GroupsList.propTypes = {
     groups:             PropTypes.arrayOf(PropTypes.object).isRequired,
-    level:              PropTypes.number.isRequired
+    level:              PropTypes.number.isRequired,
+    loadEntry:          PropTypes.func.isRequired
 };
 
 export default GroupsList;
