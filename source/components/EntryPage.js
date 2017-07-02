@@ -5,6 +5,19 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { Actions } from "react-native-router-flux";
+import {
+    Cell,
+    CellGroup,
+    // CellInput,
+    // TagsInput,
+    // SelectList,
+    // CellSheet,
+    // ActionItem,
+    // CellDatePicker,
+    // CellListProvider,
+    // CellListItem,
+    // CellSlider
+} from "react-native-cell-components";
 
 const styles = StyleSheet.create({
     container: {
@@ -12,6 +25,28 @@ const styles = StyleSheet.create({
         width: "100%"
     }
 });
+
+function displayValueForProp(propName, value) {
+    switch(propName) {
+        case "password":
+            return "••••••••••";
+        default:
+            return value;
+    }
+}
+
+function iconLabelForProp(propName) {
+    switch(propName) {
+        case "username":
+            return "face";
+        case "password":
+            return "fingerprint";
+        case "title":
+            return "layers";
+        default:
+            return "label";
+    }
+}
 
 class EntryPage extends Component {
 
@@ -30,7 +65,16 @@ class EntryPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-
+                <CellGroup header="Properties">
+                    {Object.keys(this.props.properties).map(prop =>
+                        <Cell
+                            key={prop}
+                            title={prop}
+                            value={displayValueForProp(prop, this.props.properties[prop])}
+                            icon={iconLabelForProp(prop)}
+                            />
+                    )}
+                </CellGroup>
             </View>
         );
     }

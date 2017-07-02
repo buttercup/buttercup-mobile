@@ -1,5 +1,9 @@
 const STATE_KEY = "entry";
 
+export function getEntryProperties(state) {
+    return state[STATE_KEY].properties;
+}
+
 export function getEntryTitle(state) {
-    return state[STATE_KEY].properties.title;
+    return getEntryProperties(state).title;
 }
