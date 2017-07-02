@@ -36,13 +36,15 @@ function displayValueForProp(propName, value) {
 }
 
 function iconLabelForProp(propName) {
-    switch(propName) {
+    switch(propName.toLowerCase()) {
         case "username":
             return "face";
         case "password":
             return "fingerprint";
         case "title":
             return "layers";
+        case "url":
+            return "laptop";
         default:
             return "label";
     }
@@ -75,6 +77,16 @@ class EntryPage extends Component {
                             />
                     )}
                 </CellGroup>
+                <CellGroup header="Meta">
+                    {Object.keys(this.props.meta).map(prop =>
+                        <Cell
+                            key={prop}
+                            title={prop}
+                            value={displayValueForProp(prop, this.props.meta[prop])}
+                            icon={iconLabelForProp(prop)}
+                            />
+                    )}
+                </CellGroup>
             </View>
         );
     }
@@ -82,6 +94,8 @@ class EntryPage extends Component {
 }
 
 EntryPage.propTypes = {
+    meta:               PropTypes.object.isRequired,
+    properties:         PropTypes.object.isRequired,
     title:              PropTypes.string.isRequired
 };
 

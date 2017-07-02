@@ -7,3 +7,7 @@ export function getEntryProperties(state) {
 export function getEntryTitle(state) {
     return getEntryProperties(state).title;
 }
+
+export function getMetaItems(state) {
+    return state[STATE_KEY].meta || {};
+}
