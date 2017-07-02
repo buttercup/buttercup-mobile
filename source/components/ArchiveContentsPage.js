@@ -28,7 +28,7 @@ class ArchiveContentsPage extends Component {
     componentDidMount() {
         if (!this.hasUpdatedTitle && this.props.title && this.props.title.length > 0) {
             this.hasUpdatedTitle = true;
-            Actions.refresh({ title: this.props.title });
+            Actions.refresh({ title: `📂 ${this.props.title}` });
         }
     }
 
