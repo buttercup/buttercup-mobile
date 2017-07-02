@@ -19,6 +19,14 @@ import {
     updateCurrentArchive
 } from "../shared/archiveContents.js";
 
+function openArchive(dispatch, sourceID) {
+    dispatch(setSelectedSource(sourceID));
+    // populate groups
+    updateCurrentArchive();
+    // run action
+    Actions.archiveContents();
+}
+
 export default connect(
     (state, ownProps) => ({
         archives:                   getArchivesDisplayList(state),
@@ -27,12 +35,8 @@ export default connect(
     }),
     {
         removeArchive:              sourceID => () => removeSource(sourceID),
-        selectArchiveSource:        id => dispatch => {
-            dispatch(setSelectedSource(id));
-            // populate groups
-            updateCurrentArchive();
-            // run action
-            Actions.archiveContents();
+        selectArchiveSource:        sourceID => dispatch => {
+            openArchive(dispatch, sourceID);
         },
         setIsUnlocking,
         showUnlockPasswordPrompt,
@@ -40,7 +44,10 @@ export default connect(
             dispatch(showUnlockPasswordPrompt(false));
             unlockSource(sourceID, password)
                 .then(() => {
+                    // success!
                     dispatch(setIsUnlocking(false));
+                    // open source
+                    openArchive(dispatch, sourceID);
                 })
                 .catch(err => {
                     dispatch(setIsUnlocking(false));
