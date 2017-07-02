@@ -14,6 +14,7 @@ import {
     setSelectedSource
 } from "../actions/ArchiveContentsPage.js";
 import {
+    lockSource,
     removeSource,
     unlockSource,
     updateCurrentArchive
@@ -34,6 +35,15 @@ export default connect(
         showUnlockPrompt:           shouldShowUnlockPasswordPrompt(state)
     }),
     {
+        lockArchive:                sourceID => dispatch => {
+            lockSource(sourceID)
+                .then(() => {
+
+                })
+                .catch(err => {
+
+                })
+        },
         removeArchive:              sourceID => () => removeSource(sourceID),
         selectArchiveSource:        sourceID => dispatch => {
             openArchive(dispatch, sourceID);

@@ -1,6 +1,7 @@
 import {
     ARCHIVES_ADD_LOCKED_SOURCE,
     ARCHIVES_ADD_UNLOCKED_SOURCE,
+    ARCHIVES_LOCK_SOURCE,
     ARCHIVES_REMOVE_SOURCE,
     ARCHIVES_TOGGLE_IS_UNLOCKING,
     ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT,
@@ -44,7 +45,7 @@ export default function archivesReducer(state = INITIAL, action = {}) {
                 ...state,
                 showUnlockPasswordPrompt: !!action.payload
             };
-        case ARCHIVES_UNLOCK_SOURCE:
+        case ARCHIVES_UNLOCK_SOURCE: {
             const replacementSource = action.payload;
             const existingArchives = state.archives.filter(source => source.id !== replacementSource.id);
             return {
@@ -54,6 +55,18 @@ export default function archivesReducer(state = INITIAL, action = {}) {
                     { ...replacementSource, status: UNLOCKED }
                 ]
             };
+        }
+        case ARCHIVES_LOCK_SOURCE: {
+            const replacementSource = action.payload;
+            const existingArchives = state.archives.filter(source => source.id !== replacementSource.id);
+            return {
+                ...state,
+                archives: [
+                    ...existingArchives,
+                    { ...replacementSource, status: LOCKED }
+                ]
+            };
+        }
         case ARCHIVES_REMOVE_SOURCE:
             return {
                 ...state,

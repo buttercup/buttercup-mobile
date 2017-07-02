@@ -82,6 +82,14 @@ class ArchivesList extends Component {
         this.lastSelectedSourceID = null;
     }
 
+    handleArchiveLockRequest(sourceID, status) {
+        if (status === "unlocked") {
+            this.props.lockArchive(sourceID);
+        } else {
+            alert("Cannot lock archive that is not unlocked");
+        }
+    }
+
     handleArchiveSelection(sourceID, status) {
         if (status === "unlocked") {
             this.props.selectArchiveSource(sourceID);
@@ -154,6 +162,7 @@ class ArchivesList extends Component {
                     >
                         <TouchableHighlight
                             onPress={() => this.handleArchiveSelection(archiveInfo.id, archiveInfo.status)}
+                            onLongPress={() => this.handleArchiveLockRequest(archiveInfo.id, archiveInfo.status)}
                             underlayColor="white"
                             >
                                 <View style={styles.itemView}>
@@ -174,6 +183,7 @@ class ArchivesList extends Component {
 ArchivesList.propTypes = {
     archives:                   PropTypes.arrayOf(PropTypes.object),
     isUnlocking:                PropTypes.bool.isRequired,
+    lockArchive:                PropTypes.func.isRequired,
     removeArchive:              PropTypes.func.isRequired,
     selectArchiveSource:        PropTypes.func.isRequired,
     showUnlockPrompt:           PropTypes.bool.isRequired,

@@ -19,6 +19,11 @@ export function loadEntry(sourceID, entryID) {
     }));
 }
 
+export function lockSource(sourceID) {
+    const archiveManager = getSharedArchiveManager();
+    return archiveManager.lock(sourceID);
+}
+
 export function removeSource(sourceID) {
     const archiveManager = getSharedArchiveManager();
     return archiveManager.remove(sourceID);
