@@ -18,6 +18,7 @@
     "react-native-elements": "^0.12.2",
     "react-native-loading-spinner-overlay": "^0.5.0",
     "react-native-navbar": "^1.7.1",
+    "react-native-notification": "^2.0.0",
     "react-native-prompt": "^1.0.0",
     "react-native-router-flux": "^3.39.1",
     "react-native-swipeout": "^2.1.1",

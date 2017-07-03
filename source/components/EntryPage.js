@@ -5,6 +5,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { Actions } from "react-native-router-flux";
+import Notification from "react-native-notification";
 import {
     Cell,
     CellGroup,
@@ -64,6 +65,10 @@ class EntryPage extends Component {
         }
     }
 
+    handleCellPress(key, value) {
+        this.props.copyToClipboard(key, value);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -74,6 +79,7 @@ class EntryPage extends Component {
                             title={prop}
                             value={displayValueForProp(prop, this.props.properties[prop])}
                             icon={iconLabelForProp(prop)}
+                            onPress={() => this.handleCellPress(prop, this.props.properties[prop])}
                             />
                     )}
                 </CellGroup>
@@ -84,9 +90,13 @@ class EntryPage extends Component {
                             title={prop}
                             value={displayValueForProp(prop, this.props.meta[prop])}
                             icon={iconLabelForProp(prop)}
+                            onPress={() => this.handleCellPress(prop, this.props.meta[prop])}
                             />
                     )}
                 </CellGroup>
+                <Notification
+                    message={this.props.entryNotificationMessage}
+                    />
             </View>
         );
     }
@@ -94,9 +104,10 @@ class EntryPage extends Component {
 }
 
 EntryPage.propTypes = {
-    meta:               PropTypes.object.isRequired,
-    properties:         PropTypes.object.isRequired,
-    title:              PropTypes.string.isRequired
+    copyToClipboard:        PropTypes.func.isRequired,
+    meta:                   PropTypes.object.isRequired,
+    properties:             PropTypes.object.isRequired,
+    title:                  PropTypes.string.isRequired
 };
 
 export default EntryPage;

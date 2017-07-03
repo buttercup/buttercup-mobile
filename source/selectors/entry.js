@@ -11,3 +11,7 @@ export function getEntryTitle(state) {
 export function getMetaItems(state) {
     return state[STATE_KEY].meta || {};
 }
+
+export function getNotification(state) {
+    return state[STATE_KEY].notification;
+}

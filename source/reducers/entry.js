@@ -1,5 +1,6 @@
 import {
     ENTRY_LOAD,
+    ENTRY_NOTIFICATION_SET,
     ENTRY_UNLOAD
 } from "../actions/types.js";
 
@@ -8,7 +9,8 @@ const INITIAL = {
     id: null,
     properties: {},
     meta: {},
-    sourceID: null
+    sourceID: null,
+    notification: ""
 };
 
 export default function entryReducer(state = INITIAL, action = {}) {
@@ -24,6 +26,11 @@ export default function entryReducer(state = INITIAL, action = {}) {
         case ENTRY_UNLOAD:
             return {
                 ...INITIAL
+            };
+        case ENTRY_NOTIFICATION_SET:
+            return {
+                ...state,
+                notification: action.payload
             };
 
         default:
