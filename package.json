@@ -16,6 +16,7 @@
     "react-native-cell-components": "^0.2.1",
     "react-native-collapsible": "^0.8.0",
     "react-native-elements": "^0.12.2",
+    "react-native-exception-handler": "^1.1.0",
     "react-native-loading-spinner-overlay": "^0.5.0",
     "react-native-navbar": "^1.7.1",
     "react-native-notification": "^2.0.0",

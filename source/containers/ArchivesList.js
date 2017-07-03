@@ -19,6 +19,7 @@ import {
     unlockSource,
     updateCurrentArchive
 } from "../shared/archiveContents.js";
+import { handleError } from "../global/exceptions";
 
 function openArchive(dispatch, sourceID) {
     dispatch(setSelectedSource(sourceID));
@@ -61,6 +62,7 @@ export default connect(
                 })
                 .catch(err => {
                     dispatch(setIsUnlocking(false));
+                    handleError("Failed unlocking archive", err);
                 });
         }
     }
