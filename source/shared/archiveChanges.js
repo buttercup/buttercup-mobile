@@ -3,6 +3,7 @@ import {
     addLockedSource,
     addUnlockedSource,
     removeSourceWithID,
+    setSourceLocked,
     setSourceUnlocked
 } from "../actions/archives.js";
 
@@ -38,6 +39,11 @@ export function linkArchiveManagerToStore(store) {
         console.log("Source unlocked", sourceInfo);
         const source = normaliseSourceInfo(sourceInfo);
         dispatch(setSourceUnlocked(source));
+    });
+    archiveManager.on("sourceLocked", function __handleLockedSource(sourceInfo) {
+        console.log("Source locked", sourceInfo);
+        const source = normaliseSourceInfo(sourceInfo);
+        dispatch(setSourceLocked(source));
     });
     archiveManager.on("sourceRemoved", function __handleRemovedSource(sourceInfo) {
         console.log("Source removed", sourceInfo);

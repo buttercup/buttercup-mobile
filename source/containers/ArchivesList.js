@@ -14,10 +14,20 @@ import {
     setSelectedSource
 } from "../actions/ArchiveContentsPage.js";
 import {
+    lockSource,
     removeSource,
     unlockSource,
     updateCurrentArchive
 } from "../shared/archiveContents.js";
+import { handleError } from "../global/exceptions";
+
+function openArchive(dispatch, sourceID) {
+    dispatch(setSelectedSource(sourceID));
+    // populate groups
+    updateCurrentArchive();
+    // run action
+    Actions.archiveContents();
+}
 
 export default connect(
     (state, ownProps) => ({
@@ -26,13 +36,18 @@ export default connect(
         showUnlockPrompt:           shouldShowUnlockPasswordPrompt(state)
     }),
     {
+        lockArchive:                sourceID => dispatch => {
+            lockSource(sourceID)
+                .then(() => {
+
+                })
+                .catch(err => {
+
+                })
+        },
         removeArchive:              sourceID => () => removeSource(sourceID),
-        selectArchiveSource:        id => dispatch => {
-            dispatch(setSelectedSource(id));
-            // populate groups
-            updateCurrentArchive();
-            // run action
-            Actions.archiveContents();
+        selectArchiveSource:        sourceID => dispatch => {
+            openArchive(dispatch, sourceID);
         },
         setIsUnlocking,
         showUnlockPasswordPrompt,
@@ -40,10 +55,14 @@ export default connect(
             dispatch(showUnlockPasswordPrompt(false));
             unlockSource(sourceID, password)
                 .then(() => {
+                    // success!
                     dispatch(setIsUnlocking(false));
+                    // open source
+                    openArchive(dispatch, sourceID);
                 })
                 .catch(err => {
                     dispatch(setIsUnlocking(false));
+                    handleError("Failed unlocking archive", err);
                 });
         }
     }

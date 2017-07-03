@@ -15,7 +15,6 @@ let __sharedManager = null;
 
 export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
     const manager = getSharedArchiveManager();
-    console.log(sourceCreds, archiveCreds);
     return manager.addSource(
         name,
         sourceCreds,
