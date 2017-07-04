@@ -19,7 +19,7 @@ import {
     unlockSource,
     updateCurrentArchive
 } from "../shared/archiveContents.js";
-import { handleError } from "../global/exceptions";
+import { handleError } from "../global/exceptions.js";
 
 function openArchive(dispatch, sourceID) {
     dispatch(setSelectedSource(sourceID));

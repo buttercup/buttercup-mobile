@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { Actions } from "react-native-router-flux";
 import RemoteConnectPage from "../components/RemoteConnectPage.js";
 import {
     getArchiveType,
@@ -8,6 +9,7 @@ import {
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
 import {
+    disconnect,
     onChangePassword,
     onChangeURL,
     onChangeUsername,
@@ -15,7 +17,7 @@ import {
     onConnectPressed
 } from "../actions/RemoteConnectPage.js";
 import { createRemoteConnection } from "../shared/explorerConnection.js";
-import { Actions } from "react-native-router-flux";
+import { handleError } from "../global/exceptions.js";
 
 function handleConnectionCreation(dispatch, getState) {
     return createRemoteConnection(getRemoteConnectionInfo(getState()))
@@ -24,7 +26,8 @@ function handleConnectionCreation(dispatch, getState) {
             Actions.remoteExplorer();
         })
         .catch(function __handleError(err) {
-            throw err; // @todo fix
+            dispatch(disconnect());
+            handleError("Connection failed", err);
         });
 }
 

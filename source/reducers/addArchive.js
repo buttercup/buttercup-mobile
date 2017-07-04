@@ -6,6 +6,7 @@ import {
     ADD_ARCHIVE_SET_ARCHIVE_TYPE,
     ADD_ARCHIVE_SET_CONNECTED,
     ADD_ARCHIVE_SET_CONNECTING,
+    ADD_ARCHIVE_SET_DISCONNECTED,
     ADD_ARCHIVE_SET_PASSWORD,
     ADD_ARCHIVE_SET_URL,
     ADD_ARCHIVE_SET_USERNAME
@@ -35,6 +36,11 @@ export default function addArchiveReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 connection: "connected"
+            };
+        case ADD_ARCHIVE_SET_DISCONNECTED:
+            return {
+                ...state,
+                connection: "none"
             };
         case ADD_ARCHIVE_SET_PASSWORD:
             return {
