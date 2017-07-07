@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@buttercup/mobile-compat": "~0.6.0",
-    "buttercup-web": "~0.32.2",
+    "@yfuks/react-native-action-sheet": "0.0.3",
+    "buttercup-web": "~0.33.1",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",

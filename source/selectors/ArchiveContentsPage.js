@@ -1,3 +1,5 @@
+import { getSharedArchiveManager } from "../library/buttercup.js";
+
 const STATE_KEY = "archiveContents";
 const ARCHIVES_STATE_KEY = "archives";
 
@@ -28,8 +30,9 @@ export function getGroupsUnderID(state, id) {
 }
 
 export function getSelectedArchive(state) {
-    const source = getSelectedSource(state);
-    return source.workspace.primary.archive;
+    const id = getSelectedSourceID(state);
+    const archiveManager = getSharedArchiveManager();
+    return archiveManager.sources[archiveManager.indexOfSource(id)].workspace.primary.archive;
 }
 
 export function getSelectedSourceName(state) {

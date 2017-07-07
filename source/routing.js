@@ -8,6 +8,7 @@ import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
 import EntryPage from "./containers/EntryPage.js";
 import { showNewPrompt } from "./actions/RemoteExplorerPage.js";
+import { showArchivesPageRightSheet } from "./shared/sheets.js";
 
 import { dispatch } from "./store.js";
 
@@ -24,7 +25,7 @@ export function getRouter() {
                     hideNavBar={false}
                     title="Buttercup"
                     rightTitle="🔐"
-                    onRight={() => Actions.addArchive()}
+                    onRight={showArchivesPageRightSheet}
                     leftTitle="⚙️"
                     onLeft={() => alert("Settings - WIP")}
                     />
