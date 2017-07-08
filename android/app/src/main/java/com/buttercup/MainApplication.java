@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.actionsheet.ActionSheetPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -27,8 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new ActionSheetPackage(),
-            new VectorIconsPackage(),
-            new RNFSPackage()
+            new VectorIconsPackage()
       );
     }
   };

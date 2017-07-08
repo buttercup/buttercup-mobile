@@ -12,7 +12,7 @@ export default class ButtercupShared extends Component {
     constructor(...args) {
         super(...args);
         // Setup native key derivation immediately
-        patchKeyDerivation();
+        // patchKeyDerivation();
         // Use native `fetch` for requests
         createWebDAVAdapter.setFetchMethod(fetch);
         // Initialise the manager
