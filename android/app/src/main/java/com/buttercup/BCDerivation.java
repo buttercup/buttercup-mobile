@@ -16,10 +16,8 @@ public class BCDerivation {
     public static String deriveKeyFromPassword(String password, String salt, int rounds)
         throws InvalidKeySpecException, NoSuchAlgorithmException
     {
-//        byte[] passwordData = password.getBytes(StandardCharsets.UTF_8);
         char[] passwordData = password.toCharArray();
         byte[] saltData = salt.getBytes(StandardCharsets.UTF_8);
-//        char[] key = new char[64];
         byte[] key = pbkdf2(passwordData, saltData, rounds, 64);
         return hexStringFromData(key);
     }

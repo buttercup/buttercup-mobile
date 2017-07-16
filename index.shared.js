@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { createWebDAVAdapter } from "@buttercup/mobile-compat";
+import * as Buttercup from "buttercup-web";
 import { getRouter } from "./source/routing.js";
 import { patchKeyDerivation } from "./source/library/buttercup.js";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";
@@ -15,6 +16,7 @@ export default class ButtercupShared extends Component {
         patchKeyDerivation();
         // Use native `fetch` for requests
         createWebDAVAdapter.setFetchMethod(fetch);
+        Buttercup.vendor.webdavFS.setFetchMethod(fetch);
         // Initialise the manager
         getSharedArchiveManager().rehydrate();
     }
