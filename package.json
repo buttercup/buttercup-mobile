@@ -41,6 +41,9 @@
     "preset": "react-native",
     "setupFiles": [
       "./scripts/jestInit.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|react-native-action-sheet)/"
     ]
   }
 }
