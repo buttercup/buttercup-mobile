@@ -52,6 +52,7 @@ export function createRemoteCredentials(archiveType, options) {
 export function deriveKeyNatively(password, salt, rounds) {
     const callBridge = (new Promise(function(resolve, reject) {
         CryptoBridge.deriveKeyFromPassword(password, salt, rounds, (err, result) => {
+            console.log("HERE IT IS", err, result);
             if (err) {
                 return reject(err);
             }

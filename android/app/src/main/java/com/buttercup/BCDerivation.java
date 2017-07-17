@@ -6,28 +6,35 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.SecretKeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import org.spongycastle.crypto.PBEParametersGenerator;
+import org.spongycastle.crypto.generators.PKCS5S2ParametersGenerator;
+import org.spongycastle.crypto.digests.SHA256Digest;
+import org.spongycastle.crypto.params.KeyParameter;
 
 public class BCDerivation {
 
     private final static char[] HEX_CHARS = "0123456789ABCDEF".toCharArray();
-    private final static int IV_BYTE_LEN = 16;
     private final static String PBKDF2_ALGORITHM = "PBKDF2withHmacSHA256";
 
     public static String deriveKeyFromPassword(String password, String salt, int rounds)
-        throws InvalidKeySpecException, NoSuchAlgorithmException
+//        throws InvalidKeySpecException, NoSuchAlgorithmException
     {
         char[] passwordData = password.toCharArray();
         byte[] saltData = salt.getBytes(StandardCharsets.UTF_8);
-        byte[] key = pbkdf2(passwordData, saltData, rounds, 64);
-        return hexStringFromData(key);
+//        byte[] key = pbkdf2(passwordData, saltData, rounds, 64);
+//        return hexStringFromData(key);
+        PKCS5S2ParametersGenerator generator = new PKCS5S2ParametersGenerator(new SHA256Digest());
+        generator.init(PBEParametersGenerator.PKCS5PasswordToUTF8Bytes(passwordData), saltData, rounds);
+        KeyParameter key = (KeyParameter)generator.generateDerivedMacParameters(64 * 8);
+        return hexStringFromData(key.getKey());
     }
 
-    public static String generateSaltWithLength(int length) {
-        Random rand = new Random();
-        byte[] buffer = new byte[length];
-        rand.nextBytes(buffer);
-        return hexStringFromData(buffer);
-    }
+//    public static String generateSaltWithLength(int length) {
+//        Random rand = new Random();
+//        byte[] buffer = new byte[length];
+//        rand.nextBytes(buffer);
+//        return hexStringFromData(buffer);
+//    }
 
     private static String hexStringFromData(byte[] buffer) {
         char[] hexString = new char[buffer.length * 2];
