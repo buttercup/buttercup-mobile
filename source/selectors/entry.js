@@ -5,11 +5,12 @@ export function getEntryProperties(state) {
 }
 
 export function getEntryTitle(state) {
-    return getEntryProperties(state).title;
+    const titleField = getEntryProperties(state).find(item => item.property === "title");
+    return titleField && titleField.value || "";
 }
 
 export function getMetaItems(state) {
-    return state[STATE_KEY].meta || {};
+    return state[STATE_KEY].meta || [];
 }
 
 export function getNotification(state) {

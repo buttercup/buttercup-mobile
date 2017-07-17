@@ -73,24 +73,24 @@ class EntryPage extends Component {
         return (
             <View style={styles.container}>
                 <CellGroup header="Properties">
-                    {Object.keys(this.props.properties).map(prop =>
+                    {this.props.properties.map(field =>
                         <Cell
-                            key={prop}
-                            title={prop}
-                            value={displayValueForProp(prop, this.props.properties[prop])}
-                            icon={iconLabelForProp(prop)}
-                            onPress={() => this.handleCellPress(prop, this.props.properties[prop])}
+                            key={field.property}
+                            title={field.title}
+                            value={displayValueForProp(field.property, field.value)}
+                            icon={iconLabelForProp(field.property)}
+                            onPress={() => this.handleCellPress(field.title, field.value)}
                             />
                     )}
                 </CellGroup>
                 <CellGroup header="Meta">
-                    {Object.keys(this.props.meta).map(prop =>
+                    {this.props.meta.map(field =>
                         <Cell
-                            key={prop}
-                            title={prop}
-                            value={displayValueForProp(prop, this.props.meta[prop])}
-                            icon={iconLabelForProp(prop)}
-                            onPress={() => this.handleCellPress(prop, this.props.meta[prop])}
+                            key={field.property}
+                            title={field.title}
+                            value={displayValueForProp(field.property, field.value)}
+                            icon={iconLabelForProp(field.property)}
+                            onPress={() => this.handleCellPress(field.title, field.value)}
                             />
                     )}
                 </CellGroup>
@@ -105,8 +105,8 @@ class EntryPage extends Component {
 
 EntryPage.propTypes = {
     copyToClipboard:        PropTypes.func.isRequired,
-    meta:                   PropTypes.object.isRequired,
-    properties:             PropTypes.object.isRequired,
+    meta:                   PropTypes.arrayOf(PropTypes.object).isRequired,
+    properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
     title:                  PropTypes.string.isRequired
 };
 

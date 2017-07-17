@@ -16,12 +16,13 @@ const INITIAL = {
 export default function entryReducer(state = INITIAL, action = {}) {
     switch (action.type) {
         case ENTRY_LOAD:
-            const entry = action.payload;
+            const entryData = action.payload;
             return {
-                id: entry.id,
-                properties: entry.properties,
-                meta: entry.meta,
-                sourceID: entry.sourceID
+                ...state,
+                id: entryData.id,
+                properties: entryData.fields.filter(f => f.field === "property"),
+                meta: entryData.fields.filter(f => f.field === "meta"),
+                sourceID: entryData.sourceID
             };
         case ENTRY_UNLOAD:
             return {

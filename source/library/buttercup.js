@@ -4,6 +4,7 @@ import {
     ArchiveManager,
     TextDatasource,
     createCredentials,
+    entryFacade,
     Web
 } from "buttercup-web";
 import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
@@ -22,12 +23,20 @@ export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
     );
 }
 
+export function consumeEntryFacade(entry, facade) {
+    entryFacade.consumeEntryFacade(entry, facade);
+}
+
 export function createEmptyArchive() {
     return Archive.createWithDefaults();
 }
 
 export function createArchiveCredentials(password) {
     return createCredentials.fromPassword(password);
+}
+
+export function createEntryFacade(entry) {
+    return entryFacade.createEntryFacade(entry);
 }
 
 export function createRemoteCredentials(archiveType, options) {
@@ -43,7 +52,6 @@ export function createRemoteCredentials(archiveType, options) {
             }));
             return credentials;
         }
-
         default:
             throw new Error(`Unrecognised archive type: ${archiveType}`);
     }
