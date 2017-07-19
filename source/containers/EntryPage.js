@@ -1,5 +1,6 @@
 import { Clipboard } from "react-native";
 import { connect } from "react-redux";
+import { Actions } from "react-native-router-flux";
 import EntryPage from "../components/EntryPage.js";
 import { setNotification } from "../actions/entry.js"
 import {
@@ -21,8 +22,12 @@ export default connect(
             Clipboard.setString(value);
             dispatch(setNotification(`Copied '${name}' to clipboard...`));
             setTimeout(() => {
+                // clear notification
                 dispatch(setNotification(""));
             }, 1250);
+        },
+        onAddMeta:                  () => () => {
+            Actions.addMeta();
         }
     }
 )(EntryPage);

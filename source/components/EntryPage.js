@@ -9,7 +9,7 @@ import Notification from "react-native-notification";
 import {
     Cell,
     CellGroup,
-    // CellInput,
+    CellInput,
     // TagsInput,
     // SelectList,
     // CellSheet,
@@ -93,6 +93,12 @@ class EntryPage extends Component {
                             onPress={() => this.handleCellPress(field.title, field.value)}
                             />
                     )}
+                    <Cell
+                        key="$add"
+                        title="＋ Add"
+                        onPress={() => this.props.onAddMeta()}
+                        tintColor="#1144FF"
+                        />
                 </CellGroup>
                 <Notification
                     message={this.props.entryNotificationMessage}
@@ -106,6 +112,7 @@ class EntryPage extends Component {
 EntryPage.propTypes = {
     copyToClipboard:        PropTypes.func.isRequired,
     meta:                   PropTypes.arrayOf(PropTypes.object).isRequired,
+    onAddMeta:              PropTypes.func.isRequired,
     properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
     title:                  PropTypes.string.isRequired
 };
