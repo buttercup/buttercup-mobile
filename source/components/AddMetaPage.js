@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
 
 class AddMetaPage extends Component {
 
-    constructor(props, ...params) {
-        super(props, ...params);
-        this.state = {
-            key: props.key,
-            value: props.value
-        };
+    handleKeyChange(key) {
+        this.props.setMetaValues(key, this.props.metaValue);
+    }
+
+    handleValueChange(value) {
+        this.props.setMetaValues(this.props.metaKey, value);
     }
 
     render() {
@@ -34,14 +34,14 @@ class AddMetaPage extends Component {
                     <CellInput
                         key="key"
                         title="Name"
-                        value={this.state.key}
-                        onChangeText={text => this.setState({ key: text })}
+                        value={this.props.metaKey}
+                        onChangeText={text => this.handleKeyChange(text)}
                         />
                     <CellInput
                         key="value"
                         title="Value"
-                        value={this.state.value}
-                        onChangeText={text => this.setState({ value: text })}
+                        value={this.props.metaValue}
+                        onChangeText={text => this.handleValueChange(text)}
                         />
                 </CellGroup>
             </View>
@@ -51,13 +51,14 @@ class AddMetaPage extends Component {
 }
 
 AddMetaPage.propTypes = {
-    key:                        PropTypes.string,
-    value:                      PropTypes.string
+    metaKey:                    PropTypes.string,
+    setMetaValues:              PropTypes.func.isRequired,
+    metaValue:                  PropTypes.string
 };
 
 AddMetaPage.defaultProps = {
-    key:                        "",
-    value:                      ""
+    metaKey:                    "",
+    metaValue:                  ""
 };
 
 export default AddMetaPage;

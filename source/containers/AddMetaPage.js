@@ -1,15 +1,14 @@
 import { connect } from "react-redux";
 import AddMetaPage from "../components/AddMetaPage.js";
-// import {
-//     getAdditionStage
-// } from "../selectors/AddArchivePage.js";
-// import { onArchiveTypeSelected } from "../actions/AddArchivePage.js";
+import { getNewMetaKey, getNewMetaValue } from "../selectors/entry.js";
+import { setNewMeta } from "../actions/entry.js";
 
 export default connect(
     (state, ownProps) => ({
-
+        metaKey:                getNewMetaKey(state),
+        metaValue:              getNewMetaValue(state)
     }),
     {
-
+        setMetaValues:          (key, value) => dispatch => dispatch(setNewMeta({ key, value }))
     }
 )(AddMetaPage);

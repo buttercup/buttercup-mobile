@@ -19,6 +19,8 @@ export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT =       "archives/toggleUnlockPa
 export const ARCHIVES_UNLOCK_SOURCE =                   "archives/unlockSource";
 
 export const ENTRY_LOAD =                               "entry/load";
+export const ENTRY_NEW_META_CLEAR =                     "entry/clearNewMeta";
+export const ENTRY_NEW_META_SET =                       "entry/setNewMetaValues";
 export const ENTRY_NOTIFICATION_SET =                   "entry/setNotificationMessage";
 export const ENTRY_UNLOAD =                             "entry/unload";
 

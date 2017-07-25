@@ -10,6 +10,7 @@ import AddMetaPage from "./containers/AddMetaPage.js";
 import EntryPage from "./containers/EntryPage.js";
 import { showNewPrompt } from "./actions/RemoteExplorerPage.js";
 import { showArchivesPageRightSheet } from "./shared/sheets.js";
+import { saveNewMeta } from "./shared/entry.js";
 
 import { dispatch } from "./store.js";
 
@@ -69,7 +70,7 @@ export function getRouter() {
                     title="Add New Meta"
                     backTitle="Cancel"
                     rightTitle="Add"
-                    onRight={() => alert("Save")}
+                    onRight={saveNewMeta}
                     />
             </Scene>
         </RouterWithRedux>
