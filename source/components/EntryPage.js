@@ -93,12 +93,12 @@ class EntryPage extends Component {
                             onPress={() => this.handleCellPress(field.title, field.value)}
                             />
                     )}
-                    <Cell
+                    {/*<Cell
                         key="$add"
                         title="＋ Add"
                         onPress={() => this.props.onAddMeta()}
                         tintColor="#1144FF"
-                        />
+                        />*/}
                 </CellGroup>
                 <Notification
                     message={this.props.entryNotificationMessage}
