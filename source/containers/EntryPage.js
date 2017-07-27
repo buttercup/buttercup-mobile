@@ -6,14 +6,14 @@ import { setNotification } from "../actions/entry.js"
 import {
     getEntryProperties,
     getEntryTitle,
-    getMetaItems,
+    getEntryMeta,
     getNotification
 } from "../selectors/entry.js";
 
 export default connect(
     (state, ownProps) => ({
         entryNotificationMessage:   getNotification(state),
-        meta:                       getMetaItems(state),
+        meta:                       getEntryMeta(state),
         properties:                 getEntryProperties(state),
         title:                      getEntryTitle(state)
     }),

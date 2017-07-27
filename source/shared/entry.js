@@ -16,7 +16,6 @@ export function loadEntry(sourceID, entryID) {
     const archive = source.workspace.primary.archive;
     const entry = archive.getEntryByID(entryID);
     const facade = createEntryFacade(entry);
-    console.log("LOADED FACADE", JSON.parse(JSON.stringify(facade)));
     dispatch(loadNewEntry({
         id: entryID,
         fields: facade.fields,

@@ -8,14 +8,12 @@ import {
 import { ActionConst } from "react-native-router-flux";
 
 const INITIAL = {
-    editing: false,
     id: null,
     newMeta: {
         key: "",
         value: ""
     },
-    properties: {},
-    meta: {},
+    fields: [],
     sourceID: null,
     notification: ""
 };
@@ -27,8 +25,7 @@ export default function entryReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 id: entryData.id,
-                properties: entryData.fields.filter(f => f.field === "property"),
-                meta: entryData.fields.filter(f => f.field === "meta"),
+                fields: entryData.fields,
                 sourceID: entryData.sourceID
             };
         case ENTRY_UNLOAD:

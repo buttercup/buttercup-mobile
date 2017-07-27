@@ -4,17 +4,17 @@ export function getEntryID(state) {
     return state[STATE_KEY].id;
 }
 
+export function getEntryMeta(state) {
+    return state[STATE_KEY].fields.filter(f => f.field === "meta");
+}
+
 export function getEntryProperties(state) {
-    return state[STATE_KEY].properties;
+    return state[STATE_KEY].fields.filter(f => f.field === "property");
 }
 
 export function getEntryTitle(state) {
     const titleField = getEntryProperties(state).find(item => item.property === "title");
     return titleField && titleField.value || "";
-}
-
-export function getMetaItems(state) {
-    return state[STATE_KEY].meta || [];
 }
 
 export function getNewMetaKey(state) {
