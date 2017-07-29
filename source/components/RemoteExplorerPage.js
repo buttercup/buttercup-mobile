@@ -17,8 +17,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "stretch",
-        marginTop: 64
+        alignItems: "stretch"
     },
     scrollContainer: {
         height: "100%",
