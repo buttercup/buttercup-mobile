@@ -21,7 +21,6 @@ import { EntryRouteNormalProps } from "./shared/dynamicRoutes.js";
 
 import { dispatch } from "./store.js";
 
-const RouterWithRedux = connect()(Router);
 const BUTTERCUP_LOGO = require("../resources/images/buttercup-header.png");
 
 const styles = StyleSheet.create({
@@ -41,6 +40,7 @@ const styles = StyleSheet.create({
 });
 
 export function getRouter() {
+    const RouterWithRedux = connect()(Router);
     return (
         <RouterWithRedux>
             <Scene key="root">
@@ -49,7 +49,8 @@ export function getRouter() {
                     component={ArchivesPage}
                     initial={true}
                     hideNavBar={false}
-                    title={(
+                    title=""
+                    renderTitle={() => (
                         <View style={styles.rootHeaderContainer}>
                             <Image
                                 source={BUTTERCUP_LOGO}
@@ -68,6 +69,7 @@ export function getRouter() {
                     component={AddArchivePage}
                     hideNavBar={false}
                     title="Add Archive"
+                    backTitle=""
                     />
                 <Scene
                     key="remoteConnect"
@@ -88,6 +90,7 @@ export function getRouter() {
                     component={ArchiveContentsPage}
                     hideNavBar={false}
                     title=""
+                    backTitle=""
                     />
                 <Scene
                     key="entry"

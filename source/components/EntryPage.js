@@ -150,9 +150,18 @@ class EntryPage extends Component {
         const title = props.editing ?
             `Edit: ${props.title}` :
             props.title;
-        const navConfig = props.editing ?
-            EntryRouteSaveProps :
-            EntryRouteNormalProps;
+        let navConfig = EntryRouteNormalProps;
+        if (props.editing) {
+            console.log("EDIT PROPS");
+            navConfig = {
+                ...EntryRouteSaveProps,
+                onBack: () => {
+                    console.log("Back, cancel");
+                    this.props.onCancelEdit();
+                    Actions.pop();
+                }
+            };
+        }
         if (title !== this.lastTitle) {
             this.lastTitle = title;
             Actions.refresh({

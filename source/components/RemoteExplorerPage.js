@@ -16,12 +16,15 @@ import PropTypes from "prop-types";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "stretch"
     },
     scrollContainer: {
         height: "100%",
         width: "100%"
+    },
+    list: {
+        flex: 1
     }
 });
 
@@ -41,8 +44,8 @@ class RemoteExplorer extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView styles={styles.scrollContainer} ref="directoryScrollView">
-                    <List>
+                <ScrollView style={styles.scrollContainer} ref="directoryScrollView">
+                    <List style={styles.list}>
                         {this.props.items.map(item => this.renderItem(item))}
                     </List>
                 </ScrollView>
