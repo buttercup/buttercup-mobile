@@ -19,6 +19,10 @@ import {
     // CellListItem,
     // CellSlider
 } from "react-native-cell-components";
+import {
+    EntryRouteNormalProps,
+    EntryRouteSaveProps
+} from "../shared/dynamicRoutes.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -114,7 +118,16 @@ class EntryPage extends Component {
 
     renderEditButtons() {
         if (this.props.editing) {
-            return null;
+            return (
+                <CellGroup>
+                    <Cell
+                        key="cancel"
+                        title="Cancel"
+                        onPress={() => this.props.onCancelEdit()}
+                        tintColor="#FF0000"
+                        />
+                </CellGroup>
+            );
         }
         return (
             <CellGroup>
@@ -139,12 +152,8 @@ class EntryPage extends Component {
             `Edit: ${props.title}` :
             props.title;
         const navConfig = props.editing ?
-            {
-                backTitle: "Cancel",
-                onBack: () => this.props.onCancelEdit(),
-                rightTitle: "Save"
-            } :
-            {};
+            EntryRouteSaveProps :
+            EntryRouteNormalProps;
         if (title !== this.lastTitle) {
             this.lastTitle = title;
             Actions.refresh({

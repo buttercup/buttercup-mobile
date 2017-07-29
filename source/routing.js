@@ -11,6 +11,7 @@ import EntryPage from "./containers/EntryPage.js";
 import { showNewPrompt } from "./actions/RemoteExplorerPage.js";
 import { showArchivesPageRightSheet } from "./shared/sheets.js";
 import { saveNewMeta } from "./shared/entry.js";
+import { EntryRouteNormalProps } from "./shared/dynamicRoutes.js";
 
 import { dispatch } from "./store.js";
 
@@ -62,8 +63,7 @@ export function getRouter() {
                     component={EntryPage}
                     hideNavBar={false}
                     title=""
-                    rightTitle="Open"
-                    onRight={() => {}}
+                    {...EntryRouteNormalProps}
                     />
                 <Scene
                     key="addMeta"
