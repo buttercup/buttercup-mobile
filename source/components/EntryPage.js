@@ -55,14 +55,15 @@ class EntryPage extends Component {
 
     constructor(...args) {
         super(...args);
-        this.hasUpdatedTitle = false;
+        this.lastTitle = "";
+    }
+
+    componentDidReceiveProps() {
+        this.updateTitle();
     }
 
     componentDidMount() {
-        if (!this.hasUpdatedTitle && this.props.title && this.props.title.length > 0) {
-            this.hasUpdatedTitle = true;
-            Actions.refresh({ title: this.props.title });
-        }
+        this.updateTitle();
     }
 
     handleCellPress(key, value) {
@@ -93,13 +94,17 @@ class EntryPage extends Component {
                             onPress={() => this.handleCellPress(field.title, field.value)}
                             />
                     )}
-                    {/*<Cell
-                        key="$add"
-                        title="＋ Add"
-                        onPress={() => this.props.onAddMeta()}
-                        tintColor="#1144FF"
-                        />*/}
+                    {this.props.editing ?
+                        <Cell
+                            key="$add"
+                            title="＋ Add"
+                            onPress={() => this.props.onAddMeta()}
+                            tintColor="#1144FF"
+                            /> :
+                            null
+                    }
                 </CellGroup>
+                {this.renderEditButtons()}
                 <Notification
                     message={this.props.entryNotificationMessage}
                     />
@@ -107,12 +112,46 @@ class EntryPage extends Component {
         );
     }
 
+    renderEditButtons() {
+        if (this.props.editing) {
+            return null;
+        }
+        return (
+            <CellGroup>
+                <Cell
+                    key="edit"
+                    title="Edit"
+                    onPress={() => this.props.onEditPressed()}
+                    tintColor="#1144FF"
+                    />
+                <Cell
+                    key="delete"
+                    title="Delete"
+                    onPress={() => {}}
+                    tintColor="#FF0000"
+                    />
+            </CellGroup>
+        );
+    }
+
+    updateTitle(props = this.props) {
+        const title = props.editing ?
+            `Edit: ${props.title}` :
+            props.title;
+        if (title !== this.lastTitle) {
+            this.lastTitle = title;
+            Actions.refresh({ title });
+        }
+    }
+
 }
 
 EntryPage.propTypes = {
     copyToClipboard:        PropTypes.func.isRequired,
+    isEditMode:             PropTypes.bool,
     meta:                   PropTypes.arrayOf(PropTypes.object).isRequired,
     onAddMeta:              PropTypes.func.isRequired,
+    onEditPressed:          PropTypes.func.isRequired,
     properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
     title:                  PropTypes.string.isRequired
 };

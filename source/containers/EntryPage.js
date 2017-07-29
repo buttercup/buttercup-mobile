@@ -2,16 +2,21 @@ import { Clipboard } from "react-native";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import EntryPage from "../components/EntryPage.js";
-import { setNotification } from "../actions/entry.js"
+import {
+    setEntryEditing,
+    setNotification
+} from "../actions/entry.js"
 import {
     getEntryProperties,
     getEntryTitle,
     getEntryMeta,
-    getNotification
+    getNotification,
+    isEditing
 } from "../selectors/entry.js";
 
 export default connect(
     (state, ownProps) => ({
+        editing:                    isEditing(state),
         entryNotificationMessage:   getNotification(state),
         meta:                       getEntryMeta(state),
         properties:                 getEntryProperties(state),
@@ -28,6 +33,7 @@ export default connect(
         },
         onAddMeta:                  () => () => {
             Actions.addMeta();
-        }
+        },
+        onEditPressed:              () => dispatch => dispatch(setEntryEditing(true))
     }
 )(EntryPage);

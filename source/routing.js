@@ -62,6 +62,8 @@ export function getRouter() {
                     component={EntryPage}
                     hideNavBar={false}
                     title=""
+                    rightTitle="Open"
+                    onRight={() => {}}
                     />
                 <Scene
                     key="addMeta"

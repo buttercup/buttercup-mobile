@@ -34,3 +34,7 @@ export function getNotification(state) {
 export function getSourceID(state) {
     return state[STATE_KEY].sourceID;
 }
+
+export function isEditing(state) {
+    return state[STATE_KEY].editing;
+}

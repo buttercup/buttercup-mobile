@@ -3,11 +3,13 @@ import {
     ENTRY_NEW_META_CLEAR,
     ENTRY_NEW_META_SET,
     ENTRY_NOTIFICATION_SET,
+    ENTRY_SET_EDITING,
     ENTRY_UNLOAD
 } from "../actions/types.js";
 import { ActionConst } from "react-native-router-flux";
 
 const INITIAL = {
+    editing: false,
     id: null,
     newMeta: {
         key: "",
@@ -51,6 +53,11 @@ export default function entryReducer(state = INITIAL, action = {}) {
                     key: action.payload.key,
                     value: action.payload.value
                 }
+            };
+        case ENTRY_SET_EDITING:
+            return {
+                ...state,
+                editing: !!action.payload
             };
 
         default:
