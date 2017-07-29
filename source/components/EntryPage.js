@@ -69,6 +69,10 @@ class EntryPage extends Component {
         this.updateTitle();
     }
 
+    componentWillUnmount() {
+        this.props.onCancelEdit();
+    }
+
     handleCellPress(key, value) {
         this.props.copyToClipboard(key, value);
     }
@@ -150,18 +154,9 @@ class EntryPage extends Component {
         const title = props.editing ?
             `Edit: ${props.title}` :
             props.title;
-        let navConfig = EntryRouteNormalProps;
-        if (props.editing) {
-            console.log("EDIT PROPS");
-            navConfig = {
-                ...EntryRouteSaveProps,
-                onBack: () => {
-                    console.log("Back, cancel");
-                    this.props.onCancelEdit();
-                    Actions.pop();
-                }
-            };
-        }
+        const navConfig = props.editing ?
+            EntryRouteSaveProps :
+            EntryRouteNormalProps;
         if (title !== this.lastTitle) {
             this.lastTitle = title;
             Actions.refresh({
