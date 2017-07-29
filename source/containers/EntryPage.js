@@ -2,11 +2,13 @@ import { Clipboard } from "react-native";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import EntryPage from "../components/EntryPage.js";
+import { handleError } from "../global/exceptions.js";
 import {
     setEntryEditing,
     setFacadeValue,
     setNotification
 } from "../actions/entry.js"
+import { setSaving } from "../actions/app.js";
 import {
     getEntryFields,
     getEntryID,
@@ -17,6 +19,9 @@ import {
     getSourceID,
     isEditing
 } from "../selectors/entry.js";
+import {
+    isSaving
+} from "../selectors/app.js";
 import { getEntry } from "../shared/entry.js";
 import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
 import { saveCurrentArchive } from "../shared/archive.js";
@@ -27,6 +32,7 @@ export default connect(
         entryNotificationMessage:   getNotification(state),
         meta:                       getEntryMeta(state),
         properties:                 getEntryProperties(state),
+        saving:                     isSaving(state),
         title:                      getEntryTitle(state)
     }),
     {
@@ -57,7 +63,21 @@ export default connect(
             const facade = createEntryFacade(entry);
             facade.fields = fields;
             consumeEntryFacade(entry, facade);
-            saveCurrentArchive();
+            dispatch(setSaving(true));
+            saveCurrentArchive()
+                .then(() => {
+                    dispatch(setSaving(false));
+                    dispatch(setEntryEditing(false));
+                    dispatch(setNotification("Saved entry"));
+                    setTimeout(() => {
+                        // clear notification
+                        dispatch(setNotification(""));
+                    }, 1000);
+                })
+                .catch(err => {
+                    dispatch(setSaving(false));
+                    handleError("Saving failed", err);
+                });
         }
     }
 )(EntryPage);

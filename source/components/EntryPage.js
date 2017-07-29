@@ -6,6 +6,7 @@ import {
 import PropTypes from "prop-types";
 import { Actions } from "react-native-router-flux";
 import Notification from "react-native-notification";
+import Spinner from "react-native-loading-spinner-overlay";
 import {
     Cell,
     CellGroup,
@@ -108,6 +109,12 @@ class EntryPage extends Component {
                 <Notification
                     message={this.props.entryNotificationMessage}
                     />
+                <Spinner
+                    visible={this.props.saving}
+                    textContent="Saving"
+                    textStyle={{ color: "#FFF" }}
+                    overlayColor="rgba(0, 0, 0, 0.75)"
+                    />
             </View>
         );
     }
@@ -182,7 +189,7 @@ class EntryPage extends Component {
 
 EntryPage.propTypes = {
     copyToClipboard:        PropTypes.func.isRequired,
-    isEditMode:             PropTypes.bool,
+    editing:                PropTypes.bool.isRequired,
     meta:                   PropTypes.arrayOf(PropTypes.object).isRequired,
     onAddMeta:              PropTypes.func.isRequired,
     onCancelEdit:           PropTypes.func.isRequired,
@@ -190,6 +197,7 @@ EntryPage.propTypes = {
     onFieldValueChange:     PropTypes.func.isRequired,
     onSavePressed:          PropTypes.func.isRequired,
     properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
+    saving:                 PropTypes.bool.isRequired,
     title:                  PropTypes.string.isRequired
 };
 

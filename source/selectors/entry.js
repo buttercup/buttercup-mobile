@@ -42,3 +42,7 @@ export function getSourceID(state) {
 export function isEditing(state) {
     return state[STATE_KEY].editing;
 }
+
+export function isSaving(state) {
+    return state[STATE_KEY].saving;
+}

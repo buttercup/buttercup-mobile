@@ -7,6 +7,8 @@ export const ADD_ARCHIVE_SET_PASSWORD =                 "addArchive/setPassword"
 export const ADD_ARCHIVE_SET_URL =                      "addArchive/setURL";
 export const ADD_ARCHIVE_SET_USERNAME =                 "addArchive/setUsername";
 
+export const APP_SET_SAVING =                           "app/setSaving";
+
 export const ARCHIVE_CONTENTS_SET_GROUPS =              "archiveContents/setGroups";
 export const ARCHIVE_CONTENTS_SET_SOURCE =              "archiveContentsPage/setSource";
 
