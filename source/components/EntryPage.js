@@ -9,15 +9,7 @@ import Notification from "react-native-notification";
 import {
     Cell,
     CellGroup,
-    CellInput,
-    // TagsInput,
-    // SelectList,
-    // CellSheet,
-    // ActionItem,
-    // CellDatePicker,
-    // CellListProvider,
-    // CellListItem,
-    // CellSlider
+    CellInput
 } from "react-native-cell-components";
 import {
     EntryRouteNormalProps,
@@ -29,15 +21,6 @@ const styles = StyleSheet.create({
         width: "100%"
     }
 });
-
-function displayValueForProp(propName, value) {
-    switch(propName) {
-        case "password":
-            return "••••••••••";
-        default:
-            return value;
-    }
-}
 
 function iconLabelForProp(propName) {
     switch(propName.toLowerCase()) {
@@ -73,6 +56,28 @@ class EntryPage extends Component {
         this.props.onCancelEdit();
     }
 
+    displayValueForProp(propName, value) {
+        if (this.props.editing) {
+            return value;
+        }
+        switch(propName) {
+            case "password":
+                return "••••••••••";
+            default:
+                return value;
+        }
+    }
+
+    filterFields(fields) {
+        if (this.props.editing) {
+            return fields;
+        }
+        return fields.filter(item =>
+            item.field !== "property" ||
+            (item.field === "property" && item.property !== "title")
+        );
+    }
+
     handleCellPress(key, value) {
         this.props.copyToClipboard(key, value);
     }
@@ -81,26 +86,10 @@ class EntryPage extends Component {
         return (
             <View style={styles.container}>
                 <CellGroup header="Properties">
-                    {this.props.properties.map(field =>
-                        <Cell
-                            key={field.property}
-                            title={field.title}
-                            value={displayValueForProp(field.property, field.value)}
-                            icon={iconLabelForProp(field.property)}
-                            onPress={() => this.handleCellPress(field.title, field.value)}
-                            />
-                    )}
+                    {this.filterFields(this.props.properties).map(field => this.renderContentCell(field))}
                 </CellGroup>
                 <CellGroup header="Meta">
-                    {this.props.meta.map(field =>
-                        <Cell
-                            key={field.property}
-                            title={field.title}
-                            value={displayValueForProp(field.property, field.value)}
-                            icon={iconLabelForProp(field.property)}
-                            onPress={() => this.handleCellPress(field.title, field.value)}
-                            />
-                    )}
+                    {this.props.meta.map(field => this.renderContentCell(field))}
                     {this.props.editing ?
                         <Cell
                             key="$add"
@@ -116,6 +105,21 @@ class EntryPage extends Component {
                     message={this.props.entryNotificationMessage}
                     />
             </View>
+        );
+    }
+
+    renderContentCell(field) {
+        const CellType = this.props.editing ?
+            CellInput :
+            Cell;
+        return (
+            <CellType
+                key={field.property}
+                title={field.title}
+                value={this.displayValueForProp(field.property, field.value)}
+                icon={iconLabelForProp(field.property)}
+                onPress={() => this.handleCellPress(field.title, field.value)}
+                />
         );
     }
 
