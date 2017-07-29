@@ -4,6 +4,7 @@ import { Actions } from "react-native-router-flux";
 import EntryPage from "../components/EntryPage.js";
 import {
     setEntryEditing,
+    setFacadeValue,
     setNotification
 } from "../actions/entry.js"
 import {
@@ -35,6 +36,11 @@ export default connect(
             Actions.addMeta();
         },
         onCancelEdit:               () => dispatch => dispatch(setEntryEditing(false)),
-        onEditPressed:              () => dispatch => dispatch(setEntryEditing(true))
+        onEditPressed:              () => dispatch => dispatch(setEntryEditing(true)),
+        onFieldValueChange:         (field, property, value) => dispatch => {
+            dispatch(setFacadeValue({
+                field, property, value
+            }))
+        }
     }
 )(EntryPage);

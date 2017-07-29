@@ -5,12 +5,14 @@ import {
     ENTRY_NEW_META_SET,
     ENTRY_NOTIFICATION_SET,
     ENTRY_SET_EDITING,
+    ENTRY_SET_FACADE_VALUE,
     ENTRY_UNLOAD
 } from "./types.js";
 
 export const clearNewMeta =                 createAction(ENTRY_NEW_META_CLEAR);
 export const loadEntry =                    createAction(ENTRY_LOAD);
 export const setEntryEditing =              createAction(ENTRY_SET_EDITING);
+export const setFacadeValue =               createAction(ENTRY_SET_FACADE_VALUE);
 export const setNewMeta =                   createAction(ENTRY_NEW_META_SET);
 export const setNotification =              createAction(ENTRY_NOTIFICATION_SET);
 export const unloadEntry =                  createAction(ENTRY_UNLOAD);

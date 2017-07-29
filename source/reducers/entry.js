@@ -4,6 +4,7 @@ import {
     ENTRY_NEW_META_SET,
     ENTRY_NOTIFICATION_SET,
     ENTRY_SET_EDITING,
+    ENTRY_SET_FACADE_VALUE,
     ENTRY_UNLOAD
 } from "../actions/types.js";
 import { ActionConst } from "react-native-router-flux";
@@ -59,6 +60,22 @@ export default function entryReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 editing: !!action.payload
+            };
+        case ENTRY_SET_FACADE_VALUE:
+            const {
+                field,
+                property,
+                value
+            } = action.payload;
+            const targetIndex = state.fields.findIndex(item => item.field === field && item.property === property);
+            const newFields = [ ...state.fields ];
+            newFields[targetIndex] = {
+                ...newFields[targetIndex],
+                value
+            };
+            return {
+                ...state,
+                fields: newFields
             };
 
         default:

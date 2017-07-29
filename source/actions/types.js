@@ -23,6 +23,7 @@ export const ENTRY_NEW_META_CLEAR =                     "entry/clearNewMeta";
 export const ENTRY_NEW_META_SET =                       "entry/setNewMetaValues";
 export const ENTRY_NOTIFICATION_SET =                   "entry/setNotificationMessage";
 export const ENTRY_SET_EDITING =                        "entry/setEditing";
+export const ENTRY_SET_FACADE_VALUE =                   "entry/setFacadeValue";
 export const ENTRY_UNLOAD =                             "entry/unload";
 
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";

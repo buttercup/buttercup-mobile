@@ -82,6 +82,10 @@ class EntryPage extends Component {
         this.props.copyToClipboard(key, value);
     }
 
+    modifyField(field, newValue) {
+        this.props.onFieldValueChange(field.field, field.property, newValue);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -119,6 +123,7 @@ class EntryPage extends Component {
                 value={this.displayValueForProp(field.property, field.value)}
                 icon={iconLabelForProp(field.property)}
                 onPress={() => this.handleCellPress(field.title, field.value)}
+                onChangeText={newText => this.modifyField(field, newText)}
                 />
         );
     }
@@ -179,6 +184,7 @@ EntryPage.propTypes = {
     onAddMeta:              PropTypes.func.isRequired,
     onCancelEdit:           PropTypes.func.isRequired,
     onEditPressed:          PropTypes.func.isRequired,
+    onFieldValueChange:     PropTypes.func.isRequired,
     properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
     title:                  PropTypes.string.isRequired
 };
