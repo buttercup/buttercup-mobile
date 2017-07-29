@@ -164,7 +164,10 @@ class EntryPage extends Component {
             `Edit: ${props.title}` :
             props.title;
         const navConfig = props.editing ?
-            EntryRouteSaveProps :
+            {
+                ...EntryRouteSaveProps,
+                onRight: () => this.props.onSavePressed()
+            } :
             EntryRouteNormalProps;
         if (title !== this.lastTitle) {
             this.lastTitle = title;
@@ -185,6 +188,7 @@ EntryPage.propTypes = {
     onCancelEdit:           PropTypes.func.isRequired,
     onEditPressed:          PropTypes.func.isRequired,
     onFieldValueChange:     PropTypes.func.isRequired,
+    onSavePressed:          PropTypes.func.isRequired,
     properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
     title:                  PropTypes.string.isRequired
 };

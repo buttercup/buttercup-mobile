@@ -8,12 +8,18 @@ import {
     setNotification
 } from "../actions/entry.js"
 import {
+    getEntryFields,
+    getEntryID,
     getEntryProperties,
     getEntryTitle,
     getEntryMeta,
     getNotification,
+    getSourceID,
     isEditing
 } from "../selectors/entry.js";
+import { getEntry } from "../shared/entry.js";
+import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
+import { saveCurrentArchive } from "../shared/archive.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -41,6 +47,17 @@ export default connect(
             dispatch(setFacadeValue({
                 field, property, value
             }))
+        },
+        onSavePressed:              () => (dispatch, getState) => {
+            const state = getState();
+            const fields = getEntryFields(state);
+            const sourceID = getSourceID(state);
+            const entryID = getEntryID(state);
+            const entry = getEntry(sourceID, entryID);
+            const facade = createEntryFacade(entry);
+            facade.fields = fields;
+            consumeEntryFacade(entry, facade);
+            saveCurrentArchive();
         }
     }
 )(EntryPage);

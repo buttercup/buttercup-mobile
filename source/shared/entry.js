@@ -10,12 +10,22 @@ import {
 } from "../selectors/entry.js";
 import { handleError } from "../global/exceptions.js";
 
-export function loadEntry(sourceID, entryID) {
+export function getEntry(sourceID, entryID) {
     const archiveManager = getSharedArchiveManager();
     const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
     const archive = source.workspace.primary.archive;
     const entry = archive.getEntryByID(entryID);
+    return entry;
+}
+
+export function getEntryFacade(sourceID, entryID) {
+    const entry = getEntry(sourceID, entryID);
     const facade = createEntryFacade(entry);
+    return facade;
+}
+
+export function loadEntry(sourceID, entryID) {
+    const facade = getEntryFacade(sourceID, entryID);
     dispatch(loadNewEntry({
         id: entryID,
         fields: facade.fields,

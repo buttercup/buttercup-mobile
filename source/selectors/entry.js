@@ -1,15 +1,19 @@
 const STATE_KEY = "entry";
 
+export function getEntryFields(state) {
+    return state[STATE_KEY].fields;
+}
+
 export function getEntryID(state) {
     return state[STATE_KEY].id;
 }
 
 export function getEntryMeta(state) {
-    return state[STATE_KEY].fields.filter(f => f.field === "meta");
+    return getEntryFields(state).filter(f => f.field === "meta");
 }
 
 export function getEntryProperties(state) {
-    return state[STATE_KEY].fields.filter(f => f.field === "property");
+    return getEntryFields(state).filter(f => f.field === "property");
 }
 
 export function getEntryTitle(state) {
