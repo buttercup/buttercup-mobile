@@ -58,8 +58,8 @@ class EntryPage extends Component {
         this.lastTitle = "";
     }
 
-    componentDidReceiveProps() {
-        this.updateTitle();
+    componentWillReceiveProps(props) {
+        this.updateTitle(props);
     }
 
     componentDidMount() {
