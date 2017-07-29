@@ -39,11 +39,12 @@ export default function entryReducer(state = INITIAL, action = {}) {
                 ...state,
                 notification: action.payload
             };
-        case ActionConst.BACK_ACTION:
-            /* falls-through */
         case ENTRY_NEW_META_CLEAR:
+            /* falls-through */
+        case ActionConst.BACK_ACTION:
             return {
                 ...state,
+                editing: false,
                 newMeta: INITIAL.newMeta
             };
         case ENTRY_NEW_META_SET:

@@ -138,9 +138,19 @@ class EntryPage extends Component {
         const title = props.editing ?
             `Edit: ${props.title}` :
             props.title;
+        const navConfig = props.editing ?
+            {
+                backTitle: "Cancel",
+                onBack: () => this.props.onCancelEdit(),
+                rightTitle: "Save"
+            } :
+            {};
         if (title !== this.lastTitle) {
             this.lastTitle = title;
-            Actions.refresh({ title });
+            Actions.refresh({
+                title,
+                ...navConfig
+            });
         }
     }
 
@@ -151,6 +161,7 @@ EntryPage.propTypes = {
     isEditMode:             PropTypes.bool,
     meta:                   PropTypes.arrayOf(PropTypes.object).isRequired,
     onAddMeta:              PropTypes.func.isRequired,
+    onCancelEdit:           PropTypes.func.isRequired,
     onEditPressed:          PropTypes.func.isRequired,
     properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
     title:                  PropTypes.string.isRequired

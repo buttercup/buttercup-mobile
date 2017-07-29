@@ -34,6 +34,7 @@ export default connect(
         onAddMeta:                  () => () => {
             Actions.addMeta();
         },
+        onCancelEdit:               () => dispatch => dispatch(setEntryEditing(false)),
         onEditPressed:              () => dispatch => dispatch(setEntryEditing(true))
     }
 )(EntryPage);

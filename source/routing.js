@@ -17,7 +17,6 @@ import { dispatch } from "./store.js";
 const RouterWithRedux = connect()(Router);
 
 export function getRouter() {
-    console.log("RENDER ROUTER");
     return (
         <RouterWithRedux>
             <Scene key="root">
