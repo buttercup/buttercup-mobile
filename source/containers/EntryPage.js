@@ -1,4 +1,4 @@
-import { Clipboard } from "react-native";
+import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
 import EntryPage from "../components/EntryPage.js";
@@ -12,9 +12,10 @@ import { setSaving } from "../actions/app.js";
 import {
     getEntryFields,
     getEntryID,
+    getEntryMeta,
     getEntryProperties,
     getEntryTitle,
-    getEntryMeta,
+    getEntryURL,
     getNotification,
     getSourceID,
     isEditing
@@ -53,6 +54,21 @@ export default connect(
             dispatch(setFacadeValue({
                 field, property, value
             }))
+        },
+        onOpenPressed:              () => (dispatch, getState) => {
+            const url = getEntryURL(getState());
+            if (url) {
+                Linking.openURL(url);
+            } else {
+                Alert.alert(
+                    "No URL",
+                    "This entry doesn't contain a URL meta field."
+                    [
+                        { text: "OK", onPress: () => {} }
+                    ],
+                    { cancelable: false }
+                );
+            }
         },
         onSavePressed:              () => (dispatch, getState) => {
             const state = getState();

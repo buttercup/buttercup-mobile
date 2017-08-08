@@ -175,7 +175,10 @@ class EntryPage extends Component {
                 ...EntryRouteSaveProps,
                 onRight: () => this.props.onSavePressed()
             } :
-            EntryRouteNormalProps;
+            {
+                ...EntryRouteNormalProps,
+                onRight: () => this.props.onOpenPressed()
+            };
         if (title !== this.lastTitle) {
             this.lastTitle = title;
             Actions.refresh({
@@ -195,6 +198,7 @@ EntryPage.propTypes = {
     onCancelEdit:           PropTypes.func.isRequired,
     onEditPressed:          PropTypes.func.isRequired,
     onFieldValueChange:     PropTypes.func.isRequired,
+    onOpenPressed:          PropTypes.func.isRequired,
     onSavePressed:          PropTypes.func.isRequired,
     properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
     saving:                 PropTypes.bool.isRequired,

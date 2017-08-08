@@ -21,6 +21,11 @@ export function getEntryTitle(state) {
     return titleField && titleField.value || "";
 }
 
+export function getEntryURL(state) {
+    const urlField = getEntryMeta(state).find(item => /url/i.test(item.property));
+    return urlField && urlField.value || null;
+}
+
 export function getNewMetaKey(state) {
     const newMeta = state[STATE_KEY].newMeta || {};
     return newMeta.key || "";
