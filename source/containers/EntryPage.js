@@ -46,9 +46,7 @@ export default connect(
                 dispatch(setNotification(""));
             }, 1250);
         },
-        onAddMeta:                  () => () => {
-            Actions.addMeta();
-        },
+        onAddMeta:                  () => () => Actions.addMeta(),
         onCancelEdit:               () => dispatch => dispatch(setEntryEditing(false)),
         onEditPressed:              () => dispatch => dispatch(setEntryEditing(true)),
         onFieldValueChange:         (field, property, value) => dispatch => {
