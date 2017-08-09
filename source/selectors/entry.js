@@ -12,6 +12,11 @@ export function getEntryMeta(state) {
     return getEntryFields(state).filter(f => f.field === "meta");
 }
 
+export function getEntryPassword(state) {
+    const passwordField = getEntryProperties(state).find(item => item.property === "password");
+    return passwordField && passwordField.value || "";
+}
+
 export function getEntryProperties(state) {
     return getEntryFields(state).filter(f => f.field === "property");
 }

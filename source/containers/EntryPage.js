@@ -13,6 +13,7 @@ import {
     getEntryFields,
     getEntryID,
     getEntryMeta,
+    getEntryPassword,
     getEntryProperties,
     getEntryTitle,
     getEntryURL,
@@ -56,9 +57,25 @@ export default connect(
             }))
         },
         onOpenPressed:              () => (dispatch, getState) => {
-            const url = getEntryURL(getState());
+            const state = getState();
+            const url = getEntryURL(state);
+            const password = getEntryPassword(state);
             if (url) {
-                Linking.openURL(url);
+                Alert.alert(
+                    "Open URL",
+                    "Press OK to launch the URL. The password will be copied to the clipboard.",
+                    [
+                        { text: "Cancel", style: "cancel" },
+                        {
+                            text: "OK",
+                            style: "default",
+                            onPress: () => {
+                                Clipboard.setString(password);
+                                Linking.openURL(url);
+                            }
+                        }
+                    ]
+                );
             } else {
                 Alert.alert(
                     "No URL",
