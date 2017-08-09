@@ -41,6 +41,18 @@ export function getNewMetaValue(state) {
     return newMeta.value || "";
 }
 
+export function getNewPassword(state) {
+    return state[STATE_KEY].newEntry.password;
+}
+
+export function getNewTitle(state) {
+    return state[STATE_KEY].newEntry.title;
+}
+
+export function getNewUsername(state) {
+    return state[STATE_KEY].newEntry.username;
+}
+
 export function getNotification(state) {
     return state[STATE_KEY].notification;
 }

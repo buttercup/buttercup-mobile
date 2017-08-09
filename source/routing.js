@@ -14,9 +14,10 @@ import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
 import AddMetaPage from "./containers/AddMetaPage.js";
 import EntryPage from "./containers/EntryPage.js";
+import NewEntryPage from "./containers/NewEntryPage.js";
 import { showNewPrompt } from "./actions/RemoteExplorerPage.js";
 import { showArchivesPageRightSheet } from "./shared/sheets.js";
-import { saveNewMeta } from "./shared/entry.js";
+import { saveNewEntry, saveNewMeta } from "./shared/entry.js";
 import { EntryRouteNormalProps } from "./shared/dynamicRoutes.js";
 
 import { dispatch } from "./store.js";
@@ -107,6 +108,15 @@ export function getRouter() {
                     backTitle="Cancel"
                     rightTitle="Add"
                     onRight={saveNewMeta}
+                    />
+                <Scene
+                    key="newEntry"
+                    component={NewEntryPage}
+                    hideNavBar={false}
+                    title="New Entry"
+                    backTitle="Cancel"
+                    rightTitle="Create"
+                    onRight={saveNewEntry}
                     />
             </Scene>
         </RouterWithRedux>

@@ -19,17 +19,21 @@ const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [
     SHEET_CANCEL
 ];
 
-export function showArchiveContentsAddItemSheet() {
+export function showArchiveContentsAddItemSheet(showEntryAdd) {
+    const buttons = [ ...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS ];
+    if (!showEntryAdd) {
+        buttons.shift();
+    }
     ActionSheet.showActionSheetWithOptions(
         {
-            options: ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS,
-            cancelButtonIndex: ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
+            options: buttons,
+            cancelButtonIndex: buttons.indexOf(SHEET_CANCEL),
             title: "Add to group"
         },
         selectedIndex => {
-            switch(ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS[selectedIndex]) {
+            switch(buttons[selectedIndex]) {
                 case SHEET_ADD_ENTRY: {
-
+                    Actions.newEntry();
                     break;
                 }
                 case SHEET_ADD_GROUP: {

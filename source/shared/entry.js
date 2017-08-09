@@ -6,6 +6,9 @@ import {
     getEntryID,
     getNewMetaKey,
     getNewMetaValue,
+    getNewPassword,
+    getNewTitle,
+    getNewUsername,
     getSourceID
 } from "../selectors/entry.js";
 import { handleError } from "../global/exceptions.js";
@@ -33,6 +36,25 @@ export function loadEntry(sourceID, entryID) {
     }));
 }
 
+export function saveNewEntry() {
+    const state = getState();
+    const title = getNewTitle(state);
+    const username = getNewUsername(state);
+    const password = getNewPassword(state);
+    if (title.trim().length <= 0) {
+        handleError("Failed saving entry", new Error("Title cannot be empty"));
+        return;
+    }
+    const sourceID = getSourceID(state);
+    const archiveManager = getSharedArchiveManager();
+    const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
+    const archive = source.workspace.primary.archive;
+    // const entry = archive.getEntryByID(entryID);
+    // entry.setMeta(key, value);
+    // Actions.pop();
+    // loadEntry(sourceID, entryID);
+}
+
 export function saveNewMeta() {
     const state = getState();
     const key = getNewMetaKey(state);
@@ -47,9 +69,7 @@ export function saveNewMeta() {
     const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
     const archive = source.workspace.primary.archive;
     const entry = archive.getEntryByID(entryID);
-    console.log("SET", key, value, entry);
     entry.setMeta(key, value);
-    console.log("SET'", entry.toObject());
     Actions.pop();
     loadEntry(sourceID, entryID);
 }

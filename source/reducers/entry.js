@@ -1,10 +1,12 @@
 import {
     ENTRY_LOAD,
+    ENTRY_NEW_CLEAR,
     ENTRY_NEW_META_CLEAR,
     ENTRY_NEW_META_SET,
     ENTRY_NOTIFICATION_SET,
     ENTRY_SET_EDITING,
     ENTRY_SET_FACADE_VALUE,
+    ENTRY_SET_NEW_PROPERTY_VALUE,
     ENTRY_UNLOAD
 } from "../actions/types.js";
 import { ActionConst } from "react-native-router-flux";
@@ -12,6 +14,12 @@ import { ActionConst } from "react-native-router-flux";
 const INITIAL = {
     editing: false,
     id: null,
+    newEntry: {
+        title: "",
+        username: "",
+        parentID: "0",
+        password: ""
+    },
     newMeta: {
         key: "",
         value: ""
@@ -40,13 +48,16 @@ export default function entryReducer(state = INITIAL, action = {}) {
                 ...state,
                 notification: action.payload
             };
+        case ENTRY_NEW_CLEAR:
+            /* falls-through */
         case ENTRY_NEW_META_CLEAR:
             /* falls-through */
         case ActionConst.BACK_ACTION:
             return {
                 ...state,
                 editing: false,
-                newMeta: INITIAL.newMeta
+                newMeta: INITIAL.newMeta,
+                newEntry: INITIAL.newEntry
             };
         case ENTRY_NEW_META_SET:
             return {
@@ -54,6 +65,15 @@ export default function entryReducer(state = INITIAL, action = {}) {
                 newMeta: {
                     key: action.payload.key,
                     value: action.payload.value
+                }
+            };
+        case ENTRY_SET_NEW_PROPERTY_VALUE:
+            console.log("SET", action.payload);
+            return {
+                ...state,
+                newEntry: {
+                    ...state.newEntry,
+                    [action.payload.key]: action.payload.value
                 }
             };
         case ENTRY_SET_EDITING:

@@ -47,7 +47,7 @@ function renderItem(section) {
         <TouchableHighlight
             disabled={!touchable}
             key={section.id}
-            onPress={() => (this.onPress || section.onPress)(section.id)}
+            onPress={() => (this.onPress || section.onPress)(section.id, this.parentID)}
             underlayColor="white"
             >
                 <View style={styles.accordionHeaderView} key={section.id}>
@@ -69,6 +69,7 @@ function renderSection(section) {
                 groups={section.content.groups}
                 entries={section.content.entries}
                 level={this.level + 1}
+                parentID={section.id}
                 />
         </View>
     );
@@ -101,8 +102,8 @@ class GroupsList extends Component {
                 id: "button-add",
                 title: "Add",
                 content: null,
-                onPress: () => {
-                    this.props.onAddPressed();
+                onPress: (targetID, parentID) => {
+                    this.props.onAddPressed(parentID);
                 },
                 icon: ADD_ICON
             }
@@ -123,15 +124,22 @@ class GroupsList extends Component {
                 <View>
                     <Accordion
                         sections={this.getGroupSections()}
-                        renderHeader={renderItem.bind({ level })}
+                        renderHeader={renderItem.bind({
+                            level,
+                            parentID: this.props.parentID
+                        })}
                         renderContent={renderSection.bind({ level })}
                         underlayColor="white"
                         />
                     {this.getEntrySections().map(section => renderItem.call({
                         level,
-                        onPress: id => this.props.loadEntry(id)
+                        onPress: id => this.props.loadEntry(id),
+                        parentID: this.props.parentID
                     }, section))}
-                    {this.getMiscSections().map(section => renderItem.call({ level }, section))}
+                    {this.getMiscSections().map(section => renderItem.call({
+                        level,
+                        parentID: this.props.parentID
+                    }, section))}
                 </View>
             </RootElement>
         );
@@ -143,7 +151,12 @@ GroupsList.propTypes = {
     groups:             PropTypes.arrayOf(PropTypes.object).isRequired,
     level:              PropTypes.number.isRequired,
     loadEntry:          PropTypes.func.isRequired,
-    onAddPressed:       PropTypes.func.isRequired
+    onAddPressed:       PropTypes.func.isRequired,
+    parentID:           PropTypes.string
+};
+
+GroupsList.defaultProps = {
+    parentID:           "0"
 };
 
 export default GroupsList;
