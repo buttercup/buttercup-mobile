@@ -24,6 +24,11 @@ class NewEntryPage extends Component {
     }
 
     render() {
+        const boringProps = {
+            autoCapitalize: "none",
+            autoCorrect: false,
+            spellCheck: false
+        };
         return (
             <View style={styles.container}>
                 <CellGroup>
@@ -37,13 +42,16 @@ class NewEntryPage extends Component {
                         key="username"
                         title="Username"
                         value={this.props.username}
+                        keyboardType="email-address"
                         onChangeText={text => this.handleValueChange("username", text)}
+                        {...boringProps}
                         />
                     <CellInput
                         key="password"
                         title="Password"
                         value={this.props.password}
                         onChangeText={text => this.handleValueChange("password", text)}
+                        {...boringProps}
                         />
                 </CellGroup>
                 <Spinner
