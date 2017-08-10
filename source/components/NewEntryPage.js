@@ -9,6 +9,7 @@ import {
     CellGroup,
     CellInput
 } from "react-native-cell-components";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const styles = StyleSheet.create({
     container: {
@@ -45,6 +46,12 @@ class NewEntryPage extends Component {
                         onChangeText={text => this.handleValueChange("password", text)}
                         />
                 </CellGroup>
+                <Spinner
+                    visible={this.props.isSaving}
+                    textContent="Saving"
+                    textStyle={{ color: "#FFF" }}
+                    overlayColor="rgba(0, 0, 0, 0.75)"
+                    />
             </View>
         );
     }
@@ -52,6 +59,7 @@ class NewEntryPage extends Component {
 }
 
 NewEntryPage.propTypes = {
+    isSaving:                   PropTypes.bool.isRequired,
     password:                   PropTypes.string.isRequired,
     setPropertyValue:           PropTypes.func.isRequired,
     title:                      PropTypes.string.isRequired,

@@ -6,11 +6,14 @@ import {
     getEntryID,
     getNewMetaKey,
     getNewMetaValue,
+    getNewParentID,
     getNewPassword,
     getNewTitle,
     getNewUsername,
     getSourceID
 } from "../selectors/entry.js";
+import { setSaving } from "../actions/app.js";
+import { getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
 import { handleError } from "../global/exceptions.js";
 
 export function getEntry(sourceID, entryID) {
@@ -45,14 +48,22 @@ export function saveNewEntry() {
         handleError("Failed saving entry", new Error("Title cannot be empty"));
         return;
     }
-    const sourceID = getSourceID(state);
+    const sourceID = getSelectedSourceID(state);
+    const parentGroupID = getNewParentID(state);
     const archiveManager = getSharedArchiveManager();
     const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
     const archive = source.workspace.primary.archive;
-    // const entry = archive.getEntryByID(entryID);
-    // entry.setMeta(key, value);
-    // Actions.pop();
-    // loadEntry(sourceID, entryID);
+    const newEntry = archive.findGroupByID(parentGroupID).createEntry(title);
+    newEntry
+        .setProperty("username", username)
+        .setProperty("password", password);
+    dispatch(setSaving(true));
+    return source.workspace
+        .save()
+        .then(() => {
+            dispatch(setSaving(false));
+            Actions.pop();
+        });
 }
 
 export function saveNewMeta() {

@@ -41,6 +41,10 @@ export function getNewMetaValue(state) {
     return newMeta.value || "";
 }
 
+export function getNewParentID(state) {
+    return state[STATE_KEY].newEntry.parentID;
+}
+
 export function getNewPassword(state) {
     return state[STATE_KEY].newEntry.password;
 }
@@ -63,8 +67,4 @@ export function getSourceID(state) {
 
 export function isEditing(state) {
     return state[STATE_KEY].editing;
-}
-
-export function isSaving(state) {
-    return state[STATE_KEY].saving;
 }

@@ -6,6 +6,7 @@ import {
     ENTRY_NOTIFICATION_SET,
     ENTRY_SET_EDITING,
     ENTRY_SET_FACADE_VALUE,
+    ENTRY_SET_NEW_PARENT_GROUP,
     ENTRY_SET_NEW_PROPERTY_VALUE,
     ENTRY_UNLOAD
 } from "../actions/types.js";
@@ -68,12 +69,19 @@ export default function entryReducer(state = INITIAL, action = {}) {
                 }
             };
         case ENTRY_SET_NEW_PROPERTY_VALUE:
-            console.log("SET", action.payload);
             return {
                 ...state,
                 newEntry: {
                     ...state.newEntry,
                     [action.payload.key]: action.payload.value
+                }
+            };
+        case ENTRY_SET_NEW_PARENT_GROUP:
+            return {
+                ...state,
+                newEntry: {
+                    ...state.newEntry,
+                    parentID: action.payload
                 }
             };
         case ENTRY_SET_EDITING:

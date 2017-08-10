@@ -78,9 +78,7 @@ export default connect(
                 Alert.alert(
                     "No URL",
                     "This entry doesn't contain a URL meta field."
-                    [
-                        { text: "OK", onPress: () => {} }
-                    ],
+                    [ { text: "OK", onPress: () => {} } ],
                     { cancelable: false }
                 );
             }
