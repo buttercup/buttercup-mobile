@@ -27,6 +27,7 @@ import {
 import { getEntry } from "../shared/entry.js";
 import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
 import { saveCurrentArchive } from "../shared/archive.js";
+import { updateCurrentArchive } from "../shared/archiveContents.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -48,6 +49,29 @@ export default connect(
         },
         onAddMeta:                  () => () => Actions.addMeta(),
         onCancelEdit:               () => dispatch => dispatch(setEntryEditing(false)),
+        onDeletePressed:            () => (dispatch, getState) => {
+            const state = getState();
+            const sourceID = getSourceID(state);
+            const entryID = getEntryID(state);
+            const entry = getEntry(sourceID, entryID);
+            entry.delete();
+            dispatch(setSaving(true));
+            saveCurrentArchive()
+                .then(() => {
+                    dispatch(setSaving(false));
+                    updateCurrentArchive();
+                    Actions.pop();
+                    dispatch(setNotification("Deleted entry"));
+                    setTimeout(() => {
+                        // clear notification
+                        dispatch(setNotification(""));
+                    }, 1000);
+                })
+                .catch(err => {
+                    dispatch(setSaving(false));
+                    handleError("Deleting failed", err);
+                });
+        },
         onEditPressed:              () => dispatch => dispatch(setEntryEditing(true)),
         onFieldValueChange:         (field, property, value) => dispatch => {
             dispatch(setFacadeValue({

@@ -159,7 +159,7 @@ class EntryPage extends Component {
                 <Cell
                     key="delete"
                     title="Delete"
-                    onPress={() => {}}
+                    onPress={() => this.props.onDeletePressed()}
                     tintColor="#FF0000"
                     />
             </CellGroup>
@@ -196,6 +196,7 @@ EntryPage.propTypes = {
     meta:                   PropTypes.arrayOf(PropTypes.object).isRequired,
     onAddMeta:              PropTypes.func.isRequired,
     onCancelEdit:           PropTypes.func.isRequired,
+    onDeletePressed:        PropTypes.func.isRequired,
     onEditPressed:          PropTypes.func.isRequired,
     onFieldValueChange:     PropTypes.func.isRequired,
     onOpenPressed:          PropTypes.func.isRequired,
