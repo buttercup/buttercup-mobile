@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
 
 class NewEntryPage extends Component {
 
+    componentWillUnmount() {
+        this.props.onUnmount();
+    }
+
     handleValueChange(key, value) {
         this.props.setPropertyValue(key, value);
     }
@@ -68,10 +72,15 @@ class NewEntryPage extends Component {
 
 NewEntryPage.propTypes = {
     isSaving:                   PropTypes.bool.isRequired,
+    onUnmount:                  PropTypes.func,
     password:                   PropTypes.string.isRequired,
     setPropertyValue:           PropTypes.func.isRequired,
     title:                      PropTypes.string.isRequired,
     username:                   PropTypes.string.isRequired
+};
+
+NewEntryPage.defaultProps = {
+    onUnmount:                  () => {}
 };
 
 export default NewEntryPage;

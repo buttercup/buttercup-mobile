@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
 
 class AddMetaPage extends Component {
 
+    componentWillUnmount() {
+        this.props.onUnmount();
+    }
+
     handleKeyChange(key) {
         this.props.setMetaValues(key, this.props.metaValue);
     }
@@ -52,13 +56,15 @@ class AddMetaPage extends Component {
 
 AddMetaPage.propTypes = {
     metaKey:                    PropTypes.string,
-    setMetaValues:              PropTypes.func.isRequired,
-    metaValue:                  PropTypes.string
+    metaValue:                  PropTypes.string,
+    onUnmount:                  PropTypes.func,
+    setMetaValues:              PropTypes.func.isRequired
 };
 
 AddMetaPage.defaultProps = {
     metaKey:                    "",
-    metaValue:                  ""
+    metaValue:                  "",
+    onUnmount:                  () => {}
 };
 
 export default AddMetaPage;

@@ -5,7 +5,10 @@ import {
     getNewTitle,
     getNewUsername
 } from "../selectors/entry.js";
-import { setNewEntryProperty } from "../actions/entry.js";
+import {
+    clearNewEntry,
+    setNewEntryProperty
+} from "../actions/entry.js";
 import { isSaving } from "../selectors/app.js";
 
 export default connect(
@@ -16,6 +19,7 @@ export default connect(
         username:               getNewUsername(state)
     }),
     {
+        onUnmount:              () => dispatch => dispatch(clearNewEntry()),
         setPropertyValue:       (key, value) => dispatch => dispatch(setNewEntryProperty({ key, value }))
     }
 )(NewEntryPage);
