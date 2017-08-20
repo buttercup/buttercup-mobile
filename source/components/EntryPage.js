@@ -6,35 +6,22 @@ import {
 import PropTypes from "prop-types";
 import { Actions } from "react-native-router-flux";
 import Notification from "react-native-notification";
+import Spinner from "react-native-loading-spinner-overlay";
 import {
     Cell,
     CellGroup,
-    // CellInput,
-    // TagsInput,
-    // SelectList,
-    // CellSheet,
-    // ActionItem,
-    // CellDatePicker,
-    // CellListProvider,
-    // CellListItem,
-    // CellSlider
+    CellInput
 } from "react-native-cell-components";
+import {
+    EntryRouteNormalProps,
+    EntryRouteSaveProps
+} from "../shared/dynamicRoutes.js";
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 64,
         width: "100%"
     }
 });
-
-function displayValueForProp(propName, value) {
-    switch(propName) {
-        case "password":
-            return "••••••••••";
-        default:
-            return value;
-    }
-}
 
 function iconLabelForProp(propName) {
     switch(propName.toLowerCase()) {
@@ -55,58 +42,167 @@ class EntryPage extends Component {
 
     constructor(...args) {
         super(...args);
-        this.hasUpdatedTitle = false;
+        this.lastTitle = "";
+    }
+
+    componentWillReceiveProps(props) {
+        this.updateTitle(props);
     }
 
     componentDidMount() {
-        if (!this.hasUpdatedTitle && this.props.title && this.props.title.length > 0) {
-            this.hasUpdatedTitle = true;
-            Actions.refresh({ title: this.props.title });
+        this.updateTitle();
+    }
+
+    componentWillUnmount() {
+        this.props.onCancelEdit();
+    }
+
+    displayValueForProp(propName, value) {
+        if (this.props.editing) {
+            return value;
         }
+        switch(propName) {
+            case "password":
+                return "••••••••••";
+            default:
+                return value;
+        }
+    }
+
+    filterFields(fields) {
+        if (this.props.editing) {
+            return fields;
+        }
+        return fields.filter(item =>
+            item.field !== "property" ||
+            (item.field === "property" && item.property !== "title")
+        );
     }
 
     handleCellPress(key, value) {
         this.props.copyToClipboard(key, value);
     }
 
+    modifyField(field, newValue) {
+        this.props.onFieldValueChange(field.field, field.property, newValue);
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <CellGroup header="Properties">
-                    {this.props.properties.map(field =>
-                        <Cell
-                            key={field.property}
-                            title={field.title}
-                            value={displayValueForProp(field.property, field.value)}
-                            icon={iconLabelForProp(field.property)}
-                            onPress={() => this.handleCellPress(field.title, field.value)}
-                            />
-                    )}
+                    {this.filterFields(this.props.properties).map(field => this.renderContentCell(field))}
                 </CellGroup>
                 <CellGroup header="Meta">
-                    {this.props.meta.map(field =>
+                    {this.props.meta.map(field => this.renderContentCell(field))}
+                    {this.props.editing ?
                         <Cell
-                            key={field.property}
-                            title={field.title}
-                            value={displayValueForProp(field.property, field.value)}
-                            icon={iconLabelForProp(field.property)}
-                            onPress={() => this.handleCellPress(field.title, field.value)}
-                            />
-                    )}
+                            key="$add"
+                            title="＋ Add"
+                            onPress={() => this.props.onAddMeta()}
+                            tintColor="#1144FF"
+                            /> :
+                            null
+                    }
                 </CellGroup>
+                {this.renderEditButtons()}
                 <Notification
                     message={this.props.entryNotificationMessage}
                     />
+                <Spinner
+                    visible={this.props.saving}
+                    textContent="Saving"
+                    textStyle={{ color: "#FFF" }}
+                    overlayColor="rgba(0, 0, 0, 0.75)"
+                    />
             </View>
         );
+    }
+
+    renderContentCell(field) {
+        const CellType = this.props.editing ?
+            CellInput :
+            Cell;
+        return (
+            <CellType
+                key={field.property}
+                title={field.title}
+                value={this.displayValueForProp(field.property, field.value)}
+                icon={iconLabelForProp(field.property)}
+                onPress={() => this.handleCellPress(field.title, field.value)}
+                onChangeText={newText => this.modifyField(field, newText)}
+                />
+        );
+    }
+
+    renderEditButtons() {
+        if (this.props.editing) {
+            return (
+                <CellGroup>
+                    <Cell
+                        key="cancel"
+                        title="Cancel"
+                        onPress={() => this.props.onCancelEdit()}
+                        tintColor="#FF0000"
+                        />
+                </CellGroup>
+            );
+        }
+        return (
+            <CellGroup>
+                <Cell
+                    key="edit"
+                    title="Edit"
+                    onPress={() => this.props.onEditPressed()}
+                    tintColor="#1144FF"
+                    />
+                <Cell
+                    key="delete"
+                    title="Delete"
+                    onPress={() => this.props.onDeletePressed()}
+                    tintColor="#FF0000"
+                    />
+            </CellGroup>
+        );
+    }
+
+    updateTitle(props = this.props) {
+        const title = props.editing ?
+            `Edit: ${props.title}` :
+            props.title;
+        const navConfig = props.editing ?
+            {
+                ...EntryRouteSaveProps,
+                onRight: () => this.props.onSavePressed()
+            } :
+            {
+                ...EntryRouteNormalProps,
+                onRight: () => this.props.onOpenPressed()
+            };
+        if (title !== this.lastTitle) {
+            this.lastTitle = title;
+            Actions.refresh({
+                title,
+                ...navConfig
+            });
+        }
     }
 
 }
 
 EntryPage.propTypes = {
     copyToClipboard:        PropTypes.func.isRequired,
+    editing:                PropTypes.bool.isRequired,
     meta:                   PropTypes.arrayOf(PropTypes.object).isRequired,
+    onAddMeta:              PropTypes.func.isRequired,
+    onCancelEdit:           PropTypes.func.isRequired,
+    onDeletePressed:        PropTypes.func.isRequired,
+    onEditPressed:          PropTypes.func.isRequired,
+    onFieldValueChange:     PropTypes.func.isRequired,
+    onOpenPressed:          PropTypes.func.isRequired,
+    onSavePressed:          PropTypes.func.isRequired,
     properties:             PropTypes.arrayOf(PropTypes.object).isRequired,
+    saving:                 PropTypes.bool.isRequired,
     title:                  PropTypes.string.isRequired
 };
 

@@ -7,7 +7,6 @@ import ArchivesList from "../containers/ArchivesList.js";
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 64,
         width: "100%"
     }
 });

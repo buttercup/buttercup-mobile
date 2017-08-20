@@ -7,6 +7,8 @@ export const ADD_ARCHIVE_SET_PASSWORD =                 "addArchive/setPassword"
 export const ADD_ARCHIVE_SET_URL =                      "addArchive/setURL";
 export const ADD_ARCHIVE_SET_USERNAME =                 "addArchive/setUsername";
 
+export const APP_SET_SAVING =                           "app/setSaving";
+
 export const ARCHIVE_CONTENTS_SET_GROUPS =              "archiveContents/setGroups";
 export const ARCHIVE_CONTENTS_SET_SOURCE =              "archiveContentsPage/setSource";
 
@@ -19,7 +21,14 @@ export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT =       "archives/toggleUnlockPa
 export const ARCHIVES_UNLOCK_SOURCE =                   "archives/unlockSource";
 
 export const ENTRY_LOAD =                               "entry/load";
+export const ENTRY_NEW_CLEAR =                          "entry/clearNew";
+export const ENTRY_NEW_META_CLEAR =                     "entry/clearNewMeta";
+export const ENTRY_NEW_META_SET =                       "entry/setNewMetaValues";
 export const ENTRY_NOTIFICATION_SET =                   "entry/setNotificationMessage";
+export const ENTRY_SET_EDITING =                        "entry/setEditing";
+export const ENTRY_SET_FACADE_VALUE =                   "entry/setFacadeValue";
+export const ENTRY_SET_NEW_PARENT_GROUP =               "entry/setNewEntryParentGroup";
+export const ENTRY_SET_NEW_PROPERTY_VALUE =             "entry/setNewEntryPropertyValue";
 export const ENTRY_UNLOAD =                             "entry/unload";
 
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";

@@ -14,7 +14,9 @@ import { Button } from "react-native-elements";
 const ACCORDION_ITEM_HEIGHT = 48;
 const ENTRY_ICON = require("../../resources/images/entry-256.png");
 const GROUP_ICON = require("../../resources/images/group-256.png");
-const ICON_SIZE = ACCORDION_ITEM_HEIGHT - 8;
+const ADD_ICON = require("../../resources/images/add-256.png");
+const IMAGE_SIZE = ACCORDION_ITEM_HEIGHT - 8;
+// const ICON_SIZE = IMAGE_SIZE - 6;
 
 const styles = StyleSheet.create({
     accordionHeaderView: {
@@ -37,27 +39,26 @@ function renderItem(section) {
     const imageStyle = {
         flex: 0,
         marginLeft: imageLeft,
-        width: ICON_SIZE,
-        height: ICON_SIZE
-    }
-    const itemElement = (
-        <View style={styles.accordionHeaderView} key={section.id}>
-            <Image
-                style={imageStyle}
-                source={section.type === "group" ? GROUP_ICON : ENTRY_ICON}
-                />
-            <Text style={textStyle}>{section.title}</Text>
-        </View>
-    );
-    return section.type === "group" ?
-        itemElement :
+        width: IMAGE_SIZE,
+        height: IMAGE_SIZE
+    };
+    const touchable = typeof this.onPress === "function" || typeof section.onPress === "function";
+    return (
         <TouchableHighlight
+            disabled={!touchable}
             key={section.id}
-            onPress={() => this.onPress(section.id)}
+            onPress={() => (this.onPress || section.onPress)(section.id, this.parentID)}
             underlayColor="white"
             >
-                {itemElement}
+                <View style={styles.accordionHeaderView} key={section.id}>
+                    <Image
+                        style={imageStyle}
+                        source={section.icon}
+                        />
+                    <Text style={textStyle}>{section.title}</Text>
+                </View>
         </TouchableHighlight>
+    );
 }
 
 function renderSection(section) {
@@ -68,6 +69,7 @@ function renderSection(section) {
                 groups={section.content.groups}
                 entries={section.content.entries}
                 level={this.level + 1}
+                parentID={section.id}
                 />
         </View>
     );
@@ -80,7 +82,8 @@ class GroupsList extends Component {
             id: entry.id,
             title: entry.properties.title,
             content: entry,
-            type: "entry"
+            onPress: () => {},
+            icon: ENTRY_ICON
         }));
     }
 
@@ -89,8 +92,22 @@ class GroupsList extends Component {
             id: group.id,
             title: group.title,
             content: group,
-            type: "group"
+            icon: GROUP_ICON
         }));
+    }
+
+    getMiscSections() {
+        return [
+            {
+                id: "button-add",
+                title: "Add",
+                content: null,
+                onPress: (targetID, parentID) => {
+                    this.props.onAddPressed(parentID);
+                },
+                icon: ADD_ICON
+            }
+        ];
     }
 
     render() {
@@ -107,12 +124,21 @@ class GroupsList extends Component {
                 <View>
                     <Accordion
                         sections={this.getGroupSections()}
-                        renderHeader={renderItem.bind({ level })}
+                        renderHeader={renderItem.bind({
+                            level,
+                            parentID: this.props.parentID
+                        })}
                         renderContent={renderSection.bind({ level })}
+                        underlayColor="white"
                         />
                     {this.getEntrySections().map(section => renderItem.call({
                         level,
-                        onPress: id => this.props.loadEntry(id)
+                        onPress: id => this.props.loadEntry(id),
+                        parentID: this.props.parentID
+                    }, section))}
+                    {this.getMiscSections().map(section => renderItem.call({
+                        level,
+                        parentID: this.props.parentID
                     }, section))}
                 </View>
             </RootElement>
@@ -124,7 +150,13 @@ class GroupsList extends Component {
 GroupsList.propTypes = {
     groups:             PropTypes.arrayOf(PropTypes.object).isRequired,
     level:              PropTypes.number.isRequired,
-    loadEntry:          PropTypes.func.isRequired
+    loadEntry:          PropTypes.func.isRequired,
+    onAddPressed:       PropTypes.func.isRequired,
+    parentID:           PropTypes.string
+};
+
+GroupsList.defaultProps = {
+    parentID:           "0"
 };
 
 export default GroupsList;

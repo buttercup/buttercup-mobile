@@ -19,8 +19,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-start",
         alignItems: "center",
-        backgroundColor: "transparent",
-        marginTop: 64
+        backgroundColor: "transparent"
     },
     connectButton: {
         backgroundColor: "rgb(0, 183, 172)",

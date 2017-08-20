@@ -1,20 +1,47 @@
 import React from "react";
 import { connect } from "react-redux";
+import {
+    Image,
+    StyleSheet,
+    Text,
+    View
+} from "react-native";
 import { Actions, Router, Scene } from "react-native-router-flux";
 import ArchivesPage from "./components/ArchivesPage.js";
 import AddArchivePage from "./containers/AddArchivePage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
+import AddMetaPage from "./containers/AddMetaPage.js";
 import EntryPage from "./containers/EntryPage.js";
+import NewEntryPage from "./containers/NewEntryPage.js";
 import { showNewPrompt } from "./actions/RemoteExplorerPage.js";
 import { showArchivesPageRightSheet } from "./shared/sheets.js";
+import { saveNewEntry, saveNewMeta } from "./shared/entry.js";
+import { EntryRouteNormalProps } from "./shared/dynamicRoutes.js";
 
 import { dispatch } from "./store.js";
 
-const RouterWithRedux = connect()(Router);
+const BUTTERCUP_LOGO = require("../resources/images/buttercup-header.png");
+
+const styles = StyleSheet.create({
+    rootHeaderContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: 25
+    },
+    rooterHeaderLogo: {
+        flex: 1,
+        height: 25,
+        width: 129,
+        marginBottom: -12
+    }
+});
 
 export function getRouter() {
+    const RouterWithRedux = connect()(Router);
     return (
         <RouterWithRedux>
             <Scene key="root">
@@ -23,7 +50,16 @@ export function getRouter() {
                     component={ArchivesPage}
                     initial={true}
                     hideNavBar={false}
-                    title="Buttercup"
+                    title=""
+                    renderTitle={() => (
+                        <View style={styles.rootHeaderContainer}>
+                            <Image
+                                source={BUTTERCUP_LOGO}
+                                style={styles.rooterHeaderLogo}
+                                resizeMode="contain"
+                                />
+                        </View>
+                    )}
                     rightTitle="🔐"
                     onRight={showArchivesPageRightSheet}
                     leftTitle="⚙️"
@@ -34,6 +70,7 @@ export function getRouter() {
                     component={AddArchivePage}
                     hideNavBar={false}
                     title="Add Archive"
+                    backTitle=""
                     />
                 <Scene
                     key="remoteConnect"
@@ -54,12 +91,32 @@ export function getRouter() {
                     component={ArchiveContentsPage}
                     hideNavBar={false}
                     title=""
+                    backTitle=""
                     />
                 <Scene
                     key="entry"
                     component={EntryPage}
                     hideNavBar={false}
                     title=""
+                    {...EntryRouteNormalProps}
+                    />
+                <Scene
+                    key="addMeta"
+                    component={AddMetaPage}
+                    hideNavBar={false}
+                    title="Add New Meta"
+                    backTitle="Cancel"
+                    rightTitle="Add"
+                    onRight={saveNewMeta}
+                    />
+                <Scene
+                    key="newEntry"
+                    component={NewEntryPage}
+                    hideNavBar={false}
+                    title="New Entry"
+                    backTitle="Cancel"
+                    rightTitle="Create"
+                    onRight={saveNewEntry}
                     />
             </Scene>
         </RouterWithRedux>
