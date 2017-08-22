@@ -12,11 +12,12 @@ import PropTypes from "prop-types";
 import { Button } from "react-native-elements";
 
 const ACCORDION_ITEM_HEIGHT = 48;
+const ARCHIVE_ENTRY_TRASH_ATTRIBUTE = "bc_group_role";
+const ARCHIVE_ENTRY_TRASH_ROLE = "trash";
 const ENTRY_ICON = require("../../resources/images/entry-256.png");
 const GROUP_ICON = require("../../resources/images/group-256.png");
 const ADD_ICON = require("../../resources/images/add-256.png");
 const IMAGE_SIZE = ACCORDION_ITEM_HEIGHT - 8;
-// const ICON_SIZE = IMAGE_SIZE - 6;
 
 const styles = StyleSheet.create({
     accordionHeaderView: {
@@ -70,6 +71,7 @@ function renderSection(section) {
                 entries={section.content.entries}
                 level={this.level + 1}
                 parentID={section.id}
+                isTrash={section.content.trash}
                 />
         </View>
     );
@@ -88,26 +90,34 @@ class GroupsList extends Component {
     }
 
     getGroupSections() {
+        const isTrash = !!this.props.isTrash;
         return this.props.groups.map(group => ({
             id: group.id,
             title: group.title,
-            content: group,
+            content: {
+                ...group,
+                trash: isTrash ||
+                    (group.attributes &&
+                        group.attributes[ARCHIVE_ENTRY_TRASH_ATTRIBUTE] === ARCHIVE_ENTRY_TRASH_ROLE)
+            },
             icon: GROUP_ICON
         }));
     }
 
     getMiscSections() {
-        return [
-            {
-                id: "button-add",
-                title: "Add",
-                content: null,
-                onPress: (targetID, parentID) => {
-                    this.props.onAddPressed(parentID);
-                },
-                icon: ADD_ICON
-            }
-        ];
+        return this.props.isTrash ?
+            [] :
+            [
+                {
+                    id: "button-add",
+                    title: "Add",
+                    content: null,
+                    onPress: (targetID, parentID) => {
+                        this.props.onAddPressed(parentID);
+                    },
+                    icon: ADD_ICON
+                }
+            ];
     }
 
     render() {
@@ -149,6 +159,7 @@ class GroupsList extends Component {
 
 GroupsList.propTypes = {
     groups:             PropTypes.arrayOf(PropTypes.object).isRequired,
+    isTrash:            PropTypes.bool,
     level:              PropTypes.number.isRequired,
     loadEntry:          PropTypes.func.isRequired,
     onAddPressed:       PropTypes.func.isRequired,
@@ -156,6 +167,7 @@ GroupsList.propTypes = {
 };
 
 GroupsList.defaultProps = {
+    isTrash:            false,
     parentID:           "0"
 };
 

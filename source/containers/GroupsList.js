@@ -16,6 +16,7 @@ export default connect(
     (state, ownProps) => ({
         entries:                ownProps.entries || [],
         groups:                 ownProps.groups || getGroupsUnderID(state, ownProps.groupID),
+        isTrash:                ownProps.isTrash,
         level:                  ownProps.level || 0,
         parentID:               ownProps.parentID || "0"
     }),
