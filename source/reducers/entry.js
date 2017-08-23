@@ -59,13 +59,6 @@ export default function entryReducer(state = INITIAL, action = {}) {
                 ...state,
                 newMeta: INITIAL.newMeta
             };
-        // case ActionConst.BACK_ACTION:
-        //     return {
-        //         ...state,
-        //         editing: false,
-        //         newMeta: INITIAL.newMeta,
-        //         newEntry: INITIAL.newEntry
-        //     };
         case ENTRY_NEW_META_SET:
             return {
                 ...state,
