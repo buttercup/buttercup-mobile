@@ -30,6 +30,12 @@ int const IV_BYTE_LEN = 16;
 //}
 
 + (NSString *)encryptText:(NSString *)text withKey:(NSString *)key andSalt:(NSString *)salt andHMAC:(NSString *)hmacKey andRounds:(int)pbkdf2Rounds {
+    // Validation
+    if (key.length != 64) {
+        return @"Error:Invalid key length";
+    } else if (hmacKey.length != 64) {
+        return @"Error:Invalid authentication information or possible tampering";
+    }
     // Data prep
     NSString *iv = [BCCrypto generateIV];
     NSData *ivData = [iv dataUsingEncoding:NSUTF8StringEncoding];
@@ -41,11 +47,20 @@ int const IV_BYTE_LEN = 16;
     size_t cryptBytes = 0;
     NSMutableData *dataOut = [NSMutableData dataWithLength:dataIn.length + kCCBlockSizeAES128];
     // Crypto
-    ccStatus = CCCrypt(kCCEncrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding, keyData.bytes, keyData.length, ivData.bytes, dataIn.bytes, dataIn.length, dataOut.mutableBytes, dataOut.length, &cryptBytes);
+    ccStatus = CCCrypt(
+                       kCCEncrypt,
+                       kCCAlgorithmAES128,
+                       kCCOptionPKCS7Padding,
+                       keyData.bytes, keyData.length,
+                       ivData.bytes,
+                       dataIn.bytes, dataIn.length,
+                       dataOut.mutableBytes, dataOut.length,
+                       &cryptBytes
+    );
     if (ccStatus == kCCSuccess) {
         dataOut.length = cryptBytes;
     } else {
-        return @"Error";
+        return [NSString stringWithFormat:@"Error=%i", ccStatus];
     }
     NSString *encryptedContent = [dataOut base64EncodedStringWithOptions:0];
     // HMAC
@@ -60,8 +75,6 @@ int const IV_BYTE_LEN = 16;
     NSString *hmacHex = [BCHelpers hexStringFromData:hmacData];
     // Join
     return [NSString stringWithFormat:@"%@|%@|%@", encryptedContent, hmacHex, ivHex];
-//    NSString *encryptedContent = [BCHelpers hexStringFromData:dataOut];
-//    return [NSString stringWithFormat:@"%@|%@", encryptedContent, iv];
 }
 
 + (NSString *)generateIV {
