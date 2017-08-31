@@ -13,7 +13,7 @@ extern int const IV_BYTE_LEN;
 @interface BCCrypto : NSObject
 
 + (NSString *)decryptText:(NSString *)encryptedText withKey:(NSString *)key andIV:(NSString *)ivHex andSalt:(NSString *)saltHex andHMACKey:(NSString *)hmacHexKey andHMAC:(NSString *)hmacHex;
-+ (NSString *)encryptText:(NSString *)text withKey:(NSString *)key andSalt:(NSString *)salt andHMAC:(NSString *)hmacHexKey andRounds:(int)pbkdf2Rounds;
++ (NSString *)encryptText:(NSString *)text withKey:(NSString *)key andSalt:(NSString *)salt andHMAC:(NSString *)hmacHexKey;
 + (NSString *)generateIV;
 + (NSString *)generateSaltWithLength:(int)length;
 

@@ -27,33 +27,61 @@ function constantTimeCompare(val1, val2) {
 }
 
 function decrypt(encryptedComponents, keyDerivationInfo) {
-    // Extract the components
-    console.log("DEC", encryptedComponents, keyDerivationInfo);
-    const encryptedContent = encryptedComponents.content;
-    // const iv = Buffer.from(encryptedComponents.iv, "hex");
-    const iv = new Buffer(encryptedComponents.iv, "hex");
-    const salt = encryptedComponents.salt;
-    const hmacData = encryptedComponents.hmac;
-    // Get HMAC tool
-    const hmacTool = createHmac(HMAC_ALGO, keyDerivationInfo.hmac);
-    // Generate the HMAC
-    console.log("Before hmac");
-    hmacTool.update(encryptedContent);
-    hmacTool.update(encryptedComponents.iv);
-    hmacTool.update(salt);
-    const newHmaxHex = hmacTool.digest("hex");
-    // Check hmac for tampering
-    if (constantTimeCompare(hmacData, newHmaxHex) !== true) {
-        throw new Error("Authentication failed while decrypting content");
-    }
-    // Decrypt
-    console.log("Before decipher");
-    const decryptTool = createDecipheriv(ENCRYPTION_ALGO, keyDerivationInfo.key, iv);
-    const decryptedText = decryptTool.update(encryptedContent, "base64", "utf8");
-    console.log("Before result");
-    const res = decryptedText + decryptTool.final("utf8");
-    console.log("DOne.");
-    return res;
+    const callBridge = (new Promise(function(resolve, reject) {
+        CryptoBridge.decryptText(
+            encryptedComponents.content,
+            keyDerivationInfo.key.toString("hex"),
+            encryptedComponents.iv,
+            encryptedComponents.salt,
+            keyDerivationInfo.hmac.toString("hex"),
+            encryptedComponents.hmac,
+            (err, result) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (/^Error/i.test(result)) {
+                    let errorMessage = "Unknown decrypt error";
+                    const errorCodeMatch = /^Error=([0-9-]+)/i.exec(result);
+                    const errorMessageMatch = /^Error:(.+)/i.exec(result);
+                    if (errorCodeMatch) {
+                        errorMessage = `Error code ${errorCodeMatch[1]}`;
+                    } else if (errorMessageMatch) {
+                        errorMessage = errorMessageMatch[1];
+                    }
+                    return reject(new Error(errorMessage));
+                }
+                return resolve(result);
+            }
+        );
+    }));
+    return callBridge;
+    // // Extract the components
+    // console.log("DEC", encryptedComponents, keyDerivationInfo);
+    // const encryptedContent = encryptedComponents.content;
+    // // const iv = Buffer.from(encryptedComponents.iv, "hex");
+    // const iv = new Buffer(encryptedComponents.iv, "hex");
+    // const salt = encryptedComponents.salt;
+    // const hmacData = encryptedComponents.hmac;
+    // // Get HMAC tool
+    // const hmacTool = createHmac(HMAC_ALGO, keyDerivationInfo.hmac);
+    // // Generate the HMAC
+    // console.log("Before hmac");
+    // hmacTool.update(encryptedContent);
+    // hmacTool.update(encryptedComponents.iv);
+    // hmacTool.update(salt);
+    // const newHmaxHex = hmacTool.digest("hex");
+    // // Check hmac for tampering
+    // if (constantTimeCompare(hmacData, newHmaxHex) !== true) {
+    //     throw new Error("Authentication failed while decrypting content");
+    // }
+    // // Decrypt
+    // console.log("Before decipher");
+    // const decryptTool = createDecipheriv(ENCRYPTION_ALGO, keyDerivationInfo.key, iv);
+    // const decryptedText = decryptTool.update(encryptedContent, "base64", "utf8");
+    // console.log("Before result");
+    // const res = decryptedText + decryptTool.final("utf8");
+    // console.log("DOne.");
+    // return res;
 }
 
 export function deriveKeyNatively(password, salt, rounds) {

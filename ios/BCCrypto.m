@@ -23,13 +23,14 @@ int const IV_BYTE_LEN = 16;
     NSData *ivData = [BCHelpers dataFromHexString:ivHex];
     // HMAC verification
     NSString *hmacTarget = [NSString stringWithFormat:@"%@%@%@", encryptedText, ivHex, saltHex];
-    const char *cKey  = [hmacHexKey cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *cKey = [BCHelpers characterArrayFromHexString:hmacHexKey];
     const char *cData = [hmacTarget cStringUsingEncoding:NSASCIIStringEncoding];
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
     CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
     NSData *hmacData = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
     NSString *reproducedHmac = [BCHelpers hexStringFromData:hmacData];
     if (![BCHelpers constantTimeCompare:reproducedHmac toChallenger:hmacHex]) {
+//        return [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@\n\n\n%@ === %@", key, ivHex, saltHex, hmacHexKey, hmacHex, reproducedHmac, hmacHex];
         return @"Error:Authentication failed - possible tampering";
     }
     // Crypto prep
@@ -55,7 +56,7 @@ int const IV_BYTE_LEN = 16;
     return decryptedText;
 }
 
-+ (NSString *)encryptText:(NSString *)text withKey:(NSString *)key andSalt:(NSString *)salt andHMAC:(NSString *)hmacHexKey andRounds:(int)pbkdf2Rounds {
++ (NSString *)encryptText:(NSString *)text withKey:(NSString *)key andSalt:(NSString *)salt andHMAC:(NSString *)hmacHexKey {
     // Validation
     if (key.length != 64) {
         return @"Error:Invalid key length";
@@ -93,7 +94,7 @@ int const IV_BYTE_LEN = 16;
     NSString *saltHex = [BCHelpers hexStringFromData:saltData];
     NSString *ivHex = [BCHelpers hexStringFromData:ivData];
     NSString *hmacTarget = [NSString stringWithFormat:@"%@%@%@", encryptedContent, ivHex, saltHex];
-    const char *cKey  = [hmacHexKey cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *cKey = [BCHelpers characterArrayFromHexString:hmacHexKey];
     const char *cData = [hmacTarget cStringUsingEncoding:NSASCIIStringEncoding];
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
     CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
