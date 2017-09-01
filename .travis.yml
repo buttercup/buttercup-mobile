@@ -10,7 +10,7 @@ matrix:
       os: osx
       osx_image: xcode8.3
       script:
-        - xcodebuild -workspace ios/Buttercup.xcodeproj/project.xcworkspace -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
+        - xcodebuild -workspace ./ios/Buttercup.xcodeproj/project.xcworkspace -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
 
 # language: node_js
 # script: npm run test
