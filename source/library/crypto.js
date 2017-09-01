@@ -55,33 +55,6 @@ function decrypt(encryptedComponents, keyDerivationInfo) {
         );
     }));
     return callBridge;
-    // // Extract the components
-    // console.log("DEC", encryptedComponents, keyDerivationInfo);
-    // const encryptedContent = encryptedComponents.content;
-    // // const iv = Buffer.from(encryptedComponents.iv, "hex");
-    // const iv = new Buffer(encryptedComponents.iv, "hex");
-    // const salt = encryptedComponents.salt;
-    // const hmacData = encryptedComponents.hmac;
-    // // Get HMAC tool
-    // const hmacTool = createHmac(HMAC_ALGO, keyDerivationInfo.hmac);
-    // // Generate the HMAC
-    // console.log("Before hmac");
-    // hmacTool.update(encryptedContent);
-    // hmacTool.update(encryptedComponents.iv);
-    // hmacTool.update(salt);
-    // const newHmaxHex = hmacTool.digest("hex");
-    // // Check hmac for tampering
-    // if (constantTimeCompare(hmacData, newHmaxHex) !== true) {
-    //     throw new Error("Authentication failed while decrypting content");
-    // }
-    // // Decrypt
-    // console.log("Before decipher");
-    // const decryptTool = createDecipheriv(ENCRYPTION_ALGO, keyDerivationInfo.key, iv);
-    // const decryptedText = decryptTool.update(encryptedContent, "base64", "utf8");
-    // console.log("Before result");
-    // const res = decryptedText + decryptTool.final("utf8");
-    // console.log("DOne.");
-    // return res;
 }
 
 export function deriveKeyNatively(password, salt, rounds) {
@@ -99,12 +72,6 @@ export function deriveKeyNatively(password, salt, rounds) {
 
 function encrypt(text, keyDerivationInfo) {
     const callBridge = (new Promise(function(resolve, reject) {
-        console.log("SEND", [
-            text,
-            keyDerivationInfo.key.toString("hex"),
-            keyDerivationInfo.salt,
-            keyDerivationInfo.hmac.toString("hex")
-        ]);
         CryptoBridge.encryptText(
             text,
             keyDerivationInfo.key.toString("hex"),
@@ -132,13 +99,6 @@ function encrypt(text, keyDerivationInfo) {
                     iv,
                     salt
                 ] = result.split("|");
-                console.log({
-                    hmac,
-                    iv,
-                    salt,
-                    rounds: keyDerivationInfo.rounds,
-                    encryptedContent
-                });
                 return resolve({
                     hmac,
                     iv,
@@ -150,26 +110,6 @@ function encrypt(text, keyDerivationInfo) {
         );
     }));
     return callBridge;
-    // const iv = generateIV();
-    // const encryptTool = createCipheriv(ENCRYPTION_ALGO, keyDerivationInfo.key, iv);
-    // const hmacTool = createHmac(HMAC_ALGO, keyDerivationInfo.hmac);
-    // const salt = keyDerivationInfo.salt.toString("hex");
-    // const pbkdf2Rounds = keyDerivationInfo.rounds;
-    // // Perform encryption
-    // let encryptedContent = encryptTool.update(text, "utf8", "base64");
-    // encryptedContent += encryptTool.final("base64");
-    // // Generate hmac
-    // hmacTool.update(encryptedContent);
-    // hmacTool.update(ivHex);
-    // hmacTool.update(saltHex);
-    // const hmacHex = hmacTool.digest("hex");
-    // return {
-    //     hmac: hmacHex,
-    //     iv: ivHex,
-    //     salt: saltHex,
-    //     rounds: pbkdf2Rounds,
-    //     encryptedContent
-    // };
 }
 
 function generateIV() {

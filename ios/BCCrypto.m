@@ -30,7 +30,6 @@ int const IV_BYTE_LEN = 16;
     NSData *hmacData = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
     NSString *reproducedHmac = [BCHelpers hexStringFromData:hmacData];
     if (![BCHelpers constantTimeCompare:reproducedHmac toChallenger:hmacHex]) {
-//        return [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@\n\n\n%@ === %@", key, ivHex, saltHex, hmacHexKey, hmacHex, reproducedHmac, hmacHex];
         return @"Error:Authentication failed - possible tampering";
     }
     // Crypto prep
@@ -63,13 +62,12 @@ int const IV_BYTE_LEN = 16;
     } else if (hmacHexKey.length != 64) {
         return @"Error:Invalid authentication information or possible tampering";
     }
-//    return [NSString stringWithFormat:@"Error:\n%@\n%@\n%@\n%@", text, key, salt, hmacHexKey];
     // Data prep
     NSString *iv = [BCCrypto generateIV];
-    NSData *ivData = [iv dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *ivData = [BCHelpers dataFromHexString:iv];
     NSData *dataIn = [text dataUsingEncoding:NSUTF8StringEncoding];
     NSData *keyData = [BCHelpers dataFromHexString:key];
-    NSData *saltData = [salt dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *saltData = [BCHelpers dataFromHexString:salt];
     // Crypto prep
     CCCryptorStatus ccStatus = kCCSuccess;
     size_t cryptBytes = 0;
