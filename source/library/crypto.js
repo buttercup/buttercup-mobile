@@ -98,26 +98,79 @@ export function deriveKeyNatively(password, salt, rounds) {
 }
 
 function encrypt(text, keyDerivationInfo) {
-    const iv = generateIV();
-    const encryptTool = createCipheriv(ENCRYPTION_ALGO, keyDerivationInfo.key, iv);
-    const hmacTool = createHmac(HMAC_ALGO, keyDerivationInfo.hmac);
-    const salt = keyDerivationInfo.salt.toString("hex");
-    const pbkdf2Rounds = keyDerivationInfo.rounds;
-    // Perform encryption
-    let encryptedContent = encryptTool.update(text, "utf8", "base64");
-    encryptedContent += encryptTool.final("base64");
-    // Generate hmac
-    hmacTool.update(encryptedContent);
-    hmacTool.update(ivHex);
-    hmacTool.update(saltHex);
-    const hmacHex = hmacTool.digest("hex");
-    return {
-        hmac: hmacHex,
-        iv: ivHex,
-        salt: saltHex,
-        rounds: pbkdf2Rounds,
-        encryptedContent
-    };
+    text = (new Buffer(text)).toString("hex");
+    const callBridge = (new Promise(function(resolve, reject) {
+        console.log("SEND", [
+            text,
+            keyDerivationInfo.key.toString("hex"),
+            keyDerivationInfo.salt,
+            keyDerivationInfo.hmac.toString("hex")
+        ]);
+        CryptoBridge.encryptText(
+            text,
+            keyDerivationInfo.key.toString("hex"),
+            keyDerivationInfo.salt,
+            keyDerivationInfo.hmac.toString("hex"),
+            (err, result) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (/^Error/i.test(result)) {
+                    let errorMessage = "Unknown encrypt error";
+                    const errorCodeMatch = /^Error=([0-9-]+)/i.exec(result);
+                    const errorMessageMatch = /^Error:((.|\n)+)/i.exec(result);
+                    if (errorCodeMatch) {
+                        errorMessage = `Error code ${errorCodeMatch[1]}`;
+                    } else if (errorMessageMatch) {
+                        errorMessage = errorMessageMatch[1];
+                    }
+                    return reject(new Error(errorMessage));
+                }
+                // Process result
+                const [
+                    encryptedContent,
+                    hmac,
+                    iv,
+                    salt
+                ] = result.split("|");
+                console.log({
+                    hmac,
+                    iv,
+                    salt,
+                    rounds: keyDerivationInfo.rounds,
+                    encryptedContent
+                });
+                return resolve({
+                    hmac,
+                    iv,
+                    salt,
+                    rounds: keyDerivationInfo.rounds,
+                    encryptedContent
+                });
+            }
+        );
+    }));
+    return callBridge;
+    // const iv = generateIV();
+    // const encryptTool = createCipheriv(ENCRYPTION_ALGO, keyDerivationInfo.key, iv);
+    // const hmacTool = createHmac(HMAC_ALGO, keyDerivationInfo.hmac);
+    // const salt = keyDerivationInfo.salt.toString("hex");
+    // const pbkdf2Rounds = keyDerivationInfo.rounds;
+    // // Perform encryption
+    // let encryptedContent = encryptTool.update(text, "utf8", "base64");
+    // encryptedContent += encryptTool.final("base64");
+    // // Generate hmac
+    // hmacTool.update(encryptedContent);
+    // hmacTool.update(ivHex);
+    // hmacTool.update(saltHex);
+    // const hmacHex = hmacTool.digest("hex");
+    // return {
+    //     hmac: hmacHex,
+    //     iv: ivHex,
+    //     salt: saltHex,
+    //     rounds: pbkdf2Rounds,
+    //     encryptedContent
+    // };
 }
 
 function generateIV() {

@@ -63,6 +63,7 @@ int const IV_BYTE_LEN = 16;
     } else if (hmacHexKey.length != 64) {
         return @"Error:Invalid authentication information or possible tampering";
     }
+//    return [NSString stringWithFormat:@"Error:\n%@\n%@\n%@\n%@", text, key, salt, hmacHexKey];
     // Data prep
     NSString *iv = [BCCrypto generateIV];
     NSData *ivData = [iv dataUsingEncoding:NSUTF8StringEncoding];
