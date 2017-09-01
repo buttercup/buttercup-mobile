@@ -98,7 +98,6 @@ export function deriveKeyNatively(password, salt, rounds) {
 }
 
 function encrypt(text, keyDerivationInfo) {
-    text = (new Buffer(text)).toString("hex");
     const callBridge = (new Promise(function(resolve, reject) {
         console.log("SEND", [
             text,
