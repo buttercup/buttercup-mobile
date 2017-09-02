@@ -2,9 +2,15 @@ import test, {
     createWebDAVAdapter,
     createAnyFSAdapter
 } from "@buttercup/mobile-compat";
+import joinURL from "url-join";
 
 const PATH_ABS = /^\//;
 const PATH_PARENT = /^\.\.$/;
+
+export function getOwnCloudConnection(remoteURL, username, password) {
+    const owncloudUrl = joinURL(remoteURL, "/remote.php/webdav");
+    return getWebDAVConnection(owncloudUrl, username, password);
+}
 
 export function getWebDAVConnection(remoteURL, username, password) {
     const webdavFs = username ?

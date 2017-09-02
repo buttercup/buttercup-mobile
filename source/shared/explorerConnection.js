@@ -1,5 +1,5 @@
 import { createCredentials } from "buttercup-web";
-import { getWebDAVConnection } from "../library/remote.js";
+import { getOwnCloudConnection, getWebDAVConnection } from "../library/remote.js";
 import { createEmptyArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
@@ -48,6 +48,11 @@ export function createRemoteConnection(connectionInfo) {
     } = connectionInfo;
     if (archiveType === "webdav") {
         return getWebDAVConnection(remoteURL, remoteUsername, remotePassword)
+            .then(function __storeSharedInstance(afsInstance) {
+                __remoteFSConnection = afsInstance;
+            });
+    } else if (archiveType === "owncloud") {
+        return getOwnCloudConnection(remoteURL, remoteUsername, remotePassword)
             .then(function __storeSharedInstance(afsInstance) {
                 __remoteFSConnection = afsInstance;
             });

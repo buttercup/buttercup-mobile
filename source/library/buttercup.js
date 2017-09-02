@@ -39,6 +39,8 @@ export function createEntryFacade(entry) {
 export function createRemoteCredentials(archiveType, options) {
     const credentials = createCredentials(archiveType);
     switch (archiveType) {
+        case "owncloud":
+            /* falls-through */
         case "webdav": {
             credentials.username = options.username;
             credentials.password = options.password;

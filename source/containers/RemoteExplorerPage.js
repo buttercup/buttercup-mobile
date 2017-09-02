@@ -34,6 +34,7 @@ import {
     createArchiveCredentials,
     createRemoteCredentials
 } from "../library/buttercup.js";
+import { handleError } from "../global/exceptions.js";
 
 function addToArchiveManager(state) {
     const {
@@ -66,7 +67,7 @@ function handleNewArchiveName(name, dispatch, getState) {
         })
         .catch(function __handleAddError(err) {
             dispatch(setAddingArchive(false));
-            throw err;
+            handleError("Failed adding archive", err);
         });
 }
 

@@ -40,10 +40,59 @@ class RemoteConnectPage extends Component {
         switch (this.props.archiveType) {
             case "webdav":
                 return this.renderWebDAV();
+            case "owncloud":
+                return this.renderOwnCloud();
 
             default:
                 throw new Error(`Unknown type: ${this.props.archiveType}`);
         }
+    }
+
+    renderOwnCloud() {
+        const base = { autoCapitalize: "none", keyboardType: "default", spellCheck: false };
+        const urlInputOptions = { ...base, keyboardType: "url" };
+        const usernameInputOptions = { ...base, keyboardType: "email-address" };
+        const passwordInputOptions = { ...base, secureTextEntry: true };
+        return (
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <Text h3>OwnCloud</Text>
+                    <View>
+                        <FormLabel>OwnCloud URL</FormLabel>
+                        <FormInput
+                            value={this.props.url}
+                            onChangeText={this.props.onChangeURL}
+                            {...urlInputOptions}
+                            />
+                        <FormLabel>Username</FormLabel>
+                        <FormInput
+                            value={this.props.username}
+                            onChangeText={this.props.onChangeUsername}
+                            {...usernameInputOptions}
+                            />
+                        <FormLabel>Password</FormLabel>
+                        <FormInput
+                            value={this.props.password}
+                            onChangeText={this.props.onChangePassword}
+                            {...passwordInputOptions}
+                            />
+                        <Button
+                            buttonStyle={styles.connectButton}
+                            large
+                            icon={{ name: "cloud" }}
+                            title="Connect"
+                            onPress={() => this.submit()}
+                            />
+                    </View>
+                    <Spinner
+                        visible={this.props.connecting}
+                        textContent="Connecting"
+                        textStyle={{ color: "#FFF" }}
+                        overlayColor="rgba(0, 0, 0, 0.75)"
+                        />
+                </View>
+            </TouchableWithoutFeedback>
+        );
     }
 
     renderWebDAV() {
