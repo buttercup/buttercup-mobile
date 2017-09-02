@@ -10,6 +10,10 @@ matrix:
       os: osx
       osx_image: xcode8.3
       script:
+        - brew update
+        - brew install nvm
+        - nvm install 8.4.0
+        - npm install
         - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
 
 # language: node_js
