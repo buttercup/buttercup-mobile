@@ -63,7 +63,7 @@ int const IV_BYTE_LEN = 16;
         return @"Error:Invalid authentication information or possible tampering";
     }
     // Data prep
-    NSString *iv = [BCCrypto generateIV];
+    NSString *iv = [BCCrypto generateIVHex];
     NSData *ivData = [BCHelpers dataFromHexString:iv];
     NSData *dataIn = [text dataUsingEncoding:NSUTF8StringEncoding];
     NSData *keyData = [BCHelpers dataFromHexString:key];
@@ -103,16 +103,43 @@ int const IV_BYTE_LEN = 16;
     return [NSString stringWithFormat:@"%@|%@|%@|%@", encryptedContent, hmacHex, ivHex, saltHex];
 }
 
-+ (NSString *)generateIV {
-    return [BCCrypto generateSaltWithLength:IV_BYTE_LEN];
++ (NSString *)generateIVHex {
+    unsigned char salt[IV_BYTE_LEN];
+    for (int i = 0; i < IV_BYTE_LEN; i += 1) {
+        salt[i] = (unsigned char)arc4random();
+    }
+    return [BCHelpers hexStringFromData:[NSData dataWithBytes:salt length:IV_BYTE_LEN]];
+}
+
++ (NSString *)generateRandomStringWithLength:(int)length {
+    NSString *alphabet  = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789!@#$%^&*(){}[]<>,.?~|-=_+";
+    NSMutableString *s = [NSMutableString stringWithCapacity:length];
+    for (NSUInteger i = 0U; i < length; i++) {
+        u_int32_t r = arc4random() % [alphabet length];
+        unichar c = [alphabet characterAtIndex:r];
+        [s appendFormat:@"%C", c];
+    }
+    return s;
 }
 
 + (NSString *)generateSaltWithLength:(int)length {
-    unsigned char salt[length];
-    for (int i = 0; i < length; i += 1) {
-        salt[i] = (unsigned char)arc4random();
+    NSString *randomString = [BCCrypto generateRandomStringWithLength:length * 2];
+    NSData *randomData = [randomString dataUsingEncoding:NSUTF8StringEncoding];
+    return [[BCHelpers hexStringFromData:randomData] substringToIndex:length];
+}
+
++ (NSString *)generateUUID {
+    NSUUID *uuid = [[NSUUID alloc] init];
+    return [uuid.UUIDString lowercaseString];
+}
+
++ (NSArray *)generateUUIDsForCount:(int)count {
+    NSMutableArray *uuids = [[NSMutableArray alloc] init];
+    for (int i = 0; i < count; i += 1) {
+        NSString *uuid = [BCCrypto generateUUID];
+        [uuids addObject:uuid];
     }
-    return [BCHelpers hexStringFromData:[NSData dataWithBytes:salt length:length]];
+    return [NSArray arrayWithArray:uuids];
 }
 
 @end

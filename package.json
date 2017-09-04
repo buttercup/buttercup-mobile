@@ -16,7 +16,7 @@
     "assert": "^1.4.1",
     "browserify-zlib": "^0.1.4",
     "buffer": "^3.6.0",
-    "buttercup-web": "~0.37.0",
+    "buttercup-web": "~0.39.0",
     "console-browserify": "^1.1.0",
     "constants-browserify": "0.0.1",
     "dns.js": "^1.0.1",

@@ -60,5 +60,24 @@
     XCTAssert([decrypted isEqualToString:testString]);
 }
 
+- (void)testGenerateIVHexGeneratesCorrectLength {
+    NSString *iv = [BCCrypto generateIVHex];
+    XCTAssert(iv.length == 32);
+}
+
+- (void)testGenerateSaltGeneratesCorrectLength {
+    NSString *salt12 = [BCCrypto generateSaltWithLength:12];
+    NSString *salt29 = [BCCrypto generateSaltWithLength:29];
+    XCTAssert([salt12 length] == 12);
+    XCTAssert([salt29 length] == 29);
+}
+
+- (void)testGenerateUUID {
+    NSString *uuid = [BCCrypto generateUUID];
+    NSString *uuidRegex = @"^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", uuidRegex];
+    BOOL matches = [test evaluateWithObject:uuid];
+    XCTAssert(matches);
+}
 
 @end
