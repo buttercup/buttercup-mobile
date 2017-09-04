@@ -6,6 +6,7 @@ import {
     entryFacade
 } from "buttercup-web";
 import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
+import { doAsyncWork } from "../global/async.js";
 
 const { SourceStatus: ArchiveSourceStatus } = ArchiveManager;
 
@@ -13,11 +14,12 @@ let __sharedManager = null;
 
 export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
     const manager = getSharedArchiveManager();
-    return manager.addSource(
-        name,
-        sourceCreds,
-        archiveCreds
-    );
+    return doAsyncWork()
+        .then(() => manager.addSource(
+            name,
+            sourceCreds,
+            archiveCreds
+        ));
 }
 
 export function consumeEntryFacade(entry, facade) {
@@ -58,7 +60,9 @@ export function createRemoteCredentials(archiveType, options) {
 
 export function getArchiveEncryptedContent(archive, credentials) {
     const tds = new TextDatasource();
-    return tds.save(archive, credentials);
+    return tds
+        .save(archive, credentials)
+        .then(doAsyncWork);
 }
 
 export function getSharedArchiveManager() {

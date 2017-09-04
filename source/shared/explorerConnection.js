@@ -4,6 +4,7 @@ import { createEmptyArchive, getArchiveEncryptedContent } from "../library/butte
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
 import { /*cancelNewPrompt,*/ selectArchive, setCreatingArchive, showNewNamePrompt } from "../actions/RemoteExplorerPage.js";
+import { doAsyncWork } from "../global/async.js";
 
 const PATH_PARENT = /^\.\./;
 
@@ -17,7 +18,8 @@ export function createNewArchive(state, dispatch) {
         // clear state for new item
         // dispatch(cancelNewPrompt());
         dispatch(setCreatingArchive(true));
-        createNewArchiveFile(currentPath, newPromptFilename, newPromptPassword)
+        return doAsyncWork()
+            .then(() => createNewArchiveFile(currentPath, newPromptFilename, newPromptPassword))
             .then(function __handleCreated(filePath) {
                 dispatch(setCreatingArchive(false));
                 dispatch(selectArchive(filePath));
