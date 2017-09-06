@@ -7,6 +7,11 @@ import joinURL from "url-join";
 const PATH_ABS = /^\//;
 const PATH_PARENT = /^\.\.$/;
 
+export function getNextcloudConnection(remoteURL, username, password) {
+    const nextcloudUrl = joinURL(remoteURL, "/remote.php/webdav");
+    return getWebDAVConnection(nextcloudUrl, username, password);
+}
+
 export function getOwnCloudConnection(remoteURL, username, password) {
     const owncloudUrl = joinURL(remoteURL, "/remote.php/webdav");
     return getWebDAVConnection(owncloudUrl, username, password);

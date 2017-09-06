@@ -1,9 +1,9 @@
 import { createCredentials } from "buttercup-web";
-import { getOwnCloudConnection, getWebDAVConnection } from "../library/remote.js";
+import { getNextcloudConnection, getOwnCloudConnection, getWebDAVConnection } from "../library/remote.js";
 import { createEmptyArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
-import { /*cancelNewPrompt,*/ selectArchive, setCreatingArchive, showNewNamePrompt } from "../actions/RemoteExplorerPage.js";
+import { selectArchive, setCreatingArchive, showNewNamePrompt } from "../actions/RemoteExplorerPage.js";
 import { doAsyncWork } from "../global/async.js";
 
 const PATH_PARENT = /^\.\./;
@@ -58,6 +58,11 @@ export function createRemoteConnection(connectionInfo) {
             .then(function __storeSharedInstance(afsInstance) {
                 __remoteFSConnection = afsInstance;
             });
+    } else if (archiveType === "nextcloud") {
+        return getNextcloudConnection(remoteURL, remoteUsername, remotePassword)
+        .then(function __storeSharedInstance(afsInstance) {
+            __remoteFSConnection = afsInstance;
+        });
     }
     return Promise.reject(new Error(`Unknown archive type: ${archiveType}`));
 }

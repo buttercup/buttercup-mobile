@@ -41,6 +41,8 @@ export function createEntryFacade(entry) {
 export function createRemoteCredentials(archiveType, options) {
     const credentials = createCredentials(archiveType);
     switch (archiveType) {
+        case "nextcloud":
+            /* falls-through */
         case "owncloud":
             /* falls-through */
         case "webdav": {
@@ -62,7 +64,10 @@ export function getArchiveEncryptedContent(archive, credentials) {
     const tds = new TextDatasource();
     return tds
         .save(archive, credentials)
-        .then(doAsyncWork);
+        .then(encryptedContent => {
+            return doAsyncWork()
+                .then(() => encryptedContent);
+        });
 }
 
 export function getSharedArchiveManager() {
