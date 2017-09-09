@@ -7,12 +7,14 @@ import remoteExplorer from "./remoteExplorer.js";
 import entry from "./entry.js";
 import app from "./app.js";
 import dropbox from "./dropbox.js";
+import browser from "./browser.js";
 
 const rootReducer = combineReducers({
     addArchive,
     app,
     archiveContents,
     archives,
+    browser,
     dropbox,
     entry,
     nav,

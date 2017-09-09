@@ -20,6 +20,9 @@ export const ARCHIVES_TOGGLE_IS_UNLOCKING =             "archives/toggleIsUnlock
 export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT =       "archives/toggleUnlockPasswordPrompt";
 export const ARCHIVES_UNLOCK_SOURCE =                   "archives/unlockSource";
 
+export const BROWSER_RESET =                            "browser/reset";
+export const BROWSER_SET_URL =                          "browser/setURL";
+
 export const DROPBOX_RESET_AUTH =                       "dropbox/resetAuthentication";
 export const DROPBOX_SET_AUTHENTICATED =                "dropbox/setAuthenticated";
 export const DROPBOX_SET_AUTHENTICATING =               "dropbox/setAuthenticating";

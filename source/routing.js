@@ -1,5 +1,11 @@
 import React from "react";
 import {
+    Image,
+    StyleSheet,
+    Text,
+    View
+} from "react-native";
+import {
     StackNavigator,
     addNavigationHelpers
 } from "react-navigation";
@@ -14,6 +20,7 @@ import AddMetaPage from "./containers/AddMetaPage.js";
 import AddArchivePage from "./containers/AddArchivePage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
+import PopupBrowser from "./containers/PopupBrowser.js";
 
 export const AppNavigator = StackNavigator({
     Home: { screen: ArchivesPage },
@@ -32,11 +39,11 @@ const AppWithNavigationState = ({ dispatch, nav }) => (
 
 AppWithNavigationState.propTypes = {
     dispatch:           PropTypes.func.isRequired,
-    nav:                PropTypes.object.isRequired,
+    nav:                PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    nav:                state.nav,
+    nav:                state.nav
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState);

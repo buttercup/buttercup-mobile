@@ -6,7 +6,6 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-// import { openAuthPage } from "../library/dropbox.js";
 
 const styles = StyleSheet.create({
     authButton: {
@@ -21,6 +20,7 @@ class DropboxAuthButton extends Component {
 
     beginAuthentication() {
         // openAuthPage();
+        this.props.onClick();
     }
 
     render() {
@@ -42,7 +42,8 @@ class DropboxAuthButton extends Component {
 
 DropboxAuthButton.propTypes = {
     authenticated:              PropTypes.bool.isRequired,
-    authenticating:             PropTypes.bool.isRequired
+    authenticating:             PropTypes.bool.isRequired,
+    onClick:                    PropTypes.func.isRequired
 };
 
 export default DropboxAuthButton;
