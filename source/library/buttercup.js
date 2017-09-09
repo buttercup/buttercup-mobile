@@ -41,6 +41,13 @@ export function createEntryFacade(entry) {
 export function createRemoteCredentials(archiveType, options) {
     const credentials = createCredentials(archiveType);
     switch (archiveType) {
+        case "dropbox":
+            credentials.setValue("datasource", JSON.stringify({
+                type: "dropbox",
+                token: "",
+                path: ""
+            }));
+            return credentials;
         case "nextcloud":
             /* falls-through */
         case "owncloud":

@@ -1,5 +1,5 @@
 import { createCredentials } from "buttercup-web";
-import { getNextcloudConnection, getOwnCloudConnection, getWebDAVConnection } from "../library/remote.js";
+import { getDropboxConnection, getNextcloudConnection, getOwnCloudConnection, getWebDAVConnection } from "../library/remote.js";
 import { createEmptyArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
@@ -42,27 +42,28 @@ export function createNewArchiveFile(currentDir, filename, password) {
 }
 
 export function createRemoteConnection(connectionInfo) {
+    const __storeSharedInstance = afsInstance => {
+        __remoteFSConnection = afsInstance
+    };
     const {
         archiveType,
         remoteUsername,
         remotePassword,
-        remoteURL
+        remoteURL,
+        dropboxToken
     } = connectionInfo;
     if (archiveType === "webdav") {
         return getWebDAVConnection(remoteURL, remoteUsername, remotePassword)
-            .then(function __storeSharedInstance(afsInstance) {
-                __remoteFSConnection = afsInstance;
-            });
+            .then(__storeSharedInstance);
     } else if (archiveType === "owncloud") {
         return getOwnCloudConnection(remoteURL, remoteUsername, remotePassword)
-            .then(function __storeSharedInstance(afsInstance) {
-                __remoteFSConnection = afsInstance;
-            });
+            .then(__storeSharedInstance);
     } else if (archiveType === "nextcloud") {
         return getNextcloudConnection(remoteURL, remoteUsername, remotePassword)
-        .then(function __storeSharedInstance(afsInstance) {
-            __remoteFSConnection = afsInstance;
-        });
+            .then(__storeSharedInstance);
+    } else if (archiveType === "dropbox") {
+        return getDropboxConnection(dropboxToken)
+            .then(__storeSharedInstance);
     }
     return Promise.reject(new Error(`Unknown archive type: ${archiveType}`));
 }
