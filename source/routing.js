@@ -11,13 +11,17 @@ import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
 import EntryPage from "./containers/EntryPage.js";
 import NewEntryPage from "./containers/NewEntryPage.js";
 import AddMetaPage from "./containers/AddMetaPage.js";
+import AddArchivePage from "./containers/AddArchivePage.js";
+import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 
 export const AppNavigator = StackNavigator({
     Home: { screen: ArchivesPage },
     ArchiveContents: { screen: ArchiveContentsPage },
     Entry: { screen: EntryPage },
     NewEntry: { screen: NewEntryPage },
-    AddMeta: { screen: AddMetaPage }
+    AddMeta: { screen: AddMetaPage },
+    AddArchive: { screen: AddArchivePage },
+    RemoteConnect: { screen: RemoteConnectPage }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

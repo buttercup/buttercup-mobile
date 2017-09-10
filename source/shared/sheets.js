@@ -1,7 +1,7 @@
 import ActionSheet from '@yfuks/react-native-action-sheet';
 import { lockAllArchives } from "./archives.js";
 import { dispatch } from "../store.js";
-import { navigateToNewEntry } from "../actions/navigation.js";
+import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
 
 const SHEET_ADD_ARCHIVE =                       "Add";
 const SHEET_ADD_ENTRY =                         "New Entry";
@@ -56,7 +56,7 @@ export function showArchivesPageRightSheet() {
         selectedIndex => {
             switch(ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
                 case SHEET_ADD_ARCHIVE: {
-                    // Actions.addArchive();
+                    dispatch(navigateToAddArchive());
                     break;
                 }
                 case SHEET_LOCK_ALL: {

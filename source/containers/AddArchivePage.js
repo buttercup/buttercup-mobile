@@ -4,12 +4,16 @@ import {
     getAdditionStage
 } from "../selectors/AddArchivePage.js";
 import { onArchiveTypeSelected } from "../actions/AddArchivePage.js";
+import { navigateToRemoteConnect } from "../actions/navigation.js";
 
 export default connect(
     (state, ownProps) => ({
         stage:                      getAdditionStage(state)
     }),
     {
-        onArchiveTypeSelected
+        onArchiveSelected:          type => dispatch => {
+            dispatch(onArchiveTypeSelected(type));
+            dispatch(navigateToRemoteConnect());
+        }
     }
 )(AddArchivePage);
