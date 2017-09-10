@@ -1,5 +1,5 @@
 import ActionSheet from '@yfuks/react-native-action-sheet';
-import { Actions } from "react-native-router-flux";
+// import { Actions } from "react-native-router-flux";
 import { lockAllArchives } from "./archives.js";
 
 const SHEET_ADD_ARCHIVE =                       "Add";
@@ -33,7 +33,7 @@ export function showArchiveContentsAddItemSheet(showEntryAdd) {
         selectedIndex => {
             switch(buttons[selectedIndex]) {
                 case SHEET_ADD_ENTRY: {
-                    Actions.newEntry();
+                    // Actions.newEntry();
                     break;
                 }
                 case SHEET_ADD_GROUP: {
@@ -55,7 +55,7 @@ export function showArchivesPageRightSheet() {
         selectedIndex => {
             switch(ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
                 case SHEET_ADD_ARCHIVE: {
-                    Actions.addArchive();
+                    // Actions.addArchive();
                     break;
                 }
                 case SHEET_LOCK_ALL: {

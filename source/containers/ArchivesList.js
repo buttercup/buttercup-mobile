@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
 import ArchivesList from "../components/ArchivesList.js";
 import {
     getArchivesDisplayList,
@@ -14,6 +13,9 @@ import {
     setSelectedSource
 } from "../actions/ArchiveContentsPage.js";
 import {
+    navigateToArchiveContents
+} from "../actions/navigation.js";
+import {
     lockSource,
     removeSource,
     unlockSource,
@@ -21,12 +23,17 @@ import {
 } from "../shared/archiveContents.js";
 import { handleError } from "../global/exceptions.js";
 
-function openArchive(dispatch, sourceID) {
+function openArchive(dispatch, getState, sourceID) {
+    const state = getState();
+    // Get selected title
+    const archivesList = getArchivesDisplayList(state);
+    const targetSource = archivesList.find(source => source.id === sourceID);
+    // Select source
     dispatch(setSelectedSource(sourceID));
     // populate groups
     updateCurrentArchive();
-    // run action
-    Actions.archiveContents();
+    // navigate to archive contents
+    dispatch(navigateToArchiveContents({ title: `📂 ${targetSource.name}` }));
 }
 
 export default connect(
@@ -38,27 +45,24 @@ export default connect(
     {
         lockArchive:                sourceID => dispatch => {
             lockSource(sourceID)
-                .then(() => {
-
-                })
                 .catch(err => {
-
+                    handleError("Failed locking archive(s)", err);
                 })
         },
         removeArchive:              sourceID => () => removeSource(sourceID),
-        selectArchiveSource:        sourceID => dispatch => {
-            openArchive(dispatch, sourceID);
+        selectArchiveSource:        sourceID => (dispatch, getState) => {
+            openArchive(dispatch, getState, sourceID);
         },
         setIsUnlocking,
         showUnlockPasswordPrompt,
-        unlockArchive:              (sourceID, password) => dispatch => {
+        unlockArchive:              (sourceID, password) => (dispatch, getState) => {
             dispatch(showUnlockPasswordPrompt(false));
             unlockSource(sourceID, password)
                 .then(() => {
                     // success!
                     dispatch(setIsUnlocking(false));
                     // open source
-                    openArchive(dispatch, sourceID);
+                    openArchive(dispatch, getState, sourceID);
                 })
                 .catch(err => {
                     dispatch(setIsUnlocking(false));

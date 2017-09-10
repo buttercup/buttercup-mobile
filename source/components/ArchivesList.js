@@ -46,8 +46,7 @@ const styles = StyleSheet.create({
         height: 20,
         alignSelf: "center",
         flex: 2,
-        marginLeft: 8,
-        // backgroundColor: "red"
+        marginLeft: 8
     },
     itemContainerView: {
         width: "100%",

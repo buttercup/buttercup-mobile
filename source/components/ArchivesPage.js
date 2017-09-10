@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import {
+    Image,
     StyleSheet,
     View
 } from "react-native";
 import ArchivesList from "../containers/ArchivesList.js";
+
+const BUTTERCUP_LOGO = require("../../resources/images/buttercup-header.png");
 
 const styles = StyleSheet.create({
     container: {
@@ -12,6 +15,16 @@ const styles = StyleSheet.create({
 });
 
 class ArchivesPage extends Component {
+
+    static navigationOptions = {
+        // title: "Buttercup"
+        headerTitle: (
+            <Image
+                source={BUTTERCUP_LOGO}
+                resizeMode="contain"
+                />
+        )
+    };
 
     render() {
         return (

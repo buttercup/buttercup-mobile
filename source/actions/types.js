@@ -31,6 +31,8 @@ export const ENTRY_SET_NEW_PARENT_GROUP =               "entry/setNewEntryParent
 export const ENTRY_SET_NEW_PROPERTY_VALUE =             "entry/setNewEntryPropertyValue";
 export const ENTRY_UNLOAD =                             "entry/unload";
 
+export const NAVIGATE_ARCHIVE_CONTENTS =                "navigation/archiveContents";
+
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR =                    "remoteExplorer/clear";
 export const REMOTE_EXPLORER_CREATE_NEW_FILENAME =      "remoteExplorer/createNewFilename";

@@ -1,7 +1,4 @@
 import {
-    ActionConst
-} from "react-native-router-flux";
-import {
     REMOTE_EXPLORER_CANCEL_NEW,
     REMOTE_EXPLORER_CLEAR,
     REMOTE_EXPLORER_CREATE_NEW_FILENAME,
@@ -115,10 +112,6 @@ export default function remoteExplorerReducer(state = INITIAL, action = {}) {
                 ...state,
                 adding: !!action.payload
             };
-        case ActionConst.POP_TO:
-            /* falls-through */
-        case ActionConst.BACK_ACTION:
-            /* falls-through */
         case REMOTE_EXPLORER_CLEAR:
             return INITIAL;
 

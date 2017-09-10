@@ -1,4 +1,4 @@
-import { Actions } from "react-native-router-flux";
+// import { Actions } from "react-native-router-flux";
 import { dispatch, getState } from "../store.js";
 import { createEntryFacade, getSharedArchiveManager } from "../library/buttercup.js";
 import { loadEntry as loadNewEntry } from "../actions/entry.js";
@@ -62,7 +62,7 @@ export function saveNewEntry() {
         .save()
         .then(() => {
             dispatch(setSaving(false));
-            Actions.pop();
+            // Actions.pop();
         });
 }
 
@@ -81,6 +81,6 @@ export function saveNewMeta() {
     const archive = source.workspace.primary.archive;
     const entry = archive.getEntryByID(entryID);
     entry.setMeta(key, value);
-    Actions.pop();
+    // Actions.pop();
     loadEntry(sourceID, entryID);
 }

@@ -10,7 +10,6 @@ import {
     ENTRY_SET_NEW_PROPERTY_VALUE,
     ENTRY_UNLOAD
 } from "../actions/types.js";
-import { ActionConst } from "react-native-router-flux";
 
 const INITIAL = {
     editing: false,
