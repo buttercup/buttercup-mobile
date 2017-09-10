@@ -22,9 +22,9 @@ class ArchiveContentsPage extends Component {
     static navigationOptions = ({ navigation }) => {
         const {params = {}} = navigation.state;
         return {
-          title: `${params.title}`,
+            title: `${params.title}`,
         };
-      };
+    };
 
     constructor(...args) {
         super(...args);

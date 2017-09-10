@@ -8,10 +8,14 @@ import { connect } from "react-redux";
 
 import ArchivesPage from "./components/ArchivesPage.js";
 import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
+import EntryPage from "./containers/EntryPage.js";
+import NewEntryPage from "./containers/NewEntryPage.js";
 
 export const AppNavigator = StackNavigator({
     Home: { screen: ArchivesPage },
-    ArchiveContents: { screen: ArchiveContentsPage }
+    ArchiveContents: { screen: ArchiveContentsPage },
+    Entry: { screen: EntryPage },
+    NewEntry: { screen: NewEntryPage }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

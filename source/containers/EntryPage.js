@@ -1,6 +1,5 @@
 import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
 import {
@@ -8,6 +7,7 @@ import {
     setFacadeValue,
     setNotification
 } from "../actions/entry.js"
+import { navigateBack } from "../actions/navigation.js";
 import { setSaving } from "../actions/app.js";
 import {
     getEntryFields,
@@ -60,7 +60,7 @@ export default connect(
                 .then(() => {
                     dispatch(setSaving(false));
                     updateCurrentArchive();
-                    Actions.pop();
+                    dispatch(navigateBack());
                     dispatch(setNotification("Deleted entry"));
                     setTimeout(() => {
                         // clear notification
@@ -69,7 +69,7 @@ export default connect(
                 })
                 .catch(err => {
                     dispatch(setSaving(false));
-                    handleError("Deleting failed", err);
+                    handleError("Entry deletion failed", err);
                 });
         },
         onEditPressed:              () => dispatch => dispatch(setEntryEditing(true)),

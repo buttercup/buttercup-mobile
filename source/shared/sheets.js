@@ -1,6 +1,7 @@
 import ActionSheet from '@yfuks/react-native-action-sheet';
-// import { Actions } from "react-native-router-flux";
 import { lockAllArchives } from "./archives.js";
+import { dispatch } from "../store.js";
+import { navigateToNewEntry } from "../actions/navigation.js";
 
 const SHEET_ADD_ARCHIVE =                       "Add";
 const SHEET_ADD_ENTRY =                         "New Entry";
@@ -33,7 +34,7 @@ export function showArchiveContentsAddItemSheet(showEntryAdd) {
         selectedIndex => {
             switch(buttons[selectedIndex]) {
                 case SHEET_ADD_ENTRY: {
-                    // Actions.newEntry();
+                    dispatch(navigateToNewEntry());
                     break;
                 }
                 case SHEET_ADD_GROUP: {

@@ -32,6 +32,9 @@ export const ENTRY_SET_NEW_PROPERTY_VALUE =             "entry/setNewEntryProper
 export const ENTRY_UNLOAD =                             "entry/unload";
 
 export const NAVIGATE_ARCHIVE_CONTENTS =                "navigation/archiveContents";
+export const NAVIGATE_BACK =                            "navigation/back";
+export const NAVIGATE_ENTRY =                           "navigation/entry";
+export const NAVIGATE_NEW_ENTRY =                       "navigation/newEntry";
 
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR =                    "remoteExplorer/clear";

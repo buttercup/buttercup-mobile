@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
+    Button,
     StyleSheet,
-    Text,
     View
 } from "react-native";
 import PropTypes from "prop-types";
@@ -10,6 +10,7 @@ import {
     CellInput
 } from "react-native-cell-components";
 import Spinner from "react-native-loading-spinner-overlay";
+import { saveNewEntry } from "../shared/entry.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -18,6 +19,16 @@ const styles = StyleSheet.create({
 });
 
 class NewEntryPage extends Component {
+
+    static navigationOptions = {
+        title: "New Entry",
+        headerRight: (
+            <Button
+                title="Create"
+                onPress={saveNewEntry}
+                />
+        )
+    };
 
     componentWillUnmount() {
         this.props.onUnmount();

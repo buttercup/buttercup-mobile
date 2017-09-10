@@ -1,4 +1,3 @@
-// import { Actions } from "react-native-router-flux";
 import { dispatch, getState } from "../store.js";
 import { createEntryFacade, getSharedArchiveManager } from "../library/buttercup.js";
 import { loadEntry as loadNewEntry } from "../actions/entry.js";
@@ -15,6 +14,7 @@ import {
 import { setSaving } from "../actions/app.js";
 import { getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
 import { handleError } from "../global/exceptions.js";
+import { navigateBack } from "../actions/navigation.js";
 
 export function getEntry(sourceID, entryID) {
     const archiveManager = getSharedArchiveManager();
@@ -28,6 +28,11 @@ export function getEntryFacade(sourceID, entryID) {
     const entry = getEntry(sourceID, entryID);
     const facade = createEntryFacade(entry);
     return facade;
+}
+
+export function getEntryTitle(sourceID, entryID) {
+    const entry = getEntry(sourceID, entryID);
+    return entry.getProperty("title");
 }
 
 export function loadEntry(sourceID, entryID) {
@@ -62,7 +67,7 @@ export function saveNewEntry() {
         .save()
         .then(() => {
             dispatch(setSaving(false));
-            // Actions.pop();
+            dispatch(navigateBack());
         });
 }
 

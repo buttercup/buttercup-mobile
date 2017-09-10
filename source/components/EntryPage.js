@@ -4,7 +4,7 @@ import {
     View
 } from "react-native";
 import PropTypes from "prop-types";
-import { Actions } from "react-native-router-flux";
+// import { Actions } from "react-native-router-flux";
 import Notification from "react-native-notification";
 import Spinner from "react-native-loading-spinner-overlay";
 import {
@@ -39,6 +39,13 @@ function iconLabelForProp(propName) {
 }
 
 class EntryPage extends Component {
+
+    static navigationOptions = ({ navigation }) => {
+        const {params = {}} = navigation.state;
+        return {
+            title: `${params.title}`,
+        };
+    };
 
     constructor(...args) {
         super(...args);
@@ -181,10 +188,10 @@ class EntryPage extends Component {
             };
         if (title !== this.lastTitle) {
             this.lastTitle = title;
-            Actions.refresh({
-                title,
-                ...navConfig
-            });
+            // Actions.refresh({
+            //     title,
+            //     ...navConfig
+            // });
         }
     }
 
