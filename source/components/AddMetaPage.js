@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
+    Button,
     StyleSheet,
-    Text,
     View
 } from "react-native";
 import PropTypes from "prop-types";
@@ -9,6 +9,7 @@ import {
     CellGroup,
     CellInput
 } from "react-native-cell-components";
+import { saveNewMeta } from "../shared/entry.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -17,6 +18,16 @@ const styles = StyleSheet.create({
 });
 
 class AddMetaPage extends Component {
+
+    static navigationOptions = {
+        title: "Add Meta",
+        headerRight: (
+            <Button
+                title="Save"
+                onPress={saveNewMeta}
+                />
+        )
+    };
 
     componentWillUnmount() {
         this.props.onUnmount();

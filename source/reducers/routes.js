@@ -4,7 +4,8 @@ import {
     NAVIGATE_ARCHIVE_CONTENTS,
     NAVIGATE_BACK,
     NAVIGATE_ENTRY,
-    NAVIGATE_NEW_ENTRY
+    NAVIGATE_NEW_ENTRY,
+    NAVIGATE_NEW_META
 } from "../actions/types.js";
 
 function getInitialState() {
@@ -36,6 +37,12 @@ export default function routesReducer(state = getInitialState(), action = {}) {
         case NAVIGATE_NEW_ENTRY: {
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: "NewEntry" }),
+                state
+            );
+        }
+        case NAVIGATE_NEW_META: {
+            return AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: "AddMeta" }),
                 state
             );
         }

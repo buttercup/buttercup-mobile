@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import {
+    Button,
     StyleSheet,
     View
 } from "react-native";
 import PropTypes from "prop-types";
-// import { Actions } from "react-native-router-flux";
 import Notification from "react-native-notification";
 import Spinner from "react-native-loading-spinner-overlay";
 import {
@@ -12,10 +12,10 @@ import {
     CellGroup,
     CellInput
 } from "react-native-cell-components";
-import {
-    EntryRouteNormalProps,
-    EntryRouteSaveProps
-} from "../shared/dynamicRoutes.js";
+
+const NOOP = () => {};
+const RIGHT_TITLE_OPEN = "Open";
+const RIGHT_TITLE_SAVE = "Save";
 
 const styles = StyleSheet.create({
     container: {
@@ -42,22 +42,30 @@ class EntryPage extends Component {
 
     static navigationOptions = ({ navigation }) => {
         const {params = {}} = navigation.state;
+        // const rightTitle = this.props.editing ?
+        //     "Save" :
+        //     "Open";
+        const rightTitle = params.rightTitle || RIGHT_TITLE_OPEN;
+        const onRight = params.rightAction || NOOP;
         return {
             title: `${params.title}`,
+            headerRight: (
+                <Button
+                    title={rightTitle}
+                    onPress={onRight}
+                    />
+            )
         };
     };
 
-    constructor(...args) {
-        super(...args);
-        this.lastTitle = "";
-    }
-
-    componentWillReceiveProps(props) {
-        this.updateTitle(props);
-    }
-
     componentDidMount() {
-        this.updateTitle();
+        this.updateRightButton();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.editing !== nextProps.editing) {
+            this.updateRightButton(nextProps);
+        }
     }
 
     componentWillUnmount() {
@@ -173,26 +181,17 @@ class EntryPage extends Component {
         );
     }
 
-    updateTitle(props = this.props) {
-        const title = props.editing ?
-            `Edit: ${props.title}` :
-            props.title;
-        const navConfig = props.editing ?
-            {
-                ...EntryRouteSaveProps,
-                onRight: () => this.props.onSavePressed()
-            } :
-            {
-                ...EntryRouteNormalProps,
-                onRight: () => this.props.onOpenPressed()
-            };
-        if (title !== this.lastTitle) {
-            this.lastTitle = title;
-            // Actions.refresh({
-            //     title,
-            //     ...navConfig
-            // });
-        }
+    updateRightButton(props = this.props) {
+        const rightTitle = props.editing ?
+            RIGHT_TITLE_SAVE :
+            RIGHT_TITLE_OPEN;
+        const rightAction = props.editing ?
+            () => this.props.onSavePressed() :
+            () => this.props.onOpenPressed();
+        this.props.navigation.setParams({
+            rightTitle,
+            rightAction
+        });
     }
 
 }

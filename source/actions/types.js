@@ -35,6 +35,7 @@ export const NAVIGATE_ARCHIVE_CONTENTS =                "navigation/archiveConte
 export const NAVIGATE_BACK =                            "navigation/back";
 export const NAVIGATE_ENTRY =                           "navigation/entry";
 export const NAVIGATE_NEW_ENTRY =                       "navigation/newEntry";
+export const NAVIGATE_NEW_META =                        "navigation/newMeta";
 
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR =                    "remoteExplorer/clear";

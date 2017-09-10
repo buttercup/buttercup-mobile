@@ -86,6 +86,6 @@ export function saveNewMeta() {
     const archive = source.workspace.primary.archive;
     const entry = archive.getEntryByID(entryID);
     entry.setMeta(key, value);
-    // Actions.pop();
+    dispatch(navigateBack());
     loadEntry(sourceID, entryID);
 }

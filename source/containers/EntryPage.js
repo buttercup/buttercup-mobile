@@ -7,7 +7,7 @@ import {
     setFacadeValue,
     setNotification
 } from "../actions/entry.js"
-import { navigateBack } from "../actions/navigation.js";
+import { navigateBack, navigateToNewMeta } from "../actions/navigation.js";
 import { setSaving } from "../actions/app.js";
 import {
     getEntryFields,
@@ -47,7 +47,9 @@ export default connect(
                 dispatch(setNotification(""));
             }, 1250);
         },
-        onAddMeta:                  () => () => Actions.addMeta(),
+        onAddMeta:                  () => dispatch => {
+            dispatch(navigateToNewMeta());
+        },
         onCancelEdit:               () => dispatch => dispatch(setEntryEditing(false)),
         onDeletePressed:            () => (dispatch, getState) => {
             const state = getState();
