@@ -45,6 +45,7 @@ export const NAVIGATE_BACK =                            "navigation/back";
 export const NAVIGATE_ENTRY =                           "navigation/entry";
 export const NAVIGATE_NEW_ENTRY =                       "navigation/newEntry";
 export const NAVIGATE_NEW_META =                        "navigation/newMeta";
+export const NAVIGATE_POPUP_BROWSER =                   "navigation/popupBrowser";
 export const NAVIGATE_REMOTE_CONNECT =                  "navigation/remoteConnect";
 export const NAVIGATE_REMOTE_EXPLORER =                 "navigation/remoteExplorer";
 export const NAVIGATE_ROOT =                            "navigation/returnToRoot";

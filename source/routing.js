@@ -30,7 +30,8 @@ export const AppNavigator = StackNavigator({
     AddMeta: { screen: AddMetaPage },
     AddArchive: { screen: AddArchivePage },
     RemoteConnect: { screen: RemoteConnectPage },
-    RemoteExplorer: { screen: RemoteExplorerPage }
+    RemoteExplorer: { screen: RemoteExplorerPage },
+    PopupBrowser: { screen: PopupBrowser }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

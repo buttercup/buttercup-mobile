@@ -6,6 +6,7 @@ import {
     NAVIGATE_ENTRY,
     NAVIGATE_NEW_ENTRY,
     NAVIGATE_NEW_META,
+    NAVIGATE_POPUP_BROWSER,
     NAVIGATE_REMOTE_CONNECT,
     NAVIGATE_REMOTE_EXPLORER,
     NAVIGATE_ROOT
@@ -17,6 +18,7 @@ export const navigateToArchiveContents =                createAction(NAVIGATE_AR
 export const navigateToEntry =                          createAction(NAVIGATE_ENTRY);
 export const navigateToNewEntry =                       createAction(NAVIGATE_NEW_ENTRY);
 export const navigateToNewMeta =                        createAction(NAVIGATE_NEW_META);
+export const navigateToPopupBrowser =                   createAction(NAVIGATE_POPUP_BROWSER);
 export const navigateToRemoteConnect =                  createAction(NAVIGATE_REMOTE_CONNECT);
 export const navigateToRemoteExplorer =                 createAction(NAVIGATE_REMOTE_EXPLORER);
 export const navigateToRoot =                           createAction(NAVIGATE_ROOT);

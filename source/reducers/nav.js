@@ -7,6 +7,7 @@ import {
     NAVIGATE_ENTRY,
     NAVIGATE_NEW_ENTRY,
     NAVIGATE_NEW_META,
+    NAVIGATE_POPUP_BROWSER,
     NAVIGATE_REMOTE_CONNECT,
     NAVIGATE_REMOTE_EXPLORER,
     NAVIGATE_ROOT
@@ -67,6 +68,13 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             const { title } = action.payload;
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: "RemoteExplorer", params: { title } }),
+                state
+            );
+        }
+        case NAVIGATE_POPUP_BROWSER: {
+            const { title } = action.payload;
+            return AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: "PopupBrowser", params: { title } }),
                 state
             );
         }

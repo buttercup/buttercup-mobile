@@ -19,13 +19,12 @@ const styles = StyleSheet.create({
 class DropboxAuthButton extends Component {
 
     beginAuthentication() {
-        // openAuthPage();
         this.props.onClick();
     }
 
     render() {
         const title = this.props.authenticated ? "Authenticated" : "Authenticate";
-        const iconName = this.props.authenticated ? "lock open" : "lock";
+        const iconName = this.props.authenticated ? "lock-open" : "lock";
         return (
             <Button
                 title={title}

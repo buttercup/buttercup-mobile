@@ -44,8 +44,8 @@ export function createRemoteCredentials(archiveType, options) {
         case "dropbox":
             credentials.setValue("datasource", JSON.stringify({
                 type: "dropbox",
-                token: "",
-                path: ""
+                token: options.dropboxToken,
+                path: options.path
             }));
             return credentials;
         case "nextcloud":
