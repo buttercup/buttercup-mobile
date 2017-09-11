@@ -55,8 +55,9 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             );
         }
         case NAVIGATE_REMOTE_CONNECT: {
+            const { title } = action.payload;
             return AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({ routeName: "RemoteConnect" }),
+                NavigationActions.navigate({ routeName: "RemoteConnect", params: { title } }),
                 state
             );
         }

@@ -44,15 +44,15 @@ class AddArchive extends Component {
                         key={type}
                         title={title}
                         avatar={image}
-                        onPress={() => this.handleTypeSelected(type)}
+                        onPress={() => this.handleTypeSelected(type, title)}
                         />
                 )}
             </List>
         );
     }
 
-    handleTypeSelected(type) {
-        this.props.onArchiveSelected(type);
+    handleTypeSelected(type, title) {
+        this.props.onArchiveSelected(type, title);
     }
 
     render() {

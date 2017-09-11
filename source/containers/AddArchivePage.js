@@ -11,9 +11,9 @@ export default connect(
         stage:                      getAdditionStage(state)
     }),
     {
-        onArchiveSelected:          type => dispatch => {
+        onArchiveSelected:          (type, title) => dispatch => {
             dispatch(onArchiveTypeSelected(type));
-            dispatch(navigateToRemoteConnect());
+            dispatch(navigateToRemoteConnect({ title }));
         }
     }
 )(AddArchivePage);

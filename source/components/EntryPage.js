@@ -42,9 +42,6 @@ class EntryPage extends Component {
 
     static navigationOptions = ({ navigation }) => {
         const {params = {}} = navigation.state;
-        // const rightTitle = this.props.editing ?
-        //     "Save" :
-        //     "Open";
         const rightTitle = params.rightTitle || RIGHT_TITLE_OPEN;
         const onRight = params.rightAction || NOOP;
         return {
