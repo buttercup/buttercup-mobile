@@ -30,6 +30,13 @@ const styles = StyleSheet.create({
 
 class RemoteExplorer extends Component {
 
+    static navigationOptions = ({ navigation }) => {
+        const {params = {}} = navigation.state;
+        return {
+            title: `${params.title}`
+        };
+    };
+
     componentDidMount() {
         this.handlePathSelected("/", /* is dir */ true);
     }

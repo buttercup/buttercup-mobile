@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
 import RemoteExplorer from "../components/RemoteExplorerPage.js";
 import {
     getCurrentItems,
@@ -62,7 +61,7 @@ function handleNewArchiveName(name, dispatch, getState) {
     addToArchiveManager({ ...getState(), archiveName: name })
         .then(function __getOuttaHere() {
             dispatch(setAddingArchive(false));
-            Actions.popTo("archives");
+            // Actions.popTo("archives");
         })
         .catch(function __handleAddError(err) {
             dispatch(setAddingArchive(false));

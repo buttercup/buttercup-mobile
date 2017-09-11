@@ -38,6 +38,7 @@ export const NAVIGATE_ENTRY =                           "navigation/entry";
 export const NAVIGATE_NEW_ENTRY =                       "navigation/newEntry";
 export const NAVIGATE_NEW_META =                        "navigation/newMeta";
 export const NAVIGATE_REMOTE_CONNECT =                  "navigation/remoteConnect";
+export const NAVIGATE_REMOTE_EXPLORER =                 "navigation/remoteExplorer";
 
 export const REMOTE_EXPLORER_CANCEL_NEW =               "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR =                    "remoteExplorer/clear";

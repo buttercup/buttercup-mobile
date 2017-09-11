@@ -7,7 +7,8 @@ import {
     NAVIGATE_ENTRY,
     NAVIGATE_NEW_ENTRY,
     NAVIGATE_NEW_META,
-    NAVIGATE_REMOTE_CONNECT
+    NAVIGATE_REMOTE_CONNECT,
+    NAVIGATE_REMOTE_EXPLORER
 } from "../actions/types.js";
 
 function getInitialState() {
@@ -58,6 +59,13 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             const { title } = action.payload;
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: "RemoteConnect", params: { title } }),
+                state
+            );
+        }
+        case NAVIGATE_REMOTE_EXPLORER: {
+            const { title } = action.payload;
+            return AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: "RemoteExplorer", params: { title } }),
                 state
             );
         }
