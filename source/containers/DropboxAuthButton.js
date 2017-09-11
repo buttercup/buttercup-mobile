@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
 import DropboxAuthButton from "../components/DropboxAuthButton.js";
 import { isAuthenticated, isAuthenticating } from "../selectors/dropbox.js";
 import { setBrowserURL } from "../actions/browser.js";
@@ -14,7 +13,7 @@ export default connect(
         onClick:                            () => (dispatch) => {
             const url = generateAuthorisationURL();
             dispatch(setBrowserURL(url));
-            Actions.popupBrowser();
+            // Actions.popupBrowser();
         }
     }
 )(DropboxAuthButton);
