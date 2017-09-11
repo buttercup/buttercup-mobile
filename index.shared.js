@@ -1,13 +1,13 @@
 import "./shim.js";
 import React, { Component } from "react";
+import { AppRegistry } from "react-native";
 import { Provider } from "react-redux";
 import { createWebDAVAdapter } from "@buttercup/mobile-compat";
-import { getRouter } from "./source/routing.js";
 import { patchCrypto, patchKeyDerivation } from "./source/library/crypto.js";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";
 import * as Buttercup from "buttercup-web";
-
 import store from "./source/store.js";
+import App from "./source/routing.js";
 
 export default class ButtercupShared extends Component {
 
@@ -27,9 +27,11 @@ export default class ButtercupShared extends Component {
     render() {
         return (
             <Provider store={store}>
-                {getRouter()}
+                <App />
             </Provider>
         );
     }
 
 }
+
+AppRegistry.registerComponent("Buttercup", () => ButtercupShared);

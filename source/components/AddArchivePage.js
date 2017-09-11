@@ -9,15 +9,13 @@ import {
     ListItem
 } from "react-native-elements";
 import PropTypes from "prop-types";
-import { Actions } from "react-native-router-flux";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "transparent",
-        marginTop: 64
+        backgroundColor: "transparent"
     },
     menuList: {
         marginBottom: 20,
@@ -34,6 +32,10 @@ const ARCHIVE_TYPES = [
 
 class AddArchive extends Component {
 
+    static navigationOptions = {
+        title: "Add Archive"
+    };
+
     getMenuContents() {
         return (
             <List style={styles.menuList}>
@@ -42,16 +44,15 @@ class AddArchive extends Component {
                         key={type}
                         title={title}
                         avatar={image}
-                        onPress={() => this.handleTypeSelected(type)}
+                        onPress={() => this.handleTypeSelected(type, title)}
                         />
                 )}
             </List>
         );
     }
 
-    handleTypeSelected(type) {
-        this.props.onArchiveTypeSelected(type);
-        Actions.remoteConnect();
+    handleTypeSelected(type, title) {
+        this.props.onArchiveSelected(type, title);
     }
 
     render() {
@@ -65,7 +66,7 @@ class AddArchive extends Component {
 }
 
 AddArchive.propTypes = {
-    onArchiveTypeSelected:      PropTypes.func.isRequired,
+    onArchiveSelected:          PropTypes.func.isRequired,
     stage:                      PropTypes.string.isRequired
 };
 

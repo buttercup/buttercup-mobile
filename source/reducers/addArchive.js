@@ -1,7 +1,4 @@
 import {
-    ActionConst
-} from "react-native-router-flux";
-import {
     ADD_ARCHIVE_CLEAR_PROGRESS,
     ADD_ARCHIVE_SET_ARCHIVE_TYPE,
     ADD_ARCHIVE_SET_CONNECTED,
@@ -56,11 +53,6 @@ export default function addArchiveReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 remoteUsername: action.payload
-            };
-        case ActionConst.BACK_ACTION:
-            return {
-                ...INITIAL,
-                archiveType: state.archiveType
             };
         case ADD_ARCHIVE_CLEAR_PROGRESS:
             return INITIAL;

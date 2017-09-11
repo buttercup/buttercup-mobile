@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
 import RemoteConnectPage from "../components/RemoteConnectPage.js";
 import {
     getArchiveType,
@@ -18,12 +17,17 @@ import {
 } from "../actions/RemoteConnectPage.js";
 import { createRemoteConnection } from "../shared/explorerConnection.js";
 import { handleError } from "../global/exceptions.js";
+import { getDomain } from "../library/helpers.js";
+import { navigateToRemoteExplorer } from "../actions/navigation.js";
 
 function handleConnectionCreation(dispatch, getState) {
     return createRemoteConnection(getRemoteConnectionInfo(getState()))
         .then(function __onConnected() {
+            const state = getState();
+            const url = getRemoteURL(state);
+            const domain = getDomain(url);
             dispatch(onConnected());
-            Actions.remoteExplorer();
+            dispatch(navigateToRemoteExplorer({ title: domain }));
         })
         .catch(function __handleError(err) {
             dispatch(disconnect());

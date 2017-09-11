@@ -5,7 +5,6 @@ import {
     View
 } from "react-native";
 import PropTypes from "prop-types";
-import { Actions } from "react-native-router-flux";
 import GroupsList from "../containers/GroupsList.js";
 
 const styles = StyleSheet.create({
@@ -19,17 +18,12 @@ const styles = StyleSheet.create({
 
 class ArchiveContentsPage extends Component {
 
-    constructor(...args) {
-        super(...args);
-        this.hasUpdatedTitle = false;
-    }
-
-    componentDidMount() {
-        if (!this.hasUpdatedTitle && this.props.title && this.props.title.length > 0) {
-            this.hasUpdatedTitle = true;
-            Actions.refresh({ title: `📂 ${this.props.title}` });
-        }
-    }
+    static navigationOptions = ({ navigation }) => {
+        const {params = {}} = navigation.state;
+        return {
+            title: `${params.title}`,
+        };
+    };
 
     render() {
         return (
@@ -40,9 +34,5 @@ class ArchiveContentsPage extends Component {
     }
 
 }
-
-ArchiveContentsPage.propTypes = {
-    title:              PropTypes.string.isRequired
-};
 
 export default ArchiveContentsPage;

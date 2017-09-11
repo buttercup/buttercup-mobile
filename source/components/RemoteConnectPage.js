@@ -29,6 +29,13 @@ const styles = StyleSheet.create({
 
 class RemoteConnectPage extends Component {
 
+    static navigationOptions = ({ navigation }) => {
+        const {params = {}} = navigation.state;
+        return {
+            title: `${params.title}`
+        };
+    };
+
     render() {
         switch (this.props.archiveType) {
             case "webdav":
@@ -47,7 +54,6 @@ class RemoteConnectPage extends Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <Text h3>WebDAV</Text>
                     <View>
                         <FormLabel>Remote URL</FormLabel>
                         <FormInput
