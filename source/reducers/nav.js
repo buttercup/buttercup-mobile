@@ -8,7 +8,8 @@ import {
     NAVIGATE_NEW_ENTRY,
     NAVIGATE_NEW_META,
     NAVIGATE_REMOTE_CONNECT,
-    NAVIGATE_REMOTE_EXPLORER
+    NAVIGATE_REMOTE_EXPLORER,
+    NAVIGATE_ROOT
 } from "../actions/types.js";
 
 function getInitialState() {
@@ -74,6 +75,9 @@ export default function routesReducer(state = getInitialState(), action = {}) {
                 NavigationActions.back(),
                 state
             );
+        }
+        case NAVIGATE_ROOT: {
+            return getInitialState();
         }
 
         default:

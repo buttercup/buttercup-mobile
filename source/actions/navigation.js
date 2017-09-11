@@ -7,7 +7,8 @@ import {
     NAVIGATE_NEW_ENTRY,
     NAVIGATE_NEW_META,
     NAVIGATE_REMOTE_CONNECT,
-    NAVIGATE_REMOTE_EXPLORER
+    NAVIGATE_REMOTE_EXPLORER,
+    NAVIGATE_ROOT
 } from "./types.js";
 
 export const navigateBack =                             createAction(NAVIGATE_BACK);
@@ -18,3 +19,4 @@ export const navigateToNewEntry =                       createAction(NAVIGATE_NE
 export const navigateToNewMeta =                        createAction(NAVIGATE_NEW_META);
 export const navigateToRemoteConnect =                  createAction(NAVIGATE_REMOTE_CONNECT);
 export const navigateToRemoteExplorer =                 createAction(NAVIGATE_REMOTE_EXPLORER);
+export const navigateToRoot =                           createAction(NAVIGATE_ROOT);

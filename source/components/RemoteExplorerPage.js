@@ -13,6 +13,10 @@ import Spinner from "react-native-loading-spinner-overlay";
 import Prompt from "react-native-prompt";
 import PropTypes from "prop-types";
 
+const BCUP_IMAGE = require("../../resources/images/bcup-256.png");
+const FILE_IMAGE = require("../../resources/images/file-256.png");
+const FOLDER_IMAGE = require("../../resources/images/folder-256.png");
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -103,14 +107,17 @@ class RemoteExplorer extends Component {
     }
 
     renderItem(item) {
-        const image = item.isDir ?
-            "https://opengameart.org/sites/default/files/Flat%20Folder%20icon.png" :
-            "http://www.iconeasy.com/icon/png/File%20Type/Slika%201.0%20Location%20Icons/Location%20%20%20FILE.png";
+        let image = item.isDir ?
+            FOLDER_IMAGE :
+            FILE_IMAGE;
+        if (/\.bcup$/i.test(item.name)) {
+            image = BCUP_IMAGE;
+        }
         return (
             <ListItem
                 key={item.name}
                 title={item.name}
-                avatar={{ uri: image }}
+                avatar={image}
                 onPress={() => this.handlePathSelected(item.path, item.isDir)}
                 hideChevron={true}
                 />

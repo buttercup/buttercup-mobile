@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import RemoteExplorer from "../components/RemoteExplorerPage.js";
+import { navigateToRoot } from "../actions/navigation.js";
 import {
     getCurrentItems,
     getCurrentPath,
@@ -61,7 +62,7 @@ function handleNewArchiveName(name, dispatch, getState) {
     addToArchiveManager({ ...getState(), archiveName: name })
         .then(function __getOuttaHere() {
             dispatch(setAddingArchive(false));
-            // Actions.popTo("archives");
+            dispatch(navigateToRoot());
         })
         .catch(function __handleAddError(err) {
             dispatch(setAddingArchive(false));
