@@ -41,16 +41,16 @@ class RemoteConnectPage extends Component {
             case "webdav":
                 return this.renderWebDAV();
             case "owncloud":
-                return this.renderWebDAV("OwnCloud");
+                return this.renderWebDAV();
             case "nextcloud":
-                return this.renderWebDAV("Nextcloud");
+                return this.renderWebDAV();
 
             default:
                 throw new Error(`Unknown type: ${this.props.archiveType}`);
         }
     }
 
-    renderWebDAV(connectionTitle = "WebDAV") {
+    renderWebDAV() {
         const base = { autoCapitalize: "none", keyboardType: "default", spellCheck: false };
         const urlInputOptions = { ...base, keyboardType: "url" };
         const usernameInputOptions = { ...base, keyboardType: "email-address" };
@@ -58,7 +58,6 @@ class RemoteConnectPage extends Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <Text h3>{connectionTitle}</Text>
                     <View>
                         <FormLabel>Remote URL</FormLabel>
                         <FormInput

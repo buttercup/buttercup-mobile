@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { Actions } from "react-native-router-flux";
 import AddArchivePage from "../components/AddArchivePage.js";
 import {
     getAdditionStage
