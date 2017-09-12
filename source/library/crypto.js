@@ -156,7 +156,6 @@ export function fetchUUIDs() {
 export function generateSalt(length) {
     const callBridge = (new Promise(function(resolve, reject) {
         CryptoBridge.generateSaltWithLength(length, (err, result) => {
-            console.log("GEN SALT", err, result);
             if (err) {
                 return reject(err);
             }
