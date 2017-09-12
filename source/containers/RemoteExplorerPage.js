@@ -14,6 +14,7 @@ import {
     willCreateNewArchive
 } from "../selectors/RemoteExplorerPage.js";
 import { getRemoteConnectionInfo } from "../selectors/RemoteConnectPage.js";
+import { getToken } from "../selectors/dropbox.js";
 import {
     cancelNewPrompt,
     onChangeDirectory,
@@ -46,11 +47,13 @@ function addToArchiveManager(state) {
         remotePassword,
         remoteURL
     } = { ...getNewArchiveDetails(state), ...getRemoteConnectionInfo(state) };
+    const dropboxToken = getToken(state);
     const sourceCredentials = createRemoteCredentials(archiveType, {
         username: remoteUsername,
         password: remotePassword,
         url: remoteURL,
-        path: archivePath
+        path: archivePath,
+        dropboxToken
     });
     const archiveCredentials = createArchiveCredentials(archivePassword);
     return addArchiveToArchiveManager(archiveName, sourceCredentials, archiveCredentials);

@@ -7,6 +7,7 @@ import {
     getRemoteURL,
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
+import { getToken } from "../selectors/dropbox.js";
 import {
     disconnect,
     onChangePassword,
@@ -21,13 +22,22 @@ import { getDomain } from "../library/helpers.js";
 import { navigateToRemoteExplorer } from "../actions/navigation.js";
 
 function handleConnectionCreation(dispatch, getState) {
-    return createRemoteConnection(getRemoteConnectionInfo(getState()))
+    const state = getState();
+    const remoteConnInfo = getRemoteConnectionInfo(state);
+    const dropboxToken = getToken(state);
+    return createRemoteConnection({ ...remoteConnInfo, dropboxToken })
         .then(function __onConnected() {
             const state = getState();
+            let title = "Remote";
             const url = getRemoteURL(state);
-            const domain = getDomain(url);
+            if (url) {
+                const domain = getDomain(url);
+                title = domain;
+            } else if (dropboxToken) {
+                title = "dropbox.com";
+            }
             dispatch(onConnected());
-            dispatch(navigateToRemoteExplorer({ title: domain }));
+            dispatch(navigateToRemoteExplorer({ title }));
         })
         .catch(function __handleError(err) {
             dispatch(disconnect());

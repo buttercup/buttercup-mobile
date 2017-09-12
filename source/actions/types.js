@@ -20,6 +20,14 @@ export const ARCHIVES_TOGGLE_IS_UNLOCKING =             "archives/toggleIsUnlock
 export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT =       "archives/toggleUnlockPasswordPrompt";
 export const ARCHIVES_UNLOCK_SOURCE =                   "archives/unlockSource";
 
+export const BROWSER_RESET =                            "browser/reset";
+export const BROWSER_SET_URL =                          "browser/setURL";
+
+export const DROPBOX_RESET_AUTH =                       "dropbox/resetAuthentication";
+export const DROPBOX_SET_AUTHENTICATED =                "dropbox/setAuthenticated";
+export const DROPBOX_SET_AUTHENTICATING =               "dropbox/setAuthenticating";
+export const DROPBOX_SET_AUTH_TOKEN =                   "dropbox/setAuthToken";
+
 export const ENTRY_LOAD =                               "entry/load";
 export const ENTRY_NEW_CLEAR =                          "entry/clearNew";
 export const ENTRY_NEW_META_CLEAR =                     "entry/clearNewMeta";
@@ -37,6 +45,7 @@ export const NAVIGATE_BACK =                            "navigation/back";
 export const NAVIGATE_ENTRY =                           "navigation/entry";
 export const NAVIGATE_NEW_ENTRY =                       "navigation/newEntry";
 export const NAVIGATE_NEW_META =                        "navigation/newMeta";
+export const NAVIGATE_POPUP_BROWSER =                   "navigation/popupBrowser";
 export const NAVIGATE_REMOTE_CONNECT =                  "navigation/remoteConnect";
 export const NAVIGATE_REMOTE_EXPLORER =                 "navigation/remoteExplorer";
 export const NAVIGATE_ROOT =                            "navigation/returnToRoot";
