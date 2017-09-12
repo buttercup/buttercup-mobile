@@ -1,9 +1,10 @@
 import { createCredentials } from "buttercup-web";
-import { getWebDAVConnection } from "../library/remote.js";
+import { getDropboxConnection, getNextcloudConnection, getOwnCloudConnection, getWebDAVConnection } from "../library/remote.js";
 import { createEmptyArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
-import { /*cancelNewPrompt,*/ selectArchive, setCreatingArchive, showNewNamePrompt } from "../actions/RemoteExplorerPage.js";
+import { selectArchive, setCreatingArchive, showNewNamePrompt } from "../actions/RemoteExplorerPage.js";
+import { doAsyncWork } from "../global/async.js";
 
 const PATH_PARENT = /^\.\./;
 
@@ -17,7 +18,8 @@ export function createNewArchive(state, dispatch) {
         // clear state for new item
         // dispatch(cancelNewPrompt());
         dispatch(setCreatingArchive(true));
-        createNewArchiveFile(currentPath, newPromptFilename, newPromptPassword)
+        return doAsyncWork()
+            .then(() => createNewArchiveFile(currentPath, newPromptFilename, newPromptPassword))
             .then(function __handleCreated(filePath) {
                 dispatch(setCreatingArchive(false));
                 dispatch(selectArchive(filePath));
@@ -40,17 +42,28 @@ export function createNewArchiveFile(currentDir, filename, password) {
 }
 
 export function createRemoteConnection(connectionInfo) {
+    const __storeSharedInstance = afsInstance => {
+        __remoteFSConnection = afsInstance
+    };
     const {
         archiveType,
         remoteUsername,
         remotePassword,
-        remoteURL
+        remoteURL,
+        dropboxToken
     } = connectionInfo;
     if (archiveType === "webdav") {
         return getWebDAVConnection(remoteURL, remoteUsername, remotePassword)
-            .then(function __storeSharedInstance(afsInstance) {
-                __remoteFSConnection = afsInstance;
-            });
+            .then(__storeSharedInstance);
+    } else if (archiveType === "owncloud") {
+        return getOwnCloudConnection(remoteURL, remoteUsername, remotePassword)
+            .then(__storeSharedInstance);
+    } else if (archiveType === "nextcloud") {
+        return getNextcloudConnection(remoteURL, remoteUsername, remotePassword)
+            .then(__storeSharedInstance);
+    } else if (archiveType === "dropbox") {
+        return getDropboxConnection(dropboxToken)
+            .then(__storeSharedInstance);
     }
     return Promise.reject(new Error(`Unknown archive type: ${archiveType}`));
 }

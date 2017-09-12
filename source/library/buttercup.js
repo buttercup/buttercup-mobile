@@ -6,6 +6,7 @@ import {
     entryFacade
 } from "buttercup-web";
 import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
+import { doAsyncWork } from "../global/async.js";
 
 const { SourceStatus: ArchiveSourceStatus } = ArchiveManager;
 
@@ -13,11 +14,12 @@ let __sharedManager = null;
 
 export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
     const manager = getSharedArchiveManager();
-    return manager.addSource(
-        name,
-        sourceCreds,
-        archiveCreds
-    );
+    return doAsyncWork()
+        .then(() => manager.addSource(
+            name,
+            sourceCreds,
+            archiveCreds
+        ));
 }
 
 export function consumeEntryFacade(entry, facade) {
@@ -39,6 +41,17 @@ export function createEntryFacade(entry) {
 export function createRemoteCredentials(archiveType, options) {
     const credentials = createCredentials(archiveType);
     switch (archiveType) {
+        case "dropbox":
+            credentials.setValue("datasource", JSON.stringify({
+                type: "dropbox",
+                token: options.dropboxToken,
+                path: options.path
+            }));
+            return credentials;
+        case "nextcloud":
+            /* falls-through */
+        case "owncloud":
+            /* falls-through */
         case "webdav": {
             credentials.username = options.username;
             credentials.password = options.password;
@@ -56,7 +69,12 @@ export function createRemoteCredentials(archiveType, options) {
 
 export function getArchiveEncryptedContent(archive, credentials) {
     const tds = new TextDatasource();
-    return tds.save(archive, credentials);
+    return tds
+        .save(archive, credentials)
+        .then(encryptedContent => {
+            return doAsyncWork()
+                .then(() => encryptedContent);
+        });
 }
 
 export function getSharedArchiveManager() {

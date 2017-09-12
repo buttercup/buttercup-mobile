@@ -14,6 +14,7 @@ import {
     willCreateNewArchive
 } from "../selectors/RemoteExplorerPage.js";
 import { getRemoteConnectionInfo } from "../selectors/RemoteConnectPage.js";
+import { getToken } from "../selectors/dropbox.js";
 import {
     cancelNewPrompt,
     onChangeDirectory,
@@ -34,6 +35,7 @@ import {
     createArchiveCredentials,
     createRemoteCredentials
 } from "../library/buttercup.js";
+import { handleError } from "../global/exceptions.js";
 
 function addToArchiveManager(state) {
     const {
@@ -45,11 +47,13 @@ function addToArchiveManager(state) {
         remotePassword,
         remoteURL
     } = { ...getNewArchiveDetails(state), ...getRemoteConnectionInfo(state) };
+    const dropboxToken = getToken(state);
     const sourceCredentials = createRemoteCredentials(archiveType, {
         username: remoteUsername,
         password: remotePassword,
         url: remoteURL,
-        path: archivePath
+        path: archivePath,
+        dropboxToken
     });
     const archiveCredentials = createArchiveCredentials(archivePassword);
     return addArchiveToArchiveManager(archiveName, sourceCredentials, archiveCredentials);
@@ -66,7 +70,7 @@ function handleNewArchiveName(name, dispatch, getState) {
         })
         .catch(function __handleAddError(err) {
             dispatch(setAddingArchive(false));
-            throw err;
+            handleError("Failed adding archive", err);
         });
 }
 

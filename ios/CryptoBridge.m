@@ -32,4 +32,19 @@ RCT_EXPORT_METHOD(decryptText:(NSString *)encryptedText withKey:(NSString *)key 
     ]);
 }
 
+RCT_EXPORT_METHOD(generateSaltWithLength:(int)length thenCallback:(RCTResponseSenderBlock)callback) {
+    callback(@[
+        [NSNull null],
+        [BCCrypto generateSaltWithLength:length]
+    ]);
+}
+
+RCT_EXPORT_METHOD(generateUUIDs:(RCTResponseSenderBlock)callback) {
+    NSArray *uuidArr = [BCCrypto generateUUIDsForCount:50];
+    callback(@[
+        [NSNull null],
+        [uuidArr componentsJoinedByString:@","]
+    ]);
+}
+
 @end

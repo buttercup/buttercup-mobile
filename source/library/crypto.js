@@ -1,19 +1,47 @@
 import { NativeModules } from "react-native";
 import {
-    createCipheriv,
-    createDecipheriv,
-    createHmac,
-    randomBytes
-} from "crypto";
-import {
+    tools,
     vendor,
     Web
 } from "buttercup-web";
+import {
+    addToStack,
+    getStackCount,
+    getStackItem
+} from "./cache.js";
 
 const { CryptoBridge } = NativeModules;
 
-const ENCRYPTION_ALGO = "aes-256-cbc";
-const HMAC_ALGO = "sha256";
+const CACHE_UUID_MAX = 500;
+const CACHE_UUID_MIN = 50;
+
+export function buildCache() {
+    return Promise
+        .all([
+            cacheUUIDs()
+        ]);
+}
+
+function cacheUUIDs() {
+    const uuidCount = getStackCount("uuid");
+    if (uuidCount > CACHE_UUID_MIN) {
+        return Promise.resolve();
+    }
+    console.log("Will fetch more UUIDs");
+    const refill = () => {
+        return fetchUUIDs()
+            .then(uuids => {
+                console.log(`Received ${uuids.length} UUIDs...`);
+                // console.log("UUIDS", uuids);
+                addToStack("uuid", ...uuids);
+                const uuidCount = getStackCount("uuid");
+                if (uuidCount < CACHE_UUID_MAX) {
+                    return refill();
+                }
+            });
+    };
+    return refill();
+}
 
 function constantTimeCompare(val1, val2) {
     let sentinel;
@@ -112,17 +140,30 @@ function encrypt(text, keyDerivationInfo) {
     return callBridge;
 }
 
-function generateIV() {
-    return Buffer
-        .from(randomBytes(16))
-        .toString("hex");
+export function fetchUUIDs() {
+    const callBridge = (new Promise(function(resolve, reject) {
+        CryptoBridge.generateUUIDs((err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            const uuids = result.split(",");
+            return resolve(uuids);
+        });
+    }));
+    return callBridge;
 }
 
-function generateSalt(length) {
-    const genLen = length % 2 ? length + 1 : length;
-    return randomBytes(genLen / 2)
-        .toString("hex")
-        .substring(0, length);
+export function generateSalt(length) {
+    const callBridge = (new Promise(function(resolve, reject) {
+        CryptoBridge.generateSaltWithLength(length, (err, result) => {
+            console.log("GEN SALT", err, result);
+            if (err) {
+                return reject(err);
+            }
+            return resolve(result);
+        });
+    }));
+    return callBridge;
 }
 
 export function hexKeyToBuffer(key) {
@@ -151,8 +192,11 @@ export function hexKeyToBuffer(key) {
 
 export function patchCrypto() {
     const { iocane } = vendor;
+    const { overrides } = tools;
     iocane.components.setEncryptTool(encrypt);
     iocane.components.setDecryptTool(decrypt);
+    iocane.components.setSaltGenerationTool(generateSalt);
+    overrides.setUUIDGenerator(() => getStackItem("uuid"));
 }
 
 export function patchKeyDerivation() {

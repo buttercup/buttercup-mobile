@@ -13,6 +13,7 @@ import {
 } from "react-native-elements";
 import Spinner from "react-native-loading-spinner-overlay";
 import PropTypes from "prop-types";
+import DropboxAuthButton from "../containers/DropboxAuthButton.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -38,12 +39,44 @@ class RemoteConnectPage extends Component {
 
     render() {
         switch (this.props.archiveType) {
+            case "dropbox":
+                return this.renderDropbox();
             case "webdav":
+                return this.renderWebDAV();
+            case "owncloud":
+                return this.renderWebDAV();
+            case "nextcloud":
                 return this.renderWebDAV();
 
             default:
                 throw new Error(`Unknown type: ${this.props.archiveType}`);
         }
+    }
+
+    renderDropbox() {
+        return (
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <Text h3>Dropbox</Text>
+                    <View>
+                        <DropboxAuthButton />
+                        <Button
+                            buttonStyle={styles.connectButton}
+                            large
+                            icon={{ name: "cloud" }}
+                            title="Connect"
+                            onPress={() => this.submit()}
+                            />
+                    </View>
+                    <Spinner
+                        visible={this.props.connecting}
+                        textContent="Connecting"
+                        textStyle={{ color: "#FFF" }}
+                        overlayColor="rgba(0, 0, 0, 0.75)"
+                        />
+                </View>
+            </TouchableWithoutFeedback>
+        );
     }
 
     renderWebDAV() {

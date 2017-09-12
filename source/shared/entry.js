@@ -15,6 +15,7 @@ import { setSaving } from "../actions/app.js";
 import { getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
 import { handleError } from "../global/exceptions.js";
 import { navigateBack } from "../actions/navigation.js";
+import { doAsyncWork } from "../global/async.js";
 
 export function getEntry(sourceID, entryID) {
     const archiveManager = getSharedArchiveManager();
@@ -65,6 +66,7 @@ export function saveNewEntry() {
     dispatch(setSaving(true));
     return source.workspace
         .save()
+        .then(doAsyncWork)
         .then(() => {
             dispatch(setSaving(false));
             dispatch(navigateBack());
