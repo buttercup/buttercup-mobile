@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+    Button,
     ScrollView,
     StyleSheet,
     Text,
@@ -12,6 +13,7 @@ import {
 import Spinner from "react-native-loading-spinner-overlay";
 import Prompt from "react-native-prompt";
 import PropTypes from "prop-types";
+import { beginNewArchiveProcedure } from "../shared/archives.js";
 
 const BCUP_IMAGE = require("../../resources/images/bcup-256.png");
 const FILE_IMAGE = require("../../resources/images/file-256.png");
@@ -37,7 +39,13 @@ class RemoteExplorer extends Component {
     static navigationOptions = ({ navigation }) => {
         const {params = {}} = navigation.state;
         return {
-            title: `${params.title}`
+            title: `${params.title}`,
+            headerRight: (
+                <Button
+                    title="New"
+                    onPress={beginNewArchiveProcedure}
+                    />
+            )
         };
     };
 

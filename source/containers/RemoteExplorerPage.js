@@ -27,7 +27,8 @@ import {
     setNewFilename,
     setNewMasterPassword,
     showNewNamePrompt,
-    showNewMasterPasswordPrompt
+    showNewMasterPasswordPrompt,
+    showNewPrompt
 } from "../actions/RemoteExplorerPage.js";
 import { createNewArchive, getDirectoryContents } from "../shared/explorerConnection.js";
 import {

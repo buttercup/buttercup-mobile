@@ -11,7 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@buttercup/mobile-compat": "~0.6.0",
+    "@buttercup/mobile-compat": "~0.6.1",
     "@yfuks/react-native-action-sheet": "0.0.3",
     "assert": "^1.4.1",
     "browserify-zlib": "^0.1.4",
