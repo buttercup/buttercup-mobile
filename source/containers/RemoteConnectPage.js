@@ -7,7 +7,11 @@ import {
     getRemoteURL,
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
-import { getToken } from "../selectors/dropbox.js";
+import {
+    getNotification as getDropboxAuthNotification,
+    getToken,
+    isAuthenticated
+} from "../selectors/dropbox.js";
 import {
     disconnect,
     onChangePassword,
@@ -49,6 +53,8 @@ export default connect(
     (state, ownProps) => ({
         archiveType:            getArchiveType(state),
         connecting:             isConnecting(state),
+        dropboxAuthenticated:   isAuthenticated(state),
+        dropboxAuthMessage:     getDropboxAuthNotification(state),
         url:                    getRemoteURL(state),
         ...getRemoteCredentials(state)
     }),

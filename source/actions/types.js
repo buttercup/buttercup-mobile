@@ -27,6 +27,7 @@ export const DROPBOX_RESET_AUTH =                       "dropbox/resetAuthentica
 export const DROPBOX_SET_AUTHENTICATED =                "dropbox/setAuthenticated";
 export const DROPBOX_SET_AUTHENTICATING =               "dropbox/setAuthenticating";
 export const DROPBOX_SET_AUTH_TOKEN =                   "dropbox/setAuthToken";
+export const DROPBOX_SET_NOTIFICATION =                 "dropbox/setNotification";
 
 export const ENTRY_LOAD =                               "entry/load";
 export const ENTRY_NEW_CLEAR =                          "entry/clearNew";
