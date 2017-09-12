@@ -63,7 +63,7 @@ To run on an actual device, first terminate any AVDs that are running. Connect t
 The same software version restrictions apply to real devices.
 
 ## Contributing
-We love contributions - anything from new features and bug fixes to suggestions and questions. Please keep it respectful and understand that we only have so much time in a work day. If you plan on submitting a PR for a new feature please consider raising an issue first to discuss the architecture and approach. Also remember that not all features may be accepted: We will accept features that are in line with the project roadmap that make sense and are easily maintainable.
+We love contributions - anything from new features and bug fixes to suggestions and questions. Please follow our [contribution guide](CONTRIBUTING.md).
 
 ### Development
 Please keep in-line with the code style of each file, regardless of what tests are run (linting etc.). When creating new files their format is expected to closely resemble that of other existing source files.
