@@ -21,6 +21,7 @@ import AddArchivePage from "./containers/AddArchivePage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import PopupBrowser from "./containers/PopupBrowser.js";
+import GroupsPage from "./containers/GroupsPage.js";
 
 export const AppNavigator = StackNavigator({
     Home: { screen: ArchivesPage },
@@ -31,7 +32,8 @@ export const AppNavigator = StackNavigator({
     AddArchive: { screen: AddArchivePage },
     RemoteConnect: { screen: RemoteConnectPage },
     RemoteExplorer: { screen: RemoteExplorerPage },
-    PopupBrowser: { screen: PopupBrowser }
+    PopupBrowser: { screen: PopupBrowser },
+    GroupsPage: { screen: GroupsPage }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

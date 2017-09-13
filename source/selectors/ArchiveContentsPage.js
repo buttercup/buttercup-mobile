@@ -3,6 +3,39 @@ import { getSharedArchiveManager } from "../library/buttercup.js";
 const STATE_KEY = "archiveContents";
 const ARCHIVES_STATE_KEY = "archives";
 
+export function getGroup(state, id, _groups = null) {
+    const groups = _groups || getGroups(state);
+    if (id === "0") {
+        return {
+            id: "0",
+            title: "[archive]",
+            groups,
+            entries: []
+        };
+    }
+    const targetGroup = groups.find(group => group.id === id);
+    if (targetGroup) {
+        return {
+            id,
+            title: targetGroup.title,
+            groups: targetGroup.groups || [],
+            entries: targetGroup.entries || []
+        };
+    }
+    for (let i, groupCount = groups.length; i < groupCount; i += 1) {
+        const foundGroup = getGroup(state, id, groups[i].groups || []);
+        if (foundGroup) {
+            return {
+                id,
+                title: foundGroup.title,
+                groups: foundGroup.groups || [],
+                entries: foundGroup.entries || []
+            };
+        }
+    }
+    return null;
+}
+
 export function getGroups(state) {
     return state[STATE_KEY].groups;
 }

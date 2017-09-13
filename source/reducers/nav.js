@@ -5,6 +5,7 @@ import {
     NAVIGATE_ARCHIVE_CONTENTS,
     NAVIGATE_BACK,
     NAVIGATE_ENTRY,
+    NAVIGATE_GROUPS,
     NAVIGATE_NEW_ENTRY,
     NAVIGATE_NEW_META,
     NAVIGATE_POPUP_BROWSER,
@@ -75,6 +76,13 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             const { title } = action.payload;
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: "PopupBrowser", params: { title } }),
+                state
+            );
+        }
+        case NAVIGATE_GROUPS: {
+            const { id: groupID, title } = action.payload;
+            return AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: "GroupsPage", params: { groupID, title } }),
                 state
             );
         }

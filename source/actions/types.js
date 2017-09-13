@@ -44,6 +44,7 @@ export const NAVIGATE_ADD_ARCHIVE =                     "navigation/addArchive";
 export const NAVIGATE_ARCHIVE_CONTENTS =                "navigation/archiveContents";
 export const NAVIGATE_BACK =                            "navigation/back";
 export const NAVIGATE_ENTRY =                           "navigation/entry";
+export const NAVIGATE_GROUPS =                          "navigation/groups";
 export const NAVIGATE_NEW_ENTRY =                       "navigation/newEntry";
 export const NAVIGATE_NEW_META =                        "navigation/newMeta";
 export const NAVIGATE_POPUP_BROWSER =                   "navigation/popupBrowser";
