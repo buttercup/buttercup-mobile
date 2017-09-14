@@ -3,6 +3,14 @@ import { dispatch, getState } from "../store.js";
 import { setGroups } from "../actions/ArchiveContentsPage.js";
 import { getSelectedArchive } from "../selectors/ArchiveContentsPage.js";
 import { doAsyncWork } from "../global/async.js";
+import { setNewEntryParentGroup } from "../actions/entry.js";
+import { showArchiveContentsAddItemSheet } from "../shared/sheets.js";
+
+export function addToGroup(groupID) {
+    dispatch(setNewEntryParentGroup(groupID));
+    const showEntryAdd = groupID !== "0";
+    showArchiveContentsAddItemSheet(showEntryAdd);
+}
 
 export function archiveToObject(archive) {
     return archive.toObject();

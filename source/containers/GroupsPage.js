@@ -28,8 +28,8 @@ export default connect(
         onEntryPress: entryID => (dispatch, getState) => {
             loadAndOpenEntry(entryID, dispatch, getState);
         },
-        onGroupPress: (groupID, groupTitle) => dispatch => {
-            dispatch(navigateToGroups({ id: groupID, title: `📂 ${groupTitle}` }));
+        onGroupPress: (groupID, groupTitle, isTrash) => dispatch => {
+            dispatch(navigateToGroups({ id: groupID, title: `📂 ${groupTitle}`, isTrash }));
         }
     }
 )(GroupsPage);
