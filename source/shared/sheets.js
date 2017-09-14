@@ -6,12 +6,16 @@ import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.
 const SHEET_ADD_ARCHIVE =                       "Add";
 const SHEET_ADD_ENTRY =                         "New Entry";
 const SHEET_ADD_GROUP =                         "New Group";
+const SHEET_DELETE_GROUP =                      "Delete Group";
 const SHEET_LOCK_ALL =                          "Lock All";
+const SHEET_RENAME_GROUP =                      "Rename Group";
 const SHEET_CANCEL =                            "Cancel";
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
     SHEET_ADD_GROUP,
+    SHEET_DELETE_GROUP,
+    SHEET_RENAME_GROUP,
     SHEET_CANCEL
 ];
 const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [
@@ -29,7 +33,7 @@ export function showArchiveContentsAddItemSheet(showEntryAdd) {
         {
             options: buttons,
             cancelButtonIndex: buttons.indexOf(SHEET_CANCEL),
-            title: "Add to group"
+            title: "Edit group"
         },
         selectedIndex => {
             switch(buttons[selectedIndex]) {
@@ -39,6 +43,12 @@ export function showArchiveContentsAddItemSheet(showEntryAdd) {
                 }
                 case SHEET_ADD_GROUP: {
 
+                    break;
+                }
+                case SHEET_DELETE_GROUP: {
+                    break;
+                }
+                case SHEET_RENAME_GROUP: {
                     break;
                 }
             }

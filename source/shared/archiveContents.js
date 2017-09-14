@@ -6,14 +6,14 @@ import { doAsyncWork } from "../global/async.js";
 import { setNewEntryParentGroup } from "../actions/entry.js";
 import { showArchiveContentsAddItemSheet } from "../shared/sheets.js";
 
-export function addToGroup(groupID) {
+export function archiveToObject(archive) {
+    return archive.toObject();
+}
+
+export function editGroup(groupID) {
     dispatch(setNewEntryParentGroup(groupID));
     const showEntryAdd = groupID !== "0";
     showArchiveContentsAddItemSheet(showEntryAdd);
-}
-
-export function archiveToObject(archive) {
-    return archive.toObject();
 }
 
 export function lockSource(sourceID) {

@@ -11,7 +11,7 @@ import {
     Cell,
     CellGroup
 } from "react-native-cell-components";
-import { addToGroup } from "../shared/archiveContents.js";
+import { editGroup } from "../shared/archiveContents.js";
 
 const ARCHIVE_ENTRY_TRASH_ATTRIBUTE = "bc_group_role";
 const ARCHIVE_ENTRY_TRASH_ROLE = "trash";
@@ -62,8 +62,8 @@ class GroupsPage extends Component {
         if (!isTrash) {
             options.headerRight = (
                 <Button
-                    title="Add"
-                    onPress={() => addToGroup(groupID)}
+                    title="Edit"
+                    onPress={() => editGroup(groupID)}
                     />
             );
         }
