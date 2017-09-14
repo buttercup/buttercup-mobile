@@ -1,7 +1,6 @@
 import { createAction } from "redux-actions";
 import {
     NAVIGATE_ADD_ARCHIVE,
-    NAVIGATE_ARCHIVE_CONTENTS,
     NAVIGATE_BACK,
     NAVIGATE_ENTRY,
     NAVIGATE_GROUPS,
@@ -15,7 +14,6 @@ import {
 
 export const navigateBack =                             createAction(NAVIGATE_BACK);
 export const navigateToAddArchive =                     createAction(NAVIGATE_ADD_ARCHIVE);
-export const navigateToArchiveContents =                createAction(NAVIGATE_ARCHIVE_CONTENTS);
 export const navigateToEntry =                          createAction(NAVIGATE_ENTRY);
 export const navigateToGroups =                         createAction(NAVIGATE_GROUPS);
 export const navigateToNewEntry =                       createAction(NAVIGATE_NEW_ENTRY);

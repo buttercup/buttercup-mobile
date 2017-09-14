@@ -41,7 +41,6 @@ export const ENTRY_SET_NEW_PROPERTY_VALUE =             "entry/setNewEntryProper
 export const ENTRY_UNLOAD =                             "entry/unload";
 
 export const NAVIGATE_ADD_ARCHIVE =                     "navigation/addArchive";
-export const NAVIGATE_ARCHIVE_CONTENTS =                "navigation/archiveContents";
 export const NAVIGATE_BACK =                            "navigation/back";
 export const NAVIGATE_ENTRY =                           "navigation/entry";
 export const NAVIGATE_GROUPS =                          "navigation/groups";

@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import GroupsPage from "../components/GroupsPage.js";
-import { getGroup } from "../selectors/ArchiveContentsPage.js";
+import { getGroup } from "../selectors/archiveContents.js";
 import { navigateToEntry, navigateToGroups } from "../actions/navigation.js";
 import { getEntryTitle, loadEntry } from "../shared/entry.js";
-import { getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
+import { getSelectedSourceID } from "../selectors/archiveContents.js";
 
 function getGroupContents(state, props) {
     const navGroupID = props.navigation && props.navigation.state && props.navigation.state.params &&

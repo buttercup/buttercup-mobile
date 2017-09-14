@@ -2,7 +2,6 @@ import { NavigationActions } from "react-navigation";
 import { AppNavigator } from "../routing.js";
 import {
     NAVIGATE_ADD_ARCHIVE,
-    NAVIGATE_ARCHIVE_CONTENTS,
     NAVIGATE_BACK,
     NAVIGATE_ENTRY,
     NAVIGATE_GROUPS,
@@ -26,13 +25,6 @@ function getInitialState() {
 
 export default function routesReducer(state = getInitialState(), action = {}) {
     switch (action.type) {
-        case NAVIGATE_ARCHIVE_CONTENTS: {
-            const { title } = action.payload;
-            return AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({ routeName: "ArchiveContents", params: { title } }),
-                state
-            );
-        }
         case NAVIGATE_ENTRY: {
             const { title } = action.payload;
             return AppNavigator.router.getStateForAction(

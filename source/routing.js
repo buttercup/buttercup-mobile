@@ -13,7 +13,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import ArchivesPage from "./components/ArchivesPage.js";
-import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
 import EntryPage from "./containers/EntryPage.js";
 import NewEntryPage from "./containers/NewEntryPage.js";
 import AddMetaPage from "./containers/AddMetaPage.js";
@@ -25,7 +24,6 @@ import GroupsPage from "./containers/GroupsPage.js";
 
 export const AppNavigator = StackNavigator({
     Home: { screen: ArchivesPage },
-    ArchiveContents: { screen: ArchiveContentsPage },
     Entry: { screen: EntryPage },
     NewEntry: { screen: NewEntryPage },
     AddMeta: { screen: AddMetaPage },
