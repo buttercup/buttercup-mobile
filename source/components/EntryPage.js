@@ -60,8 +60,12 @@ class EntryPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        const editing = nextProps.editing;
         if (this.props.editing !== nextProps.editing) {
             this.updateRightButton(nextProps);
+        }
+        if (!editing && this.props.title !== this.props.navigation.state.params.title) {
+            this.updateTitle(this.props.title);
         }
     }
 
@@ -188,6 +192,12 @@ class EntryPage extends Component {
         this.props.navigation.setParams({
             rightTitle,
             rightAction
+        });
+    }
+
+    updateTitle(title) {
+        this.props.navigation.setParams({
+            title
         });
     }
 
