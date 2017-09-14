@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
     Button,
+    Image,
     StyleSheet,
     Text,
     View
@@ -11,11 +12,36 @@ import {
     CellGroup
 } from "react-native-cell-components";
 
+const ENTRY_ICON = require("../../resources/images/entry-256.png");
+const GROUP_ICON = require("../../resources/images/group-256.png");
+
 const styles = StyleSheet.create({
     container: {
         width: "100%"
+    },
+    icon: {
+        width: 32,
+        height: 32
     }
 });
+
+function getEntryIcon() {
+    return (
+        <Image
+            source={ENTRY_ICON}
+            style={styles.icon}
+        />
+    );
+}
+
+function getGroupIcon() {
+    return (
+        <Image
+            source={GROUP_ICON}
+            style={styles.icon}
+        />
+    );
+}
 
 class GroupsPage extends Component {
 
@@ -33,6 +59,7 @@ class GroupsPage extends Component {
     };
 
     static propTypes = {
+        onEntryPress: PropTypes.func.isRequired,
         onGroupPress: PropTypes.func.isRequired
     };
 
@@ -43,9 +70,19 @@ class GroupsPage extends Component {
                     {this.props.group.groups.map(group =>
                         <Cell
                             key={group.id}
+                            icon={getGroupIcon}
                             onPress={() => this.props.onGroupPress(group.id, group.title)}
                         >
                             <Text>{group.title}</Text>
+                        </Cell>
+                    )}
+                    {this.props.group.entries.map(entry =>
+                        <Cell
+                            key={entry.id}
+                            icon={getEntryIcon}
+                            onPress={() => this.props.onEntryPress(entry.id)}
+                        >
+                            <Text>{entry.properties.title || ""}</Text>
                         </Cell>
                     )}
                 </CellGroup>

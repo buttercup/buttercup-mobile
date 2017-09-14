@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import GroupsPage from "../components/GroupsPage.js";
 import { getGroup } from "../selectors/ArchiveContentsPage.js";
-import { navigateToGroups } from "../actions/navigation.js";
-// import { getNewMetaKey, getNewMetaValue } from "../selectors/entry.js";
-// import { clearNewMeta, setNewMeta } from "../actions/entry.js";
+import { navigateToEntry, navigateToGroups } from "../actions/navigation.js";
+import { getEntryTitle, loadEntry } from "../shared/entry.js";
+import { getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
 
 function getGroupContents(state, props) {
     const navGroupID = props.navigation && props.navigation.state && props.navigation.state.params &&
@@ -12,11 +12,22 @@ function getGroupContents(state, props) {
     return getGroup(state, targetGroupID);
 }
 
+function loadAndOpenEntry(entryID, dispatch, getState) {
+    const state = getState();
+    const sourceID = getSelectedSourceID(state);
+    const entryTitle = getEntryTitle(sourceID, entryID);
+    loadEntry(sourceID, entryID);
+    dispatch(navigateToEntry({ title: entryTitle }));
+}
+
 export default connect(
     (state, ownProps) => ({
         group: getGroupContents(state, ownProps)
     }),
     {
+        onEntryPress: entryID => (dispatch, getState) => {
+            loadAndOpenEntry(entryID, dispatch, getState);
+        },
         onGroupPress: (groupID, groupTitle) => dispatch => {
             dispatch(navigateToGroups({ id: groupID, title: `📂 ${groupTitle}` }));
         }
