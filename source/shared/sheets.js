@@ -2,6 +2,7 @@ import ActionSheet from '@yfuks/react-native-action-sheet';
 import { lockAllArchives } from "./archives.js";
 import { dispatch } from "../store.js";
 import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
+import { showCreateGroupPrompt } from "../actions/archiveContents.js";
 
 const SHEET_ADD_ARCHIVE =                       "Add";
 const SHEET_ADD_ENTRY =                         "New Entry";
@@ -42,7 +43,7 @@ export function showArchiveContentsAddItemSheet(showEntryAdd) {
                     break;
                 }
                 case SHEET_ADD_GROUP: {
-
+                    dispatch(showCreateGroupPrompt(true));
                     break;
                 }
                 case SHEET_DELETE_GROUP: {
