@@ -1,12 +1,11 @@
 matrix:
   include:
     - language: node_js
-      node_js: 7.4.0
       script: npm run test
       before_install:
         - npm i -g jest-cli
       node_js:
-        - "stable"
+        - "7.4.0"
     - language: objective-c
       os: osx
       osx_image: xcode8.3
