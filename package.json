@@ -32,6 +32,7 @@
     "react": "^16.0.0-alpha.12",
     "react-native": "^0.48.3",
     "react-native-browser": "^0.6.2",
+    "react-native-browser-polyfill": "^0.1.2",
     "react-native-cell-components": "^0.2.1",
     "react-native-collapsible": "^0.8.0",
     "react-native-crypto": "^2.0.2",

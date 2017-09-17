@@ -1,4 +1,5 @@
 import "./shim.js";
+import "react-native-browser-polyfill";
 import React, { Component } from "react";
 import { AppRegistry } from "react-native";
 import { Provider } from "react-redux";
