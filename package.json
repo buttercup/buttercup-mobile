@@ -29,8 +29,8 @@
     "process": "^0.11.10",
     "prop-types": "^15.5.10",
     "querystring-es3": "^0.2.1",
-    "react": "16.0.0-alpha.6",
-    "react-native": "0.44.0",
+    "react": "^16.0.0-alpha.12",
+    "react-native": "^0.48.3",
     "react-native-browser": "^0.6.2",
     "react-native-cell-components": "^0.2.1",
     "react-native-collapsible": "^0.8.0",
@@ -42,8 +42,8 @@
     "react-native-loading-spinner-overlay": "^0.5.0",
     "react-native-navbar": "^1.7.1",
     "react-native-notification": "^2.0.0",
+    "react-native-os": "^1.1.0",
     "react-native-prompt": "^1.0.0",
-    "react-native-randombytes": "^2.2.0",
     "react-native-swipeout": "^2.1.1",
     "react-native-tcp": "^2.0.4",
     "react-native-udp": "^1.2.9",
@@ -69,7 +69,7 @@
     "jest": "~20.0.4",
     "jest-cli": "~20.0.4",
     "react-test-renderer": "16.0.0-alpha.6",
-    "rn-nodeify": "^7.0.1"
+    "rn-nodeify": "^8.0.0"
   },
   "jest": {
     "preset": "react-native",
@@ -90,7 +90,7 @@
     "domain": "domain-browser",
     "http": "react-native-http",
     "https": "https-browserify",
-    "os": "os-browserify",
+    "os": "react-native-os",
     "path": "path-browserify",
     "querystring": "querystring-es3",
     "fs": "react-native-level-fs",
@@ -103,7 +103,8 @@
     "stream": "stream-browserify",
     "timers": "timers-browserify",
     "tty": "tty-browserify",
-    "vm": "vm-browserify"
+    "vm": "vm-browserify",
+    "tls": false
   },
   "browser": {
     "zlib": "browserify-zlib",
@@ -115,7 +116,7 @@
     "domain": "domain-browser",
     "http": "react-native-http",
     "https": "https-browserify",
-    "os": "os-browserify",
+    "os": "react-native-os",
     "path": "path-browserify",
     "querystring": "querystring-es3",
     "fs": "react-native-level-fs",
@@ -128,6 +129,7 @@
     "stream": "stream-browserify",
     "timers": "timers-browserify",
     "tty": "tty-browserify",
-    "vm": "vm-browserify"
+    "vm": "vm-browserify",
+    "tls": false
   }
 }
