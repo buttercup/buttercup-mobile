@@ -13,11 +13,11 @@ import {
     CellGroup
 } from "react-native-cell-components";
 import { editGroup } from "../shared/archiveContents.js";
+import { rawGroupIsTrash } from "../shared/group.js";
 
-const ARCHIVE_ENTRY_TRASH_ATTRIBUTE = "bc_group_role";
-const ARCHIVE_ENTRY_TRASH_ROLE = "trash";
 const ENTRY_ICON = require("../../resources/images/entry-256.png");
 const GROUP_ICON = require("../../resources/images/group-256.png");
+const TRASH_ICON = require("../../resources/images/trash-256.png");
 
 const styles = StyleSheet.create({
     container: {
@@ -38,18 +38,16 @@ function getEntryIcon() {
     );
 }
 
-function getGroupIcon() {
+function getGroupIcon(group) {
+    const icon = rawGroupIsTrash(group) ?
+        TRASH_ICON :
+        GROUP_ICON;
     return (
         <Image
-            source={GROUP_ICON}
+            source={icon}
             style={styles.icon}
         />
     );
-}
-
-function groupIsTrash(group) {
-    return (group.attributes &&
-        group.attributes[ARCHIVE_ENTRY_TRASH_ATTRIBUTE] === ARCHIVE_ENTRY_TRASH_ROLE);
 }
 
 class GroupsPage extends Component {
@@ -85,10 +83,10 @@ class GroupsPage extends Component {
                         {this.props.group.groups.map(group =>
                             <Cell
                                 key={group.id}
-                                icon={getGroupIcon}
+                                icon={() => getGroupIcon(group)}
                                 onPress={
                                     () => this.props.onGroupPress(
-                                        group.id, group.title, isTrash || groupIsTrash(group)
+                                        group.id, group.title, isTrash || rawGroupIsTrash(group)
                                     )
                                 }
                             >

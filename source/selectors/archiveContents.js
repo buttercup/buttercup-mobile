@@ -1,4 +1,5 @@
 import { getSharedArchiveManager } from "../library/buttercup.js";
+import { rawGroupIsTrash } from "../shared/group.js";
 
 const STATE_KEY = "archiveContents";
 const ARCHIVES_STATE_KEY = "archives";
@@ -9,7 +10,7 @@ export function getGroup(state, id, _groups = null) {
         return {
             id: "0",
             title: "[archive]",
-            groups,
+            groups: sortGroups(groups),
             entries: []
         };
     }
@@ -18,8 +19,8 @@ export function getGroup(state, id, _groups = null) {
         return {
             id,
             title: targetGroup.title,
-            groups: targetGroup.groups || [],
-            entries: targetGroup.entries || []
+            groups: sortGroups(targetGroup.groups) || [],
+            entries: sortEntries(targetGroup.entries) || []
         };
     }
     for (let i, groupCount = groups.length; i < groupCount; i += 1) {
@@ -28,8 +29,8 @@ export function getGroup(state, id, _groups = null) {
             return {
                 id,
                 title: foundGroup.title,
-                groups: foundGroup.groups || [],
-                entries: foundGroup.entries || []
+                groups: sortGroups(foundGroup.groups) || [],
+                entries: sortEntries(foundGroup.entries) || []
             };
         }
     }
@@ -58,7 +59,7 @@ export function getGroupsUnderID(state, id) {
         { groups } :
         findGroup(groups);
     return foundGroup && foundGroup.groups ?
-        foundGroup.groups :
+        sortGroups(foundGroup.groups) :
         [];
 }
 
@@ -80,4 +81,31 @@ export function getSelectedSource(state) {
 
 export function getSelectedSourceID(state) {
     return state[STATE_KEY].selectedSourceID;
+}
+
+export function sortEntries(entries) {
+    return entries.sort((a, b) => {
+        const aTitle = a.properties.title.toLowerCase();
+        const bTitle = b.properties.title.toLowerCase();
+        if (aTitle === bTitle) {
+            return 0;
+        }
+        return aTitle > bTitle ? 1 : -1;
+    });
+}
+
+export function sortGroups(groups) {
+    return groups.sort((a, b) => {
+        if (rawGroupIsTrash(b)) {
+            return -1;
+        } else if (rawGroupIsTrash(a)) {
+            return 1;
+        }
+        const aTitle = a.title.toLowerCase();
+        const bTitle = b.title.toLowerCase();
+        if (aTitle === bTitle) {
+            return 0;
+        }
+        return aTitle > bTitle ? 1 : -1;
+    });
 }
