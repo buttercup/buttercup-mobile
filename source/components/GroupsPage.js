@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
     Button,
     Image,
+    ScrollView,
     StyleSheet,
     Text,
     View
@@ -79,30 +80,32 @@ class GroupsPage extends Component {
         const isTrash = !!this.props.navigation.state.params.isTrash;
         return (
             <View style={styles.container}>
-                <CellGroup>
-                    {this.props.group.groups.map(group =>
-                        <Cell
-                            key={group.id}
-                            icon={getGroupIcon}
-                            onPress={
-                                () => this.props.onGroupPress(
-                                    group.id, group.title, isTrash || groupIsTrash(group)
-                                )
-                            }
-                        >
-                            <Text>{group.title}</Text>
-                        </Cell>
-                    )}
-                    {this.props.group.entries.map(entry =>
-                        <Cell
-                            key={entry.id}
-                            icon={getEntryIcon}
-                            onPress={() => this.props.onEntryPress(entry.id)}
-                        >
-                            <Text>{entry.properties.title || ""}</Text>
-                        </Cell>
-                    )}
-                </CellGroup>
+                <ScrollView>
+                    <CellGroup>
+                        {this.props.group.groups.map(group =>
+                            <Cell
+                                key={group.id}
+                                icon={getGroupIcon}
+                                onPress={
+                                    () => this.props.onGroupPress(
+                                        group.id, group.title, isTrash || groupIsTrash(group)
+                                    )
+                                }
+                            >
+                                <Text>{group.title}</Text>
+                            </Cell>
+                        )}
+                        {this.props.group.entries.map(entry =>
+                            <Cell
+                                key={entry.id}
+                                icon={getEntryIcon}
+                                onPress={() => this.props.onEntryPress(entry.id)}
+                            >
+                                <Text>{entry.properties.title || ""}</Text>
+                            </Cell>
+                        )}
+                    </CellGroup>
+                </ScrollView>
             </View>
         );
     }
