@@ -6,6 +6,7 @@ import { showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getEntryTitle, loadEntry } from "../shared/entry.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
 import { isSaving } from "../selectors/app.js";
+import { getTopGroupID } from "../selectors/nav.js";
 import { renameGroup } from "../shared/group.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
@@ -29,6 +30,7 @@ function loadAndOpenEntry(entryID, dispatch, getState) {
 
 export default connect(
     (state, ownProps) => ({
+        currentGroupID: getTopGroupID(state) || "",
         group: getGroupContents(state, ownProps),
         saving: isSaving(state),
         showGroupRenamePrompt: shouldShowGroupRenamePrompt(state)

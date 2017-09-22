@@ -70,6 +70,7 @@ class GroupsPage extends Component {
     };
 
     static propTypes = {
+        currentGroupID: PropTypes.string.isRequired,
         onCancelGroupRename: PropTypes.func.isRequired,
         onEntryPress: PropTypes.func.isRequired,
         onGroupPress: PropTypes.func.isRequired,
@@ -119,7 +120,10 @@ class GroupsPage extends Component {
                 <Prompt
                     title="Group Name"
                     defaultValue={this.props.group.title}
-                    visible={this.props.showGroupRenamePrompt}
+                    visible={
+                        this.props.showGroupRenamePrompt &&
+                        this.props.group.id === this.props.currentGroupID
+                    }
                     onCancel={() => this.props.onCancelGroupRename()}
                     onSubmit={value => this.props.onGroupRename(this.props.group.id, value)}
                     textInputProps={{ keyboardType: "default" }}
