@@ -12,6 +12,7 @@ export const APP_SET_SAVING =                           "app/setSaving";
 export const ARCHIVE_CONTENTS_SET_GROUPS =              "archiveContents/setGroups";
 export const ARCHIVE_CONTENTS_SET_SOURCE =              "archiveContentsPage/setSource";
 export const ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT = "archiveContents/toggleCreateGroupPrompt";
+export const ARCHIVE_CONTENTS_TOGGLE_REN_GROUP_PROMPT = "archiveContents/toggleGroupRenamePrompt";
 
 export const ARCHIVES_ADD_LOCKED_SOURCE =               "archives/addLockedSource";
 export const ARCHIVES_ADD_UNLOCKED_SOURCE =             "archives/addUnlockedSource";

@@ -13,7 +13,8 @@ export function archiveToObject(archive) {
 export function editGroup(groupID) {
     dispatch(setNewEntryParentGroup(groupID));
     const showEntryAdd = groupID !== "0";
-    showArchiveContentsAddItemSheet(showEntryAdd);
+    const showEditGroup = groupID !== "0";
+    showArchiveContentsAddItemSheet(showEntryAdd, showEditGroup);
 }
 
 export function lockSource(sourceID) {

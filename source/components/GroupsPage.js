@@ -8,6 +8,8 @@ import {
     View
 } from "react-native";
 import PropTypes from "prop-types";
+import Prompt from "react-native-prompt";
+import Spinner from "react-native-loading-spinner-overlay";
 import {
     Cell,
     CellGroup
@@ -55,9 +57,7 @@ class GroupsPage extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
         const { groupID = "0", title, isTrash } = params;
-        const options = {
-            title: `${title}`
-        };
+        const options = { title };
         if (!isTrash) {
             options.headerRight = (
                 <Button
@@ -70,9 +70,21 @@ class GroupsPage extends Component {
     };
 
     static propTypes = {
+        onCancelGroupRename: PropTypes.func.isRequired,
         onEntryPress: PropTypes.func.isRequired,
-        onGroupPress: PropTypes.func.isRequired
+        onGroupPress: PropTypes.func.isRequired,
+        onGroupRename: PropTypes.func.isRequired,
+        saving: PropTypes.bool.isRequired,
+        showGroupRenamePrompt: PropTypes.bool.isRequired
     };
+
+    componentWillReceiveProps(newProps) {
+        if (this.props.group && newProps.group) {
+            if (this.props.group.title !== newProps.group.title) {
+                this.props.navigation.setParams({ title: newProps.group.title });
+            }
+        }
+    }
 
     render() {
         const isTrash = !!this.props.navigation.state.params.isTrash;
@@ -104,6 +116,20 @@ class GroupsPage extends Component {
                         )}
                     </CellGroup>
                 </ScrollView>
+                <Prompt
+                    title="Group Name"
+                    defaultValue={this.props.group.title}
+                    visible={this.props.showGroupRenamePrompt}
+                    onCancel={() => this.props.onCancelGroupRename()}
+                    onSubmit={value => this.props.onGroupRename(this.props.group.id, value)}
+                    textInputProps={{ keyboardType: "default" }}
+                    />
+                <Spinner
+                    visible={this.props.saving}
+                    textContent="Saving"
+                    textStyle={{ color: "#FFF" }}
+                    overlayColor="rgba(0, 0, 0, 0.75)"
+                    />
             </View>
         );
     }

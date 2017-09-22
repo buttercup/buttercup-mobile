@@ -83,6 +83,10 @@ export function getSelectedSourceID(state) {
     return state[STATE_KEY].selectedSourceID;
 }
 
+export function shouldShowGroupRenamePrompt(state) {
+    return state[STATE_KEY].showGroupRenamePrompt;
+}
+
 export function sortEntries(entries) {
     return entries.sort((a, b) => {
         const aTitle = a.properties.title.toLowerCase();

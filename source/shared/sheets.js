@@ -2,7 +2,7 @@ import ActionSheet from '@yfuks/react-native-action-sheet';
 import { lockAllArchives } from "./archives.js";
 import { dispatch } from "../store.js";
 import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
-import { showCreateGroupPrompt } from "../actions/archiveContents.js";
+import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 
 const SHEET_ADD_ARCHIVE =                       "Add";
 const SHEET_ADD_ENTRY =                         "New Entry";
@@ -25,10 +25,14 @@ const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [
     SHEET_CANCEL
 ];
 
-export function showArchiveContentsAddItemSheet(showEntryAdd) {
+export function showArchiveContentsAddItemSheet(showEntryAdd, showEditGroup) {
     const buttons = [ ...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS ];
     if (!showEntryAdd) {
-        buttons.shift();
+        buttons.splice(buttons.indexOf(SHEET_ADD_ENTRY), 1);
+    }
+    if (!showEditGroup) {
+        buttons.splice(buttons.indexOf(SHEET_RENAME_GROUP), 1);
+        buttons.splice(buttons.indexOf(SHEET_DELETE_GROUP), 1);
     }
     ActionSheet.showActionSheetWithOptions(
         {
@@ -50,6 +54,7 @@ export function showArchiveContentsAddItemSheet(showEntryAdd) {
                     break;
                 }
                 case SHEET_RENAME_GROUP: {
+                    dispatch(showGroupRenamePrompt(true));
                     break;
                 }
             }
