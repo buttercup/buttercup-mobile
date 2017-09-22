@@ -83,6 +83,10 @@ export function getSelectedSourceID(state) {
     return state[STATE_KEY].selectedSourceID;
 }
 
+export function shouldShowCreateGroupPrompt(state) {
+    return state[STATE_KEY].showCreateGroupPrompt;
+}
+
 export function shouldShowGroupRenamePrompt(state) {
     return state[STATE_KEY].showGroupRenamePrompt;
 }

@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
 import GroupsPage from "../components/GroupsPage.js";
-import { getGroup, shouldShowGroupRenamePrompt } from "../selectors/archiveContents.js";
+import { getGroup, shouldShowCreateGroupPrompt, shouldShowGroupRenamePrompt } from "../selectors/archiveContents.js";
 import { navigateToEntry, navigateToGroups } from "../actions/navigation.js";
-import { showGroupRenamePrompt } from "../actions/archiveContents.js";
+import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getEntryTitle, loadEntry } from "../shared/entry.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
 import { isSaving } from "../selectors/app.js";
 import { getTopGroupID } from "../selectors/nav.js";
-import { renameGroup } from "../shared/group.js";
+import { createGroup, renameGroup } from "../shared/group.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { setSaving } from "../actions/app.js";
@@ -30,17 +30,35 @@ function loadAndOpenEntry(entryID, dispatch, getState) {
 
 export default connect(
     (state, ownProps) => ({
-        currentGroupID: getTopGroupID(state) || "",
+        currentGroupID: getTopGroupID(state) || "0",
         group: getGroupContents(state, ownProps),
         saving: isSaving(state),
+        showGroupCreatePrompt: shouldShowCreateGroupPrompt(state),
         showGroupRenamePrompt: shouldShowGroupRenamePrompt(state)
     }),
     {
+        onCancelGroupCreate: () => dispatch => {
+            dispatch(showCreateGroupPrompt(false));
+        },
         onCancelGroupRename: () => dispatch => {
             dispatch(showGroupRenamePrompt(false));
         },
         onEntryPress: entryID => (dispatch, getState) => {
             loadAndOpenEntry(entryID, dispatch, getState);
+        },
+        onGroupCreate: (parentID, groupTitle) => dispatch => {
+            dispatch(showCreateGroupPrompt(false));
+            dispatch(setSaving(true));
+            createGroup(parentID, groupTitle);
+            updateCurrentArchive();
+            return saveCurrentArchive()
+                .then(() => {
+                    dispatch(setSaving(false));
+                })
+                .catch(err => {
+                    dispatch(setSaving(false));
+                    handleError("Group creation failed", err);
+                });
         },
         onGroupPress: (groupID, groupTitle, isTrash) => dispatch => {
             dispatch(navigateToGroups({ id: groupID, title: groupTitle, isTrash }));
@@ -56,7 +74,7 @@ export default connect(
                 })
                 .catch(err => {
                     dispatch(setSaving(false));
-                    handleError("Archive deletion failed", err);
+                    handleError("Group rename failed", err);
                 });
         }
     }

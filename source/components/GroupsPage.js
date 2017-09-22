@@ -71,11 +71,13 @@ class GroupsPage extends Component {
 
     static propTypes = {
         currentGroupID: PropTypes.string.isRequired,
+        onCancelGroupCreate: PropTypes.func.isRequired,
         onCancelGroupRename: PropTypes.func.isRequired,
         onEntryPress: PropTypes.func.isRequired,
         onGroupPress: PropTypes.func.isRequired,
         onGroupRename: PropTypes.func.isRequired,
         saving: PropTypes.bool.isRequired,
+        showGroupCreatePrompt: PropTypes.bool.isRequired,
         showGroupRenamePrompt: PropTypes.bool.isRequired
     };
 
@@ -89,11 +91,13 @@ class GroupsPage extends Component {
 
     render() {
         const isTrash = !!this.props.navigation.state.params.isTrash;
+        const childGroups = this.props.group && this.props.group.groups || [];
+        const childEntries = this.props.group && this.props.group.entries || [];
         return (
             <View style={styles.container}>
                 <ScrollView>
                     <CellGroup>
-                        {this.props.group.groups.map(group =>
+                        {childGroups.map(group =>
                             <Cell
                                 key={group.id}
                                 icon={() => getGroupIcon(group)}
@@ -106,7 +110,7 @@ class GroupsPage extends Component {
                                 <Text>{group.title}</Text>
                             </Cell>
                         )}
-                        {this.props.group.entries.map(entry =>
+                        {childEntries.map(entry =>
                             <Cell
                                 key={entry.id}
                                 icon={getEntryIcon}
@@ -118,7 +122,7 @@ class GroupsPage extends Component {
                     </CellGroup>
                 </ScrollView>
                 <Prompt
-                    title="Group Name"
+                    title="Rename Group"
                     defaultValue={this.props.group.title}
                     visible={
                         this.props.showGroupRenamePrompt &&
@@ -126,6 +130,17 @@ class GroupsPage extends Component {
                     }
                     onCancel={() => this.props.onCancelGroupRename()}
                     onSubmit={value => this.props.onGroupRename(this.props.group.id, value)}
+                    textInputProps={{ keyboardType: "default" }}
+                    />
+                <Prompt
+                    title="Create Group"
+                    placeholder="Group Name"
+                    visible={
+                        this.props.showGroupCreatePrompt &&
+                        this.props.group.id === this.props.currentGroupID
+                    }
+                    onCancel={() => this.props.onCancelGroupCreate()}
+                    onSubmit={value => this.props.onGroupCreate(this.props.group.id, value)}
                     textInputProps={{ keyboardType: "default" }}
                     />
                 <Spinner
