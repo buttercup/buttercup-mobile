@@ -23,7 +23,7 @@ export function getGroup(state, id, _groups = null) {
             entries: sortEntries(targetGroup.entries) || []
         };
     }
-    for (let i, groupCount = groups.length; i < groupCount; i += 1) {
+    for (let i = 0, groupCount = groups.length; i < groupCount; i += 1) {
         const foundGroup = getGroup(state, id, groups[i].groups || []);
         if (foundGroup) {
             return {
