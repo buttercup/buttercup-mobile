@@ -1,5 +1,6 @@
-import ActionSheet from '@yfuks/react-native-action-sheet';
+import ActionSheet from "@yfuks/react-native-action-sheet";
 import { lockAllArchives } from "./archives.js";
+import { promptDeleteGroup } from "./group.js";
 import { dispatch } from "../store.js";
 import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
@@ -51,6 +52,7 @@ export function showArchiveContentsAddItemSheet(showEntryAdd, showEditGroup) {
                     break;
                 }
                 case SHEET_DELETE_GROUP: {
+                    promptDeleteGroup();
                     break;
                 }
                 case SHEET_RENAME_GROUP: {
