@@ -1,7 +1,12 @@
 import { Alert } from "react-native";
 import { getGroup, getSelectedArchive } from "../selectors/archiveContents.js";
-import { getState } from "../store.js";
+import { dispatch, getState } from "../store.js";
 import { getTopGroupID } from "../selectors/nav.js";
+import { setSaving } from "../actions/app.js";
+import { navigateBack } from "../actions/navigation.js";
+import { saveCurrentArchive } from "./archive.js";
+import { handleError } from "../global/exceptions.js";
+import { updateCurrentArchive } from "./archiveContents.js";
 
 const TRASH_KEY = "bc_group_role";
 const TRASH_ROLE = "trash";
@@ -15,7 +20,10 @@ export function createGroup(parentID, title) {
 }
 
 export function deleteGroup(groupID) {
-
+    const state = getState();
+    const archive = getSelectedArchive(state);
+    const group = archive.findGroupByID(groupID);
+    group.delete();
 }
 
 export function promptDeleteGroup() {
@@ -31,7 +39,20 @@ export function promptDeleteGroup() {
                 text: "Delete",
                 style: "default",
                 onPress: () => {
-                    deleteGroup(topGroupID);
+                    dispatch(setSaving(true));
+                    Promise
+                        .resolve()
+                        .then(() => deleteGroup(topGroupID))
+                        .then(() => saveCurrentArchive())
+                        .then(() => {
+                            dispatch(setSaving(false));
+                            dispatch(navigateBack());
+                            updateCurrentArchive();
+                        })
+                        .catch(err => {
+                            dispatch(setSaving(false));
+                            handleError("Failed deleting group", err);
+                        });
                 }
             }
         ]
