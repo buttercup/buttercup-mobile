@@ -12,10 +12,11 @@ import {
     getSourceID
 } from "../selectors/entry.js";
 import { setSaving } from "../actions/app.js";
-import { getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
+import { getSelectedSourceID } from "../selectors/archiveContents.js";
 import { handleError } from "../global/exceptions.js";
 import { navigateBack } from "../actions/navigation.js";
 import { doAsyncWork } from "../global/async.js";
+import { updateCurrentArchive } from "./archiveContents.js";
 
 export function getEntry(sourceID, entryID) {
     const archiveManager = getSharedArchiveManager();
@@ -68,6 +69,7 @@ export function saveNewEntry() {
         .save()
         .then(doAsyncWork)
         .then(() => {
+            updateCurrentArchive();
             dispatch(setSaving(false));
             dispatch(navigateBack());
         });

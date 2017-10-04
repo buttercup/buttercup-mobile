@@ -2,9 +2,9 @@ import { NavigationActions } from "react-navigation";
 import { AppNavigator } from "../routing.js";
 import {
     NAVIGATE_ADD_ARCHIVE,
-    NAVIGATE_ARCHIVE_CONTENTS,
     NAVIGATE_BACK,
     NAVIGATE_ENTRY,
+    NAVIGATE_GROUPS,
     NAVIGATE_NEW_ENTRY,
     NAVIGATE_NEW_META,
     NAVIGATE_POPUP_BROWSER,
@@ -25,13 +25,6 @@ function getInitialState() {
 
 export default function routesReducer(state = getInitialState(), action = {}) {
     switch (action.type) {
-        case NAVIGATE_ARCHIVE_CONTENTS: {
-            const { title } = action.payload;
-            return AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({ routeName: "ArchiveContents", params: { title } }),
-                state
-            );
-        }
         case NAVIGATE_ENTRY: {
             const { title } = action.payload;
             return AppNavigator.router.getStateForAction(
@@ -75,6 +68,13 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             const { title } = action.payload;
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: "PopupBrowser", params: { title } }),
+                state
+            );
+        }
+        case NAVIGATE_GROUPS: {
+            const { id: groupID, title, isTrash = false } = action.payload;
+            return AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: "GroupsPage", params: { groupID, title, isTrash } }),
                 state
             );
         }

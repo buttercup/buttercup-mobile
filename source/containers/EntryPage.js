@@ -121,6 +121,7 @@ export default connect(
             dispatch(setSaving(true));
             saveCurrentArchive()
                 .then(() => {
+                    updateCurrentArchive();
                     dispatch(setSaving(false));
                     dispatch(setEntryEditing(false));
                     dispatch(setNotification("Saved entry"));

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 });
 
 const ARCHIVE_TYPES = [
-    { type: "dropbox", title: "Dropbox", image: require("../../resources/images/dropbox-256.png") },
+    // { type: "dropbox", title: "Dropbox", image: require("../../resources/images/dropbox-256.png") },
     { type: "owncloud", title: "ownCloud", image: require("../../resources/images/owncloud-256.png") },
     { type: "nextcloud", title: "Nextcloud", image: require("../../resources/images/nextcloud-256.png") },
     { type: "webdav", title: "WebDAV", image: require("../../resources/images/webdav-256.png") }

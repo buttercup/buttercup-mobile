@@ -1,5 +1,5 @@
 import { getState } from "../store.js";
-import { getSelectedSourceID } from "../selectors/ArchiveContentsPage.js";
+import { getSelectedSourceID } from "../selectors/archiveContents.js";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { doAsyncWork } from "../global/async.js";
 

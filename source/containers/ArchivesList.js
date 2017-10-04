@@ -11,9 +11,9 @@ import {
 } from "../actions/archives.js";
 import {
     setSelectedSource
-} from "../actions/ArchiveContentsPage.js";
+} from "../actions/archiveContents.js";
 import {
-    navigateToArchiveContents
+    navigateToGroups
 } from "../actions/navigation.js";
 import {
     lockSource,
@@ -33,7 +33,7 @@ function openArchive(dispatch, getState, sourceID) {
     // populate groups
     updateCurrentArchive();
     // navigate to archive contents
-    dispatch(navigateToArchiveContents({ title: `📂 ${targetSource.name}` }));
+    dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
 }
 
 export default connect(

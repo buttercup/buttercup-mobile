@@ -13,7 +13,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import ArchivesPage from "./components/ArchivesPage.js";
-import ArchiveContentsPage from "./containers/ArchiveContentsPage.js";
 import EntryPage from "./containers/EntryPage.js";
 import NewEntryPage from "./containers/NewEntryPage.js";
 import AddMetaPage from "./containers/AddMetaPage.js";
@@ -21,17 +20,18 @@ import AddArchivePage from "./containers/AddArchivePage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import PopupBrowser from "./containers/PopupBrowser.js";
+import GroupsPage from "./containers/GroupsPage.js";
 
 export const AppNavigator = StackNavigator({
     Home: { screen: ArchivesPage },
-    ArchiveContents: { screen: ArchiveContentsPage },
     Entry: { screen: EntryPage },
     NewEntry: { screen: NewEntryPage },
     AddMeta: { screen: AddMetaPage },
     AddArchive: { screen: AddArchivePage },
     RemoteConnect: { screen: RemoteConnectPage },
     RemoteExplorer: { screen: RemoteExplorerPage },
-    PopupBrowser: { screen: PopupBrowser }
+    PopupBrowser: { screen: PopupBrowser },
+    GroupsPage: { screen: GroupsPage }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
