@@ -15,6 +15,7 @@ import Prompt from "react-native-prompt";
 import Spinner from "react-native-loading-spinner-overlay";
 import Swipeout from "react-native-swipeout";
 import SwipeoutButton from "./SwipeoutButton.js";
+import EmptyView from "./EmptyView.js";
 
 const ARCHIVE_ICON_INSET = 10;
 const ARCHIVE_ICON_SIZE = 40;
@@ -23,6 +24,7 @@ const ARCHIVE_IMAGE_LOCKED = require("../../resources/images/locked-256.png");
 const ARCHIVE_IMAGE_UNLOCKED = require("../../resources/images/unlocked-256.png");
 const ARCHIVE_ITEM_HEIGHT = 64;
 const ARCHIVE_SWIPE_BUTTON_WIDTH = 80;
+const BENCH_IMAGE = require("../../resources/images/bench.png");
 
 const styles = StyleSheet.create({
     container: {
@@ -50,8 +52,7 @@ const styles = StyleSheet.create({
     },
     itemContainerView: {
         width: "100%",
-        height: ARCHIVE_ITEM_HEIGHT,
-        backgroundColor: "blue"
+        height: ARCHIVE_ITEM_HEIGHT
     },
     itemSwipeout: {
         width: "100%",
@@ -121,11 +122,19 @@ class ArchivesList extends Component {
     render() {
         return (
             <View>
-                <If condition={this.props.archives.length > 0}>
-                    <List style={styles.archivesList}>
-                        {this.props.archives.map(archive => this.renderListItem(archive))}
-                    </List>
-                </If>
+                <Choose>
+                    <When condition={this.props.archives.length > 0}>
+                        <List style={styles.archivesList}>
+                            {this.props.archives.map(archive => this.renderListItem(archive))}
+                        </List>
+                    </When>
+                    <Otherwise>
+                        <EmptyView
+                            text="Add a new archive to begin"
+                            imageSource={BENCH_IMAGE}
+                            />
+                    </Otherwise>
+                </Choose>
                 <Prompt
                     title="Archive Password"
                     placeholder=""
