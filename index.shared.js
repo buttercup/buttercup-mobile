@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { createWebDAVAdapter } from "@buttercup/mobile-compat";
 import { patchCrypto, patchKeyDerivation } from "./source/library/crypto.js";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";
+import { trackApplicationLaunch } from "./source/library/analytics.js";
 import * as Buttercup from "buttercup-web";
 import store from "./source/store.js";
 import App from "./source/routing.js";
@@ -22,6 +23,10 @@ export default class ButtercupShared extends Component {
         Buttercup.vendor.webdavFS.setFetchMethod(fetch);
         // Initialise the manager
         getSharedArchiveManager().rehydrate();
+        // Deferred items
+        setTimeout(() => {
+            trackApplicationLaunch();
+        }, 250);
     }
 
     render() {
