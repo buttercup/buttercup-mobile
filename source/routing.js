@@ -31,7 +31,16 @@ export const AppNavigator = StackNavigator({
     RemoteConnect: { screen: RemoteConnectPage },
     RemoteExplorer: { screen: RemoteExplorerPage },
     PopupBrowser: { screen: PopupBrowser },
-    GroupsPage: { screen: GroupsPage }
+    GroupsPage: { screen: GroupsPage },
+}, {
+    navigationOptions: {
+        headerTintColor: '#454545',
+        headerStyle: {
+            backgroundColor: '#ffffff',
+            borderBottomColor: '#24B5AB',
+            borderBottomWidth: 3
+        }
+    }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
