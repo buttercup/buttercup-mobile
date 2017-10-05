@@ -6,11 +6,10 @@ import {
     View
 } from "react-native";
 import {
-    Button,
-    FormInput,
-    FormLabel,
-    Text
-} from "react-native-elements";
+    Cell,
+    CellGroup,
+    CellInput
+} from "react-native-cell-components";
 import Spinner from "react-native-loading-spinner-overlay";
 import Notification from "react-native-notification";
 import PropTypes from "prop-types";
@@ -18,10 +17,11 @@ import DropboxAuthButton from "../containers/DropboxAuthButton.js";
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "center",
-        backgroundColor: "transparent"
+        // flex: 1,
+        // justifyContent: "flex-start",
+        // alignItems: "center",
+        backgroundColor: "transparent",
+        width: "100%"
     },
     connectButton: {
         backgroundColor: "rgb(0, 183, 172)",
@@ -59,6 +59,9 @@ class RemoteConnectPage extends Component {
     }
 
     renderDropbox() {
+        // **
+        // ** NOT IN USE
+        // **
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
@@ -88,40 +91,44 @@ class RemoteConnectPage extends Component {
     }
 
     renderWebDAV() {
-        const base = { autoCapitalize: "none", keyboardType: "default", spellCheck: false };
+        const base = { autoCapitalize: "none", autoCorrect: false, keyboardType: "default", spellCheck: false };
         const urlInputOptions = { ...base, keyboardType: "url" };
         const usernameInputOptions = { ...base, keyboardType: "email-address" };
         const passwordInputOptions = { ...base, secureTextEntry: true };
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <View>
-                        <FormLabel>Remote URL</FormLabel>
-                        <FormInput
+                    <CellGroup header="Connection details">
+                        <CellInput
+                            title="Remote URL"
                             value={this.props.url}
-                            onChangeText={this.props.onChangeURL}
+                            icon="laptop"
+                            onChangeText={newText => this.props.onChangeURL(newText)}
                             {...urlInputOptions}
                             />
-                        <FormLabel>Username</FormLabel>
-                        <FormInput
+                        <CellInput
+                            title="Username"
                             value={this.props.username}
-                            onChangeText={this.props.onChangeUsername}
+                            icon="face"
+                            onChangeText={newText => this.props.onChangeUsername(newText)}
                             {...usernameInputOptions}
                             />
-                        <FormLabel>Password</FormLabel>
-                        <FormInput
+                        <CellInput
+                            title="Password"
                             value={this.props.password}
-                            onChangeText={this.props.onChangePassword}
+                            icon="fingerprint"
+                            onChangeText={newText => this.props.onChangePassword(newText)}
                             {...passwordInputOptions}
                             />
-                        <Button
-                            buttonStyle={styles.connectButton}
-                            large
-                            icon={{ name: "cloud" }}
+                    </CellGroup>
+                    <CellGroup>
+                        <Cell
                             title="Connect"
+                            icon="cloud"
                             onPress={() => this.submit()}
+                            tintColor="#1144FF"
                             />
-                    </View>
+                    </CellGroup>
                     <Spinner
                         visible={this.props.connecting}
                         textContent="Connecting"
