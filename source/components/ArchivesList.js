@@ -121,9 +121,11 @@ class ArchivesList extends Component {
     render() {
         return (
             <View>
-                <List style={styles.archivesList}>
-                    {this.props.archives.map(archive => this.renderListItem(archive))}
-                </List>
+                <If condition={this.props.archives.length > 0}>
+                    <List style={styles.archivesList}>
+                        {this.props.archives.map(archive => this.renderListItem(archive))}
+                    </List>
+                </If>
                 <Prompt
                     title="Archive Password"
                     placeholder=""
