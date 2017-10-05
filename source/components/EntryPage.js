@@ -109,18 +109,20 @@ class EntryPage extends Component {
                 <CellGroup header="Properties">
                     {this.filterFields(this.props.properties).map(field => this.renderContentCell(field))}
                 </CellGroup>
-                <CellGroup header="Meta">
-                    {this.props.meta.map(field => this.renderContentCell(field))}
-                    {this.props.editing ?
-                        <Cell
-                            key="$add"
-                            title="＋ Add"
-                            onPress={() => this.props.onAddMeta()}
-                            tintColor="#1144FF"
-                            /> :
-                            null
-                    }
-                </CellGroup>
+                {(this.props.meta.length > 0 || this.props.editing) ? (
+                    <CellGroup header="Meta">
+                        {this.props.meta.map(field => this.renderContentCell(field))}
+                        {this.props.editing ?
+                            <Cell
+                                key="$add"
+                                title="＋ Add"
+                                onPress={() => this.props.onAddMeta()}
+                                tintColor="#1144FF"
+                                /> :
+                                null
+                        }
+                    </CellGroup>
+                ) : null}
                 {this.renderEditButtons()}
                 <Notification
                     message={this.props.entryNotificationMessage}

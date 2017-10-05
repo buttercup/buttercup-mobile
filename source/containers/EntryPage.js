@@ -24,7 +24,7 @@ import {
 import {
     isSaving
 } from "../selectors/app.js";
-import { getEntry } from "../shared/entry.js";
+import { getEntry, loadEntry } from "../shared/entry.js";
 import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
@@ -50,7 +50,13 @@ export default connect(
         onAddMeta:                  () => dispatch => {
             dispatch(navigateToNewMeta());
         },
-        onCancelEdit:               () => dispatch => dispatch(setEntryEditing(false)),
+        onCancelEdit:               () => (dispatch, getState) => {
+            const state = getState();
+            const sourceID = getSourceID(state);
+            const entryID = getEntryID(state);
+            dispatch(setEntryEditing(false));
+            loadEntry(sourceID, entryID);
+        },
         onDeletePressed:            () => (dispatch, getState) => {
             const state = getState();
             const sourceID = getSourceID(state);
