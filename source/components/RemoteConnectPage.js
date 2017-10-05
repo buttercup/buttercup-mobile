@@ -38,6 +38,10 @@ class RemoteConnectPage extends Component {
         };
     };
 
+    componentWillUnmount() {
+        this.props.onUnmount();
+    }
+
     render() {
         switch (this.props.archiveType) {
             case "dropbox":

@@ -13,6 +13,7 @@ import {
     isAuthenticated
 } from "../selectors/dropbox.js";
 import {
+    clearArchiveDetails,
     disconnect,
     onChangePassword,
     onChangeURL,
@@ -63,6 +64,9 @@ export default connect(
         onChangePassword,
         onChangeURL,
         onChangeUsername,
-        onConnectPressed
+        onConnectPressed,
+        onUnmount:              () => dispatch => {
+            dispatch(clearArchiveDetails());
+        }
     }
 )(RemoteConnectPage);
