@@ -2,7 +2,7 @@ import EventEmitter from "events";
 import { lockAllArchives } from "../shared/archives.js";
 import { backToRoot } from "../shared/nav.js";
 
-export const ARCHIVE_SESSION_DEFAULT_TIMEOUT_MIN = 0.5;
+export const ARCHIVE_SESSION_DEFAULT_TIMEOUT_MIN = 5;
 
 function minutesToMilliseconds(min) {
     return min * 60 * 1000;
