@@ -4,6 +4,7 @@ import {
     StyleSheet,
     Text,
     TouchableHighlight,
+    ScrollView,
     View
 } from "react-native";
 import {
@@ -28,15 +29,11 @@ const BENCH_IMAGE = require("../../resources/images/bench.png");
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "transparent",
-        paddingTop: 30
+        flex: 1
     },
     archivesList: {
         marginBottom: 20,
-        width: "100%"
+        flex: 1
     },
     archiveIcon: {
         width: ARCHIVE_ICON_SIZE,
@@ -121,12 +118,14 @@ class ArchivesList extends Component {
 
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <Choose>
                     <When condition={this.props.archives.length > 0}>
-                        <List style={styles.archivesList}>
-                            {this.props.archives.map(archive => this.renderListItem(archive))}
-                        </List>
+                        <ScrollView>
+                            <List style={styles.archivesList}>
+                                {this.props.archives.map(archive => this.renderListItem(archive))}
+                            </List>
+                        </ScrollView>
                     </When>
                     <Otherwise>
                         <EmptyView
