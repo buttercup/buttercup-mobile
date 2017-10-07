@@ -98,7 +98,7 @@ class GroupsPage extends Component {
         return (
             <View style={styles.container}>
                 <Choose>
-                    <When condition={childGroups.length > 0}>
+                    <When condition={childGroups.length > 0 || childEntries.length > 0}>
                         <ScrollView>
                             <CellGroup>
                                 {childGroups.map(group =>
