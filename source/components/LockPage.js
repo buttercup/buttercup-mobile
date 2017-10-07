@@ -5,19 +5,15 @@ import {
     View
 } from "react-native";
 
-const LOCKED_BACKGROUND = require("../../resources/images/locked-image.jpg");
+const LOGO = require("../../resources/images/solo-logo.png");
 
 const styles = StyleSheet.create({
     container: {
         top: 0,
         flex: 1,
-        alignItems: "stretch",
-        backgroundColor: "#F00"
-    },
-    image: {
-        flex: 1,
-        width: "100%",
-        height: "100%"
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#24B5AB"
     }
 });
 
@@ -30,10 +26,7 @@ class LockedModal extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image
-                    style={styles.image}
-                    source={LOCKED_BACKGROUND}
-                    />
+                <Image source={LOGO} />
             </View>
         );
     }
