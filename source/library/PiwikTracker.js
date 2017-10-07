@@ -10,6 +10,7 @@ function generateCVarString(properties) {
     const cvarObj = keys.reduce((obj, key) => {
         const thisID = PIWIK_CVAR_ID_LOOKUP[key];
         obj[thisID] = [key, properties[key]];
+        return obj;
     }, {});
     return JSON.stringify(cvarObj);
 }

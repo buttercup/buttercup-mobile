@@ -17,7 +17,7 @@ export function trackApplicationLaunch() {
     const piwik = getTracker();
     piwik
         .track("Launch", {
-            version: packageInfo.info
+            version: packageInfo.version
         })
         .catch(err => {
             console.error("Tracking failed");
