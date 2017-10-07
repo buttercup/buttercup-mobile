@@ -5,6 +5,7 @@ import {
     NAVIGATE_BACK,
     NAVIGATE_ENTRY,
     NAVIGATE_GROUPS,
+    NAVIGATE_LOCK_PAGE,
     NAVIGATE_NEW_ENTRY,
     NAVIGATE_NEW_META,
     NAVIGATE_POPUP_BROWSER,
@@ -61,6 +62,12 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             const { title } = action.payload;
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: "RemoteExplorer", params: { title } }),
+                state
+            );
+        }
+        case NAVIGATE_LOCK_PAGE: {
+            return AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: "LockPage" }),
                 state
             );
         }

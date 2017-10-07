@@ -20,7 +20,7 @@ export function trackApplicationLaunch() {
             version: packageInfo.info
         })
         .catch(err => {
-            console.error("Tracking failed");
-            console.error(err);
+            console.log("Tracking failed");
+            console.log(err);
         });
 }
