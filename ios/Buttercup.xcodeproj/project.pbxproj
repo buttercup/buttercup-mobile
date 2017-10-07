@@ -1226,7 +1226,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.Buttercup;
+				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile;
 				PRODUCT_NAME = Buttercup;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1251,7 +1251,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.Buttercup;
+				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile;
 				PRODUCT_NAME = Buttercup;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
