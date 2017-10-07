@@ -2,24 +2,23 @@ import React, { Component } from "react";
 import {
     StyleSheet,
     Text,
-    View
+    View,
+    ScrollView,
+    Image
 } from "react-native";
 import {
-    List,
-    ListItem
-} from "react-native-elements";
+    Cell,
+    CellGroup
+} from "react-native-cell-components";
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "transparent"
+        flex: 1
     },
-    menuList: {
-        marginBottom: 20,
-        width: "100%"
+    icon: {
+        width: 32,
+        height: 32
     }
 });
 
@@ -38,16 +37,17 @@ class AddArchive extends Component {
 
     getMenuContents() {
         return (
-            <List style={styles.menuList}>
+            <CellGroup header="Remote">
                 {ARCHIVE_TYPES.map(({type, title, image}) =>
-                    <ListItem
+                    <Cell
                         key={type}
-                        title={title}
-                        avatar={image}
+                        icon={() => <Image source={image} style={styles.icon} />}
                         onPress={() => this.handleTypeSelected(type, title)}
-                        />
+                    >
+                        <Text>{title}</Text>
+                    </Cell>
                 )}
-            </List>
+            </CellGroup>
         );
     }
 
@@ -57,9 +57,9 @@ class AddArchive extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 {this.getMenuContents()}
-            </View>
+            </ScrollView>
         );
     }
 

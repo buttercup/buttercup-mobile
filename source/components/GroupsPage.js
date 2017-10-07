@@ -17,10 +17,12 @@ import {
 import { editGroup } from "../shared/archiveContents.js";
 import { rawGroupIsTrash } from "../shared/group.js";
 import EmptyView from "./EmptyView.js";
+import ToolbarIcon from "./ToolbarIcon.js";
 
 const ENTRY_ICON = require("../../resources/images/entry-256.png");
 const GROUP_ICON = require("../../resources/images/group-256.png");
 const TRASH_ICON = require("../../resources/images/trash-256.png");
+const MENU_ICON = require("../../resources/images/menu.png");
 const KEY_IMAGE = require("../../resources/images/key.png");
 
 const styles = StyleSheet.create({
@@ -62,8 +64,8 @@ class GroupsPage extends Component {
         const options = { title };
         if (!isTrash) {
             options.headerRight = (
-                <Button
-                    title="Edit"
+                <ToolbarIcon
+                    icon={MENU_ICON}
                     onPress={() => editGroup(groupID)}
                     />
             );

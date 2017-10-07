@@ -12,10 +12,14 @@ import {
     CellGroup,
     CellInput
 } from "react-native-cell-components";
+import ToolbarIcon from "./ToolbarIcon.js";
 
 const NOOP = () => {};
 const RIGHT_TITLE_OPEN = "Open";
 const RIGHT_TITLE_SAVE = "Save";
+
+const GLOBE_ICON = require("../../resources/images/globe.png");
+const SAVE_ICON = require("../../resources/images/save.png");
 
 const styles = StyleSheet.create({
     container: {
@@ -42,13 +46,13 @@ class EntryPage extends Component {
 
     static navigationOptions = ({ navigation }) => {
         const {params = {}} = navigation.state;
-        const rightTitle = params.rightTitle || RIGHT_TITLE_OPEN;
+        const rightIcon = params.rightIcon || GLOBE_ICON;
         const onRight = params.rightAction || NOOP;
         return {
             title: `${params.title}`,
             headerRight: (
-                <Button
-                    title={rightTitle}
+                <ToolbarIcon
+                    icon={rightIcon}
                     onPress={onRight}
                     />
             )
@@ -185,14 +189,14 @@ class EntryPage extends Component {
     }
 
     updateRightButton(props = this.props) {
-        const rightTitle = props.editing ?
-            RIGHT_TITLE_SAVE :
-            RIGHT_TITLE_OPEN;
+        const rightIcon = props.editing ?
+            SAVE_ICON :
+            GLOBE_ICON;
         const rightAction = props.editing ?
             () => this.props.onSavePressed() :
             () => this.props.onOpenPressed();
         this.props.navigation.setParams({
-            rightTitle,
+            rightIcon,
             rightAction
         });
     }
