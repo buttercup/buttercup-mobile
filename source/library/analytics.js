@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import PiwikTracker from "./PiwikTracker.js";
 import packageInfo from "../../package.json";
 
@@ -17,7 +18,9 @@ export function trackApplicationLaunch() {
     const piwik = getTracker();
     piwik
         .track("Launch", {
-            version: packageInfo.version
+            version: packageInfo.version,
+            platform: Platform.OS,
+            platformVersion: `${Platform.OS} ${Platform.Version}`
         })
         .catch(err => {
             console.error("Tracking failed");
