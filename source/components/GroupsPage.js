@@ -16,14 +16,18 @@ import {
 } from "react-native-cell-components";
 import { editGroup } from "../shared/archiveContents.js";
 import { rawGroupIsTrash } from "../shared/group.js";
+import EmptyView from "./EmptyView.js";
+import ToolbarIcon from "./ToolbarIcon.js";
 
 const ENTRY_ICON = require("../../resources/images/entry-256.png");
 const GROUP_ICON = require("../../resources/images/group-256.png");
 const TRASH_ICON = require("../../resources/images/trash-256.png");
+const MENU_ICON = require("../../resources/images/menu.png");
+const KEY_IMAGE = require("../../resources/images/key.png");
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%"
+        flex: 1,
     },
     icon: {
         width: 32,
@@ -60,8 +64,8 @@ class GroupsPage extends Component {
         const options = { title };
         if (!isTrash) {
             options.headerRight = (
-                <Button
-                    title="Edit"
+                <ToolbarIcon
+                    icon={MENU_ICON}
                     onPress={() => editGroup(groupID)}
                     />
             );
@@ -95,32 +99,42 @@ class GroupsPage extends Component {
         const childEntries = this.props.group && this.props.group.entries || [];
         return (
             <View style={styles.container}>
-                <ScrollView>
-                    <CellGroup>
-                        {childGroups.map(group =>
-                            <Cell
-                                key={group.id}
-                                icon={() => getGroupIcon(group)}
-                                onPress={
-                                    () => this.props.onGroupPress(
-                                        group.id, group.title, isTrash || rawGroupIsTrash(group)
-                                    )
-                                }
-                            >
-                                <Text>{group.title}</Text>
-                            </Cell>
-                        )}
-                        {childEntries.map(entry =>
-                            <Cell
-                                key={entry.id}
-                                icon={getEntryIcon}
-                                onPress={() => this.props.onEntryPress(entry.id)}
-                            >
-                                <Text>{entry.properties.title || ""}</Text>
-                            </Cell>
-                        )}
-                    </CellGroup>
-                </ScrollView>
+                <Choose>
+                    <When condition={childGroups.length > 0 || childEntries.length > 0}>
+                        <ScrollView>
+                            <CellGroup>
+                                {childGroups.map(group =>
+                                    <Cell
+                                        key={group.id}
+                                        icon={() => getGroupIcon(group)}
+                                        onPress={
+                                            () => this.props.onGroupPress(
+                                                group.id, group.title, isTrash || rawGroupIsTrash(group)
+                                            )
+                                        }
+                                    >
+                                        <Text>{group.title}</Text>
+                                    </Cell>
+                                )}
+                                {childEntries.map(entry =>
+                                    <Cell
+                                        key={entry.id}
+                                        icon={getEntryIcon}
+                                        onPress={() => this.props.onEntryPress(entry.id)}
+                                    >
+                                        <Text>{entry.properties.title || ""}</Text>
+                                    </Cell>
+                                )}
+                            </CellGroup>
+                        </ScrollView>
+                    </When>
+                    <Otherwise>
+                        <EmptyView
+                            text="Add a group or entry"
+                            imageSource={KEY_IMAGE}
+                            />
+                    </Otherwise>
+                </Choose>
                 <Prompt
                     title="Rename Group"
                     defaultValue={this.props.group.title}

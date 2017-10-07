@@ -42,6 +42,14 @@ class AddMetaPage extends Component {
     }
 
     render() {
+        const cellOptions = {
+            autoCapitalize: "none",
+            autoCorrect: false,
+            keyboardType: "default",
+            spellCheck: false
+        };
+        console.log(this.props.metaKey);
+        const isUrl = /url\b/i.test(this.props.metaKey);
         return (
             <View style={styles.container}>
                 <CellGroup>
@@ -50,12 +58,15 @@ class AddMetaPage extends Component {
                         title="Name"
                         value={this.props.metaKey}
                         onChangeText={text => this.handleKeyChange(text)}
+                        {...cellOptions}
                         />
                     <CellInput
                         key="value"
                         title="Value"
                         value={this.props.metaValue}
                         onChangeText={text => this.handleValueChange(text)}
+                        {...cellOptions}
+                        keyboardType={isUrl ? "url" : "default"}
                         />
                 </CellGroup>
             </View>

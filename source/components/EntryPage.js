@@ -12,10 +12,14 @@ import {
     CellGroup,
     CellInput
 } from "react-native-cell-components";
+import ToolbarIcon from "./ToolbarIcon.js";
 
 const NOOP = () => {};
 const RIGHT_TITLE_OPEN = "Open";
 const RIGHT_TITLE_SAVE = "Save";
+
+const GLOBE_ICON = require("../../resources/images/globe.png");
+const SAVE_ICON = require("../../resources/images/save.png");
 
 const styles = StyleSheet.create({
     container: {
@@ -42,13 +46,13 @@ class EntryPage extends Component {
 
     static navigationOptions = ({ navigation }) => {
         const {params = {}} = navigation.state;
-        const rightTitle = params.rightTitle || RIGHT_TITLE_OPEN;
+        const rightIcon = params.rightIcon || GLOBE_ICON;
         const onRight = params.rightAction || NOOP;
         return {
             title: `${params.title}`,
             headerRight: (
-                <Button
-                    title={rightTitle}
+                <ToolbarIcon
+                    icon={rightIcon}
                     onPress={onRight}
                     />
             )
@@ -138,7 +142,16 @@ class EntryPage extends Component {
     }
 
     renderContentCell(field) {
-        const CellType = this.props.editing ?
+        const { editing } = this.props;
+        const cellOptions = editing
+            ? {
+                autoCapitalize: "none",
+                autoCorrect: false,
+                keyboardType: "default",
+                spellCheck: false
+            }
+            : {};
+        const CellType = editing ?
             CellInput :
             Cell;
         return (
@@ -149,6 +162,7 @@ class EntryPage extends Component {
                 icon={iconLabelForProp(field.property)}
                 onPress={() => this.handleCellPress(field.title, field.value)}
                 onChangeText={newText => this.modifyField(field, newText)}
+                {...cellOptions}
                 />
         );
     }
@@ -185,14 +199,14 @@ class EntryPage extends Component {
     }
 
     updateRightButton(props = this.props) {
-        const rightTitle = props.editing ?
-            RIGHT_TITLE_SAVE :
-            RIGHT_TITLE_OPEN;
+        const rightIcon = props.editing ?
+            SAVE_ICON :
+            GLOBE_ICON;
         const rightAction = props.editing ?
             () => this.props.onSavePressed() :
             () => this.props.onOpenPressed();
         this.props.navigation.setParams({
-            rightTitle,
+            rightIcon,
             rightAction
         });
     }
