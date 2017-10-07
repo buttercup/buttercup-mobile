@@ -28,6 +28,7 @@ import { getEntry, loadEntry } from "../shared/entry.js";
 import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
+import { promptDeleteEntry } from "../shared/entry.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -57,28 +58,8 @@ export default connect(
             dispatch(setEntryEditing(false));
             loadEntry(sourceID, entryID);
         },
-        onDeletePressed:            () => (dispatch, getState) => {
-            const state = getState();
-            const sourceID = getSourceID(state);
-            const entryID = getEntryID(state);
-            const entry = getEntry(sourceID, entryID);
-            entry.delete();
-            dispatch(setSaving(true));
-            saveCurrentArchive()
-                .then(() => {
-                    dispatch(setSaving(false));
-                    updateCurrentArchive();
-                    dispatch(navigateBack());
-                    dispatch(setNotification("Deleted entry"));
-                    setTimeout(() => {
-                        // clear notification
-                        dispatch(setNotification(""));
-                    }, 1000);
-                })
-                .catch(err => {
-                    dispatch(setSaving(false));
-                    handleError("Entry deletion failed", err);
-                });
+        onDeletePressed:            () => () => {
+            promptDeleteEntry();
         },
         onEditPressed:              () => dispatch => dispatch(setEntryEditing(true)),
         onFieldValueChange:         (field, property, value) => dispatch => {

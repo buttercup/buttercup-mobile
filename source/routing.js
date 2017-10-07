@@ -21,6 +21,7 @@ import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import PopupBrowser from "./containers/PopupBrowser.js";
 import GroupsPage from "./containers/GroupsPage.js";
+import LockPage from "./components/LockPage.js";
 
 export const AppNavigator = StackNavigator({
     Home: { screen: ArchivesPage },
@@ -32,6 +33,7 @@ export const AppNavigator = StackNavigator({
     RemoteExplorer: { screen: RemoteExplorerPage },
     PopupBrowser: { screen: PopupBrowser },
     GroupsPage: { screen: GroupsPage },
+    LockPage: { screen: LockPage }
 }, {
     navigationOptions: {
         headerTintColor: '#454545',
