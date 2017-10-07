@@ -1,4 +1,5 @@
 import querystring from "querystring-es3";
+import { isTest } from "../global/testing.js";
 
 const DEFAULT_TRACK_URL = "buttercup://mobile/beta";
 const PIWIK_CVAR_ID_LOOKUP = {
@@ -19,6 +20,9 @@ function generateCVarString(properties) {
 
 function sendPayload(fetchFn, trackerURL, payload) {
     const url = `${trackerURL}?${querystring.stringify(payload)}`;
+    if (isTest() === true) {
+        return Promise.resolve();
+    }
     return fetch(url).then(response => {
         if (/^(200|30[12478])$/.test(response.status) !== true) {
             throw new Error(`Tracking failed: Bad response code: ${response.status} ${response.statusText}`);
