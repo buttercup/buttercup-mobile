@@ -142,7 +142,16 @@ class EntryPage extends Component {
     }
 
     renderContentCell(field) {
-        const CellType = this.props.editing ?
+        const { editing } = this.props;
+        const cellOptions = editing
+            ? {
+                autoCapitalize: "none",
+                autoCorrect: false,
+                keyboardType: "default",
+                spellCheck: false
+            }
+            : {};
+        const CellType = editing ?
             CellInput :
             Cell;
         return (
@@ -153,6 +162,7 @@ class EntryPage extends Component {
                 icon={iconLabelForProp(field.property)}
                 onPress={() => this.handleCellPress(field.title, field.value)}
                 onChangeText={newText => this.modifyField(field, newText)}
+                {...cellOptions}
                 />
         );
     }
