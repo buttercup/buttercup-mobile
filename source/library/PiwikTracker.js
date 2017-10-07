@@ -2,7 +2,9 @@ import querystring from "querystring-es3";
 
 const DEFAULT_TRACK_URL = "buttercup://mobile/beta";
 const PIWIK_CVAR_ID_LOOKUP = {
-    version: "1"
+    version: "1",
+    platform: "2",
+    platformVersion: "3"
 };
 
 function generateCVarString(properties) {
@@ -10,6 +12,7 @@ function generateCVarString(properties) {
     const cvarObj = keys.reduce((obj, key) => {
         const thisID = PIWIK_CVAR_ID_LOOKUP[key];
         obj[thisID] = [key, properties[key]];
+        return obj;
     }, {});
     return JSON.stringify(cvarObj);
 }
