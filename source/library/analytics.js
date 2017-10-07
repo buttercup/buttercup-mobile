@@ -23,7 +23,7 @@ export function trackApplicationLaunch() {
             platformVersion: `${Platform.OS} ${Platform.Version}`
         })
         .catch(err => {
-            console.error("Tracking failed");
-            console.error(err);
+            console.log("Tracking failed");
+            console.log(err);
         });
 }
