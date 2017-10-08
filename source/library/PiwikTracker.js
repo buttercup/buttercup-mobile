@@ -1,4 +1,5 @@
 import querystring from "querystring-es3";
+import { smartFetch } from "./network.js";
 import { isTest } from "../global/testing.js";
 
 const DEFAULT_TRACK_URL = "buttercup://mobile/beta";
@@ -23,7 +24,7 @@ function sendPayload(fetchFn, trackerURL, payload) {
     if (isTest() === true) {
         return Promise.resolve();
     }
-    return fetch(url).then(response => {
+    return fetchFn(url).then(response => {
         if (/^(200|30[12478])$/.test(response.status) !== true) {
             throw new Error(`Tracking failed: Bad response code: ${response.status} ${response.statusText}`);
         }
@@ -35,7 +36,7 @@ export default class PiwikTracker {
     constructor(piwikID, piwikURL) {
         this._id = piwikID;
         this._url = piwikURL;
-        this._fetchMethod = fetch;
+        this._fetchMethod = smartFetch;
     }
 
     get fetchMethod() {
@@ -51,7 +52,7 @@ export default class PiwikTracker {
     }
 
     set fetchMethod(fn) {
-        this._fetchMethod = fn || fetch;
+        this._fetchMethod = fn || smartFetch;
     }
 
     track(action, properties) {
