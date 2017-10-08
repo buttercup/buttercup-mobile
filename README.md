@@ -13,6 +13,8 @@ This repository holds the source for the Buttercup mobile application, which is 
 
 The mobile application allows for full integration with Buttercup archives stored on a variety of platforms. Like the other applications, this mobile application makes use of **AES 256bit encryption** with over **200k PBKDF2 password derivation interations**.
 
+You can read about the changes and releases of the application in the [changelog](CHANGELOG.md).
+
 ### Introduction
 This project uses **React Native** to build _native_ iOS and Android applications from a React/JavaScript codebase. The majority of the codebase is JavaScript which utilises the following platforms:
 
