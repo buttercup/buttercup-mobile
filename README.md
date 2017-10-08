@@ -3,6 +3,8 @@ The mobile application for the Buttercup Credentials Manager.
 
 [![Buttercup](https://cdn.rawgit.com/buttercup-pw/buttercup-assets/6582a033/badge/buttercup-slim.svg)](https://buttercup.pw) [![Build Status](https://travis-ci.org/buttercup/buttercup-mobile.svg?branch=master)](https://travis-ci.org/buttercup/buttercup-mobile)
 
+![Main screen](https://github.com/buttercup/buttercup-mobile/raw/master/bcup-1.png) ![Groups screen](https://github.com/buttercup/buttercup-mobile/raw/master/bcup-2.png)
+
 ## About
 This repository holds the source for the Buttercup mobile application, which is available for the following platforms:
 
