@@ -18,5 +18,7 @@ matrix:
     - language: java
       jdk: oraclejdk8
       script:
+        - pwd
+        - ls -lah
         - ./android/.gradlew assemble
         - ./scripts/testAndroid.sh
