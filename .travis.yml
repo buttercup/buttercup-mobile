@@ -16,6 +16,7 @@ matrix:
     #     - npm install
     #     - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
     - language: android
+      sudo: required
       android:
         components:
           - tools
@@ -23,6 +24,10 @@ matrix:
           - tools
           - build-tools-26.0.0
           - android-26
+      before_script:
+        - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+        - sudo apt-get install -y nodejs
+        - npm install
       script:
         - cd android && ./gradlew assemble && cd ..
         - ./scripts/testAndroid.sh
