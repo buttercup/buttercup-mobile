@@ -13,6 +13,11 @@ public class BCCrypto {
     public static final int IV_BYTE_LEN = 16;
     public static final String RANDOM_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789!@#$%^&*(){}[]<>,.?~|-=_+";
 
+    public static String generateIV() {
+        // Use salt to generate the hex
+        return generateSalt(IV_BYTE_LEN * 2);
+    }
+
     public static String generateRandomString(int length) {
         StringBuilder randomString = new StringBuilder();
         Random rnd = new Random();

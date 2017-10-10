@@ -17,6 +17,18 @@ public class BCCryptoTest {
     }
 
     @Test
+    public void generateIV_generatesCorrectLength() throws Exception {
+        String iv = BCCrypto.generateIV();
+        assertEquals(32, iv.length());
+    }
+
+    @Test
+    public void generateIV_generatesCorrectFormat() throws Exception {
+        String iv = BCCrypto.generateIV();
+        assertTrue(iv.matches("^[a-f0-9]+$"));
+    }
+
+    @Test
     public void generateRandomString_generatesCorrectLength() throws Exception {
         String str1 = BCCrypto.generateRandomString(12);
         String str2 = BCCrypto.generateRandomString(21);
