@@ -10,7 +10,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:android": "react-native run-android",
     "start:ios": "react-native run-ios",
-    "test": "jest"
+    "test": "jest",
+    "test:android": "cd android && ./gradlew --project-cache-dir ../.gradlecache test"
   },
   "lint-staged": {
     "{{source,scripts,__tests__}/**/*.js,index.*.js}": [
