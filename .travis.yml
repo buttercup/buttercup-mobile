@@ -15,10 +15,7 @@ matrix:
         - nvm install 8.4.0
         - npm install
         - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
-
-# language: node_js
-# script: npm run test
-# before_install:
-#   -  npm i -g jest-cli
-# node_js:
-#   - "stable"
+    - language: java
+      script:
+        - ./android/.gradlew assemble
+        - ./scripts/testAndroid.sh
