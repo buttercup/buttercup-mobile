@@ -31,4 +31,16 @@ public class BCCryptoTest {
         assertNotEquals(str1, str2);
     }
 
+    @Test
+    public void generateSalt_generatesCorrectLength() throws Exception {
+        String salt = BCCrypto.generateSalt(18);
+        assertEquals(18, salt.length());
+    }
+
+    @Test
+    public void generateSalt_generatesCorrectFormat() throws Exception {
+        String salt = BCCrypto.generateSalt(16);
+        assertTrue(salt.matches("^[a-f0-9]+$"));
+    }
+
 }
