@@ -15,8 +15,14 @@ matrix:
     #     - nvm install 8.4.0
     #     - npm install
     #     - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
-    - language: java
-      jdk: oraclejdk8
+    - language: android
+      android:
+        components:
+          - tools
+          - platform-tools
+          - tools
+          - build-tools-26.0.0
+          - android-26
       script:
         - cd android && ./gradlew assemble && cd ..
         - ./scripts/testAndroid.sh
