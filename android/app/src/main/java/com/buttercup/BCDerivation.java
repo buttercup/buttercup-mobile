@@ -8,7 +8,7 @@ import org.spongycastle.crypto.params.KeyParameter;
 
 public class BCDerivation {
 
-    private final static char[] HEX_CHARS = "0123456789ABCDEF".toCharArray();
+    private final static char[] HEX_CHARS = "0123456789abcdef".toCharArray();
 
     public static String deriveKeyFromPassword(String password, String salt, int rounds) {
         char[] passwordData = password.toCharArray();
