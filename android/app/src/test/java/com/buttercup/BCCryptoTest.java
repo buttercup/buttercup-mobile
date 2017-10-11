@@ -12,6 +12,8 @@ import static org.junit.Assert.*;
  */
 public class BCCryptoTest {
 
+    private static final String BASE64_REXP = "^[A-Za-z0-9+/=]+$";
+    private static final String HEX_REXP = "^[a-f0-9]+$";
     private static final String UUID_REXP = "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$";
 
     private static final String unencryptedText = "This is some\nraw text!! ";
@@ -28,11 +30,38 @@ public class BCCryptoTest {
     }
 
     @Test
+    public void encryptText_returnsCorrectlyFormattedContent() {
+        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String encryptedContent = encryptedBlock.split("\\|")[0];
+        assertTrue(encryptedContent.matches(BASE64_REXP));
+    }
+
+    @Test
+    public void encryptText_returnsCorrectlyFormattedHMAC() {
+        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String hmac = encryptedBlock.split("\\|")[1];
+        assertTrue(hmac.matches(HEX_REXP));
+    }
+
+    @Test
+    public void encryptText_returnsCorrectlyFormattedIV() {
+        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String iv = encryptedBlock.split("\\|")[2];
+        assertTrue(iv.matches(HEX_REXP));
+    }
+
+    @Test
     public void encryptText_returnsCorrectStructure() {
         String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
         String[] components = encryptedBlock.split("\\|");
-        System.out.println(encryptedBlock);
         assertEquals(4, components.length);
+    }
+
+    @Test
+    public void encryptText_returnsSameSalt() {
+        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String salt = encryptedBlock.split("\\|")[3];
+        assertEquals(saltHex, salt);
     }
 
     @Test

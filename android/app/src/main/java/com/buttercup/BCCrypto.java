@@ -31,7 +31,8 @@ public class BCCrypto {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
             byte[] encrypted = cipher.doFinal(text.getBytes());
-            String encryptedText = Base64.getEncoder().encode(encrypted).toString();
+            byte[] encodedEncryptedText = Base64.getEncoder().encode(encrypted);
+            String encryptedText = new String(encodedEncryptedText);
             // HMAC
             Mac sha256HMAC = Mac.getInstance("HmacSHA256");
             SecretKeySpec hmacSecretKey = new SecretKeySpec(hmacKeyData, "HmacSHA256");
