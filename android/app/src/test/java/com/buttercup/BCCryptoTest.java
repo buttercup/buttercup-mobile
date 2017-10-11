@@ -55,4 +55,17 @@ public class BCCryptoTest {
         assertTrue(salt.matches("^[a-f0-9]+$"));
     }
 
+    @Test
+    public void generateUUID_generatesAValidUUID() throws Exception {
+        String uuid = BCCrypto.generateUUID();
+        assertTrue(uuid.matches("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"));
+    }
+
+    @Test
+    public void generateUUID_generatesDifferentUUIDs() throws Exception {
+        String uuid1 = BCCrypto.generateUUID();
+        String uuid2 = BCCrypto.generateUUID();
+        assertNotEquals(uuid1, uuid2);
+    }
+
 }

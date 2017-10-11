@@ -3,6 +3,7 @@ package com.buttercup;
 import java.util.Random;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 /**
  * Created by perry on 10/10/17.
@@ -32,6 +33,11 @@ public class BCCrypto {
         String randomText = generateRandomString(length * 2);
         String hex = String.format("%040x", new BigInteger(1, randomText.getBytes(StandardCharsets.UTF_8)));
         return hex.substring(0, length).toLowerCase();
+    }
+
+    public static String generateUUID() {
+        UUID newID = UUID.randomUUID();
+        return newID.toString();
     }
 
 }
