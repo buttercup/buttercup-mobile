@@ -4,6 +4,11 @@ import java.util.Random;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.Base64;
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.Mac;
 
 /**
  * Created by perry on 10/10/17.
@@ -13,6 +18,34 @@ public class BCCrypto {
 
     public static final int IV_BYTE_LEN = 16;
     public static final String RANDOM_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789!@#$%^&*(){}[]<>,.?~|-=_+";
+
+    public static String encryptText(String text, String keyHex, String saltHex, String hmacHexKey) {
+        String ivHex = generateIV();
+        byte[] ivData = BCHelpers.hexStringToByteArray(ivHex);
+        byte[] keyData = BCHelpers.hexStringToByteArray(keyHex);
+        byte[] hmacKeyData = BCHelpers.hexStringToByteArray(hmacHexKey);
+        IvParameterSpec iv = new IvParameterSpec(ivData);
+        SecretKeySpec skeySpec = new SecretKeySpec(keyData, "AES");
+        try {
+            // AES encryption
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+            byte[] encrypted = cipher.doFinal(text.getBytes());
+            String encryptedText = Base64.getEncoder().encode(encrypted).toString();
+            // HMAC
+            Mac sha256HMAC = Mac.getInstance("HmacSHA256");
+            SecretKeySpec hmacSecretKey = new SecretKeySpec(hmacKeyData, "HmacSHA256");
+            sha256HMAC.init(hmacSecretKey);
+            String hmacTarget = encryptedText + ivHex + saltHex;
+            byte[] hmacData = sha256HMAC.doFinal(hmacTarget.getBytes(StandardCharsets.UTF_8));
+            String hmacHex = BCHelpers.byteArrayToHexString(hmacData);
+            // Output
+            return encryptedText + "|" + hmacHex + "|" + ivHex + "|" + saltHex;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return "";
+    }
 
     public static String generateIV() {
         // Use salt to generate the hex

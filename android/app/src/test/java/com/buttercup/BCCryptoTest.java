@@ -12,11 +12,27 @@ import static org.junit.Assert.*;
  */
 public class BCCryptoTest {
 
-    public static final String UUID_REXP = "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$";
+    private static final String UUID_REXP = "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$";
+
+    private static final String unencryptedText = "This is some\nraw text!! ";
+
+    private String keyHex;
+    private String saltHex;
+    private String hmacKeyHex;
 
     @Before
     public void setUp() throws Exception {
+        keyHex = BCCrypto.generateSalt(64); // random hex string
+        saltHex = BCCrypto.generateSalt(15);
+        hmacKeyHex = BCCrypto.generateSalt(64);
+    }
 
+    @Test
+    public void encryptText_returnsCorrectStructure() {
+        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String[] components = encryptedBlock.split("\\|");
+        System.out.println(encryptedBlock);
+        assertEquals(4, components.length);
     }
 
     @Test
