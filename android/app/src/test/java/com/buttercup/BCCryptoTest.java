@@ -1,7 +1,5 @@
 package com.buttercup;
 
-import com.buttercup.BCCrypto;
-
 import org.junit.Before;
 import org.junit.Test;
 
