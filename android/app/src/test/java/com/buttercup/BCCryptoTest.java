@@ -11,6 +11,9 @@ import static org.junit.Assert.*;
  * Created by perry on 10/10/17.
  */
 public class BCCryptoTest {
+
+    public static final String UUID_REXP = "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$";
+
     @Before
     public void setUp() throws Exception {
 
@@ -58,7 +61,7 @@ public class BCCryptoTest {
     @Test
     public void generateUUID_generatesAValidUUID() throws Exception {
         String uuid = BCCrypto.generateUUID();
-        assertTrue(uuid.matches("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"));
+        assertTrue(uuid.matches(UUID_REXP));
     }
 
     @Test
@@ -66,6 +69,20 @@ public class BCCryptoTest {
         String uuid1 = BCCrypto.generateUUID();
         String uuid2 = BCCrypto.generateUUID();
         assertNotEquals(uuid1, uuid2);
+    }
+
+    @Test
+    public void generateUUIDs_generatesCorrectAmount() throws Exception {
+        String[] uuids = BCCrypto.generateUUIDs(34);
+        assertEquals(34, uuids.length);
+    }
+
+    @Test
+    public void generateUUIDs_generatesCorrectFormat() throws Exception {
+        String[] uuids = BCCrypto.generateUUIDs(12);
+        for (String uuid: uuids) {
+            assertTrue(uuid.matches(UUID_REXP));
+        }
     }
 
 }

@@ -40,4 +40,12 @@ public class BCCrypto {
         return newID.toString();
     }
 
+    public static String[] generateUUIDs(int count) {
+        String[] uuids = new String[count];
+        for (int i = 0; i < count; i += 1) {
+            uuids[i] = generateUUID();
+        }
+        return uuids;
+    }
+
 }
