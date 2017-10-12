@@ -16,8 +16,29 @@ import javax.crypto.Mac;
 
 public class BCCrypto {
 
-    public static final int IV_BYTE_LEN = 16;
-    public static final String RANDOM_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789!@#$%^&*(){}[]<>,.?~|-=_+";
+    private static final int IV_BYTE_LEN = 16;
+    private static final String RANDOM_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789!@#$%^&*(){}[]<>,.?~|-=_+";
+
+    public static String decryptText(String encryptedText, String keyHex, String ivHex, String saltHex, String hmacKeyHex, String hmacHex) {
+        byte[] encryptedData = Base64.getDecoder().decode(encryptedText.getBytes(StandardCharsets.UTF_8));
+        byte[] keyData = BCHelpers.hexStringToByteArray(keyHex);
+        byte[] ivData = BCHelpers.hexStringToByteArray(ivHex);
+        byte[] saltData = BCHelpers.hexStringToByteArray(saltHex);
+        byte[] hmacKeyData = BCHelpers.hexStringToByteArray(hmacKeyHex);
+        IvParameterSpec iv = new IvParameterSpec(ivData);
+        SecretKeySpec skeySpec = new SecretKeySpec(keyData, "AES");
+        // AES decryption
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+            byte[] decrypted = cipher.doFinal(encryptedData);
+            String decryptedText = new String(decrypted, "UTF8");
+            return decryptedText;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
     public static String encryptText(String text, String keyHex, String saltHex, String hmacHexKey) {
         String ivHex = generateIV();

@@ -14,7 +14,7 @@ public class BCCryptoTest {
     private static final String HEX_REXP = "^[a-f0-9]+$";
     private static final String UUID_REXP = "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$";
 
-    private static final String unencryptedText = "This is some\nraw text!! ";
+    private static final String exportUnencryptedText = " 1x^^\\ \t\n +Hey@..!ä";
 
     private String keyHex;
     private String saltHex;
@@ -23,41 +23,54 @@ public class BCCryptoTest {
     @Before
     public void setUp() throws Exception {
         keyHex = BCCrypto.generateSalt(64); // random hex string
-        saltHex = BCCrypto.generateSalt(15);
+        saltHex = BCCrypto.generateSalt(16);
         hmacKeyHex = BCCrypto.generateSalt(64);
     }
 
     @Test
+    public void decryptText_decryptsContentFromEncryptText() {
+        String encryptedBlock = BCCrypto.encryptText(exportUnencryptedText, keyHex, saltHex, hmacKeyHex);
+        String[] parts = encryptedBlock.split("\\|");
+        String encryptedContent = parts[0];
+        String hmacHex = parts[1];
+        String ivHex = parts[2];
+        String decryptedText = BCCrypto.decryptText(encryptedContent, keyHex, ivHex, saltHex, hmacKeyHex, hmacHex);
+        assertEquals(exportUnencryptedText, decryptedText);
+    }
+
+    @Test
     public void encryptText_returnsCorrectlyFormattedContent() {
-        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String encryptedBlock = BCCrypto.encryptText(exportUnencryptedText, keyHex, saltHex, hmacKeyHex);
         String encryptedContent = encryptedBlock.split("\\|")[0];
         assertTrue(encryptedContent.matches(BASE64_REXP));
+//        System.out.println(encryptedBlock);
+//        System.out.println(keyHex + " " + saltHex + " " + hmacKeyHex);
     }
 
     @Test
     public void encryptText_returnsCorrectlyFormattedHMAC() {
-        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String encryptedBlock = BCCrypto.encryptText(exportUnencryptedText, keyHex, saltHex, hmacKeyHex);
         String hmac = encryptedBlock.split("\\|")[1];
         assertTrue(hmac.matches(HEX_REXP));
     }
 
     @Test
     public void encryptText_returnsCorrectlyFormattedIV() {
-        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String encryptedBlock = BCCrypto.encryptText(exportUnencryptedText, keyHex, saltHex, hmacKeyHex);
         String iv = encryptedBlock.split("\\|")[2];
         assertTrue(iv.matches(HEX_REXP));
     }
 
     @Test
     public void encryptText_returnsCorrectStructure() {
-        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String encryptedBlock = BCCrypto.encryptText(exportUnencryptedText, keyHex, saltHex, hmacKeyHex);
         String[] components = encryptedBlock.split("\\|");
         assertEquals(4, components.length);
     }
 
     @Test
     public void encryptText_returnsSameSalt() {
-        String encryptedBlock = BCCrypto.encryptText(unencryptedText, keyHex, saltHex, hmacKeyHex);
+        String encryptedBlock = BCCrypto.encryptText(exportUnencryptedText, keyHex, saltHex, hmacKeyHex);
         String salt = encryptedBlock.split("\\|")[3];
         assertEquals(saltHex, salt);
     }
