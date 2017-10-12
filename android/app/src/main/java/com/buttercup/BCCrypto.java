@@ -23,21 +23,28 @@ public class BCCrypto {
         byte[] encryptedData = Base64.getDecoder().decode(encryptedText.getBytes(StandardCharsets.UTF_8));
         byte[] keyData = BCHelpers.hexStringToByteArray(keyHex);
         byte[] ivData = BCHelpers.hexStringToByteArray(ivHex);
-        byte[] saltData = BCHelpers.hexStringToByteArray(saltHex);
         byte[] hmacKeyData = BCHelpers.hexStringToByteArray(hmacKeyHex);
         IvParameterSpec iv = new IvParameterSpec(ivData);
         SecretKeySpec skeySpec = new SecretKeySpec(keyData, "AES");
-        // AES decryption
         try {
+            // HMAC verification
+            Mac sha256HMAC = Mac.getInstance("HmacSHA256");
+            SecretKeySpec hmacSecretKey = new SecretKeySpec(hmacKeyData, "HmacSHA256");
+            sha256HMAC.init(hmacSecretKey);
+            String hmacTarget = encryptedText + ivHex + saltHex;
+            byte[] hmacData = sha256HMAC.doFinal(hmacTarget.getBytes(StandardCharsets.UTF_8));
+            String newHmacHex = BCHelpers.byteArrayToHexString(hmacData);
+            if (!newHmacHex.equals(hmacHex)) {
+                throw new Exception("Authentication failed - possible tampering");
+            }
+            // AES decryption
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             byte[] decrypted = cipher.doFinal(encryptedData);
-            String decryptedText = new String(decrypted, "UTF8");
-            return decryptedText;
+            return new String(decrypted, "UTF8");
         } catch (Exception ex) {
-            ex.printStackTrace();
+            return "Error:" + ex.getMessage();
         }
-        return null;
     }
 
     public static String encryptText(String text, String keyHex, String saltHex, String hmacHexKey) {
@@ -64,9 +71,8 @@ public class BCCrypto {
             // Output
             return encryptedText + "|" + hmacHex + "|" + ivHex + "|" + saltHex;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            return "Error:" + ex.getMessage();
         }
-        return "";
     }
 
     public static String generateIV() {
