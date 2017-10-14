@@ -1,4 +1,7 @@
+import { AsyncStorage } from "react-native";
 import querystring from "querystring-es3";
+import { doAsyncWork } from "../global/async.js";
+import { getUUID } from "./crypto.js";
 import { smartFetch } from "./network.js";
 import { isTest } from "../global/testing.js";
 
@@ -8,6 +11,7 @@ const PIWIK_CVAR_ID_LOOKUP = {
     platform: "2",
     platformVersion: "3"
 };
+const PIWIK_SESSION_ID_KEY = "sessionID";
 
 function generateCVarString(properties) {
     const keys = Object.keys(properties);
@@ -17,6 +21,11 @@ function generateCVarString(properties) {
         return obj;
     }, {});
     return JSON.stringify(cvarObj);
+}
+
+function generateSessionID() {
+    return doAsyncWork()
+        .then(() => getUUID());
 }
 
 function sendPayload(fetchFn, trackerURL, payload) {
@@ -55,6 +64,22 @@ export default class PiwikTracker {
         this._fetchMethod = fn || smartFetch;
     }
 
+    getSessionID() {
+        return AsyncStorage
+            .getItem(PIWIK_SESSION_ID_KEY)
+            .then(sessionID => {
+                if (!sessionID) {
+                    console.log("Generating new session ID");
+                    return generateSessionID()
+                        .then(sessionID => AsyncStorage
+                            .setItem(PIWIK_SESSION_ID_KEY, sessionID)
+                            .then(() => sessionID)
+                        );
+                }
+                return sessionID;
+            })
+    }
+
     track(action, properties) {
         const availableKeys = Object.keys(PIWIK_CVAR_ID_LOOKUP);
         const providedKeys = Object.keys(properties);
@@ -69,9 +94,16 @@ export default class PiwikTracker {
             action_name: action,
             cvar: cvarJSON,
             idsite: this.id,
-            rec: 1
+            rec: 1,
+            apiv: 1
         };
-        return sendPayload(this.fetchMethod, this.url, payload)
+        return this.getSessionID()
+            .then(sessionID => {
+                Object.assign(payload, {
+                    _id: sessionID
+                });
+                return sendPayload(this.fetchMethod, this.url, payload);
+            })
             .then(() => {
                 console.log("Tracking sent:", action, payload);
             });
