@@ -26,10 +26,10 @@ export default class ButtercupShared extends Component {
         // Initialise the manager
         getSharedArchiveManager().rehydrate();
         // Watch app activity
-        initialiseSessionMonitoring();
+        // initialiseSessionMonitoring();
         // Deferred items
         setTimeout(() => {
-            trackApplicationLaunch();
+            // trackApplicationLaunch();
         }, 250);
     }
 
