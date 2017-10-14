@@ -13,7 +13,7 @@
     "test": "jest"
   },
   "lint-staged": {
-    "{src,config,test}/**/*.js": [
+    "{{source,scripts,__tests__}/**/*.js,index.*.js}": [
       "prettier --write",
       "git add"
     ]

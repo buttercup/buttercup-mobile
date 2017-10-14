@@ -13,7 +13,6 @@ import store from "./source/store.js";
 import App from "./source/routing.js";
 
 export default class ButtercupShared extends Component {
-
     constructor(...args) {
         super(...args);
         // Setup native key derivation immediately
@@ -40,7 +39,6 @@ export default class ButtercupShared extends Component {
             </Provider>
         );
     }
-
 }
 
 AppRegistry.registerComponent("Buttercup", () => ButtercupShared);
