@@ -165,6 +165,10 @@ export function generateSalt(length) {
     return callBridge;
 }
 
+export function getUUID() {
+    return getStackItem("uuid");
+}
+
 export function hexKeyToBuffer(key) {
     let hexKey = key;
     const hexArr = [];
@@ -195,7 +199,7 @@ export function patchCrypto() {
     iocane.components.setEncryptTool(encrypt);
     iocane.components.setDecryptTool(decrypt);
     iocane.components.setSaltGenerationTool(generateSalt);
-    overrides.setUUIDGenerator(() => getStackItem("uuid"));
+    overrides.setUUIDGenerator(() => getUUID());
 }
 
 export function patchKeyDerivation() {
