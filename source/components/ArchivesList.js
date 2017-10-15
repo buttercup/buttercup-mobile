@@ -74,6 +74,17 @@ const styles = StyleSheet.create({
 const ARCHIVE_SWIPE_BUTTONS = [{ text: "Remove", component: <SwipeoutButton>Remove</SwipeoutButton>, _type: "remove" }];
 
 class ArchivesList extends Component {
+    static propTypes = {
+        archives: PropTypes.arrayOf(PropTypes.object),
+        isUnlocking: PropTypes.bool.isRequired,
+        lockArchive: PropTypes.func.isRequired,
+        removeArchive: PropTypes.func.isRequired,
+        selectArchiveSource: PropTypes.func.isRequired,
+        showUnlockPrompt: PropTypes.bool.isRequired,
+        showUnlockPasswordPrompt: PropTypes.func.isRequired,
+        unlockArchive: PropTypes.func.isRequired
+    };
+
     constructor(...args) {
         super(...args);
         this.lastSelectedSourceID = null;
@@ -125,7 +136,11 @@ class ArchivesList extends Component {
         }
         const { title: typeTitle, image: typeImage } = ARCHIVE_TYPES[archiveInfo.type];
         return (
-            <TouchableHighlight onPress={() => {}}>
+            <TouchableHighlight
+                onPress={() => this.handleArchiveSelection(archiveInfo.id, archiveInfo.status)}
+                onLongPress={() => this.handleArchiveLockRequest(archiveInfo.id, archiveInfo.status)}
+                underlayColor="white"
+            >
                 <View style={styles.swipeRow}>
                     <View style={styles.rowContents}>
                         <Image source={image} style={styles.archiveIcon} />
@@ -162,11 +177,6 @@ class ArchivesList extends Component {
                             disableRightSwipe={true}
                             rightOpenValue={-75}
                         />
-                        {/*<ScrollView>
-                            <List style={styles.archivesList}>
-                                {this.props.archives.map(archive => this.renderListItem(archive))}
-                            </List>
-                        </ScrollView>*/}
                     </When>
                     <Otherwise>
                         <EmptyView text="Add a new archive to begin" imageSource={BENCH_IMAGE} />
@@ -189,52 +199,6 @@ class ArchivesList extends Component {
             </View>
         );
     }
-
-    // renderListItem(archiveInfo) {
-    //     let image = ARCHIVE_IMAGE_PENDING;
-    //     if (archiveInfo.status === "locked") {
-    //         image = ARCHIVE_IMAGE_LOCKED;
-    //     } else if (archiveInfo.status === "unlocked") {
-    //         image = ARCHIVE_IMAGE_UNLOCKED;
-    //     }
-    //     return (
-    //         <View style={styles.itemContainerView} key={archiveInfo.id}>
-    //             <Swipeout
-    //                 buttonWidth={ARCHIVE_SWIPE_BUTTON_WIDTH}
-    //                 style={styles.itemSwipeout}
-    //                 right={ARCHIVE_SWIPE_BUTTONS.map(info => ({
-    //                     ...info,
-    //                     onPress: () => this.handleSwipeoutButtonPress(info, archiveInfo)
-    //                 }))}
-    //                 >
-    //                     <TouchableHighlight
-    //                         onPress={() => this.handleArchiveSelection(archiveInfo.id, archiveInfo.status)}
-    //                         onLongPress={() => this.handleArchiveLockRequest(archiveInfo.id, archiveInfo.status)}
-    //                         underlayColor="white"
-    //                         >
-    //                             <View style={styles.itemView}>
-    //                                 <Image
-    //                                     source={image}
-    //                                     style={styles.archiveIcon}
-    //                                     />
-    //                                 <Text style={styles.archiveText}>{archiveInfo.name}</Text>
-    //                             </View>
-    //                     </TouchableHighlight>
-    //             </Swipeout>
-    //         </View>
-    //     );
-    // }
 }
-
-ArchivesList.propTypes = {
-    archives: PropTypes.arrayOf(PropTypes.object),
-    isUnlocking: PropTypes.bool.isRequired,
-    lockArchive: PropTypes.func.isRequired,
-    removeArchive: PropTypes.func.isRequired,
-    selectArchiveSource: PropTypes.func.isRequired,
-    showUnlockPrompt: PropTypes.bool.isRequired,
-    showUnlockPasswordPrompt: PropTypes.func.isRequired,
-    unlockArchive: PropTypes.func.isRequired
-};
 
 export default ArchivesList;
