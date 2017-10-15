@@ -22,21 +22,13 @@ export function lockSource(sourceID) {
     return archiveManager.lock(sourceID);
 }
 
-export function removeSource(sourceID) {
-    const archiveManager = getSharedArchiveManager();
-    return archiveManager.remove(sourceID);
-}
-
 export function unlockSource(sourceID, password) {
     const archiveManager = getSharedArchiveManager();
-    return doAsyncWork()
-        .then(() => archiveManager.unlock(sourceID, password));
+    return doAsyncWork().then(() => archiveManager.unlock(sourceID, password));
 }
 
 export function updateCurrentArchive() {
     const state = getState();
     const archive = getSelectedArchive(state);
-    dispatch(
-        setGroups(archiveToObject(archive).groups)
-    );
+    dispatch(setGroups(archiveToObject(archive).groups));
 }

@@ -10,8 +10,6 @@ import SwipeoutButton from "./SwipeoutButton.js";
 import EmptyView from "./EmptyView.js";
 import { getArchiveTypeDetails } from "../library/archives.js";
 
-const ARCHIVE_ICON_INSET = 10;
-const ARCHIVE_ICON_SIZE = 40;
 const ARCHIVE_IMAGE_PENDING = require("../../resources/images/pending-256.png");
 const ARCHIVE_IMAGE_LOCKED = require("../../resources/images/locked-256.png");
 const ARCHIVE_IMAGE_UNLOCKED = require("../../resources/images/unlocked-256.png");
@@ -68,6 +66,21 @@ const styles = StyleSheet.create({
         width: 17,
         height: 17,
         marginRight: 5
+    },
+    swipedViewContainer: {
+        flex: 1,
+        flexDirection: "row",
+        backgroundColor: "red",
+        alignItems: "center",
+        justifyContent: "flex-end"
+    },
+    swipedViewTouchView: {
+        flex: 1
+    },
+    swipedViewText: {
+        flex: 0,
+        color: "#fff",
+        marginRight: 12
     }
 });
 
@@ -114,17 +127,9 @@ class ArchivesList extends Component {
         this.props.unlockArchive(this.lastSelectedSourceID, password);
     }
 
-    handleSwipeoutButtonPress(buttonInfo, archiveInfo) {
-        const { _type: type } = buttonInfo;
+    handleSwipeoutButtonPress(archiveInfo) {
         const { id: sourceID } = archiveInfo;
-        switch (type) {
-            case "remove": {
-                this.props.removeArchive(sourceID);
-                break;
-            }
-            default:
-                throw new Error(`Unknown button pressed: ${type}`);
-        }
+        this.props.removeArchive(sourceID);
     }
 
     renderArchiveItem(archiveInfo) {
@@ -157,6 +162,21 @@ class ArchivesList extends Component {
         );
     }
 
+    renderArchiveItemSubview(archiveInfo) {
+        // this.handleSwipeoutButtonPress(info, archiveInfo)
+        return (
+            <TouchableHighlight
+                style={styles.swipedViewTouchView}
+                onPress={() => this.handleSwipeoutButtonPress(archiveInfo)}
+                underlayColor="white"
+            >
+                <View style={styles.swipedViewContainer}>
+                    <Text style={styles.swipedViewText}>Remove</Text>
+                </View>
+            </TouchableHighlight>
+        );
+    }
+
     render() {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -168,14 +188,9 @@ class ArchivesList extends Component {
                         <SwipeListView
                             dataSource={ds.cloneWithRows(this.props.archives)}
                             renderRow={archiveInfo => this.renderArchiveItem(archiveInfo)}
-                            renderHiddenRow={archiveInfo => (
-                                <View>
-                                    <Text>Left</Text>
-                                    <Text>Right</Text>
-                                </View>
-                            )}
+                            renderHiddenRow={archiveInfo => this.renderArchiveItemSubview(archiveInfo)}
                             disableRightSwipe={true}
-                            rightOpenValue={-75}
+                            rightOpenValue={0 - ARCHIVE_SWIPE_BUTTON_WIDTH}
                         />
                     </When>
                     <Otherwise>
