@@ -9,6 +9,7 @@ import {
     getStackCount,
     getStackItem
 } from "./cache.js";
+import { Uint8Array } from "./polyfill/typedArrays.js";
 
 const { CryptoBridge } = NativeModules;
 
