@@ -7,6 +7,17 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
 public class CryptoBridge extends ReactContextBaseJavaModule {
 
+    private String join(String[] items) {
+        String output = "";
+        for (String item : items) {
+            if (output.length() > 0) {
+                output += ",";
+            }
+            output += item;
+        }
+        return output;
+    }
+
     public CryptoBridge(ReactApplicationContext reactContext) {
         super(reactContext);
     }
@@ -42,7 +53,7 @@ public class CryptoBridge extends ReactContextBaseJavaModule {
     @ReactMethod
     public void generateUUIDs(Callback callback) {
         String[] uuids = BCCrypto.generateUUIDs(50);
-        callback.invoke(null, String.join(",", uuids));
+        callback.invoke(null, join(uuids));
     }
 
     @Override

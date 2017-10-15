@@ -1,10 +1,11 @@
 package com.buttercup;
 
+import org.spongycastle.util.encoders.Base64;
+
 import java.util.Random;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
-import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -20,7 +21,7 @@ public class BCCrypto {
     private static final String RANDOM_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789!@#$%^&*(){}[]<>,.?~|-=_+";
 
     public static String decryptText(String encryptedText, String keyHex, String ivHex, String saltHex, String hmacKeyHex, String hmacHex) {
-        byte[] encryptedData = Base64.getDecoder().decode(encryptedText.getBytes(StandardCharsets.UTF_8));
+        byte[] encryptedData = Base64.decode(encryptedText);
         byte[] keyData = BCHelpers.hexStringToByteArray(keyHex);
         byte[] ivData = BCHelpers.hexStringToByteArray(ivHex);
         byte[] hmacKeyData = BCHelpers.hexStringToByteArray(hmacKeyHex);
@@ -59,7 +60,7 @@ public class BCCrypto {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
             byte[] encrypted = cipher.doFinal(text.getBytes());
-            byte[] encodedEncryptedText = Base64.getEncoder().encode(encrypted);
+            byte[] encodedEncryptedText = Base64.encode(encrypted);
             String encryptedText = new String(encodedEncryptedText);
             // HMAC
             Mac sha256HMAC = Mac.getInstance("HmacSHA256");
