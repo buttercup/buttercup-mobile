@@ -16,4 +16,7 @@ trim_trailing_whitespace = false
 [karma.conf.js]
 [.travis.yml]
 [package.json]
+[.prettierrc]
+[*.json]
+[*.yaml]
 indent_size = 2
