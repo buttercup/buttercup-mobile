@@ -8,6 +8,7 @@ import {
     ENTRY_SET_FACADE_VALUE,
     ENTRY_SET_NEW_PARENT_GROUP,
     ENTRY_SET_NEW_PROPERTY_VALUE,
+    ENTRY_SET_VIEWING_HIDDEN,
     ENTRY_UNLOAD
 } from "../actions/types.js";
 
@@ -26,7 +27,8 @@ const INITIAL = {
     },
     fields: [],
     sourceID: null,
-    notification: ""
+    notification: "",
+    viewingHidden: false
 };
 
 export default function entryReducer(state = INITIAL, action = {}) {
@@ -85,16 +87,19 @@ export default function entryReducer(state = INITIAL, action = {}) {
         case ENTRY_SET_EDITING:
             return {
                 ...state,
-                editing: !!action.payload
+                editing: !!action.payload,
+                viewingHidden: false
+            };
+        case ENTRY_SET_VIEWING_HIDDEN:
+            return {
+                ...state,
+                viewingHidden: !!action.payload,
+                editing: false
             };
         case ENTRY_SET_FACADE_VALUE:
-            const {
-                field,
-                property,
-                value
-            } = action.payload;
+            const { field, property, value } = action.payload;
             const targetIndex = state.fields.findIndex(item => item.field === field && item.property === property);
-            const newFields = [ ...state.fields ];
+            const newFields = [...state.fields];
             newFields[targetIndex] = {
                 ...newFields[targetIndex],
                 value
