@@ -2,11 +2,7 @@ import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
-import {
-    setEntryEditing,
-    setFacadeValue,
-    setNotification
-} from "../actions/entry.js"
+import { setEntryEditing, setFacadeValue, setNotification, setViewingHidden } from "../actions/entry.js";
 import { navigateBack, navigateToNewMeta } from "../actions/navigation.js";
 import { setSaving } from "../actions/app.js";
 import {
@@ -19,11 +15,10 @@ import {
     getEntryURL,
     getNotification,
     getSourceID,
-    isEditing
+    isEditing,
+    isViewingHidden
 } from "../selectors/entry.js";
-import {
-    isSaving
-} from "../selectors/app.js";
+import { isSaving } from "../selectors/app.js";
 import { getEntry, loadEntry } from "../shared/entry.js";
 import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
 import { saveCurrentArchive } from "../shared/archive.js";
@@ -32,15 +27,16 @@ import { promptDeleteEntry } from "../shared/entry.js";
 
 export default connect(
     (state, ownProps) => ({
-        editing:                    isEditing(state),
-        entryNotificationMessage:   getNotification(state),
-        meta:                       getEntryMeta(state),
-        properties:                 getEntryProperties(state),
-        saving:                     isSaving(state),
-        title:                      getEntryTitle(state)
+        editing: isEditing(state),
+        entryNotificationMessage: getNotification(state),
+        meta: getEntryMeta(state),
+        properties: getEntryProperties(state),
+        saving: isSaving(state),
+        title: getEntryTitle(state),
+        viewHidden: isViewingHidden(state)
     }),
     {
-        copyToClipboard:            (name, value) => dispatch => {
+        copyToClipboard: (name, value) => dispatch => {
             Clipboard.setString(value);
             dispatch(setNotification(`Copied '${name}' to clipboard...`));
             setTimeout(() => {
@@ -48,55 +44,57 @@ export default connect(
                 dispatch(setNotification(""));
             }, 1250);
         },
-        onAddMeta:                  () => dispatch => {
+        onAddMeta: () => dispatch => {
             dispatch(navigateToNewMeta());
         },
-        onCancelEdit:               () => (dispatch, getState) => {
+        onCancelEdit: () => (dispatch, getState) => {
             const state = getState();
             const sourceID = getSourceID(state);
             const entryID = getEntryID(state);
             dispatch(setEntryEditing(false));
             loadEntry(sourceID, entryID);
         },
-        onDeletePressed:            () => () => {
+        onCancelViewingHidden: () => dispatch => {
+            dispatch(setViewingHidden(false));
+        },
+        onDeletePressed: () => () => {
             promptDeleteEntry();
         },
-        onEditPressed:              () => dispatch => dispatch(setEntryEditing(true)),
-        onFieldValueChange:         (field, property, value) => dispatch => {
-            dispatch(setFacadeValue({
-                field, property, value
-            }))
+        onEditPressed: () => dispatch => dispatch(setEntryEditing(true)),
+        onFieldValueChange: (field, property, value) => dispatch => {
+            dispatch(
+                setFacadeValue({
+                    field,
+                    property,
+                    value
+                })
+            );
         },
-        onOpenPressed:              () => (dispatch, getState) => {
+        onOpenPressed: () => (dispatch, getState) => {
             const state = getState();
             const url = getEntryURL(state);
             const password = getEntryPassword(state);
             if (url) {
-                Alert.alert(
-                    "Open URL",
-                    "Press OK to launch the URL. The password will be copied to the clipboard.",
-                    [
-                        { text: "Cancel", style: "cancel" },
-                        {
-                            text: "OK",
-                            style: "default",
-                            onPress: () => {
-                                Clipboard.setString(password);
-                                Linking.openURL(url);
-                            }
+                Alert.alert("Open URL", "Press OK to launch the URL. The password will be copied to the clipboard.", [
+                    { text: "Cancel", style: "cancel" },
+                    {
+                        text: "OK",
+                        style: "default",
+                        onPress: () => {
+                            Clipboard.setString(password);
+                            Linking.openURL(url);
                         }
-                    ]
-                );
+                    }
+                ]);
             } else {
                 Alert.alert(
                     "No URL",
-                    "This entry doesn't contain a URL meta field."
-                    [ { text: "OK", onPress: () => {} } ],
+                    "This entry doesn't contain a URL meta field."[{ text: "OK", onPress: () => {} }],
                     { cancelable: false }
                 );
             }
         },
-        onSavePressed:              () => (dispatch, getState) => {
+        onSavePressed: () => (dispatch, getState) => {
             const state = getState();
             const fields = getEntryFields(state);
             const sourceID = getSourceID(state);
@@ -121,6 +119,9 @@ export default connect(
                     dispatch(setSaving(false));
                     handleError("Saving failed", err);
                 });
+        },
+        onViewHiddenPressed: () => dispatch => {
+            dispatch(setViewingHidden(true));
         }
     }
 )(EntryPage);

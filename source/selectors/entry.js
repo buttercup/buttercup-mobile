@@ -14,7 +14,7 @@ export function getEntryMeta(state) {
 
 export function getEntryPassword(state) {
     const passwordField = getEntryProperties(state).find(item => item.property === "password");
-    return passwordField && passwordField.value || "";
+    return (passwordField && passwordField.value) || "";
 }
 
 export function getEntryProperties(state) {
@@ -23,12 +23,12 @@ export function getEntryProperties(state) {
 
 export function getEntryTitle(state) {
     const titleField = getEntryProperties(state).find(item => item.property === "title");
-    return titleField && titleField.value || "";
+    return (titleField && titleField.value) || "";
 }
 
 export function getEntryURL(state) {
     const urlField = getEntryMeta(state).find(item => /url/i.test(item.property));
-    return urlField && urlField.value || null;
+    return (urlField && urlField.value) || null;
 }
 
 export function getNewMetaKey(state) {
@@ -67,4 +67,8 @@ export function getSourceID(state) {
 
 export function isEditing(state) {
     return state[STATE_KEY].editing;
+}
+
+export function isViewingHidden(state) {
+    return state[STATE_KEY].viewingHidden;
 }
