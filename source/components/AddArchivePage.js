@@ -1,16 +1,8 @@
 import React, { Component } from "react";
-import {
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    Image
-} from "react-native";
-import {
-    Cell,
-    CellGroup
-} from "react-native-cell-components";
+import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import { Cell, CellGroup } from "react-native-cell-components";
 import PropTypes from "prop-types";
+import { getArchiveTypeDetails } from "../library/archives.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -22,15 +14,9 @@ const styles = StyleSheet.create({
     }
 });
 
-const ARCHIVE_TYPES = [
-    // { type: "dropbox", title: "Dropbox", image: require("../../resources/images/dropbox-256.png") },
-    { type: "owncloud", title: "ownCloud", image: require("../../resources/images/owncloud-256.png") },
-    { type: "nextcloud", title: "Nextcloud", image: require("../../resources/images/nextcloud-256.png") },
-    { type: "webdav", title: "WebDAV", image: require("../../resources/images/webdav-256.png") }
-];
+const ARCHIVE_TYPES = getArchiveTypeDetails();
 
 class AddArchive extends Component {
-
     static navigationOptions = {
         title: "Add Archive"
     };
@@ -38,7 +24,7 @@ class AddArchive extends Component {
     getMenuContents() {
         return (
             <CellGroup header="Remote">
-                {ARCHIVE_TYPES.map(({type, title, image}) =>
+                {ARCHIVE_TYPES.map(({ type, title, image }) => (
                     <Cell
                         key={type}
                         icon={() => <Image source={image} style={styles.icon} />}
@@ -46,7 +32,7 @@ class AddArchive extends Component {
                     >
                         <Text>{title}</Text>
                     </Cell>
-                )}
+                ))}
             </CellGroup>
         );
     }
@@ -56,22 +42,17 @@ class AddArchive extends Component {
     }
 
     render() {
-        return (
-            <ScrollView style={styles.container}>
-                {this.getMenuContents()}
-            </ScrollView>
-        );
+        return <ScrollView style={styles.container}>{this.getMenuContents()}</ScrollView>;
     }
-
 }
 
 AddArchive.propTypes = {
-    onArchiveSelected:          PropTypes.func.isRequired,
-    stage:                      PropTypes.string.isRequired
+    onArchiveSelected: PropTypes.func.isRequired,
+    stage: PropTypes.string.isRequired
 };
 
 AddArchive.defaultProps = {
-    stage:                      "chooseType"
+    stage: "chooseType"
 };
 
 export default AddArchive;
