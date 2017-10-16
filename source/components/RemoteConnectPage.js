@@ -46,22 +46,20 @@ class RemoteConnectPage extends Component {
     }
 
     renderDropbox() {
-        // **
-        // ** NOT IN USE
-        // **
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <View>
                         <DropboxAuthButton />
-                        <Button
-                            buttonStyle={styles.connectButton}
-                            large
-                            icon={{ name: "cloud" }}
-                            title="Connect"
-                            onPress={() => this.submit()}
-                            disabled={!this.props.dropboxAuthenticated}
-                        />
+                        <CellGroup>
+                            <Cell
+                                title="Connect"
+                                icon="cloud"
+                                onPress={() => this.submit()}
+                                tintColor="#1144FF"
+                                disabled={!this.props.dropboxAuthenticated}
+                            />
+                        </CellGroup>
                     </View>
                     <Notification message={this.props.dropboxAuthMessage} />
                     <Spinner
