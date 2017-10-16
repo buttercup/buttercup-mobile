@@ -5,6 +5,21 @@ export function addBCUPExtension(filePath) {
     return filePath;
 }
 
+export function formatArchiveTypeTitle(type) {
+    switch (type) {
+        case "webdav":
+            return "WebDAV";
+        case "owncloud":
+            return "ownCloud";
+        case "nextcloud":
+            return "Nextcloud";
+        case "dropbox":
+            return "Dropbox";
+        default:
+            return type;
+    }
+}
+
 export function joinPathAndFilename(directory, filename) {
     return `${directory}/${filename}`.replace(/\/{2,}/, "/");
 }

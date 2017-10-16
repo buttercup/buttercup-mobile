@@ -1,15 +1,6 @@
 import React, { Component } from "react";
-import {
-    Keyboard,
-    StyleSheet,
-    TouchableWithoutFeedback,
-    View
-} from "react-native";
-import {
-    Cell,
-    CellGroup,
-    CellInput
-} from "react-native-cell-components";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import Spinner from "react-native-loading-spinner-overlay";
 import Notification from "react-native-notification";
 import PropTypes from "prop-types";
@@ -17,9 +8,6 @@ import DropboxAuthButton from "../containers/DropboxAuthButton.js";
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
-        // justifyContent: "flex-start",
-        // alignItems: "center",
         backgroundColor: "transparent",
         width: "100%"
     },
@@ -30,9 +18,8 @@ const styles = StyleSheet.create({
 });
 
 class RemoteConnectPage extends Component {
-
     static navigationOptions = ({ navigation }) => {
-        const {params = {}} = navigation.state;
+        const { params = {} } = navigation.state;
         return {
             title: `${params.title}`
         };
@@ -74,17 +61,15 @@ class RemoteConnectPage extends Component {
                             title="Connect"
                             onPress={() => this.submit()}
                             disabled={!this.props.dropboxAuthenticated}
-                            />
-                    </View>
-                    <Notification
-                        message={this.props.dropboxAuthMessage}
                         />
+                    </View>
+                    <Notification message={this.props.dropboxAuthMessage} />
                     <Spinner
                         visible={this.props.connecting}
                         textContent="Connecting"
                         textStyle={{ color: "#FFF" }}
                         overlayColor="rgba(0, 0, 0, 0.75)"
-                        />
+                    />
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -105,36 +90,31 @@ class RemoteConnectPage extends Component {
                             icon="laptop"
                             onChangeText={newText => this.props.onChangeURL(newText)}
                             {...urlInputOptions}
-                            />
+                        />
                         <CellInput
                             title="Username"
                             value={this.props.username}
                             icon="face"
                             onChangeText={newText => this.props.onChangeUsername(newText)}
                             {...usernameInputOptions}
-                            />
+                        />
                         <CellInput
                             title="Password"
                             value={this.props.password}
                             icon="fingerprint"
                             onChangeText={newText => this.props.onChangePassword(newText)}
                             {...passwordInputOptions}
-                            />
+                        />
                     </CellGroup>
                     <CellGroup>
-                        <Cell
-                            title="Connect"
-                            icon="cloud"
-                            onPress={() => this.submit()}
-                            tintColor="#1144FF"
-                            />
+                        <Cell title="Connect" icon="cloud" onPress={() => this.submit()} tintColor="#1144FF" />
                     </CellGroup>
                     <Spinner
                         visible={this.props.connecting}
                         textContent="Connecting"
                         textStyle={{ color: "#FFF" }}
                         overlayColor="rgba(0, 0, 0, 0.75)"
-                        />
+                    />
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -145,26 +125,25 @@ class RemoteConnectPage extends Component {
         this.props.onConnectPressed();
         this.props.initiateConnection();
     }
-
 }
 
 RemoteConnectPage.propTypes = {
-    archiveType:            PropTypes.string,
-    connecting:             PropTypes.bool,
-    dropboxAuthenticated:   PropTypes.bool,
-    dropboxAuthMessage:     PropTypes.string,
-    initiateConnection:     PropTypes.func,
-    onChangePassword:       PropTypes.func,
-    onChangeURL:            PropTypes.func,
-    onChangeUsername:       PropTypes.func,
-    onConnectPressed:       PropTypes.func,
-    password:               PropTypes.string,
-    url:                    PropTypes.string,
-    username:               PropTypes.string
+    archiveType: PropTypes.string,
+    connecting: PropTypes.bool,
+    dropboxAuthenticated: PropTypes.bool,
+    dropboxAuthMessage: PropTypes.string,
+    initiateConnection: PropTypes.func,
+    onChangePassword: PropTypes.func,
+    onChangeURL: PropTypes.func,
+    onChangeUsername: PropTypes.func,
+    onConnectPressed: PropTypes.func,
+    password: PropTypes.string,
+    url: PropTypes.string,
+    username: PropTypes.string
 };
 
 RemoteConnectPage.defaultProps = {
-    dropboxAuthenticated:   false
+    dropboxAuthenticated: false
 };
 
 export default RemoteConnectPage;
