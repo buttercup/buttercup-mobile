@@ -10,13 +10,11 @@ import SwipeoutButton from "./SwipeoutButton.js";
 import EmptyView from "./EmptyView.js";
 import { getArchiveTypeDetails } from "../library/archives.js";
 
-const ARCHIVE_IMAGE_PENDING = require("../../resources/images/pending-256.png");
-const ARCHIVE_IMAGE_LOCKED = require("../../resources/images/locked-256.png");
-const ARCHIVE_IMAGE_UNLOCKED = require("../../resources/images/unlocked-256.png");
-const ARCHIVE_ITEM_HEIGHT = 88;
-const ARCHIVE_ITEM_CONTENTS_HEIGHT = 62;
+const ARCHIVE_ITEM_HEIGHT = 70;
+const ARCHIVE_ITEM_CONTENTS_HEIGHT = 45;
 const ARCHIVE_SWIPE_BUTTON_WIDTH = 80;
 const BENCH_IMAGE = require("../../resources/images/bench.png");
+const LOCK_IMAGE = require("../../resources/images/locked.png");
 
 const ARCHIVE_TYPES = getArchiveTypeDetails().reduce((types, nextType) => {
     types[nextType.type] = nextType;
@@ -36,31 +34,55 @@ const styles = StyleSheet.create({
     rowContents: {
         flex: 1,
         alignSelf: "center",
-        height: 62,
+        height: ARCHIVE_ITEM_CONTENTS_HEIGHT,
         justifyContent: "flex-start",
+        alignItems: "center",
         flexDirection: "row"
+    },
+    archiveLockImage: {
+        width: 24,
+        height: 24,
+        marginRight: 10,
+        tintColor: "#333"
     },
     archiveIcon: {
         flex: 0,
-        maxWidth: ARCHIVE_ITEM_CONTENTS_HEIGHT,
-        maxHeight: ARCHIVE_ITEM_CONTENTS_HEIGHT,
+        width: ARCHIVE_ITEM_CONTENTS_HEIGHT,
+        height: ARCHIVE_ITEM_CONTENTS_HEIGHT,
         alignSelf: "center",
-        marginLeft: 10
+        marginLeft: 10,
+        backgroundColor: "red",
+        borderRadius: ARCHIVE_ITEM_CONTENTS_HEIGHT / 2,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    archiveIconUnlocked: {
+        backgroundColor: "#5CAB7D"
+    },
+    archiveIconLocked: {
+        backgroundColor: "#f15c5c"
+    },
+    archiveIconText: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "300"
     },
     archiveDetails: {
+        flex: 1,
         marginLeft: 12,
         flexDirection: "column",
         justifyContent: "center"
     },
     archiveDetailsSubView: {
         flexDirection: "row",
-        justifyContent: "flex-start"
+        alignItems: "center"
     },
     archiveTitle: {
         fontSize: 18
     },
     archiveSubtitle: {
-        color: "#777"
+        color: "#777",
+        fontSize: 12
     },
     archiveTypeImage: {
         width: 17,
@@ -85,6 +107,10 @@ const styles = StyleSheet.create({
 });
 
 const ARCHIVE_SWIPE_BUTTONS = [{ text: "Remove", component: <SwipeoutButton>Remove</SwipeoutButton>, _type: "remove" }];
+
+function getArchiveAbbr(archiveName) {
+    return archiveName.substr(0, 1).toUpperCase() + archiveName.substr(1, 1);
+}
 
 class ArchivesList extends Component {
     static propTypes = {
@@ -133,12 +159,6 @@ class ArchivesList extends Component {
     }
 
     renderArchiveItem(archiveInfo) {
-        let image = ARCHIVE_IMAGE_PENDING;
-        if (archiveInfo.status === "locked") {
-            image = ARCHIVE_IMAGE_LOCKED;
-        } else if (archiveInfo.status === "unlocked") {
-            image = ARCHIVE_IMAGE_UNLOCKED;
-        }
         const { title: typeTitle, image: typeImage } = ARCHIVE_TYPES[archiveInfo.type];
         return (
             <TouchableHighlight
@@ -148,14 +168,24 @@ class ArchivesList extends Component {
             >
                 <View style={styles.swipeRow}>
                     <View style={styles.rowContents}>
-                        <Image source={image} style={styles.archiveIcon} />
+                        <View
+                            style={[
+                                styles.archiveIcon,
+                                archiveInfo.status === "locked" ? styles.archiveIconLocked : styles.archiveIconUnlocked
+                            ]}
+                        >
+                            <Text style={styles.archiveIconText}>{getArchiveAbbr(archiveInfo.name)}</Text>
+                        </View>
                         <View style={styles.archiveDetails}>
                             <Text style={styles.archiveTitle}>{archiveInfo.name}</Text>
                             <View style={styles.archiveDetailsSubView}>
                                 <Image source={typeImage} style={styles.archiveTypeImage} />
-                                <Text style={styles.archiveSubtitle}>{typeTitle}</Text>
+                                <Text style={styles.archiveSubtitle}>{typeTitle.toUpperCase()}</Text>
                             </View>
                         </View>
+                        <If condition={archiveInfo.status === "locked"}>
+                            <Image source={LOCK_IMAGE} style={styles.archiveLockImage} />
+                        </If>
                     </View>
                 </View>
             </TouchableHighlight>
