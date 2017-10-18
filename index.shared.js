@@ -4,6 +4,7 @@ import { AppRegistry } from "react-native";
 import { Provider } from "react-redux";
 import * as Buttercup from "buttercup-web";
 import { createWebDAVAdapter } from "@buttercup/mobile-compat";
+import "./source/compat/DropboxDatasource.js";
 import { patchCrypto, patchKeyDerivation } from "./source/library/crypto.js";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";
 import { trackApplicationLaunch } from "./source/library/analytics.js";
