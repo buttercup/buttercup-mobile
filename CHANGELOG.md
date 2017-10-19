@@ -1,5 +1,15 @@
 # Buttercup Mobile Changelog
 
+## v1.1.0
+_2017-10-18
+
+Quick follow-up feature release:
+
+ * Dropbox support
+ * Analytics update (session fix)
+ * "View-hidden" button for showing password field
+ * Home screen face-lift
+
 ## v1.0.0
 _2017-10-07_
 
