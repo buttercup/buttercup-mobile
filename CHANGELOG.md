@@ -1,7 +1,7 @@
 # Buttercup Mobile Changelog
 
 ## v1.1.0
-_2017-10-18
+_2017-10-18_
 
 Quick follow-up feature release:
 
