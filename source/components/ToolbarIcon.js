@@ -1,16 +1,12 @@
-import React from 'react';
-import {
-    Image,
-    StyleSheet,
-    TouchableOpacity
-} from "react-native";
+import React from "react";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-        paddingRight: 10
+        padding: 10
     },
     image: {
-        tintColor: '#454545'
+        tintColor: "#454545"
     }
 });
 

@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
     headerImageAndroid: {
         alignSelf: "center",
-        marginLeft: 32
+        marginLeft: 38
     }
 });
 
@@ -24,10 +24,14 @@ function getHeaderImage() {
     });
 }
 
+function getRightToolbarButton() {
+    return <ToolbarIcon icon={CLOUD_ADD} onPress={showArchivesPageRightSheet} />;
+}
+
 class ArchivesPage extends Component {
     static navigationOptions = {
         headerTitle: getHeaderImage(),
-        headerRight: <ToolbarIcon icon={CLOUD_ADD} onPress={showArchivesPageRightSheet} />
+        headerRight: getRightToolbarButton()
     };
 
     render() {
