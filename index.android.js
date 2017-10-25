@@ -3,9 +3,10 @@ import { AppRegistry } from "react-native";
 import ButtercupShared from "./index.shared.js";
 
 export default class Buttercup extends ButtercupShared {
-
-    // Nothing here
-
+    constructor(...args) {
+        super(...args);
+        // Android specific launch code
+    }
 }
 
-AppRegistry.registerComponent('Buttercup', () => Buttercup);
+AppRegistry.registerComponent("Buttercup", () => Buttercup);
