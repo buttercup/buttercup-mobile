@@ -22,8 +22,8 @@ matrix:
           - tools
           - platform-tools
           - tools
-          - build-tools-26.0.0
-          - android-26
+          - build-tools-23.0.0
+          - android-23
       before_script:
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install -y nodejs
