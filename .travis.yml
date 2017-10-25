@@ -22,7 +22,7 @@ matrix:
           - tools
           - platform-tools
           - tools
-          - build-tools-23.0.0
+          - build-tools-23.0.1
           - android-23
       before_script:
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
