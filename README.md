@@ -66,6 +66,14 @@ To run on an actual device, first terminate any AVDs that are running. Connect t
 
 The same software version restrictions apply to real devices.
 
+#### Building an APK
+To build a signed APK:
+
+ 1. Close all other development resources for the project.
+ 2. Run `npm run build:android` to first build the project.
+ 3. In Android Studio, choose _Build > Generate Signed APK_.
+ 4. Build a release APK by following the instructions in the GUI.
+
 ## Contributing
 We love contributions - anything from new features and bug fixes to suggestions and questions. Please follow our [contribution guide](CONTRIBUTING.md).
 
