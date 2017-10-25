@@ -30,6 +30,7 @@ build/
 local.properties
 *.iml
 .gradlecache
+*.apk
 
 # node.js
 #
