@@ -46,11 +46,13 @@ export function getEntryTitle(sourceID, entryID) {
 
 export function loadEntry(sourceID, entryID) {
     const facade = getEntryFacade(sourceID, entryID);
-    dispatch(loadNewEntry({
-        id: entryID,
-        fields: facade.fields,
-        sourceID
-    }));
+    dispatch(
+        loadNewEntry({
+            id: entryID,
+            fields: facade.fields,
+            sourceID
+        })
+    );
 }
 
 export function promptDeleteEntry() {
@@ -59,33 +61,28 @@ export function promptDeleteEntry() {
     const entryID = getEntryID(state);
     const entry = getEntry(sourceID, entryID);
     const title = entry.getProperty("title");
-    Alert.alert(
-        "Delete Entry",
-        `Are you sure that you want to delete the entry '${title}'?`,
-        [
-            { text: "Cancel", style: "cancel" },
-            {
-                text: "Delete",
-                style: "default",
-                onPress: () => {
-                    dispatch(setSaving(true));
-                    Promise
-                        .resolve()
-                        .then(() => deleteEntry(sourceID, entryID))
-                        .then(() => saveCurrentArchive())
-                        .then(() => {
-                            dispatch(setSaving(false));
-                            dispatch(navigateBack());
-                            updateCurrentArchive();
-                        })
-                        .catch(err => {
-                            dispatch(setSaving(false));
-                            handleError("Failed deleting entry", err);
-                        });
-                }
+    Alert.alert("Delete Entry", `Are you sure that you want to delete the entry '${title}'?`, [
+        { text: "Cancel", style: "cancel" },
+        {
+            text: "Delete",
+            style: "default",
+            onPress: () => {
+                dispatch(setSaving(true));
+                Promise.resolve()
+                    .then(() => deleteEntry(sourceID, entryID))
+                    .then(() => saveCurrentArchive())
+                    .then(() => {
+                        dispatch(setSaving(false));
+                        dispatch(navigateBack());
+                        updateCurrentArchive();
+                    })
+                    .catch(err => {
+                        dispatch(setSaving(false));
+                        handleError("Failed deleting entry", err);
+                    });
             }
-        ]
-    );
+        }
+    ]);
 }
 
 export function saveNewEntry() {
@@ -103,18 +100,13 @@ export function saveNewEntry() {
     const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
     const archive = source.workspace.primary.archive;
     const newEntry = archive.findGroupByID(parentGroupID).createEntry(title);
-    newEntry
-        .setProperty("username", username)
-        .setProperty("password", password);
+    newEntry.setProperty("username", username).setProperty("password", password);
     dispatch(setSaving(true));
-    return source.workspace
-        .save()
-        .then(doAsyncWork)
-        .then(() => {
-            updateCurrentArchive();
-            dispatch(setSaving(false));
-            dispatch(navigateBack());
-        });
+    return saveCurrentArchive(source.workspace).then(() => {
+        updateCurrentArchive();
+        dispatch(setSaving(false));
+        dispatch(navigateBack());
+    });
 }
 
 export function saveNewMeta() {
