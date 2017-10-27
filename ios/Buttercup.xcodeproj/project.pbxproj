@@ -46,6 +46,7 @@
 		9A1586680933407B88BBBF6E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
 		BBC4A737D75245BFB27E789A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
 		BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */; };
+		C223EB841F8FDCFE004384AD /* BCCryptoExportTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C223EB831F8FDCFE004384AD /* BCCryptoExportTests.m */; };
 		C23C4D811ED58FD7008B5786 /* BCDerivation.m in Sources */ = {isa = PBXBuildFile; fileRef = C23C4D801ED58FD7008B5786 /* BCDerivation.m */; };
 		C26F52C01F5736CE000EB570 /* BCCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BD1F5736CE000EB570 /* BCCrypto.m */; };
 		C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
@@ -309,6 +310,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
+		C223EB831F8FDCFE004384AD /* BCCryptoExportTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCCryptoExportTests.m; sourceTree = "<group>"; };
 		C23C4D7F1ED58FD7008B5786 /* BCDerivation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCDerivation.h; sourceTree = "<group>"; };
 		C23C4D801ED58FD7008B5786 /* BCDerivation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCDerivation.m; sourceTree = "<group>"; };
 		C26F52BC1F5736CE000EB570 /* BCCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCCrypto.h; sourceTree = "<group>"; };
@@ -426,6 +428,7 @@
 				00E356F01AD99517003FC87E /* Supporting Files */,
 				C26F52DD1F5739B6000EB570 /* BCHelpersTests.m */,
 				C26F52E01F573D41000EB570 /* BCCryptoTests.m */,
+				C223EB831F8FDCFE004384AD /* BCCryptoExportTests.m */,
 			);
 			path = ButtercupTests;
 			sourceTree = "<group>";
@@ -1080,6 +1083,7 @@
 				C26F52DF1F5739BB000EB570 /* BCHelpers.m in Sources */,
 				C26F52E21F573D45000EB570 /* BCCrypto.m in Sources */,
 				C26F52DE1F5739B6000EB570 /* BCHelpersTests.m in Sources */,
+				C223EB841F8FDCFE004384AD /* BCCryptoExportTests.m in Sources */,
 				00E356F31AD99517003FC87E /* ButtercupTests.m in Sources */,
 				C26F52E11F573D41000EB570 /* BCCryptoTests.m in Sources */,
 			);

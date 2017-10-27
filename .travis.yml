@@ -2,11 +2,15 @@ matrix:
   include:
     - language: node_js
       script: npm run test
+      env:
+        - NAME=Jest
       before_install:
         - npm i -g jest-cli
       node_js:
         - "stable"
     - language: objective-c
+      env:
+        - NAME=iOS
       os: osx
       osx_image: xcode8.3
       script:
@@ -15,10 +19,21 @@ matrix:
         - nvm install 8.4.0
         - npm install
         - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
-
-# language: node_js
-# script: npm run test
-# before_install:
-#   -  npm i -g jest-cli
-# node_js:
-#   - "stable"
+    - language: android
+      sudo: required
+      env:
+        - NAME=Android
+      android:
+        components:
+          - tools
+          - platform-tools
+          - tools
+          - build-tools-23.0.1
+          - android-23
+      before_script:
+        - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+        - sudo apt-get install -y nodejs
+        - npm install
+      script:
+        - cd android && ./gradlew assemble && cd ..
+        - ./scripts/testAndroid.sh
