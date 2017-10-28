@@ -1,5 +1,13 @@
 # Buttercup Mobile Changelog
 
+## v1.1.1
+_2017-10-27_
+
+Patch release to fix some issues:
+
+ * **Bugfix**: (#62) Saving would override remote changes without merging
+ * Removed analytics
+
 ## v1.1.0
 _2017-10-18_
 
