@@ -24,19 +24,7 @@ public class BCCryptoTest {
     private String hmacKeyHex;
 
     private String getFileContents() {
-        try (BufferedReader br = new BufferedReader(new FileReader("./test.txt"))) {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            return sb.toString();
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
-        return null;
+        return TestData.getTestData();
     }
 
     @Before

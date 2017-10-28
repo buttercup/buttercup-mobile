@@ -90,7 +90,7 @@ android {
         applicationId "com.buttercup"
         minSdkVersion 23
         targetSdkVersion 23
-        versionCode 4
+        versionCode 5
         versionName "1.1.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
