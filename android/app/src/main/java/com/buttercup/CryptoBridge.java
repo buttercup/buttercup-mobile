@@ -1,7 +1,5 @@
 package com.buttercup;
 
-import android.util.Log;
-
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -47,13 +45,13 @@ public class CryptoBridge extends ReactContextBaseJavaModule {
     public void encryptText(String encodedText, String keyHex, String saltHex, String hmacHexKey, Callback callback) {
         String text;
         try {
+            // We decode the text from Base64 and URI-encoding due to limitations with the bridge
+            // sending weird text that resulted from GZIP'ing:
             text = URLDecoder.decode(BCHelpers.base64ToString(encodedText), "UTF-8");
         } catch (Exception ex) {
             callback.invoke(null, "Error:" + ex.getMessage());
             return;
         }
-        Log.i("BcupAndroid", "Text: " + text);
-        Log.i("BcupAndroid", "TextLen: " + text.length());
         String encryptedText = BCCrypto.encryptText(text, keyHex, saltHex, hmacHexKey);
         callback.invoke(null, encryptedText);
     }
