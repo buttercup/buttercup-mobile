@@ -3,6 +3,9 @@ package com.buttercup;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 import static org.junit.Assert.*;
 
 /**
@@ -20,6 +23,22 @@ public class BCCryptoTest {
     private String saltHex;
     private String hmacKeyHex;
 
+    private String getFileContents() {
+        try (BufferedReader br = new BufferedReader(new FileReader("./test.txt"))) {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            return sb.toString();
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+        return null;
+    }
+
     @Before
     public void setUp() throws Exception {
         keyHex = BCCrypto.generateSalt(64); // random hex string
@@ -36,6 +55,19 @@ public class BCCryptoTest {
         String ivHex = parts[2];
         String decryptedText = BCCrypto.decryptText(encryptedContent, keyHex, ivHex, saltHex, hmacKeyHex, hmacHex);
         assertEquals(exportUnencryptedText, decryptedText);
+    }
+
+    @Test
+    public void decryptText_decryptsLargeAmountOfText() {
+        String fileContents = getFileContents();
+        assertTrue(fileContents.length() > 1000);
+        String encryptedBlock = BCCrypto.encryptText(fileContents, keyHex, saltHex, hmacKeyHex);
+        String[] parts = encryptedBlock.split("\\|");
+        String encryptedContent = parts[0];
+        String hmacHex = parts[1];
+        String ivHex = parts[2];
+        String decryptedText = BCCrypto.decryptText(encryptedContent, keyHex, ivHex, saltHex, hmacKeyHex, hmacHex);
+        assertEquals(fileContents, decryptedText);
     }
 
     @Test

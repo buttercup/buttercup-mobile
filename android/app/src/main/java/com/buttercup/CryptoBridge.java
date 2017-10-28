@@ -1,9 +1,14 @@
 package com.buttercup;
 
+import android.util.Log;
+
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
+
+import java.net.URLDecoder;
+import java.lang.String;
 
 public class CryptoBridge extends ReactContextBaseJavaModule {
 
@@ -39,7 +44,16 @@ public class CryptoBridge extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void encryptText(String text, String keyHex, String saltHex, String hmacHexKey, Callback callback) {
+    public void encryptText(String encodedText, String keyHex, String saltHex, String hmacHexKey, Callback callback) {
+        String text;
+        try {
+            text = URLDecoder.decode(BCHelpers.base64ToString(encodedText), "UTF-8");
+        } catch (Exception ex) {
+            callback.invoke(null, "Error:" + ex.getMessage());
+            return;
+        }
+        Log.i("BcupAndroid", "Text: " + text);
+        Log.i("BcupAndroid", "TextLen: " + text.length());
         String encryptedText = BCCrypto.encryptText(text, keyHex, saltHex, hmacHexKey);
         callback.invoke(null, encryptedText);
     }

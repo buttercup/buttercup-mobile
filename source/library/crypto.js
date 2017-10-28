@@ -1,14 +1,7 @@
-import { NativeModules } from "react-native";
-import {
-    tools,
-    vendor,
-    Web
-} from "buttercup-web";
-import {
-    addToStack,
-    getStackCount,
-    getStackItem
-} from "./cache.js";
+import { NativeModules, Platform } from "react-native";
+import { tools, vendor, Web } from "buttercup-web";
+import { encode as toBase64, decode as fromBase64 } from "base-64";
+import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
 
 const { CryptoBridge } = NativeModules;
@@ -17,10 +10,7 @@ const CACHE_UUID_MAX = 500;
 const CACHE_UUID_MIN = 50;
 
 export function buildCache() {
-    return Promise
-        .all([
-            cacheUUIDs()
-        ]);
+    return Promise.all([cacheUUIDs()]);
 }
 
 function cacheUUIDs() {
@@ -30,16 +20,15 @@ function cacheUUIDs() {
     }
     console.log("Will fetch more UUIDs");
     const refill = () => {
-        return fetchUUIDs()
-            .then(uuids => {
-                console.log(`Received ${uuids.length} UUIDs...`);
-                // console.log("UUIDS", uuids);
-                addToStack("uuid", ...uuids);
-                const uuidCount = getStackCount("uuid");
-                if (uuidCount < CACHE_UUID_MAX) {
-                    return refill();
-                }
-            });
+        return fetchUUIDs().then(uuids => {
+            console.log(`Received ${uuids.length} UUIDs...`);
+            // console.log("UUIDS", uuids);
+            addToStack("uuid", ...uuids);
+            const uuidCount = getStackCount("uuid");
+            if (uuidCount < CACHE_UUID_MAX) {
+                return refill();
+            }
+        });
     };
     return refill();
 }
@@ -49,14 +38,14 @@ function constantTimeCompare(val1, val2) {
     if (val1.length !== val2.length) {
         return false;
     }
-    for (let i = 0; i <= (val1.length - 1); i += 1) {
+    for (let i = 0; i <= val1.length - 1; i += 1) {
         sentinel |= val1.charCodeAt(i) ^ val2.charCodeAt(i);
     }
     return sentinel === 0;
 }
 
-function decrypt(encryptedComponents, keyDerivationInfo) {
-    const callBridge = (new Promise(function(resolve, reject) {
+function internalDecrypt(encryptedComponents, keyDerivationInfo) {
+    const callBridge = new Promise(function(resolve, reject) {
         CryptoBridge.decryptText(
             encryptedComponents.content,
             keyDerivationInfo.key.toString("hex"),
@@ -82,27 +71,30 @@ function decrypt(encryptedComponents, keyDerivationInfo) {
                 return resolve(result);
             }
         );
-    }));
+    });
     return callBridge;
 }
 
 export function deriveKeyNatively(password, salt, rounds) {
-    const callBridge = (new Promise(function(resolve, reject) {
+    const callBridge = new Promise(function(resolve, reject) {
         CryptoBridge.deriveKeyFromPassword(password, salt, rounds, (err, result) => {
             if (err) {
                 return reject(err);
             }
             return resolve(result);
         });
-    }));
-    return callBridge
-        .then(derivedKeyHex => hexKeyToBuffer(derivedKeyHex));
+    });
+    return callBridge.then(derivedKeyHex => hexKeyToBuffer(derivedKeyHex));
 }
 
-function encrypt(text, keyDerivationInfo) {
-    const callBridge = (new Promise(function(resolve, reject) {
+function internalEncrypt(text, keyDerivationInfo) {
+    const callBridge = new Promise(function(resolve, reject) {
+        const encodedText = Platform.select({
+            ios: text,
+            android: toBase64(encodeURIComponent(text))
+        });
         CryptoBridge.encryptText(
-            text,
+            encodedText,
             keyDerivationInfo.key.toString("hex"),
             keyDerivationInfo.salt,
             keyDerivationInfo.hmac.toString("hex"),
@@ -122,12 +114,7 @@ function encrypt(text, keyDerivationInfo) {
                     return reject(new Error(errorMessage));
                 }
                 // Process result
-                const [
-                    encryptedContent,
-                    hmac,
-                    iv,
-                    salt
-                ] = result.split("|");
+                const [encryptedContent, hmac, iv, salt] = result.split("|");
                 return resolve({
                     hmac,
                     iv,
@@ -137,12 +124,12 @@ function encrypt(text, keyDerivationInfo) {
                 });
             }
         );
-    }));
+    });
     return callBridge;
 }
 
 export function fetchUUIDs() {
-    const callBridge = (new Promise(function(resolve, reject) {
+    const callBridge = new Promise(function(resolve, reject) {
         CryptoBridge.generateUUIDs((err, result) => {
             if (err) {
                 return reject(err);
@@ -150,19 +137,19 @@ export function fetchUUIDs() {
             const uuids = result.split(",");
             return resolve(uuids);
         });
-    }));
+    });
     return callBridge;
 }
 
 export function generateSalt(length) {
-    const callBridge = (new Promise(function(resolve, reject) {
+    const callBridge = new Promise(function(resolve, reject) {
         CryptoBridge.generateSaltWithLength(length, (err, result) => {
             if (err) {
                 return reject(err);
             }
             return resolve(result);
         });
-    }));
+    });
     return callBridge;
 }
 
@@ -197,15 +184,14 @@ export function hexKeyToBuffer(key) {
 export function patchCrypto() {
     const { iocane } = vendor;
     const { overrides } = tools;
-    iocane.components.setEncryptTool(encrypt);
-    iocane.components.setDecryptTool(decrypt);
+    iocane.components.setEncryptTool(internalEncrypt);
+    iocane.components.setDecryptTool(internalDecrypt);
     iocane.components.setSaltGenerationTool(generateSalt);
     overrides.setUUIDGenerator(() => getUUID());
 }
 
 export function patchKeyDerivation() {
-    Web.HashingTools.patchCorePBKDF(
-        (password, salt, rounds, bits /* , algorithm */) =>
-            deriveKeyNatively(password, salt, rounds)
+    Web.HashingTools.patchCorePBKDF((password, salt, rounds, bits /* , algorithm */) =>
+        deriveKeyNatively(password, salt, rounds)
     );
 }

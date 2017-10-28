@@ -1,5 +1,7 @@
 package com.buttercup;
 
+import android.util.Log;
+
 import org.spongycastle.util.encoders.Base64;
 
 import java.util.Random;
@@ -49,6 +51,7 @@ public class BCCrypto {
     }
 
     public static String encryptText(String text, String keyHex, String saltHex, String hmacHexKey) {
+        Log.i("BcupAndroid", "Enc: " + text);
         String ivHex = generateIV();
         byte[] ivData = BCHelpers.hexStringToByteArray(ivHex);
         byte[] keyData = BCHelpers.hexStringToByteArray(keyHex);

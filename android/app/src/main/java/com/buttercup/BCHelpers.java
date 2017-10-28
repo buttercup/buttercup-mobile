@@ -1,5 +1,7 @@
 package com.buttercup;
 
+import org.spongycastle.util.encoders.Base64;
+
 /**
  * Created by perry on 11/10/17.
  */
@@ -7,6 +9,11 @@ package com.buttercup;
 public class BCHelpers {
 
     private final static char[] HEX_CHARS = "0123456789abcdef".toCharArray();
+
+    public static String base64ToString(String base64String) {
+        byte[] decodedData = Base64.decode(base64String);
+        return new String(decodedData);
+    }
 
     public static String byteArrayToHexString(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
@@ -26,6 +33,11 @@ public class BCHelpers {
                     + Character.digit(s.charAt(i+1), 16));
         }
         return data;
+    }
+
+    public static String stringToBase64(String s) {
+        byte[] encodedBuffer = Base64.encode(s.getBytes());
+        return new String(encodedBuffer);
     }
 
 }
