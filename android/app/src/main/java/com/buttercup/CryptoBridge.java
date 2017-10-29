@@ -5,6 +5,9 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
+import java.net.URLDecoder;
+import java.lang.String;
+
 public class CryptoBridge extends ReactContextBaseJavaModule {
 
     private String join(String[] items) {
@@ -39,7 +42,16 @@ public class CryptoBridge extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void encryptText(String text, String keyHex, String saltHex, String hmacHexKey, Callback callback) {
+    public void encryptText(String encodedText, String keyHex, String saltHex, String hmacHexKey, Callback callback) {
+        String text;
+        try {
+            // We decode the text from Base64 and URI-encoding due to limitations with the bridge
+            // sending weird text that resulted from GZIP'ing:
+            text = URLDecoder.decode(BCHelpers.base64ToString(encodedText), "UTF-8");
+        } catch (Exception ex) {
+            callback.invoke(null, "Error:" + ex.getMessage());
+            return;
+        }
         String encryptedText = BCCrypto.encryptText(text, keyHex, saltHex, hmacHexKey);
         callback.invoke(null, encryptedText);
     }
