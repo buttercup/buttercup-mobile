@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { APP_MASTER_RESET } from "../actions/types.js";
 import archives from "./archives.js";
 import archiveContents from "./archiveContents.js";
 import nav from "./nav.js";
@@ -9,7 +10,7 @@ import app from "./app.js";
 import dropbox from "./dropbox.js";
 import browser from "./browser.js";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     addArchive,
     app,
     archiveContents,
@@ -20,5 +21,13 @@ const rootReducer = combineReducers({
     nav,
     remoteExplorer
 });
+
+const rootReducer = (state, action) => {
+    if (action.type === APP_MASTER_RESET) {
+        // reset global state
+        state = undefined;
+    }
+    return appReducer(state, action);
+};
 
 export default rootReducer;

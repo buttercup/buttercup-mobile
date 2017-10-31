@@ -1,5 +1,6 @@
-import { dispatch } from "../store.js";
+import { dispatch, getState } from "../store.js";
 import { navigateBack, navigateToLockPage, navigateToRoot } from "../actions/navigation.js";
+import { isRoot } from "../selectors/nav.js";
 
 let __lockPageShown = false;
 
@@ -12,6 +13,19 @@ export function hideLockPage() {
         dispatch(navigateBack());
         __lockPageShown = false;
     }
+}
+
+/**
+ * Navigates back a page if not on main screen
+ * @returns {Boolean} True if navigation possible, false otherwise
+ */
+export function navigateBackIfPossible() {
+    const state = getState();
+    if (isRoot(state) === false) {
+        dispatch(navigateBack());
+        return true;
+    }
+    return false;
 }
 
 export function showLockPage() {
