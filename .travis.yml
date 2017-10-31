@@ -6,8 +6,10 @@ matrix:
         - NAME=Jest
       before_install:
         - npm i -g jest-cli
+      install:
+        - npm install
       node_js:
-        - "stable"
+        - 8
     - language: objective-c
       env:
         - NAME=iOS
