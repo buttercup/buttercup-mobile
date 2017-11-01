@@ -1,5 +1,12 @@
 # Buttercup Mobile Changelog
 
+## v1.1.2
+_2017-11-01_
+
+Android patch:
+
+ * **Bugfix**: (#64) Using the Android back arrow to leave the app would cause intermittent crashes
+
 ## v1.1.1
 _2017-10-27_
 
