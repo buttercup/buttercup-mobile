@@ -23,7 +23,7 @@
   "dependencies": {
     "@buttercup/mobile-compat": "~0.6.1",
     "@tradle/react-native-http": "^2.0.0",
-    "@yfuks/react-native-action-sheet": "0.0.3",
+    "@yfuks/react-native-action-sheet": "0.0.4",
     "assert": "^1.4.1",
     "base-64": "^0.1.0",
     "browserify-zlib": "^0.1.4",
