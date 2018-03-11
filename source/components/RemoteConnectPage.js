@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import Spinner from "react-native-loading-spinner-overlay";
-import Notification from "react-native-notification";
 import PropTypes from "prop-types";
 import DropboxAuthButton from "../containers/DropboxAuthButton.js";
 
@@ -61,7 +60,6 @@ class RemoteConnectPage extends Component {
                             />
                         </CellGroup>
                     </View>
-                    <Notification message={this.props.dropboxAuthMessage} />
                     <Spinner
                         visible={this.props.connecting}
                         textContent="Connecting"
@@ -129,7 +127,6 @@ RemoteConnectPage.propTypes = {
     archiveType: PropTypes.string,
     connecting: PropTypes.bool,
     dropboxAuthenticated: PropTypes.bool,
-    dropboxAuthMessage: PropTypes.string,
     initiateConnection: PropTypes.func,
     onChangePassword: PropTypes.func,
     onChangeURL: PropTypes.func,

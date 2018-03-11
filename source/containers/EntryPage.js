@@ -2,7 +2,7 @@ import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
-import { setEntryEditing, setFacadeValue, setNotification, setViewingHidden } from "../actions/entry.js";
+import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
 import { navigateBack, navigateToNewMeta } from "../actions/navigation.js";
 import { setSaving } from "../actions/app.js";
 import {
@@ -24,11 +24,11 @@ import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { promptDeleteEntry } from "../shared/entry.js";
+import { executeNotification } from "../global/notify.js";
 
 export default connect(
     (state, ownProps) => ({
         editing: isEditing(state),
-        entryNotificationMessage: getNotification(state),
         meta: getEntryMeta(state),
         properties: getEntryProperties(state),
         saving: isSaving(state),
@@ -38,11 +38,7 @@ export default connect(
     {
         copyToClipboard: (name, value) => dispatch => {
             Clipboard.setString(value);
-            dispatch(setNotification(`Copied '${name}' to clipboard...`));
-            setTimeout(() => {
-                // clear notification
-                dispatch(setNotification(""));
-            }, 1250);
+            executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
         },
         onAddMeta: () => dispatch => {
             dispatch(navigateToNewMeta());
@@ -104,16 +100,12 @@ export default connect(
             facade.fields = fields;
             consumeEntryFacade(entry, facade);
             dispatch(setSaving(true));
-            saveCurrentArchive()
+            return saveCurrentArchive()
                 .then(() => {
                     updateCurrentArchive();
                     dispatch(setSaving(false));
                     dispatch(setEntryEditing(false));
-                    dispatch(setNotification("Saved entry"));
-                    setTimeout(() => {
-                        // clear notification
-                        dispatch(setNotification(""));
-                    }, 1000);
+                    executeNotification("success", "Saved entry", "Successfully saved changes to the entry");
                 })
                 .catch(err => {
                     dispatch(setSaving(false));

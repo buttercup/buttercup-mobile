@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
-import Notification from "react-native-notification";
 import Spinner from "react-native-loading-spinner-overlay";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import ToolbarIcon from "./ToolbarIcon.js";
@@ -133,7 +132,6 @@ class EntryPage extends Component {
                     </CellGroup>
                 ) : null}
                 {this.renderEditButtons()}
-                <Notification message={this.props.entryNotificationMessage} />
                 <Spinner
                     visible={this.props.saving}
                     textContent="Saving"

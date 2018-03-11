@@ -1,29 +1,21 @@
 import { connect } from "react-redux";
 import PopupBrowser from "../components/PopupBrowser.js";
 import { getURL } from "../selectors/browser.js";
-import {
-    setDropboxAuthenticated,
-    setDropboxAuthenticating,
-    setDropboxAuthToken,
-    setDropboxNotification
-} from "../actions/dropbox.js";
+import { setDropboxAuthenticated, setDropboxAuthenticating, setDropboxAuthToken } from "../actions/dropbox.js";
 import { navigateBack } from "../actions/navigation.js";
+import { executeNotification } from "../global/notify.js";
 
 export default connect(
     (state, ownProps) => ({
-        url:                        getURL(state)
+        url: getURL(state)
     }),
     {
-        onDropboxTokenReceived:     token => dispatch => {
+        onDropboxTokenReceived: token => dispatch => {
             dispatch(setDropboxAuthToken(token));
             dispatch(setDropboxAuthenticated(true));
             dispatch(setDropboxAuthenticating(false));
             dispatch(navigateBack());
-            dispatch(setDropboxNotification("Authentication complete"));
-            setTimeout(() => {
-                // clear notification
-                dispatch(setDropboxNotification(""));
-            }, 1500);
+            executeNotification("success", "Dropbox authentication", "Successfully authenticated Dropbox account");
         }
     }
 )(PopupBrowser);
