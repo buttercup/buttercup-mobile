@@ -3,7 +3,6 @@ import {
     ENTRY_NEW_CLEAR,
     ENTRY_NEW_META_CLEAR,
     ENTRY_NEW_META_SET,
-    ENTRY_NOTIFICATION_SET,
     ENTRY_SET_EDITING,
     ENTRY_SET_FACADE_VALUE,
     ENTRY_SET_NEW_PARENT_GROUP,
@@ -27,7 +26,6 @@ const INITIAL = {
     },
     fields: [],
     sourceID: null,
-    notification: "",
     viewingHidden: false
 };
 
@@ -44,11 +42,6 @@ export default function entryReducer(state = INITIAL, action = {}) {
         case ENTRY_UNLOAD:
             return {
                 ...INITIAL
-            };
-        case ENTRY_NOTIFICATION_SET:
-            return {
-                ...state,
-                notification: action.payload
             };
         case ENTRY_NEW_CLEAR:
             return {
