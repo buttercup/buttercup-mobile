@@ -3,7 +3,7 @@ import { Image, StyleSheet, ListView, Text, TouchableHighlight, ScrollView, View
 import { SwipeListView } from "react-native-swipe-list-view";
 import { List, ListItem } from "react-native-elements";
 import PropTypes from "prop-types";
-import Prompt from "react-native-prompt";
+import Prompt from "@perrymitchell/react-native-prompt";
 import Spinner from "react-native-loading-spinner-overlay";
 import Swipeout from "react-native-swipeout";
 import SwipeoutButton from "./SwipeoutButton.js";
