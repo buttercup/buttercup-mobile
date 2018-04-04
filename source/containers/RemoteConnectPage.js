@@ -8,7 +8,6 @@ import {
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
 import {
-    // getNotification as getDropboxAuthNotification,
     getToken,
     isAuthenticated
 } from "../selectors/dropbox.js";
