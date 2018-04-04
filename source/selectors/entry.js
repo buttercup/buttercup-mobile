@@ -57,10 +57,6 @@ export function getNewUsername(state) {
     return state[STATE_KEY].newEntry.username;
 }
 
-export function getNotification(state) {
-    return state[STATE_KEY].notification;
-}
-
 export function getSourceID(state) {
     return state[STATE_KEY].sourceID;
 }

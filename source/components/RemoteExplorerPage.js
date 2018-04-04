@@ -1,17 +1,8 @@
 import React, { Component } from "react";
-import {
-    Button,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View
-} from "react-native";
-import {
-    List,
-    ListItem
-} from "react-native-elements";
+import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import { List, ListItem } from "react-native-elements";
 import Spinner from "react-native-loading-spinner-overlay";
-import Prompt from "react-native-prompt";
+import Prompt from "@perrymitchell/react-native-prompt";
 import PropTypes from "prop-types";
 import { beginNewArchiveProcedure } from "../shared/archives.js";
 
@@ -35,17 +26,11 @@ const styles = StyleSheet.create({
 });
 
 class RemoteExplorer extends Component {
-
     static navigationOptions = ({ navigation }) => {
-        const {params = {}} = navigation.state;
+        const { params = {} } = navigation.state;
         return {
             title: `${params.title}`,
-            headerRight: (
-                <Button
-                    title="New"
-                    onPress={beginNewArchiveProcedure}
-                    />
-            )
+            headerRight: <Button title="New" onPress={beginNewArchiveProcedure} />
         };
     };
 
@@ -55,7 +40,7 @@ class RemoteExplorer extends Component {
 
     handlePathSelected(newPath, isDir) {
         const scrollResetCB = () => {
-            this.refs.directoryScrollView.scrollTo({ y: 0, animated: false })
+            this.refs.directoryScrollView.scrollTo({ y: 0, animated: false });
         };
         this.props.onPathSelected(newPath, isDir, scrollResetCB);
     }
@@ -64,9 +49,7 @@ class RemoteExplorer extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollContainer} ref="directoryScrollView">
-                    <List style={styles.list}>
-                        {this.props.items.map(item => this.renderItem(item))}
-                    </List>
+                    <List style={styles.list}>{this.props.items.map(item => this.renderItem(item))}</List>
                 </ScrollView>
                 <Prompt
                     title="Archive Filename"
@@ -75,7 +58,7 @@ class RemoteExplorer extends Component {
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewFilename(value)}
                     textInputProps={{ autoCapitalize: "none", spellCheck: false, keyboardType: "default" }}
-                    />
+                />
                 <Prompt
                     title="Archive Password"
                     placeholder=""
@@ -83,7 +66,7 @@ class RemoteExplorer extends Component {
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewMasterPassword(value)}
                     textInputProps={{ secureTextEntry: true }}
-                    />
+                />
                 <Prompt
                     title="Archive Name"
                     placeholder=""
@@ -91,33 +74,31 @@ class RemoteExplorer extends Component {
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewArchiveName(value)}
                     textInputProps={{ keyboardType: "default" }}
-                    />
+                />
                 <Spinner
                     visible={this.props.creatingFile}
                     textContent="Creating Archive"
                     textStyle={{ color: "#FFF" }}
                     overlayColor="rgba(0, 0, 0, 0.75)"
-                    />
+                />
                 <Spinner
                     visible={this.props.loading}
                     textContent="Fetching Contents"
                     textStyle={{ color: "#FFF" }}
                     overlayColor="rgba(0, 0, 0, 0.75)"
-                    />
+                />
                 <Spinner
                     visible={this.props.addingArchive}
                     textContent="Adding Archive"
                     textStyle={{ color: "#FFF" }}
                     overlayColor="rgba(0, 0, 0, 0.75)"
-                    />
+                />
             </View>
         );
     }
 
     renderItem(item) {
-        let image = item.isDir ?
-            FOLDER_IMAGE :
-            FILE_IMAGE;
+        let image = item.isDir ? FOLDER_IMAGE : FILE_IMAGE;
         if (/\.bcup$/i.test(item.name)) {
             image = BCUP_IMAGE;
         }
@@ -128,31 +109,30 @@ class RemoteExplorer extends Component {
                 avatar={image}
                 onPress={() => this.handlePathSelected(item.path, item.isDir)}
                 hideChevron={true}
-                />
+            />
         );
     }
-
 }
 
 RemoteExplorer.propTypes = {
-    addingArchive:              PropTypes.bool.isRequired,
-    cancelNewPrompt:            PropTypes.func.isRequired,
-    items:                      PropTypes.array.isRequired,
-    loading:                    PropTypes.bool.isRequired,
-    onNewArchiveName:           PropTypes.func.isRequired,
-    onNewFilename:              PropTypes.func.isRequired,
-    onNewMasterPassword:        PropTypes.func.isRequired,
-    onPathSelected:             PropTypes.func.isRequired,
-    remoteDirectory:            PropTypes.string.isRequired,
-    showNewName:                PropTypes.bool.isRequired,
-    showNewPassword:            PropTypes.bool.isRequired,
-    showNewPrompt:              PropTypes.bool.isRequired
+    addingArchive: PropTypes.bool.isRequired,
+    cancelNewPrompt: PropTypes.func.isRequired,
+    items: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onNewArchiveName: PropTypes.func.isRequired,
+    onNewFilename: PropTypes.func.isRequired,
+    onNewMasterPassword: PropTypes.func.isRequired,
+    onPathSelected: PropTypes.func.isRequired,
+    remoteDirectory: PropTypes.string.isRequired,
+    showNewName: PropTypes.bool.isRequired,
+    showNewPassword: PropTypes.bool.isRequired,
+    showNewPrompt: PropTypes.bool.isRequired
 };
 
 RemoteExplorer.defaultProps = {
-    items:                      [],
-    loading:                    false,
-    remoteDirectory:            "/"
+    items: [],
+    loading: false,
+    remoteDirectory: "/"
 };
 
 export default RemoteExplorer;

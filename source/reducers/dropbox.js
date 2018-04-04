@@ -2,15 +2,13 @@ import {
     DROPBOX_RESET_AUTH,
     DROPBOX_SET_AUTHENTICATED,
     DROPBOX_SET_AUTHENTICATING,
-    DROPBOX_SET_AUTH_TOKEN,
-    DROPBOX_SET_NOTIFICATION
+    DROPBOX_SET_AUTH_TOKEN
 } from "../actions/types.js";
 
 const INITIAL = {
     authenticated: false,
     authenticating: false,
-    authToken: null,
-    notification: ""
+    authToken: null
 };
 
 export default function dropboxReducer(state = INITIAL, action = {}) {
@@ -33,11 +31,6 @@ export default function dropboxReducer(state = INITIAL, action = {}) {
         case DROPBOX_RESET_AUTH:
             return {
                 ...INITIAL
-            };
-        case DROPBOX_SET_NOTIFICATION:
-            return {
-                ...state,
-                notification: action.payload
             };
 
         default:

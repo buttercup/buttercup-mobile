@@ -8,7 +8,6 @@ import {
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
 import {
-    getNotification as getDropboxAuthNotification,
     getToken,
     isAuthenticated
 } from "../selectors/dropbox.js";
@@ -52,20 +51,19 @@ function handleConnectionCreation(dispatch, getState) {
 
 export default connect(
     (state, ownProps) => ({
-        archiveType:            getArchiveType(state),
-        connecting:             isConnecting(state),
-        dropboxAuthenticated:   isAuthenticated(state),
-        dropboxAuthMessage:     getDropboxAuthNotification(state),
-        url:                    getRemoteURL(state),
+        archiveType: getArchiveType(state),
+        connecting: isConnecting(state),
+        dropboxAuthenticated: isAuthenticated(state),
+        url: getRemoteURL(state),
         ...getRemoteCredentials(state)
     }),
     {
-        initiateConnection:     () => (...args) => handleConnectionCreation(...args),
+        initiateConnection: () => (...args) => handleConnectionCreation(...args),
         onChangePassword,
         onChangeURL,
         onChangeUsername,
         onConnectPressed,
-        onUnmount:              () => dispatch => {
+        onUnmount: () => dispatch => {
             dispatch(clearArchiveDetails());
         }
     }

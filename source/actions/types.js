@@ -30,13 +30,11 @@ export const DROPBOX_RESET_AUTH = "dropbox/resetAuthentication";
 export const DROPBOX_SET_AUTHENTICATED = "dropbox/setAuthenticated";
 export const DROPBOX_SET_AUTHENTICATING = "dropbox/setAuthenticating";
 export const DROPBOX_SET_AUTH_TOKEN = "dropbox/setAuthToken";
-export const DROPBOX_SET_NOTIFICATION = "dropbox/setNotification";
 
 export const ENTRY_LOAD = "entry/load";
 export const ENTRY_NEW_CLEAR = "entry/clearNew";
 export const ENTRY_NEW_META_CLEAR = "entry/clearNewMeta";
 export const ENTRY_NEW_META_SET = "entry/setNewMetaValues";
-export const ENTRY_NOTIFICATION_SET = "entry/setNotificationMessage";
 export const ENTRY_SET_EDITING = "entry/setEditing";
 export const ENTRY_SET_FACADE_VALUE = "entry/setFacadeValue";
 export const ENTRY_SET_NEW_PARENT_GROUP = "entry/setNewEntryParentGroup";
