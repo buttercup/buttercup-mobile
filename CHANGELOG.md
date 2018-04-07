@@ -1,5 +1,14 @@
 # Buttercup Mobile Changelog
 
+## v1.2.0
+_2018-04-07_
+
+Feature release:
+
+ * **Touch unlock** support for iOS and Android
+ * Update React-Native to 0.54
+ * Minor UI updates
+
 ## v1.1.2
 _2017-11-01_
 
