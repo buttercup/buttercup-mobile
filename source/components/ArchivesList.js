@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     archiveTouchImage: {
         width: 24,
         height: 24,
-        marginRight: 14,
+        marginRight: 10,
         tintColor: "#AAA"
     },
     archiveIcon: {
