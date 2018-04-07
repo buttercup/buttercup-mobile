@@ -147,9 +147,7 @@ class ArchivesList extends Component {
             touchIDEnabledForSource(sourceID)
                 .then(enabled => {
                     if (enabled) {
-                        return getMasterPasswordFromTouchUnlock(sourceID).then(masterPassword => {
-                            this.handlePasswordEntered(masterPassword);
-                        });
+                        return this.handleArchiveTouchUnlock(sourceID);
                     } else {
                         this.props.showUnlockPasswordPrompt(true);
                     }
@@ -158,8 +156,26 @@ class ArchivesList extends Component {
                     handleError("Unlocking failed", err);
                 });
         } else {
-            alert("Uhh.. seems that's not working right now :(");
+            handleError("Unlocking failed", new Error(`Unexpected archive state: ${status}`));
         }
+    }
+
+    handleArchiveTouchUnlock(sourceID) {
+        return getMasterPasswordFromTouchUnlock(sourceID).then(result => {
+            if (typeof result === "string") {
+                return this.handlePasswordEntered(result);
+            }
+            switch (result.action) {
+                case "fallback":
+                    this.props.showUnlockPasswordPrompt(true);
+                    break;
+                case "cancel":
+                    // do nothing
+                    break;
+                default:
+                    throw new Error(`Unlock failed: Unknown authentication result: ${action}`);
+            }
+        });
     }
 
     handlePasswordEntered(password) {

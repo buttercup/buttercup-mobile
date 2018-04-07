@@ -53,6 +53,18 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
                 throw new Error("No credentials found under touch ID for this source");
             }
             return sourcePassword;
+        })
+        .catch(err => {
+            switch (err.name) {
+                case "LAErrorSystemCancel":
+                /* falls-through */
+                case "LAErrorUserCancel":
+                    return { action: "cancel" };
+                case "LAErrorUserFallback":
+                    return { action: "fallback" };
+                default:
+                    throw err;
+            }
         });
 }
 
