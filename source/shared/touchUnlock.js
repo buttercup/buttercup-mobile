@@ -37,6 +37,25 @@ export function enableTouchUnlock(sourceID) {
         });
 }
 
+export function getMasterPasswordFromTouchUnlock(sourceID) {
+    return touchIDEnabledForSource(sourceID)
+        .then(enabled => {
+            if (!enabled) {
+                throw new Error("Touch unlock is not enabled for this source");
+            }
+            return TouchID.authenticate("Authenticate to open archive");
+        })
+        .then(() => getGenericPassword())
+        .then(keychainCreds => {
+            const items = JSON.parse(keychainCreds.password);
+            const sourcePassword = items[sourceID];
+            if (!sourcePassword) {
+                throw new Error("No credentials found under touch ID for this source");
+            }
+            return sourcePassword;
+        });
+}
+
 export function touchIDEnabledForSource(sourceID) {
     const storageKey = `${TOUCH_ID_ENABLED_PREFIX}${sourceID}`;
     return getValue(storageKey, false);
