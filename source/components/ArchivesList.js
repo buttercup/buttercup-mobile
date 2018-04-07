@@ -156,9 +156,8 @@ class ArchivesList extends Component {
                 .then(enabled => {
                     if (enabled) {
                         return this.handleArchiveTouchUnlock(sourceID);
-                    } else {
-                        this.props.showUnlockPasswordPrompt(true);
                     }
+                    this.props.showUnlockPasswordPrompt(true);
                 })
                 .catch(err => {
                     handleError("Unlocking failed", err);
