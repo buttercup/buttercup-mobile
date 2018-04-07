@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
-import { List, ListItem } from "react-native-elements";
+import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Cell, CellGroup } from "react-native-cell-components";
 import Spinner from "react-native-loading-spinner-overlay";
 import Prompt from "@perrymitchell/react-native-prompt";
 import PropTypes from "prop-types";
@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
     },
     list: {
         flex: 1
+    },
+    icon: {
+        width: 32,
+        height: 32
     }
 });
 
@@ -49,7 +53,11 @@ class RemoteExplorer extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scrollContainer} ref="directoryScrollView">
-                    <List style={styles.list}>{this.props.items.map(item => this.renderItem(item))}</List>
+                    <CellGroup>
+                        <For each="item" of={this.props.items}>
+                            {this.renderItem(item)}
+                        </For>
+                    </CellGroup>
                 </ScrollView>
                 <Prompt
                     title="Archive Filename"
@@ -103,13 +111,13 @@ class RemoteExplorer extends Component {
             image = BCUP_IMAGE;
         }
         return (
-            <ListItem
+            <Cell
                 key={item.name}
-                title={item.name}
-                avatar={image}
+                icon={() => <Image source={image} style={styles.icon} />}
                 onPress={() => this.handlePathSelected(item.path, item.isDir)}
-                hideChevron={true}
-            />
+            >
+                <Text>{item.name}</Text>
+            </Cell>
         );
     }
 }
