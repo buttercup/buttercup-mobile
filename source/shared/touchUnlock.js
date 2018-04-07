@@ -4,8 +4,10 @@ import { getValue, setValue } from "../library/storage.js";
 import { handleError } from "../global/exceptions.js";
 import { executeNotification } from "../global/notify.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
-import { getState } from "../store.js";
+import { getArchivesDisplayList } from "../selectors/archives.js";
+import { dispatch, getState } from "../store.js";
 import { getSharedArchiveManager } from "../library/buttercup.js";
+import { setSourcesUsingTouchID } from "../actions/archives.js";
 
 const TOUCH_ID_ENABLED_PREFIX = "bcup:touchid-unlock-enabled:source:";
 
@@ -17,6 +19,10 @@ export function disableTouchUnlock(sourceID) {
             return setGenericPassword("-", newCreds);
         })
         .then(() => setValue(storageKey, false))
+        .then(() => {
+            executeNotification("success", "Touch Unlock", "Successfully disabled touch unlock");
+        })
+        .then(() => updateTouchEnabledSources())
         .catch(error => {
             handleError("Failed disabling touch unlock", error);
         });
@@ -44,6 +50,7 @@ export function enableTouchUnlock(sourceID) {
         .then(() => setValue(storageKey, true))
         .then(() => {
             executeNotification("success", "Touch Unlock", "Successfully enabled touch unlock");
+            return updateTouchEnabledSources();
         })
         .catch(error => {
             handleError("Failed enabling touch unlock", error);
@@ -96,4 +103,21 @@ function updateKeychainCredentials(keychainCreds, sourceID, password) {
     const credsObj = typeof keychainCreds === "string" && keychainCreds.length > 0 ? JSON.parse(keychainCreds) : {};
     credsObj[sourceID] = password;
     return JSON.stringify(credsObj);
+}
+
+export function updateTouchEnabledSources() {
+    const state = getState();
+    const archivesList = getArchivesDisplayList(state);
+    return Promise.all(
+        archivesList.map(item => touchIDEnabledForSource(item.id).then(enabled => [item.id, enabled]))
+    ).then(results => {
+        const enabledIDs = results.reduce((current, next) => {
+            const [id, enabled] = next;
+            if (enabled) {
+                return [...current, id];
+            }
+            return current;
+        }, []);
+        dispatch(setSourcesUsingTouchID(enabledIDs));
+    });
 }

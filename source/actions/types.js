@@ -19,6 +19,7 @@ export const ARCHIVES_ADD_LOCKED_SOURCE = "archives/addLockedSource";
 export const ARCHIVES_ADD_UNLOCKED_SOURCE = "archives/addUnlockedSource";
 export const ARCHIVES_LOCK_SOURCE = "archives/lockSource";
 export const ARCHIVES_REMOVE_SOURCE = "archives/removeSource";
+export const ARCHIVES_SET_TOUCHID_ENABLED = "archives/touchID/setEnabledArchives";
 export const ARCHIVES_TOGGLE_IS_UNLOCKING = "archives/toggleIsUnlocking";
 export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT = "archives/toggleUnlockPasswordPrompt";
 export const ARCHIVES_UNLOCK_SOURCE = "archives/unlockSource";
