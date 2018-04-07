@@ -4,6 +4,10 @@ export function getArchivesDisplayList(state) {
     return state[STATE_KEY].archives;
 }
 
+export function getSourceIDsUsingTouchID(state) {
+    return state[STATE_KEY].archivesUsingTouchID;
+}
+
 export function isUnlocking(state) {
     return state[STATE_KEY].isUnlockingSelected;
 }

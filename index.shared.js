@@ -12,6 +12,7 @@ import { smartFetch } from "./source/library/network.js";
 import store from "./source/store.js";
 import App from "./source/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
+import { initialisePermanentStorage } from "./source/library/storage.js";
 
 export default class ButtercupShared extends Component {
     constructor(...args) {
@@ -23,6 +24,8 @@ export default class ButtercupShared extends Component {
         // Use native `fetch` for requests
         createWebDAVAdapter.setFetchMethod(smartFetch);
         Buttercup.vendor.webdavFS.setFetchMethod(smartFetch);
+        // Initialise storage
+        initialisePermanentStorage();
         // Initialise the manager
         getSharedArchiveManager().rehydrate();
         // Setup notifications

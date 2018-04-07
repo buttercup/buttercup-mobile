@@ -6,6 +6,7 @@ import {
     setSourceLocked,
     setSourceUnlocked
 } from "../actions/archives.js";
+import { updateTouchEnabledSources } from "../shared/touchUnlock.js";
 
 function normaliseSourceInfo(sourceInfo) {
     const archiveManager = getSharedArchiveManager();
@@ -15,7 +16,7 @@ function normaliseSourceInfo(sourceInfo) {
         id: sourceInfo.id,
         name: sourceInfo.name,
         status: sourceInfo.status,
-        type: sourceInfo.type,
+        type: sourceInfo.type
     };
 }
 
@@ -32,6 +33,7 @@ export function linkArchiveManagerToStore(store) {
         console.log("Source rehydrated", sourceInfo);
         const source = normaliseSourceInfo(sourceInfo);
         dispatch(addLockedSource(source));
+        updateTouchEnabledSources();
     });
     archiveManager.on("sourceUnlocked", function __handleUnlockedSource(sourceInfo) {
         console.log("Source unlocked", sourceInfo);

@@ -14,7 +14,7 @@ export function editGroup(groupID) {
     dispatch(setNewEntryParentGroup(groupID));
     const showEntryAdd = groupID !== "0";
     const showEditGroup = groupID !== "0";
-    showArchiveContentsAddItemSheet(showEntryAdd, showEditGroup);
+    showArchiveContentsAddItemSheet(/* is root */ groupID === "0", showEntryAdd, showEditGroup);
 }
 
 export function lockSource(sourceID) {

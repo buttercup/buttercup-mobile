@@ -1,6 +1,11 @@
 import { connect } from "react-redux";
 import ArchivesList from "../components/ArchivesList.js";
-import { getArchivesDisplayList, isUnlocking, shouldShowUnlockPasswordPrompt } from "../selectors/archives.js";
+import {
+    getArchivesDisplayList,
+    getSourceIDsUsingTouchID,
+    isUnlocking,
+    shouldShowUnlockPasswordPrompt
+} from "../selectors/archives.js";
 import { setIsUnlocking, showUnlockPasswordPrompt } from "../actions/archives.js";
 import { setSelectedSource } from "../actions/archiveContents.js";
 import { navigateToGroups } from "../actions/navigation.js";
@@ -25,7 +30,8 @@ export default connect(
     (state, ownProps) => ({
         archives: getArchivesDisplayList(state),
         isUnlocking: isUnlocking(state),
-        showUnlockPrompt: shouldShowUnlockPasswordPrompt(state)
+        showUnlockPrompt: shouldShowUnlockPasswordPrompt(state),
+        sourcesUsingTouchUnlock: getSourceIDsUsingTouchID(state)
     }),
     {
         lockArchive: sourceID => dispatch => {

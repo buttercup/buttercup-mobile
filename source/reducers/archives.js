@@ -3,6 +3,7 @@ import {
     ARCHIVES_ADD_UNLOCKED_SOURCE,
     ARCHIVES_LOCK_SOURCE,
     ARCHIVES_REMOVE_SOURCE,
+    ARCHIVES_SET_TOUCHID_ENABLED,
     ARCHIVES_TOGGLE_IS_UNLOCKING,
     ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT,
     ARCHIVES_UNLOCK_SOURCE
@@ -13,6 +14,7 @@ const { LOCKED, UNLOCKED } = ArchiveSourceStatus;
 
 const INITIAL = {
     archives: [],
+    archivesUsingTouchID: [],
     isUnlockingSelected: false,
     showUnlockPasswordPrompt: false
 };
@@ -27,7 +29,8 @@ export default function archivesReducer(state = INITIAL, action = {}) {
         case ARCHIVES_ADD_UNLOCKED_SOURCE:
             return {
                 ...state,
-                archives: [...state.archives,
+                archives: [
+                    ...state.archives,
                     // ensure unlocked
                     { ...action.payload, status: UNLOCKED }
                 ]
@@ -35,7 +38,8 @@ export default function archivesReducer(state = INITIAL, action = {}) {
         case ARCHIVES_ADD_LOCKED_SOURCE:
             return {
                 ...state,
-                archives: [...state.archives,
+                archives: [
+                    ...state.archives,
                     // ensure locked
                     { ...action.payload, status: LOCKED }
                 ]
@@ -50,10 +54,7 @@ export default function archivesReducer(state = INITIAL, action = {}) {
             const existingArchives = state.archives.filter(source => source.id !== replacementSource.id);
             return {
                 ...state,
-                archives: [
-                    ...existingArchives,
-                    { ...replacementSource, status: UNLOCKED }
-                ]
+                archives: [...existingArchives, { ...replacementSource, status: UNLOCKED }]
             };
         }
         case ARCHIVES_LOCK_SOURCE: {
@@ -61,16 +62,18 @@ export default function archivesReducer(state = INITIAL, action = {}) {
             const existingArchives = state.archives.filter(source => source.id !== replacementSource.id);
             return {
                 ...state,
-                archives: [
-                    ...existingArchives,
-                    { ...replacementSource, status: LOCKED }
-                ]
+                archives: [...existingArchives, { ...replacementSource, status: LOCKED }]
             };
         }
         case ARCHIVES_REMOVE_SOURCE:
             return {
                 ...state,
                 archives: state.archives.filter(archive => archive.id !== action.payload)
+            };
+        case ARCHIVES_SET_TOUCHID_ENABLED:
+            return {
+                ...state,
+                archivesUsingTouchID: [...action.payload]
             };
 
         default:

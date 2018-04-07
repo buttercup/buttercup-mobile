@@ -9,11 +9,14 @@ import Swipeout from "react-native-swipeout";
 import SwipeoutButton from "./SwipeoutButton.js";
 import EmptyView from "./EmptyView.js";
 import { getArchiveTypeDetails } from "../library/archives.js";
+import { getMasterPasswordFromTouchUnlock, touchIDEnabledForSource } from "../shared/touchUnlock.js";
+import { handleError } from "../global/exceptions.js";
 
 const ARCHIVE_ITEM_HEIGHT = 70;
 const ARCHIVE_ITEM_CONTENTS_HEIGHT = 45;
 const ARCHIVE_SWIPE_BUTTON_WIDTH = 80;
 const BENCH_IMAGE = require("../../resources/images/bench.png");
+const FINGERPRINT_IMAGE = require("../../resources/images/fingerprint.png");
 const LOCK_IMAGE = require("../../resources/images/locked.png");
 
 const ARCHIVE_TYPES = getArchiveTypeDetails().reduce((types, nextType) => {
@@ -44,6 +47,12 @@ const styles = StyleSheet.create({
         height: 24,
         marginRight: 10,
         tintColor: "#333"
+    },
+    archiveTouchImage: {
+        width: 24,
+        height: 24,
+        marginRight: 10,
+        tintColor: "#AAA"
     },
     archiveIcon: {
         flex: 0,
@@ -121,6 +130,7 @@ class ArchivesList extends Component {
         selectArchiveSource: PropTypes.func.isRequired,
         showUnlockPrompt: PropTypes.bool.isRequired,
         showUnlockPasswordPrompt: PropTypes.func.isRequired,
+        sourcesUsingTouchUnlock: PropTypes.arrayOf(PropTypes.string).isRequired,
         unlockArchive: PropTypes.func.isRequired
     };
 
@@ -142,10 +152,37 @@ class ArchivesList extends Component {
             this.props.selectArchiveSource(sourceID);
         } else if (status === "locked") {
             this.lastSelectedSourceID = sourceID;
-            this.props.showUnlockPasswordPrompt(true);
+            touchIDEnabledForSource(sourceID)
+                .then(enabled => {
+                    if (enabled) {
+                        return this.handleArchiveTouchUnlock(sourceID);
+                    }
+                    this.props.showUnlockPasswordPrompt(true);
+                })
+                .catch(err => {
+                    handleError("Unlocking failed", err);
+                });
         } else {
-            alert("Uhh.. seems that's not working right now :(");
+            handleError("Unlocking failed", new Error(`Unexpected archive state: ${status}`));
         }
+    }
+
+    handleArchiveTouchUnlock(sourceID) {
+        return getMasterPasswordFromTouchUnlock(sourceID).then(result => {
+            if (typeof result === "string") {
+                return this.handlePasswordEntered(result);
+            }
+            switch (result.action) {
+                case "fallback":
+                    this.props.showUnlockPasswordPrompt(true);
+                    break;
+                case "cancel":
+                    // do nothing
+                    break;
+                default:
+                    throw new Error(`Unlock failed: Unknown authentication result: ${action}`);
+            }
+        });
     }
 
     handlePasswordEntered(password) {
@@ -183,6 +220,9 @@ class ArchivesList extends Component {
                                 <Text style={styles.archiveSubtitle}>{typeTitle.toUpperCase()}</Text>
                             </View>
                         </View>
+                        <If condition={this.props.sourcesUsingTouchUnlock.includes(archiveInfo.id)}>
+                            <Image source={FINGERPRINT_IMAGE} style={styles.archiveTouchImage} />
+                        </If>
                         <If condition={archiveInfo.status === "locked"}>
                             <Image source={LOCK_IMAGE} style={styles.archiveLockImage} />
                         </If>

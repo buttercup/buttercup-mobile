@@ -137,6 +137,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-keychain')
+    compile project(':react-native-touch-id')
     compile project(':react-native-randombytes')
     compile project(':@yfuks/react-native-action-sheet')
     compile project(':react-native-vector-icons')
