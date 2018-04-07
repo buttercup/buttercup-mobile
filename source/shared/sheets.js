@@ -2,6 +2,7 @@ import ActionSheet from "@yfuks/react-native-action-sheet";
 import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
 import { getState, dispatch } from "../store.js";
+import { handleError } from "../global/exceptions.js";
 import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
@@ -111,7 +112,25 @@ export function showTouchIDToggleSheet() {
             selectedIndex => {
                 switch (options[selectedIndex]) {
                     case itemEnableTouchID: {
-                        enableTouchUnlock(currentSourceID);
+                        enableTouchUnlock(currentSourceID).then(outcome => {
+                            switch (outcome.action) {
+                                case "cancel":
+                                    // do nothing
+                                    break;
+                                case "fallback":
+                                    handleError(
+                                        "Failed enabling touch unlock",
+                                        new Error("Password not supported for enabling touch unlock")
+                                    );
+                                    break;
+                                default:
+                                    handleError(
+                                        "Failed enabling touch unlock",
+                                        new Error("Unrecognised touch unlock response")
+                                    );
+                                    break;
+                            }
+                        });
                         break;
                     }
                     case itemDisableTouchID: {

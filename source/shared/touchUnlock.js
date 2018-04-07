@@ -30,7 +30,7 @@ export function disableTouchUnlock(sourceID) {
 
 export function enableTouchUnlock(sourceID) {
     const storageKey = `${TOUCH_ID_ENABLED_PREFIX}${sourceID}`;
-    TouchID.authenticate("Authenticate to enable touch unlock")
+    return TouchID.authenticate("Authenticate to enable touch unlock")
         .then(() => getGenericPassword())
         .then(keychainCreds => {
             const archiveManager = getSharedArchiveManager();
@@ -52,8 +52,18 @@ export function enableTouchUnlock(sourceID) {
             executeNotification("success", "Touch Unlock", "Successfully enabled touch unlock");
             return updateTouchEnabledSources();
         })
-        .catch(error => {
-            handleError("Failed enabling touch unlock", error);
+        .catch(err => {
+            switch (err.name) {
+                case "LAErrorSystemCancel":
+                /* falls-through */
+                case "LAErrorUserCancel":
+                    return { action: "cancel" };
+                case "LAErrorUserFallback":
+                    return { action: "fallback" };
+                default:
+                    handleError("Failed enabling touch unlock", err);
+                    break;
+            }
         });
 }
 
