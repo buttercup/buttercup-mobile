@@ -9,6 +9,19 @@ import { getSharedArchiveManager } from "../library/buttercup.js";
 
 const TOUCH_ID_ENABLED_PREFIX = "bcup:touchid-unlock-enabled:source:";
 
+export function disableTouchUnlock(sourceID) {
+    const storageKey = `${TOUCH_ID_ENABLED_PREFIX}${sourceID}`;
+    return getGenericPassword()
+        .then(keychainCreds => {
+            const newCreds = removeSourceFromKeychainCredentials(keychainCreds.password);
+            return setGenericPassword("-", newCreds);
+        })
+        .then(() => setValue(storageKey, false))
+        .catch(error => {
+            handleError("Failed disabling touch unlock", error);
+        });
+}
+
 export function enableTouchUnlock(sourceID) {
     const storageKey = `${TOUCH_ID_ENABLED_PREFIX}${sourceID}`;
     TouchID.authenticate("Authenticate to enable touch unlock")
@@ -66,6 +79,12 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
                     throw err;
             }
         });
+}
+
+function removeSourceFromKeychainCredentials(keychainCreds, sourceID) {
+    const credsObj = typeof keychainCreds === "string" && keychainCreds.length > 0 ? JSON.parse(keychainCreds) : {};
+    delete credsObj[sourceID];
+    return JSON.stringify(credsObj);
 }
 
 export function touchIDEnabledForSource(sourceID) {
