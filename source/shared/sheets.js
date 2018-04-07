@@ -5,7 +5,7 @@ import { getState, dispatch } from "../store.js";
 import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
-import { touchIDEnabledForSource } from "./touchUnlock.js";
+import { enableTouchUnlock, touchIDEnabledForSource } from "./touchUnlock.js";
 
 const SHEET_ADD_ARCHIVE = "Add";
 const SHEET_ADD_ENTRY = "New Entry";
@@ -110,12 +110,8 @@ export function showTouchIDToggleSheet() {
             },
             selectedIndex => {
                 switch (options[selectedIndex]) {
-                    case SHEET_ADD_ARCHIVE: {
-                        dispatch(navigateToAddArchive());
-                        break;
-                    }
-                    case SHEET_LOCK_ALL: {
-                        lockAllArchives();
+                    case itemEnableTouchID: {
+                        enableTouchUnlock(currentSourceID);
                         break;
                     }
                 }
