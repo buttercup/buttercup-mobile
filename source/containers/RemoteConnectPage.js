@@ -8,7 +8,6 @@ import {
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
 import {
-    // getNotification as getDropboxAuthNotification,
     getToken,
     isAuthenticated
 } from "../selectors/dropbox.js";
@@ -55,7 +54,6 @@ export default connect(
         archiveType: getArchiveType(state),
         connecting: isConnecting(state),
         dropboxAuthenticated: isAuthenticated(state),
-        // dropboxAuthMessage:     getDropboxAuthNotification(state),
         url: getRemoteURL(state),
         ...getRemoteCredentials(state)
     }),
