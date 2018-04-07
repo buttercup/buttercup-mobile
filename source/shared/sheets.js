@@ -114,6 +114,10 @@ export function showTouchIDToggleSheet() {
                         enableTouchUnlock(currentSourceID);
                         break;
                     }
+                    case itemDisableTouchID: {
+                        // @todo
+                        break;
+                    }
                 }
             }
         );

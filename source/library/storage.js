@@ -26,7 +26,7 @@ export function initialisePermanentStorage() {
     });
 }
 
-export function saveValue(key, value, ttl = null) {
+export function setValue(key, value, ttl = null) {
     if (/_/.test(key)) {
         throw new Error(`Failed saving value: Underscore's not allowed in key: "${key}"`);
     }
