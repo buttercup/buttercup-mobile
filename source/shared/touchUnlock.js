@@ -104,6 +104,16 @@ function removeSourceFromKeychainCredentials(keychainCreds, sourceID) {
     return JSON.stringify(credsObj);
 }
 
+export function touchIDAvailable() {
+    return TouchID.isSupported()
+        .then(supportCode => {
+            return supportCode === "FaceID" || supportCode === "TouchID";
+        })
+        .catch(err => {
+            return false;
+        });
+}
+
 export function touchIDEnabledForSource(sourceID) {
     const storageKey = `${TOUCH_ID_ENABLED_PREFIX}${sourceID}`;
     return getValue(storageKey, false);
