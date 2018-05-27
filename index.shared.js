@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import { AppRegistry } from "react-native";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
-import * as Buttercup from "buttercup-web";
+import * as Buttercup from "buttercup/dist/buttercup-web.min";
 import { createWebDAVAdapter } from "@buttercup/mobile-compat";
 import "./source/compat/DropboxDatasource.js";
 import { patchCrypto, patchKeyDerivation } from "./source/library/crypto.js";

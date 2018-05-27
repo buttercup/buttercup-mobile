@@ -1,5 +1,10 @@
-import { createCredentials } from "buttercup-web";
-import { getDropboxConnection, getNextcloudConnection, getOwnCloudConnection, getWebDAVConnection } from "../library/remote.js";
+import { createCredentials } from "buttercup/dist/buttercup-web.min";
+import {
+    getDropboxConnection,
+    getNextcloudConnection,
+    getOwnCloudConnection,
+    getWebDAVConnection
+} from "../library/remote.js";
 import { createEmptyArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
@@ -33,37 +38,28 @@ export function createNewArchive(state, dispatch) {
 export function createNewArchiveFile(currentDir, filename, password) {
     const archive = createEmptyArchive();
     const filePath = addBCUPExtension(joinPathAndFilename(currentDir, filename));
-    return getArchiveEncryptedContent(archive, createCredentials.fromPassword(password))
-        .then(function __handleEncryptedContents(encText) {
+    return getArchiveEncryptedContent(archive, createCredentials.fromPassword(password)).then(
+        function __handleEncryptedContents(encText) {
             return getSharedConnection()
                 .writeFile(filePath, encText, "utf8")
                 .then(() => filePath);
-        });
+        }
+    );
 }
 
 export function createRemoteConnection(connectionInfo) {
     const __storeSharedInstance = afsInstance => {
-        __remoteFSConnection = afsInstance
+        __remoteFSConnection = afsInstance;
     };
-    const {
-        archiveType,
-        remoteUsername,
-        remotePassword,
-        remoteURL,
-        dropboxToken
-    } = connectionInfo;
+    const { archiveType, remoteUsername, remotePassword, remoteURL, dropboxToken } = connectionInfo;
     if (archiveType === "webdav") {
-        return getWebDAVConnection(remoteURL, remoteUsername, remotePassword)
-            .then(__storeSharedInstance);
+        return getWebDAVConnection(remoteURL, remoteUsername, remotePassword).then(__storeSharedInstance);
     } else if (archiveType === "owncloud") {
-        return getOwnCloudConnection(remoteURL, remoteUsername, remotePassword)
-            .then(__storeSharedInstance);
+        return getOwnCloudConnection(remoteURL, remoteUsername, remotePassword).then(__storeSharedInstance);
     } else if (archiveType === "nextcloud") {
-        return getNextcloudConnection(remoteURL, remoteUsername, remotePassword)
-            .then(__storeSharedInstance);
+        return getNextcloudConnection(remoteURL, remoteUsername, remotePassword).then(__storeSharedInstance);
     } else if (archiveType === "dropbox") {
-        return getDropboxConnection(dropboxToken)
-            .then(__storeSharedInstance);
+        return getDropboxConnection(dropboxToken).then(__storeSharedInstance);
     }
     return Promise.reject(new Error(`Unknown archive type: ${archiveType}`));
 }
@@ -81,11 +77,13 @@ export function getDirectoryContents(remoteDir) {
             }
             return items;
         })
-        .then(items => items.map(item => ({
-            name: item.name,
-            path: item.path,
-            isDir: item.isDirectory()
-        })))
+        .then(items =>
+            items.map(item => ({
+                name: item.name,
+                path: item.path,
+                isDir: item.isDirectory()
+            }))
+        )
         .then(items => sortItems(items));
 }
 

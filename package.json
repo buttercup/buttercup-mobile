@@ -21,7 +21,7 @@
     ]
   },
   "dependencies": {
-    "@buttercup/mobile-compat": "~0.6.1",
+    "@buttercup/mobile-compat": "~0.7.0",
     "@perrymitchell/react-native-prompt": "^1.1.0",
     "@tradle/react-native-http": "^2.0.0",
     "@yfuks/react-native-action-sheet": "0.0.4",
@@ -29,7 +29,7 @@
     "base-64": "^0.1.0",
     "browserify-zlib": "^0.1.4",
     "buffer": "^3.6.0",
-    "buttercup-web": "~0.41.0",
+    "buttercup": "~1.7.0",
     "console-browserify": "^1.1.0",
     "constants-browserify": "0.0.1",
     "dns.js": "^1.0.1",
