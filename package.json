@@ -103,7 +103,10 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "\\.history"
-    ]
+    ],
+    "globals": {
+        "window": true
+    }
   },
   "react-native": {
     "zlib": "browserify-zlib",
