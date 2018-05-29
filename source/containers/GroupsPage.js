@@ -1,6 +1,10 @@
 import { connect } from "react-redux";
 import GroupsPage from "../components/GroupsPage.js";
-import { getGroup, shouldShowCreateGroupPrompt, shouldShowGroupRenamePrompt } from "../selectors/archiveContents.js";
+import {
+    getGroup,
+    shouldShowCreateGroupPrompt,
+    shouldShowGroupRenamePrompt
+} from "../selectors/archiveContents.js";
 import { navigateToEntry, navigateToGroups } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getEntryTitle, loadEntry } from "../shared/entry.js";
@@ -14,8 +18,12 @@ import { setSaving } from "../actions/app.js";
 import { handleError } from "../global/exceptions.js";
 
 function getGroupContents(state, props) {
-    const navGroupID = props.navigation && props.navigation.state && props.navigation.state.params &&
-        props.navigation.state.params.groupID || null;
+    const navGroupID =
+        (props.navigation &&
+            props.navigation.state &&
+            props.navigation.state.params &&
+            props.navigation.state.params.groupID) ||
+        null;
     const targetGroupID = props.groupID || navGroupID || "0";
     return getGroup(state, targetGroupID);
 }

@@ -12,8 +12,7 @@ export function getDropboxConnection(token) {
     const dropboxAdapter = createDropboxAdapter({
         apiKey: token
     });
-    return testRemoteFSConnection(dropboxAdapter)
-        .then(() => createAnyFSAdapter(dropboxAdapter));
+    return testRemoteFSConnection(dropboxAdapter).then(() => createAnyFSAdapter(dropboxAdapter));
 }
 
 export function getNextcloudConnection(remoteURL, username, password) {
@@ -27,11 +26,10 @@ export function getOwnCloudConnection(remoteURL, username, password) {
 }
 
 export function getWebDAVConnection(remoteURL, username, password) {
-    const webdavFs = username ?
-        createWebDAVAdapter(remoteURL, username, password) :
-        createWebDAVAdapter(remoteURL);
-    return testRemoteFSConnection(webdavFs)
-        .then(() => createAnyFSAdapter(webdavFs));
+    const webdavFs = username
+        ? createWebDAVAdapter(remoteURL, username, password)
+        : createWebDAVAdapter(remoteURL);
+    return testRemoteFSConnection(webdavFs).then(() => createAnyFSAdapter(webdavFs));
 }
 
 export function testRemoteFSConnection(fsInstance) {

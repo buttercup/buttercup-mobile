@@ -4,12 +4,8 @@ export function handleError(message, error) {
     setTimeout(() => {
         Alert.alert(
             `Error: ${message}`,
-            typeof error === "string" ?
-                error :
-                error.message,
-            [
-                { text: "OK", onPress: () => {} }
-            ],
+            typeof error === "string" ? error : error.message,
+            [{ text: "OK", onPress: () => {} }],
             { cancelable: false }
         );
     }, 0);

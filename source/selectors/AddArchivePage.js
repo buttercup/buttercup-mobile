@@ -5,4 +5,4 @@ export function getAdditionStage(state) {
         return "enterConnectionDetails";
     }
     return "chooseType";
-};
+}

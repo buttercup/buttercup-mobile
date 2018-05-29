@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Image, StyleSheet, ListView, Text, TouchableHighlight, ScrollView, View } from "react-native";
+import {
+    Image,
+    StyleSheet,
+    ListView,
+    Text,
+    TouchableHighlight,
+    ScrollView,
+    View
+} from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { List, ListItem } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -9,7 +17,10 @@ import Swipeout from "react-native-swipeout";
 import SwipeoutButton from "./SwipeoutButton.js";
 import EmptyView from "./EmptyView.js";
 import { getArchiveTypeDetails } from "../library/archives.js";
-import { getMasterPasswordFromTouchUnlock, touchIDEnabledForSource } from "../shared/touchUnlock.js";
+import {
+    getMasterPasswordFromTouchUnlock,
+    touchIDEnabledForSource
+} from "../shared/touchUnlock.js";
 import { handleError } from "../global/exceptions.js";
 
 const ARCHIVE_ITEM_HEIGHT = 70;
@@ -115,7 +126,9 @@ const styles = StyleSheet.create({
     }
 });
 
-const ARCHIVE_SWIPE_BUTTONS = [{ text: "Remove", component: <SwipeoutButton>Remove</SwipeoutButton>, _type: "remove" }];
+const ARCHIVE_SWIPE_BUTTONS = [
+    { text: "Remove", component: <SwipeoutButton>Remove</SwipeoutButton>, _type: "remove" }
+];
 
 function getArchiveAbbr(archiveName) {
     return archiveName.substr(0, 1).toUpperCase() + archiveName.substr(1, 1);
@@ -200,7 +213,9 @@ class ArchivesList extends Component {
         return (
             <TouchableHighlight
                 onPress={() => this.handleArchiveSelection(archiveInfo.id, archiveInfo.status)}
-                onLongPress={() => this.handleArchiveLockRequest(archiveInfo.id, archiveInfo.status)}
+                onLongPress={() =>
+                    this.handleArchiveLockRequest(archiveInfo.id, archiveInfo.status)
+                }
                 underlayColor="white"
             >
                 <View style={styles.swipeRow}>
@@ -208,16 +223,22 @@ class ArchivesList extends Component {
                         <View
                             style={[
                                 styles.archiveIcon,
-                                archiveInfo.status === "locked" ? styles.archiveIconLocked : styles.archiveIconUnlocked
+                                archiveInfo.status === "locked"
+                                    ? styles.archiveIconLocked
+                                    : styles.archiveIconUnlocked
                             ]}
                         >
-                            <Text style={styles.archiveIconText}>{getArchiveAbbr(archiveInfo.name)}</Text>
+                            <Text style={styles.archiveIconText}>
+                                {getArchiveAbbr(archiveInfo.name)}
+                            </Text>
                         </View>
                         <View style={styles.archiveDetails}>
                             <Text style={styles.archiveTitle}>{archiveInfo.name}</Text>
                             <View style={styles.archiveDetailsSubView}>
                                 <Image source={typeImage} style={styles.archiveTypeImage} />
-                                <Text style={styles.archiveSubtitle}>{typeTitle.toUpperCase()}</Text>
+                                <Text style={styles.archiveSubtitle}>
+                                    {typeTitle.toUpperCase()}
+                                </Text>
                             </View>
                         </View>
                         <If condition={this.props.sourcesUsingTouchUnlock.includes(archiveInfo.id)}>
@@ -258,7 +279,9 @@ class ArchivesList extends Component {
                         <SwipeListView
                             dataSource={ds.cloneWithRows(this.props.archives)}
                             renderRow={archiveInfo => this.renderArchiveItem(archiveInfo)}
-                            renderHiddenRow={archiveInfo => this.renderArchiveItemSubview(archiveInfo)}
+                            renderHiddenRow={archiveInfo =>
+                                this.renderArchiveItemSubview(archiveInfo)
+                            }
                             disableRightSwipe={true}
                             rightOpenValue={0 - ARCHIVE_SWIPE_BUTTON_WIDTH}
                         />

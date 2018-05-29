@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import {
-    Button,
-    StyleSheet,
-    View
-} from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
-import {
-    CellGroup,
-    CellInput
-} from "react-native-cell-components";
+import { CellGroup, CellInput } from "react-native-cell-components";
 import Spinner from "react-native-loading-spinner-overlay";
 import { saveNewEntry } from "../shared/entry.js";
 
@@ -19,15 +12,9 @@ const styles = StyleSheet.create({
 });
 
 class NewEntryPage extends Component {
-
     static navigationOptions = {
         title: "New Entry",
-        headerRight: (
-            <Button
-                title="Create"
-                onPress={saveNewEntry}
-                />
-        )
+        headerRight: <Button title="Create" onPress={saveNewEntry} />
     };
 
     componentWillUnmount() {
@@ -52,7 +39,7 @@ class NewEntryPage extends Component {
                         title="Title"
                         value={this.props.title}
                         onChangeText={text => this.handleValueChange("title", text)}
-                        />
+                    />
                     <CellInput
                         key="username"
                         title="Username"
@@ -60,38 +47,37 @@ class NewEntryPage extends Component {
                         keyboardType="email-address"
                         onChangeText={text => this.handleValueChange("username", text)}
                         {...boringProps}
-                        />
+                    />
                     <CellInput
                         key="password"
                         title="Password"
                         value={this.props.password}
                         onChangeText={text => this.handleValueChange("password", text)}
                         {...boringProps}
-                        />
+                    />
                 </CellGroup>
                 <Spinner
                     visible={this.props.isSaving}
                     textContent="Saving"
                     textStyle={{ color: "#FFF" }}
                     overlayColor="rgba(0, 0, 0, 0.75)"
-                    />
+                />
             </View>
         );
     }
-
 }
 
 NewEntryPage.propTypes = {
-    isSaving:                   PropTypes.bool.isRequired,
-    onUnmount:                  PropTypes.func,
-    password:                   PropTypes.string.isRequired,
-    setPropertyValue:           PropTypes.func.isRequired,
-    title:                      PropTypes.string.isRequired,
-    username:                   PropTypes.string.isRequired
+    isSaving: PropTypes.bool.isRequired,
+    onUnmount: PropTypes.func,
+    password: PropTypes.string.isRequired,
+    setPropertyValue: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired
 };
 
 NewEntryPage.defaultProps = {
-    onUnmount:                  () => {}
+    onUnmount: () => {}
 };
 
 export default NewEntryPage;

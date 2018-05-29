@@ -72,7 +72,12 @@ class RemoteConnectPage extends Component {
     }
 
     renderWebDAV() {
-        const base = { autoCapitalize: "none", autoCorrect: false, keyboardType: "default", spellCheck: false };
+        const base = {
+            autoCapitalize: "none",
+            autoCorrect: false,
+            keyboardType: "default",
+            spellCheck: false
+        };
         const urlInputOptions = { ...base, keyboardType: "url" };
         const usernameInputOptions = { ...base, keyboardType: "email-address" };
         const passwordInputOptions = { ...base, secureTextEntry: true };
@@ -103,7 +108,12 @@ class RemoteConnectPage extends Component {
                         />
                     </CellGroup>
                     <CellGroup>
-                        <Cell title="Connect" icon="cloud" onPress={() => this.submit()} tintColor="#1144FF" />
+                        <Cell
+                            title="Connect"
+                            icon="cloud"
+                            onPress={() => this.submit()}
+                            tintColor="#1144FF"
+                        />
                     </CellGroup>
                     <Spinner
                         visible={this.props.connecting}

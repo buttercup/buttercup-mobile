@@ -55,12 +55,8 @@ export function getGroupsUnderID(state, id) {
         }
         return foundGroup;
     };
-    const foundGroup = id.toString() === "0" ?
-        { groups } :
-        findGroup(groups);
-    return foundGroup && foundGroup.groups ?
-        sortGroups(foundGroup.groups) :
-        [];
+    const foundGroup = id.toString() === "0" ? { groups } : findGroup(groups);
+    return foundGroup && foundGroup.groups ? sortGroups(foundGroup.groups) : [];
 }
 
 export function getSelectedArchive(state) {
@@ -71,7 +67,7 @@ export function getSelectedArchive(state) {
 
 export function getSelectedSourceName(state) {
     const selected = getSelectedSource(state);
-    return selected && selected.name || "";
+    return (selected && selected.name) || "";
 }
 
 export function getSelectedSource(state) {

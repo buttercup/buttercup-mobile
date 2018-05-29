@@ -71,21 +71,27 @@ export default connect(
             const url = getEntryURL(state);
             const password = getEntryPassword(state);
             if (url) {
-                Alert.alert("Open URL", "Press OK to launch the URL. The password will be copied to the clipboard.", [
-                    { text: "Cancel", style: "cancel" },
-                    {
-                        text: "OK",
-                        style: "default",
-                        onPress: () => {
-                            Clipboard.setString(password);
-                            Linking.openURL(url);
+                Alert.alert(
+                    "Open URL",
+                    "Press OK to launch the URL. The password will be copied to the clipboard.",
+                    [
+                        { text: "Cancel", style: "cancel" },
+                        {
+                            text: "OK",
+                            style: "default",
+                            onPress: () => {
+                                Clipboard.setString(password);
+                                Linking.openURL(url);
+                            }
                         }
-                    }
-                ]);
+                    ]
+                );
             } else {
                 Alert.alert(
                     "No URL",
-                    "This entry doesn't contain a URL meta field."[{ text: "OK", onPress: () => {} }],
+                    "This entry doesn't contain a URL meta field."[
+                        { text: "OK", onPress: () => {} }
+                    ],
                     { cancelable: false }
                 );
             }
@@ -105,7 +111,11 @@ export default connect(
                     updateCurrentArchive();
                     dispatch(setSaving(false));
                     dispatch(setEntryEditing(false));
-                    executeNotification("success", "Saved entry", "Successfully saved changes to the entry");
+                    executeNotification(
+                        "success",
+                        "Saved entry",
+                        "Successfully saved changes to the entry"
+                    );
                 })
                 .catch(err => {
                     dispatch(setSaving(false));

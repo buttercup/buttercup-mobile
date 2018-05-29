@@ -15,10 +15,7 @@ export function getRemoteConnectionInfo(state) {
 }
 
 export function getRemoteCredentials(state) {
-    const {
-        remoteUsername: username,
-        remotePassword: password
-    } = state[STATE_KEY];
+    const { remoteUsername: username, remotePassword: password } = state[STATE_KEY];
     return { username, password };
 }
 

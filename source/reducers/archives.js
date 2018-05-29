@@ -51,7 +51,9 @@ export default function archivesReducer(state = INITIAL, action = {}) {
             };
         case ARCHIVES_UNLOCK_SOURCE: {
             const replacementSource = action.payload;
-            const existingArchives = state.archives.filter(source => source.id !== replacementSource.id);
+            const existingArchives = state.archives.filter(
+                source => source.id !== replacementSource.id
+            );
             return {
                 ...state,
                 archives: [...existingArchives, { ...replacementSource, status: UNLOCKED }]
@@ -59,7 +61,9 @@ export default function archivesReducer(state = INITIAL, action = {}) {
         }
         case ARCHIVES_LOCK_SOURCE: {
             const replacementSource = action.payload;
-            const existingArchives = state.archives.filter(source => source.id !== replacementSource.id);
+            const existingArchives = state.archives.filter(
+                source => source.id !== replacementSource.id
+            );
             return {
                 ...state,
                 archives: [...existingArchives, { ...replacementSource, status: LOCKED }]

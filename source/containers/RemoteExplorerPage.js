@@ -93,9 +93,7 @@ function handleNewMasterPassword(password, dispatch, getState) {
 
 function handlePathSelection(nextItem, isDir, resetScroll, dispatch, getState) {
     const currentPath = getCurrentPath(getState());
-    const nextPath = nextItem === ".." ?
-        removeLastPathItem(currentPath) :
-        nextItem;
+    const nextPath = nextItem === ".." ? removeLastPathItem(currentPath) : nextItem;
     if (isDir) {
         // directory
         dispatch(setLoading(true));
@@ -115,32 +113,33 @@ function handlePathSelection(nextItem, isDir, resetScroll, dispatch, getState) {
 
 function removeLastPathItem(pathStr) {
     const parts = pathStr.split("/");
-    const newPath = parts.slice(0, parts.length - 1).join("/").trim();
-    return newPath.length > 0 ?
-        newPath :
-        "/";
+    const newPath = parts
+        .slice(0, parts.length - 1)
+        .join("/")
+        .trim();
+    return newPath.length > 0 ? newPath : "/";
 }
 
 export default connect(
     (state, ownProps) => ({
-        addingArchive:                  isAddingArchive(state),
-        creatingFile:                   isCreatingFile(state),
-        items:                          getCurrentItems(state),
-        loading:                        isLoading(state),
-        remoteDirectory:                getCurrentPath(state),
-        showNewName:                    shouldShowNewNamePrompt(state),
-        showNewPassword:                shouldShowPasswordPrompt(state),
-        showNewPrompt:                  shouldShowNewFilePrompt(state)
+        addingArchive: isAddingArchive(state),
+        creatingFile: isCreatingFile(state),
+        items: getCurrentItems(state),
+        loading: isLoading(state),
+        remoteDirectory: getCurrentPath(state),
+        showNewName: shouldShowNewNamePrompt(state),
+        showNewPassword: shouldShowPasswordPrompt(state),
+        showNewPrompt: shouldShowNewFilePrompt(state)
     }),
     {
         cancelNewPrompt,
-        onNewArchiveName:               (name) => (dispatch, getState) =>
-                                            handleNewArchiveName(name, dispatch, getState),
-        onNewFilename:                  (filename) => (dispatch, getState) =>
-                                            handleNewFile(filename, dispatch, getState),
-        onNewMasterPassword:            (password) => (dispatch, getState) =>
-                                            handleNewMasterPassword(password, dispatch, getState),
-        onPathSelected:                 (remoteItem, isDir, scrollResetCB) => (dispatch, getState) =>
-                                            handlePathSelection(remoteItem, isDir, scrollResetCB, dispatch, getState)
+        onNewArchiveName: name => (dispatch, getState) =>
+            handleNewArchiveName(name, dispatch, getState),
+        onNewFilename: filename => (dispatch, getState) =>
+            handleNewFile(filename, dispatch, getState),
+        onNewMasterPassword: password => (dispatch, getState) =>
+            handleNewMasterPassword(password, dispatch, getState),
+        onPathSelected: (remoteItem, isDir, scrollResetCB) => (dispatch, getState) =>
+            handlePathSelection(remoteItem, isDir, scrollResetCB, dispatch, getState)
     }
 )(RemoteExplorer);

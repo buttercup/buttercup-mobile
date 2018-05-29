@@ -4,7 +4,10 @@ import { StackNavigator, addNavigationHelpers } from "react-navigation";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // for react-navigation 1.0.0-beta.30
-import { createReduxBoundAddListener, createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
+import {
+    createReduxBoundAddListener,
+    createReactNavigationReduxMiddleware
+} from "react-navigation-redux-helpers";
 
 import ArchivesPage from "./components/ArchivesPage.js";
 import EntryPage from "./containers/EntryPage.js";

@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {
-    Image,
-    StyleSheet,
-    View
-} from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 const LOGO = require("../../resources/images/solo-logo.png");
 
@@ -18,7 +14,6 @@ const styles = StyleSheet.create({
 });
 
 class LockedModal extends Component {
-
     static navigationOptions = {
         header: null
     };
@@ -30,7 +25,6 @@ class LockedModal extends Component {
             </View>
         );
     }
-
 }
 
 export default LockedModal;

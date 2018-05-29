@@ -40,7 +40,9 @@ class GroupsPage extends Component {
         const { groupID = "0", title, isTrash } = params;
         const options = { title };
         if (!isTrash) {
-            options.headerRight = <ToolbarIcon icon={MENU_ICON} onPress={() => editGroup(groupID)} />;
+            options.headerRight = (
+                <ToolbarIcon icon={MENU_ICON} onPress={() => editGroup(groupID)} />
+            );
         }
         return options;
     };
@@ -109,7 +111,10 @@ class GroupsPage extends Component {
                 <Prompt
                     title="Rename Group"
                     defaultValue={this.props.group.title}
-                    visible={this.props.showGroupRenamePrompt && this.props.group.id === this.props.currentGroupID}
+                    visible={
+                        this.props.showGroupRenamePrompt &&
+                        this.props.group.id === this.props.currentGroupID
+                    }
                     onCancel={() => this.props.onCancelGroupRename()}
                     onSubmit={value => this.props.onGroupRename(this.props.group.id, value)}
                     textInputProps={{ keyboardType: "default" }}
@@ -117,7 +122,10 @@ class GroupsPage extends Component {
                 <Prompt
                     title="Create Group"
                     placeholder="Group Name"
-                    visible={this.props.showGroupCreatePrompt && this.props.group.id === this.props.currentGroupID}
+                    visible={
+                        this.props.showGroupCreatePrompt &&
+                        this.props.group.id === this.props.currentGroupID
+                    }
                     onCancel={() => this.props.onCancelGroupCreate()}
                     onSubmit={value => this.props.onGroupCreate(this.props.group.id, value)}
                     textInputProps={{ keyboardType: "default" }}

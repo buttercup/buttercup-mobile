@@ -8,7 +8,11 @@ import {
 import { createEmptyArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
-import { selectArchive, setCreatingArchive, showNewNamePrompt } from "../actions/RemoteExplorerPage.js";
+import {
+    selectArchive,
+    setCreatingArchive,
+    showNewNamePrompt
+} from "../actions/RemoteExplorerPage.js";
 import { doAsyncWork } from "../global/async.js";
 
 const PATH_PARENT = /^\.\./;
@@ -53,11 +57,17 @@ export function createRemoteConnection(connectionInfo) {
     };
     const { archiveType, remoteUsername, remotePassword, remoteURL, dropboxToken } = connectionInfo;
     if (archiveType === "webdav") {
-        return getWebDAVConnection(remoteURL, remoteUsername, remotePassword).then(__storeSharedInstance);
+        return getWebDAVConnection(remoteURL, remoteUsername, remotePassword).then(
+            __storeSharedInstance
+        );
     } else if (archiveType === "owncloud") {
-        return getOwnCloudConnection(remoteURL, remoteUsername, remotePassword).then(__storeSharedInstance);
+        return getOwnCloudConnection(remoteURL, remoteUsername, remotePassword).then(
+            __storeSharedInstance
+        );
     } else if (archiveType === "nextcloud") {
-        return getNextcloudConnection(remoteURL, remoteUsername, remotePassword).then(__storeSharedInstance);
+        return getNextcloudConnection(remoteURL, remoteUsername, remotePassword).then(
+            __storeSharedInstance
+        );
     } else if (archiveType === "dropbox") {
         return getDropboxConnection(dropboxToken).then(__storeSharedInstance);
     }

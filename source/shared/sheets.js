@@ -6,7 +6,12 @@ import { handleError } from "../global/exceptions.js";
 import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
-import { disableTouchUnlock, enableTouchUnlock, touchIDAvailable, touchIDEnabledForSource } from "./touchUnlock.js";
+import {
+    disableTouchUnlock,
+    enableTouchUnlock,
+    touchIDAvailable,
+    touchIDEnabledForSource
+} from "./touchUnlock.js";
 
 const SHEET_ADD_ARCHIVE = "Add";
 const SHEET_ADD_ENTRY = "New Entry";
@@ -122,7 +127,9 @@ export function showTouchIDToggleSheet() {
                                 case "fallback":
                                     handleError(
                                         "Failed enabling touch unlock",
-                                        new Error("Password not supported for enabling touch unlock")
+                                        new Error(
+                                            "Password not supported for enabling touch unlock"
+                                        )
                                     );
                                     break;
                                 default:

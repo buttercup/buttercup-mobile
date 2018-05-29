@@ -10,7 +10,9 @@ export function beginNewArchiveProcedure() {
 
 export function lockAllArchives() {
     const archiveManager = getSharedArchiveManager();
-    return Promise.all(archiveManager.unlockedSources.map(source => archiveManager.lock(source.id))).then(doAsyncWork);
+    return Promise.all(
+        archiveManager.unlockedSources.map(source => archiveManager.lock(source.id))
+    ).then(doAsyncWork);
 }
 
 export function promptRemoveArchive(sourceID) {

@@ -8,11 +8,11 @@ import { setDropboxAuthenticating } from "../actions/dropbox.js";
 
 export default connect(
     (state, ownProps) => ({
-        authenticated:                      isAuthenticated(state),
-        authenticating:                     isAuthenticating(state)
+        authenticated: isAuthenticated(state),
+        authenticating: isAuthenticating(state)
     }),
     {
-        onClick:                            () => dispatch => {
+        onClick: () => dispatch => {
             const url = generateAuthorisationURL();
             dispatch(setBrowserURL(url));
             dispatch(setDropboxAuthenticating(true));

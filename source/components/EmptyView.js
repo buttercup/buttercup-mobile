@@ -1,10 +1,5 @@
-import React from 'react';
-import {
-    Image,
-    StyleSheet,
-    Text,
-    View
-} from "react-native";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 const styles = StyleSheet.create({
     emptyView: {
@@ -22,9 +17,7 @@ const styles = StyleSheet.create({
 export default function EmptyView({ text, imageSource }) {
     return (
         <View style={styles.emptyView}>
-            <Image
-                source={imageSource}
-                />
+            <Image source={imageSource} />
             <Text style={styles.emptyViewText}>{text}</Text>
         </View>
     );

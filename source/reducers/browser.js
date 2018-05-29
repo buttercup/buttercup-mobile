@@ -1,7 +1,4 @@
-import {
-    BROWSER_RESET,
-    BROWSER_SET_URL
-} from "../actions/types.js";
+import { BROWSER_RESET, BROWSER_SET_URL } from "../actions/types.js";
 
 const INITIAL = {
     url: "about:blank"

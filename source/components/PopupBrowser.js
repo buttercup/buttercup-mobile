@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {
-    StyleSheet,
-    View,
-    WebView
-} from "react-native";
+import { StyleSheet, View, WebView } from "react-native";
 import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
@@ -19,9 +15,8 @@ const styles = StyleSheet.create({
 });
 
 class PopupBrowser extends Component {
-
     static navigationOptions = ({ navigation }) => {
-        const {params = {}} = navigation.state;
+        const { params = {} } = navigation.state;
         const title = params.title || "Browser";
         return {
             title: `${title}`
@@ -47,7 +42,7 @@ class PopupBrowser extends Component {
         const blocks = (frag || "").split("&");
         const blockNum = blocks.length;
         for (let i = 0; i < blockNum; i += 1) {
-            const [ key, value ] = blocks[i].split("=");
+            const [key, value] = blocks[i].split("=");
             if (key === "access_token") {
                 this.props.onDropboxTokenReceived(value);
                 break;
@@ -61,19 +56,18 @@ class PopupBrowser extends Component {
                 source={{ uri: this.props.url }}
                 style={styles.webView}
                 onNavigationStateChange={state => this.handleNavigationChange(state)}
-                />
+            />
         );
     }
-
 }
 
 PopupBrowser.propTypes = {
-    onDropboxTokenReceived:     PropTypes.func,
-    url:                        PropTypes.string.isRequired
+    onDropboxTokenReceived: PropTypes.func,
+    url: PropTypes.string.isRequired
 };
 
 PopupBrowser.defaultProps = {
-    onDropboxTokenReceived:     () => {}
+    onDropboxTokenReceived: () => {}
 };
 
 export default PopupBrowser;

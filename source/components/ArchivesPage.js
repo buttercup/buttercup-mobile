@@ -20,7 +20,9 @@ const styles = StyleSheet.create({
 function getHeaderImage() {
     return Platform.select({
         ios: <Image source={BUTTERCUP_LOGO} resizeMode="contain" />,
-        android: <Image source={BUTTERCUP_LOGO} resizeMode="contain" style={styles.headerImageAndroid} />
+        android: (
+            <Image source={BUTTERCUP_LOGO} resizeMode="contain" style={styles.headerImageAndroid} />
+        )
     });
 }
 

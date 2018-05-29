@@ -8,9 +8,7 @@ export function addToStack(stack, ...items) {
 }
 
 export function getStackCount(stack) {
-    return (Array.isArray(cache[stack]) !== true) ?
-        0 :
-        cache[stack].length;
+    return Array.isArray(cache[stack]) !== true ? 0 : cache[stack].length;
 }
 
 export function getStackItem(stack) {

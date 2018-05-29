@@ -1,8 +1,7 @@
 import ApplicationState from "./ApplicationState.js";
 import ArchiveSession from "./ArchiveSession.js";
 
-let __sharedApplicationState,
-    __sharedArchiveSession;
+let __sharedApplicationState, __sharedArchiveSession;
 
 export function getSharedApplicationState() {
     if (!__sharedApplicationState) {
