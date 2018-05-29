@@ -4,7 +4,7 @@ import {
     TextDatasource,
     createCredentials,
     entryFacade
-} from "buttercup/dist/buttercup-web.min";
+} from "buttercup/dist/buttercup-web.min.js";
 import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
 

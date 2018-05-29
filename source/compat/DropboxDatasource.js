@@ -1,4 +1,4 @@
-import { DatasourceAdapter, TextDatasource } from "buttercup/dist/buttercup-web.min";
+import { DatasourceAdapter, TextDatasource } from "buttercup/dist/buttercup-web.min.js";
 import { getArchiveContents, putArchiveContents } from "./dropbox.js";
 
 const { registerDatasource } = DatasourceAdapter;

@@ -1,5 +1,5 @@
 import { AsyncStorage } from "react-native";
-import Buttercup from "buttercup/dist/buttercup-web.min";
+import Buttercup from "buttercup/dist/buttercup-web.min.js";
 
 const { StorageInterface } = Buttercup.storage;
 

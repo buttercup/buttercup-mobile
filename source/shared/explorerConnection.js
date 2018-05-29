@@ -1,4 +1,4 @@
-import { createCredentials } from "buttercup/dist/buttercup-web.min";
+import { createCredentials } from "buttercup/dist/buttercup-web.min.js";
 import {
     getDropboxConnection,
     getNextcloudConnection,
