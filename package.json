@@ -11,7 +11,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:android": "react-native run-android",
     "start:ios": "react-native run-ios",
-    "test": "jest",
+    "test": "jest --no-cache",
     "test:android": "cd android && ./gradlew --project-cache-dir ../.gradlecache test"
   },
   "lint-staged": {
@@ -87,6 +87,7 @@
     "husky": "^0.14.3",
     "jest": "^22.4.2",
     "jest-cli": "^22.4.2",
+    "jest-fetch-mock": "^1.6.2",
     "lint-staged": "^4.2.3",
     "prettier": "^1.7.4",
     "react-test-renderer": "^16.3.0-alpha.1",
@@ -94,6 +95,7 @@
   },
   "jest": {
     "preset": "react-native",
+    "testEnvironment": "jsdom",
     "setupFiles": [
       "./scripts/jestInit.js"
     ],
@@ -103,10 +105,7 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "\\.history"
-    ],
-    "globals": {
-        "window": true
-    }
+    ]
   },
   "react-native": {
     "zlib": "browserify-zlib",
