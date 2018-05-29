@@ -7,10 +7,7 @@ import {
     getRemoteURL,
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
-import {
-    getToken,
-    isAuthenticated
-} from "../selectors/dropbox.js";
+import { getToken, isAuthenticated } from "../selectors/dropbox.js";
 import {
     clearArchiveDetails,
     disconnect,

@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import {
-    Button,
-    StyleSheet,
-    View
-} from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
-import {
-    CellGroup,
-    CellInput
-} from "react-native-cell-components";
+import { CellGroup, CellInput } from "react-native-cell-components";
 import { saveNewMeta } from "../shared/entry.js";
 
 const styles = StyleSheet.create({
@@ -18,15 +11,9 @@ const styles = StyleSheet.create({
 });
 
 class AddMetaPage extends Component {
-
     static navigationOptions = {
         title: "Add Meta",
-        headerRight: (
-            <Button
-                title="Save"
-                onPress={saveNewMeta}
-                />
-        )
+        headerRight: <Button title="Save" onPress={saveNewMeta} />
     };
 
     componentWillUnmount() {
@@ -59,7 +46,7 @@ class AddMetaPage extends Component {
                         value={this.props.metaKey}
                         onChangeText={text => this.handleKeyChange(text)}
                         {...cellOptions}
-                        />
+                    />
                     <CellInput
                         key="value"
                         title="Value"
@@ -67,25 +54,24 @@ class AddMetaPage extends Component {
                         onChangeText={text => this.handleValueChange(text)}
                         {...cellOptions}
                         keyboardType={isUrl ? "url" : "default"}
-                        />
+                    />
                 </CellGroup>
             </View>
         );
     }
-
 }
 
 AddMetaPage.propTypes = {
-    metaKey:                    PropTypes.string,
-    metaValue:                  PropTypes.string,
-    onUnmount:                  PropTypes.func,
-    setMetaValues:              PropTypes.func.isRequired
+    metaKey: PropTypes.string,
+    metaValue: PropTypes.string,
+    onUnmount: PropTypes.func,
+    setMetaValues: PropTypes.func.isRequired
 };
 
 AddMetaPage.defaultProps = {
-    metaKey:                    "",
-    metaValue:                  "",
-    onUnmount:                  () => {}
+    metaKey: "",
+    metaValue: "",
+    onUnmount: () => {}
 };
 
 export default AddMetaPage;

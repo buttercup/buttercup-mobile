@@ -91,7 +91,9 @@ export default function entryReducer(state = INITIAL, action = {}) {
             };
         case ENTRY_SET_FACADE_VALUE:
             const { field, property, value } = action.payload;
-            const targetIndex = state.fields.findIndex(item => item.field === field && item.property === property);
+            const targetIndex = state.fields.findIndex(
+                item => item.field === field && item.property === property
+            );
             const newFields = [...state.fields];
             newFields[targetIndex] = {
                 ...newFields[targetIndex],

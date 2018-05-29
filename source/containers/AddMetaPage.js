@@ -5,11 +5,11 @@ import { clearNewMeta, setNewMeta } from "../actions/entry.js";
 
 export default connect(
     (state, ownProps) => ({
-        metaKey:                getNewMetaKey(state),
-        metaValue:              getNewMetaValue(state)
+        metaKey: getNewMetaKey(state),
+        metaValue: getNewMetaValue(state)
     }),
     {
-        onUnmount:              () => dispatch => dispatch(clearNewMeta()),
-        setMetaValues:          (key, value) => dispatch => dispatch(setNewMeta({ key, value }))
+        onUnmount: () => dispatch => dispatch(clearNewMeta()),
+        setMetaValues: (key, value) => dispatch => dispatch(setNewMeta({ key, value }))
     }
 )(AddMetaPage);

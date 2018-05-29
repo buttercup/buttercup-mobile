@@ -81,15 +81,15 @@ export default function routesReducer(state = getInitialState(), action = {}) {
         case NAVIGATE_GROUPS: {
             const { id: groupID, title, isTrash = false } = action.payload;
             return AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({ routeName: "GroupsPage", params: { groupID, title, isTrash } }),
+                NavigationActions.navigate({
+                    routeName: "GroupsPage",
+                    params: { groupID, title, isTrash }
+                }),
                 state
             );
         }
         case NAVIGATE_BACK: {
-            return AppNavigator.router.getStateForAction(
-                NavigationActions.back(),
-                state
-            );
+            return AppNavigator.router.getStateForAction(NavigationActions.back(), state);
         }
         case NAVIGATE_ROOT: {
             return getInitialState();

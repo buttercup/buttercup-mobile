@@ -4,7 +4,7 @@ import {
     TextDatasource,
     createCredentials,
     entryFacade
-} from "buttercup-web";
+} from "buttercup/dist/buttercup-web.min.js";
 import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
 
@@ -14,12 +14,7 @@ let __sharedManager = null;
 
 export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
     const manager = getSharedArchiveManager();
-    return doAsyncWork()
-        .then(() => manager.addSource(
-            name,
-            sourceCreds,
-            archiveCreds
-        ));
+    return doAsyncWork().then(() => manager.addSource(name, sourceCreds, archiveCreds));
 }
 
 export function consumeEntryFacade(entry, facade) {
@@ -42,24 +37,30 @@ export function createRemoteCredentials(archiveType, options) {
     const credentials = createCredentials(archiveType);
     switch (archiveType) {
         case "dropbox":
-            credentials.setValue("datasource", JSON.stringify({
-                type: "dropbox",
-                token: options.dropboxToken,
-                path: options.path
-            }));
+            credentials.setValue(
+                "datasource",
+                JSON.stringify({
+                    type: "dropbox",
+                    token: options.dropboxToken,
+                    path: options.path
+                })
+            );
             return credentials;
         case "nextcloud":
-            /* falls-through */
+        /* falls-through */
         case "owncloud":
-            /* falls-through */
+        /* falls-through */
         case "webdav": {
             credentials.username = options.username;
             credentials.password = options.password;
-            credentials.setValue("datasource", JSON.stringify({
-                type: archiveType,
-                endpoint: options.url,
-                path: options.path
-            }));
+            credentials.setValue(
+                "datasource",
+                JSON.stringify({
+                    type: archiveType,
+                    endpoint: options.url,
+                    path: options.path
+                })
+            );
             return credentials;
         }
         default:
@@ -69,12 +70,9 @@ export function createRemoteCredentials(archiveType, options) {
 
 export function getArchiveEncryptedContent(archive, credentials) {
     const tds = new TextDatasource();
-    return tds
-        .save(archive, credentials)
-        .then(encryptedContent => {
-            return doAsyncWork()
-                .then(() => encryptedContent);
-        });
+    return tds.save(archive, credentials).then(encryptedContent => {
+        return doAsyncWork().then(() => encryptedContent);
+    });
 }
 
 export function getSharedArchiveManager() {
@@ -84,6 +82,4 @@ export function getSharedArchiveManager() {
     return __sharedManager;
 }
 
-export {
-    ArchiveSourceStatus
-};
+export { ArchiveSourceStatus };

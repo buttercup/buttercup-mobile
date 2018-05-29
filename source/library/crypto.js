@@ -1,5 +1,5 @@
 import { NativeModules, Platform } from "react-native";
-import { tools, vendor, Web } from "buttercup-web";
+import { tools, vendor, Web } from "buttercup/dist/buttercup-web.min.js";
 import { encode as toBase64, decode as fromBase64 } from "base-64";
 import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";

@@ -12,7 +12,7 @@ export function getNewArchiveDetails(state) {
     const {
         newPromptArchiveName: archiveName,
         newPromptPassword: archivePassword,
-        selectedArchivePath: archivePath,
+        selectedArchivePath: archivePath
     } = state[STATE_KEY];
     return {
         archiveName,

@@ -99,7 +99,9 @@ class EntryPage extends Component {
             return fields;
         }
         return fields.filter(
-            item => item.field !== "property" || (item.field === "property" && item.property !== "title")
+            item =>
+                item.field !== "property" ||
+                (item.field === "property" && item.property !== "title")
         );
     }
 
@@ -115,7 +117,9 @@ class EntryPage extends Component {
         return (
             <View style={styles.container}>
                 <CellGroup header="Properties">
-                    {this.filterFields(this.props.properties).map(field => this.renderContentCell(field))}
+                    {this.filterFields(this.props.properties).map(field =>
+                        this.renderContentCell(field)
+                    )}
                 </CellGroup>
                 {this.props.meta.length > 0 || this.props.editing ? (
                     <CellGroup header="Meta">
@@ -213,7 +217,9 @@ class EntryPage extends Component {
 
     updateRightButton(props = this.props) {
         const rightIcon = props.editing ? SAVE_ICON : GLOBE_ICON;
-        const rightAction = props.editing ? () => this.props.onSavePressed() : () => this.props.onOpenPressed();
+        const rightAction = props.editing
+            ? () => this.props.onSavePressed()
+            : () => this.props.onOpenPressed();
         this.props.navigation.setParams({
             rightIcon,
             rightAction

@@ -13,9 +13,8 @@ const TRASH_ROLE = "trash";
 
 export function createGroup(parentID, title) {
     const currentArchive = getSelectedArchive(getState());
-    const parent = (!parentID || parentID === "0") ?
-        currentArchive :
-        currentArchive.findGroupByID(parentID);
+    const parent =
+        !parentID || parentID === "0" ? currentArchive : currentArchive.findGroupByID(parentID);
     parent.createGroup(title);
 }
 
@@ -30,33 +29,28 @@ export function promptDeleteGroup() {
     const state = getState();
     const topGroupID = getTopGroupID(state);
     const { title } = getGroup(state, topGroupID);
-    Alert.alert(
-        "Delete Group",
-        `Are you sure that you want to delete the group '${title}'?`,
-        [
-            { text: "Cancel", style: "cancel" },
-            {
-                text: "Delete",
-                style: "default",
-                onPress: () => {
-                    dispatch(setSaving(true));
-                    Promise
-                        .resolve()
-                        .then(() => deleteGroup(topGroupID))
-                        .then(() => saveCurrentArchive())
-                        .then(() => {
-                            dispatch(setSaving(false));
-                            dispatch(navigateBack());
-                            updateCurrentArchive();
-                        })
-                        .catch(err => {
-                            dispatch(setSaving(false));
-                            handleError("Failed deleting group", err);
-                        });
-                }
+    Alert.alert("Delete Group", `Are you sure that you want to delete the group '${title}'?`, [
+        { text: "Cancel", style: "cancel" },
+        {
+            text: "Delete",
+            style: "default",
+            onPress: () => {
+                dispatch(setSaving(true));
+                Promise.resolve()
+                    .then(() => deleteGroup(topGroupID))
+                    .then(() => saveCurrentArchive())
+                    .then(() => {
+                        dispatch(setSaving(false));
+                        dispatch(navigateBack());
+                        updateCurrentArchive();
+                    })
+                    .catch(err => {
+                        dispatch(setSaving(false));
+                        handleError("Failed deleting group", err);
+                    });
             }
-        ]
-    );
+        }
+    ]);
 }
 
 export function rawGroupIsTrash(group) {

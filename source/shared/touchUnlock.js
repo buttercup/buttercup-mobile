@@ -44,7 +44,11 @@ export function enableTouchUnlock(sourceID) {
             if (!masterPassword) {
                 throw new Error("Unable to locate current credentials");
             }
-            const newCreds = updateKeychainCredentials(keychainCreds.password, sourceID, masterPassword);
+            const newCreds = updateKeychainCredentials(
+                keychainCreds.password,
+                sourceID,
+                masterPassword
+            );
             return setGenericPassword("-", newCreds);
         })
         .then(() => setValue(storageKey, true))
@@ -99,7 +103,10 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
 }
 
 function removeSourceFromKeychainCredentials(keychainCreds, sourceID) {
-    const credsObj = typeof keychainCreds === "string" && keychainCreds.length > 0 ? JSON.parse(keychainCreds) : {};
+    const credsObj =
+        typeof keychainCreds === "string" && keychainCreds.length > 0
+            ? JSON.parse(keychainCreds)
+            : {};
     delete credsObj[sourceID];
     return JSON.stringify(credsObj);
 }
@@ -120,7 +127,10 @@ export function touchIDEnabledForSource(sourceID) {
 }
 
 function updateKeychainCredentials(keychainCreds, sourceID, password) {
-    const credsObj = typeof keychainCreds === "string" && keychainCreds.length > 0 ? JSON.parse(keychainCreds) : {};
+    const credsObj =
+        typeof keychainCreds === "string" && keychainCreds.length > 0
+            ? JSON.parse(keychainCreds)
+            : {};
     credsObj[sourceID] = password;
     return JSON.stringify(credsObj);
 }
@@ -129,7 +139,9 @@ export function updateTouchEnabledSources() {
     const state = getState();
     const archivesList = getArchivesDisplayList(state);
     return Promise.all(
-        archivesList.map(item => touchIDEnabledForSource(item.id).then(enabled => [item.id, enabled]))
+        archivesList.map(item =>
+            touchIDEnabledForSource(item.id).then(enabled => [item.id, enabled])
+        )
     ).then(results => {
         const enabledIDs = results.reduce((current, next) => {
             const [id, enabled] = next;

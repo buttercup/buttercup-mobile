@@ -2,7 +2,6 @@ import { AppState } from "react-native";
 import EventEmitter from "events";
 
 export default class ApplicationState extends EventEmitter {
-
     constructor() {
         super();
         this._applicationState = "active";
@@ -19,9 +18,7 @@ export default class ApplicationState extends EventEmitter {
     }
 
     handleAppStateChange(nextAppState) {
-        const resolvedState = /^(inactive|background)$/.test(nextAppState) ?
-            "inactive" :
-            "active";
+        const resolvedState = /^(inactive|background)$/.test(nextAppState) ? "inactive" : "active";
         if (this.state !== resolvedState) {
             this._applicationState = resolvedState;
             this.emit("stateChange", resolvedState);
@@ -33,5 +30,4 @@ export default class ApplicationState extends EventEmitter {
             console.log(`Application state changed: ${resolvedState}`);
         }
     }
-
 }

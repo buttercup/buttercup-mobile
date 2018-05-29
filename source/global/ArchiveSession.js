@@ -9,7 +9,6 @@ function minutesToMilliseconds(min) {
 }
 
 export default class ArchiveSession extends EventEmitter {
-
     constructor() {
         super();
         this._timer = null;
@@ -59,5 +58,4 @@ export default class ArchiveSession extends EventEmitter {
         clearTimeout(this._timer);
         this.handleReactivation();
     }
-
 }

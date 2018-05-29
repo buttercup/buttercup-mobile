@@ -1,6 +1,4 @@
-import {
-    APP_SET_SAVING
-} from "../actions/types.js";
+import { APP_SET_SAVING } from "../actions/types.js";
 
 const INITIAL = {
     saving: false

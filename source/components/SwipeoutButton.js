@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {
-    StyleSheet,
-    Text,
-    View
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 const ROOT_STYLES = {
     width: "100%",
@@ -25,7 +21,6 @@ const styles = StyleSheet.create({
 });
 
 class SwipeoutButton extends Component {
-
     render() {
         const extraStyles = {
             backgroundColor: "red"
@@ -36,7 +31,6 @@ class SwipeoutButton extends Component {
             </View>
         );
     }
-
 }
 
 export default SwipeoutButton;
