@@ -114,7 +114,7 @@ function removeSourceFromKeychainCredentials(keychainCreds, sourceID) {
 export function touchIDAvailable() {
     return TouchID.isSupported()
         .then(supportCode => {
-            return supportCode === "FaceID" || supportCode === "TouchID";
+            return supportCode === "FaceID" || supportCode === "TouchID" || supportCode === true;
         })
         .catch(err => {
             return false;
