@@ -1,0 +1,10 @@
+[package]
+name = "crypto"
+version = "0.1.0"
+authors = ["Sallar Kaboli <sallar.kaboli@gmail.com>"]
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+buttercup-crypto = "0.1.0"

@@ -1,0 +1,23 @@
+[[package]]
+name = "buttercup-crypto"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "rust-crypto-wasm 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "crypto"
+version = "0.1.0"
+dependencies = [
+ "buttercup-crypto 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "rust-crypto-wasm"
+version = "0.2.36"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[metadata]
+"checksum buttercup-crypto 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "1ce8fd9013aa00aa98c93283533d115b60a2d997d1373a3abd2c0cc4e2f245b3"
+"checksum rust-crypto-wasm 0.2.36 (registry+https://github.com/rust-lang/crates.io-index)" = "ea726b733930cff9deb62a5250266616b0b144569dd30d98866ef6fbe0734a0f"
