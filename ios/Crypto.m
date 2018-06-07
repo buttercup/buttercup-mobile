@@ -2,6 +2,7 @@
 #import "Crypto.h"
 #import <React/RCTLog.h>
 #include <sys/sysctl.h>
+#import "BCHelpers.h"
 
 @implementation Crypto
 
@@ -13,10 +14,14 @@ RCT_EXPORT_MODULE()
     return YES;
 }
 
-RCT_EXPORT_METHOD(pbkdf2:(NSString*)password:(NSString*)salt:(int)iterations:(int)bytes:(RCTResponseSenderBlock)callback) {
+RCT_EXPORT_METHOD(pbkdf2:(NSString*)password:(NSString*)salt:(int)iterations:(int)bytes:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
     const char* utf8String = pbkdf2_derive([password cStringUsingEncoding:NSUTF8StringEncoding], [salt cStringUsingEncoding:NSUTF8StringEncoding], iterations, bytes);
-    RCTLogInfo(@"Pretending to create an event %@ %@ %d %d %@", password, salt, iterations, bytes, [NSString stringWithFormat:@"%s", utf8String]);
-    callback(@[[NSNull null], [NSString stringWithFormat:@"%s", utf8String]]);
+    if (utf8String) {
+        resolve([BCHelpers hexStringFromData:[NSData dataWithBytes:utf8String length:64]]);
+    } else {
+        NSError *error = [NSError init];
+        reject(@"pbkdf2_failed", @"Key Derivation failed.", error);
+    }
 }
 
 @end

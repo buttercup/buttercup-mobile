@@ -1,11 +1,26 @@
 import { NativeModules, Platform } from "react-native";
+import { Buffer } from "buffer";
 import { tools, vendor, Web } from "./buttercupCore.js";
 import { encode as toBase64, decode as fromBase64 } from "base-64";
 import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
 
 const { iocane: { configure: configureIocane } } = vendor;
-const { CryptoBridge } = NativeModules;
+const { CryptoBridge, Crypto } = NativeModules;
+
+function test(buff) {
+    const derivedKeyHex = buff.toString("hex");
+    const dkhLength = derivedKeyHex.length;
+    console.log("hex", derivedKeyHex, dkhLength);
+    const keyBuffer = new Buffer(derivedKeyHex.substr(0, dkhLength / 2), "hex");
+    const hmacBuffer = new Buffer(derivedKeyHex.substr(dkhLength / 2), "hex");
+    console.log({
+        salt: salt,
+        key: keyBuffer,
+        hmac: hmacBuffer,
+        rounds: rounds
+    });
+}
 
 const CACHE_UUID_MAX = 500;
 const CACHE_UUID_MIN = 50;
@@ -76,15 +91,9 @@ function internalDecrypt(encryptedComponents, keyDerivationInfo) {
 }
 
 export function deriveKeyNatively(password, salt, rounds) {
-    const callBridge = new Promise(function(resolve, reject) {
-        CryptoBridge.deriveKeyFromPassword(password, salt, rounds, (err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            return resolve(result);
-        });
-    });
-    return callBridge.then(derivedKeyHex => hexKeyToBuffer(derivedKeyHex));
+    return Crypto.pbkdf2(password, salt, rounds, /* bytes */ 512).then(derivedKeyHex =>
+        hexKeyToBuffer(derivedKeyHex)
+    );
 }
 
 function internalEncrypt(text, keyDerivationInfo) {
