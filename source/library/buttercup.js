@@ -1,13 +1,8 @@
-import {
-    Archive,
-    ArchiveManager,
-    TextDatasource,
-    createCredentials,
-    entryFacade
-} from "buttercup/dist/buttercup-web.min.js";
+import { Archive, ArchiveManager, Datasources, Credentials, entryFacade } from "./buttercupCore.js";
 import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
 
+const { TextDatasource } = Datasources;
 const { SourceStatus: ArchiveSourceStatus } = ArchiveManager;
 
 let __sharedManager = null;
@@ -26,7 +21,7 @@ export function createEmptyArchive() {
 }
 
 export function createArchiveCredentials(password) {
-    return createCredentials.fromPassword(password);
+    return Credentials.fromPassword(password);
 }
 
 export function createEntryFacade(entry) {
@@ -34,7 +29,7 @@ export function createEntryFacade(entry) {
 }
 
 export function createRemoteCredentials(archiveType, options) {
-    const credentials = createCredentials(archiveType);
+    const credentials = Credentials(archiveType);
     switch (archiveType) {
         case "dropbox":
             credentials.setValue(
