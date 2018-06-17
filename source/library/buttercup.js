@@ -1,9 +1,16 @@
-import { Archive, ArchiveManager, Datasources, Credentials, entryFacade } from "./buttercupCore.js";
+import {
+    Archive,
+    ArchiveManager,
+    ArchiveSource,
+    Datasources,
+    Credentials,
+    entryFacade
+} from "./buttercupCore.js";
 import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
 
 const { TextDatasource } = Datasources;
-const { SourceStatus: ArchiveSourceStatus } = ArchiveManager;
+const { Status: ArchiveSourceStatus } = ArchiveSource;
 
 let __sharedManager = null;
 

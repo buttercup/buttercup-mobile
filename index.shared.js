@@ -3,10 +3,10 @@ import React, { Component, Fragment } from "react";
 import { AppRegistry } from "react-native";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
-import * as Buttercup from "buttercup/dist/buttercup-web.min.js";
+import { vendor as ButtercupVendor } from "./source/library/buttercupCore.js";
 import { createWebDAVAdapter } from "@buttercup/mobile-compat";
 import "./source/compat/DropboxDatasource.js";
-import { patchCrypto, patchKeyDerivation } from "./source/library/crypto.js";
+import { patchCrypto } from "./source/library/crypto.js";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";
 import { smartFetch } from "./source/library/network.js";
 import store from "./source/store.js";
@@ -17,13 +17,11 @@ import { initialisePermanentStorage } from "./source/library/storage.js";
 export default class ButtercupShared extends Component {
     constructor(...args) {
         super(...args);
-        // Setup native key derivation immediately
-        patchKeyDerivation();
         // Setup native crypto
         patchCrypto();
         // Use native `fetch` for requests
         createWebDAVAdapter.setFetchMethod(smartFetch);
-        Buttercup.vendor.webdavFS.setFetchMethod(smartFetch);
+        ButtercupVendor.webdav.setFetchMethod(smartFetch);
         // Initialise storage
         initialisePermanentStorage();
         // Initialise the manager

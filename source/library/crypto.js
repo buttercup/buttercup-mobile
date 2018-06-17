@@ -4,6 +4,7 @@ import { encode as toBase64, decode as fromBase64 } from "base-64";
 import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
 
+const { iocane: { configure: configureIocane } } = vendor;
 const { CryptoBridge } = NativeModules;
 
 const CACHE_UUID_MAX = 500;
@@ -182,16 +183,11 @@ export function hexKeyToBuffer(key) {
 }
 
 export function patchCrypto() {
-    const { iocane } = vendor;
-    const { overrides } = tools;
-    iocane.components.setEncryptTool(internalEncrypt);
-    iocane.components.setDecryptTool(internalDecrypt);
-    iocane.components.setSaltGenerationTool(generateSalt);
-    overrides.setUUIDGenerator(() => getUUID());
-}
-
-export function patchKeyDerivation() {
-    Web.HashingTools.patchCorePBKDF((password, salt, rounds, bits /* , algorithm */) =>
-        deriveKeyNatively(password, salt, rounds)
-    );
+    configureIocane()
+        .use("cbc")
+        .overrideEncryption("cbc", internalEncrypt)
+        .overrideDecryption("cbc", internalDecrypt)
+        .overrideSaltGeneration(generateSalt)
+        .overrideKeyDerivation(deriveKeyNatively);
+    tools.uuid.setUUIDGenerator(() => getUUID());
 }
