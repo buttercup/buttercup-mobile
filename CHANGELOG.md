@@ -1,5 +1,13 @@
 # Buttercup Mobile Changelog
 
+## v1.3.0
+_2018-06-05_
+
+May update:
+
+ * Upgraded archive format for future format support
+ * Fixed Android Touch Unlock support
+
 ## v1.2.0
 _2018-04-07_
 
