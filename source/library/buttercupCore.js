@@ -1,1 +1,1 @@
-export * from "buttercup/dist/buttercup-web.min.js";
+export * from "buttercup/dist/buttercup-web.js";

@@ -16,7 +16,9 @@ let __sharedManager = null;
 
 export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
     const manager = getSharedArchiveManager();
-    return doAsyncWork().then(() => manager.addSource(name, sourceCreds, archiveCreds));
+    return doAsyncWork().then(() =>
+        manager.addSource(new ArchiveSource(name, sourceCreds, archiveCreds))
+    );
 }
 
 export function consumeEntryFacade(entry, facade) {
@@ -36,7 +38,7 @@ export function createEntryFacade(entry) {
 }
 
 export function createRemoteCredentials(archiveType, options) {
-    const credentials = Credentials(archiveType);
+    const credentials = new Credentials({ type: archiveType });
     switch (archiveType) {
         case "dropbox":
             credentials.setValue(

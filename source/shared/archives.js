@@ -11,14 +11,15 @@ export function beginNewArchiveProcedure() {
 export function lockAllArchives() {
     const archiveManager = getSharedArchiveManager();
     return Promise.all(
-        archiveManager.unlockedSources.map(source => archiveManager.lock(source.id))
+        archiveManager.unlockedSources.map(source =>
+            archiveManager.getSourceForID(source.id).lock()
+        )
     ).then(doAsyncWork);
 }
 
 export function promptRemoveArchive(sourceID) {
     const archiveManager = getSharedArchiveManager();
-    const sourceIndex = archiveManager.indexOfSource(sourceID);
-    const source = archiveManager.sources[sourceIndex];
+    const source = archiveManager.getSourceForID(sourceID);
     Alert.alert("Remove Archive", `Are you sure that you want to remove '${source.name}'?`, [
         { text: "Cancel", style: "cancel" },
         {
@@ -33,5 +34,5 @@ export function promptRemoveArchive(sourceID) {
 
 export function removeSource(sourceID) {
     const archiveManager = getSharedArchiveManager();
-    return archiveManager.remove(sourceID);
+    return archiveManager.removeSource(sourceID);
 }

@@ -11,8 +11,7 @@ export function saveCurrentArchive(overrideWorkspace = null) {
         const state = getState();
         const sourceID = getSelectedSourceID(state);
         const archiveManager = getSharedArchiveManager();
-        const sourceIndex = archiveManager.indexOfSource(sourceID);
-        workspace = archiveManager.sources[sourceIndex].workspace;
+        workspace = archiveManager.getSourceForID(sourceID).workspace;
     }
     return workspace
         .localDiffersFromRemote()

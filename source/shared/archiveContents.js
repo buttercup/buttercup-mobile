@@ -19,12 +19,12 @@ export function editGroup(groupID) {
 
 export function lockSource(sourceID) {
     const archiveManager = getSharedArchiveManager();
-    return archiveManager.lock(sourceID);
+    return archiveManager.getSourceForID(sourceID).lock();
 }
 
 export function unlockSource(sourceID, password) {
     const archiveManager = getSharedArchiveManager();
-    return doAsyncWork().then(() => archiveManager.unlock(sourceID, password));
+    return doAsyncWork().then(() => archiveManager.getSourceForID(sourceID).unlock(password));
 }
 
 export function updateCurrentArchive() {
