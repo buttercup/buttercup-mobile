@@ -23,7 +23,6 @@ function cacheUUIDs() {
     const refill = () => {
         return fetchUUIDs().then(uuids => {
             console.log(`Received ${uuids.length} UUIDs...`);
-            // console.log("UUIDS", uuids);
             addToStack("uuid", ...uuids);
             const uuidCount = getStackCount("uuid");
             if (uuidCount < CACHE_UUID_MAX) {
