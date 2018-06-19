@@ -15,7 +15,7 @@ export function saveCurrentArchive(overrideWorkspace = null) {
     }
     return workspace
         .localDiffersFromRemote()
-        .then(differs => (differs ? workspace.mergeSaveablesFromRemote().then(() => true) : false))
+        .then(differs => (differs ? workspace.mergeFromRemote().then(() => true) : false))
         .then(shouldSave => (shouldSave ? workspace.save() : null))
         .then(doAsyncWork);
 }
