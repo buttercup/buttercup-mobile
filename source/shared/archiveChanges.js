@@ -7,7 +7,6 @@ export function linkArchiveManagerToStore(store) {
     const archiveManager = getSharedArchiveManager();
     // listen for new archives
     archiveManager.on("sourcesUpdated", sourcesList => {
-        console.log("Sources updated", sourcesList);
         dispatch(setArchives(sourcesList));
     });
 }

@@ -35,7 +35,7 @@ class AddMetaPage extends Component {
             keyboardType: "default",
             spellCheck: false
         };
-        console.log(this.props.metaKey);
+        // console.log(this.props.metaKey);
         const isUrl = /url\b/i.test(this.props.metaKey);
         return (
             <View style={styles.container}>

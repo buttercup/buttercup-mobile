@@ -52,7 +52,7 @@ function internalDecrypt(encryptedComponents, keyDerivationInfo) {
             encryptedComponents.iv,
             encryptedComponents.salt,
             keyDerivationInfo.hmac.toString("hex"),
-            encryptedComponents.hmac,
+            encryptedComponents.auth,
             (err, result) => {
                 if (err) {
                     return reject(err);
