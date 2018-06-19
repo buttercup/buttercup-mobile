@@ -13,53 +13,49 @@ fn glued_result(string_list: Vec<String>) -> Vec<u8> {
 }
 
 #[no_mangle]
-pub extern "C" fn pbkdf2_derive(
+pub unsafe extern "C" fn pbkdf2_derive(
     password: *const c_char,
     salt: *const c_char,
     iterations: c_uint,
     bits: c_uint,
 ) -> *mut c_char {
-    unsafe {
-        let password_str = CStr::from_ptr(password);
-        let salt_str = CStr::from_ptr(salt);
-        let result = pbkdf2(
-            password_str.to_str().unwrap(),
-            salt_str.to_str().unwrap(),
-            iterations as usize,
-            bits as usize,
-        );
-        CString::from_vec_unchecked(result).into_raw()
-    }
+    let password_str = CStr::from_ptr(password);
+    let salt_str = CStr::from_ptr(salt);
+    let result = pbkdf2(
+        password_str.to_str().unwrap(),
+        salt_str.to_str().unwrap(),
+        iterations as usize,
+        bits as usize,
+    );
+    CString::from_vec_unchecked(result).into_raw()
 }
 
 #[no_mangle]
-pub extern "C" fn encrypt_cbc(
+pub unsafe extern "C" fn encrypt_cbc(
     data: *const c_char,     // UTF8 String
     key: *const c_char,      // Hex
     salt: *const c_char,     // Hex
     hmac_key: *const c_char, // Hex
 ) -> *mut c_char {
-    unsafe {
-        let data_str = CStr::from_ptr(data);
-        let key_str = hex::decode(CStr::from_ptr(key).to_bytes()).unwrap();
-        let hmac_str = hex::decode(CStr::from_ptr(hmac_key).to_bytes()).unwrap();
-        let salt_str = hex::decode(CStr::from_ptr(salt).to_bytes()).unwrap();
+    let data_str = CStr::from_ptr(data);
+    let key_str = hex::decode(CStr::from_ptr(key).to_bytes()).unwrap();
+    let hmac_str = hex::decode(CStr::from_ptr(hmac_key).to_bytes()).unwrap();
+    let salt_str = hex::decode(CStr::from_ptr(salt).to_bytes()).unwrap();
 
-        let result = cbc::encrypt(
-            data_str.to_bytes(),
-            key_str.as_slice(),
-            salt_str.as_slice(),
-            hmac_str.as_slice(),
-        );
+    let result = cbc::encrypt(
+        data_str.to_bytes(),
+        key_str.as_slice(),
+        salt_str.as_slice(),
+        hmac_str.as_slice(),
+    );
 
-        let (base64_result, hmac_code, iv, new_salt) = result.ok().unwrap();
-        let glue = glued_result(vec![
-            base64_result,
-            hex::encode(hmac_code),
-            hex::encode(iv),
-            hex::encode(new_salt),
-        ]);
+    let (base64_result, hmac_code, iv, new_salt) = result.ok().unwrap();
+    let glue = glued_result(vec![
+        base64_result,
+        hex::encode(hmac_code),
+        hex::encode(iv),
+        hex::encode(new_salt),
+    ]);
 
-        CString::from_vec_unchecked(glue).into_raw()
-    }
+    CString::from_vec_unchecked(glue).into_raw()
 }
