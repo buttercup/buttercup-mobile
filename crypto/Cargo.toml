@@ -7,4 +7,6 @@ authors = ["Sallar Kaboli <sallar.kaboli@gmail.com>"]
 crate-type = ["staticlib"]
 
 [dependencies]
-buttercup-crypto = "0.1.0"
+# buttercup-crypto = "0.1.0"
+buttercup-crypto = { path = "../../buttercup-crypto" }
+hex = "^0.3"
