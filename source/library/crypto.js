@@ -83,44 +83,26 @@ export function deriveKeyNatively(password, salt, rounds, bits) {
 }
 
 function internalEncrypt(text, keyDerivationInfo) {
-    const callBridge = new Promise(function(resolve, reject) {
-        const encodedText = Platform.select({
-            ios: text,
-            android: toBase64(encodeURIComponent(text))
-        });
-        CryptoBridge.encryptText(
-            encodedText,
-            keyDerivationInfo.key.toString("hex"),
-            keyDerivationInfo.salt,
-            keyDerivationInfo.hmac.toString("hex"),
-            (err, result) => {
-                if (err) {
-                    return reject(err);
-                }
-                if (/^Error/i.test(result)) {
-                    let errorMessage = "Unknown encrypt error";
-                    const errorCodeMatch = /^Error=([0-9-]+)/i.exec(result);
-                    const errorMessageMatch = /^Error:((.|\n)+)/i.exec(result);
-                    if (errorCodeMatch) {
-                        errorMessage = `Error code ${errorCodeMatch[1]}`;
-                    } else if (errorMessageMatch) {
-                        errorMessage = errorMessageMatch[1];
-                    }
-                    return reject(new Error(errorMessage));
-                }
-                // Process result
-                const [encryptedContent, auth, iv, salt] = result.split("|");
-                return resolve({
-                    auth,
-                    iv,
-                    salt,
-                    rounds: keyDerivationInfo.rounds,
-                    content: encryptedContent
-                });
-            }
-        );
+    const encodedText = Platform.select({
+        ios: new Buffer(text, "utf8").toString("base64"),
+        android: toBase64(encodeURIComponent(text))
     });
-    return callBridge;
+
+    return Crypto.encryptText(
+        encodedText,
+        keyDerivationInfo.key.toString("hex"),
+        keyDerivationInfo.salt,
+        keyDerivationInfo.hmac.toString("hex")
+    ).then(res => {
+        const [encryptedContent, auth, iv, salt] = res.split("$");
+        return {
+            auth,
+            iv,
+            salt,
+            rounds: keyDerivationInfo.rounds,
+            encryptedContent
+        };
+    });
 }
 
 export function fetchUUIDs() {

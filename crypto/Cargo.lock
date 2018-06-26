@@ -98,6 +98,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "crypto"
 version = "0.1.0"
 dependencies = [
+ "base64 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "buttercup-crypto 0.3.0",
  "hex 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
