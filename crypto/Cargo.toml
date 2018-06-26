@@ -10,3 +10,4 @@ crate-type = ["staticlib"]
 # buttercup-crypto = "0.1.0"
 buttercup-crypto = { path = "../../buttercup-crypto" }
 hex = "^0.3"
+base64 = "^0.5"

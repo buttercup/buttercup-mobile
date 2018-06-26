@@ -45,9 +45,9 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89B5C41CA3CA429FAD873211 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DF36A447445434284F83319 /* Entypo.ttf */; };
 		92F0ABE1593340309BF78086 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F492DA2907E4FEDAC51BB80 /* Foundation.ttf */; };
-		99851D7020C984E800EAC115 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D6F20C984E800EAC115 /* libcrypto.a */; };
 		99851D7220C985FA00EAC115 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D7120C985FA00EAC115 /* libresolv.tbd */; };
 		99851D7520C9B83E00EAC115 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 99851D7420C9B83E00EAC115 /* Crypto.m */; };
+		99D0F23020E2929B00FD05D7 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D6F20C984E800EAC115 /* libcrypto.a */; };
 		9A1586680933407B88BBBF6E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
 		BBC4A737D75245BFB27E789A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
 		BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */; };
@@ -460,8 +460,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				99851D7220C985FA00EAC115 /* libresolv.tbd in Frameworks */,
-				99851D7020C984E800EAC115 /* libcrypto.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
+				99D0F23020E2929B00FD05D7 /* libcrypto.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,

@@ -1,3 +1,4 @@
+extern crate base64;
 extern crate buttercup_crypto;
 extern crate hex;
 
@@ -32,20 +33,20 @@ pub unsafe extern "C" fn pbkdf2_derive(
 
 #[no_mangle]
 pub unsafe extern "C" fn encrypt_cbc(
-    data: *const c_char,     // UTF8 String
-    key: *const c_char,      // Hex
-    salt: *const c_char,     // Hex
-    hmac_key: *const c_char, // Hex
+    base64_data: *const c_char, // UTF8 String
+    key: *const c_char,         // Hex
+    salt: *const c_char,        // UTF8 String
+    hmac_key: *const c_char,    // Hex
 ) -> *mut c_char {
-    let data_str = CStr::from_ptr(data);
+    let data_str = base64::decode(CStr::from_ptr(base64_data).to_bytes()).unwrap();
     let key_str = hex::decode(CStr::from_ptr(key).to_bytes()).unwrap();
     let hmac_str = hex::decode(CStr::from_ptr(hmac_key).to_bytes()).unwrap();
-    let salt_str = hex::decode(CStr::from_ptr(salt).to_bytes()).unwrap();
+    let salt_str = CStr::from_ptr(salt).to_bytes();
 
     let result = cbc::encrypt(
-        data_str.to_bytes(),
+        data_str.as_slice(),
         key_str.as_slice(),
-        salt_str.as_slice(),
+        salt_str,
         hmac_str.as_slice(),
     );
 
@@ -54,7 +55,7 @@ pub unsafe extern "C" fn encrypt_cbc(
         base64_result,
         hex::encode(hmac_code),
         hex::encode(iv),
-        hex::encode(new_salt),
+        String::from_utf8_unchecked(new_salt),
     ]);
 
     CString::from_vec_unchecked(glue).into_raw()
