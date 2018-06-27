@@ -15,7 +15,14 @@ RCT_EXPORT_MODULE()
 }
 
 RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(int)bits:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* utf8String = pbkdf2_derive([password cStringUsingEncoding:NSUTF8StringEncoding], [salt cStringUsingEncoding:NSUTF8StringEncoding], iterations, bits);
+
+    const char* utf8String = pbkdf2_derive(
+        [password UTF8String],
+        [salt UTF8String],
+        iterations,
+        bits
+    );
+
     if (utf8String) {
         resolve([BCHelpers hexStringFromData:[NSData dataWithBytes:utf8String length:bits/8]]);
     } else {
@@ -24,12 +31,33 @@ RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(
     }
 }
 
-RCT_EXPORT_METHOD(encryptText:(NSString *)data withKey:(NSString *)key andSalt:(NSString *)salt andHMAC:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
 
-    const char* encryptedText = encrypt_cbc([data UTF8String], [key UTF8String], [salt UTF8String], [hmacHexKey UTF8String]);
+    const char* encryptedText = encrypt_cbc(
+        [data UTF8String],
+        [key UTF8String],
+        [salt UTF8String],
+        [hmacHexKey UTF8String]
+    );
 
     if (encryptedText) {
         resolve([NSString stringWithUTF8String:encryptedText]);
+    }
+}
+
+RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex:(NSString *)salt:(NSString *)hmacHexKey:(NSString *)hmacHex:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+
+    const char* decryptedText = decrypt_cbc(
+        [data UTF8String],
+        [key UTF8String],
+        [ivHex UTF8String],
+        [salt UTF8String],
+        [hmacHexKey UTF8String],
+        [hmacHex UTF8String]
+    );
+
+    if (decryptedText) {
+        resolve([NSString stringWithUTF8String:decryptedText]);
     }
 }
 

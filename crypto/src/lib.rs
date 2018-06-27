@@ -60,3 +60,35 @@ pub unsafe extern "C" fn encrypt_cbc(
 
     CString::from_vec_unchecked(glue).into_raw()
 }
+
+#[no_mangle]
+pub unsafe extern "C" fn decrypt_cbc(
+    base64_data: *const c_char, // UTF8 String
+    key: *const c_char,         // Hex
+    iv: *const c_char,          // Hex
+    salt: *const c_char,        // UTF8 String
+    hmac_key: *const c_char,    // Hex
+    hmac: *const c_char,        // Hex
+) -> *mut c_char {
+    let data_str = CStr::from_ptr(base64_data).to_bytes();
+    let key_str = hex::decode(CStr::from_ptr(key).to_bytes()).unwrap();
+    let iv_str = hex::decode(CStr::from_ptr(iv).to_bytes()).unwrap();
+    let salt_str = CStr::from_ptr(salt).to_bytes();
+    let hmac_key_str = hex::decode(CStr::from_ptr(hmac_key).to_bytes()).unwrap();
+    let hmac_str = hex::decode(CStr::from_ptr(hmac).to_bytes()).unwrap();
+
+    let result = cbc::decrypt(
+        data_str,
+        key_str.as_slice(),
+        iv_str.as_slice(),
+        salt_str,
+        hmac_key_str.as_slice(),
+        hmac_str.as_slice(),
+    );
+
+    let decrypted_result = result.ok().unwrap();
+    let decrypted_base64 = base64::encode(decrypted_result.as_slice());
+    let decrypted_bytes = decrypted_base64.as_bytes();
+
+    CString::from_vec_unchecked(decrypted_bytes.to_vec()).into_raw()
+}
