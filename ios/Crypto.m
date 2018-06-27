@@ -70,4 +70,13 @@ RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTP
     }
 }
 
+RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+
+    const char* salt = generate_salt(length);
+
+    if (salt) {
+        resolve([NSString stringWithUTF8String:salt]);
+    }
+}
+
 @end

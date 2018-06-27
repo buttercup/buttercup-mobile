@@ -5,6 +5,7 @@ extern crate uuid;
 
 use buttercup_crypto::derivation::pbkdf2;
 use buttercup_crypto::encryption::cbc;
+use buttercup_crypto::random::generate_string;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_uint};
 use uuid::Uuid;
@@ -90,9 +91,8 @@ pub unsafe extern "C" fn decrypt_cbc(
 
     let decrypted_result = result.ok().unwrap();
     let decrypted_base64 = base64::encode(decrypted_result.as_slice());
-    let decrypted_bytes = decrypted_base64.as_bytes();
 
-    CString::from_vec_unchecked(decrypted_bytes.to_vec()).into_raw()
+    CString::from_vec_unchecked(Vec::from(decrypted_base64)).into_raw()
 }
 
 #[no_mangle]
@@ -103,4 +103,10 @@ pub unsafe extern "C" fn generate_uuid_list(count: c_uint) -> *mut c_char {
     }
     let string = list.join(",");
     CString::from_vec_unchecked(Vec::from(string)).into_raw()
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn generate_salt(length: c_uint) -> *mut c_char {
+    let salt = generate_string(length as usize);
+    CString::from_vec_unchecked(Vec::from(salt)).into_raw()
 }
