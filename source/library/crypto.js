@@ -90,15 +90,7 @@ export function fetchUUIDs() {
 }
 
 export function generateSalt(length) {
-    const callBridge = new Promise(function(resolve, reject) {
-        CryptoBridge.generateSaltWithLength(length, (err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            return resolve(result);
-        });
-    });
-    return callBridge;
+    return Crypto.generateSaltWithLength(length);
 }
 
 export function getUUID() {
