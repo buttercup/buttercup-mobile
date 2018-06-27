@@ -46,34 +46,14 @@ function constantTimeCompare(val1, val2) {
 }
 
 function internalDecrypt(encryptedComponents, keyDerivationInfo) {
-    const callBridge = new Promise(function(resolve, reject) {
-        CryptoBridge.decryptText(
-            encryptedComponents.content,
-            keyDerivationInfo.key.toString("hex"),
-            encryptedComponents.iv,
-            encryptedComponents.salt,
-            keyDerivationInfo.hmac.toString("hex"),
-            encryptedComponents.auth,
-            (err, result) => {
-                if (err) {
-                    return reject(err);
-                }
-                if (/^Error/i.test(result)) {
-                    let errorMessage = "Unknown decrypt error";
-                    const errorCodeMatch = /^Error=([0-9-]+)/i.exec(result);
-                    const errorMessageMatch = /^Error:(.+)/i.exec(result);
-                    if (errorCodeMatch) {
-                        errorMessage = `Error code ${errorCodeMatch[1]}`;
-                    } else if (errorMessageMatch) {
-                        errorMessage = errorMessageMatch[1];
-                    }
-                    return reject(new Error(errorMessage));
-                }
-                return resolve(result);
-            }
-        );
-    });
-    return callBridge;
+    return Crypto.decryptText(
+        encryptedComponents.content,
+        keyDerivationInfo.key.toString("hex"),
+        encryptedComponents.iv,
+        encryptedComponents.salt,
+        keyDerivationInfo.hmac.toString("hex"),
+        encryptedComponents.auth
+    ).then(decryptedBase64 => new Buffer(decryptedBase64, "base64").toString("utf8"));
 }
 
 export function deriveKeyNatively(password, salt, rounds, bits) {
