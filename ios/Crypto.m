@@ -61,4 +61,13 @@ RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex
     }
 }
 
+RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+
+    const char* uuidList = generate_uuid_list(count);
+
+    if (uuidList) {
+        resolve([NSString stringWithUTF8String:uuidList]);
+    }
+}
+
 @end

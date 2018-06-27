@@ -1,11 +1,13 @@
 extern crate base64;
 extern crate buttercup_crypto;
 extern crate hex;
+extern crate uuid;
 
 use buttercup_crypto::derivation::pbkdf2;
 use buttercup_crypto::encryption::cbc;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_uint};
+use uuid::Uuid;
 
 fn glued_result(string_list: Vec<String>) -> Vec<u8> {
     let joined = string_list.join("$");
@@ -91,4 +93,14 @@ pub unsafe extern "C" fn decrypt_cbc(
     let decrypted_bytes = decrypted_base64.as_bytes();
 
     CString::from_vec_unchecked(decrypted_bytes.to_vec()).into_raw()
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn generate_uuid_list(count: c_uint) -> *mut c_char {
+    let mut list = Vec::<String>::new();
+    for _ in 0..count as usize {
+        list.push(format!("{}", Uuid::new_v4()));
+    }
+    let string = list.join(",");
+    CString::from_vec_unchecked(Vec::from(string)).into_raw()
 }

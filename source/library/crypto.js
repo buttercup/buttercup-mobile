@@ -86,16 +86,7 @@ function internalEncrypt(text, keyDerivationInfo) {
 }
 
 export function fetchUUIDs() {
-    const callBridge = new Promise(function(resolve, reject) {
-        CryptoBridge.generateUUIDs((err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            const uuids = result.split(",");
-            return resolve(uuids);
-        });
-    });
-    return callBridge;
+    return Crypto.generateUUIDs(CACHE_UUID_MIN).then(res => res.split(","));
 }
 
 export function generateSalt(length) {
