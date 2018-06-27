@@ -1,10 +1,11 @@
 import { NativeModules, Platform } from "react-native";
+import { Buffer } from "buffer";
 import { tools, vendor, Web } from "buttercup/dist/buttercup-web.min.js";
 import { encode as toBase64, decode as fromBase64 } from "base-64";
 import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
 
-const { CryptoBridge } = NativeModules;
+const { Crypto } = NativeModules;
 
 const CACHE_UUID_MAX = 500;
 const CACHE_UUID_MIN = 50;
@@ -45,112 +46,51 @@ function constantTimeCompare(val1, val2) {
 }
 
 function internalDecrypt(encryptedComponents, keyDerivationInfo) {
-    const callBridge = new Promise(function(resolve, reject) {
-        CryptoBridge.decryptText(
-            encryptedComponents.content,
-            keyDerivationInfo.key.toString("hex"),
-            encryptedComponents.iv,
-            encryptedComponents.salt,
-            keyDerivationInfo.hmac.toString("hex"),
-            encryptedComponents.hmac,
-            (err, result) => {
-                if (err) {
-                    return reject(err);
-                }
-                if (/^Error/i.test(result)) {
-                    let errorMessage = "Unknown decrypt error";
-                    const errorCodeMatch = /^Error=([0-9-]+)/i.exec(result);
-                    const errorMessageMatch = /^Error:(.+)/i.exec(result);
-                    if (errorCodeMatch) {
-                        errorMessage = `Error code ${errorCodeMatch[1]}`;
-                    } else if (errorMessageMatch) {
-                        errorMessage = errorMessageMatch[1];
-                    }
-                    return reject(new Error(errorMessage));
-                }
-                return resolve(result);
-            }
-        );
-    });
-    return callBridge;
+    return Crypto.decryptText(
+        encryptedComponents.content,
+        keyDerivationInfo.key.toString("hex"),
+        encryptedComponents.iv,
+        encryptedComponents.salt,
+        keyDerivationInfo.hmac.toString("hex"),
+        encryptedComponents.hmac
+    ).then(decryptedBase64 => new Buffer(decryptedBase64, "base64").toString("utf8"));
 }
 
-export function deriveKeyNatively(password, salt, rounds) {
-    const callBridge = new Promise(function(resolve, reject) {
-        CryptoBridge.deriveKeyFromPassword(password, salt, rounds, (err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            return resolve(result);
-        });
-    });
-    return callBridge.then(derivedKeyHex => hexKeyToBuffer(derivedKeyHex));
+export function deriveKeyNatively(password, salt, rounds, bits) {
+    return Crypto.pbkdf2(password, salt, rounds, bits).then(derivedKeyHex =>
+        hexKeyToBuffer(derivedKeyHex)
+    );
 }
 
 function internalEncrypt(text, keyDerivationInfo) {
-    const callBridge = new Promise(function(resolve, reject) {
-        const encodedText = Platform.select({
-            ios: text,
-            android: toBase64(encodeURIComponent(text))
-        });
-        CryptoBridge.encryptText(
-            encodedText,
-            keyDerivationInfo.key.toString("hex"),
-            keyDerivationInfo.salt,
-            keyDerivationInfo.hmac.toString("hex"),
-            (err, result) => {
-                if (err) {
-                    return reject(err);
-                }
-                if (/^Error/i.test(result)) {
-                    let errorMessage = "Unknown encrypt error";
-                    const errorCodeMatch = /^Error=([0-9-]+)/i.exec(result);
-                    const errorMessageMatch = /^Error:((.|\n)+)/i.exec(result);
-                    if (errorCodeMatch) {
-                        errorMessage = `Error code ${errorCodeMatch[1]}`;
-                    } else if (errorMessageMatch) {
-                        errorMessage = errorMessageMatch[1];
-                    }
-                    return reject(new Error(errorMessage));
-                }
-                // Process result
-                const [encryptedContent, hmac, iv, salt] = result.split("|");
-                return resolve({
-                    hmac,
-                    iv,
-                    salt,
-                    rounds: keyDerivationInfo.rounds,
-                    encryptedContent
-                });
-            }
-        );
+    const encodedText = Platform.select({
+        ios: new Buffer(text, "utf8").toString("base64"),
+        android: toBase64(encodeURIComponent(text))
     });
-    return callBridge;
+
+    return Crypto.encryptText(
+        encodedText,
+        keyDerivationInfo.key.toString("hex"),
+        keyDerivationInfo.salt,
+        keyDerivationInfo.hmac.toString("hex")
+    ).then(res => {
+        const [encryptedContent, hmac, iv, salt] = res.split("$");
+        return {
+            hmac,
+            iv,
+            salt,
+            rounds: keyDerivationInfo.rounds,
+            encryptedContent
+        };
+    });
 }
 
 export function fetchUUIDs() {
-    const callBridge = new Promise(function(resolve, reject) {
-        CryptoBridge.generateUUIDs((err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            const uuids = result.split(",");
-            return resolve(uuids);
-        });
-    });
-    return callBridge;
+    return Crypto.generateUUIDs(CACHE_UUID_MIN).then(res => res.split(","));
 }
 
 export function generateSalt(length) {
-    const callBridge = new Promise(function(resolve, reject) {
-        CryptoBridge.generateSaltWithLength(length, (err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            return resolve(result);
-        });
-    });
-    return callBridge;
+    return Crypto.generateSaltWithLength(length);
 }
 
 export function getUUID() {
@@ -192,6 +132,6 @@ export function patchCrypto() {
 
 export function patchKeyDerivation() {
     Web.HashingTools.patchCorePBKDF((password, salt, rounds, bits /* , algorithm */) =>
-        deriveKeyNatively(password, salt, rounds)
+        deriveKeyNatively(password, salt, rounds, bits)
     );
 }
