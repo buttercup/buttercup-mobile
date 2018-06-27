@@ -5,7 +5,7 @@ import { encode as toBase64, decode as fromBase64 } from "base-64";
 import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
 
-const { CryptoBridge, Crypto } = NativeModules;
+const { Crypto } = NativeModules;
 
 const CACHE_UUID_MAX = 500;
 const CACHE_UUID_MIN = 50;
