@@ -28,7 +28,7 @@ export function deleteEntry(sourceID, entryID) {
 export function getEntry(sourceID, entryID) {
     const archiveManager = getSharedArchiveManager();
     const { archive } = archiveManager.getSourceForID(sourceID).workspace;
-    const entry = archive.getEntryByID(entryID);
+    const entry = archive.findEntryByID(entryID);
     return entry;
 }
 
@@ -121,7 +121,7 @@ export function saveNewMeta() {
     const archiveManager = getSharedArchiveManager();
     const source = archiveManager.getSourceForID(sourceID);
     const archive = source.workspace.archive;
-    const entry = archive.getEntryByID(entryID);
+    const entry = archive.findEntryByID(entryID);
     entry.setMeta(key, value);
     dispatch(navigateBack());
     loadEntry(sourceID, entryID);

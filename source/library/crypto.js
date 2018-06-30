@@ -114,13 +114,13 @@ function internalEncrypt(text, keyDerivationInfo) {
                     return reject(new Error(errorMessage));
                 }
                 // Process result
-                const [encryptedContent, hmac, iv, salt] = result.split("|");
+                const [encryptedContent, auth, iv, salt] = result.split("|");
                 return resolve({
-                    hmac,
+                    auth,
                     iv,
                     salt,
                     rounds: keyDerivationInfo.rounds,
-                    encryptedContent
+                    content: encryptedContent
                 });
             }
         );
