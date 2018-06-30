@@ -24,6 +24,7 @@ import { saveCurrentArchive } from "../shared/archive.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { promptDeleteEntry } from "../shared/entry.js";
 import { executeNotification } from "../global/notify.js";
+import { prepareURLForLaunch } from "../library/helpers.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -79,7 +80,7 @@ export default connect(
                             style: "default",
                             onPress: () => {
                                 Clipboard.setString(password);
-                                Linking.openURL(url);
+                                Linking.openURL(prepareURLForLaunch(url));
                             }
                         }
                     ]
