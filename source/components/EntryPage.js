@@ -47,7 +47,6 @@ class EntryPage extends Component {
     static propTypes = {
         copyToClipboard: PropTypes.func.isRequired,
         editing: PropTypes.bool.isRequired,
-        meta: PropTypes.arrayOf(PropTypes.object).isRequired,
         onAddMeta: PropTypes.func.isRequired,
         onCancelEdit: PropTypes.func.isRequired,
         onCancelViewingHidden: PropTypes.func.isRequired,
@@ -118,24 +117,19 @@ class EntryPage extends Component {
             <View style={styles.container}>
                 <ScrollView>
                     <CellGroup header="Properties">
-                        {this.filterFields(this.props.properties).map(field =>
-                            this.renderContentCell(field)
-                        )}
+                        <For each="field" of={this.filterFields(this.props.properties)}>
+                            {this.renderContentCell(field)}
+                        </For>
+                        <If condition={this.props.editing}>
+                            <Cell
+                                key="$add"
+                                title="Add"
+                                onPress={() => this.props.onAddMeta()}
+                                tintColor="#1144FF"
+                                icon={{ name: "tag-plus", source: "material-community-icons" }}
+                            />
+                        </If>
                     </CellGroup>
-                    {this.props.meta.length > 0 || this.props.editing ? (
-                        <CellGroup header="Meta">
-                            {this.props.meta.map(field => this.renderContentCell(field))}
-                            {this.props.editing ? (
-                                <Cell
-                                    key="$add"
-                                    title="Add"
-                                    onPress={() => this.props.onAddMeta()}
-                                    tintColor="#1144FF"
-                                    icon={{ name: "tag-plus", source: "material-community-icons" }}
-                                />
-                            ) : null}
-                        </CellGroup>
-                    ) : null}
                     {this.renderEditButtons()}
                 </ScrollView>
                 <Spinner

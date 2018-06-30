@@ -8,7 +8,6 @@ import { setSaving } from "../actions/app.js";
 import {
     getEntryFields,
     getEntryID,
-    getEntryMeta,
     getEntryPassword,
     getEntryProperties,
     getEntryTitle,
@@ -29,7 +28,6 @@ import { executeNotification } from "../global/notify.js";
 export default connect(
     (state, ownProps) => ({
         editing: isEditing(state),
-        meta: getEntryMeta(state),
         properties: getEntryProperties(state),
         saving: isSaving(state),
         title: getEntryTitle(state),
