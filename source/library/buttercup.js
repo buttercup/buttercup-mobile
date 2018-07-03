@@ -14,11 +14,25 @@ const { Status: ArchiveSourceStatus } = ArchiveSource;
 
 let __sharedManager = null;
 
+/**
+ * Add a new archive to the manager
+ * @param {String} name The archive name
+ * @param {Credentials} sourceCreds Remote source credentials *instance*
+ * @param {Credentials} archiveCreds Archive master password credentials *instance*
+ * @returns
+ */
 export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
     const manager = getSharedArchiveManager();
-    return doAsyncWork().then(() =>
-        manager.addSource(new ArchiveSource(name, sourceCreds, archiveCreds))
-    );
+    return doAsyncWork()
+        .then(() =>
+            Promise.all([
+                sourceCreds.toSecureString(archiveCreds.password),
+                archiveCreds.toSecureString(archiveCreds.password)
+            ])
+        )
+        .then(([sourceCredString, archiveCredString]) =>
+            manager.addSource(new ArchiveSource(name, sourceCredString, archiveCredString))
+        );
 }
 
 export function consumeEntryFacade(entry, facade) {

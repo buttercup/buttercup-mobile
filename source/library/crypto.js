@@ -187,6 +187,7 @@ export function patchCrypto() {
         .overrideEncryption("cbc", internalEncrypt)
         .overrideDecryption("cbc", internalDecrypt)
         .overrideSaltGeneration(generateSalt)
+        // .overrideIVGeneration()
         .overrideKeyDerivation(deriveKeyNatively);
     tools.uuid.setUUIDGenerator(() => getUUID());
 }
