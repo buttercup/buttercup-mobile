@@ -36,11 +36,11 @@ export function enableTouchUnlock(sourceID) {
             const archiveManager = getSharedArchiveManager();
             const state = getState();
             const sourceID = getSelectedSourceID(state);
-            const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
+            const source = archiveManager.getSourceForID(sourceID);
             if (!source) {
                 throw new Error("Current source was not found");
             }
-            const masterPassword = source.workspace.primary.credentials.password;
+            const masterPassword = source.workspace.masterCredentials.password;
             if (!masterPassword) {
                 throw new Error("Unable to locate current credentials");
             }

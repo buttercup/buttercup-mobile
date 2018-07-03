@@ -8,7 +8,6 @@ import { setSaving } from "../actions/app.js";
 import {
     getEntryFields,
     getEntryID,
-    getEntryMeta,
     getEntryPassword,
     getEntryProperties,
     getEntryTitle,
@@ -25,11 +24,11 @@ import { saveCurrentArchive } from "../shared/archive.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { promptDeleteEntry } from "../shared/entry.js";
 import { executeNotification } from "../global/notify.js";
+import { prepareURLForLaunch } from "../library/helpers.js";
 
 export default connect(
     (state, ownProps) => ({
         editing: isEditing(state),
-        meta: getEntryMeta(state),
         properties: getEntryProperties(state),
         saving: isSaving(state),
         title: getEntryTitle(state),
@@ -81,7 +80,7 @@ export default connect(
                             style: "default",
                             onPress: () => {
                                 Clipboard.setString(password);
-                                Linking.openURL(url);
+                                Linking.openURL(prepareURLForLaunch(url));
                             }
                         }
                     ]

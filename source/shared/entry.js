@@ -27,9 +27,8 @@ export function deleteEntry(sourceID, entryID) {
 
 export function getEntry(sourceID, entryID) {
     const archiveManager = getSharedArchiveManager();
-    const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
-    const archive = source.workspace.primary.archive;
-    const entry = archive.getEntryByID(entryID);
+    const { archive } = archiveManager.getSourceForID(sourceID).workspace;
+    const entry = archive.findEntryByID(entryID);
     return entry;
 }
 
@@ -97,8 +96,8 @@ export function saveNewEntry() {
     const sourceID = getSelectedSourceID(state);
     const parentGroupID = getNewParentID(state);
     const archiveManager = getSharedArchiveManager();
-    const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
-    const archive = source.workspace.primary.archive;
+    const source = archiveManager.getSourceForID(sourceID);
+    const archive = source.workspace.archive;
     const newEntry = archive.findGroupByID(parentGroupID).createEntry(title);
     newEntry.setProperty("username", username).setProperty("password", password);
     dispatch(setSaving(true));
@@ -120,9 +119,9 @@ export function saveNewMeta() {
     const sourceID = getSourceID(state);
     const entryID = getEntryID(state);
     const archiveManager = getSharedArchiveManager();
-    const source = archiveManager.sources[archiveManager.indexOfSource(sourceID)];
-    const archive = source.workspace.primary.archive;
-    const entry = archive.getEntryByID(entryID);
+    const source = archiveManager.getSourceForID(sourceID);
+    const archive = source.workspace.archive;
+    const entry = archive.findEntryByID(entryID);
     entry.setMeta(key, value);
     dispatch(navigateBack());
     loadEntry(sourceID, entryID);

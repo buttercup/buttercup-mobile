@@ -1,7 +1,7 @@
-import { DatasourceAdapter, TextDatasource } from "buttercup/dist/buttercup-web.min.js";
+import { Datasources } from "../library/buttercupCore.js";
 import { getArchiveContents, putArchiveContents } from "./dropbox.js";
 
-const { registerDatasource } = DatasourceAdapter;
+const { TextDatasource, registerDatasource } = Datasources;
 
 const NOOP = () => {};
 
@@ -19,8 +19,8 @@ class DropboxDatasource extends TextDatasource {
         });
     }
 
-    save(archive, password) {
-        return super.save(archive, password).then(encryptedContent => {
+    save(history, password) {
+        return super.save(history, password).then(encryptedContent => {
             return putArchiveContents(this.path, encryptedContent, this.token).then(NOOP);
         });
     }

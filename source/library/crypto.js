@@ -1,9 +1,10 @@
 import { NativeModules, Platform } from "react-native";
-import { tools, vendor, Web } from "buttercup/dist/buttercup-web.min.js";
+import { tools, vendor, Web } from "./buttercupCore.js";
 import { encode as toBase64, decode as fromBase64 } from "base-64";
 import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
 
+const { iocane: { configure: configureIocane } } = vendor;
 const { CryptoBridge } = NativeModules;
 
 const CACHE_UUID_MAX = 500;
@@ -22,7 +23,6 @@ function cacheUUIDs() {
     const refill = () => {
         return fetchUUIDs().then(uuids => {
             console.log(`Received ${uuids.length} UUIDs...`);
-            // console.log("UUIDS", uuids);
             addToStack("uuid", ...uuids);
             const uuidCount = getStackCount("uuid");
             if (uuidCount < CACHE_UUID_MAX) {
@@ -52,7 +52,7 @@ function internalDecrypt(encryptedComponents, keyDerivationInfo) {
             encryptedComponents.iv,
             encryptedComponents.salt,
             keyDerivationInfo.hmac.toString("hex"),
-            encryptedComponents.hmac,
+            encryptedComponents.auth,
             (err, result) => {
                 if (err) {
                     return reject(err);
@@ -114,13 +114,13 @@ function internalEncrypt(text, keyDerivationInfo) {
                     return reject(new Error(errorMessage));
                 }
                 // Process result
-                const [encryptedContent, hmac, iv, salt] = result.split("|");
+                const [encryptedContent, auth, iv, salt] = result.split("|");
                 return resolve({
-                    hmac,
+                    auth,
                     iv,
                     salt,
                     rounds: keyDerivationInfo.rounds,
-                    encryptedContent
+                    content: encryptedContent
                 });
             }
         );
@@ -182,16 +182,11 @@ export function hexKeyToBuffer(key) {
 }
 
 export function patchCrypto() {
-    const { iocane } = vendor;
-    const { overrides } = tools;
-    iocane.components.setEncryptTool(internalEncrypt);
-    iocane.components.setDecryptTool(internalDecrypt);
-    iocane.components.setSaltGenerationTool(generateSalt);
-    overrides.setUUIDGenerator(() => getUUID());
-}
-
-export function patchKeyDerivation() {
-    Web.HashingTools.patchCorePBKDF((password, salt, rounds, bits /* , algorithm */) =>
-        deriveKeyNatively(password, salt, rounds)
-    );
+    configureIocane()
+        .use("cbc")
+        .overrideEncryption("cbc", internalEncrypt)
+        .overrideDecryption("cbc", internalDecrypt)
+        .overrideSaltGeneration(generateSalt)
+        .overrideKeyDerivation(deriveKeyNatively);
+    tools.uuid.setUUIDGenerator(() => getUUID());
 }

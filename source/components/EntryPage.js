@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, ScrollView, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import Spinner from "react-native-loading-spinner-overlay";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
@@ -47,7 +47,6 @@ class EntryPage extends Component {
     static propTypes = {
         copyToClipboard: PropTypes.func.isRequired,
         editing: PropTypes.bool.isRequired,
-        meta: PropTypes.arrayOf(PropTypes.object).isRequired,
         onAddMeta: PropTypes.func.isRequired,
         onCancelEdit: PropTypes.func.isRequired,
         onCancelViewingHidden: PropTypes.func.isRequired,
@@ -116,15 +115,12 @@ class EntryPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <CellGroup header="Properties">
-                    {this.filterFields(this.props.properties).map(field =>
-                        this.renderContentCell(field)
-                    )}
-                </CellGroup>
-                {this.props.meta.length > 0 || this.props.editing ? (
-                    <CellGroup header="Meta">
-                        {this.props.meta.map(field => this.renderContentCell(field))}
-                        {this.props.editing ? (
+                <ScrollView>
+                    <CellGroup header="Properties">
+                        <For each="field" of={this.filterFields(this.props.properties)}>
+                            {this.renderContentCell(field)}
+                        </For>
+                        <If condition={this.props.editing}>
                             <Cell
                                 key="$add"
                                 title="Add"
@@ -132,10 +128,10 @@ class EntryPage extends Component {
                                 tintColor="#1144FF"
                                 icon={{ name: "tag-plus", source: "material-community-icons" }}
                             />
-                        ) : null}
+                        </If>
                     </CellGroup>
-                ) : null}
-                {this.renderEditButtons()}
+                    {this.renderEditButtons()}
+                </ScrollView>
                 <Spinner
                     visible={this.props.saving}
                     textContent="Saving"

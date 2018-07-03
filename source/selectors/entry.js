@@ -8,10 +8,6 @@ export function getEntryID(state) {
     return state[STATE_KEY].id;
 }
 
-export function getEntryMeta(state) {
-    return getEntryFields(state).filter(f => f.field === "meta");
-}
-
 export function getEntryPassword(state) {
     const passwordField = getEntryProperties(state).find(item => item.property === "password");
     return (passwordField && passwordField.value) || "";
@@ -27,7 +23,7 @@ export function getEntryTitle(state) {
 }
 
 export function getEntryURL(state) {
-    const urlField = getEntryMeta(state).find(item => /url/i.test(item.property));
+    const urlField = getEntryProperties(state).find(item => /url/i.test(item.property));
     return (urlField && urlField.value) || null;
 }
 

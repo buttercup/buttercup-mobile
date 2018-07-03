@@ -1,4 +1,4 @@
-import { createCredentials } from "buttercup/dist/buttercup-web.min.js";
+import { Credentials } from "../library/buttercupCore.js";
 import {
     getDropboxConnection,
     getNextcloudConnection,
@@ -42,7 +42,7 @@ export function createNewArchive(state, dispatch) {
 export function createNewArchiveFile(currentDir, filename, password) {
     const archive = createEmptyArchive();
     const filePath = addBCUPExtension(joinPathAndFilename(currentDir, filename));
-    return getArchiveEncryptedContent(archive, createCredentials.fromPassword(password)).then(
+    return getArchiveEncryptedContent(archive, Credentials.fromPassword(password)).then(
         function __handleEncryptedContents(encText) {
             return getSharedConnection()
                 .writeFile(filePath, encText, "utf8")

@@ -8,5 +8,8 @@ export function handleError(message, error) {
             [{ text: "OK", onPress: () => {} }],
             { cancelable: false }
         );
+        if (__DEV__) {
+            console.error(error);
+        }
     }, 0);
 }

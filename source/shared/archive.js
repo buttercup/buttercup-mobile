@@ -11,12 +11,11 @@ export function saveCurrentArchive(overrideWorkspace = null) {
         const state = getState();
         const sourceID = getSelectedSourceID(state);
         const archiveManager = getSharedArchiveManager();
-        const sourceIndex = archiveManager.indexOfSource(sourceID);
-        workspace = archiveManager.sources[sourceIndex].workspace;
+        workspace = archiveManager.getSourceForID(sourceID).workspace;
     }
     return workspace
         .localDiffersFromRemote()
-        .then(differs => (differs ? workspace.mergeSaveablesFromRemote().then(() => true) : false))
+        .then(differs => (differs ? workspace.mergeFromRemote().then(() => true) : false))
         .then(shouldSave => (shouldSave ? workspace.save() : null))
         .then(doAsyncWork);
 }
