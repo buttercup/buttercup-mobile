@@ -62,7 +62,7 @@ export function deriveKeyNatively(password, salt, rounds, bits) {
     );
 }
 
-function internalEncrypt(text, keyDerivationInfo) {
+function internalEncrypt(text, keyDerivationInfo, generatedIV) {
     const encodedText = Platform.select({
         ios: new Buffer(text, "utf8").toString("base64"),
         android: toBase64(encodeURIComponent(text))
@@ -72,6 +72,7 @@ function internalEncrypt(text, keyDerivationInfo) {
         encodedText,
         keyDerivationInfo.key.toString("hex"),
         keyDerivationInfo.salt,
+        generatedIV.toString("hex"),
         keyDerivationInfo.hmac.toString("hex")
     ).then(res => {
         const [content, auth, iv, salt] = res.split("$");

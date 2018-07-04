@@ -31,12 +31,13 @@ RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(
     }
 }
 
-RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:(NSString *)ivHex:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
 
     const char* encryptedText = encrypt_cbc(
         [data UTF8String],
         [key UTF8String],
         [salt UTF8String],
+        [ivHex UTF8String],
         [hmacHexKey UTF8String]
     );
 

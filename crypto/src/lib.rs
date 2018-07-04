@@ -39,17 +39,20 @@ pub unsafe extern "C" fn encrypt_cbc(
     base64_data: *const c_char, // UTF8 String
     key: *const c_char,         // Hex
     salt: *const c_char,        // UTF8 String
+    iv_hex: *const c_char,      // Hex
     hmac_key: *const c_char,    // Hex
 ) -> *mut c_char {
     let data_str = base64::decode(CStr::from_ptr(base64_data).to_bytes()).unwrap();
     let key_str = hex::decode(CStr::from_ptr(key).to_bytes()).unwrap();
-    let hmac_str = hex::decode(CStr::from_ptr(hmac_key).to_bytes()).unwrap();
     let salt_str = CStr::from_ptr(salt).to_bytes();
+    let iv_bytes = hex::decode(CStr::from_ptr(iv_hex).to_bytes()).unwrap();
+    let hmac_str = hex::decode(CStr::from_ptr(hmac_key).to_bytes()).unwrap();
 
     let result = cbc::encrypt(
         data_str.as_slice(),
         key_str.as_slice(),
         salt_str,
+        iv_bytes.as_slice(),
         hmac_str.as_slice(),
     );
 
