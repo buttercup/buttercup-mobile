@@ -31,7 +31,7 @@
     "base-64": "^0.1.0",
     "browserify-zlib": "^0.1.4",
     "buffer": "^3.6.0",
-    "buttercup": "2.0.3",
+    "buttercup": "2.0.4",
     "console-browserify": "^1.1.0",
     "constants-browserify": "0.0.1",
     "dns.js": "^1.0.1",

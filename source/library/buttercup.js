@@ -19,9 +19,10 @@ let __sharedManager = null;
  * @param {String} name The archive name
  * @param {Credentials} sourceCreds Remote source credentials *instance*
  * @param {Credentials} archiveCreds Archive master password credentials *instance*
+ * @param {String} archiveType Archive type
  * @returns
  */
-export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
+export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds, archiveType) {
     const manager = getSharedArchiveManager();
     return doAsyncWork()
         .then(() =>
@@ -31,7 +32,9 @@ export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
             ])
         )
         .then(([sourceCredString, archiveCredString]) =>
-            manager.addSource(new ArchiveSource(name, sourceCredString, archiveCredString))
+            manager.addSource(
+                new ArchiveSource(name, sourceCredString, archiveCredString, { type: archiveType })
+            )
         );
 }
 
