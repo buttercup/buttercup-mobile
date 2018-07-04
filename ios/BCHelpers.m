@@ -66,4 +66,16 @@
     return [NSString stringWithString:hexString];
 }
 
++ (NSError *)convertExceptionToError:(NSException *)exception {
+    NSMutableDictionary * info = [NSMutableDictionary dictionary];
+    [info setValue:exception.name forKey:@"ExceptionName"];
+    [info setValue:exception.reason forKey:@"ExceptionReason"];
+    [info setValue:exception.callStackReturnAddresses forKey:@"ExceptionCallStackReturnAddresses"];
+    [info setValue:exception.callStackSymbols forKey:@"ExceptionCallStackSymbols"];
+    [info setValue:exception.userInfo forKey:@"ExceptionUserInfo"];
+
+    NSError *error = [[NSError alloc] initWithDomain:@"LibButtercup" code:500 userInfo:info];
+    return error;
+}
+
 @end

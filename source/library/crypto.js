@@ -74,13 +74,13 @@ function internalEncrypt(text, keyDerivationInfo) {
         keyDerivationInfo.salt,
         keyDerivationInfo.hmac.toString("hex")
     ).then(res => {
-        const [encryptedContent, auth, iv, salt] = res.split("$");
+        const [content, auth, iv, salt] = res.split("$");
         return {
             auth,
             iv,
             salt,
             rounds: keyDerivationInfo.rounds,
-            encryptedContent
+            content
         };
     });
 }
@@ -91,6 +91,10 @@ export function fetchUUIDs() {
 
 export function generateSalt(length) {
     return Crypto.generateSaltWithLength(length);
+}
+
+export function generateIV() {
+    return Crypto.generateIV().then(res => new Buffer(res, "hex"));
 }
 
 export function getUUID() {
@@ -127,7 +131,7 @@ export function patchCrypto() {
         .overrideEncryption("cbc", internalEncrypt)
         .overrideDecryption("cbc", internalDecrypt)
         .overrideSaltGeneration(generateSalt)
-        // .overrideIVGeneration()
+        .overrideIVGeneration(generateIV)
         .overrideKeyDerivation(deriveKeyNatively);
     tools.uuid.setUUIDGenerator(() => getUUID());
 }

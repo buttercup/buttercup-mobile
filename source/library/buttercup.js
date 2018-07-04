@@ -91,7 +91,7 @@ export function createRemoteCredentials(archiveType, options) {
 
 export function getArchiveEncryptedContent(archive, credentials) {
     const tds = new TextDatasource();
-    return tds.save(archive, credentials).then(encryptedContent => {
+    return tds.save(archive.getHistory(), credentials).then(encryptedContent => {
         return doAsyncWork().then(() => encryptedContent);
     });
 }

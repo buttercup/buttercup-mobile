@@ -14,5 +14,6 @@
 + (BOOL)constantTimeCompare:(NSString *)reference toChallenger:(NSString *)challenger;
 + (NSData *)dataFromHexString:(NSString *)string;
 + (NSString *)hexStringFromData:(NSData *)data;
++ (NSError *)convertExceptionToError:(NSException *)exception;
 
 @end

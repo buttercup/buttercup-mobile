@@ -7,3 +7,4 @@ const char* encrypt_cbc(const char* data, const char* key, const char* salt, con
 const char* decrypt_cbc(const char* data, const char* key, const char* iv, const char* salt, const char* hmac_key, const char* hmac);
 const char* generate_uuid_list(uint32_t count);
 const char* generate_salt(uint32_t count);
+const char* generate_random_bytes();

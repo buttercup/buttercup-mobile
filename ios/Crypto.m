@@ -46,7 +46,6 @@ RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:
 }
 
 RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex:(NSString *)salt:(NSString *)hmacHexKey:(NSString *)hmacHex:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-
     const char* decryptedText = decrypt_cbc(
         [data UTF8String],
         [key UTF8String],
@@ -62,7 +61,6 @@ RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex
 }
 
 RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-
     const char* uuidList = generate_uuid_list(count);
 
     if (uuidList) {
@@ -71,11 +69,18 @@ RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTP
 }
 
 RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-
     const char* salt = generate_salt(length);
 
     if (salt) {
         resolve([NSString stringWithUTF8String:salt]);
+    }
+}
+
+RCT_EXPORT_METHOD(generateIV:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    const char* iv = generate_random_bytes();
+
+    if (iv) {
+        resolve([BCHelpers hexStringFromData:[NSData dataWithBytes:iv length:16]]);
     }
 }
 
