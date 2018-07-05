@@ -135,13 +135,13 @@ pub mod android {
     use self::jni::JNIEnv;
     use super::*;
 
-    fn env_get_string(env: &JNIEnv, var: &JString, name: &str) -> String {
-        env.get_string(*var)
+    fn env_get_string(env: &JNIEnv, var: JString, name: &str) -> String {
+        env.get_string(var)
             .expect(&format!("Couldn't get {} from JNI Environment.", name))
             .into()
     }
 
-    fn env_get_hex_string(env: &JNIEnv, var: &JString, name: &str) -> Vec<u8> {
+    fn env_get_hex_string(env: &JNIEnv, var: JString, name: &str) -> Vec<u8> {
         let string = env_get_string(env, var, name);
         let decoded =
             hex::decode(string).expect(&format!("Could not decode JNI input hex: {}", name));
@@ -149,7 +149,7 @@ pub mod android {
         decoded
     }
 
-    fn env_get_base64_string(env: &JNIEnv, var: &JString, name: &str) -> Vec<u8> {
+    fn env_get_base64_string(env: &JNIEnv, var: JString, name: &str) -> Vec<u8> {
         let string = env_get_string(env, var, name);
         let decoded =
             base64::decode(&string).expect(&format!("Could not decode JNI input base64: {}", name));
@@ -171,8 +171,8 @@ pub mod android {
         iterations: c_uint,
         bits: c_uint,
     ) -> jstring {
-        let password = env_get_string(&env, &password, "Password");
-        let salt = env_get_string(&env, &salt, "Salt");
+        let password = env_get_string(&env, password, "Password");
+        let salt = env_get_string(&env, salt, "Salt");
         let result = pbkdf2(&password, &salt, iterations as usize, bits as usize);
         return_string_pointer(&env, hex::encode(result))
     }
@@ -188,11 +188,11 @@ pub mod android {
         hmac_key_hex: JString, // Hex
     ) -> jstring {
         // Convert pointers into data
-        let data = env_get_base64_string(&env, &encoded_text, "Encoded Data");
-        let key = env_get_hex_string(&env, &key_hex, "Key");
-        let salt = env_get_string(&env, &salt, "Salt");
-        let iv = env_get_hex_string(&env, &iv_hex, "IV");
-        let hmac_key = env_get_hex_string(&env, &hmac_key_hex, "HMAC Key");
+        let data = env_get_base64_string(&env, encoded_text, "Encoded Data");
+        let key = env_get_hex_string(&env, key_hex, "Key");
+        let salt = env_get_string(&env, salt, "Salt");
+        let iv = env_get_hex_string(&env, iv_hex, "IV");
+        let hmac_key = env_get_hex_string(&env, hmac_key_hex, "HMAC Key");
 
         // Encrypt
         let result = cbc::encrypt(
@@ -225,12 +225,12 @@ pub mod android {
         hmac_hex: JString,     // Hex
     ) -> jstring {
         // Convert pointers into data
-        let data = env_get_string(&env, &data, "Data");
-        let key = env_get_hex_string(&env, &key_hex, "Key");
-        let iv = env_get_hex_string(&env, &iv_hex, "IV");
-        let salt = env_get_string(&env, &salt, "Salt");
-        let hmac_key = env_get_hex_string(&env, &hmac_key_hex, "HMAC Key");
-        let hmac = env_get_hex_string(&env, &hmac_hex, "HMAC");
+        let data = env_get_string(&env, data, "Data");
+        let key = env_get_hex_string(&env, key_hex, "Key");
+        let iv = env_get_hex_string(&env, iv_hex, "IV");
+        let salt = env_get_string(&env, salt, "Salt");
+        let hmac_key = env_get_hex_string(&env, hmac_key_hex, "HMAC Key");
+        let hmac = env_get_hex_string(&env, hmac_hex, "HMAC");
 
         // Decrypt
         let result = cbc::decrypt(
