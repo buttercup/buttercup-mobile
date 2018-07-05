@@ -1507,7 +1507,7 @@
 				);
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../crypto/target/universal/release";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/libs";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1535,7 +1535,7 @@
 				);
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/../crypto/target/universal/release";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/libs";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
