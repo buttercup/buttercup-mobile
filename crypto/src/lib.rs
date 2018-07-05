@@ -6,6 +6,7 @@ extern crate uuid;
 use buttercup_crypto::derivation::pbkdf2;
 use buttercup_crypto::encryption::cbc;
 use buttercup_crypto::random::{generate_iv, generate_string};
+use std::ptr::null_mut;
 use uuid::Uuid;
 
 fn glued_result(string_list: Vec<String>) -> Vec<u8> {
@@ -186,7 +187,10 @@ pub mod android {
     }
 
     fn return_string_pointer(env: &JNIEnv, input: String) -> jstring {
-        let output = env.new_string(input).expect("Couldn't create JNI string");
+        let output = match env.new_string(input) {
+            Ok(val) => val,
+            Err(_) => return null_mut(),
+        };
         output.into_inner()
     }
 
@@ -230,8 +234,10 @@ pub mod android {
             iv.as_slice(),
             hmac_key.as_slice(),
         );
-
-        let (base64_result, hmac_code, iv, _) = result.ok().unwrap();
+        let (base64_result, hmac_code, iv, _) = match result {
+            Ok(val) => val,
+            Err(_) => return null_mut(),
+        };
         let glue = glued_result(vec![
             base64_result,
             hex::encode(hmac_code),
@@ -270,9 +276,11 @@ pub mod android {
             hmac.as_slice(),
         );
 
-        let decrypted_result = result.ok().unwrap();
+        let decrypted_result = match result {
+            Ok(val) => val,
+            Err(_) => return null_mut(),
+        };
         let decrypted_base64 = base64::encode(decrypted_result.as_slice());
-
         return_string_pointer(&env, decrypted_base64)
     }
 

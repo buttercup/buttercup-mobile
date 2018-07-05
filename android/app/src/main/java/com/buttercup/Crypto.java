@@ -41,7 +41,11 @@ public class Crypto extends ReactContextBaseJavaModule {
     @ReactMethod
     public void pbkdf2(String password, String salt, int rounds, int bits, Promise promise) {
         String derivationHex = Crypto.deriveKeyFromPassword(password, salt, rounds, bits);
-        promise.resolve(derivationHex);
+        if (derivationHex.length() > 0) {
+            promise.resolve(derivationHex);
+            return;
+        }
+        promise.reject("Key Derivation failed.");
     }
 
     @ReactMethod
@@ -60,6 +64,10 @@ public class Crypto extends ReactContextBaseJavaModule {
             ivHex,
             hmacKeyHex
         );
+        if (encryptedText == null) {
+            promise.reject("Encryption failed.");
+            return;
+        }
         promise.resolve(encryptedText);
     }
 
@@ -81,25 +89,41 @@ public class Crypto extends ReactContextBaseJavaModule {
             hmacKeyHex,
             hmacHex
         );
+        if (decryptedText == null) {
+            promise.reject("Decryption failed. The archive is possibly tampered with.");
+            return;
+        }
         promise.resolve(decryptedText);
     }
 
     @ReactMethod
     public void generateUUIDs(int count, Promise promise) {
         String uuids = Crypto.generateUUIDList(10);
-        promise.resolve(uuids);
+        if (uuids.length() > 0) {
+            promise.resolve(uuids);
+            return;
+        }
+        promise.reject("Generating UUIDs failed.");
     }
 
     @ReactMethod
     public void generateSaltWithLength(int length, Promise promise) {
         String salt = Crypto.generateSalt(length);
-        promise.resolve(salt);
+        if (salt.length() > 0) {
+            promise.resolve(salt);
+            return;
+        }
+        promise.reject("Generating Salt failed.");
     }
 
     @ReactMethod
     public void generateIV(Promise promise) {
         String ivHex = Crypto.generateRandomBytes();
-        promise.resolve(ivHex);
+        if (ivHex.length() > 0) {
+            promise.resolve(ivHex);
+            return;
+        }
+        promise.reject("Generating IV failed.");
     }
 
     @Override
