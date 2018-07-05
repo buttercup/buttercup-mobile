@@ -13,7 +13,6 @@ buttercup-crypto = { path = "../../buttercup-crypto" }
 hex = "^0.3"
 base64 = "^0.5"
 uuid = { version = "0.6", features = ["v4"] }
-jni = { version = "0.10.1", default-features = false }
 
 [target.'cfg(target_os="android")'.dependencies]
 jni = { version = "0.10.1", default-features = false }

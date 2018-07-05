@@ -1,15 +1,11 @@
 extern crate base64;
 extern crate buttercup_crypto;
 extern crate hex;
-extern crate jni;
 extern crate uuid;
 
 use buttercup_crypto::derivation::pbkdf2;
 use buttercup_crypto::encryption::cbc;
 use buttercup_crypto::random::{generate_iv, generate_string};
-use jni::objects::{JClass, JString};
-use jni::sys::jstring;
-use jni::JNIEnv;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_uint};
 use uuid::Uuid;
@@ -124,21 +120,55 @@ pub unsafe extern "C" fn generate_random_bytes() -> *mut c_char {
     CString::from_vec_unchecked(iv.to_vec()).into_raw()
 }
 
-#[no_mangle]
+#[cfg(target_os = "android")]
 #[allow(non_snake_case)]
-pub extern "system" fn Java_com_buttercup_Crypto_hello(
-    env: JNIEnv,
-    _class: JClass,
-    input: JString,
-) -> jstring {
-    let input: String = env
-        .get_string(input)
-        .expect("Couldn't get java string!")
-        .into();
+pub mod android {
+    extern crate jni;
 
-    let output = env
-        .new_string(format!("Hello, {}! I'm running from rust!", input))
-        .expect("Couldn't create java string!");
+    use self::jni::objects::{JClass, JString};
+    use self::jni::sys::{jlong, jstring};
+    use self::jni::JNIEnv;
+    use super::*;
 
-    output.into_inner()
+    #[no_mangle]
+    pub extern "system" fn Java_com_buttercup_Crypto_deriveKeyFromPassword(
+        env: JNIEnv,
+        _class: JClass,
+        password: JString,
+        salt: JString,
+        iterations: c_uint,
+        bits: c_uint,
+    ) -> jstring {
+        let password: String = env
+            .get_string(password)
+            .expect("Couldn't get password.")
+            .into();
+        let salt: String = env.get_string(salt).expect("Couldn't get salt.").into();
+
+        let result = pbkdf2(&password, &salt, iterations as usize, bits as usize);
+
+        let output = env
+            .new_string(hex::encode(result))
+            .expect("Couldn't create derivation result as hex.");
+
+        output.into_inner()
+    }
+
+    #[no_mangle]
+    pub extern "system" fn Java_com_buttercup_Crypto_generateUUIDList(
+        env: JNIEnv,
+        _class: JClass,
+        count: c_uint,
+    ) -> jstring {
+        let mut list = Vec::<String>::new();
+        for _ in 0..count {
+            list.push(format!("{}", Uuid::new_v4()));
+        }
+        let output = env
+            .new_string(list.join(","))
+            .expect("Couldn't create java string!");
+
+        output.into_inner()
+    }
+
 }
