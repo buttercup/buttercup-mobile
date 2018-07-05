@@ -47,13 +47,8 @@ function deriveKeyNatively(password, salt, rounds, bits) {
 }
 
 function internalEncrypt(text, keyDerivationInfo, generatedIV) {
-    const encodedText = Platform.select({
-        ios: new Buffer(text, "utf8").toString("base64"),
-        android: new Buffer(encodeURIComponent(text), "utf8").toString("base64")
-    });
-
     return Crypto.encryptText(
-        encodedText,
+        new Buffer(text, "utf8").toString("base64"),
         keyDerivationInfo.key.toString("hex"),
         keyDerivationInfo.salt,
         generatedIV.toString("hex"),

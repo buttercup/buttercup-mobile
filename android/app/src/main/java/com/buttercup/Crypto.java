@@ -14,6 +14,21 @@ public class Crypto extends ReactContextBaseJavaModule {
     private static native String deriveKeyFromPassword(String password, String salt, int rounds, int bits);
     private static native String generateSalt(int length);
     private static native String generateRandomBytes();
+    private static native String encryptCBC(
+        String encodedText,
+        String keyHex,
+        String salt,
+        String ivHex,
+        String hmacKeyHex
+    );
+    private static native String decryptCBC(
+        String encryptedText,
+        String keyHex,
+        String ivHex,
+        String salt,
+        String hmacKeyHex,
+        String hmacHex
+    );
 
     static {
         System.loadLibrary("crypto");
@@ -30,7 +45,47 @@ public class Crypto extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void generateUUIDs(Promise promise) {
+    public void encryptText(
+        String encodedText,
+        String keyHex,
+        String salt,
+        String ivHex,
+        String hmacKeyHex,
+        Promise promise
+    ) {
+        String encryptedText = Crypto.encryptCBC(
+            encodedText,
+            keyHex,
+            salt,
+            ivHex,
+            hmacKeyHex
+        );
+        promise.resolve(encryptedText);
+    }
+
+    @ReactMethod
+    public void decryptText(
+        String encryptedText,
+        String keyHex,
+        String ivHex,
+        String salt,
+        String hmacKeyHex,
+        String hmacHex,
+        Promise promise
+    ) {
+        String decryptedText = Crypto.decryptCBC(
+            encryptedText,
+            keyHex,
+            ivHex,
+            salt,
+            hmacKeyHex,
+            hmacHex
+        );
+        promise.resolve(decryptedText);
+    }
+
+    @ReactMethod
+    public void generateUUIDs(int count, Promise promise) {
         String uuids = Crypto.generateUUIDList(10);
         promise.resolve(uuids);
     }

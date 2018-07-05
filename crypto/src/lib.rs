@@ -156,6 +156,102 @@ pub mod android {
     }
 
     #[no_mangle]
+    pub extern "system" fn Java_com_buttercup_Crypto_encryptCBC(
+        env: JNIEnv,
+        _: JClass,
+        encoded_text: JString, // Base64 Encoded text
+        key_hex: JString,      // Hex
+        salt: JString,         // UTF8 String
+        iv_hex: JString,       // Hex
+        hmac_key_hex: JString, // Hex
+    ) -> jstring {
+        // Convert pointers into data
+        let encoded_text: String = env
+            .get_string(encoded_text)
+            .expect("Couldn't get data.")
+            .into();
+        let key_hex: String = env.get_string(key_hex).expect("Couldn't get key.").into();
+        let salt: String = env.get_string(salt).expect("Couldn't get salt.").into();
+        let iv_hex: String = env.get_string(iv_hex).expect("Couldn't get iv.").into();
+        let hmac_key_hex: String = env
+            .get_string(hmac_key_hex)
+            .expect("Couldn't get hmac key.")
+            .into();
+
+        // Decode data
+        let data = base64::decode(&encoded_text).unwrap();
+        let key = hex::decode(&key_hex).unwrap();
+        let iv = hex::decode(&iv_hex).unwrap();
+        let hmac_key = hex::decode(&hmac_key_hex).unwrap();
+
+        // Encrypt
+        let result = cbc::encrypt(
+            data.as_slice(),
+            key.as_slice(),
+            salt.as_bytes(),
+            iv.as_slice(),
+            hmac_key.as_slice(),
+        );
+
+        let (base64_result, hmac_code, _, _) = result.ok().unwrap();
+        let glue = glued_result(vec![base64_result, hex::encode(hmac_code), iv_hex, salt]);
+
+        let output = env
+            .new_string(String::from_utf8(glue).ok().unwrap())
+            .expect("Couldn't create glued string from encrypted result");
+
+        output.into_inner()
+    }
+
+    #[no_mangle]
+    pub extern "system" fn Java_com_buttercup_Crypto_decryptCBC(
+        env: JNIEnv,
+        _: JClass,
+        data: JString,         // UTF8 String
+        key_hex: JString,      // Hex
+        iv_hex: JString,       // Hex
+        salt: JString,         // UTF8 String
+        hmac_key_hex: JString, // Hex
+        hmac_hex: JString,     // Hex
+    ) -> jstring {
+        // Convert pointers into data
+        let data: String = env.get_string(data).expect("Couldn't get data.").into();
+        let key_hex: String = env.get_string(key_hex).expect("Couldn't get key.").into();
+        let iv_hex: String = env.get_string(iv_hex).expect("Couldn't get iv.").into();
+        let salt: String = env.get_string(salt).expect("Couldn't get salt.").into();
+        let hmac_key_hex: String = env
+            .get_string(hmac_key_hex)
+            .expect("Couldn't get hmac key.")
+            .into();
+        let hmac_hex: String = env.get_string(hmac_hex).expect("Couldn't get hmac.").into();
+
+        // Decode data
+        let key = hex::decode(&key_hex).unwrap();
+        let iv = hex::decode(&iv_hex).unwrap();
+        let hmac_key = hex::decode(&hmac_key_hex).unwrap();
+        let hmac = hex::decode(&hmac_hex).unwrap();
+
+        // Decrypt
+        let result = cbc::decrypt(
+            data.as_bytes(),
+            key.as_slice(),
+            iv.as_slice(),
+            salt.as_bytes(),
+            hmac_key.as_slice(),
+            hmac.as_slice(),
+        );
+
+        let decrypted_result = result.ok().unwrap();
+        let decrypted_base64 = base64::encode(decrypted_result.as_slice());
+
+        let output = env
+            .new_string(decrypted_base64)
+            .expect("Couldn't create decrypted base64 string.");
+
+        output.into_inner()
+    }
+
+    #[no_mangle]
     pub extern "system" fn Java_com_buttercup_Crypto_generateUUIDList(
         env: JNIEnv,
         _: JClass,
