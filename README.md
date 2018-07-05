@@ -78,6 +78,45 @@ To build a signed APK:
  3. In Android Studio, choose _Build > Generate Signed APK_.
  4. Build a release APK by following the instructions in the GUI.
 
+### Crypto Library Development
+
+Buttercup Mobile's crypto functionality is written in Rust and lives under `./crypto` directory. The binaries are already built and placed inside the relevant directories and you don't usually need to change those. However, if you want to work on the Rust library, the following are required:
+
+1. Install Rust & Cargo using [`rustup` toolchain](https://rustup.rs/)
+2. Install [`cargo lipo`](https://github.com/TimNN/cargo-lipo) to build iOS binaries
+3. Add iOS and Android targets to your `rustup` toolchain:
+
+```sh
+# iOS
+rustup target add aarch64-apple-ios
+rustup target add armv7-apple-ios
+rustup target add i386-apple-ios
+rustup target add x86_64-apple-ios
+
+# Android
+rustup target add aarch64-linux-android
+rustup target add armv7-linux-androideabi
+rustup target add i686-linux-android
+```
+
+4. Get Android NDK. We recommend installing it via Android Studio or `sdkmanager`:
+
+```sh
+sdkmanager --verbose ndk-bundle
+```
+
+5. Create the standalone NDKs.
+
+```sh
+cd crypto && ./create-ndk-standalone.sh
+```
+
+6. Finally build the binaries:
+
+```sh
+./build.sh
+```
+
 ## Contributing
 We love contributions - anything from new features and bug fixes to suggestions and questions. Please follow our [contribution guide](CONTRIBUTING.md).
 
