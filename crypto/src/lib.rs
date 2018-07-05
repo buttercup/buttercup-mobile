@@ -16,6 +16,14 @@ fn glued_result(string_list: Vec<String>) -> Vec<u8> {
     joined_bytes.to_vec()
 }
 
+fn generated_glued_uuid_list(count: usize) -> String {
+    let mut list = Vec::<String>::new();
+    for _ in 0..count {
+        list.push(format!("{}", Uuid::new_v4()));
+    }
+    list.join(",")
+}
+
 #[no_mangle]
 pub unsafe extern "C" fn pbkdf2_derive(
     password: *const c_char,
@@ -101,11 +109,7 @@ pub unsafe extern "C" fn decrypt_cbc(
 
 #[no_mangle]
 pub unsafe extern "C" fn generate_uuid_list(count: c_uint) -> *mut c_char {
-    let mut list = Vec::<String>::new();
-    for _ in 0..count as usize {
-        list.push(format!("{}", Uuid::new_v4()));
-    }
-    let string = list.join(",");
+    let string = generated_glued_uuid_list(count as usize);
     CString::from_vec_unchecked(Vec::from(string)).into_raw()
 }
 
@@ -127,9 +131,36 @@ pub mod android {
     extern crate jni;
 
     use self::jni::objects::{JClass, JString};
-    use self::jni::sys::{jlong, jstring};
+    use self::jni::sys::jstring;
     use self::jni::JNIEnv;
     use super::*;
+
+    fn env_get_string(env: &JNIEnv, var: &JString, name: &str) -> String {
+        env.get_string(*var)
+            .expect(&format!("Couldn't get {} from JNI Environment.", name))
+            .into()
+    }
+
+    fn env_get_hex_string(env: &JNIEnv, var: &JString, name: &str) -> Vec<u8> {
+        let string = env_get_string(env, var, name);
+        let decoded =
+            hex::decode(string).expect(&format!("Could not decode JNI input hex: {}", name));
+
+        decoded
+    }
+
+    fn env_get_base64_string(env: &JNIEnv, var: &JString, name: &str) -> Vec<u8> {
+        let string = env_get_string(env, var, name);
+        let decoded =
+            base64::decode(&string).expect(&format!("Could not decode JNI input base64: {}", name));
+
+        decoded
+    }
+
+    fn return_string_pointer(env: &JNIEnv, input: String) -> jstring {
+        let output = env.new_string(input).expect("Couldn't create JNI string");
+        output.into_inner()
+    }
 
     #[no_mangle]
     pub extern "system" fn Java_com_buttercup_Crypto_deriveKeyFromPassword(
@@ -140,19 +171,10 @@ pub mod android {
         iterations: c_uint,
         bits: c_uint,
     ) -> jstring {
-        let password: String = env
-            .get_string(password)
-            .expect("Couldn't get password.")
-            .into();
-        let salt: String = env.get_string(salt).expect("Couldn't get salt.").into();
-
+        let password = env_get_string(&env, &password, "Password");
+        let salt = env_get_string(&env, &salt, "Salt");
         let result = pbkdf2(&password, &salt, iterations as usize, bits as usize);
-
-        let output = env
-            .new_string(hex::encode(result))
-            .expect("Couldn't create derivation result as hex.");
-
-        output.into_inner()
+        return_string_pointer(&env, hex::encode(result))
     }
 
     #[no_mangle]
@@ -166,23 +188,11 @@ pub mod android {
         hmac_key_hex: JString, // Hex
     ) -> jstring {
         // Convert pointers into data
-        let encoded_text: String = env
-            .get_string(encoded_text)
-            .expect("Couldn't get data.")
-            .into();
-        let key_hex: String = env.get_string(key_hex).expect("Couldn't get key.").into();
-        let salt: String = env.get_string(salt).expect("Couldn't get salt.").into();
-        let iv_hex: String = env.get_string(iv_hex).expect("Couldn't get iv.").into();
-        let hmac_key_hex: String = env
-            .get_string(hmac_key_hex)
-            .expect("Couldn't get hmac key.")
-            .into();
-
-        // Decode data
-        let data = base64::decode(&encoded_text).unwrap();
-        let key = hex::decode(&key_hex).unwrap();
-        let iv = hex::decode(&iv_hex).unwrap();
-        let hmac_key = hex::decode(&hmac_key_hex).unwrap();
+        let data = env_get_base64_string(&env, &encoded_text, "Encoded Data");
+        let key = env_get_hex_string(&env, &key_hex, "Key");
+        let salt = env_get_string(&env, &salt, "Salt");
+        let iv = env_get_hex_string(&env, &iv_hex, "IV");
+        let hmac_key = env_get_hex_string(&env, &hmac_key_hex, "HMAC Key");
 
         // Encrypt
         let result = cbc::encrypt(
@@ -193,14 +203,14 @@ pub mod android {
             hmac_key.as_slice(),
         );
 
-        let (base64_result, hmac_code, _, _) = result.ok().unwrap();
-        let glue = glued_result(vec![base64_result, hex::encode(hmac_code), iv_hex, salt]);
-
-        let output = env
-            .new_string(String::from_utf8(glue).ok().unwrap())
-            .expect("Couldn't create glued string from encrypted result");
-
-        output.into_inner()
+        let (base64_result, hmac_code, iv, _) = result.ok().unwrap();
+        let glue = glued_result(vec![
+            base64_result,
+            hex::encode(hmac_code),
+            hex::encode(iv),
+            salt,
+        ]);
+        return_string_pointer(&env, String::from_utf8(glue).ok().unwrap())
     }
 
     #[no_mangle]
@@ -215,21 +225,12 @@ pub mod android {
         hmac_hex: JString,     // Hex
     ) -> jstring {
         // Convert pointers into data
-        let data: String = env.get_string(data).expect("Couldn't get data.").into();
-        let key_hex: String = env.get_string(key_hex).expect("Couldn't get key.").into();
-        let iv_hex: String = env.get_string(iv_hex).expect("Couldn't get iv.").into();
-        let salt: String = env.get_string(salt).expect("Couldn't get salt.").into();
-        let hmac_key_hex: String = env
-            .get_string(hmac_key_hex)
-            .expect("Couldn't get hmac key.")
-            .into();
-        let hmac_hex: String = env.get_string(hmac_hex).expect("Couldn't get hmac.").into();
-
-        // Decode data
-        let key = hex::decode(&key_hex).unwrap();
-        let iv = hex::decode(&iv_hex).unwrap();
-        let hmac_key = hex::decode(&hmac_key_hex).unwrap();
-        let hmac = hex::decode(&hmac_hex).unwrap();
+        let data = env_get_string(&env, &data, "Data");
+        let key = env_get_hex_string(&env, &key_hex, "Key");
+        let iv = env_get_hex_string(&env, &iv_hex, "IV");
+        let salt = env_get_string(&env, &salt, "Salt");
+        let hmac_key = env_get_hex_string(&env, &hmac_key_hex, "HMAC Key");
+        let hmac = env_get_hex_string(&env, &hmac_hex, "HMAC");
 
         // Decrypt
         let result = cbc::decrypt(
@@ -244,11 +245,7 @@ pub mod android {
         let decrypted_result = result.ok().unwrap();
         let decrypted_base64 = base64::encode(decrypted_result.as_slice());
 
-        let output = env
-            .new_string(decrypted_base64)
-            .expect("Couldn't create decrypted base64 string.");
-
-        output.into_inner()
+        return_string_pointer(&env, decrypted_base64)
     }
 
     #[no_mangle]
@@ -257,15 +254,8 @@ pub mod android {
         _: JClass,
         count: c_uint,
     ) -> jstring {
-        let mut list = Vec::<String>::new();
-        for _ in 0..count {
-            list.push(format!("{}", Uuid::new_v4()));
-        }
-        let output = env
-            .new_string(list.join(","))
-            .expect("Couldn't create java string!");
-
-        output.into_inner()
+        let string = generated_glued_uuid_list(count as usize);
+        return_string_pointer(&env, string)
     }
 
     #[no_mangle]
@@ -275,9 +265,7 @@ pub mod android {
         length: c_uint,
     ) -> jstring {
         let salt = generate_string(length as usize);
-        let output = env.new_string(salt).expect("Couldn't create salt string");
-
-        output.into_inner()
+        return_string_pointer(&env, salt)
     }
 
     #[no_mangle]
@@ -286,11 +274,7 @@ pub mod android {
         _: JClass,
     ) -> jstring {
         let iv = generate_iv();
-        let output = env
-            .new_string(hex::encode(iv))
-            .expect("Couldn't create salt string");
-
-        output.into_inner()
+        return_string_pointer(&env, hex::encode(iv))
     }
 
 }
