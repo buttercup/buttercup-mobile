@@ -24,7 +24,7 @@ RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(
     );
 
     if (utf8String) {
-        resolve([BCHelpers hexStringFromData:[NSData dataWithBytes:utf8String length:bits/8]]);
+        resolve([NSString stringWithUTF8String:utf8String]);
     } else {
         NSError *error = [NSError init];
         reject(@"pbkdf2_failed", @"Key Derivation failed.", error);
@@ -81,7 +81,7 @@ RCT_EXPORT_METHOD(generateIV:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBl
     const char* iv = generate_random_bytes();
 
     if (iv) {
-        resolve([BCHelpers hexStringFromData:[NSData dataWithBytes:iv length:16]]);
+        resolve([NSString stringWithUTF8String:iv]);
     }
 }
 

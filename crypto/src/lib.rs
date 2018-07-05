@@ -31,7 +31,8 @@ pub unsafe extern "C" fn pbkdf2_derive(
         iterations as usize,
         bits as usize,
     );
-    CString::from_vec_unchecked(result).into_raw()
+    let result_hex = hex::encode(result);
+    CString::from_vec_unchecked(Vec::from(result_hex)).into_raw()
 }
 
 #[no_mangle]
@@ -116,8 +117,8 @@ pub unsafe extern "C" fn generate_salt(length: c_uint) -> *mut c_char {
 
 #[no_mangle]
 pub unsafe extern "C" fn generate_random_bytes() -> *mut c_char {
-    let iv = generate_iv();
-    CString::from_vec_unchecked(iv.to_vec()).into_raw()
+    let iv = hex::encode(generate_iv());
+    CString::from_vec_unchecked(Vec::from(iv)).into_raw()
 }
 
 #[cfg(target_os = "android")]
@@ -133,7 +134,7 @@ pub mod android {
     #[no_mangle]
     pub extern "system" fn Java_com_buttercup_Crypto_deriveKeyFromPassword(
         env: JNIEnv,
-        _class: JClass,
+        _: JClass,
         password: JString,
         salt: JString,
         iterations: c_uint,
@@ -157,7 +158,7 @@ pub mod android {
     #[no_mangle]
     pub extern "system" fn Java_com_buttercup_Crypto_generateUUIDList(
         env: JNIEnv,
-        _class: JClass,
+        _: JClass,
         count: c_uint,
     ) -> jstring {
         let mut list = Vec::<String>::new();
@@ -167,6 +168,31 @@ pub mod android {
         let output = env
             .new_string(list.join(","))
             .expect("Couldn't create java string!");
+
+        output.into_inner()
+    }
+
+    #[no_mangle]
+    pub extern "system" fn Java_com_buttercup_Crypto_generateSalt(
+        env: JNIEnv,
+        _: JClass,
+        length: c_uint,
+    ) -> jstring {
+        let salt = generate_string(length as usize);
+        let output = env.new_string(salt).expect("Couldn't create salt string");
+
+        output.into_inner()
+    }
+
+    #[no_mangle]
+    pub extern "system" fn Java_com_buttercup_Crypto_generateRandomBytes(
+        env: JNIEnv,
+        _: JClass,
+    ) -> jstring {
+        let iv = generate_iv();
+        let output = env
+            .new_string(hex::encode(iv))
+            .expect("Couldn't create salt string");
 
         output.into_inner()
     }
