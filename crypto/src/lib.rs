@@ -6,8 +6,6 @@ extern crate uuid;
 use buttercup_crypto::derivation::pbkdf2;
 use buttercup_crypto::encryption::cbc;
 use buttercup_crypto::random::{generate_iv, generate_string};
-use std::ffi::{CStr, CString};
-use std::os::raw::{c_char, c_uint};
 use uuid::Uuid;
 
 fn glued_result(string_list: Vec<String>) -> Vec<u8> {
@@ -24,105 +22,134 @@ fn generated_glued_uuid_list(count: usize) -> String {
     list.join(",")
 }
 
-#[no_mangle]
-pub unsafe extern "C" fn pbkdf2_derive(
-    password: *const c_char,
-    salt: *const c_char,
-    iterations: c_uint,
-    bits: c_uint,
-) -> *mut c_char {
-    let password_str = CStr::from_ptr(password);
-    let salt_str = CStr::from_ptr(salt);
-    let result = pbkdf2(
-        password_str.to_str().unwrap(),
-        salt_str.to_str().unwrap(),
-        iterations as usize,
-        bits as usize,
-    );
-    let result_hex = hex::encode(result);
-    CString::from_vec_unchecked(Vec::from(result_hex)).into_raw()
-}
+#[cfg(target_os = "ios")]
+pub mod ios {
+    use super::*;
+    use std::ffi::{CStr, CString};
+    use std::os::raw::{c_char, c_uint};
 
-#[no_mangle]
-pub unsafe extern "C" fn encrypt_cbc(
-    base64_data: *const c_char, // UTF8 String
-    key: *const c_char,         // Hex
-    salt: *const c_char,        // UTF8 String
-    iv_hex: *const c_char,      // Hex
-    hmac_key: *const c_char,    // Hex
-) -> *mut c_char {
-    let data_str = base64::decode(CStr::from_ptr(base64_data).to_bytes()).unwrap();
-    let key_str = hex::decode(CStr::from_ptr(key).to_bytes()).unwrap();
-    let salt_str = CStr::from_ptr(salt).to_bytes();
-    let iv_bytes = hex::decode(CStr::from_ptr(iv_hex).to_bytes()).unwrap();
-    let hmac_str = hex::decode(CStr::from_ptr(hmac_key).to_bytes()).unwrap();
+    unsafe fn env_get_string(var: *const c_char, name: &str) -> &str {
+        let string = CStr::from_ptr(var)
+            .to_str()
+            .expect(&format!("Couldn't get {} from iOS pointer.", name));
 
-    let result = cbc::encrypt(
-        data_str.as_slice(),
-        key_str.as_slice(),
-        salt_str,
-        iv_bytes.as_slice(),
-        hmac_str.as_slice(),
-    );
+        string
+    }
 
-    let (base64_result, hmac_code, iv, new_salt) = result.ok().unwrap();
-    let glue = glued_result(vec![
-        base64_result,
-        hex::encode(hmac_code),
-        hex::encode(iv),
-        String::from_utf8_unchecked(new_salt),
-    ]);
+    unsafe fn env_get_hex_string(var: *const c_char, name: &str) -> Vec<u8> {
+        let string = env_get_string(var, name);
+        let decoded =
+            hex::decode(string).expect(&format!("Could not decode pointer input hex: {}", name));
 
-    CString::from_vec_unchecked(glue).into_raw()
-}
+        decoded
+    }
 
-#[no_mangle]
-pub unsafe extern "C" fn decrypt_cbc(
-    base64_data: *const c_char, // UTF8 String
-    key: *const c_char,         // Hex
-    iv: *const c_char,          // Hex
-    salt: *const c_char,        // UTF8 String
-    hmac_key: *const c_char,    // Hex
-    hmac: *const c_char,        // Hex
-) -> *mut c_char {
-    let data_str = CStr::from_ptr(base64_data).to_bytes();
-    let key_str = hex::decode(CStr::from_ptr(key).to_bytes()).unwrap();
-    let iv_str = hex::decode(CStr::from_ptr(iv).to_bytes()).unwrap();
-    let salt_str = CStr::from_ptr(salt).to_bytes();
-    let hmac_key_str = hex::decode(CStr::from_ptr(hmac_key).to_bytes()).unwrap();
-    let hmac_str = hex::decode(CStr::from_ptr(hmac).to_bytes()).unwrap();
+    unsafe fn env_get_base64_string(var: *const c_char, name: &str) -> Vec<u8> {
+        let string = env_get_string(var, name);
+        let decoded = base64::decode(&string)
+            .expect(&format!("Could not decode pointer input base64: {}", name));
 
-    let result = cbc::decrypt(
-        data_str,
-        key_str.as_slice(),
-        iv_str.as_slice(),
-        salt_str,
-        hmac_key_str.as_slice(),
-        hmac_str.as_slice(),
-    );
+        decoded
+    }
 
-    let decrypted_result = result.ok().unwrap();
-    let decrypted_base64 = base64::encode(decrypted_result.as_slice());
+    unsafe fn return_string_pointer(input: String) -> *mut c_char {
+        CString::from_vec_unchecked(Vec::from(input)).into_raw()
+    }
 
-    CString::from_vec_unchecked(Vec::from(decrypted_base64)).into_raw()
-}
+    #[no_mangle]
+    pub unsafe extern "C" fn pbkdf2_derive(
+        password: *const c_char,
+        salt: *const c_char,
+        iterations: c_uint,
+        bits: c_uint,
+    ) -> *mut c_char {
+        let password_str = env_get_string(password, "Password");
+        let salt_str = env_get_string(salt, "Salt");
+        let result = pbkdf2(password_str, salt_str, iterations as usize, bits as usize);
 
-#[no_mangle]
-pub unsafe extern "C" fn generate_uuid_list(count: c_uint) -> *mut c_char {
-    let string = generated_glued_uuid_list(count as usize);
-    CString::from_vec_unchecked(Vec::from(string)).into_raw()
-}
+        return_string_pointer(hex::encode(result))
+    }
 
-#[no_mangle]
-pub unsafe extern "C" fn generate_salt(length: c_uint) -> *mut c_char {
-    let salt = generate_string(length as usize);
-    CString::from_vec_unchecked(Vec::from(salt)).into_raw()
-}
+    #[no_mangle]
+    pub unsafe extern "C" fn encrypt_cbc(
+        encoded_text: *const c_char, // UTF8 String
+        key_hex: *const c_char,      // Hex
+        salt: *const c_char,         // UTF8 String
+        iv_hex: *const c_char,       // Hex
+        hmac_key_hex: *const c_char, // Hex
+    ) -> *mut c_char {
+        let data = env_get_base64_string(encoded_text, "Data");
+        let key = env_get_hex_string(key_hex, "Key");
+        let salt = env_get_string(salt, "Salt");
+        let iv = env_get_hex_string(iv_hex, "IV");
+        let hmac_key = env_get_hex_string(hmac_key_hex, "HMAC Key");
 
-#[no_mangle]
-pub unsafe extern "C" fn generate_random_bytes() -> *mut c_char {
-    let iv = hex::encode(generate_iv());
-    CString::from_vec_unchecked(Vec::from(iv)).into_raw()
+        let result = cbc::encrypt(
+            data.as_slice(),
+            key.as_slice(),
+            salt.as_bytes(),
+            iv.as_slice(),
+            hmac_key.as_slice(),
+        );
+
+        let (base64_result, hmac_code, iv, _) = result.ok().unwrap();
+        let glue = glued_result(vec![
+            base64_result,
+            hex::encode(hmac_code),
+            hex::encode(iv),
+            String::from(salt),
+        ]);
+
+        return_string_pointer(String::from_utf8(glue).ok().unwrap())
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn decrypt_cbc(
+        data: *const c_char,         // UTF8 String
+        key_hex: *const c_char,      // Hex
+        iv_hex: *const c_char,       // Hex
+        salt: *const c_char,         // UTF8 String
+        hmac_key_hex: *const c_char, // Hex
+        hmac_hex: *const c_char,     // Hex
+    ) -> *mut c_char {
+        // Convert pointers into data
+        let data = env_get_string(data, "Data");
+        let key = env_get_hex_string(key_hex, "Key");
+        let iv = env_get_hex_string(iv_hex, "IV");
+        let salt = env_get_string(salt, "Salt");
+        let hmac_key = env_get_hex_string(hmac_key_hex, "HMAC Key");
+        let hmac = env_get_hex_string(hmac_hex, "HMAC");
+
+        let result = cbc::decrypt(
+            data.as_bytes(),
+            key.as_slice(),
+            iv.as_slice(),
+            salt.as_bytes(),
+            hmac_key.as_slice(),
+            hmac.as_slice(),
+        );
+
+        let decrypted_result = result.ok().unwrap();
+        return_string_pointer(base64::encode(decrypted_result.as_slice()))
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn generate_uuid_list(count: c_uint) -> *mut c_char {
+        let string = generated_glued_uuid_list(count as usize);
+        return_string_pointer(string)
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn generate_salt(length: c_uint) -> *mut c_char {
+        let salt = generate_string(length as usize);
+        return_string_pointer(salt)
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn generate_random_bytes() -> *mut c_char {
+        let iv = hex::encode(generate_iv());
+        return_string_pointer(iv)
+    }
 }
 
 #[cfg(target_os = "android")]
@@ -134,6 +161,7 @@ pub mod android {
     use self::jni::sys::jstring;
     use self::jni::JNIEnv;
     use super::*;
+    use std::os::raw::c_uint;
 
     fn env_get_string(env: &JNIEnv, var: JString, name: &str) -> String {
         env.get_string(var)
