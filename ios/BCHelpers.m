@@ -66,15 +66,15 @@
     return [NSString stringWithString:hexString];
 }
 
-+ (NSError *)convertExceptionToError:(NSException *)exception {
-    NSMutableDictionary * info = [NSMutableDictionary dictionary];
-    [info setValue:exception.name forKey:@"ExceptionName"];
-    [info setValue:exception.reason forKey:@"ExceptionReason"];
-    [info setValue:exception.callStackReturnAddresses forKey:@"ExceptionCallStackReturnAddresses"];
-    [info setValue:exception.callStackSymbols forKey:@"ExceptionCallStackSymbols"];
-    [info setValue:exception.userInfo forKey:@"ExceptionUserInfo"];
++ (NSError *)newErrorObject {
+    // Create the error.
+    NSString *domain = @"pw.buttercup.mobile.Crypto";
+    int errorCode = 4;
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    [userInfo setObject:@"Crypto Error" forKey:NSLocalizedDescriptionKey];
 
-    NSError *error = [[NSError alloc] initWithDomain:@"LibButtercup" code:500 userInfo:info];
+    // Populate the error reference.
+    NSError* error = [[NSError alloc] initWithDomain:domain code:errorCode userInfo:userInfo];
     return error;
 }
 

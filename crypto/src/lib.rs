@@ -93,7 +93,10 @@ pub mod ios {
             hmac_key.as_slice(),
         );
 
-        let (base64_result, hmac_code, iv, _) = result.ok().unwrap();
+        let (base64_result, hmac_code, iv, _) = match result {
+            Ok(val) => val,
+            Err(_) => return null_mut(),
+        };
         let glue = glued_result(vec![
             base64_result,
             hex::encode(hmac_code),
@@ -130,7 +133,10 @@ pub mod ios {
             hmac.as_slice(),
         );
 
-        let decrypted_result = result.ok().unwrap();
+        let decrypted_result = match result {
+            Ok(val) => val,
+            Err(_) => return null_mut(),
+        };
         return_string_pointer(base64::encode(decrypted_result.as_slice()))
     }
 

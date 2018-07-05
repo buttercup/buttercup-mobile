@@ -26,8 +26,11 @@ RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(
     if (utf8String) {
         resolve([NSString stringWithUTF8String:utf8String]);
     } else {
-        NSError *error = [NSError init];
-        reject(@"pbkdf2_failed", @"Key Derivation failed.", error);
+        reject(
+            @"pbkdf2_failed",
+            @"Key Derivation failed.",
+            [BCHelpers newErrorObject]
+        );
     }
 }
 
@@ -43,6 +46,12 @@ RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:
 
     if (encryptedText) {
         resolve([NSString stringWithUTF8String:encryptedText]);
+    } else {
+        reject(
+            @"encryption_failed",
+            @"Encryption failed.",
+            [BCHelpers newErrorObject]
+        );
     }
 }
 
@@ -58,6 +67,12 @@ RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex
 
     if (decryptedText) {
         resolve([NSString stringWithUTF8String:decryptedText]);
+    } else {
+        reject(
+            @"decryption_failed",
+            @"Decryption failed. The archive is possibly tampered with.",
+            [BCHelpers newErrorObject]
+        );
     }
 }
 
@@ -66,6 +81,12 @@ RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTP
 
     if (uuidList) {
         resolve([NSString stringWithUTF8String:uuidList]);
+    } else {
+        reject(
+            @"uuid_generation_failed",
+            @"Generating UUIDs failed.",
+            [BCHelpers newErrorObject]
+        );
     }
 }
 
@@ -74,6 +95,12 @@ RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)res
 
     if (salt) {
         resolve([NSString stringWithUTF8String:salt]);
+    } else {
+        reject(
+            @"salt_generation_failed",
+            @"Generating Salt failed.",
+            [BCHelpers newErrorObject]
+        );
     }
 }
 
@@ -82,6 +109,12 @@ RCT_EXPORT_METHOD(generateIV:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBl
 
     if (iv) {
         resolve([NSString stringWithUTF8String:iv]);
+    } else {
+        reject(
+            @"iv_generation_failed",
+            @"Generating IV failed.",
+            [BCHelpers newErrorObject]
+        );
     }
 }
 
