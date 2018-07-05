@@ -65,6 +65,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "buttercup-crypto"
 version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "aes-soft 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "base64 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -123,7 +124,7 @@ name = "crypto"
 version = "0.1.0"
 dependencies = [
  "base64 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "buttercup-crypto 0.4.1",
+ "buttercup-crypto 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "hex 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "jni 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "uuid 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -344,6 +345,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum block-cipher-trait 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d6136d803280ae3532efa36114335255ea94f3d75d735ddedd66b0d7cd30bad3"
 "checksum block-modes 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "862511b40f91a3305dc119fdfdc25b561779f78828495e41b71d360b8c9f56df"
 "checksum block-padding 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "75bc2cfa52dc218b47ea000b15e6e5d00ca2f831db31e41592383c14d8802907"
+"checksum buttercup-crypto 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)" = "0f673914b1ae745304828238101578aacea6d4ceb5190e30ba3f77ba65f72141"
 "checksum byte-tools 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "560c32574a12a89ecd91f5e742165893f86e3ab98d21f8ea548658eb9eef5f40"
 "checksum byteorder 1.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "74c0b906e9446b0a2e4f760cdb3fa4b2c48cdc6db8766a845c54b6ff063fd2e9"
 "checksum cesu8 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "6d43a04d8753f35258c91f8ec639f792891f748a1edbd759cf1dcea3382ad83c"

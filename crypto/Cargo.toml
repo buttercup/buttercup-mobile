@@ -8,8 +8,8 @@ publish = false
 crate-type = ["staticlib", "cdylib"]
 
 [dependencies]
-# buttercup-crypto = "0.1.0"
-buttercup-crypto = { path = "../../buttercup-crypto" }
+buttercup-crypto = "0.4.1"
+# buttercup-crypto = { path = "../../buttercup-crypto" }
 hex = "^0.3"
 base64 = "^0.5"
 uuid = { version = "0.6", features = ["v4"] }
