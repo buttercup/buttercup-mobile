@@ -1,41 +1,29 @@
 matrix:
   include:
-    - language: node_js
-      script: npm run test
-      env:
-        - NAME=Jest
-      before_install:
-        - npm i -g jest-cli
-      install:
-        - npm install
-      node_js:
-        - 8
-    - language: objective-c
-      env:
-        - NAME=iOS
-      os: osx
-      osx_image: xcode9.2
-      script:
-        - brew update
-        - brew install nvm
-        - nvm install 8.4.0
-        - npm install
-        - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.2' build test | xcpretty -c
     - language: android
       sudo: required
       env:
         - NAME=Android
+        global:
+          - ANDROID_API=23
+          - ANDROID_BUILD_TOOLS=23.0.1
+          - ANDROID_ABI=armeabi-v7a
+          - ANDROID_TAG=google_apis
+          - ADB_INSTALL_TIMEOUT=5 # minutes
       android:
         components:
           - tools
           - platform-tools
           - tools
-          - build-tools-23.0.1
-          - android-23
+          - build-tools-$ANDROID_BUILD_TOOLS
+          - android-$ANDROID_API
+          - extra-android-support
+          - sys-img-$ANDROID_ABI-android-$ANDROID_BUILD_TOOLS
       before_script:
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install -y nodejs
         - npm install
+        - echo no | android create avd --force -n test -t "Google Inc.:Google APIs:"$ANDROID_API --abi $ANDROID_ABI --tag $ANDROID_TAG
       script:
         - cd android && ./gradlew assemble && cd ..
         - ./scripts/testAndroid.sh
