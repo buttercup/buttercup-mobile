@@ -4,13 +4,9 @@ matrix:
       sudo: required
       dist: precise
       env:
-        global:
-          - NAME=Android
-          - ANDROID_API=23
-          - ANDROID_BUILD_TOOLS=23.0.1
-          - ANDROID_ABI=armeabi-v7a
-          - ANDROID_TAG=google_apis
-          - ADB_INSTALL_TIMEOUT=5 # minutes
+        matrix:
+          - NAME=Android-23 DIST=precise ANDROID_TARGET=android-23 ANDROID_API=23 ANDROID_ABI=armeabi-v7a ANDROID_BUILD_TOOLS=23.0.1 ANDROID_ABI=armeabi-v7a ANDROID_TAG=google_apis
+          - NAME=Android-26 DIST=precise ANDROID_TARGET=android-26 ANDROID_API=26 ANDROID_ABI=armeabi-v7a ANDROID_BUILD_TOOLS=26.0.2 ANDROID_ABI=armeabi-v7a ANDROID_TAG=google_apis
       android:
         components:
           - tools
@@ -25,7 +21,7 @@ matrix:
           - sys-img-$ANDROID_ABI-android-$ANDROID_BUILD_TOOLS
       before_script:
         - android list targets
-        - echo no | android create avd --force -n test -t android-$ANDROID_API --abi $ANDROID_ABI --tag $ANDROID_TAG
+        - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --tag $ANDROID_TAG
         - emulator -avd test -no-skin -no-audio -no-window &
         - adb wait-for-device
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
