@@ -3,7 +3,7 @@ matrix:
     - language: android
       sudo: required
       env:
-        - NAME=Android
+        NAME: Android
         global:
           - ANDROID_API=23
           - ANDROID_BUILD_TOOLS=23.0.1
