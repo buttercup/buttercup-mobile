@@ -25,10 +25,9 @@ matrix:
           - extra-android-m2repository
           - sys-img-$ANDROID_ABI-$ANDROID_TAG-$ANDROID_API
       before_script:
-        - android list sdk --extended --no-ui --all
         - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --tag $ANDROID_TAG
         - emulator -avd test -no-skin -no-audio -no-window &
-        - adb wait-for-device
+        - android-wait-for-emulator
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install -y nodejs
         - npm install
