@@ -23,9 +23,8 @@ matrix:
           - extra-google-google_play_services
           - extra-google-m2repository
           - extra-android-m2repository
-          - sys-img-$ANDROID_ABI-$ANDROID_TARGET
+          - sys-img-$ANDROID_ABI-$ANDROID_TAG-$ANDROID_API
       before_script:
-        - android list targets
         - android list sdk --extended --no-ui --all
         - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --tag $ANDROID_TAG
         - emulator -avd test -no-skin -no-audio -no-window &
