@@ -2,6 +2,7 @@ matrix:
   include:
     - language: android
       sudo: required
+      dist: precise
       env:
         NAME: Android
         global:
@@ -18,12 +19,15 @@ matrix:
           - build-tools-$ANDROID_BUILD_TOOLS
           - android-$ANDROID_API
           - extra-android-support
+          - extra-google-google_play_services
+          - extra-google-m2repository
+          - extra-android-m2repository
           - sys-img-$ANDROID_ABI-android-$ANDROID_BUILD_TOOLS
       before_script:
+        - echo no | android create avd --force -n test -t "Google Inc.:Google APIs:"$ANDROID_API --abi $ANDROID_ABI --tag $ANDROID_TAG
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install -y nodejs
         - npm install
-        - echo no | android create avd --force -n test -t "Google Inc.:Google APIs:"$ANDROID_API --abi $ANDROID_ABI --tag $ANDROID_TAG
       script:
         - cd android && ./gradlew assemble && cd ..
         - ./scripts/testAndroid.sh
