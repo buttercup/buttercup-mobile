@@ -12,15 +12,26 @@ matrix:
         - 8
     - language: objective-c
       env:
-        - NAME=iOS
+        - NAME=iOS-11_iPhone-7_arm64
       os: osx
-      osx_image: xcode9.2
+      osx_image: xcode9.4
       script:
         - brew update
         - brew install nvm
         - nvm install 8.4.0
         - npm install
         - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.2' build test | xcpretty -c
+    - language: objective-c
+      env:
+        - NAME=iOS-10_iPhone-5_armv7s
+      os: osx
+      osx_image: xcode9.4
+      script:
+        - brew update
+        - brew install nvm
+        - nvm install 8.4.0
+        - npm install
+        - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 5,OS=10.3' build test | xcpretty -c
     - language: android
       sudo: required
       jdk: oraclejdk8
