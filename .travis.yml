@@ -22,7 +22,7 @@ matrix:
         - nvm install 8.4.0
         - npm install
         # - cd ios && set -o pipefail xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.2' build test | xcpretty -c
-        - bash ./scripts/testIOS.sh "iPhone 7" "11.2"
+        - ./scripts/testIOS.sh "iPhone 7" "11.2"
     # - language: objective-c
     #   env:
     #     - NAME=iOS-10_iPhone-5_armv7s
