@@ -3,6 +3,7 @@ matrix:
     - language: android
       sudo: required
       dist: precise
+      jdk: oraclejdk8
       env:
         - NAME=Android-23
         - DIST=precise
@@ -12,8 +13,11 @@ matrix:
         - ANDROID_BUILD_TOOLS=23.0.1
         - ANDROID_ABI=armeabi-v7a
         - ANDROID_TAG=google_apis
+        - ADB_INSTALL_TIMEOUT=5 # minutes
       android:
         components:
+          - tools
+          - platform-tools
           - build-tools-$ANDROID_BUILD_TOOLS
           - android-$ANDROID_API
           - extra-android-support
@@ -22,6 +26,8 @@ matrix:
           - extra-android-m2repository
           - sys-img-$ANDROID_ABI-$ANDROID_TAG-$ANDROID_API
       before_script:
+        - echo "y" | android update sdk -a --no-ui --filter $ANDROID_TARGET
+        - echo "y" | android update sdk -a --no-ui --filter sys-img-$ANDROID_ABI-$ANDROID_TAG-$ANDROID_API
         - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --tag $ANDROID_TAG
         - QEMU_AUDIO_DRV=none emulator -avd test -no-window &
         - android-wait-for-emulator
