@@ -25,7 +25,9 @@ matrix:
           - sys-img-$ANDROID_ABI-android-$ANDROID_BUILD_TOOLS
       before_script:
         - android list targets
-        - echo no | android create avd --force -n test -t "Google Inc.:Google APIs:"$ANDROID_API --abi $ANDROID_ABI --tag $ANDROID_TAG
+        - echo no | android create avd --force -n test -t android-$ANDROID_API --abi $ANDROID_ABI --tag $ANDROID_TAG
+        - emulator -avd test -no-skin -no-audio -no-window &
+        - adb wait-for-device
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install -y nodejs
         - npm install
