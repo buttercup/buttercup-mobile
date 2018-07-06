@@ -4,9 +4,14 @@ matrix:
       sudo: required
       dist: precise
       env:
-        matrix:
-          - NAME=Android-23 DIST=precise ANDROID_TARGET=android-23 ANDROID_API=23 ANDROID_ABI=armeabi-v7a ANDROID_BUILD_TOOLS=23.0.1 ANDROID_ABI=armeabi-v7a ANDROID_TAG=google_apis
-          - NAME=Android-26 DIST=precise ANDROID_TARGET=android-26 ANDROID_API=26 ANDROID_ABI=armeabi-v7a ANDROID_BUILD_TOOLS=26.0.2 ANDROID_ABI=armeabi-v7a ANDROID_TAG=google_apis
+        - NAME=Android-23
+        - DIST=precise
+        - ANDROID_TARGET=android-23
+        - ANDROID_API=23
+        - ANDROID_ABI=armeabi-v7a
+        - ANDROID_BUILD_TOOLS=23.0.1
+        - ANDROID_ABI=armeabi-v7a
+        - ANDROID_TAG=google_apis
       android:
         components:
           - tools
@@ -18,9 +23,10 @@ matrix:
           - extra-google-google_play_services
           - extra-google-m2repository
           - extra-android-m2repository
-          - sys-img-$ANDROID_ABI-android-$ANDROID_BUILD_TOOLS
+          - sys-img-$ANDROID_ABI-$ANDROID_TARGET
       before_script:
         - android list targets
+        - android list sdk --extended --no-ui --all
         - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --tag $ANDROID_TAG
         - emulator -avd test -no-skin -no-audio -no-window &
         - adb wait-for-device
