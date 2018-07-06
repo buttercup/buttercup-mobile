@@ -2,11 +2,9 @@ matrix:
   include:
     - language: android
       sudo: required
-      dist: precise
       jdk: oraclejdk8
       env:
         - NAME=Android-23
-        - DIST=precise
         - ANDROID_TARGET=android-23
         - ANDROID_API=23
         - ANDROID_ABI=armeabi-v7a
