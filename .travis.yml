@@ -14,9 +14,6 @@ matrix:
         - ANDROID_TAG=google_apis
       android:
         components:
-          - tools
-          - platform-tools
-          - tools
           - build-tools-$ANDROID_BUILD_TOOLS
           - android-$ANDROID_API
           - extra-android-support
