@@ -20,7 +20,7 @@ matrix:
         - brew install nvm
         - nvm install 8.4.0
         - npm install
-        - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.2' build test | xcpretty -c
+        - cd ios && set -o pipefail xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 7,OS=11.2' build test | xcpretty -c
     - language: objective-c
       env:
         - NAME=iOS-10_iPhone-5_armv7s
@@ -31,7 +31,7 @@ matrix:
         - brew install nvm
         - nvm install 8.4.0
         - npm install
-        - cd ios && xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 5,OS=10.3' build test | xcpretty -c
+        - cd ios && set -o pipefail xcodebuild -scheme Buttercup -destination 'platform=iOS Simulator,name=iPhone 5,OS=10.3' build test | xcpretty -c
     - language: android
       sudo: required
       jdk: oraclejdk8
