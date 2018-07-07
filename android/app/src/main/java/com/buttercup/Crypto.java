@@ -9,7 +9,6 @@ import java.net.URLDecoder;
 import java.lang.String;
 
 public class Crypto extends ReactContextBaseJavaModule {
-
     private static native String generateUUIDList(int count);
     private static native String deriveKeyFromPassword(String password, String salt, int rounds, int bits);
     private static native String generateSalt(int length);
@@ -130,5 +129,4 @@ public class Crypto extends ReactContextBaseJavaModule {
     public String getName() {
         return "Crypto";
     }
-
 }

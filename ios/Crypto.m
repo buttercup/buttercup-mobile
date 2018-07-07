@@ -9,13 +9,11 @@
 // The React Native bridge needs to know our module
 RCT_EXPORT_MODULE()
 
-+ (BOOL)requiresMainQueueSetup
-{
++ (BOOL)requiresMainQueueSetup {
     return YES;
 }
 
 RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(int)bits:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-
     const char* utf8String = pbkdf2_derive(
         [password UTF8String],
         [salt UTF8String],
@@ -35,7 +33,6 @@ RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(
 }
 
 RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:(NSString *)ivHex:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-
     const char* encryptedText = encrypt_cbc(
         [data UTF8String],
         [key UTF8String],
