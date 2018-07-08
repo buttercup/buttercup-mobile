@@ -58,6 +58,11 @@ pub mod ios {
     }
 
     #[no_mangle]
+    pub unsafe extern "C" fn dealloc_memory(input: *mut c_char) {
+        drop(CString::from_raw(input));
+    }
+
+    #[no_mangle]
     pub unsafe extern "C" fn pbkdf2_derive(
         password: *const c_char,
         salt: *const c_char,

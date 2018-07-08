@@ -14,15 +14,16 @@ RCT_EXPORT_MODULE()
 }
 
 RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(int)bits:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* utf8String = pbkdf2_derive(
+    const char* keyDerivationInfo = pbkdf2_derive(
         [password UTF8String],
         [salt UTF8String],
         iterations,
         bits
     );
 
-    if (utf8String) {
-        resolve([NSString stringWithUTF8String:utf8String]);
+    if (keyDerivationInfo) {
+        resolve([NSString stringWithUTF8String:keyDerivationInfo]);
+        dealloc_memory(keyDerivationInfo);
     } else {
         reject(
             @"pbkdf2_failed",
@@ -43,6 +44,7 @@ RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:
 
     if (encryptedText) {
         resolve([NSString stringWithUTF8String:encryptedText]);
+        dealloc_memory(encryptedText);
     } else {
         reject(
             @"encryption_failed",
@@ -64,6 +66,7 @@ RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex
 
     if (decryptedText) {
         resolve([NSString stringWithUTF8String:decryptedText]);
+        dealloc_memory(decryptedText);
     } else {
         reject(
             @"decryption_failed",
@@ -78,6 +81,7 @@ RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTP
 
     if (uuidList) {
         resolve([NSString stringWithUTF8String:uuidList]);
+        dealloc_memory(uuidList);
     } else {
         reject(
             @"uuid_generation_failed",
@@ -92,6 +96,7 @@ RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)res
 
     if (salt) {
         resolve([NSString stringWithUTF8String:salt]);
+        dealloc_memory(salt);
     } else {
         reject(
             @"salt_generation_failed",
@@ -106,6 +111,7 @@ RCT_EXPORT_METHOD(generateIV:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBl
 
     if (iv) {
         resolve([NSString stringWithUTF8String:iv]);
+        dealloc_memory(iv);
     } else {
         reject(
             @"iv_generation_failed",
