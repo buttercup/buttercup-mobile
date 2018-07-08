@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
 
 set -eu
 
@@ -39,3 +42,5 @@ create_ndk() {
 create_ndk arm64 21
 create_ndk arm 14
 create_ndk x86 14
+
+cd -
