@@ -60,6 +60,10 @@ matrix:
       before_script:
         - echo "y" | android update sdk -a --no-ui --filter $ANDROID_TARGET
         - echo "y" | android update sdk -a --no-ui --filter sys-img-$ANDROID_ABI-$ANDROID_TAG-$ANDROID_API
+        - echo "y" | sdkmanager "ndk-bundle"
+        - echo "y" | sdkmanager "cmake;3.6.4111459"
+        - echo "y" | sdkmanager "lldb;3.1"
+        - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
         - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --tag $ANDROID_TAG
         - QEMU_AUDIO_DRV=none emulator -avd test -no-window &
         - android-wait-for-emulator

@@ -164,7 +164,7 @@ pub mod ios {
     }
 }
 
-#[cfg(target_os = "android")]
+#[cfg(any(target_os = "android", feature = "android-tests"))]
 #[allow(non_snake_case)]
 pub mod android {
     extern crate jni;
