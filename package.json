@@ -12,7 +12,7 @@
     "start:android": "react-native run-android",
     "start:ios": "react-native run-ios",
     "test": "run-s test:format test:react-native",
-    "test:android": "cd android && ./gradlew --project-cache-dir ../.gradlecache test",
+    "test:android": "./scripts/testAndroid.sh",
     "test:format": "prettier-check '{{source,scripts,__tests__}/**/*.js,index.*.js,shim.js}'",
     "test:react-native": "jest --no-cache"
   },
