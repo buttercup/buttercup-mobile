@@ -1,23 +1,25 @@
 package com.buttercup;
 
-//import com.buttercup.Crypto;
-//import com.buttercup.MockPromise;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import android.support.test.runner.AndroidJUnit4;
 
 import static org.junit.Assert.*;
 
+@RunWith(AndroidJUnit4.class)
 public class CryptoTest {
-    public static final String PASSWORD = "mySecretPassw0rd";
-    public static final int ROUNDS = 212032;
-    public static final String SALT = "#j8P.3Fv9";
-    public static final int BITS = 512;
+    private static final String PASSWORD = "mySecretPassw0rd";
+    private static final int ROUNDS = 212032;
+    private static final String SALT = "#j8P.3Fv9";
+    private static final int BITS = 512;
 
     private Crypto crypto;
 
     @Before
     public void setUp() throws Exception {
+        System.out.println(System.getProperty(("java.library.path")));
         Crypto crypto = new Crypto(null);
     }
 
