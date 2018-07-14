@@ -72,5 +72,4 @@ matrix:
         - sudo apt-get install -y nodejs
         - npm install
       script:
-        - cd android && ./gradlew assemble && cd ..
         - ./scripts/testAndroid.sh
