@@ -17,9 +17,11 @@ public class Crypto {
             String ivHex,
             String hmacKeyHex
     );
-    private static native String generateRandomBytes();
+    private static native String generateRandomBytes(int length);
     private static native String generateSalt(int length);
     private static native String generateUUIDList(int count);
+
+    private static final int IV_BYTES = 16;
 
     static {
         System.loadLibrary("crypto");
@@ -60,7 +62,7 @@ public class Crypto {
     }
 
     public static String generateIV() {
-        String ivHex = Crypto.generateRandomBytes();
+        String ivHex = Crypto.generateRandomBytes(IV_BYTES);
         return ivHex.length() > 0 ? ivHex : null;
     }
 
