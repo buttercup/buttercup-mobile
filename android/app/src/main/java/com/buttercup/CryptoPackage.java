@@ -20,7 +20,7 @@ public class CryptoPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new Crypto(reactContext));
+        modules.add(new CryptoBridge(reactContext));
         return modules;
     }
 
