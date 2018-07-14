@@ -5,8 +5,6 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
-import java.lang.String;
-
 public class CryptoBridge extends ReactContextBaseJavaModule {
     public CryptoBridge(ReactApplicationContext reactContext) {
         super(reactContext);

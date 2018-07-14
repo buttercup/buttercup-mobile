@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Base64;
 
 import static org.junit.Assert.*;
 import java.util.regex.*;
@@ -18,30 +17,28 @@ public class CryptoTest {
     private static final String KEY_HEX = "6a7049fac02d3458a2596624664c9f382a259d98254678b49493cb6d6c645ef9";
     private static final String IV_HEX = "71c424dd64f6143749705f0d7a2b0ff1";
     private static final String HMAC_KEY_HEX = "5cce008ec5c7d7f98e7869a6627b37888d029a70c15b7fbca257c7891a94b14e";
+    private static final String TEST_STR = "Original Text";
+    private static final String TEST_STR_B64 = "T3JpZ2luYWwgVGV4dA==";
 
     private static final String HEX_REXP = "^([a-f0-9]+|[A-F0-9]+)$";
     private static final String UUID_REXP = "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$";
 
     @Test
     public void encryptText_encryptedTextDoesNotContainOriginal() throws Exception {
-        byte[] data = "Original Text".getBytes("UTF-8");
-        String someText = Base64.encodeToString(data, Base64.DEFAULT);
-        System.out.println("This is cool2: " + someText);
         String encrypted = Crypto.encryptText(
-                someText,
+                TEST_STR_B64,
                 KEY_HEX,
                 SALT,
                 IV_HEX,
                 HMAC_KEY_HEX
         );
-        System.out.println("This is cool: " + encrypted);
-        assertFalse(encrypted.contains("Original Text"));
-        assertFalse(encrypted.contains(someText));
+        assertFalse(encrypted.contains(TEST_STR));
+        assertFalse(encrypted.contains(TEST_STR_B64));
     }
 
     @Test
     public void encryptText_encryptedTextIsNotEmpty() throws Exception {
-        String encrypted = Crypto.encryptText("abcdefghij", KEY_HEX, SALT, IV_HEX, HMAC_KEY_HEX);
+        String encrypted = Crypto.encryptText(TEST_STR_B64, KEY_HEX, SALT, IV_HEX, HMAC_KEY_HEX);
         assertTrue(encrypted.length() > 10);
     }
 
