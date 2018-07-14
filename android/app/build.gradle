@@ -135,7 +135,7 @@ android {
             }
         }
     }
-    sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jni/'] } }
+    sourceSets { main { jni.srcDirs = ['src/main/jniLibs', 'src/main/jniLibs/'] } }
 }
 
 dependencies {

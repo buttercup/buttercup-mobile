@@ -12,7 +12,7 @@ public class Crypto extends ReactContextBaseJavaModule {
     private static native String generateUUIDList(int count);
     private static native String deriveKeyFromPassword(String password, String salt, int rounds, int bits);
     private static native String generateSalt(int length);
-    private static native String generateRandomBytes();
+    private static native String generateRandomBytes(int length);
     private static native String encryptCBC(
         String encodedText,
         String keyHex,
@@ -116,8 +116,8 @@ public class Crypto extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void generateIV(Promise promise) {
-        String ivHex = Crypto.generateRandomBytes();
+    public void generateIV(int length, Promise promise) {
+        String ivHex = Crypto.generateRandomBytes(length);
         if (ivHex.length() > 0) {
             promise.resolve(ivHex);
             return;

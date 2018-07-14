@@ -106,8 +106,8 @@ RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)res
     }
 }
 
-RCT_EXPORT_METHOD(generateIV:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* iv = generate_random_bytes();
+RCT_EXPORT_METHOD(generateIV:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    const char* iv = generate_random_bytes(length);
 
     if (iv) {
         resolve([NSString stringWithUTF8String:iv]);

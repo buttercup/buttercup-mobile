@@ -5,7 +5,7 @@ extern crate uuid;
 
 use buttercup_crypto::derivation::pbkdf2;
 use buttercup_crypto::encryption::cbc;
-use buttercup_crypto::random::{generate_iv, generate_string};
+use buttercup_crypto::random::{generate_bytes, generate_string};
 use std::ptr::null_mut;
 use uuid::Uuid;
 
@@ -158,8 +158,8 @@ pub mod ios {
     }
 
     #[no_mangle]
-    pub unsafe extern "C" fn generate_random_bytes() -> *mut c_char {
-        let iv = hex::encode(generate_iv());
+    pub unsafe extern "C" fn generate_random_bytes(length: c_uint) -> *mut c_char {
+        let iv = hex::encode(generate_bytes(length as usize));
         return_string_pointer(iv)
     }
 }
@@ -319,8 +319,9 @@ pub mod android {
     pub extern "system" fn Java_com_buttercup_Crypto_generateRandomBytes(
         env: JNIEnv,
         _: JClass,
+        length: c_uint,
     ) -> jstring {
-        let iv = generate_iv();
+        let iv = generate_bytes(length as usize);
         return_string_pointer(&env, hex::encode(iv))
     }
 

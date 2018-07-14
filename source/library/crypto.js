@@ -9,6 +9,7 @@ const { Crypto } = NativeModules;
 
 const CACHE_UUID_MAX = 500;
 const CACHE_UUID_MIN = 50;
+const IV_LENGTH = 16; // Bytes
 
 function cacheUUIDs() {
     const uuidCount = getStackCount("uuid");
@@ -74,7 +75,7 @@ function generateSalt(length) {
 }
 
 function generateIV() {
-    return Crypto.generateIV().then(res => new Buffer(res, "hex"));
+    return Crypto.generateIV(IV_LENGTH).then(res => new Buffer(res, "hex"));
 }
 
 function getUUID() {
