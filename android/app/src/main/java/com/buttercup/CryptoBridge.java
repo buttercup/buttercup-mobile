@@ -90,7 +90,7 @@ public class CryptoBridge extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "Crypto";
+        return "CryptoBridge";
     }
 
     @ReactMethod
