@@ -58,6 +58,21 @@
     XCTAssertEqual(len32.length, 32);
 }
 
+- (void)testGenerateUUIDsGeneratesAUUID {
+    NSString *uuid = [Crypto generateUUIDs:1];
+    NSString *uuidRegex = @"^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", uuidRegex];
+    XCTAssertTrue([test evaluateWithObject:uuid]);
+}
+
+- (void)testGenerateUUIDsGeneratesMultipleUUIDs {
+    NSArray *uuids = [[Crypto generateUUIDs:2] componentsSeparatedByString:@","];
+    NSString *uuidRegex = @"^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", uuidRegex];
+    XCTAssertTrue([test evaluateWithObject:[uuids objectAtIndex:0]]);
+    XCTAssertTrue([test evaluateWithObject:[uuids objectAtIndex:1]]);
+}
+
 - (void)testEncryptTextPerformsReasonably {
     NSString *targetData = @"";
     for (int i = 0; i < 1000; i += 1) {

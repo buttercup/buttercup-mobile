@@ -49,6 +49,13 @@
     return output;
 }
 
++ (NSString *)generateUUIDs:(int)count {
+    const char* uuidList = generate_uuid_list(count);
+    NSString *output = [NSString stringWithUTF8String:uuidList];
+    dealloc_memory(uuidList);
+    return output;
+}
+
 + (NSString *)pbkdf2UsingPassword:(NSString *)password andSalt:(NSString *)salt andIterations:(int)iterations andBits:(int)bits {
     const char* keyDerivationInfo = pbkdf2_derive(
         [password UTF8String],

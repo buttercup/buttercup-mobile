@@ -67,16 +67,15 @@ RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)res
 }
 
 RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* uuidList = generate_uuid_list(count);
-    if (uuidList) {
-        resolve([NSString stringWithUTF8String:uuidList]);
-        dealloc_memory(uuidList);
+    NSString *uuids = [Crypto generateUUIDs:count];
+    if (uuids && [uuids length] > 0) {
+        resolve(uuids);
     } else {
         reject(
-               @"uuid_generation_failed",
-               @"Generating UUIDs failed.",
-               [BCHelpers newErrorObject]
-               );
+            @"uuid_generation_failed",
+            @"UUID generation failed",
+            [BCHelpers newErrorObject]
+        );
     }
 }
 
