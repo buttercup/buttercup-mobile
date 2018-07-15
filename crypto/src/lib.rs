@@ -78,7 +78,7 @@ pub mod ios {
 
     #[no_mangle]
     pub unsafe extern "C" fn encrypt_cbc(
-        encoded_text: *const c_char, // UTF8 String
+        encoded_text: *const c_char, // Base64 String
         key_hex: *const c_char,      // Hex
         salt: *const c_char,         // UTF8 String
         iv_hex: *const c_char,       // Hex
