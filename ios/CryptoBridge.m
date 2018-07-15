@@ -28,24 +28,15 @@ RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:
 }
 
 RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex:(NSString *)salt:(NSString *)hmacHexKey:(NSString *)hmacHex:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* decryptedText = decrypt_cbc(
-        [data UTF8String],
-        [key UTF8String],
-        [ivHex UTF8String],
-        [salt UTF8String],
-        [hmacHexKey UTF8String],
-        [hmacHex UTF8String]
-    );
-
-    if (decryptedText) {
-        resolve([NSString stringWithUTF8String:decryptedText]);
-        dealloc_memory(decryptedText);
+    NSString *decryptedString = [Crypto decryptText:data usingKey:key andSalt:salt andIV:ivHex andHMACKey:hmacHexKey andHMAC:hmacHex];
+    if (decryptedString && [decryptedString length] > 0) {
+        resolve(decryptedString);
     } else {
         reject(
-            @"decryption_failed",
-            @"Decryption failed. The archive is possibly tampered with.",
-            [BCHelpers newErrorObject]
-        );
+               @"decryption_failed",
+               @"Decryption failed: Possible tampering",
+               [BCHelpers newErrorObject]
+               );
     }
 }
 
@@ -101,7 +92,7 @@ RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(
     } else {
         reject(
                @"pbkdf2_failed",
-               @"Key Derivation failed.",
+               @"Key Derivation failed",
                [BCHelpers newErrorObject]
                );
     }

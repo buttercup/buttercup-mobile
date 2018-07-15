@@ -18,6 +18,19 @@
     [super tearDown];
 }
 
+- (void)testDecryptTextDecryptsOutputOfEncryptText {
+    NSString *targetData = @"Some test string";
+    NSString *targetDataBase64 = [[targetData dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+    NSString *keyHex = @"bbb74e51f675a663939f2e1eb1da33d2ad94003361dd458f935057f283ef7b4f";
+    NSString *hmacKeyHex = @"67a128be346be974d4658600ac237b5fbebf558651693135aef39a3277f1e585";
+    NSString *ivHex = @"f99d1b64511282e482cfc53cc856b5c2";
+    NSString *salt = @"s%vK3-2#0";
+    NSString *output = [Crypto encryptText:targetDataBase64 usingKey:keyHex andSalt:salt andIV:ivHex andHMACKey:hmacKeyHex];
+    NSArray *components = [output componentsSeparatedByString:@"$"];
+    NSString *decryptedOutput = [Crypto decryptText:[components objectAtIndex:0] usingKey:keyHex andSalt:[components objectAtIndex:3] andIV:[components objectAtIndex:2] andHMACKey:hmacKeyHex andHMAC:[components objectAtIndex:1]];
+    XCTAssertTrue([decryptedOutput isEqualToString:targetDataBase64]);
+}
+
 - (void)testEncryptTextEncryptsData {
     NSString *targetData = @"Some test string";
     NSString *targetDataBase64 = [[targetData dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];

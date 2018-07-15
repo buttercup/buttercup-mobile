@@ -8,6 +8,20 @@
 
 @implementation Crypto
 
++ (NSString *)decryptText:(NSString *)text usingKey:(NSString *)keyHex andSalt:(NSString *)salt andIV:(NSString *)ivHex andHMACKey:(NSString *)hmacKeyHex andHMAC:(NSString *)hmacHex {
+    const char* decryptedText = decrypt_cbc(
+        [text UTF8String],
+        [keyHex UTF8String],
+        [ivHex UTF8String],
+        [salt UTF8String],
+        [hmacKeyHex UTF8String],
+        [hmacHex UTF8String]
+    );
+    NSString *output = [NSString stringWithUTF8String:decryptedText];
+    dealloc_memory(decryptedText);
+    return output;
+}
+
 + (NSString *)encryptText:(NSString *)text usingKey:(NSString *)keyHex andSalt:(NSString *)salt andIV:(NSString *)ivHex andHMACKey:(NSString *)hmacKeyHex {
     const char* encryptedText = encrypt_cbc(
         [text UTF8String],
