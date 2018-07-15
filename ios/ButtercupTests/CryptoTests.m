@@ -44,11 +44,25 @@
     XCTAssertTrue([output length] > 0);
 }
 
+- (void)testGenerateIVWithLengthGeneratesCorrectlyFormattedStrings {
+    NSString *iv = [Crypto generateIVWithLength:17];
+    NSString *ivRegex = @"^[a-f0-9]+$";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", ivRegex];
+    XCTAssertTrue([test evaluateWithObject:iv]);
+}
+
 - (void)testGenerateIVWithLengthGeneratesStringsWithCorrectLengths {
     NSString *len16 = [Crypto generateIVWithLength:16];
     NSString *len32 = [Crypto generateIVWithLength:32];
     XCTAssertEqual(len16.length, 32); // 32 chars = 16 bytes
     XCTAssertEqual(len32.length, 64); // 64 chars = 32 bytes
+}
+
+- (void)testGenerateSaltWithLengthGeneratesCorrectlyFormattedStrings {
+    NSString *salt = [Crypto generateSaltWithLength:17];
+    NSString *saltRegex = @"^[a-zA-Z0-9]+$";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", saltRegex];
+    XCTAssertTrue([test evaluateWithObject:salt]);
 }
 
 - (void)testGenerateSaltWithLengthGeneratesStringsWithCorrectLengths {
