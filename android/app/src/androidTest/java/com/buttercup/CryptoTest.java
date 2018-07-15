@@ -44,14 +44,14 @@ public class CryptoTest {
 
     @Test
     public void generateIV_generatesCorrectLengthIVs() throws Exception {
-        String iv = Crypto.generateIV();
+        String iv = Crypto.generateIVWithLength(16);
         // 32 chars = 16 bytes of hex
         assertEquals(32, iv.length());
     }
 
     @Test
     public void generateIV_generatesHexadecimal() throws Exception {
-        String iv = Crypto.generateIV();
+        String iv = Crypto.generateIVWithLength(16);
         assertTrue(Pattern.matches(HEX_REXP, iv));
     }
 

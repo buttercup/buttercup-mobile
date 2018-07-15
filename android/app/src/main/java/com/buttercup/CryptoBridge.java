@@ -59,8 +59,8 @@ public class CryptoBridge extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void generateIV(Promise promise) {
-        String ivHex = Crypto.generateIV();
+    public void generateIV(int length, Promise promise) {
+        String ivHex = Crypto.generateIVWithLength(length);
         if (ivHex.length() > 0) {
             promise.resolve(ivHex);
             return;

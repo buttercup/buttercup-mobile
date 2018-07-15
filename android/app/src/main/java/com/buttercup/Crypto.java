@@ -21,8 +21,6 @@ public class Crypto {
     private static native String generateSalt(int length);
     private static native String generateUUIDList(int count);
 
-    private static final int IV_BYTES = 16;
-
     static {
         System.loadLibrary("crypto");
     }
@@ -61,8 +59,8 @@ public class Crypto {
         );
     }
 
-    public static String generateIV() {
-        String ivHex = Crypto.generateRandomBytes(IV_BYTES);
+    public static String generateIVWithLength(int length) {
+        String ivHex = Crypto.generateRandomBytes(length);
         return ivHex.length() > 0 ? ivHex : null;
     }
 
