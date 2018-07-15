@@ -1,10 +1,10 @@
 #import "CryptoBindings.h"
-#import "Crypto.h"
+#import "CryptoBridge.h"
 #import <React/RCTLog.h>
 #include <sys/sysctl.h>
 #import "BCHelpers.h"
 
-@implementation Crypto
+@implementation CryptoBridge
 
 // The React Native bridge needs to know our module
 RCT_EXPORT_MODULE()

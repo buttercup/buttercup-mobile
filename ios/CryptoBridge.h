@@ -4,6 +4,6 @@
     #import "RCTBridgeModule.h"
 #endif
 
-@interface Crypto : NSObject <RCTBridgeModule>
+@interface CryptoBridge : NSObject <RCTBridgeModule>
 
 @end

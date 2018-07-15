@@ -46,7 +46,7 @@
 		89B5C41CA3CA429FAD873211 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DF36A447445434284F83319 /* Entypo.ttf */; };
 		92F0ABE1593340309BF78086 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F492DA2907E4FEDAC51BB80 /* Foundation.ttf */; };
 		99851D7220C985FA00EAC115 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D7120C985FA00EAC115 /* libresolv.tbd */; };
-		99851D7520C9B83E00EAC115 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 99851D7420C9B83E00EAC115 /* Crypto.m */; };
+		99851D7520C9B83E00EAC115 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 99851D7420C9B83E00EAC115 /* CryptoBridge.m */; };
 		99D0F23020E2929B00FD05D7 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D6F20C984E800EAC115 /* libcrypto.a */; };
 		9A1586680933407B88BBBF6E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
 		BBC4A737D75245BFB27E789A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
@@ -418,8 +418,8 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		99851D6F20C984E800EAC115 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../crypto/target/universal/release/libcrypto.a; sourceTree = "<group>"; };
 		99851D7120C985FA00EAC115 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
-		99851D7320C9B7FC00EAC115 /* Crypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Crypto.h; sourceTree = "<group>"; };
-		99851D7420C9B83E00EAC115 /* Crypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Crypto.m; sourceTree = "<group>"; };
+		99851D7320C9B7FC00EAC115 /* CryptoBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoBridge.h; sourceTree = "<group>"; };
+		99851D7420C9B83E00EAC115 /* CryptoBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CryptoBridge.m; sourceTree = "<group>"; };
 		99851D7620C9B89C00EAC115 /* CryptoBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CryptoBindings.h; path = ../crypto/src/CryptoBindings.h; sourceTree = "<group>"; };
 		A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
@@ -578,8 +578,8 @@
 				C26F52BE1F5736CE000EB570 /* BCHelpers.h */,
 				C26F52BF1F5736CE000EB570 /* BCHelpers.m */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
-				99851D7320C9B7FC00EAC115 /* Crypto.h */,
-				99851D7420C9B83E00EAC115 /* Crypto.m */,
+				99851D7320C9B7FC00EAC115 /* CryptoBridge.h */,
+				99851D7420C9B83E00EAC115 /* CryptoBridge.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1367,7 +1367,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99851D7520C9B83E00EAC115 /* Crypto.m in Sources */,
+				99851D7520C9B83E00EAC115 /* CryptoBridge.m in Sources */,
 				C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
