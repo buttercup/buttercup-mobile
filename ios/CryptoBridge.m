@@ -1,5 +1,6 @@
 #import "CryptoBindings.h"
 #import "CryptoBridge.h"
+#import "Crypto.h"
 #import <React/RCTLog.h>
 #include <sys/sysctl.h>
 #import "BCHelpers.h"
@@ -13,44 +14,16 @@ RCT_EXPORT_MODULE()
     return YES;
 }
 
-RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(int)bits:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* keyDerivationInfo = pbkdf2_derive(
-        [password UTF8String],
-        [salt UTF8String],
-        iterations,
-        bits
-    );
-
-    if (keyDerivationInfo) {
-        resolve([NSString stringWithUTF8String:keyDerivationInfo]);
-        dealloc_memory(keyDerivationInfo);
-    } else {
-        reject(
-            @"pbkdf2_failed",
-            @"Key Derivation failed.",
-            [BCHelpers newErrorObject]
-        );
-    }
-}
-
 RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:(NSString *)ivHex:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* encryptedText = encrypt_cbc(
-        [data UTF8String],
-        [key UTF8String],
-        [salt UTF8String],
-        [ivHex UTF8String],
-        [hmacHexKey UTF8String]
-    );
-
-    if (encryptedText) {
-        resolve([NSString stringWithUTF8String:encryptedText]);
-        dealloc_memory(encryptedText);
+    NSString *encryptedString = [Crypto encryptText:data usingKey:key andSalt:salt andIV:ivHex andHMACKey:hmacHexKey];
+    if (encryptedString && [encryptedString length] > 0) {
+        resolve(encryptedString);
     } else {
         reject(
-            @"encryption_failed",
-            @"Encryption failed.",
-            [BCHelpers newErrorObject]
-        );
+               @"encryption_failed",
+               @"Encryption failed",
+               [BCHelpers newErrorObject]
+               );
     }
 }
 
@@ -118,6 +91,19 @@ RCT_EXPORT_METHOD(generateIV:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPro
             @"Generating IV failed.",
             [BCHelpers newErrorObject]
         );
+    }
+}
+
+RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(int)bits:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *derivedData = [Crypto pbkdf2UsingPassword:password andSalt:salt andIterations:iterations andBits:bits];
+    if (derivedData && [derivedData length] > 0) {
+        resolve(derivedData);
+    } else {
+        reject(
+               @"pbkdf2_failed",
+               @"Key Derivation failed.",
+               [BCHelpers newErrorObject]
+               );
     }
 }
 
