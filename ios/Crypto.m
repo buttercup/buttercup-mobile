@@ -42,6 +42,13 @@
     return output;
 }
 
++ (NSString *)generateSaltWithLength:(int)length {
+    const char* salt = generate_salt(length);
+    NSString *output = [NSString stringWithUTF8String:salt];
+    dealloc_memory(salt);
+    return output;
+}
+
 + (NSString *)pbkdf2UsingPassword:(NSString *)password andSalt:(NSString *)salt andIterations:(int)iterations andBits:(int)bits {
     const char* keyDerivationInfo = pbkdf2_derive(
         [password UTF8String],

@@ -14,19 +14,6 @@ RCT_EXPORT_MODULE()
     return YES;
 }
 
-RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:(NSString *)ivHex:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    NSString *encryptedString = [Crypto encryptText:data usingKey:key andSalt:salt andIV:ivHex andHMACKey:hmacHexKey];
-    if (encryptedString && [encryptedString length] > 0) {
-        resolve(encryptedString);
-    } else {
-        reject(
-               @"encryption_failed",
-               @"Encryption failed",
-               [BCHelpers newErrorObject]
-               );
-    }
-}
-
 RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex:(NSString *)salt:(NSString *)hmacHexKey:(NSString *)hmacHex:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
     NSString *decryptedString = [Crypto decryptText:data usingKey:key andSalt:salt andIV:ivHex andHMACKey:hmacHexKey andHMAC:hmacHex];
     if (decryptedString && [decryptedString length] > 0) {
@@ -40,31 +27,16 @@ RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex
     }
 }
 
-RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* uuidList = generate_uuid_list(count);
-    if (uuidList) {
-        resolve([NSString stringWithUTF8String:uuidList]);
-        dealloc_memory(uuidList);
+RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:(NSString *)ivHex:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *encryptedString = [Crypto encryptText:data usingKey:key andSalt:salt andIV:ivHex andHMACKey:hmacHexKey];
+    if (encryptedString && [encryptedString length] > 0) {
+        resolve(encryptedString);
     } else {
         reject(
-            @"uuid_generation_failed",
-            @"Generating UUIDs failed.",
-            [BCHelpers newErrorObject]
-        );
-    }
-}
-
-RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* salt = generate_salt(length);
-    if (salt) {
-        resolve([NSString stringWithUTF8String:salt]);
-        dealloc_memory(salt);
-    } else {
-        reject(
-            @"salt_generation_failed",
-            @"Generating Salt failed.",
-            [BCHelpers newErrorObject]
-        );
+               @"encryption_failed",
+               @"Encryption failed",
+               [BCHelpers newErrorObject]
+               );
     }
 }
 
@@ -78,6 +50,33 @@ RCT_EXPORT_METHOD(generateIV:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPro
             @"IV generation failed",
             [BCHelpers newErrorObject]
         );
+    }
+}
+
+RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *salt = [Crypto generateSaltWithLength:length];
+    if (salt && [salt length] > 0) {
+        resolve(salt);
+    } else {
+        reject(
+               @"salt_generation_failed",
+               @"Salt generation failed",
+               [BCHelpers newErrorObject]
+               );
+    }
+}
+
+RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    const char* uuidList = generate_uuid_list(count);
+    if (uuidList) {
+        resolve([NSString stringWithUTF8String:uuidList]);
+        dealloc_memory(uuidList);
+    } else {
+        reject(
+               @"uuid_generation_failed",
+               @"Generating UUIDs failed.",
+               [BCHelpers newErrorObject]
+               );
     }
 }
 
