@@ -44,6 +44,13 @@
     XCTAssertTrue([output length] > 0);
 }
 
+- (void)testGenerateIVWithLengthGeneratesStringsWithCorrectLengths {
+    NSString *len16 = [Crypto generateIVWithLength:16];
+    NSString *len32 = [Crypto generateIVWithLength:32];
+    XCTAssertEqual(len16.length, 32); // 32 chars = 16 bytes
+    XCTAssertEqual(len32.length, 64); // 64 chars = 32 bytes
+}
+
 - (void)testEncryptTextPerformsReasonably {
     NSString *targetData = @"";
     for (int i = 0; i < 1000; i += 1) {

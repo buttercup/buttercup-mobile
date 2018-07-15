@@ -35,6 +35,13 @@
     return output;
 }
 
++ (NSString *)generateIVWithLength:(int)length {
+    const char* iv = generate_random_bytes(length);
+    NSString *output = [NSString stringWithUTF8String:iv];
+    dealloc_memory(iv);
+    return output;
+}
+
 + (NSString *)pbkdf2UsingPassword:(NSString *)password andSalt:(NSString *)salt andIterations:(int)iterations andBits:(int)bits {
     const char* keyDerivationInfo = pbkdf2_derive(
         [password UTF8String],

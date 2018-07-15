@@ -42,7 +42,6 @@ RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex
 
 RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
     const char* uuidList = generate_uuid_list(count);
-
     if (uuidList) {
         resolve([NSString stringWithUTF8String:uuidList]);
         dealloc_memory(uuidList);
@@ -57,7 +56,6 @@ RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTP
 
 RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
     const char* salt = generate_salt(length);
-
     if (salt) {
         resolve([NSString stringWithUTF8String:salt]);
         dealloc_memory(salt);
@@ -71,15 +69,13 @@ RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)res
 }
 
 RCT_EXPORT_METHOD(generateIV:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
-    const char* iv = generate_random_bytes(length);
-
-    if (iv) {
-        resolve([NSString stringWithUTF8String:iv]);
-        dealloc_memory(iv);
+    NSString *iv = [Crypto generateIVWithLength:length];
+    if (iv && [iv length] > 0) {
+        resolve(iv);
     } else {
         reject(
             @"iv_generation_failed",
-            @"Generating IV failed.",
+            @"IV generation failed",
             [BCHelpers newErrorObject]
         );
     }
@@ -91,10 +87,10 @@ RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(
         resolve(derivedData);
     } else {
         reject(
-               @"pbkdf2_failed",
-               @"Key Derivation failed",
-               [BCHelpers newErrorObject]
-               );
+            @"pbkdf2_failed",
+            @"Key Derivation failed",
+            [BCHelpers newErrorObject]
+        );
     }
 }
 
