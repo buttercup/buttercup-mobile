@@ -54,6 +54,7 @@
 		C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
 		C26F52DE1F5739B6000EB570 /* BCHelpersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52DD1F5739B6000EB570 /* BCHelpersTests.m */; };
 		C26F52DF1F5739BB000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
+		C2B9132D20FBE9640010DAD6 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488A20FB5463000EC30D /* Crypto.m */; };
 		C2F3488B20FB5463000EC30D /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488A20FB5463000EC30D /* Crypto.m */; };
 		C2F3488D20FB7EEA000EC30D /* CryptoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488C20FB7EEA000EC30D /* CryptoTests.m */; };
 		C9661C6B6D9A4BC688834D4B /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FCC2D269F844C8BF09D78C /* Octicons.ttf */; };
@@ -1365,6 +1366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2B9132D20FBE9640010DAD6 /* Crypto.m in Sources */,
 				C2F3488D20FB7EEA000EC30D /* CryptoTests.m in Sources */,
 				C26F52DF1F5739BB000EB570 /* BCHelpers.m in Sources */,
 				C26F52DE1F5739B6000EB570 /* BCHelpersTests.m in Sources */,
