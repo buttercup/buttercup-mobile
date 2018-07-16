@@ -66,4 +66,16 @@
     return [NSString stringWithString:hexString];
 }
 
++ (NSError *)newErrorObject {
+    // Create the error.
+    NSString *domain = @"pw.buttercup.mobile.Crypto";
+    int errorCode = 4;
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    [userInfo setObject:@"Crypto Error" forKey:NSLocalizedDescriptionKey];
+
+    // Populate the error reference.
+    NSError* error = [[NSError alloc] initWithDomain:domain code:errorCode userInfo:userInfo];
+    return error;
+}
+
 @end

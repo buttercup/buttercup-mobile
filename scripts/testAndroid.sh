@@ -2,4 +2,11 @@
 
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cd $THISDIR/../android && ./gradlew --project-cache-dir ../.gradlecache test
+set -e
+
+cd $THISDIR/../android
+
+./gradlew assemble
+./gradlew app:connectedAndroidTest
+
+cd -

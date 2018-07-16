@@ -50,11 +50,6 @@ public class MainApplication extends Application implements ReactApplication {
         SoLoader.init(this, /* native exopackage */ false);
     }
 
-//    @Override
-//    protected String getJSMainModuleName() {
-//      return "index";
-//    }
-
     @Override
     public ReactNativeHost getReactNativeHost() {
         return mReactNativeHost;

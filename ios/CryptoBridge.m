@@ -1,50 +1,95 @@
-//
-//  CryptoBridge.m
-//  Buttercup
-//
-//  Created by Perry Mitchell on 24/5/17.
-//  Copyright © 2017 Facebook. All rights reserved.
-//
-
+#import "CryptoBindings.h"
 #import "CryptoBridge.h"
-#import "BCDerivation.h"
-#import "BCCrypto.h"
+#import "Crypto.h"
+#import <React/RCTLog.h>
+#include <sys/sysctl.h>
+#import "BCHelpers.h"
 
 @implementation CryptoBridge
 
-RCT_EXPORT_MODULE();
+// The React Native bridge needs to know our module
+RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(deriveKeyFromPassword:(NSString *)password andSalt:(NSString *)salt forRounds:(int)rounds thenCallBack:(RCTResponseSenderBlock)callback) {
-    callback(@[[NSNull null], [BCDerivation deriveKeyFromPassword:password andSalt:salt forRounds:rounds]]);
++ (BOOL)requiresMainQueueSetup {
+    return YES;
 }
 
-RCT_EXPORT_METHOD(encryptText:(NSString *)text withKey:(NSString *)key andSalt:(NSString *)salt andHMAC:(NSString *)hmacHexKey thenCallBack:(RCTResponseSenderBlock)callback) {
-    callback(@[
-        [NSNull null],
-        [BCCrypto encryptText:text withKey:key andSalt:salt andHMAC:hmacHexKey]
-    ]);
+RCT_EXPORT_METHOD(decryptText:(NSString *)data:(NSString *)key:(NSString *)ivHex:(NSString *)salt:(NSString *)hmacHexKey:(NSString *)hmacHex:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *decryptedString = [Crypto decryptText:data usingKey:key andSalt:salt andIV:ivHex andHMACKey:hmacHexKey andHMAC:hmacHex];
+    if (decryptedString && [decryptedString length] > 0) {
+        resolve(decryptedString);
+    } else {
+        reject(
+               @"decryption_failed",
+               @"Decryption failed: Possible tampering",
+               [BCHelpers newErrorObject]
+               );
+    }
 }
 
-RCT_EXPORT_METHOD(decryptText:(NSString *)encryptedText withKey:(NSString *)key andIV:(NSString *)ivHex andSalt:(NSString *)saltHex andHMACKey:(NSString *)hmacHexKey andHMAC:(NSString *)hmacHex thenCallBack:(RCTResponseSenderBlock)callback) {
-    callback(@[
-        [NSNull null],
-        [BCCrypto decryptText:encryptedText withKey:key andIV:ivHex andSalt:saltHex andHMACKey:hmacHexKey andHMAC:hmacHex]
-    ]);
+RCT_EXPORT_METHOD(encryptText:(NSString *)data:(NSString *)key:(NSString *)salt:(NSString *)ivHex:(NSString *)hmacHexKey:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *encryptedString = [Crypto encryptText:data usingKey:key andSalt:salt andIV:ivHex andHMACKey:hmacHexKey];
+    if (encryptedString && [encryptedString length] > 0) {
+        resolve(encryptedString);
+    } else {
+        reject(
+               @"encryption_failed",
+               @"Encryption failed",
+               [BCHelpers newErrorObject]
+               );
+    }
 }
 
-RCT_EXPORT_METHOD(generateSaltWithLength:(int)length thenCallback:(RCTResponseSenderBlock)callback) {
-    callback(@[
-        [NSNull null],
-        [BCCrypto generateSaltWithLength:length]
-    ]);
+RCT_EXPORT_METHOD(generateIV:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *iv = [Crypto generateIVWithLength:length];
+    if (iv && [iv length] > 0) {
+        resolve(iv);
+    } else {
+        reject(
+            @"iv_generation_failed",
+            @"IV generation failed",
+            [BCHelpers newErrorObject]
+        );
+    }
 }
 
-RCT_EXPORT_METHOD(generateUUIDs:(RCTResponseSenderBlock)callback) {
-    NSArray *uuidArr = [BCCrypto generateUUIDsForCount:50];
-    callback(@[
-        [NSNull null],
-        [uuidArr componentsJoinedByString:@","]
-    ]);
+RCT_EXPORT_METHOD(generateSaltWithLength:(int)length:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *salt = [Crypto generateSaltWithLength:length];
+    if (salt && [salt length] > 0) {
+        resolve(salt);
+    } else {
+        reject(
+               @"salt_generation_failed",
+               @"Salt generation failed",
+               [BCHelpers newErrorObject]
+               );
+    }
+}
+
+RCT_EXPORT_METHOD(generateUUIDs:(int)count:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *uuids = [Crypto generateUUIDs:count];
+    if (uuids && [uuids length] > 0) {
+        resolve(uuids);
+    } else {
+        reject(
+            @"uuid_generation_failed",
+            @"UUID generation failed",
+            [BCHelpers newErrorObject]
+        );
+    }
+}
+
+RCT_EXPORT_METHOD(pbkdf2:(NSString *)password:(NSString *)salt:(int)iterations:(int)bits:(RCTPromiseResolveBlock)resolve:(RCTPromiseRejectBlock)reject) {
+    NSString *derivedData = [Crypto pbkdf2UsingPassword:password andSalt:salt andIterations:iterations andBits:bits];
+    if (derivedData && [derivedData length] > 0) {
+        resolve(derivedData);
+    } else {
+        reject(
+            @"pbkdf2_failed",
+            @"Key Derivation failed",
+            [BCHelpers newErrorObject]
+        );
+    }
 }
 
 @end

@@ -57,7 +57,12 @@ function addToArchiveManager(state) {
         dropboxToken
     });
     const archiveCredentials = createArchiveCredentials(archivePassword);
-    return addArchiveToArchiveManager(archiveName, sourceCredentials, archiveCredentials);
+    return addArchiveToArchiveManager(
+        archiveName,
+        sourceCredentials,
+        archiveCredentials,
+        archiveType
+    );
 }
 
 function handleNewArchiveName(name, dispatch, getState) {

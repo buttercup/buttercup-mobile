@@ -19,9 +19,10 @@ let __sharedManager = null;
  * @param {String} name The archive name
  * @param {Credentials} sourceCreds Remote source credentials *instance*
  * @param {Credentials} archiveCreds Archive master password credentials *instance*
+ * @param {String} archiveType Archive type
  * @returns
  */
-export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
+export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds, archiveType) {
     const manager = getSharedArchiveManager();
     return doAsyncWork()
         .then(() =>
@@ -31,7 +32,9 @@ export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds) {
             ])
         )
         .then(([sourceCredString, archiveCredString]) =>
-            manager.addSource(new ArchiveSource(name, sourceCredString, archiveCredString))
+            manager.addSource(
+                new ArchiveSource(name, sourceCredString, archiveCredString, { type: archiveType })
+            )
         );
 }
 
@@ -88,7 +91,7 @@ export function createRemoteCredentials(archiveType, options) {
 
 export function getArchiveEncryptedContent(archive, credentials) {
     const tds = new TextDatasource();
-    return tds.save(archive, credentials).then(encryptedContent => {
+    return tds.save(archive.getHistory(), credentials).then(encryptedContent => {
         return doAsyncWork().then(() => encryptedContent);
     });
 }
