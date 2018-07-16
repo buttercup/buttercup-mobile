@@ -1,5 +1,11 @@
 # Buttercup Mobile Changelog
 
+## v1.4.0
+_2018-07-16_
+
+ * **New crypto library** written in Rust
+   * **Bugfix**: (#78) Possible tampering error
+
 ## v1.3.0
 _2018-06-05_
 
