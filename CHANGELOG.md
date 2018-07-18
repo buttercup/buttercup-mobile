@@ -1,5 +1,10 @@
 # Buttercup Mobile Changelog
 
+## v1.4.1
+_2018-07-18_
+
+ * **Bugfix**: App would crash on some Android phones due to bad gradle config
+
 ## v1.4.0
 _2018-07-16_
 
