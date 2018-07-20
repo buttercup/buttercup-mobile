@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import Prompt from "@perrymitchell/react-native-prompt";
-import Spinner from "react-native-loading-spinner-overlay";
 import { Cell, CellGroup } from "react-native-cell-components";
 import { editGroup } from "../shared/archiveContents.js";
 import { rawGroupIsTrash } from "../shared/group.js";
+import Spinner from "./Spinner.js";
 import EmptyView from "./EmptyView.js";
 import ToolbarIcon from "./ToolbarIcon.js";
 
@@ -130,12 +130,7 @@ class GroupsPage extends Component {
                     onSubmit={value => this.props.onGroupCreate(this.props.group.id, value)}
                     textInputProps={{ keyboardType: "default" }}
                 />
-                <Spinner
-                    visible={this.props.saving}
-                    textContent="Saving"
-                    textStyle={{ color: "#FFF" }}
-                    overlayColor="rgba(0, 0, 0, 0.75)"
-                />
+                <Spinner visible={this.props.saving} text="Saving" />
             </View>
         );
     }

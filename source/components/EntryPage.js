@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, ScrollView, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
-import Spinner from "react-native-loading-spinner-overlay";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
+import Spinner from "./Spinner.js";
 import ToolbarIcon from "./ToolbarIcon.js";
 
 const NOOP = () => {};
@@ -132,12 +132,7 @@ class EntryPage extends Component {
                     </CellGroup>
                     {this.renderEditButtons()}
                 </ScrollView>
-                <Spinner
-                    visible={this.props.saving}
-                    textContent="Saving"
-                    textStyle={{ color: "#FFF" }}
-                    overlayColor="rgba(0, 0, 0, 0.75)"
-                />
+                <Spinner visible={this.props.saving} text="Saving" />
             </View>
         );
     }

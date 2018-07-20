@@ -39,7 +39,7 @@ export const AppNavigator = StackNavigator(
             headerStyle: {
                 backgroundColor: "#ffffff",
                 borderBottomColor: "#24B5AB",
-                borderBottomWidth: 2
+                borderBottomWidth: 3
             },
             headerTitleStyle: {
                 flex: 1

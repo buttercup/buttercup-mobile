@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Cell, CellGroup } from "react-native-cell-components";
-import Spinner from "react-native-loading-spinner-overlay";
 import Prompt from "@perrymitchell/react-native-prompt";
 import PropTypes from "prop-types";
 import { beginNewArchiveProcedure } from "../shared/archives.js";
+import Spinner from "./Spinner.js";
 
 const BCUP_IMAGE = require("../../resources/images/bcup-256.png");
 const FILE_IMAGE = require("../../resources/images/file-256.png");
@@ -87,24 +87,9 @@ class RemoteExplorer extends Component {
                     onSubmit={value => this.props.onNewArchiveName(value)}
                     textInputProps={{ keyboardType: "default" }}
                 />
-                <Spinner
-                    visible={this.props.creatingFile}
-                    textContent="Creating Archive"
-                    textStyle={{ color: "#FFF" }}
-                    overlayColor="rgba(0, 0, 0, 0.75)"
-                />
-                <Spinner
-                    visible={this.props.loading}
-                    textContent="Fetching Contents"
-                    textStyle={{ color: "#FFF" }}
-                    overlayColor="rgba(0, 0, 0, 0.75)"
-                />
-                <Spinner
-                    visible={this.props.addingArchive}
-                    textContent="Adding Archive"
-                    textStyle={{ color: "#FFF" }}
-                    overlayColor="rgba(0, 0, 0, 0.75)"
-                />
+                <Spinner visible={this.props.creatingFile} text="Creating Archive" />
+                <Spinner visible={this.props.loading} text="Fetching Contents" />
+                <Spinner visible={this.props.addingArchive} text="Adding Archive" />
             </View>
         );
     }

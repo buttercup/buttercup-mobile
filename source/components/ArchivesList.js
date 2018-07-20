@@ -12,8 +12,8 @@ import { SwipeListView } from "react-native-swipe-list-view";
 import { List, ListItem } from "react-native-elements";
 import PropTypes from "prop-types";
 import Prompt from "@perrymitchell/react-native-prompt";
-import Spinner from "react-native-loading-spinner-overlay";
 import Swipeout from "react-native-swipeout";
+import Spinner from "./Spinner.js";
 import SwipeoutButton from "./SwipeoutButton.js";
 import EmptyView from "./EmptyView.js";
 import { getArchiveTypeDetails } from "../library/archives.js";
@@ -298,12 +298,7 @@ class ArchivesList extends Component {
                     onSubmit={pass => this.handlePasswordEntered(pass)}
                     textInputProps={{ secureTextEntry: true }}
                 />
-                <Spinner
-                    visible={this.props.isUnlocking}
-                    textContent="Unlocking"
-                    textStyle={{ color: "#FFF" }}
-                    overlayColor="rgba(0, 0, 0, 0.75)"
-                />
+                <Spinner visible={this.props.isUnlocking} text="Unlocking" />
             </View>
         );
     }
