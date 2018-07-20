@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
-import Spinner from "react-native-loading-spinner-overlay";
 import PropTypes from "prop-types";
 import DropboxAuthButton from "../containers/DropboxAuthButton.js";
+import Spinner from "./Spinner.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -60,12 +60,7 @@ class RemoteConnectPage extends Component {
                             />
                         </CellGroup>
                     </View>
-                    <Spinner
-                        visible={this.props.connecting}
-                        textContent="Connecting"
-                        textStyle={{ color: "#FFF" }}
-                        overlayColor="rgba(0, 0, 0, 0.75)"
-                    />
+                    <Spinner visible={this.props.connecting} text="Connecting" />
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -115,12 +110,7 @@ class RemoteConnectPage extends Component {
                             tintColor="#1144FF"
                         />
                     </CellGroup>
-                    <Spinner
-                        visible={this.props.connecting}
-                        textContent="Connecting"
-                        textStyle={{ color: "#FFF" }}
-                        overlayColor="rgba(0, 0, 0, 0.75)"
-                    />
+                    <Spinner visible={this.props.connecting} text="Connecting" />
                 </View>
             </TouchableWithoutFeedback>
         );

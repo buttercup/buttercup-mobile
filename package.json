@@ -54,7 +54,7 @@
     "react-native-exception-handler": "^1.1.0",
     "react-native-keychain": "^3.0.0-rc.3",
     "react-native-level-fs": "^3.0.0",
-    "react-native-loading-spinner-overlay": "^0.5.0",
+    "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-navbar": "^1.7.1",
     "react-native-os": "^1.1.0",
     "react-native-randombytes": "^3.0.0",

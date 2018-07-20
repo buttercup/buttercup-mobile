@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
     headerImageAndroid: {
         alignSelf: "center",
-        marginLeft: 38
+        marginLeft: 20
     }
 });
 

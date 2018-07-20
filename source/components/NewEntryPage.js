@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { CellGroup, CellInput } from "react-native-cell-components";
-import Spinner from "react-native-loading-spinner-overlay";
 import { saveNewEntry } from "../shared/entry.js";
+import Spinner from "./Spinner.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -56,12 +56,7 @@ class NewEntryPage extends Component {
                         {...boringProps}
                     />
                 </CellGroup>
-                <Spinner
-                    visible={this.props.isSaving}
-                    textContent="Saving"
-                    textStyle={{ color: "#FFF" }}
-                    overlayColor="rgba(0, 0, 0, 0.75)"
-                />
+                <Spinner visible={this.props.isSaving} text="Saving" />
             </View>
         );
     }
