@@ -1,5 +1,10 @@
 # Buttercup Mobile Changelog
 
+## v1.4.2
+_2018-07-21_
+
+ * **Bugfix**: (#111) Various Android UI issues
+
 ## v1.4.1
 _2018-07-18_
 
