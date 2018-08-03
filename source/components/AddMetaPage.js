@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
 class AddMetaPage extends Component {
     static navigationOptions = {
-        title: "Add Meta",
+        title: "Add Property",
         headerRight: <Button title="Save" onPress={saveNewMeta} />
     };
 
