@@ -1,5 +1,10 @@
 # Buttercup Mobile Changelog
 
+## v1.4.3
+_2018-08-03_
+
+ * **Bugfix**: (#112) App crashes when certain custom properties are edited or added
+
 ## v1.4.2
 _2018-07-21_
 
