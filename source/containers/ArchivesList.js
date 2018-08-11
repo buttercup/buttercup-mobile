@@ -19,6 +19,7 @@ import {
 } from "../shared/archiveContents.js";
 import { promptRemoveArchive } from "../shared/archives.js";
 import { handleError } from "../global/exceptions.js";
+import { getConnectedStatus } from "../global/connectivity.js";
 import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 
 function openArchive(dispatch, getState, sourceID) {
@@ -34,37 +35,53 @@ function openArchive(dispatch, getState, sourceID) {
     dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
 }
 
-function performOfflineProcedure(dispatch, getState, sourceID, password) {
+function performOfflineProcedure(dispatch, getState, sourceID, password, isOffline = false) {
     return checkSourceHasOfflineCopy(sourceID).then(hasOffline => {
         if (!hasOffline) {
-            return;
+            return false;
         }
         Alert.alert(
-            "Offline Content",
+            isOffline ? "Offline Content (currently offline)" : "Offline Content",
             "Would you like to try and load this archive in offline (read-only) mode?",
             [
                 { text: "Cancel", style: "cancel" },
                 {
-                    text: "Open",
+                    text: "Use Offline",
                     style: "default",
                     onPress: () => {
-                        dispatch(setIsUnlocking(true));
-                        performSourceUnlock(dispatch, getState, sourceID, password, true);
+                        performSourceUnlock(dispatch, getState, sourceID, password, true).catch(
+                            err => {
+                                handleError("Failed unlocking archive", err);
+                            }
+                        );
                     }
                 }
             ]
         );
+        return true;
     });
 }
 
 function performSourceUnlock(dispatch, getState, sourceID, password, useOffline = false) {
-    dispatch(setIsUnlocking(true));
-    dispatch(showUnlockPasswordPrompt(false));
-    return unlockSource(sourceID, password).then(() => {
-        // success!
-        dispatch(setIsUnlocking(false));
-        // open source
-        openArchive(dispatch, getState, sourceID);
+    return getConnectedStatus().then(connected => {
+        console.log("CONNECTED", connected, useOffline);
+        if (!connected && !useOffline) {
+            return performOfflineProcedure(dispatch, getState, sourceID, password, true).then(
+                usedOffline => {
+                    if (!usedOffline) {
+                        throw new Error("Failed unlocking: Device not online");
+                    }
+                }
+            );
+        }
+        dispatch(showUnlockPasswordPrompt(false));
+        dispatch(setIsUnlocking(true));
+        return unlockSource(sourceID, password, useOffline).then(() => {
+            // success!
+            dispatch(setIsUnlocking(false));
+            // open source
+            openArchive(dispatch, getState, sourceID);
+        });
     });
 }
 

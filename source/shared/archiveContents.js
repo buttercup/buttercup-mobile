@@ -27,9 +27,11 @@ export function lockSource(sourceID) {
     return archiveManager.getSourceForID(sourceID).lock();
 }
 
-export function unlockSource(sourceID, password) {
+export function unlockSource(sourceID, password, useOffline = false) {
     const archiveManager = getSharedArchiveManager();
-    return doAsyncWork().then(() => archiveManager.getSourceForID(sourceID).unlock(password));
+    return doAsyncWork().then(() =>
+        archiveManager.getSourceForID(sourceID).unlock(password, /* init: */ false, useOffline)
+    );
 }
 
 export function updateCurrentArchive() {
