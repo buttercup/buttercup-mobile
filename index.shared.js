@@ -39,7 +39,7 @@ export default class ButtercupShared extends Component {
             <Provider store={store}>
                 <Fragment>
                     <App />
-                    <DropdownAlert ref={ref => (this.dropdown = ref)} />
+                    <DropdownAlert ref={ref => (this.dropdown = ref)} closeInterval={8000} />
                 </Fragment>
             </Provider>
         );
