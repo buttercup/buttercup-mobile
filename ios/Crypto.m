@@ -17,6 +17,9 @@
         [hmacKeyHex UTF8String],
         [hmacHex UTF8String]
     );
+    if (decryptedText == NULL) {
+        return @"Error:Failed decrypting content";
+    }
     NSString *output = [NSString stringWithUTF8String:decryptedText];
     dealloc_memory(decryptedText);
     return output;
