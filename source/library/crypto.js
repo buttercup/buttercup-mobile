@@ -4,6 +4,7 @@ import VError from "verror";
 import { tools, vendor, Web } from "./buttercupCore.js";
 import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
+import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 
 const { iocane: { configure: configureIocane } } = vendor;
 const { CryptoBridge: Crypto } = NativeModules;
@@ -44,7 +45,7 @@ function internalDecrypt(encryptedComponents, keyDerivationInfo) {
         .then(content => {
             if (BRIDGE_ERROR_REXP.test(content)) {
                 const errMsg = content.replace(BRIDGE_ERROR_REXP, "");
-                throw new VError({ info: { code: "DECRYPT_ERROR" } }, errMsg);
+                throw new VError({ info: { code: ERROR_CODE_DECRYPT_ERROR } }, errMsg);
             }
             return content;
         })

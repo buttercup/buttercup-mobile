@@ -199,7 +199,6 @@ class ArchivesList extends Component {
     }
 
     handlePasswordEntered(password) {
-        this.props.setIsUnlocking(true);
         this.props.unlockArchive(this.lastSelectedSourceID, password);
     }
 

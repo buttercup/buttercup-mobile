@@ -10,6 +10,11 @@ export function archiveToObject(archive) {
     return archive.toObject();
 }
 
+export function checkSourceHasOfflineCopy(sourceID) {
+    const source = getSharedArchiveManager().getSourceForID(sourceID);
+    return source.checkOfflineCopy();
+}
+
 export function editGroup(groupID) {
     dispatch(setNewEntryParentGroup(groupID));
     const showEntryAdd = groupID !== "0";
