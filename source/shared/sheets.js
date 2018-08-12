@@ -136,6 +136,8 @@ export function showTouchIDToggleSheet() {
                     case itemEnableTouchID: {
                         enableTouchUnlock(currentSourceID).then(outcome => {
                             switch (outcome.action) {
+                                case "none":
+                                /* falls-through */
                                 case "cancel":
                                     // do nothing
                                     break;

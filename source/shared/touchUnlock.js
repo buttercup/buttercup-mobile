@@ -54,7 +54,7 @@ export function enableTouchUnlock(sourceID) {
         .then(() => setValue(storageKey, true))
         .then(() => {
             executeNotification("success", "Touch Unlock", "Successfully enabled touch unlock");
-            return updateTouchEnabledSources();
+            return updateTouchEnabledSources().then(() => ({ action: "none" }));
         })
         .catch(err => {
             switch (err.name) {
