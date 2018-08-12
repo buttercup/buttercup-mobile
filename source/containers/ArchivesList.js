@@ -49,7 +49,13 @@ function performOfflineProcedure(dispatch, getState, sourceID, password, isOffli
             isOffline ? "Offline Content (currently offline)" : "Offline Content",
             "Would you like to try and load this archive in offline (read-only) mode?",
             [
-                { text: "Cancel", style: "cancel" },
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                    onPress: () => {
+                        dispatch(setBusyState(null));
+                    }
+                },
                 {
                     text: "Use Offline",
                     style: "default",
@@ -77,7 +83,10 @@ function performOfflineProcedure(dispatch, getState, sourceID, password, isOffli
 }
 
 function performSourceUnlock(dispatch, getState, sourceID, password, useOffline = false) {
+    dispatch(showUnlockPasswordPrompt(false));
+    dispatch(setBusyState("Checking Connection"));
     return getConnectedStatus().then(connected => {
+        dispatch(setBusyState("Unlocking"));
         if (!connected && !useOffline) {
             return performOfflineProcedure(dispatch, getState, sourceID, password, true).then(
                 usedOffline => {
@@ -87,8 +96,6 @@ function performSourceUnlock(dispatch, getState, sourceID, password, useOffline 
                 }
             );
         }
-        dispatch(showUnlockPasswordPrompt(false));
-        dispatch(setBusyState("Unlocking"));
         return unlockSource(sourceID, password, useOffline).then(() => {
             // success!
             dispatch(setBusyState(null));
