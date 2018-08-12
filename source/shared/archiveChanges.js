@@ -7,6 +7,13 @@ export function linkArchiveManagerToStore(store) {
     const archiveManager = getSharedArchiveManager();
     // listen for new archives
     archiveManager.on("sourcesUpdated", sourcesList => {
-        dispatch(setArchives(sourcesList));
+        const sources = sourcesList.map(sourceInfo => ({
+            ...sourceInfo,
+            readOnly:
+                sourceInfo.status === "unlocked" &&
+                archiveManager.getSourceForID(sourceInfo.id).workspace.archive.readOnly
+        }));
+        dispatch(setArchives(sources));
+        updateTouchEnabledSources();
     });
 }

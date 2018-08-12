@@ -29,6 +29,7 @@ const ARCHIVE_SWIPE_BUTTON_WIDTH = 80;
 const BENCH_IMAGE = require("../../resources/images/bench.png");
 const FINGERPRINT_IMAGE = require("../../resources/images/fingerprint.png");
 const LOCK_IMAGE = require("../../resources/images/locked.png");
+const READONLY_IMAGE = require("../../resources/images/readonly.png");
 
 const ARCHIVE_TYPES = getArchiveTypeDetails().reduce((types, nextType) => {
     types[nextType.type] = nextType;
@@ -60,6 +61,12 @@ const styles = StyleSheet.create({
         tintColor: "#333"
     },
     archiveTouchImage: {
+        width: 24,
+        height: 24,
+        marginRight: 10,
+        tintColor: "#333"
+    },
+    archiveReadOnlyImage: {
         width: 24,
         height: 24,
         marginRight: 10,
@@ -209,6 +216,7 @@ class ArchivesList extends Component {
 
     renderArchiveItem(archiveInfo) {
         const { title: typeTitle, image: typeImage } = ARCHIVE_TYPES[archiveInfo.type];
+        console.log(this.props.sourcesUsingTouchUnlock);
         return (
             <TouchableHighlight
                 onPress={() => this.handleArchiveSelection(archiveInfo.id, archiveInfo.status)}
@@ -240,11 +248,25 @@ class ArchivesList extends Component {
                                 </Text>
                             </View>
                         </View>
-                        <If condition={this.props.sourcesUsingTouchUnlock.includes(archiveInfo.id)}>
-                            <Image source={FINGERPRINT_IMAGE} style={styles.archiveTouchImage} />
+                        <If condition={archiveInfo.readOnly}>
+                            <Image source={READONLY_IMAGE} style={styles.archiveReadOnlyImage} />
                         </If>
                         <If condition={archiveInfo.status === "locked"}>
-                            <Image source={LOCK_IMAGE} style={styles.archiveLockImage} />
+                            <Choose>
+                                <When
+                                    condition={this.props.sourcesUsingTouchUnlock.includes(
+                                        archiveInfo.id
+                                    )}
+                                >
+                                    <Image
+                                        source={FINGERPRINT_IMAGE}
+                                        style={styles.archiveTouchImage}
+                                    />
+                                </When>
+                                <Otherwise>
+                                    <Image source={LOCK_IMAGE} style={styles.archiveLockImage} />
+                                </Otherwise>
+                            </Choose>
                         </If>
                     </View>
                 </View>
