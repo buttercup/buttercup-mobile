@@ -1,5 +1,5 @@
 const STATE_KEY = "app";
 
-export function isSaving(state) {
-    return state[STATE_KEY].saving;
+export function getBusyState(state) {
+    return state[STATE_KEY].busyState;
 }

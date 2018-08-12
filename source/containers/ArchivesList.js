@@ -5,10 +5,11 @@ import ArchivesList from "../components/ArchivesList.js";
 import {
     getArchivesDisplayList,
     getSourceIDsUsingTouchID,
-    isUnlocking,
     shouldShowUnlockPasswordPrompt
 } from "../selectors/archives.js";
-import { setIsUnlocking, showUnlockPasswordPrompt } from "../actions/archives.js";
+import { setBusyState } from "../actions/app.js";
+import { getBusyState } from "../selectors/app.js";
+import { showUnlockPasswordPrompt } from "../actions/archives.js";
 import { markCurrentSourceReadOnly, setSelectedSource } from "../actions/archiveContents.js";
 import { navigateToGroups } from "../actions/navigation.js";
 import {
@@ -87,10 +88,10 @@ function performSourceUnlock(dispatch, getState, sourceID, password, useOffline 
             );
         }
         dispatch(showUnlockPasswordPrompt(false));
-        dispatch(setIsUnlocking(true));
+        dispatch(setBusyState("Unlocking"));
         return unlockSource(sourceID, password, useOffline).then(() => {
             // success!
-            dispatch(setIsUnlocking(false));
+            dispatch(setBusyState(null));
             // open source
             openArchive(dispatch, getState, sourceID);
         });
@@ -100,7 +101,7 @@ function performSourceUnlock(dispatch, getState, sourceID, password, useOffline 
 export default connect(
     (state, ownProps) => ({
         archives: getArchivesDisplayList(state),
-        isUnlocking: isUnlocking(state),
+        busyState: getBusyState(state),
         showUnlockPrompt: shouldShowUnlockPasswordPrompt(state),
         sourcesUsingTouchUnlock: getSourceIDsUsingTouchID(state)
     }),
@@ -119,7 +120,7 @@ export default connect(
         showUnlockPasswordPrompt,
         unlockArchive: (sourceID, password) => (dispatch, getState) => {
             return performSourceUnlock(dispatch, getState, sourceID, password).catch(err => {
-                dispatch(setIsUnlocking(false));
+                dispatch(setBusyState(null));
                 handleError("Failed unlocking archive", err);
                 const { code: errorCode } = VError.info(err);
                 if ((errorCode && errorCode !== ERROR_CODE_DECRYPT_ERROR) || !errorCode) {

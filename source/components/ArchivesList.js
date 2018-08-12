@@ -137,7 +137,7 @@ function getArchiveAbbr(archiveName) {
 class ArchivesList extends Component {
     static propTypes = {
         archives: PropTypes.arrayOf(PropTypes.object),
-        isUnlocking: PropTypes.bool.isRequired,
+        busyState: PropTypes.string,
         lockArchive: PropTypes.func.isRequired,
         removeArchive: PropTypes.func.isRequired,
         selectArchiveSource: PropTypes.func.isRequired,
@@ -297,7 +297,7 @@ class ArchivesList extends Component {
                     onSubmit={pass => this.handlePasswordEntered(pass)}
                     textInputProps={{ secureTextEntry: true }}
                 />
-                <Spinner visible={this.props.isUnlocking} text="Unlocking" />
+                <Spinner visible={this.props.busyState !== null} text={this.props.busyState} />
             </View>
         );
     }

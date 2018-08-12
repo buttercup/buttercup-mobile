@@ -48,13 +48,13 @@ class GroupsPage extends Component {
     };
 
     static propTypes = {
+        busyState: PropTypes.string,
         currentGroupID: PropTypes.string.isRequired,
         onCancelGroupCreate: PropTypes.func.isRequired,
         onCancelGroupRename: PropTypes.func.isRequired,
         onEntryPress: PropTypes.func.isRequired,
         onGroupPress: PropTypes.func.isRequired,
         onGroupRename: PropTypes.func.isRequired,
-        saving: PropTypes.bool.isRequired,
         showGroupCreatePrompt: PropTypes.bool.isRequired,
         showGroupRenamePrompt: PropTypes.bool.isRequired
     };
@@ -130,7 +130,7 @@ class GroupsPage extends Component {
                     onSubmit={value => this.props.onGroupCreate(this.props.group.id, value)}
                     textInputProps={{ keyboardType: "default" }}
                 />
-                <Spinner visible={this.props.saving} text="Saving" />
+                <Spinner visible={this.props.busyState !== null} text={this.props.busyState} />
             </View>
         );
     }

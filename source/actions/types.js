@@ -8,7 +8,7 @@ export const ADD_ARCHIVE_SET_URL = "addArchive/setURL";
 export const ADD_ARCHIVE_SET_USERNAME = "addArchive/setUsername";
 
 export const APP_MASTER_RESET = "app/reset";
-export const APP_SET_SAVING = "app/setSaving";
+export const APP_SET_BUSY_STATE = "app/setBusyState";
 
 export const ARCHIVE_CONTENTS_MARK_READONLY = "archiveContents/markAsReadOnly";
 export const ARCHIVE_CONTENTS_SET_GROUPS = "archiveContents/setGroups";
@@ -18,7 +18,6 @@ export const ARCHIVE_CONTENTS_TOGGLE_REN_GROUP_PROMPT = "archiveContents/toggleG
 
 export const ARCHIVES_SET = "archives/set";
 export const ARCHIVES_SET_TOUCHID_ENABLED = "archives/touchID/setEnabledArchives";
-export const ARCHIVES_TOGGLE_IS_UNLOCKING = "archives/toggleIsUnlocking";
 export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT = "archives/toggleUnlockPasswordPrompt";
 
 export const BROWSER_RESET = "browser/reset";

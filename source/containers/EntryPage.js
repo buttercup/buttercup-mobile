@@ -4,7 +4,7 @@ import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
 import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
 import { navigateBack, navigateToNewMeta } from "../actions/navigation.js";
-import { setSaving } from "../actions/app.js";
+import { setBusyState } from "../actions/app.js";
 import {
     getEntryFields,
     getEntryID,
@@ -17,7 +17,7 @@ import {
     isEditing,
     isViewingHidden
 } from "../selectors/entry.js";
-import { isSaving } from "../selectors/app.js";
+import { getBusyState } from "../selectors/app.js";
 import { getEntry, loadEntry } from "../shared/entry.js";
 import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
 import { saveCurrentArchive } from "../shared/archive.js";
@@ -28,9 +28,9 @@ import { prepareURLForLaunch } from "../library/helpers.js";
 
 export default connect(
     (state, ownProps) => ({
+        busyState: getBusyState(state),
         editing: isEditing(state),
         properties: getEntryProperties(state),
-        saving: isSaving(state),
         title: getEntryTitle(state),
         viewHidden: isViewingHidden(state)
     }),
@@ -104,11 +104,11 @@ export default connect(
             const facade = createEntryFacade(entry);
             facade.fields = fields;
             consumeEntryFacade(entry, facade);
-            dispatch(setSaving(true));
+            dispatch(setBusyState("Saving"));
             return saveCurrentArchive()
                 .then(() => {
                     updateCurrentArchive();
-                    dispatch(setSaving(false));
+                    dispatch(setBusyState(null));
                     dispatch(setEntryEditing(false));
                     executeNotification(
                         "success",
@@ -117,7 +117,7 @@ export default connect(
                     );
                 })
                 .catch(err => {
-                    dispatch(setSaving(false));
+                    dispatch(setBusyState(null));
                     handleError("Saving failed", err);
                 });
         },

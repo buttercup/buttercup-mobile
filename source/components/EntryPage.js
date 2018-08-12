@@ -45,6 +45,7 @@ class EntryPage extends Component {
     };
 
     static propTypes = {
+        busyState: PropTypes.string,
         copyToClipboard: PropTypes.func.isRequired,
         editing: PropTypes.bool.isRequired,
         onAddMeta: PropTypes.func.isRequired,
@@ -57,7 +58,6 @@ class EntryPage extends Component {
         onSavePressed: PropTypes.func.isRequired,
         onViewHiddenPressed: PropTypes.func.isRequired,
         properties: PropTypes.arrayOf(PropTypes.object).isRequired,
-        saving: PropTypes.bool.isRequired,
         title: PropTypes.string.isRequired,
         viewHidden: PropTypes.bool.isRequired
     };
@@ -132,7 +132,7 @@ class EntryPage extends Component {
                     </CellGroup>
                     {this.renderEditButtons()}
                 </ScrollView>
-                <Spinner visible={this.props.saving} text="Saving" />
+                <Spinner visible={this.props.busyState !== null} text={this.props.busyState} />
             </View>
         );
     }

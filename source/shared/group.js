@@ -2,7 +2,7 @@ import { Alert } from "react-native";
 import { getGroup, getSelectedArchive } from "../selectors/archiveContents.js";
 import { dispatch, getState } from "../store.js";
 import { getTopGroupID } from "../selectors/nav.js";
-import { setSaving } from "../actions/app.js";
+import { setBusyState } from "../actions/app.js";
 import { navigateBack } from "../actions/navigation.js";
 import { saveCurrentArchive } from "./archive.js";
 import { handleError } from "../global/exceptions.js";
@@ -35,17 +35,17 @@ export function promptDeleteGroup() {
             text: "Delete",
             style: "default",
             onPress: () => {
-                dispatch(setSaving(true));
+                dispatch(setBusyState("Saving"));
                 Promise.resolve()
                     .then(() => deleteGroup(topGroupID))
                     .then(() => saveCurrentArchive())
                     .then(() => {
-                        dispatch(setSaving(false));
+                        dispatch(setBusyState(null));
                         dispatch(navigateBack());
                         updateCurrentArchive();
                     })
                     .catch(err => {
-                        dispatch(setSaving(false));
+                        dispatch(setBusyState(null));
                         handleError("Failed deleting group", err);
                     });
             }
