@@ -21,6 +21,7 @@ import { promptRemoveArchive } from "../shared/archives.js";
 import { handleError } from "../global/exceptions.js";
 import { getConnectedStatus } from "../global/connectivity.js";
 import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
+import { executeNotification } from "../global/notify.js";
 
 function openArchive(dispatch, getState, sourceID) {
     const state = getState();
@@ -49,11 +50,20 @@ function performOfflineProcedure(dispatch, getState, sourceID, password, isOffli
                     text: "Use Offline",
                     style: "default",
                     onPress: () => {
-                        performSourceUnlock(dispatch, getState, sourceID, password, true).catch(
-                            err => {
+                        performSourceUnlock(dispatch, getState, sourceID, password, true)
+                            .then(() => {
+                                setTimeout(() => {
+                                    executeNotification(
+                                        "info",
+                                        "Read-Only Mode",
+                                        "This archive was opened in read-only mode due to being offline. " +
+                                            "Changes will not be possible and certain features will be disabled."
+                                    );
+                                }, 1000);
+                            })
+                            .catch(err => {
                                 handleError("Failed unlocking archive", err);
-                            }
-                        );
+                            });
                     }
                 }
             ]
@@ -64,7 +74,6 @@ function performOfflineProcedure(dispatch, getState, sourceID, password, isOffli
 
 function performSourceUnlock(dispatch, getState, sourceID, password, useOffline = false) {
     return getConnectedStatus().then(connected => {
-        console.log("CONNECTED", connected, useOffline);
         if (!connected && !useOffline) {
             return performOfflineProcedure(dispatch, getState, sourceID, password, true).then(
                 usedOffline => {
