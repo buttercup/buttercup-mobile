@@ -17,6 +17,7 @@ import {
     isEditing,
     isViewingHidden
 } from "../selectors/entry.js";
+import { isCurrentlyReadOnly } from "../selectors/archiveContents.js";
 import { getBusyState } from "../selectors/app.js";
 import { getEntry, loadEntry } from "../shared/entry.js";
 import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
@@ -30,6 +31,7 @@ export default connect(
     (state, ownProps) => ({
         busyState: getBusyState(state),
         editing: isEditing(state),
+        isReadOnly: isCurrentlyReadOnly(state),
         properties: getEntryProperties(state),
         title: getEntryTitle(state),
         viewHidden: isViewingHidden(state)
