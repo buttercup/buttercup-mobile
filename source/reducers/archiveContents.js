@@ -1,4 +1,5 @@
 import {
+    ARCHIVE_CONTENTS_MARK_READONLY,
     ARCHIVE_CONTENTS_SET_GROUPS,
     ARCHIVE_CONTENTS_SET_SOURCE,
     ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT,
@@ -7,6 +8,7 @@ import {
 
 const INITIAL = {
     groups: {},
+    readOnly: false,
     selectedSourceID: null,
     showCreateGroupPrompt: false,
     showGroupRenamePrompt: false
@@ -33,6 +35,11 @@ export default function archiveContentsReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 showGroupRenamePrompt: !!action.payload
+            };
+        case ARCHIVE_CONTENTS_MARK_READONLY:
+            return {
+                ...state,
+                readOnly: !!action.payload
             };
 
         default:

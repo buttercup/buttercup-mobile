@@ -22,6 +22,10 @@ export function editGroup(groupID) {
     showArchiveContentsAddItemSheet(/* is root */ groupID === "0", showEntryAdd, showEditGroup);
 }
 
+export function getSourceReadonlyStatus(sourceID) {
+    return getSharedArchiveManager().getSourceForID(sourceID).workspace.archive.readOnly;
+}
+
 export function lockSource(sourceID) {
     const archiveManager = getSharedArchiveManager();
     return archiveManager.getSourceForID(sourceID).lock();

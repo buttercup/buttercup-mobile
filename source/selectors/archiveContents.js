@@ -79,6 +79,10 @@ export function getSelectedSourceID(state) {
     return state[STATE_KEY].selectedSourceID;
 }
 
+export function isCurrentlyReadOnly(state) {
+    return state[STATE_KEY].readOnly;
+}
+
 export function shouldShowCreateGroupPrompt(state) {
     return state[STATE_KEY].showCreateGroupPrompt;
 }

@@ -9,10 +9,11 @@ import {
     shouldShowUnlockPasswordPrompt
 } from "../selectors/archives.js";
 import { setIsUnlocking, showUnlockPasswordPrompt } from "../actions/archives.js";
-import { setSelectedSource } from "../actions/archiveContents.js";
+import { markCurrentSourceReadOnly, setSelectedSource } from "../actions/archiveContents.js";
 import { navigateToGroups } from "../actions/navigation.js";
 import {
     checkSourceHasOfflineCopy,
+    getSourceReadonlyStatus,
     lockSource,
     unlockSource,
     updateCurrentArchive
@@ -30,6 +31,8 @@ function openArchive(dispatch, getState, sourceID) {
     const targetSource = archivesList.find(source => source.id === sourceID);
     // Select source
     dispatch(setSelectedSource(sourceID));
+    const isReadOnly = getSourceReadonlyStatus(sourceID);
+    dispatch(markCurrentSourceReadOnly(isReadOnly));
     // populate groups
     updateCurrentArchive();
     // navigate to archive contents
