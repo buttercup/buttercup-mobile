@@ -25,7 +25,7 @@ import { getConnectedStatus } from "../global/connectivity.js";
 import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 import { executeNotification } from "../global/notify.js";
 
-function openArchive(dispatch, getState, sourceID) {
+const openArchive = sourceID => (dispatch, getState) => {
     const state = getState();
     // Get selected title
     const archivesList = getArchivesDisplayList(state);
@@ -38,9 +38,9 @@ function openArchive(dispatch, getState, sourceID) {
     updateCurrentArchive();
     // navigate to archive contents
     dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
-}
+};
 
-function performOfflineProcedure(dispatch, getState, sourceID, password, isOffline = false) {
+const performOfflineProcedure = (sourceID, password, isOffline = false) => (dispatch, getState) => {
     return checkSourceHasOfflineCopy(sourceID).then(hasOffline => {
         if (!hasOffline) {
             return false;
@@ -60,7 +60,7 @@ function performOfflineProcedure(dispatch, getState, sourceID, password, isOffli
                     text: "Use Offline",
                     style: "default",
                     onPress: () => {
-                        performSourceUnlock(dispatch, getState, sourceID, password, true)
+                        dispatch(performSourceUnlock(sourceID, password, true))
                             .then(() => {
                                 setTimeout(() => {
                                     executeNotification(
@@ -80,30 +80,28 @@ function performOfflineProcedure(dispatch, getState, sourceID, password, isOffli
         );
         return true;
     });
-}
+};
 
-function performSourceUnlock(dispatch, getState, sourceID, password, useOffline = false) {
+const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatch, getState) => {
     dispatch(showUnlockPasswordPrompt(false));
     dispatch(setBusyState("Checking Connection"));
     return getConnectedStatus().then(connected => {
         dispatch(setBusyState("Unlocking"));
         if (!connected && !useOffline) {
-            return performOfflineProcedure(dispatch, getState, sourceID, password, true).then(
-                usedOffline => {
-                    if (!usedOffline) {
-                        throw new Error("Failed unlocking: Device not online");
-                    }
+            return dispatch(performOfflineProcedure(sourceID, password, true)).then(usedOffline => {
+                if (!usedOffline) {
+                    throw new Error("Failed unlocking: Device not online");
                 }
-            );
+            });
         }
         return unlockSource(sourceID, password, useOffline).then(() => {
             // success!
             dispatch(setBusyState(null));
             // open source
-            openArchive(dispatch, getState, sourceID);
+            dispatch(openArchive(sourceID));
         });
     });
-}
+};
 
 export default connect(
     (state, ownProps) => ({
@@ -121,17 +119,15 @@ export default connect(
         removeArchive: sourceID => () => {
             promptRemoveArchive(sourceID);
         },
-        selectArchiveSource: sourceID => (dispatch, getState) => {
-            openArchive(dispatch, getState, sourceID);
-        },
+        selectArchiveSource: openArchive,
         showUnlockPasswordPrompt,
-        unlockArchive: (sourceID, password) => (dispatch, getState) => {
-            return performSourceUnlock(dispatch, getState, sourceID, password).catch(err => {
+        unlockArchive: (sourceID, password) => dispatch => {
+            return dispatch(performSourceUnlock(sourceID, password)).catch(err => {
                 dispatch(setBusyState(null));
                 handleError("Failed unlocking archive", err);
                 const { code: errorCode } = VError.info(err);
                 if ((errorCode && errorCode !== ERROR_CODE_DECRYPT_ERROR) || !errorCode) {
-                    return performOfflineProcedure(dispatch, getState, sourceID, password);
+                    return dispatch(performOfflineProcedure(sourceID, password));
                 }
             });
         }

@@ -216,7 +216,6 @@ class ArchivesList extends Component {
 
     renderArchiveItem(archiveInfo) {
         const { title: typeTitle, image: typeImage } = ARCHIVE_TYPES[archiveInfo.type];
-        console.log(this.props.sourcesUsingTouchUnlock);
         return (
             <TouchableHighlight
                 onPress={() => this.handleArchiveSelection(archiveInfo.id, archiveInfo.status)}
