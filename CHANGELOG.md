@@ -1,5 +1,10 @@
 # Buttercup Mobile Changelog
 
+## v1.5.0
+_2018-08-13_
+
+ * ([#115](https://github.com/buttercup/buttercup-mobile/pull/115)) Offline archives
+
 ## v1.4.3
 _2018-08-03_
 
