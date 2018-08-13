@@ -1,15 +1,15 @@
-import { APP_SET_SAVING } from "../actions/types.js";
+import { APP_SET_BUSY_STATE } from "../actions/types.js";
 
 const INITIAL = {
-    saving: false
+    busyState: null
 };
 
 export default function appReducer(state = INITIAL, action = {}) {
     switch (action.type) {
-        case APP_SET_SAVING:
+        case APP_SET_BUSY_STATE:
             return {
                 ...state,
-                saving: !!action.payload
+                busyState: action.payload
             };
 
         default:

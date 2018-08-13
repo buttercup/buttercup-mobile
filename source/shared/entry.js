@@ -12,7 +12,7 @@ import {
     getNewUsername,
     getSourceID
 } from "../selectors/entry.js";
-import { setSaving } from "../actions/app.js";
+import { setBusyState } from "../actions/app.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
 import { handleError } from "../global/exceptions.js";
 import { navigateBack } from "../actions/navigation.js";
@@ -66,17 +66,17 @@ export function promptDeleteEntry() {
             text: "Delete",
             style: "default",
             onPress: () => {
-                dispatch(setSaving(true));
+                dispatch(setBusyState("Saving"));
                 Promise.resolve()
                     .then(() => deleteEntry(sourceID, entryID))
                     .then(() => saveCurrentArchive())
                     .then(() => {
-                        dispatch(setSaving(false));
+                        dispatch(setBusyState(null));
                         dispatch(navigateBack());
                         updateCurrentArchive();
                     })
                     .catch(err => {
-                        dispatch(setSaving(false));
+                        dispatch(setBusyState(null));
                         handleError("Failed deleting entry", err);
                     });
             }
@@ -100,10 +100,10 @@ export function saveNewEntry() {
     const archive = source.workspace.archive;
     const newEntry = archive.findGroupByID(parentGroupID).createEntry(title);
     newEntry.setProperty("username", username).setProperty("password", password);
-    dispatch(setSaving(true));
+    dispatch(setBusyState("Saving"));
     return saveCurrentArchive(source.workspace).then(() => {
         updateCurrentArchive();
-        dispatch(setSaving(false));
+        dispatch(setBusyState(null));
         dispatch(navigateBack());
     });
 }

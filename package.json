@@ -30,7 +30,7 @@
     "assert": "^1.4.1",
     "browserify-zlib": "^0.1.4",
     "buffer": "^3.6.0",
-    "buttercup": "^2.3.0",
+    "buttercup": "^2.4.0",
     "console-browserify": "^1.1.0",
     "constants-browserify": "0.0.1",
     "dns.js": "^1.0.1",
@@ -38,6 +38,7 @@
     "dropbox": "^2.5.7",
     "events": "^1.1.1",
     "https-browserify": "0.0.1",
+    "is-online": "^7.0.0",
     "os-browserify": "^0.1.2",
     "path-browserify": "0.0.0",
     "process": "^0.11.10",
@@ -79,6 +80,7 @@
     "url": "^0.10.3",
     "url-join": "^2.0.2",
     "util": "^0.10.3",
+    "verror": "^1.10.0",
     "vm-browserify": "0.0.4"
   },
   "devDependencies": {

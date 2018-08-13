@@ -1,15 +1,9 @@
-import { Alert } from "react-native";
+import { executeNotification } from "./notify.js";
 
 export function handleError(message, error) {
-    setTimeout(() => {
-        Alert.alert(
-            `Error: ${message}`,
-            typeof error === "string" ? error : error.message,
-            [{ text: "OK", onPress: () => {} }],
-            { cancelable: false }
-        );
-        if (__DEV__) {
-            console.error(error);
-        }
-    }, 0);
+    executeNotification(
+        "error",
+        `Error: ${message}`,
+        typeof error === "string" ? error : error.message
+    );
 }

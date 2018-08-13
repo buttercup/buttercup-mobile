@@ -10,6 +10,11 @@ export function archiveToObject(archive) {
     return archive.toObject();
 }
 
+export function checkSourceHasOfflineCopy(sourceID) {
+    const source = getSharedArchiveManager().getSourceForID(sourceID);
+    return source.checkOfflineCopy();
+}
+
 export function editGroup(groupID) {
     dispatch(setNewEntryParentGroup(groupID));
     const showEntryAdd = groupID !== "0";
@@ -17,14 +22,20 @@ export function editGroup(groupID) {
     showArchiveContentsAddItemSheet(/* is root */ groupID === "0", showEntryAdd, showEditGroup);
 }
 
+export function getSourceReadonlyStatus(sourceID) {
+    return getSharedArchiveManager().getSourceForID(sourceID).workspace.archive.readOnly;
+}
+
 export function lockSource(sourceID) {
     const archiveManager = getSharedArchiveManager();
     return archiveManager.getSourceForID(sourceID).lock();
 }
 
-export function unlockSource(sourceID, password) {
+export function unlockSource(sourceID, password, useOffline = false) {
     const archiveManager = getSharedArchiveManager();
-    return doAsyncWork().then(() => archiveManager.getSourceForID(sourceID).unlock(password));
+    return doAsyncWork().then(() =>
+        archiveManager.getSourceForID(sourceID).unlock(password, /* init: */ false, useOffline)
+    );
 }
 
 export function updateCurrentArchive() {

@@ -56,14 +56,14 @@ class NewEntryPage extends Component {
                         {...boringProps}
                     />
                 </CellGroup>
-                <Spinner visible={this.props.isSaving} text="Saving" />
+                <Spinner visible={this.props.busyState !== null} text={this.props.busyState} />
             </View>
         );
     }
 }
 
 NewEntryPage.propTypes = {
-    isSaving: PropTypes.bool.isRequired,
+    busyState: PropTypes.string,
     onUnmount: PropTypes.func,
     password: PropTypes.string.isRequired,
     setPropertyValue: PropTypes.func.isRequired,

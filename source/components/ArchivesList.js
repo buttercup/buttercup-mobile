@@ -29,6 +29,7 @@ const ARCHIVE_SWIPE_BUTTON_WIDTH = 80;
 const BENCH_IMAGE = require("../../resources/images/bench.png");
 const FINGERPRINT_IMAGE = require("../../resources/images/fingerprint.png");
 const LOCK_IMAGE = require("../../resources/images/locked.png");
+const READONLY_IMAGE = require("../../resources/images/readonly.png");
 
 const ARCHIVE_TYPES = getArchiveTypeDetails().reduce((types, nextType) => {
     types[nextType.type] = nextType;
@@ -60,6 +61,12 @@ const styles = StyleSheet.create({
         tintColor: "#333"
     },
     archiveTouchImage: {
+        width: 24,
+        height: 24,
+        marginRight: 10,
+        tintColor: "#333"
+    },
+    archiveReadOnlyImage: {
         width: 24,
         height: 24,
         marginRight: 10,
@@ -137,7 +144,7 @@ function getArchiveAbbr(archiveName) {
 class ArchivesList extends Component {
     static propTypes = {
         archives: PropTypes.arrayOf(PropTypes.object),
-        isUnlocking: PropTypes.bool.isRequired,
+        busyState: PropTypes.string,
         lockArchive: PropTypes.func.isRequired,
         removeArchive: PropTypes.func.isRequired,
         selectArchiveSource: PropTypes.func.isRequired,
@@ -199,7 +206,6 @@ class ArchivesList extends Component {
     }
 
     handlePasswordEntered(password) {
-        this.props.setIsUnlocking(true);
         this.props.unlockArchive(this.lastSelectedSourceID, password);
     }
 
@@ -241,11 +247,25 @@ class ArchivesList extends Component {
                                 </Text>
                             </View>
                         </View>
-                        <If condition={this.props.sourcesUsingTouchUnlock.includes(archiveInfo.id)}>
-                            <Image source={FINGERPRINT_IMAGE} style={styles.archiveTouchImage} />
+                        <If condition={archiveInfo.readOnly}>
+                            <Image source={READONLY_IMAGE} style={styles.archiveReadOnlyImage} />
                         </If>
                         <If condition={archiveInfo.status === "locked"}>
-                            <Image source={LOCK_IMAGE} style={styles.archiveLockImage} />
+                            <Choose>
+                                <When
+                                    condition={this.props.sourcesUsingTouchUnlock.includes(
+                                        archiveInfo.id
+                                    )}
+                                >
+                                    <Image
+                                        source={FINGERPRINT_IMAGE}
+                                        style={styles.archiveTouchImage}
+                                    />
+                                </When>
+                                <Otherwise>
+                                    <Image source={LOCK_IMAGE} style={styles.archiveLockImage} />
+                                </Otherwise>
+                            </Choose>
                         </If>
                     </View>
                 </View>
@@ -298,7 +318,7 @@ class ArchivesList extends Component {
                     onSubmit={pass => this.handlePasswordEntered(pass)}
                     textInputProps={{ secureTextEntry: true }}
                 />
-                <Spinner visible={this.props.isUnlocking} text="Unlocking" />
+                <Spinner visible={this.props.busyState !== null} text={this.props.busyState} />
             </View>
         );
     }

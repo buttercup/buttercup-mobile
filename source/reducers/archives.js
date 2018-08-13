@@ -11,7 +11,6 @@ const { LOCKED, UNLOCKED } = ArchiveSourceStatus;
 const INITIAL = {
     archives: [],
     archivesUsingTouchID: [],
-    isUnlockingSelected: false,
     showUnlockPasswordPrompt: false
 };
 
@@ -21,11 +20,6 @@ export default function archivesReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 archives: [...action.payload]
-            };
-        case ARCHIVES_TOGGLE_IS_UNLOCKING:
-            return {
-                ...state,
-                isUnlockingSelected: !!action.payload
             };
         case ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT:
             return {

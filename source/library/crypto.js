@@ -1,12 +1,15 @@
 import { NativeModules, Platform } from "react-native";
 import { Buffer } from "buffer";
+import VError from "verror";
 import { tools, vendor, Web } from "./buttercupCore.js";
 import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
+import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 
 const { iocane: { configure: configureIocane } } = vendor;
 const { CryptoBridge: Crypto } = NativeModules;
 
+const BRIDGE_ERROR_REXP = /^Error:/i;
 const CACHE_UUID_MAX = 500;
 const CACHE_UUID_MIN = 50;
 const IV_LENGTH = 16; // Bytes
@@ -38,7 +41,15 @@ function internalDecrypt(encryptedComponents, keyDerivationInfo) {
         encryptedComponents.salt,
         keyDerivationInfo.hmac.toString("hex"),
         encryptedComponents.auth
-    ).then(decryptedBase64 => new Buffer(decryptedBase64, "base64").toString("utf8"));
+    )
+        .then(content => {
+            if (BRIDGE_ERROR_REXP.test(content)) {
+                const errMsg = content.replace(BRIDGE_ERROR_REXP, "");
+                throw new VError({ info: { code: ERROR_CODE_DECRYPT_ERROR } }, errMsg);
+            }
+            return content;
+        })
+        .then(decryptedBase64 => new Buffer(decryptedBase64, "base64").toString("utf8"));
 }
 
 function deriveKeyNatively(password, salt, rounds, bits) {

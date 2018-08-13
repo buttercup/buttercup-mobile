@@ -9,12 +9,12 @@ import { navigateToEntry, navigateToGroups } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getEntryTitle, loadEntry } from "../shared/entry.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
-import { isSaving } from "../selectors/app.js";
+import { getBusyState } from "../selectors/app.js";
 import { getTopGroupID } from "../selectors/nav.js";
 import { createGroup, renameGroup } from "../shared/group.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
-import { setSaving } from "../actions/app.js";
+import { setBusyState } from "../actions/app.js";
 import { handleError } from "../global/exceptions.js";
 
 function getGroupContents(state, props) {
@@ -38,9 +38,9 @@ function loadAndOpenEntry(entryID, dispatch, getState) {
 
 export default connect(
     (state, ownProps) => ({
+        busyState: getBusyState(state),
         currentGroupID: getTopGroupID(state) || "0",
         group: getGroupContents(state, ownProps),
-        saving: isSaving(state),
         showGroupCreatePrompt: shouldShowCreateGroupPrompt(state),
         showGroupRenamePrompt: shouldShowGroupRenamePrompt(state)
     }),
@@ -56,15 +56,15 @@ export default connect(
         },
         onGroupCreate: (parentID, groupTitle) => dispatch => {
             dispatch(showCreateGroupPrompt(false));
-            dispatch(setSaving(true));
+            dispatch(setBusyState("Saving"));
             createGroup(parentID, groupTitle);
             updateCurrentArchive();
             return saveCurrentArchive()
                 .then(() => {
-                    dispatch(setSaving(false));
+                    dispatch(setBusyState(null));
                 })
                 .catch(err => {
-                    dispatch(setSaving(false));
+                    dispatch(setBusyState(null));
                     handleError("Group creation failed", err);
                 });
         },
@@ -73,15 +73,15 @@ export default connect(
         },
         onGroupRename: (groupID, groupName) => dispatch => {
             dispatch(showGroupRenamePrompt(false));
-            dispatch(setSaving(true));
+            dispatch(setBusyState("Saving"));
             renameGroup(groupID, groupName);
             updateCurrentArchive();
             return saveCurrentArchive()
                 .then(() => {
-                    dispatch(setSaving(false));
+                    dispatch(setBusyState(null));
                 })
                 .catch(err => {
-                    dispatch(setSaving(false));
+                    dispatch(setBusyState(null));
                     handleError("Group rename failed", err);
                 });
         }

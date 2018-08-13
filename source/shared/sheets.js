@@ -5,7 +5,7 @@ import { getState, dispatch } from "../store.js";
 import { handleError } from "../global/exceptions.js";
 import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
-import { getSelectedSourceID } from "../selectors/archiveContents.js";
+import { getSelectedSourceID, isCurrentlyReadOnly } from "../selectors/archiveContents.js";
 import {
     disableTouchUnlock,
     enableTouchUnlock,
@@ -32,19 +32,34 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
 ];
 const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [SHEET_ADD_ARCHIVE, SHEET_LOCK_ALL, SHEET_CANCEL];
 
+function removeTextFromArray(arr, text) {
+    const ind = arr.indexOf(text);
+    if (ind >= 0) {
+        arr.splice(ind, 1);
+    }
+}
+
 export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGroup) {
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
     const title = isRoot ? "Manage Archive" : "Edit Group";
+    const state = getState();
+    const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {
         if (!showEntryAdd) {
-            buttons.splice(buttons.indexOf(SHEET_ADD_ENTRY), 1);
+            removeTextFromArray(buttons, SHEET_ADD_ENTRY);
         }
         if (!showEditGroup) {
-            buttons.splice(buttons.indexOf(SHEET_RENAME_GROUP), 1);
-            buttons.splice(buttons.indexOf(SHEET_DELETE_GROUP), 1);
+            removeTextFromArray(buttons, SHEET_RENAME_GROUP);
+            removeTextFromArray(buttons, SHEET_DELETE_GROUP);
         }
         if (!isRoot || !touchIDAvailable) {
-            buttons.splice(buttons.indexOf(SHEET_TOGGLE_TOUCH_ID), 1);
+            removeTextFromArray(buttons, SHEET_TOGGLE_TOUCH_ID);
+        }
+        if (readOnly) {
+            removeTextFromArray(buttons, SHEET_ADD_GROUP);
+            removeTextFromArray(buttons, SHEET_ADD_ENTRY);
+            removeTextFromArray(buttons, SHEET_RENAME_GROUP);
+            removeTextFromArray(buttons, SHEET_DELETE_GROUP);
         }
         ActionSheet.showActionSheetWithOptions(
             {
@@ -121,6 +136,8 @@ export function showTouchIDToggleSheet() {
                     case itemEnableTouchID: {
                         enableTouchUnlock(currentSourceID).then(outcome => {
                             switch (outcome.action) {
+                                case "none":
+                                /* falls-through */
                                 case "cancel":
                                     // do nothing
                                     break;
