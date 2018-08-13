@@ -15,6 +15,14 @@ This repository holds the source for the Buttercup mobile application, which is 
 
 The mobile application allows for full integration with Buttercup archives stored on a variety of platforms. Like the other applications, this mobile application makes use of **AES 256bit encryption** with over **200k PBKDF2 password derivation interations**.
 
+The Buttercup for Mobile application boasts the following features:
+
+ * On-device encryption and decryption
+ * Auto-hide screen when app is sent to background (like banking apps)
+ * Auto-lock vaults after a certain period of inactivity
+ * Add/Edit/Delete entries
+ * Unlock vaults even when offline (read-only)
+
 You can read about the changes and releases of the application in the [changelog](CHANGELOG.md).
 
 ### Introduction
