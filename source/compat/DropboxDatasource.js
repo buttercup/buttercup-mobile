@@ -12,10 +12,13 @@ class DropboxDatasource extends TextDatasource {
         this.token = accessToken;
     }
 
-    load(password) {
+    load(credentials) {
+        if (this.hasContent) {
+            return super.load(credentials);
+        }
         return getArchiveContents(this.path, this.token).then(content => {
             this.setContent(content);
-            return super.load(password);
+            return super.load(credentials);
         });
     }
 
@@ -23,6 +26,10 @@ class DropboxDatasource extends TextDatasource {
         return super.save(history, password).then(encryptedContent => {
             return putArchiveContents(this.path, encryptedContent, this.token).then(NOOP);
         });
+    }
+
+    supportsRemoteBypass() {
+        return true;
     }
 
     toObject() {
