@@ -1,8 +1,8 @@
-import {
-    createAnyFSAdapter,
-    createDropboxAdapter,
-    createWebDAVAdapter
-} from "@buttercup/mobile-compat";
+// import {
+//     createAnyFSAdapter,
+//     createDropboxAdapter,
+//     createWebDAVAdapter
+// } from "@buttercup/mobile-compat";
 import joinURL from "url-join";
 
 const PATH_ABS = /^\//;
