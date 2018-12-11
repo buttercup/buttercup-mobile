@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
 // import { vendor as ButtercupVendor } from "./source/library/buttercupCore.js";
 // import { createWebDAVAdapter } from "@buttercup/mobile-compat";
-import "./source/compat/DropboxDatasource.js";
+// import "./source/compat/DropboxDatasource.js";
 import { patchCrypto } from "./source/library/crypto.js";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";
 // import { smartFetch } from "./source/library/network.js";

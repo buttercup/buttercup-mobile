@@ -1,18 +1,13 @@
-// import {
-//     createAnyFSAdapter,
-//     createDropboxAdapter,
-//     createWebDAVAdapter
-// } from "@buttercup/mobile-compat";
+import { createClient as createDropboxClient } from "@buttercup/dropbox-client";
 import joinURL from "url-join";
 
+const NOOP = () => {};
 const PATH_ABS = /^\//;
 const PATH_PARENT = /^\.\.$/;
 
 export function getDropboxConnection(token) {
-    const dropboxAdapter = createDropboxAdapter({
-        apiKey: token
-    });
-    return testRemoteFSConnection(dropboxAdapter).then(() => createAnyFSAdapter(dropboxAdapter));
+    const dropboxAdapter = createDropboxClient(token);
+    return testRemoteFSConnection(dropboxAdapter).then(() => wrapDropboxClient(dropboxAdapter));
 }
 
 export function getNextcloudConnection(remoteURL, username, password) {
@@ -32,13 +27,20 @@ export function getWebDAVConnection(remoteURL, username, password) {
     return testRemoteFSConnection(webdavFs).then(() => createAnyFSAdapter(webdavFs));
 }
 
-export function testRemoteFSConnection(fsInstance) {
-    return new Promise(function __testFSWithStat(resolve, reject) {
-        fsInstance.readdir("/", function __handleStatResponse(err, stat) {
-            if (err) {
-                return reject(err);
-            }
-            return resolve();
-        });
-    });
+export function testRemoteFSConnection(client) {
+    return client.getDirectoryContents("/").then(NOOP);
+}
+
+function wrapDropboxClient(client) {
+    return {
+        getDirectoryContents: remoteDir =>
+            client.getDirectoryContents(remoteDir).then(items =>
+                items.map(item => ({
+                    name: item.name,
+                    path: item.path,
+                    isDirectory: () => item.type === "directory"
+                }))
+            ),
+        getFileContents: remotePath => client.getFileContents(remotePath)
+    };
 }

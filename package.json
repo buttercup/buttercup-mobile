@@ -23,6 +23,7 @@
     ]
   },
   "dependencies": {
+    "@buttercup/dropbox-client": "^0.1.1",
     "@perrymitchell/react-native-prompt": "^1.1.0",
     "@tradle/react-native-http": "^2.0.0",
     "@yfuks/react-native-action-sheet": "0.0.4",
@@ -34,6 +35,7 @@
     "constants-browserify": "0.0.1",
     "dns.js": "^1.0.1",
     "domain-browser": "^1.1.7",
+    "dropbox": "^4.0.13",
     "events": "^1.1.1",
     "https-browserify": "0.0.1",
     "is-online": "^7.0.0",
@@ -80,7 +82,8 @@
     "url-join": "^2.0.2",
     "util": "^0.10.3",
     "verror": "^1.10.0",
-    "vm-browserify": "0.0.4"
+    "vm-browserify": "0.0.4",
+    "webdav": "^2.0.0"
   },
   "devDependencies": {
     "babel-jest": "^22.4.1",
