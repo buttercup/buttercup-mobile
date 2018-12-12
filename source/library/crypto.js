@@ -6,7 +6,9 @@ import { addToStack, getStackCount, getStackItem } from "./cache.js";
 import { Uint8Array } from "./polyfill/typedArrays.js";
 import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 
-const { iocane: { configure: configureIocane } } = vendor;
+const {
+    iocane: { configure: configureIocane }
+} = vendor;
 const { CryptoBridge: Crypto } = NativeModules;
 
 const BRIDGE_ERROR_REXP = /^Error:/i;
