@@ -1,9 +1,8 @@
 import { createClient as createDropboxClient } from "@buttercup/dropbox-client";
+import { createClient as createWebDAVClient } from "webdav";
 import joinURL from "url-join";
 
 const NOOP = () => {};
-const PATH_ABS = /^\//;
-const PATH_PARENT = /^\.\.$/;
 
 export function getDropboxConnection(token) {
     const dropboxAdapter = createDropboxClient(token);
@@ -21,10 +20,11 @@ export function getOwnCloudConnection(remoteURL, username, password) {
 }
 
 export function getWebDAVConnection(remoteURL, username, password) {
-    const webdavFs = username
-        ? createWebDAVAdapter(remoteURL, username, password)
-        : createWebDAVAdapter(remoteURL);
-    return testRemoteFSConnection(webdavFs).then(() => createAnyFSAdapter(webdavFs));
+    console.log("CREATE", remoteURL, username, password);
+    const webdavClient = username
+        ? createWebDAVClient(remoteURL, { username, password })
+        : createWebDAVClient(remoteURL);
+    return testRemoteFSConnection(webdavClient).then(() => wrapWebDAVClient(webdavClient));
 }
 
 export function testRemoteFSConnection(client) {
@@ -42,5 +42,19 @@ function wrapDropboxClient(client) {
                 }))
             ),
         getFileContents: remotePath => client.getFileContents(remotePath)
+    };
+}
+
+function wrapWebDAVClient(client) {
+    return {
+        getDirectoryContents: dir =>
+            client.getDirectoryContents(dir).then(items =>
+                items.map(item => ({
+                    name: item.basename,
+                    path: item.filename,
+                    isDirectory: () => item.type === "directory"
+                }))
+            ),
+        getFileContents: remotePath => client.getFileContents(remotePath, { format: "text" })
     };
 }
