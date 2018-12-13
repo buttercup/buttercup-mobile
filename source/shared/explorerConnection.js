@@ -76,8 +76,8 @@ export function createRemoteConnection(connectionInfo) {
 
 export function getDirectoryContents(remoteDir) {
     return getSharedConnection()
-        .readDirectory(remoteDir)
-        .then(function __appendNavUp(items) {
+        .getDirectoryContents(remoteDir)
+        .then(items => {
             if (remoteDir !== "/") {
                 items.unshift({
                     name: ".. (Up)",
