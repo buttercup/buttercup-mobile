@@ -20,7 +20,6 @@ export function getOwnCloudConnection(remoteURL, username, password) {
 }
 
 export function getWebDAVConnection(remoteURL, username, password) {
-    console.log("CREATE", remoteURL, username, password);
     const webdavClient = username
         ? createWebDAVClient(remoteURL, { username, password })
         : createWebDAVClient(remoteURL);
