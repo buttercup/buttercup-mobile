@@ -101,8 +101,8 @@ android {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "1.5.0"
+        versionCode 15
+        versionName "1.6.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -135,7 +135,11 @@ android {
             }
         }
     }
-    sourceSets { main { jni.srcDirs = ['src/main/jniLibs', 'src/main/jniLibs/'] } }
+    sourceSets {
+        main {
+            jni.srcDirs = [/*'src/main/jniLibs', 'src/main/jniLibs/'*/]
+        }
+    }
 }
 
 dependencies {
