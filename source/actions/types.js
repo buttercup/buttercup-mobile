@@ -40,6 +40,7 @@ export const ENTRY_SET_VIEWING_HIDDEN = "entry/setViewingHidden";
 export const ENTRY_UNLOAD = "entry/unload";
 
 export const NAVIGATE_ADD_ARCHIVE = "navigation/addArchive";
+export const NAVIGATE_SEARCH_ARCHIVES = "navigation/searchArchives";
 export const NAVIGATE_BACK = "navigation/back";
 export const NAVIGATE_ENTRY = "navigation/entry";
 export const NAVIGATE_GROUPS = "navigation/groups";
