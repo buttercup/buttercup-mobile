@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import { getMatchingEntriesForSearchTerm, getNameForSource } from "../shared/entries.js";
-import debounce from 'lodash/debounce';
+import debounce from "lodash/debounce";
 
 /*TODO:
     maybe add search highlight
@@ -31,25 +31,25 @@ class SearchArchives extends Component {
     };
     constructor(props) {
         super(props);
-    
+
         this.state = {
-          entries: [],
-          searchTerm: '',
-          selectedItemIndex: -1
+            entries: [],
+            searchTerm: "",
+            selectedItemIndex: -1
         };
-      }
-    changeInput = debounce(function(text){
+    }
+    changeInput = debounce(function(text) {
         this.setState(
             {
                 searchTerm: text,
                 selectedItemIndex: -1
             },
             () =>
-            getMatchingEntriesForSearchTerm(this.state.searchTerm).then(entries => {
-                this.setState({
-                entries: this.state.searchTerm ? entries : []
-                });
-            })
+                getMatchingEntriesForSearchTerm(this.state.searchTerm).then(entries => {
+                    this.setState({
+                        entries: this.state.searchTerm ? entries : []
+                    });
+                })
         );
     }, 500);
     getEntryIcon() {
@@ -66,8 +66,10 @@ class SearchArchives extends Component {
                     >
                         <View>
                             <Text>{entry.entry._remoteObject.properties.title || ""}</Text>
-                            <Text style={styles.entrySubtitle}>{getNameForSource(entry.sourceID)}</Text>  
-                        </View>    
+                            <Text style={styles.entrySubtitle}>
+                                {getNameForSource(entry.sourceID)}
+                            </Text>
+                        </View>
                     </Cell>
                 ))}
             </CellGroup>
@@ -75,24 +77,21 @@ class SearchArchives extends Component {
     }
     render() {
         const cellOptions = {
-                  autoCapitalize: "none",
-                  autoCorrect: false,
-                  keyboardType: "default",
-                  spellCheck: false
+            autoCapitalize: "none",
+            autoCorrect: false,
+            keyboardType: "default",
+            spellCheck: false
         };
         return (
             <View style={styles.container}>
                 <CellInput
-                    title = "Search for..."
+                    title="Search for..."
                     icon="search"
                     onChangeText={text => this.changeInput(text)}
-                    value={this.state.searchTerm}
                     {...cellOptions}
                 />
-                <ScrollView 
-                    style={styles.container} 
-                    keyboardShouldPersistTaps={'handled'}>
-                        {this.renderSearchResults()}
+                <ScrollView style={styles.container} keyboardShouldPersistTaps={"handled"}>
+                    {this.renderSearchResults()}
                 </ScrollView>
             </View>
         );
