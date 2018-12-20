@@ -5,9 +5,7 @@ import { getEntryTitle, loadEntry } from "../shared/entry.js";
 import { navigateToEntry } from "../actions/navigation.js";
 
 export default connect(
-    (state, ownProps) => ({
-        
-    }),
+    (state, ownProps) => ({}),
     {
         onEntryPress: entryID => (dispatch, getState) => {
             const state = getState();

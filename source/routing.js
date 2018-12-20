@@ -28,7 +28,7 @@ export const AppNavigator = StackNavigator(
         NewEntry: { screen: NewEntryPage },
         AddMeta: { screen: AddMetaPage },
         AddArchive: { screen: AddArchivePage },
-        SearchArchives: {screen: SearchArchivesPage },
+        SearchArchives: { screen: SearchArchivesPage },
         RemoteConnect: { screen: RemoteConnectPage },
         RemoteExplorer: { screen: RemoteExplorerPage },
         PopupBrowser: { screen: PopupBrowser },

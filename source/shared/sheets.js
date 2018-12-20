@@ -3,7 +3,11 @@ import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
 import { getState, dispatch } from "../store.js";
 import { handleError } from "../global/exceptions.js";
-import { navigateToAddArchive, navigateToNewEntry, navigateToSearchArchives } from "../actions/navigation.js";
+import {
+    navigateToAddArchive,
+    navigateToNewEntry,
+    navigateToSearchArchives
+} from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getSelectedSourceID, isCurrentlyReadOnly } from "../selectors/archiveContents.js";
 import {
@@ -32,7 +36,12 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_CANCEL,
     SHEET_SEARCH_ALL_ARCHIVES
 ];
-const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [SHEET_ADD_ARCHIVE, SHEET_LOCK_ALL, SHEET_SEARCH_ALL_ARCHIVES, SHEET_CANCEL];
+const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [
+    SHEET_ADD_ARCHIVE,
+    SHEET_LOCK_ALL,
+    SHEET_SEARCH_ALL_ARCHIVES,
+    SHEET_CANCEL
+];
 
 function removeTextFromArray(arr, text) {
     const ind = arr.indexOf(text);

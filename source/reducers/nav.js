@@ -54,9 +54,9 @@ export default function routesReducer(state = getInitialState(), action = {}) {
         }
         case NAVIGATE_SEARCH_ARCHIVES: {
             return AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({routeName: "SearchArchives"}),
+                NavigationActions.navigate({ routeName: "SearchArchives" }),
                 state
-            )
+            );
         }
         case NAVIGATE_REMOTE_CONNECT: {
             const { title } = action.payload;
