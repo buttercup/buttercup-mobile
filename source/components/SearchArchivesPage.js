@@ -62,7 +62,7 @@ class SearchArchives extends Component {
                     <Cell
                         key={entry.entry._remoteObject.id}
                         icon={this.getEntryIcon}
-                        onPress={() => this.props.onEntryPress(entry.entry.id)}
+                        onPress={() => this.props.onEntryPress(entry.entry.id, entry.sourceID)}
                     >
                         <View>
                             <Text>{entry.entry._remoteObject.properties.title || ""}</Text>
