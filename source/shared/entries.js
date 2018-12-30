@@ -3,7 +3,6 @@ import { EntryFinder } from "../library/buttercupCore";
 
 export function getMatchingEntriesForSearchTerm(term) {
     const manager = getSharedArchiveManager();
-
     const unlockedSources = manager.unlockedSources;
     const lookup = unlockedSources.reduce(
         (current, next) => ({
@@ -14,11 +13,9 @@ export function getMatchingEntriesForSearchTerm(term) {
     );
     const archives = unlockedSources.map(source => source.workspace.archive);
     const finder = new EntryFinder(archives);
-
     return Promise.all(
-        finder.search(term).map(async result => {
+        finder.search(term).map(result => {
             const archiveId = lookup[result.archive.id];
-
             return {
                 sourceID: archiveId,
                 groupID: result.entry.getGroup().id,
@@ -30,7 +27,6 @@ export function getMatchingEntriesForSearchTerm(term) {
 export function getNameForSource(sourceID) {
     const manager = getSharedArchiveManager();
     const source = manager.getSourceForID(sourceID);
-
     if (!source) {
         throw new Error(`Unable to fetch source information: No source found for ID: ${sourceID}`);
     }
