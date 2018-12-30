@@ -24,9 +24,9 @@ export function getMatchingEntriesForSearchTerm(term) {
         })
     );
 }
+
 export function getNameForSource(sourceID) {
-    const manager = getSharedArchiveManager();
-    const source = manager.getSourceForID(sourceID);
+    const source = getSharedArchiveManager().getSourceForID(sourceID);
     if (!source) {
         throw new Error(`Unable to fetch source information: No source found for ID: ${sourceID}`);
     }
