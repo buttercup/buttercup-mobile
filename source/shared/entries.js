@@ -1,7 +1,7 @@
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { EntryFinder } from "../library/buttercupCore";
 
-export async function getMatchingEntriesForSearchTerm(term) {
+export function getMatchingEntriesForSearchTerm(term) {
     const manager = getSharedArchiveManager();
 
     const unlockedSources = manager.unlockedSources;
@@ -16,7 +16,7 @@ export async function getMatchingEntriesForSearchTerm(term) {
     const finder = new EntryFinder(archives);
 
     return Promise.all(
-        finder.search("/" + term + "/").map(async result => {
+        finder.search(term).map(async result => {
             const archiveId = lookup[result.archive.id];
 
             return {
