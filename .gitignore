@@ -32,6 +32,7 @@ local.properties
 .gradlecache
 *.apk
 index.android.bundle*
+/android/app/release
 
 # node.js
 #
