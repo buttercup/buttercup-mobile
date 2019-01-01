@@ -14,6 +14,7 @@ import EntryPage from "./containers/EntryPage.js";
 import NewEntryPage from "./containers/NewEntryPage.js";
 import AddMetaPage from "./containers/AddMetaPage.js";
 import AddArchivePage from "./containers/AddArchivePage.js";
+import SearchArchivesPage from "./containers/SearchArchivesPage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import PopupBrowser from "./containers/PopupBrowser.js";
@@ -27,6 +28,7 @@ export const AppNavigator = StackNavigator(
         NewEntry: { screen: NewEntryPage },
         AddMeta: { screen: AddMetaPage },
         AddArchive: { screen: AddArchivePage },
+        SearchArchives: { screen: SearchArchivesPage },
         RemoteConnect: { screen: RemoteConnectPage },
         RemoteExplorer: { screen: RemoteExplorerPage },
         PopupBrowser: { screen: PopupBrowser },

@@ -2,6 +2,7 @@ import { NavigationActions } from "react-navigation";
 import { AppNavigator } from "../routing.js";
 import {
     NAVIGATE_ADD_ARCHIVE,
+    NAVIGATE_SEARCH_ARCHIVES,
     NAVIGATE_BACK,
     NAVIGATE_ENTRY,
     NAVIGATE_GROUPS,
@@ -48,6 +49,12 @@ export default function routesReducer(state = getInitialState(), action = {}) {
         case NAVIGATE_ADD_ARCHIVE: {
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: "AddArchive" }),
+                state
+            );
+        }
+        case NAVIGATE_SEARCH_ARCHIVES: {
+            return AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: "SearchArchives" }),
                 state
             );
         }

@@ -1,7 +1,8 @@
-import { APP_SET_BUSY_STATE } from "../actions/types.js";
+import { APP_SET_BUSY_STATE, APP_SET_SEARCH_CONTEXT } from "../actions/types.js";
 
 const INITIAL = {
-    busyState: null
+    busyState: null,
+    searchContext: "root"
 };
 
 export default function appReducer(state = INITIAL, action = {}) {
@@ -11,7 +12,11 @@ export default function appReducer(state = INITIAL, action = {}) {
                 ...state,
                 busyState: action.payload
             };
-
+        case APP_SET_SEARCH_CONTEXT:
+            return {
+                ...state,
+                searchContext: action.payload
+            };
         default:
             return state;
     }

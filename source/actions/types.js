@@ -9,6 +9,7 @@ export const ADD_ARCHIVE_SET_USERNAME = "addArchive/setUsername";
 
 export const APP_MASTER_RESET = "app/reset";
 export const APP_SET_BUSY_STATE = "app/setBusyState";
+export const APP_SET_SEARCH_CONTEXT = "app/search/setContext";
 
 export const ARCHIVE_CONTENTS_MARK_READONLY = "archiveContents/markAsReadOnly";
 export const ARCHIVE_CONTENTS_SET_GROUPS = "archiveContents/setGroups";
@@ -40,6 +41,7 @@ export const ENTRY_SET_VIEWING_HIDDEN = "entry/setViewingHidden";
 export const ENTRY_UNLOAD = "entry/unload";
 
 export const NAVIGATE_ADD_ARCHIVE = "navigation/addArchive";
+export const NAVIGATE_SEARCH_ARCHIVES = "navigation/searchArchives";
 export const NAVIGATE_BACK = "navigation/back";
 export const NAVIGATE_ENTRY = "navigation/entry";
 export const NAVIGATE_GROUPS = "navigation/groups";

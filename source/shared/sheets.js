@@ -3,7 +3,11 @@ import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
 import { getState, dispatch } from "../store.js";
 import { handleError } from "../global/exceptions.js";
-import { navigateToAddArchive, navigateToNewEntry } from "../actions/navigation.js";
+import {
+    navigateToAddArchive,
+    navigateToNewEntry,
+    navigateToSearchArchives
+} from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getSelectedSourceID, isCurrentlyReadOnly } from "../selectors/archiveContents.js";
 import {
@@ -21,6 +25,7 @@ const SHEET_DELETE_GROUP = "Delete Group";
 const SHEET_LOCK_ALL = "Lock All";
 const SHEET_RENAME_GROUP = "Rename Group";
 const SHEET_TOGGLE_TOUCH_ID = "Toggle Touch Unlock";
+const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Archive";
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -28,7 +33,8 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_DELETE_GROUP,
     SHEET_RENAME_GROUP,
     SHEET_TOGGLE_TOUCH_ID,
-    SHEET_CANCEL
+    SHEET_CANCEL,
+    SHEET_SEARCH_CURRENT_ARCHIVE
 ];
 const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [SHEET_ADD_ARCHIVE, SHEET_LOCK_ALL, SHEET_CANCEL];
 
@@ -87,6 +93,10 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
                     }
                     case SHEET_TOGGLE_TOUCH_ID: {
                         showTouchIDToggleSheet();
+                        break;
+                    }
+                    case SHEET_SEARCH_CURRENT_ARCHIVE: {
+                        dispatch(navigateToSearchArchives());
                         break;
                     }
                 }
