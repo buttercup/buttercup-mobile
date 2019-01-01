@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
-import { getMatchingEntriesForSearchTerm, getNameForSource } from "../shared/entries.js";
-import debounce from "lodash/debounce";
+import debounce from "debounce";
+import { getNameForSource, searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
 
 /*TODO:
     maybe add search highlight
@@ -30,30 +31,32 @@ class SearchArchives extends Component {
         title: "Search Archives"
     };
 
-    constructor(props) {
-        super(props);
+    static propTypes = {
+        searchContext: PropTypes.oneOf(["root", "archive"])
+    };
 
-        this.state = {
-            entries: [],
-            searchTerm: "",
-            selectedItemIndex: -1
-        };
-    }
+    state = {
+        entries: [],
+        searchTerm: "",
+        selectedItemIndex: -1
+    };
 
     changeInput = debounce(function(text) {
+        const searchWithTerm =
+            this.props.searchContext === "root" ? searchAllArchives : searchCurrentArchive;
         this.setState(
             {
                 searchTerm: text,
                 selectedItemIndex: -1
             },
             () =>
-                getMatchingEntriesForSearchTerm(this.state.searchTerm).then(entries => {
+                searchWithTerm(this.state.searchTerm).then(entries => {
                     this.setState({
                         entries: this.state.searchTerm ? entries : []
                     });
                 })
         );
-    }, 500);
+    }, 250);
 
     componentDidMount() {
         setTimeout(() => this.focus(), 150);

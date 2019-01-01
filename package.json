@@ -33,6 +33,7 @@
     "buttercup": "^2.8.1",
     "console-browserify": "^1.1.0",
     "constants-browserify": "0.0.1",
+    "debounce": "^1.2.0",
     "dns.js": "^1.0.1",
     "domain-browser": "^1.1.7",
     "dropbox": "^4.0.13",

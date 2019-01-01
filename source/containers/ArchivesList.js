@@ -7,7 +7,7 @@ import {
     getSourceIDsUsingTouchID,
     shouldShowUnlockPasswordPrompt
 } from "../selectors/archives.js";
-import { setBusyState } from "../actions/app.js";
+import { setBusyState, setSearchContext } from "../actions/app.js";
 import { getBusyState } from "../selectors/app.js";
 import { showUnlockPasswordPrompt } from "../actions/archives.js";
 import { markCurrentSourceReadOnly, setSelectedSource } from "../actions/archiveContents.js";
@@ -37,6 +37,7 @@ const openArchive = sourceID => (dispatch, getState) => {
     // populate groups
     updateCurrentArchive();
     // navigate to archive contents
+    dispatch(setSearchContext("archive"));
     dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
 };
 

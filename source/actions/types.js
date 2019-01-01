@@ -9,6 +9,7 @@ export const ADD_ARCHIVE_SET_USERNAME = "addArchive/setUsername";
 
 export const APP_MASTER_RESET = "app/reset";
 export const APP_SET_BUSY_STATE = "app/setBusyState";
+export const APP_SET_SEARCH_CONTEXT = "app/search/setContext";
 
 export const ARCHIVE_CONTENTS_MARK_READONLY = "archiveContents/markAsReadOnly";
 export const ARCHIVE_CONTENTS_SET_GROUPS = "archiveContents/setGroups";

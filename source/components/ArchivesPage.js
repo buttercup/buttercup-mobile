@@ -4,6 +4,7 @@ import ArchivesList from "../containers/ArchivesList.js";
 import { showArchivesPageRightSheet } from "../shared/sheets.js";
 import ToolbarIcon from "./ToolbarIcon.js";
 import { navigateToSearchArchives } from "../actions/navigation.js";
+import { setSearchContext } from "../actions/app.js";
 import { dispatch } from "../store.js";
 
 const BUTTERCUP_LOGO = require("../../resources/images/buttercup-header.png");
@@ -38,6 +39,7 @@ function getRightToolbarButton() {
 }
 
 function gotoSearch() {
+    dispatch(setSearchContext("root"));
     dispatch(navigateToSearchArchives());
 }
 

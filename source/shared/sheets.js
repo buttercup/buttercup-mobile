@@ -25,7 +25,7 @@ const SHEET_DELETE_GROUP = "Delete Group";
 const SHEET_LOCK_ALL = "Lock All";
 const SHEET_RENAME_GROUP = "Rename Group";
 const SHEET_TOGGLE_TOUCH_ID = "Toggle Touch Unlock";
-const SHEET_SEARCH_ALL_ARCHIVES = "Search All Archives";
+const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Archive";
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -34,7 +34,7 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_RENAME_GROUP,
     SHEET_TOGGLE_TOUCH_ID,
     SHEET_CANCEL,
-    SHEET_SEARCH_ALL_ARCHIVES
+    SHEET_SEARCH_CURRENT_ARCHIVE
 ];
 const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [SHEET_ADD_ARCHIVE, SHEET_LOCK_ALL, SHEET_CANCEL];
 
@@ -95,7 +95,7 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
                         showTouchIDToggleSheet();
                         break;
                     }
-                    case SHEET_SEARCH_ALL_ARCHIVES: {
+                    case SHEET_SEARCH_CURRENT_ARCHIVE: {
                         dispatch(navigateToSearchArchives());
                         break;
                     }
