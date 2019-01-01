@@ -75,20 +75,20 @@ class SearchArchives extends Component {
     renderSearchResults() {
         return (
             <CellGroup>
-                {this.state.entries.map(entry => (
+                <For each="result" of={this.state.entries}>
                     <Cell
-                        key={entry.entry._remoteObject.id}
+                        key={result.entry.id}
                         icon={this.getEntryIcon}
-                        onPress={() => this.props.onEntryPress(entry.entry.id, entry.sourceID)}
+                        onPress={() => this.props.onEntryPress(result.entry.id, result.sourceID)}
                     >
                         <View>
-                            <Text>{entry.entry._remoteObject.properties.title || ""}</Text>
+                            <Text>{result.entry.getProperty("title") || ""}</Text>
                             <Text style={styles.entrySubtitle}>
-                                {getNameForSource(entry.sourceID)}
+                                {getNameForSource(result.sourceID)}
                             </Text>
                         </View>
                     </Cell>
-                ))}
+                </For>
             </CellGroup>
         );
     }
