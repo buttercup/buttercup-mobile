@@ -11,7 +11,7 @@ The mobile application for the Buttercup Credentials Manager.
 This repository holds the source for the Buttercup mobile application, which is available for the following platforms:
 
  * iOS **10+**
- * Android **6.0+**
+ * Android **8.0+**
 
 The mobile application allows for full integration with Buttercup archives stored on a variety of platforms. Like the other applications, this mobile application makes use of **AES 256bit encryption** with over **200k PBKDF2 password derivation interations**.
 
