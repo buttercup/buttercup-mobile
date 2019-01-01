@@ -36,12 +36,7 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_CANCEL,
     SHEET_SEARCH_ALL_ARCHIVES
 ];
-const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [
-    SHEET_ADD_ARCHIVE,
-    SHEET_LOCK_ALL,
-    SHEET_SEARCH_ALL_ARCHIVES,
-    SHEET_CANCEL
-];
+const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [SHEET_ADD_ARCHIVE, SHEET_LOCK_ALL, SHEET_CANCEL];
 
 function removeTextFromArray(arr, text) {
     const ind = arr.indexOf(text);
@@ -125,10 +120,6 @@ export function showArchivesPageRightSheet() {
                 }
                 case SHEET_LOCK_ALL: {
                     lockAllArchives();
-                    break;
-                }
-                case SHEET_SEARCH_ALL_ARCHIVES: {
-                    dispatch(navigateToSearchArchives());
                     break;
                 }
             }
