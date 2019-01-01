@@ -1,5 +1,10 @@
 # Buttercup Mobile Changelog
 
+## v1.7.0
+_2019-01-01_
+
+ * ([#69](https://github.com/buttercup/buttercup-mobile/issues/69)) Searching
+
 ## v1.6.0
 _2018-12-14_
 
