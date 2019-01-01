@@ -29,6 +29,7 @@ class SearchArchives extends Component {
     static navigationOptions = {
         title: "Search Archives"
     };
+
     constructor(props) {
         super(props);
 
@@ -38,6 +39,7 @@ class SearchArchives extends Component {
             selectedItemIndex: -1
         };
     }
+
     changeInput = debounce(function(text) {
         this.setState(
             {
@@ -52,9 +54,21 @@ class SearchArchives extends Component {
                 })
         );
     }, 500);
+
+    componentDidMount() {
+        setTimeout(() => this.focus(), 150);
+    }
+
+    focus() {
+        if (this._input) {
+            this._input.focus();
+        }
+    }
+
     getEntryIcon() {
         return <Image source={ENTRY_ICON} style={styles.icon} />;
     }
+
     renderSearchResults() {
         return (
             <CellGroup>
@@ -75,6 +89,7 @@ class SearchArchives extends Component {
             </CellGroup>
         );
     }
+
     render() {
         const cellOptions = {
             autoCapitalize: "none",
@@ -85,9 +100,10 @@ class SearchArchives extends Component {
         return (
             <View style={styles.container}>
                 <CellInput
-                    title="Search for..."
+                    title=""
                     icon="search"
                     onChangeText={text => this.changeInput(text)}
+                    ref={input => (this._input = input)}
                     {...cellOptions}
                 />
                 <ScrollView style={styles.container} keyboardShouldPersistTaps={"handled"}>
