@@ -1,5 +1,12 @@
 # Buttercup Mobile Changelog
 
+## v1.6.0
+_2018-12-14_
+
+ * **Bugfix**:
+   * ([#129](https://github.com/buttercup/buttercup-mobile/issues/129)) Android packaging failing
+ * New Dropbox & WebDAV clients
+
 ## v1.5.0
 _2018-08-13_
 
