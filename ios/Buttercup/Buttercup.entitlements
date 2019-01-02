@@ -4,5 +4,9 @@
 <dict>
 	<key>com.apple.developer.authentication-services.autofill-credential-provider</key>
 	<true/>
+    <key>com.apple.security.application-groups</key>
+    <array>
+        <string>group.pw.buttercup.mobile</string>
+    </array>
 </dict>
 </plist>
