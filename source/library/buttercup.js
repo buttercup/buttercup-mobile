@@ -6,7 +6,8 @@ import {
     Credentials,
     entryFacade
 } from "./buttercupCore.js";
-import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
+// import AsyncStorageInterface from "../compat/AsyncStorageInterface.js";
+import SecureStorageInterface from "../compat/SecureStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
 
 const { TextDatasource } = Datasources;
@@ -98,7 +99,8 @@ export function getArchiveEncryptedContent(archive, credentials) {
 
 export function getSharedArchiveManager() {
     if (__sharedManager === null) {
-        __sharedManager = new ArchiveManager(new AsyncStorageInterface());
+        // __sharedManager = new ArchiveManager(new AsyncStorageInterface());
+        __sharedManager = new ArchiveManager(new SecureStorageInterface());
     }
     return __sharedManager;
 }

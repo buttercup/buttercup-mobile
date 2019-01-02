@@ -8,17 +8,20 @@ import { getSharedArchiveManager } from "./source/library/buttercup.js";
 import store from "./source/store.js";
 import App from "./source/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
-import { initialisePermanentStorage } from "./source/library/storage.js";
+import { migrateStorageToKeychain } from "./source/library/storage.js";
 
 export default class ButtercupShared extends Component {
     constructor(...args) {
         super(...args);
         // Setup native crypto
         patchCrypto();
-        // Initialise storage
-        initialisePermanentStorage();
-        // Initialise the manager
-        getSharedArchiveManager().rehydrate();
+
+        // Ensure that the users storage has migrated to Keychain
+        migrateStorageToKeychain().then(() => {
+            // Initialise the manager
+            getSharedArchiveManager().rehydrate();
+        });
+
         // Setup notifications
         setNotificationFunction((type, title, message) => {
             if (this.dropdown) {
