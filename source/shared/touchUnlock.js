@@ -16,7 +16,7 @@ const secureStorageConfig = {
     accessGroup: "group.pw.buttercup.mobile" // So that the Keychain is available in the AutoFill Extension
 };
 
-function getTouchUnlockCredentials() {
+export function getTouchUnlockCredentials() {
     return new Promise((resolve, reject) => {
         SecureStorage.getItem("-", secureStorageConfig).then(keychainCreds => {
             const credsObj =
@@ -28,7 +28,7 @@ function getTouchUnlockCredentials() {
     });
 }
 
-function setTouchUnlockCredentials(credentials) {
+export function setTouchUnlockCredentials(credentials) {
     SecureStorage.setItem("-", JSON.stringify(credentials), secureStorageConfig);
 }
 

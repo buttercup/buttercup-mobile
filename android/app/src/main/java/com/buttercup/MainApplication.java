@@ -3,6 +3,7 @@ package com.buttercup;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.keychain.KeychainPackage;
 import li.yunqi.rnsecurestorage.RNSecureStoragePackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
+                new KeychainPackage(),
                 new RNSecureStoragePackage(),
                 new FingerprintAuthPackage(),
                 new RandomBytesPackage(),

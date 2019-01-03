@@ -1,9 +1,43 @@
+import { getGenericPassword, resetGenericPassword } from "react-native-keychain";
+import { Platform } from "react-native";
+
 import AsyncStorageInterface from "../compat/AsyncStorageInterface";
 import SecureStorageInterface from "../compat/SecureStorageInterface";
 
-const MIGRATION_COMPLETED_KEY = "bcup_migration_complete";
+import { setTouchUnlockCredentials } from "../shared/touchUnlock";
 
-export function migrateStorageToKeychain() {
+const MIGRATION_COMPLETED_KEY = "bcup_storage_migrated";
+
+export function migrateStorage() {
+    return Promise.all([migrateTouchIDToSecureStorage(), migrateAsyncStorageToKeychain()]);
+}
+
+export function migrateTouchIDToSecureStorage() {
+    return new Promise((resolve, reject) => {
+        if (Platform.OS === "ios") {
+            // We dont need to manually migrate on iOS as the secure-storage module is directly
+            // compatible with the keychain module
+            resolve();
+        } else {
+            getGenericPassword().then(keychainCreds => {
+                if (typeof keychainCreds === "object") {
+                    // Move the Touch credentials across to Secure Storage
+                    const items = JSON.parse(keychainCreds.password);
+                    setTouchUnlockCredentials(items);
+
+                    // Delete old credentials from Keychain to completely clean up
+                    resetGenericPassword();
+                    resolve();
+                } else {
+                    // Nothing to migrate.. all done here
+                    resolve();
+                }
+            });
+        }
+    });
+}
+
+export function migrateAsyncStorageToKeychain() {
     const asyncStorage = new AsyncStorageInterface();
     const secureStorage = new SecureStorageInterface();
 
