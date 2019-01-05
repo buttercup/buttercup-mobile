@@ -27,11 +27,8 @@ export function migrateTouchIDToSecureStorage() {
 
                     // Delete old credentials from Keychain to completely clean up
                     resetGenericPassword();
-                    resolve();
-                } else {
-                    // Nothing to migrate.. all done here
-                    resolve();
                 }
+                resolve();
             });
         }
     });

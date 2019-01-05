@@ -7,6 +7,7 @@
 //
 
 #import <AuthenticationServices/AuthenticationServices.h>
+#import "AutoFillHelpers.h"
 
 @interface CredentialProviderViewController : ASCredentialProviderViewController
 

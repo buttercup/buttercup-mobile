@@ -85,6 +85,10 @@
 		9E13616621DDF09000EE48B0 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FCC2D269F844C8BF09D78C /* Octicons.ttf */; };
 		9E13616721DDF09000EE48B0 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C526BB0D8D7F42AFB7E8DF31 /* SimpleLineIcons.ttf */; };
 		9E13616821DDF09000EE48B0 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
+		9E4418DC21E0215500CA5E79 /* AutoFillBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */; };
+		9E4418DD21E0215500CA5E79 /* AutoFillBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */; };
+		9E44190B21E042A000CA5E79 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */; };
+		9E44190C21E042A000CA5E79 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */; };
 		BBC4A737D75245BFB27E789A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
 		BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */; };
 		C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
@@ -490,6 +494,10 @@
 		9E1360D221DC420F00EE48B0 /* BCAutoFillExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BCAutoFillExtension.entitlements; sourceTree = "<group>"; };
 		9E13610721DC434000EE48B0 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = libs/libcrypto.a; sourceTree = "<group>"; };
 		9E13615421DC465800EE48B0 /* RNSecureStorage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSecureStorage.xcodeproj; path = "../node_modules/react-native-secure-storage/ios/RNSecureStorage.xcodeproj"; sourceTree = "<group>"; };
+		9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillBridge.m; sourceTree = "<group>"; };
+		9E44190821E0217000CA5E79 /* AutoFillBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillBridge.h; sourceTree = "<group>"; };
+		9E44190921E0426C00CA5E79 /* AutoFillHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillHelpers.h; sourceTree = "<group>"; };
+		9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillHelpers.m; sourceTree = "<group>"; };
 		A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
@@ -688,6 +696,10 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				9E44190821E0217000CA5E79 /* AutoFillBridge.h */,
+				9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */,
+				9E44190921E0426C00CA5E79 /* AutoFillHelpers.h */,
+				9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */,
 			);
 			name = Buttercup;
 			sourceTree = "<group>";
@@ -1540,10 +1552,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E44190B21E042A000CA5E79 /* AutoFillHelpers.m in Sources */,
 				C2F3488B20FB5463000EC30D /* Crypto.m in Sources */,
 				99851D7520C9B83E00EAC115 /* CryptoBridge.m in Sources */,
 				C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				9E4418DC21E0215500CA5E79 /* AutoFillBridge.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1570,9 +1584,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E13615C21DC865A00EE48B0 /* Crypto.m in Sources */,
+				9E44190C21E042A000CA5E79 /* AutoFillHelpers.m in Sources */,
 				9E13615D21DC865E00EE48B0 /* CryptoBridge.m in Sources */,
 				9E13615E21DC866600EE48B0 /* BCHelpers.m in Sources */,
 				9E1360CD21DC420F00EE48B0 /* CredentialProviderViewController.m in Sources */,
+				9E4418DD21E0215500CA5E79 /* AutoFillBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

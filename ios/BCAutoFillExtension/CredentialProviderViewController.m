@@ -13,11 +13,15 @@
 
 @implementation CredentialProviderViewController
 
+/*
+ * Inject our RN JS UI into the ViewController
+ */
 -(void)viewDidLoad {
     [super viewDidLoad];
     
     NSURL *jsCodeLocation;
     
+    // @TODO: Replace with dedicated RN UI instead of showing the main application.
     jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
     
     RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
@@ -35,26 +39,23 @@
  */
 - (void)prepareCredentialListForServiceIdentifiers:(NSArray<ASCredentialServiceIdentifier *> *)serviceIdentifiers
 {
+    NSLog(@"%@", serviceIdentifiers);
 }
 
 /*
- Implement this method if your extension supports showing credentials in the QuickType bar.
- When the user selects a credential from your app, this method will be called with the
- ASPasswordCredentialIdentity your app has previously saved to the ASCredentialIdentityStore.
- Provide the password by completing the extension request with the associated ASPasswordCredential.
- If using the credential would require showing custom UI for authenticating the user, cancel
- the request with error code ASExtensionErrorCodeUserInteractionRequired.
- 
+ * Attempt to match an identity tapped in the QuickBar to a Buttercup Entry
+ */
  - (void)provideCredentialWithoutUserInteractionForIdentity:(ASPasswordCredentialIdentity *)credentialIdentity
  {
- BOOL databaseIsUnlocked = YES;
- if (databaseIsUnlocked) {
- ASPasswordCredential *credential = [[ASPasswordCredential alloc] initWithUser:@"j_appleseed" password:@"apple1234"];
- [self.extensionContext completeRequestWithSelectedCredential:credential completionHandler:nil];
- } else
- [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:ASExtensionErrorDomain code:ASExtensionErrorCodeUserInteractionRequired userInfo:nil]];
+     ASPasswordCredential *matchingCredential = [AutoFillHelpers getAutoFillPasswordCredential:credentialIdentity];
+     if (matchingCredential != nil) {
+         [self.extensionContext completeRequestWithSelectedCredential:matchingCredential completionHandler:nil];
+     } else {
+         // Failed to find matching Buttercup entry.. send the user to the UI to choose a credential manually
+         [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:ASExtensionErrorDomain code:ASExtensionErrorCodeUserInteractionRequired userInfo:nil]];
+     }
  }
- */
+ 
 
 /*
  Implement this method if -provideCredentialWithoutUserInteractionForIdentity: can fail with
@@ -75,6 +76,7 @@
 - (IBAction)passwordSelected:(id)sender
 {
     ASPasswordCredential *credential = [[ASPasswordCredential alloc] initWithUser:@"j_appleseed" password:@"apple1234"];
+    
     [self.extensionContext completeRequestWithSelectedCredential:credential completionHandler:nil];
 }
 
