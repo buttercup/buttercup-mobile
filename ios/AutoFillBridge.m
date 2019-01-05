@@ -49,8 +49,7 @@ RCT_EXPORT_METHOD(updateEntriesForSourceID:(NSString *)sourceID entries:(NSDicti
     // Now that the store has been synced, update the ASCredentialIdentityStore with all the identies
     [AutoFillHelpers updateASCredentialIdentityStore:autoFillEntries];
     
-    // return resolve(@YES);
-    return resolve([AutoFillHelpers getAutoFillEntries]);
+    return resolve(@YES);
 }
 
 /**
