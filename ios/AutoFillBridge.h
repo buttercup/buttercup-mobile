@@ -4,6 +4,9 @@
 #import "RCTBridgeModule.h"
 #endif
 
-@interface AutoFillBridge : NSObject <RCTBridgeModule>
+#import <AuthenticationServices/AuthenticationServices.h>
 
+@interface AutoFillBridge : NSObject <RCTBridgeModule>
+@property (nonatomic, strong) ASCredentialProviderExtensionContext *extensionContext;
+- (instancetype)initWithExtensionContext:(ASCredentialProviderExtensionContext *)extensionContext;
 @end

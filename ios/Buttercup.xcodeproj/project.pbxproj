@@ -89,6 +89,7 @@
 		9E4418DD21E0215500CA5E79 /* AutoFillBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */; };
 		9E44190B21E042A000CA5E79 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */; };
 		9E44190C21E042A000CA5E79 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */; };
+		9E44191021E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */; };
 		BBC4A737D75245BFB27E789A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
 		BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */; };
 		C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
@@ -498,6 +499,8 @@
 		9E44190821E0217000CA5E79 /* AutoFillBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillBridge.h; sourceTree = "<group>"; };
 		9E44190921E0426C00CA5E79 /* AutoFillHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillHelpers.h; sourceTree = "<group>"; };
 		9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillHelpers.m; sourceTree = "<group>"; };
+		9E44190E21E1775A00CA5E79 /* AutoFillExtensionContextBridgeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillExtensionContextBridgeDelegate.h; sourceTree = "<group>"; };
+		9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillExtensionContextBridgeDelegate.m; sourceTree = "<group>"; };
 		A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
@@ -827,6 +830,8 @@
 				9E1360CE21DC420F00EE48B0 /* MainInterface.storyboard */,
 				9E1360D121DC420F00EE48B0 /* Info.plist */,
 				9E1360D221DC420F00EE48B0 /* BCAutoFillExtension.entitlements */,
+				9E44190E21E1775A00CA5E79 /* AutoFillExtensionContextBridgeDelegate.h */,
+				9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */,
 			);
 			path = BCAutoFillExtension;
 			sourceTree = "<group>";
@@ -993,6 +998,7 @@
 				9E1360C421DC420E00EE48B0 /* Sources */,
 				9E1360C521DC420E00EE48B0 /* Frameworks */,
 				9E1360C621DC420E00EE48B0 /* Resources */,
+				9E44190D21E0729B00CA5E79 /* Bundle React Native code and images */,
 			);
 			buildRules = (
 			);
@@ -1533,6 +1539,24 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		9E44190D21E0729B00CA5E79 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1588,6 +1612,7 @@
 				9E13615D21DC865E00EE48B0 /* CryptoBridge.m in Sources */,
 				9E13615E21DC866600EE48B0 /* BCHelpers.m in Sources */,
 				9E1360CD21DC420F00EE48B0 /* CredentialProviderViewController.m in Sources */,
+				9E44191021E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m in Sources */,
 				9E4418DD21E0215500CA5E79 /* AutoFillBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

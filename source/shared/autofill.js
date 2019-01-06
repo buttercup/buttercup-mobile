@@ -46,3 +46,29 @@ export function removeSourceFromAutoFill(sourceID) {
         return AutoFillBridge.removeEntriesForSourceID(sourceID);
     });
 }
+
+export function completeAutoFillWithEntry(entry) {
+    // @TODO: Grab Username and Password from the Entry
+    return new Promise((resolve, reject) => {
+        if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+            // AutoFill is only implemented on iOS at the moment
+            resolve();
+            return;
+        }
+
+        return AutoFillBridge.completeAutoFill("autofilled", "password123");
+    });
+}
+
+export function cancelAutoFill() {
+    // @TODO: Grab Username and Password from the Entry
+    return new Promise((resolve, reject) => {
+        if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+            // AutoFill is only implemented on iOS at the moment
+            resolve();
+            return;
+        }
+
+        return AutoFillBridge.cancelAutoFill();
+    });
+}

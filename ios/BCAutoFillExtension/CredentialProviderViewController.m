@@ -7,29 +7,34 @@
 //
 
 #import "CredentialProviderViewController.h"
-
-#import <React/RCTBundleURLProvider.h>
+#import "AutoFillExtensionContextBridgeDelegate.h"
 #import <React/RCTRootView.h>
 
 @implementation CredentialProviderViewController
 
-/*
- * Inject our RN JS UI into the ViewController
+/**
+ * Load the custom React Native Entry Point as the UI for manual selection of a Credential
+ * Note: We use the custom AutoFillExtensionContextBridgeDelegate so that the AutoFill Extension Context
+ *  can be injected into the Bridge (via the AutoFillBrige). This will enable the AutoFill Cancel and
+ *   Completion callbacks to be exectued via the React Native JS Bridge.
+ *
+ * We also pass additional initialProperties to the React Native app, so we can give it some context
+ *  about the Service or Failed Credential that the user is trying to log into or with.
  */
--(void)viewDidLoad {
-    [super viewDidLoad];
+- (void)loadReactNativeUI:(NSDictionary *) initialProperties
+{
+    id<RCTBridgeDelegate> autoFillBridgeDelegate = [[AutoFillExtensionContextBridgeDelegate alloc]
+                                                    initWithExtensionContext:self.extensionContext];
     
-    NSURL *jsCodeLocation;
+    RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:autoFillBridgeDelegate launchOptions:nil];
     
-    // @TODO: Replace with dedicated RN UI instead of showing the main application.
-    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
-    
-    RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                        moduleName:@"Buttercup"
-                                                 initialProperties:nil
-                                                     launchOptions:nil];
+    RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+                                                     moduleName:[AutoFillExtensionContextBridgeDelegate moduleNameForBridge]
+                                              initialProperties:initialProperties];
     rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+    
     self.view = rootView;
+    
 }
 
 /*
@@ -39,7 +44,17 @@
  */
 - (void)prepareCredentialListForServiceIdentifiers:(NSArray<ASCredentialServiceIdentifier *> *)serviceIdentifiers
 {
-    NSLog(@"%@", serviceIdentifiers);
+    NSLog(@"BCUP_AF prepareCredentialListForServiceIdentifiers");
+    
+    // Pass the serviceIdentifiers to the React Native app via the initialProperties initializer
+    NSMutableArray *identifiers = [[NSMutableArray alloc] init];
+    
+    for (id serviceIdentifier in serviceIdentifiers) {
+        [identifiers addObject:[serviceIdentifier identifier]];
+    }
+    
+    NSDictionary *initialProps = [NSDictionary dictionaryWithObject: identifiers forKey: @"serviceIdentifiers"];
+    [self loadReactNativeUI: initialProps];
 }
 
 /*
@@ -47,6 +62,7 @@
  */
  - (void)provideCredentialWithoutUserInteractionForIdentity:(ASPasswordCredentialIdentity *)credentialIdentity
  {
+     NSLog(@"BCUP_AF provideCredentialWithoutUserInteractionForIdentity");
      ASPasswordCredential *matchingCredential = [AutoFillHelpers getAutoFillPasswordCredential:credentialIdentity];
      if (matchingCredential != nil) {
          [self.extensionContext completeRequestWithSelectedCredential:matchingCredential completionHandler:nil];
@@ -58,26 +74,15 @@
  
 
 /*
- Implement this method if -provideCredentialWithoutUserInteractionForIdentity: can fail with
- ASExtensionErrorCodeUserInteractionRequired. In this case, the system may present your extension's
- UI and call this method. Show appropriate UI for authenticating the user then provide the password
- by completing the extension request with the associated ASPasswordCredential.
- 
+ * User tapped user from the QuickBar but we were unable to match to a Buttercup credential.
+ * Show the React Native UI and pass it the failing credential indentity
+ */
  - (void)prepareInterfaceToProvideCredentialForIdentity:(ASPasswordCredentialIdentity *)credentialIdentity
  {
+     NSLog(@"BCUP_AF prepareInterfaceToProvideCredentialForIdentity");
+     // Pass the serviceIdentifiers to the React Native app via the initialProperties initializer
+     NSDictionary *initialProps = [NSDictionary dictionaryWithObject:[credentialIdentity recordIdentifier] forKey: @"credentialIdentity"];
+     [self loadReactNativeUI: initialProps];
  }
- */
-
-- (IBAction)cancel:(id)sender
-{
-    [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:ASExtensionErrorDomain code:ASExtensionErrorCodeUserCanceled userInfo:nil]];
-}
-
-- (IBAction)passwordSelected:(id)sender
-{
-    ASPasswordCredential *credential = [[ASPasswordCredential alloc] initWithUser:@"j_appleseed" password:@"apple1234"];
-    
-    [self.extensionContext completeRequestWithSelectedCredential:credential completionHandler:nil];
-}
 
 @end

@@ -18,6 +18,17 @@ RCT_EXPORT_MODULE()
     return YES;
 }
 
+- (instancetype)initWithExtensionContext:(ASCredentialProviderExtensionContext *)extensionContext
+API_AVAILABLE(ios(12.0)){
+    self = [super init];
+    if (self)
+    {
+        self.extensionContext = extensionContext;
+    }
+    
+    return self;
+}
+
 - (NSDictionary *)constantsToExport
 {
     return @{ @"DEVICE_SUPPORTS_AUTOFILL": @([AutoFillHelpers deviceSupportsAutoFill]) };
@@ -74,6 +85,36 @@ RCT_EXPORT_METHOD(removeEntriesForSourceID:(NSString *)sourceID resolver:(RCTPro
     [AutoFillHelpers updateASCredentialIdentityStore:autoFillEntries];
     
     return resolve(@YES);
+}
+
+/**
+ * Complete the Manual AutoFill Process by sending a desired username and password back to the iOS AutoFill Extension Context.
+ * Note: This method should ONLY be used when the module is loaded inside an iOS AutoFill Overlay.
+ * Use the AutoFillBridgeDelegate
+ */
+RCT_EXPORT_METHOD(completeAutoFill:(NSString *)username password:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    if (![AutoFillHelpers deviceSupportsAutoFill]) {
+        reject(@"", @"Device does not support AutoFill.", nil);
+    } else if (self.extensionContext == nil) {
+        reject(@"", @"AutoFill Extension Context not available. This method should only be run from the Buttercup AutoFill Overlay.", nil);
+    } else {
+        ASPasswordCredential *credential = [[ASPasswordCredential alloc] initWithUser:username password:password];
+        [self.extensionContext completeRequestWithSelectedCredential:credential completionHandler:nil];
+        resolve(@YES);
+    }
+}
+
+RCT_EXPORT_METHOD(cancelAutoFill:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    if (![AutoFillHelpers deviceSupportsAutoFill]) {
+        reject(@"", @"Device does not support AutoFill.", nil);
+    } else if (self.extensionContext == nil) {
+        reject(@"", @"AutoFill Extension Context not available. This method should only be run from the Buttercup AutoFill Overlay.", nil);
+    } else {
+        [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:ASExtensionErrorDomain code:ASExtensionErrorCodeUserCanceled userInfo:nil]];
+        resolve(@YES);
+    }
 }
 
 @end
