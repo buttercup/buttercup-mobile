@@ -20,4 +20,5 @@
 @interface AutoFillExtensionContextBridgeDelegate : NSObject <RCTBridgeDelegate>
 + (NSString *)moduleNameForBridge;
 - (instancetype)initWithExtensionContext:(ASCredentialProviderExtensionContext *)extensionContext;
+- (void) updateExtensionContext:(ASCredentialProviderExtensionContext *)extensionContext;
 @end

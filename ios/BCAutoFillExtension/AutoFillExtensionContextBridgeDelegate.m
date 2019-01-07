@@ -30,6 +30,11 @@
     return self;
 }
 
+- (void) updateExtensionContext:(ASCredentialProviderExtensionContext *)extensionContext
+{
+    [(AutoFillBridge *)self.extraModules[0] setExtensionContext:extensionContext];
+}
+
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
     return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios.autofill" fallbackResource:nil];

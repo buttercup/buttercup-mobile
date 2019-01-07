@@ -7,8 +7,18 @@ import { completeAutoFillWithEntry, cancelAutoFill } from "./source/shared/autof
 export default class ButtercupAutoFill extends Component {
     constructor(...args) {
         super(...args);
+    }
 
-        console.log("PROPS", this.props);
+    componentDidMount() {
+        console.log("PROPS: Mount", this.props);
+
+        if (this.props.credentialIdentity) {
+            // AutoFill UI Started due to failure to find match from QuickBar suggestion
+            console.log("Start with Credential Identity", this.props.credentialIdentity);
+        } else if (this.props.serviceIdentifiers) {
+            // AutoFill UI Started with a list of URLs to prioritize potential credentials with
+            console.log("Start with Service Identifiers", this.props.serviceIdentifiers);
+        }
     }
 
     onPressTestAutoFillComplete() {
