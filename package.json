@@ -38,6 +38,7 @@
     "domain-browser": "^1.1.7",
     "dropbox": "^4.0.13",
     "events": "^1.1.1",
+    "extract-domain": "^2.0.4",
     "https-browserify": "0.0.1",
     "is-online": "^7.0.0",
     "os-browserify": "^0.1.2",

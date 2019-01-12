@@ -48,7 +48,6 @@ export function removeSourceFromAutoFill(sourceID) {
 }
 
 export function completeAutoFillWithEntry(entry) {
-    // @TODO: Grab Username and Password from the Entry
     return new Promise((resolve, reject) => {
         if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
             // AutoFill is only implemented on iOS at the moment
@@ -56,12 +55,13 @@ export function completeAutoFillWithEntry(entry) {
             return;
         }
 
-        return AutoFillBridge.completeAutoFill("autofilled", "password123");
+        const username = entry.getProperty("username");
+        const password = entry.getProperty("password");
+        return AutoFillBridge.completeAutoFill(username, password);
     });
 }
 
 export function cancelAutoFill() {
-    // @TODO: Grab Username and Password from the Entry
     return new Promise((resolve, reject) => {
         if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
             // AutoFill is only implemented on iOS at the moment

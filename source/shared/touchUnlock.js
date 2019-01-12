@@ -84,22 +84,9 @@ export function enableTouchUnlock(sourceID) {
         });
 }
 
-export function getMasterPasswordFromTouchUnlock(sourceID) {
-    return touchIDEnabledForSource(sourceID)
-        .then(enabled => {
-            if (!enabled) {
-                throw new Error("Touch unlock is not enabled for this source");
-            }
-            return TouchID.authenticate("Authenticate to open archive");
-        })
+export function getKeychainCredentialsFromTouchUnlock() {
+    return TouchID.authenticate("Authenticate to open archive")
         .then(() => getTouchUnlockCredentials())
-        .then(keychainCreds => {
-            const sourcePassword = keychainCreds[sourceID];
-            if (!sourcePassword) {
-                throw new Error("No credentials found under touch ID for this source");
-            }
-            return sourcePassword;
-        })
         .catch(err => {
             switch (err.name) {
                 case "LAErrorSystemCancel":
@@ -111,6 +98,23 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
                 default:
                     throw err;
             }
+        });
+}
+
+export function getMasterPasswordFromTouchUnlock(sourceID) {
+    return touchIDEnabledForSource(sourceID)
+        .then(enabled => {
+            if (!enabled) {
+                throw new Error("Touch unlock is not enabled for this source");
+            }
+            return getKeychainCredentialsFromTouchUnlock();
+        })
+        .then(keychainCreds => {
+            const sourcePassword = keychainCreds[sourceID];
+            if (!sourcePassword) {
+                throw new Error("No credentials found under touch ID for this source");
+            }
+            return sourcePassword;
         });
 }
 

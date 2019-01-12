@@ -1,3 +1,4 @@
+import extractDomain from "extract-domain";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { EntryFinder } from "../library/buttercupCore.js";
 import { getState } from "../store.js";
@@ -42,4 +43,43 @@ function searchForEntries(term, archives) {
             };
         })
     );
+}
+
+export function getMatchingEntriesForURL(url) {
+    // Source - https://github.com/buttercup/buttercup-browser-extension/blob/3109fc2c788ee0a5f99a28c9cf520ca74f160f0b/source/background/library/archives.js#L280
+    const unlockedSources = getSharedArchiveManager().unlockedSources;
+    const entries = [];
+    unlockedSources.forEach(source => {
+        const archive = source.workspace.archive;
+        const newEntries = archive.findEntriesByMeta("url", /.+/).filter(entry => {
+            const entryURL = entry.getMeta("url");
+            const entryDomain = extractDomain(entryURL);
+            return (
+                entryDomain.length > 0 &&
+                entryDomain === extractDomain(url) &&
+                entry.isInTrash() === false
+            );
+        });
+        entries.push(
+            ...newEntries.map(entry => ({
+                entry,
+                sourceID: source.id
+            }))
+        );
+    });
+    return entries;
+}
+
+export function getMatchingEntriesForURLs(urls) {
+    let entries = [];
+    urls.forEach(url => {
+        getMatchingEntriesForURL(url).forEach(result => {
+            // Check for duplicates (e.g. similar URLs may have duplicate results)
+            if (!entries.find(_result => result.entry.id === _result.entry.id)) {
+                entries.push(result);
+            }
+        });
+    });
+
+    return entries;
 }
