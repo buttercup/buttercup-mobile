@@ -6,10 +6,10 @@ import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
 import Spinner from "./Spinner.js";
 import { getNameForSource, searchAllArchives } from "../shared/entries.js";
+import { getEntryPath } from "../shared/entry";
 import { cancelAutoFill } from "../shared/autofill";
 import ToolbarButton from "./ToolbarButton";
-
-const ENTRY_ICON = require("../../resources/images/entry-256.png");
+import SearchResult from "./SearchResult";
 
 const styles = StyleSheet.create({
     container: {
@@ -17,18 +17,6 @@ const styles = StyleSheet.create({
     },
     cancel: {
         padding: 10
-    },
-    icon: {
-        width: 32,
-        height: 32,
-        marginRight: 8
-    },
-    entryUsername: {
-        fontSize: 12
-    },
-    entrySubtitle: {
-        color: "#777",
-        fontSize: 12
     }
 });
 
@@ -93,10 +81,6 @@ class AutoFillList extends Component {
         }
     }
 
-    getEntryIcon() {
-        return <Image source={ENTRY_ICON} style={styles.icon} />;
-    }
-
     renderSearchResults() {
         return (
             <CellGroup>
@@ -104,22 +88,13 @@ class AutoFillList extends Component {
                     each="result"
                     of={this.state.entries.length ? this.state.entries : this.props.initialEntries}
                 >
-                    <Cell
+                    <SearchResult
                         key={result.entry.id}
-                        icon={this.getEntryIcon}
-                        onPress={() => this.props.onEntryPress(result.entry.id, result.sourceID)}
-                    >
-                        <View>
-                            <Text>{result.entry.getProperty("title") || ""}</Text>
-                            <Text style={styles.entryUsername}>
-                                {result.entry.getProperty("username") || ""}
-                            </Text>
-                            <Text style={styles.entrySubtitle}>
-                                {getNameForSource(result.sourceID)}
-                            </Text>
-                        </View>
-                        <Icon name="sign-in" size={22} color="#5c7080" />
-                    </Cell>
+                        sourceID={result.sourceID}
+                        entryID={result.entry.id}
+                        onEntryPress={this.props.onEntryPress}
+                        icon={<Icon name="sign-in" size={22} color="#5c7080" />}
+                    />
                 </For>
             </CellGroup>
         );

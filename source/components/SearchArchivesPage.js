@@ -3,26 +3,17 @@ import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
-import { getNameForSource, searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
+import { searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
+import SearchResult from "./SearchResult";
 
 /*TODO:
     maybe add search highlight
     Test on Device
 */
 
-const ENTRY_ICON = require("../../resources/images/entry-256.png");
-
 const styles = StyleSheet.create({
     container: {
         flex: 1
-    },
-    icon: {
-        width: 32,
-        height: 32
-    },
-    entrySubtitle: {
-        color: "#777",
-        fontSize: 12
     }
 });
 
@@ -68,26 +59,16 @@ class SearchArchives extends Component {
         }
     }
 
-    getEntryIcon() {
-        return <Image source={ENTRY_ICON} style={styles.icon} />;
-    }
-
     renderSearchResults() {
         return (
             <CellGroup>
                 <For each="result" of={this.state.entries}>
-                    <Cell
+                    <SearchResult
                         key={result.entry.id}
-                        icon={this.getEntryIcon}
-                        onPress={() => this.props.onEntryPress(result.entry.id, result.sourceID)}
-                    >
-                        <View>
-                            <Text>{result.entry.getProperty("title") || ""}</Text>
-                            <Text style={styles.entrySubtitle}>
-                                {getNameForSource(result.sourceID)}
-                            </Text>
-                        </View>
-                    </Cell>
+                        sourceID={result.sourceID}
+                        entryID={result.entry.id}
+                        onEntryPress={this.props.onEntryPress}
+                    />
                 </For>
             </CellGroup>
         );
