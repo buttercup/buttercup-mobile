@@ -55,9 +55,19 @@ class ArchivesPage extends Component {
         // Flag to the App that we are running in the AutoFill extension context
         dispatch(setIsContextAutoFill(!!this.props.screenProps.isContextAutoFill));
 
+        // Parse incoming props from the Native AutoFill context
         if (this.props.screenProps.serviceIdentifiers !== undefined) {
             dispatch(setAutoFillURLs(this.props.screenProps.serviceIdentifiers));
         } else if (this.props.screenProps.credentialIdentity !== undefined) {
+            /**
+             * Note: This case should never happen, as the iOS credential store is sync'd 1-1 with Buttercup at runtime.
+             * Leaving this here for if/when the use case arises that it needs to be handled, but I could not find a way to replicate it.
+             *
+             * At the time of writing, the passed credentialIdentity is NOT handled in the rest of the app.
+             * For more info see https://developer.apple.com/documentation/authenticationservices/ascredentialproviderviewcontroller/2977553-prepareinterfacetoprovidecredent?language=objc
+             *
+             * @se1exin - 14/1/19.
+             */
             dispatch(setAutoFillIdentity(this.props.screenProps.credentialIdentity));
         }
     }

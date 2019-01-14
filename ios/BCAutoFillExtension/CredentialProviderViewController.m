@@ -70,8 +70,6 @@ RCTRootView *rootView;
  */
 - (void)prepareCredentialListForServiceIdentifiers:(NSArray<ASCredentialServiceIdentifier *> *)serviceIdentifiers
 {
-    NSLog(@"BCUP_AF prepareCredentialListForServiceIdentifiers");
-    
     // Pass the serviceIdentifiers to the React Native app via the initialProperties initializer
     NSMutableArray *identifiers = [[NSMutableArray alloc] init];
     
@@ -88,7 +86,6 @@ RCTRootView *rootView;
  */
  - (void)provideCredentialWithoutUserInteractionForIdentity:(ASPasswordCredentialIdentity *)credentialIdentity
  {
-     NSLog(@"BCUP_AF provideCredentialWithoutUserInteractionForIdentity");
      ASPasswordCredential *matchingCredential = [AutoFillHelpers getAutoFillPasswordCredential:credentialIdentity];
      if (matchingCredential != nil) {
          [self.extensionContext completeRequestWithSelectedCredential:matchingCredential completionHandler:nil];
@@ -106,7 +103,6 @@ RCTRootView *rootView;
  */
  - (void)prepareInterfaceToProvideCredentialForIdentity:(ASPasswordCredentialIdentity *)credentialIdentity
  {
-     NSLog(@"BCUP_AF prepareInterfaceToProvideCredentialForIdentity");
      // Pass the serviceIdentifiers to the React Native app via the initialProperties initializer
      NSDictionary *initialProps = [NSDictionary dictionaryWithObject:[credentialIdentity recordIdentifier] forKey: @"credentialIdentity"];
      [self loadReactNativeUI: initialProps];
