@@ -3,8 +3,14 @@
 //  ButtercupAutoFill
 //
 //  Created by Jacob Morris on 30/12/18.
-//  Copyright © 2018 Facebook. All rights reserved.
 //
+
+/**
+ * Copyright (c) 2017-present, Buttercup, Inc.
+ *
+ * This source code is licensed under the GNU GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 #import "CredentialProviderViewController.h"
 #import "AutoFillExtensionContextBridgeDelegate.h"
@@ -44,13 +50,13 @@ RCTRootView *rootView;
         // Setup a new RN Bridge and App to display
         autoFillBridgeDelegate = [[AutoFillExtensionContextBridgeDelegate alloc]
                                   initWithExtensionContext:self.extensionContext];
-        
+
         bridge = [[RCTBridge alloc] initWithDelegate:autoFillBridgeDelegate launchOptions:nil];
-        
+
         rootView = [[RCTRootView alloc] initWithBridge:bridge
                                             moduleName:[AutoFillExtensionContextBridgeDelegate moduleNameForBridge]
                                      initialProperties:appPropsFinal];
-        
+
     } else {
         // We already have a running Bridge instance
         // Supply the new Extension Context to the Bridge so that AutoFill completion/cancel works,
@@ -59,7 +65,7 @@ RCTRootView *rootView;
         [rootView setAppProperties:appPropsFinal];
         [bridge reload]; // The bridge will have been invalidated in viewWillDisappear. Make sure it's running again.
     }
-    
+
     self.view = rootView;
 }
 
@@ -72,11 +78,11 @@ RCTRootView *rootView;
 {
     // Pass the serviceIdentifiers to the React Native app via the initialProperties initializer
     NSMutableArray *identifiers = [[NSMutableArray alloc] init];
-    
+
     for (id serviceIdentifier in serviceIdentifiers) {
         [identifiers addObject:[serviceIdentifier identifier]];
     }
-    
+
     NSDictionary *initialProps = [NSDictionary dictionaryWithObject: identifiers forKey: @"serviceIdentifiers"];
     [self loadReactNativeUI: initialProps];
 }
@@ -94,7 +100,7 @@ RCTRootView *rootView;
          [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:ASExtensionErrorDomain code:ASExtensionErrorCodeUserInteractionRequired userInfo:nil]];
      }
  }
- 
+
 
 /*
  * User tapped user from the QuickBar but we were unable to match to a Buttercup credential.

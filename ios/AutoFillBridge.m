@@ -3,8 +3,14 @@
 //  Buttercup
 //
 //  Created by Jacob Morris on 5/1/19.
-//  Copyright © 2019 Facebook. All rights reserved.
 //
+
+/**
+ * Copyright (c) 2017-present, Buttercup, Inc.
+ *
+ * This source code is licensed under the GNU GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 #import "AutoFillBridge.h"
 #import "AutoFillHelpers.h"
@@ -25,7 +31,7 @@ API_AVAILABLE(ios(12.0)){
     {
         self.extensionContext = extensionContext;
     }
-    
+
     return self;
 }
 
@@ -45,21 +51,21 @@ RCT_EXPORT_METHOD(updateEntriesForSourceID:(NSString *)sourceID entries:(NSDicti
 {
     // First retrieve the current intermediate store state so we can merge into it
     NSMutableDictionary *autoFillEntries = [[AutoFillHelpers getAutoFillEntries] mutableCopy];
-    
+
     // Merge in the updated credentials
     autoFillEntries[sourceID] = entries;
-    
+
     // Sync the entries to the Keychain
     NSError *saveError = [AutoFillHelpers setAutoFillEntries:autoFillEntries];
-    
+
     // Handle any errors saving to Keychain
     if (saveError != nil) {
         return reject([NSString stringWithFormat:@"%li", (long)saveError.code], [saveError localizedDescription], nil);
     }
-    
+
     // Now that the store has been synced, update the ASCredentialIdentityStore with all the identies
     [AutoFillHelpers updateASCredentialIdentityStore:autoFillEntries];
-    
+
     return resolve(@YES);
 }
 
@@ -69,21 +75,21 @@ RCT_EXPORT_METHOD(updateEntriesForSourceID:(NSString *)sourceID entries:(NSDicti
 RCT_EXPORT_METHOD(removeEntriesForSourceID:(NSString *)sourceID resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSMutableDictionary *autoFillEntries = [[AutoFillHelpers getAutoFillEntries] mutableCopy];
-    
+
     // Delete the Source and it's Entries. removeObjectForKey continues if the source does or does not exist.
     [autoFillEntries removeObjectForKey:sourceID];
-    
+
     // Sync the entries to the Keychain
     NSError *saveError = [AutoFillHelpers setAutoFillEntries:autoFillEntries];
-    
+
     // Handle any errors saving to Keychain
     if (saveError != nil) {
         return reject([NSString stringWithFormat:@"%li", (long)saveError.code], [saveError localizedDescription], nil);
     }
-    
+
     // Now that the store has been synced, update the ASCredentialIdentityStore with all the identies
     [AutoFillHelpers updateASCredentialIdentityStore:autoFillEntries];
-    
+
     return resolve(@YES);
 }
 

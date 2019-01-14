@@ -3,8 +3,14 @@
 //  Buttercup
 //
 //  Created by Jacob Morris on 5/1/19.
-//  Copyright © 2019 Facebook. All rights reserved.
 //
+
+/**
+ * Copyright (c) 2017-present, Buttercup, Inc.
+ *
+ * This source code is licensed under the GNU GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 #import <AuthenticationServices/AuthenticationServices.h>
 #import <Security/Security.h>

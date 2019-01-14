@@ -3,8 +3,14 @@
 //  BCAutoFillExtension
 //
 //  Created by Jacob Morris on 6/1/19.
-//  Copyright © 2019 Facebook. All rights reserved.
 //
+
+/**
+ * Copyright (c) 2017-present, Buttercup, Inc.
+ *
+ * This source code is licensed under the GNU GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 #import "AutoFillExtensionContextBridgeDelegate.h"
 
@@ -26,7 +32,7 @@
         AutoFillBridge *autoFillBridgeModule = [[AutoFillBridge alloc] initWithExtensionContext:extensionContext];
         self.extraModules = @[autoFillBridgeModule];
     }
-    
+
     return self;
 }
 
