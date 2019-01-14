@@ -35,6 +35,10 @@ RCTRootView *rootView;
  */
 - (void)loadReactNativeUI:(NSDictionary *) appProps
 {
+    // Add a flag to the appProps to indicate we are loading from AutoFill
+    NSMutableDictionary *appPropsFinal = [appProps mutableCopy];
+    [appPropsFinal setValue:@true forKey:@"isContextAutoFill"];
+
     if (autoFillBridgeDelegate == nil || bridge == nil || rootView == nil) {
         // Either this is a brand new Extension Instance, or something got garbage collected.
         // Setup a new RN Bridge and App to display
@@ -45,14 +49,14 @@ RCTRootView *rootView;
         
         rootView = [[RCTRootView alloc] initWithBridge:bridge
                                             moduleName:[AutoFillExtensionContextBridgeDelegate moduleNameForBridge]
-                                     initialProperties:appProps];
+                                     initialProperties:appPropsFinal];
         
     } else {
         // We already have a running Bridge instance
         // Supply the new Extension Context to the Bridge so that AutoFill completion/cancel works,
         // and new Props to the App (e.g. if the user is trying to autofill on a different website).
         [autoFillBridgeDelegate updateExtensionContext:self.extensionContext];
-        [rootView setAppProperties:appProps];
+        [rootView setAppProperties:appPropsFinal];
         [bridge reload]; // The bridge will have been invalidated in viewWillDisappear. Make sure it's running again.
     }
     

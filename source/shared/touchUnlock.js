@@ -35,7 +35,7 @@ export function setTouchUnlockCredentials(credentials) {
 export function disableTouchUnlock(sourceID) {
     return getTouchUnlockCredentials()
         .then(keychainCreds => {
-            const newCreds = removeSourceFromKeychainCredentials(keychainCreds);
+            const newCreds = removeSourceFromKeychainCredentials(keychainCreds, sourceID);
             return setTouchUnlockCredentials(newCreds);
         })
         .then(() => {

@@ -1,34 +1,12 @@
 import { Alert } from "react-native";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { removeSourceFromAutoFill } from "./autofill";
-import { touchIDEnabledForSource, getKeychainCredentialsFromTouchUnlock } from "./touchUnlock";
-import { unlockSource } from "../shared/archiveContents";
 import { doAsyncWork } from "../global/async.js";
 import { dispatch } from "../store.js";
 import { showNewPrompt } from "../actions/RemoteExplorerPage.js";
 
 export function beginNewArchiveProcedure() {
     dispatch(showNewPrompt());
-}
-
-export function unlockAllTouchEnabledArchives() {
-    console.log("unlockAllTouchEnabledArchives", getSharedArchiveManager().sourcesList);
-
-    const sources = getSharedArchiveManager().sourcesList;
-    Promise.all(sources.map(source => touchIDEnabledForSource(source.id))).then(results => {
-        console.log(results);
-        results.forEach((enabled, index) => {
-            if (enabled) {
-                getKeychainCredentialsFromTouchUnlock().then(keychainCreds => {
-                    console.log("passwords", keychainCreds);
-                    Object.keys(keychainCreds).forEach(sourceID => {
-                        console.log("Source ID", sourceID);
-                        unlockSource(sourceID, keychainCreds[sourceID]);
-                    });
-                });
-            }
-        });
-    });
 }
 
 export function lockAllArchives() {
