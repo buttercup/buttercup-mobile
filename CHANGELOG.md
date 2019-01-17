@@ -1,5 +1,10 @@
 # Buttercup Mobile Changelog
 
+## v1.8.0
+_2019-01-17_
+
+ * ([#125](https://github.com/buttercup/buttercup-mobile/issues/125)) iOS Autofill integration
+
 ## v1.7.0
 _2019-01-01_
 
