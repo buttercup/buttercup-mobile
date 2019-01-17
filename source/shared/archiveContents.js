@@ -5,6 +5,8 @@ import { getSelectedArchive } from "../selectors/archiveContents.js";
 import { doAsyncWork } from "../global/async.js";
 import { setNewEntryParentGroup } from "../actions/entry.js";
 import { showArchiveContentsAddItemSheet } from "../shared/sheets.js";
+import { addSourceToAutoFill } from "./autofill";
+import { getSelectedSourceID } from "../selectors/archiveContents";
 
 export function archiveToObject(archive) {
     return archive.toObject();
@@ -41,5 +43,10 @@ export function unlockSource(sourceID, password, useOffline = false) {
 export function updateCurrentArchive() {
     const state = getState();
     const archive = getSelectedArchive(state);
+
     dispatch(setGroups(archiveToObject(archive).groups));
+
+    // Make sure the updates are reflected in AutoFill as well
+    const sourceID = getSelectedSourceID(state);
+    addSourceToAutoFill(sourceID, archive);
 }

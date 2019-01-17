@@ -1,5 +1,6 @@
 import { Alert } from "react-native";
 import { getSharedArchiveManager } from "../library/buttercup.js";
+import { removeSourceFromAutoFill } from "./autofill";
 import { doAsyncWork } from "../global/async.js";
 import { dispatch } from "../store.js";
 import { showNewPrompt } from "../actions/RemoteExplorerPage.js";
@@ -33,6 +34,9 @@ export function promptRemoveArchive(sourceID) {
 }
 
 export function removeSource(sourceID) {
+    // Make sure the source and it's entries are removed from autofill
+    removeSourceFromAutoFill(sourceID);
+
     const archiveManager = getSharedArchiveManager();
     return archiveManager.removeSource(sourceID);
 }

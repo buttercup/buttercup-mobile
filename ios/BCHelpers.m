@@ -3,8 +3,14 @@
 //  Buttercup
 //
 //  Created by Perry Mitchell on 29/8/17.
-//  Copyright © 2017 Facebook. All rights reserved.
 //
+
+/**
+ * Copyright (c) 2017-present, Buttercup, Inc.
+ *
+ * This source code is licensed under the GNU GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 #import "BCHelpers.h"
 

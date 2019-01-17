@@ -24,9 +24,17 @@ import { handleError } from "../global/exceptions.js";
 import { getConnectedStatus } from "../global/connectivity.js";
 import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 import { executeNotification } from "../global/notify.js";
+import { getSharedArchiveManager } from "../library/buttercup";
+import {
+    getKeychainCredentialsFromTouchUnlock,
+    touchIDEnabledForSource
+} from "../shared/touchUnlock";
+import { navigateToSearchArchives } from "../actions/navigation";
+import { getIsContextAutoFill } from "../selectors/autofill";
 
 const openArchive = sourceID => (dispatch, getState) => {
     const state = getState();
+    const isContextAutoFill = getIsContextAutoFill(state);
     // Get selected title
     const archivesList = getArchivesDisplayList(state);
     const targetSource = archivesList.find(source => source.id === sourceID);
@@ -38,7 +46,12 @@ const openArchive = sourceID => (dispatch, getState) => {
     updateCurrentArchive();
     // navigate to archive contents
     dispatch(setSearchContext("archive"));
-    dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
+    if (isContextAutoFill) {
+        // To keep things lightweight, in autofill mode (ios) we can only browse entries via Search
+        dispatch(navigateToSearchArchives());
+    } else {
+        dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
+    }
 };
 
 const performOfflineProcedure = (sourceID, password, isOffline = false) => (dispatch, getState) => {
@@ -84,11 +97,17 @@ const performOfflineProcedure = (sourceID, password, isOffline = false) => (disp
 };
 
 const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatch, getState) => {
+    const isContextAutoFill = getIsContextAutoFill(getState());
     dispatch(showUnlockPasswordPrompt(false));
     dispatch(setBusyState("Checking Connection"));
     return getConnectedStatus().then(connected => {
         dispatch(setBusyState("Unlocking"));
-        if (!connected && !useOffline) {
+        if (!connected && isContextAutoFill) {
+            // It is assumed the user is online when attempting to autofill
+            // @TODO: Test and handle offline cases (perhaps with offline login??)
+            // Dev Note: 'Alert' does not work in the iOS AutoFill Extension.
+            throw new Error("Failed unlocking: Device not online");
+        } else if (!connected && !useOffline) {
             return dispatch(performOfflineProcedure(sourceID, password, true)).then(usedOffline => {
                 if (!usedOffline) {
                     throw new Error("Failed unlocking: Device not online");
@@ -104,12 +123,65 @@ const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatc
     });
 };
 
+const unlockAllTouchArchives = () => dispatch => {
+    dispatch(setBusyState("Unlocking Touch Archives"));
+    // Find all the sources that have TouchID Enabled
+    const sources = getSharedArchiveManager().sourcesList;
+    return Promise.all(sources.map(source => touchIDEnabledForSource(source.id))).then(results => {
+        // Build a list of source that need to be unlock
+        let sourceIDsToUnlock = [];
+        results.forEach((enabled, index) => {
+            if (enabled) {
+                sourceIDsToUnlock.push(sources[index].id);
+            }
+        });
+
+        if (sourceIDsToUnlock.length) {
+            // First check if we can access the Keychain (maybe the user disabled access?)
+            return getKeychainCredentialsFromTouchUnlock()
+                .then(keychainCreds => {
+                    // Great we're in, now check for internet and unlock
+                    dispatch(setBusyState("Checking Connection"));
+                    return getConnectedStatus().then(connected => {
+                        dispatch(setBusyState("Unlocking Touch Archives"));
+                        if (!connected) {
+                            throw new Error("Failed unlocking: Device not online");
+                        }
+
+                        let unlockPromises = [];
+                        Object.keys(keychainCreds).forEach(sourceID => {
+                            if (sourceIDsToUnlock.indexOf(sourceID) > -1) {
+                                unlockPromises.push(
+                                    unlockSource(sourceID, keychainCreds[sourceID])
+                                );
+                            }
+                        });
+
+                        return Promise.all(unlockPromises);
+                    });
+                })
+                .then(() => {
+                    // success!
+                    dispatch(setBusyState(null));
+
+                    // Go directly to the search page. The user can come back and manually unlock others if they want.
+                    dispatch(setSearchContext("root"));
+                    dispatch(navigateToSearchArchives());
+                });
+        } else {
+            // No Touch enabled sources.. thats fine, the user can unlock manually
+            dispatch(setBusyState(null));
+        }
+    });
+};
+
 export default connect(
     (state, ownProps) => ({
         archives: getArchivesDisplayList(state),
         busyState: getBusyState(state),
         showUnlockPrompt: shouldShowUnlockPasswordPrompt(state),
-        sourcesUsingTouchUnlock: getSourceIDsUsingTouchID(state)
+        sourcesUsingTouchUnlock: getSourceIDsUsingTouchID(state),
+        isContextAutoFill: getIsContextAutoFill(state)
     }),
     {
         lockArchive: sourceID => dispatch => {
@@ -130,6 +202,12 @@ export default connect(
                 if ((errorCode && errorCode !== ERROR_CODE_DECRYPT_ERROR) || !errorCode) {
                     return dispatch(performOfflineProcedure(sourceID, password));
                 }
+            });
+        },
+        unlockAllTouchArchives: () => dispatch => {
+            return dispatch(unlockAllTouchArchives()).catch(error => {
+                dispatch(setBusyState(null));
+                handleError("Unlocking failed", error);
             });
         }
     }

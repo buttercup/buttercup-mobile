@@ -43,6 +43,18 @@ export function getEntryTitle(sourceID, entryID) {
     return entry.getProperty("title");
 }
 
+export function getEntryPath(sourceID, entryID) {
+    const entry = getEntry(sourceID, entryID);
+    let group = entry.getGroup(),
+        entryPath = [group];
+    let parent;
+    while ((parent = group.getGroup()) !== null) {
+        entryPath.unshift(parent);
+        group = parent;
+    }
+    return entryPath.map(pathGroup => pathGroup.getTitle());
+}
+
 export function loadEntry(sourceID, entryID) {
     const facade = getEntryFacade(sourceID, entryID);
     dispatch(
