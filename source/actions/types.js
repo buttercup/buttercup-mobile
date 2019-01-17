@@ -21,6 +21,10 @@ export const ARCHIVES_SET = "archives/set";
 export const ARCHIVES_SET_TOUCHID_ENABLED = "archives/touchID/setEnabledArchives";
 export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT = "archives/toggleUnlockPasswordPrompt";
 
+export const AUTOFILL_SET_CONTEXT = "autofill/isContextAutoFill";
+export const AUTOFILL_SET_URLS = "autofill/urls";
+export const AUTOFILL_SET_IDENTITY = "autofill/identity";
+
 export const BROWSER_RESET = "browser/reset";
 export const BROWSER_SET_URL = "browser/setURL";
 

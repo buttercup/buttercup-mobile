@@ -1,29 +1,38 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
-import { searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
-import SearchResult from "./SearchResult";
-
-/*TODO:
-    maybe add search highlight
-    Test on Device
-*/
+import { searchAllArchives } from "../../shared/entries.js";
+import { cancelAutoFill } from "../../shared/autofill";
+import ToolbarButton from "../../components/ToolbarButton";
+import SearchResult from "../../components/SearchResult";
+import { searchCurrentArchive } from "../../shared/entries";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    cancel: {
+        padding: 10
     }
 });
 
-class SearchArchives extends Component {
+function getRightToolbarButton() {
+    return <ToolbarButton title={"Cancel"} onPress={cancelAutoFill} />;
+}
+
+class SearchArchivesPage extends Component {
     static navigationOptions = {
-        title: "Search Archives"
+        title: "Search Archives",
+        headerRight: getRightToolbarButton()
     };
 
     static propTypes = {
-        searchContext: PropTypes.oneOf(["root", "archive"])
+        searchContext: PropTypes.oneOf(["root", "archive"]),
+        initialEntries: PropTypes.arrayOf(PropTypes.object).isRequired,
+        onEntryPress: PropTypes.func.isRequired
     };
 
     state = {
@@ -52,7 +61,6 @@ class SearchArchives extends Component {
     componentDidMount() {
         setTimeout(() => this.focus(), 150);
     }
-
     focus() {
         if (this._input) {
             this._input.focus();
@@ -62,12 +70,16 @@ class SearchArchives extends Component {
     renderSearchResults() {
         return (
             <CellGroup>
-                <For each="result" of={this.state.entries}>
+                <For
+                    each="result"
+                    of={this.state.entries.length ? this.state.entries : this.props.initialEntries}
+                >
                     <SearchResult
                         key={result.entry.id}
                         sourceID={result.sourceID}
                         entryID={result.entry.id}
                         onEntryPress={this.props.onEntryPress}
+                        icon={<Icon name="sign-in" size={22} color="#5c7080" />}
                     />
                 </For>
             </CellGroup>
@@ -98,4 +110,4 @@ class SearchArchives extends Component {
     }
 }
 
-export default SearchArchives;
+export default SearchArchivesPage;

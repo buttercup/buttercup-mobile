@@ -1,26 +1,24 @@
 import "./shim.js";
 import React, { Component, Fragment } from "react";
-import { AppRegistry } from "react-native";
+import { AppRegistry, View, Button, Text } from "react-native";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
-import { patchCrypto } from "./source/library/crypto.js";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";
 import store from "./source/store.js";
-import App from "./source/routing.js";
+import App from "./source/autofill/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
-import { migrateStorage } from "./source/library/storage.js";
+import { patchCrypto } from "./source/library/crypto";
+import { initialiseSessionMonitoring } from "./source/global/session.js";
 
-export default class ButtercupShared extends Component {
+export default class ButtercupAutoFill extends Component {
     constructor(...args) {
         super(...args);
+
         // Setup native crypto
         patchCrypto();
 
-        // Ensure that the users storage has migrated to Keychain
-        migrateStorage().then(() => {
-            // Initialise the manager
-            getSharedArchiveManager().rehydrate();
-        });
+        // Initialise the manager
+        getSharedArchiveManager().rehydrate();
 
         // Setup notifications
         setNotificationFunction((type, title, message) => {
@@ -28,13 +26,16 @@ export default class ButtercupShared extends Component {
                 this.dropdown.alertWithType(type, title, message);
             }
         });
+
+        // Watch app activity
+        initialiseSessionMonitoring();
     }
 
     render() {
         return (
             <Provider store={store}>
                 <Fragment>
-                    <App />
+                    <App screenProps={this.props} />
                     <DropdownAlert ref={ref => (this.dropdown = ref)} closeInterval={8000} />
                 </Fragment>
             </Provider>
@@ -42,4 +43,4 @@ export default class ButtercupShared extends Component {
     }
 }
 
-AppRegistry.registerComponent("Buttercup", () => ButtercupShared);
+AppRegistry.registerComponent("ButtercupAutoFill", () => ButtercupAutoFill);

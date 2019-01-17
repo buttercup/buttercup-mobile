@@ -42,7 +42,6 @@
 		51E12EC1CBF641D7910FC691 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C526BB0D8D7F42AFB7E8DF31 /* SimpleLineIcons.ttf */; };
 		55502B73129D4E8AA4FDFC1D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE6B43702ADD4E138BE40FF9 /* libTouchID.a */; };
 		6F973D1D5BED41C8ACE160AD /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D1436390EF8481595521599 /* EvilIcons.ttf */; };
-		761AC4ADA80C4F599626C0F5 /* libRNKeychain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29C796149C7F4A96A29E4D40 /* libRNKeychain.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89B5C41CA3CA429FAD873211 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DF36A447445434284F83319 /* Entypo.ttf */; };
 		92F0ABE1593340309BF78086 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F492DA2907E4FEDAC51BB80 /* Foundation.ttf */; };
@@ -51,6 +50,46 @@
 		99A6776F215AC7DF0023B45E /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
 		99D0F23020E2929B00FD05D7 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D6F20C984E800EAC115 /* libcrypto.a */; };
 		9A1586680933407B88BBBF6E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
+		9E1360C921DC420F00EE48B0 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
+		9E1360CD21DC420F00EE48B0 /* CredentialProviderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */; };
+		9E1360D021DC420F00EE48B0 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1360CE21DC420F00EE48B0 /* MainInterface.storyboard */; };
+		9E1360D521DC420F00EE48B0 /* BCAutoFillExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9E1360C821DC420E00EE48B0 /* BCAutoFillExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9E13610521DC431A00EE48B0 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D7120C985FA00EAC115 /* libresolv.tbd */; };
+		9E13610621DC432600EE48B0 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		9E13610821DC434000EE48B0 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E13610721DC434000EE48B0 /* libcrypto.a */; };
+		9E13610921DC434800EE48B0 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		9E13610A21DC436200EE48B0 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
+		9E13610B21DC436200EE48B0 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
+		9E13610C21DC436200EE48B0 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
+		9E13610D21DC436200EE48B0 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
+		9E13610E21DC436200EE48B0 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
+		9E13610F21DC436200EE48B0 /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
+		9E13611021DC436200EE48B0 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		9E13611121DC436200EE48B0 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		9E13611221DC436200EE48B0 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
+		9E13611421DC437500EE48B0 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2ADA9D11F5735CA009D97EB /* libRNRandomBytes.a */; };
+		9E13611521DC437500EE48B0 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C20E8C531ED8D3490018186B /* libRNVectorIcons.a */; };
+		9E13611621DC437C00EE48B0 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AF3D54207916FC00A40A70 /* libTouchID.a */; };
+		9E13615A21DC465E00EE48B0 /* libRNSecureStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E13615921DC465900EE48B0 /* libRNSecureStorage.a */; };
+		9E13615B21DC466600EE48B0 /* libRNSecureStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E13615921DC465900EE48B0 /* libRNSecureStorage.a */; };
+		9E13615C21DC865A00EE48B0 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488A20FB5463000EC30D /* Crypto.m */; };
+		9E13615D21DC865E00EE48B0 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 99851D7420C9B83E00EAC115 /* CryptoBridge.m */; };
+		9E13615E21DC866600EE48B0 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
+		9E13615F21DDF09000EE48B0 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DF36A447445434284F83319 /* Entypo.ttf */; };
+		9E13616021DDF09000EE48B0 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D1436390EF8481595521599 /* EvilIcons.ttf */; };
+		9E13616121DDF09000EE48B0 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 476FD2FED5464740BFA551B3 /* FontAwesome.ttf */; };
+		9E13616221DDF09000EE48B0 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F492DA2907E4FEDAC51BB80 /* Foundation.ttf */; };
+		9E13616321DDF09000EE48B0 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4CDACA32E214A28AD3AF336 /* Ionicons.ttf */; };
+		9E13616421DDF09000EE48B0 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
+		9E13616521DDF09000EE48B0 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CEA96C243934CE395797F2D /* MaterialIcons.ttf */; };
+		9E13616621DDF09000EE48B0 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FCC2D269F844C8BF09D78C /* Octicons.ttf */; };
+		9E13616721DDF09000EE48B0 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C526BB0D8D7F42AFB7E8DF31 /* SimpleLineIcons.ttf */; };
+		9E13616821DDF09000EE48B0 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
+		9E4418DC21E0215500CA5E79 /* AutoFillBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */; };
+		9E4418DD21E0215500CA5E79 /* AutoFillBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */; };
+		9E44190B21E042A000CA5E79 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */; };
+		9E44190C21E042A000CA5E79 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */; };
+		9E44191021E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */; };
 		BBC4A737D75245BFB27E789A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
 		BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */; };
 		C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
@@ -330,6 +369,20 @@
 			remoteGlobalIDString = 163CDE4E2087CAD3001065FB;
 			remoteInfo = "RNRandomBytes-tvOS";
 		};
+		9E1360D321DC420F00EE48B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9E1360C721DC420E00EE48B0;
+			remoteInfo = BCAutoFillExtension;
+		};
+		9E13615821DC465900EE48B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9E13615421DC465800EE48B0 /* RNSecureStorage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNSecureStorage;
+		};
 		C20E8C521ED8D3490018186B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */;
@@ -365,20 +418,6 @@
 			remoteGlobalIDString = ADD01A681E09402E00F6D226;
 			remoteInfo = "RCTBlob-tvOS";
 		};
-		C2AF3D4E207916FC00A40A70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 16F5703FDC0843AF892998C3 /* RNKeychain.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5D82366F1B0CE05B005A9EF3;
-			remoteInfo = RNKeychain;
-		};
-		C2AF3D50207916FC00A40A70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 16F5703FDC0843AF892998C3 /* RNKeychain.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6478985F1F38BF9100DA1C12;
-			remoteInfo = "RNKeychain-tvOS";
-		};
 		C2AF3D53207916FC00A40A70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 46771EDC56994001BF7A4321 /* TouchID.xcodeproj */;
@@ -387,6 +426,20 @@
 			remoteInfo = TouchID;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9E13610421DC420F00EE48B0 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9E1360D521DC420F00EE48B0 /* BCAutoFillExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -410,7 +463,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Buttercup/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Buttercup/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		16F5703FDC0843AF892998C3 /* RNKeychain.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNKeychain.xcodeproj; path = "../node_modules/react-native-keychain/RNKeychain.xcodeproj"; sourceTree = "<group>"; };
 		19FCC2D269F844C8BF09D78C /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		29C796149C7F4A96A29E4D40 /* libRNKeychain.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNKeychain.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Buttercup-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Buttercup-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,6 +487,20 @@
 		99851D7620C9B89C00EAC115 /* CryptoBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CryptoBindings.h; path = ../crypto/src/CryptoBindings.h; sourceTree = "<group>"; };
 		99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		99A67770215AC7DF0023B45E /* Buttercup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Buttercup.entitlements; path = Buttercup/Buttercup.entitlements; sourceTree = "<group>"; };
+		9E1360C821DC420E00EE48B0 /* BCAutoFillExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BCAutoFillExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E1360CB21DC420F00EE48B0 /* CredentialProviderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CredentialProviderViewController.h; sourceTree = "<group>"; };
+		9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CredentialProviderViewController.m; sourceTree = "<group>"; };
+		9E1360CF21DC420F00EE48B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		9E1360D121DC420F00EE48B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9E1360D221DC420F00EE48B0 /* BCAutoFillExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BCAutoFillExtension.entitlements; sourceTree = "<group>"; };
+		9E13610721DC434000EE48B0 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = libs/libcrypto.a; sourceTree = "<group>"; };
+		9E13615421DC465800EE48B0 /* RNSecureStorage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSecureStorage.xcodeproj; path = "../node_modules/react-native-secure-storage/ios/RNSecureStorage.xcodeproj"; sourceTree = "<group>"; };
+		9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillBridge.m; sourceTree = "<group>"; };
+		9E44190821E0217000CA5E79 /* AutoFillBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillBridge.h; sourceTree = "<group>"; };
+		9E44190921E0426C00CA5E79 /* AutoFillHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillHelpers.h; sourceTree = "<group>"; };
+		9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillHelpers.m; sourceTree = "<group>"; };
+		9E44190E21E1775A00CA5E79 /* AutoFillExtensionContextBridgeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillExtensionContextBridgeDelegate.h; sourceTree = "<group>"; };
+		9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillExtensionContextBridgeDelegate.m; sourceTree = "<group>"; };
 		A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
@@ -479,7 +545,7 @@
 				3E603D47F48440489E0182E4 /* libRNVectorIcons.a in Frameworks */,
 				BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */,
 				55502B73129D4E8AA4FDFC1D /* libTouchID.a in Frameworks */,
-				761AC4ADA80C4F599626C0F5 /* libRNKeychain.a in Frameworks */,
+				9E13615B21DC466600EE48B0 /* libRNSecureStorage.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +569,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9E1360C521DC420E00EE48B0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9E1360C921DC420F00EE48B0 /* AuthenticationServices.framework in Frameworks */,
+				9E13610521DC431A00EE48B0 /* libresolv.tbd in Frameworks */,
+				9E13610621DC432600EE48B0 /* libRCTAnimation.a in Frameworks */,
+				9E13610821DC434000EE48B0 /* libcrypto.a in Frameworks */,
+				9E13610921DC434800EE48B0 /* libReact.a in Frameworks */,
+				9E13610A21DC436200EE48B0 /* libRCTActionSheet.a in Frameworks */,
+				9E13610B21DC436200EE48B0 /* libRCTGeolocation.a in Frameworks */,
+				9E13610C21DC436200EE48B0 /* libRCTImage.a in Frameworks */,
+				9E13610D21DC436200EE48B0 /* libRCTLinking.a in Frameworks */,
+				9E13610E21DC436200EE48B0 /* libRCTNetwork.a in Frameworks */,
+				9E13610F21DC436200EE48B0 /* libRCTSettings.a in Frameworks */,
+				9E13611021DC436200EE48B0 /* libRCTText.a in Frameworks */,
+				9E13611221DC436200EE48B0 /* libRCTWebSocket.a in Frameworks */,
+				9E13611121DC436200EE48B0 /* libRCTVibration.a in Frameworks */,
+				9E13611521DC437500EE48B0 /* libRNVectorIcons.a in Frameworks */,
+				9E13611421DC437500EE48B0 /* libRNRandomBytes.a in Frameworks */,
+				9E13611621DC437C00EE48B0 /* libTouchID.a in Frameworks */,
+				9E13615A21DC465E00EE48B0 /* libRNSecureStorage.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,6 +699,10 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				9E44190821E0217000CA5E79 /* AutoFillBridge.h */,
+				9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */,
+				9E44190921E0426C00CA5E79 /* AutoFillHelpers.h */,
+				9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */,
 			);
 			name = Buttercup;
 			sourceTree = "<group>";
@@ -638,6 +733,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E13610721DC434000EE48B0 /* libcrypto.a */,
 				99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */,
 				99851D7120C985FA00EAC115 /* libresolv.tbd */,
 				99851D6F20C984E800EAC115 /* libcrypto.a */,
@@ -667,6 +763,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				9E13615421DC465800EE48B0 /* RNSecureStorage.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -683,7 +780,6 @@
 				A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */,
 				B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */,
 				46771EDC56994001BF7A4321 /* TouchID.xcodeproj */,
-				16F5703FDC0843AF892998C3 /* RNKeychain.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -703,6 +799,7 @@
 				13B07FAE1A68108700A75B9A /* Buttercup */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ButtercupTests */,
+				9E1360CA21DC420F00EE48B0 /* BCAutoFillExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				F06253306B464B5FBAA6636B /* Resources */,
 				C2756AA21F8742D00036B825 /* Recovered References */,
@@ -720,6 +817,29 @@
 				00E356EE1AD99517003FC87E /* ButtercupTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* Buttercup-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Buttercup-tvOSTests.xctest */,
+				9E1360C821DC420E00EE48B0 /* BCAutoFillExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9E1360CA21DC420F00EE48B0 /* BCAutoFillExtension */ = {
+			isa = PBXGroup;
+			children = (
+				9E1360CB21DC420F00EE48B0 /* CredentialProviderViewController.h */,
+				9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */,
+				9E1360CE21DC420F00EE48B0 /* MainInterface.storyboard */,
+				9E1360D121DC420F00EE48B0 /* Info.plist */,
+				9E1360D221DC420F00EE48B0 /* BCAutoFillExtension.entitlements */,
+				9E44190E21E1775A00CA5E79 /* AutoFillExtensionContextBridgeDelegate.h */,
+				9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */,
+			);
+			path = BCAutoFillExtension;
+			sourceTree = "<group>";
+		};
+		9E13615521DC465800EE48B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9E13615921DC465900EE48B0 /* libRNSecureStorage.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -765,15 +885,6 @@
 			children = (
 				C2AF3D13207916FB00A40A70 /* libRCTBlob.a */,
 				C2AF3D15207916FB00A40A70 /* libRCTBlob-tvOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C2AF3D48207916FC00A40A70 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C2AF3D4F207916FC00A40A70 /* libRNKeychain.a */,
-				C2AF3D51207916FC00A40A70 /* libRNKeychain.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -832,10 +943,12 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				9E13610421DC420F00EE48B0 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9E1360D421DC420F00EE48B0 /* PBXTargetDependency */,
 			);
 			name = Buttercup;
 			productName = "Hello World";
@@ -878,6 +991,25 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* Buttercup-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		9E1360C721DC420E00EE48B0 /* BCAutoFillExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9E13610321DC420F00EE48B0 /* Build configuration list for PBXNativeTarget "BCAutoFillExtension" */;
+			buildPhases = (
+				9EFFBC4321ED42D700E6D853 /* Copy App Versioning */,
+				9E1360C421DC420E00EE48B0 /* Sources */,
+				9E1360C521DC420E00EE48B0 /* Frameworks */,
+				9E1360C621DC420E00EE48B0 /* Resources */,
+				9E44190D21E0729B00CA5E79 /* Bundle React Native code and images */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BCAutoFillExtension;
+			productName = BCAutoFillExtension;
+			productReference = 9E1360C821DC420E00EE48B0 /* BCAutoFillExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -885,7 +1017,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0940;
-				ORGANIZATIONNAME = Facebook;
+				ORGANIZATIONNAME = Buttercup;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -908,6 +1040,16 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					9E1360C721DC420E00EE48B0 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = 9D8F4J769D;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -976,12 +1118,12 @@
 					ProjectRef = 10B32057C9914AD5AC8E2D10 /* RNFS.xcodeproj */;
 				},
 				{
-					ProductGroup = C2AF3D48207916FC00A40A70 /* Products */;
-					ProjectRef = 16F5703FDC0843AF892998C3 /* RNKeychain.xcodeproj */;
-				},
-				{
 					ProductGroup = C2ADA9B41F5735CA009D97EB /* Products */;
 					ProjectRef = B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */;
+				},
+				{
+					ProductGroup = 9E13615521DC465800EE48B0 /* Products */;
+					ProjectRef = 9E13615421DC465800EE48B0 /* RNSecureStorage.xcodeproj */;
 				},
 				{
 					ProductGroup = C20E8C361ED8D3490018186B /* Products */;
@@ -998,6 +1140,7 @@
 				00E356ED1AD99517003FC87E /* ButtercupTests */,
 				2D02E47A1E0B4A5D006451C7 /* Buttercup-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* Buttercup-tvOSTests */,
+				9E1360C721DC420E00EE48B0 /* BCAutoFillExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1255,6 +1398,13 @@
 			remoteRef = 99A6776A215AC7DE0023B45E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		9E13615921DC465900EE48B0 /* libRNSecureStorage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSecureStorage.a;
+			remoteRef = 9E13615821DC465900EE48B0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C20E8C531ED8D3490018186B /* libRNVectorIcons.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1288,20 +1438,6 @@
 			fileType = archive.ar;
 			path = "libRCTBlob-tvOS.a";
 			remoteRef = C2AF3D14207916FB00A40A70 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C2AF3D4F207916FC00A40A70 /* libRNKeychain.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNKeychain.a;
-			remoteRef = C2AF3D4E207916FC00A40A70 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C2AF3D51207916FC00A40A70 /* libRNKeychain.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNKeychain.a;
-			remoteRef = C2AF3D50207916FC00A40A70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C2AF3D54207916FC00A40A70 /* libTouchID.a */ = {
@@ -1355,6 +1491,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9E1360C621DC420E00EE48B0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9E13616521DDF09000EE48B0 /* MaterialIcons.ttf in Resources */,
+				9E13616621DDF09000EE48B0 /* Octicons.ttf in Resources */,
+				9E1360D021DC420F00EE48B0 /* MainInterface.storyboard in Resources */,
+				9E13616421DDF09000EE48B0 /* MaterialCommunityIcons.ttf in Resources */,
+				9E13616221DDF09000EE48B0 /* Foundation.ttf in Resources */,
+				9E13616321DDF09000EE48B0 /* Ionicons.ttf in Resources */,
+				9E13616821DDF09000EE48B0 /* Zocial.ttf in Resources */,
+				9E13616021DDF09000EE48B0 /* EvilIcons.ttf in Resources */,
+				9E13616721DDF09000EE48B0 /* SimpleLineIcons.ttf in Resources */,
+				9E13615F21DDF09000EE48B0 /* Entypo.ttf in Resources */,
+				9E13616121DDF09000EE48B0 /* FontAwesome.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1386,6 +1540,42 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		9E44190D21E0729B00CA5E79 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh index.ios.autofill.js\n";
+		};
+		9EFFBC4321ED42D700E6D853 /* Copy App Versioning */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy App Versioning";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\nversionString=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"$SRCROOT/Buttercup/Info.plist\")\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$SRCROOT/Buttercup/Info.plist\")\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $versionString\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1405,10 +1595,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E44190B21E042A000CA5E79 /* AutoFillHelpers.m in Sources */,
 				C2F3488B20FB5463000EC30D /* Crypto.m in Sources */,
 				99851D7520C9B83E00EAC115 /* CryptoBridge.m in Sources */,
 				C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				9E4418DC21E0215500CA5E79 /* AutoFillBridge.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1430,6 +1622,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9E1360C421DC420E00EE48B0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9E13615C21DC865A00EE48B0 /* Crypto.m in Sources */,
+				9E44190C21E042A000CA5E79 /* AutoFillHelpers.m in Sources */,
+				9E13615D21DC865E00EE48B0 /* CryptoBridge.m in Sources */,
+				9E13615E21DC866600EE48B0 /* BCHelpers.m in Sources */,
+				9E1360CD21DC420F00EE48B0 /* CredentialProviderViewController.m in Sources */,
+				9E44191021E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m in Sources */,
+				9E4418DD21E0215500CA5E79 /* AutoFillBridge.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1443,6 +1649,11 @@
 			target = 2D02E47A1E0B4A5D006451C7 /* Buttercup-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
+		9E1360D421DC420F00EE48B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9E1360C721DC420E00EE48B0 /* BCAutoFillExtension */;
+			targetProxy = 9E1360D321DC420F00EE48B0 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1453,6 +1664,14 @@
 			);
 			name = LaunchScreen.xib;
 			path = Buttercup;
+			sourceTree = "<group>";
+		};
+		9E1360CE21DC420F00EE48B0 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9E1360CF21DC420F00EE48B0 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1536,6 +1755,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
@@ -1567,6 +1787,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				HEADER_SEARCH_PATHS = (
@@ -1835,6 +2056,78 @@
 			};
 			name = Release;
 		};
+		9E1360D621DC420F00EE48B0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = BCAutoFillExtension/BCAutoFillExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9D8F4J769D;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = BCAutoFillExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libs",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile.bcautofillextension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9E1360D721DC420F00EE48B0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = BCAutoFillExtension/BCAutoFillExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9D8F4J769D;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = BCAutoFillExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libs",
+				);
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile.bcautofillextension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1879,6 +2172,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9E13610321DC420F00EE48B0 /* Build configuration list for PBXNativeTarget "BCAutoFillExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9E1360D621DC420F00EE48B0 /* Debug */,
+				9E1360D721DC420F00EE48B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

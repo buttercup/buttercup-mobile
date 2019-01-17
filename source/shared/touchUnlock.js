@@ -1,6 +1,5 @@
 import TouchID from "react-native-touch-id";
-import { getGenericPassword, setGenericPassword } from "react-native-keychain";
-import { getValue, setValue } from "../library/storage.js";
+import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
 import { handleError } from "../global/exceptions.js";
 import { executeNotification } from "../global/notify.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
@@ -9,16 +8,36 @@ import { dispatch, getState } from "../store.js";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { setSourcesUsingTouchID } from "../actions/archives.js";
 
-const TOUCH_ID_ENABLED_PREFIX = "bcup:touchid-unlock-enabled:source:";
+const secureStorageConfig = {
+    accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+    authenticationPrompt: "",
+    service: "pw.buttercup.mobile",
+    authenticateType: AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
+    accessGroup: "group.pw.buttercup.mobile" // So that the Keychain is available in the AutoFill Extension
+};
+
+export function getTouchUnlockCredentials() {
+    return new Promise((resolve, reject) => {
+        SecureStorage.getItem("-", secureStorageConfig).then(keychainCreds => {
+            const credsObj =
+                typeof keychainCreds === "string" && keychainCreds.length > 0
+                    ? JSON.parse(keychainCreds)
+                    : {};
+            resolve(credsObj);
+        });
+    });
+}
+
+export function setTouchUnlockCredentials(credentials) {
+    SecureStorage.setItem("-", JSON.stringify(credentials), secureStorageConfig);
+}
 
 export function disableTouchUnlock(sourceID) {
-    const storageKey = `${TOUCH_ID_ENABLED_PREFIX}${sourceID}`;
-    return getGenericPassword()
+    return getTouchUnlockCredentials()
         .then(keychainCreds => {
-            const newCreds = removeSourceFromKeychainCredentials(keychainCreds.password);
-            return setGenericPassword("-", newCreds);
+            const newCreds = removeSourceFromKeychainCredentials(keychainCreds, sourceID);
+            return setTouchUnlockCredentials(newCreds);
         })
-        .then(() => setValue(storageKey, false))
         .then(() => {
             executeNotification("success", "Touch Unlock", "Successfully disabled touch unlock");
         })
@@ -29,9 +48,8 @@ export function disableTouchUnlock(sourceID) {
 }
 
 export function enableTouchUnlock(sourceID) {
-    const storageKey = `${TOUCH_ID_ENABLED_PREFIX}${sourceID}`;
     return TouchID.authenticate("Authenticate to enable touch unlock")
-        .then(() => getGenericPassword())
+        .then(() => getTouchUnlockCredentials())
         .then(keychainCreds => {
             const archiveManager = getSharedArchiveManager();
             const state = getState();
@@ -44,14 +62,9 @@ export function enableTouchUnlock(sourceID) {
             if (!masterPassword) {
                 throw new Error("Unable to locate current credentials");
             }
-            const newCreds = updateKeychainCredentials(
-                keychainCreds.password,
-                sourceID,
-                masterPassword
-            );
-            return setGenericPassword("-", newCreds);
+            const newCreds = updateKeychainCredentials(keychainCreds, sourceID, masterPassword);
+            return setTouchUnlockCredentials(newCreds);
         })
-        .then(() => setValue(storageKey, true))
         .then(() => {
             executeNotification("success", "Touch Unlock", "Successfully enabled touch unlock");
             return updateTouchEnabledSources().then(() => ({ action: "none" }));
@@ -71,23 +84,9 @@ export function enableTouchUnlock(sourceID) {
         });
 }
 
-export function getMasterPasswordFromTouchUnlock(sourceID) {
-    return touchIDEnabledForSource(sourceID)
-        .then(enabled => {
-            if (!enabled) {
-                throw new Error("Touch unlock is not enabled for this source");
-            }
-            return TouchID.authenticate("Authenticate to open archive");
-        })
-        .then(() => getGenericPassword())
-        .then(keychainCreds => {
-            const items = JSON.parse(keychainCreds.password);
-            const sourcePassword = items[sourceID];
-            if (!sourcePassword) {
-                throw new Error("No credentials found under touch ID for this source");
-            }
-            return sourcePassword;
-        })
+export function getKeychainCredentialsFromTouchUnlock() {
+    return TouchID.authenticate("Authenticate to open archive")
+        .then(() => getTouchUnlockCredentials())
         .catch(err => {
             switch (err.name) {
                 case "LAErrorSystemCancel":
@@ -102,13 +101,26 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
         });
 }
 
+export function getMasterPasswordFromTouchUnlock(sourceID) {
+    return touchIDEnabledForSource(sourceID)
+        .then(enabled => {
+            if (!enabled) {
+                throw new Error("Touch unlock is not enabled for this source");
+            }
+            return getKeychainCredentialsFromTouchUnlock();
+        })
+        .then(keychainCreds => {
+            const sourcePassword = keychainCreds[sourceID];
+            if (!sourcePassword) {
+                throw new Error("No credentials found under touch ID for this source");
+            }
+            return sourcePassword;
+        });
+}
+
 function removeSourceFromKeychainCredentials(keychainCreds, sourceID) {
-    const credsObj =
-        typeof keychainCreds === "string" && keychainCreds.length > 0
-            ? JSON.parse(keychainCreds)
-            : {};
-    delete credsObj[sourceID];
-    return JSON.stringify(credsObj);
+    delete keychainCreds[sourceID];
+    return keychainCreds;
 }
 
 export function touchIDAvailable() {
@@ -122,17 +134,16 @@ export function touchIDAvailable() {
 }
 
 export function touchIDEnabledForSource(sourceID) {
-    const storageKey = `${TOUCH_ID_ENABLED_PREFIX}${sourceID}`;
-    return getValue(storageKey, false);
+    return new Promise((resolve, reject) => {
+        getTouchUnlockCredentials().then(keychainCreds => {
+            resolve(keychainCreds.hasOwnProperty(sourceID));
+        });
+    });
 }
 
 function updateKeychainCredentials(keychainCreds, sourceID, password) {
-    const credsObj =
-        typeof keychainCreds === "string" && keychainCreds.length > 0
-            ? JSON.parse(keychainCreds)
-            : {};
-    credsObj[sourceID] = password;
-    return JSON.stringify(credsObj);
+    keychainCreds[sourceID] = password;
+    return keychainCreds;
 }
 
 export function updateTouchEnabledSources() {
