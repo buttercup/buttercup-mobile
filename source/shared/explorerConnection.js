@@ -52,8 +52,8 @@ export function createNewArchiveFile(currentDir, filename, password) {
 }
 
 export function createRemoteConnection(connectionInfo) {
-    const __storeSharedInstance = afsInstance => {
-        __remoteFSConnection = afsInstance;
+    const __storeSharedInstance = fsInstance => {
+        __remoteFSConnection = fsInstance;
     };
     const { archiveType, remoteUsername, remotePassword, remoteURL, dropboxToken } = connectionInfo;
     if (archiveType === "webdav") {

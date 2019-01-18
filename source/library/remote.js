@@ -40,7 +40,8 @@ function wrapDropboxClient(client) {
                     isDirectory: () => item.type === "directory"
                 }))
             ),
-        getFileContents: remotePath => client.getFileContents(remotePath)
+        getFileContents: remotePath => client.getFileContents(remotePath),
+        writeFile: (remotePath, data /* , encoding */) => client.putFileContents(remotePath, data)
     };
 }
 
@@ -54,6 +55,7 @@ function wrapWebDAVClient(client) {
                     isDirectory: () => item.type === "directory"
                 }))
             ),
-        getFileContents: remotePath => client.getFileContents(remotePath, { format: "text" })
+        getFileContents: remotePath => client.getFileContents(remotePath, { format: "text" }),
+        writeFile: (remotePath, data /* , encoding */) => client.putFileContents(remotePath, data)
     };
 }
