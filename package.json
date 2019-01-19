@@ -1,6 +1,6 @@
 {
   "name": "Buttercup",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "private": true,
   "scripts": {
     "build:android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
@@ -11,6 +11,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:android": "react-native run-android",
     "start:ios": "react-native run-ios --simulator='iPhone XS'",
+    "start:ios:6s": "react-native run-ios --simulator='iPhone 6s'",
     "test": "run-s test:format test:react-native",
     "test:android": "./scripts/testAndroid.sh",
     "test:format": "prettier-check '{{source,scripts,__tests__}/**/*.js,index.*.js,shim.js}'",

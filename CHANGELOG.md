@@ -1,5 +1,11 @@
 # Buttercup Mobile Changelog
 
+## v1.8.1
+_2019-01-19_
+
+ * **Bugfix**: ([#137](https://github.com/buttercup/buttercup-mobile/issues/137)) Keychain access results in constant auth prompts
+ * **Bugfix**: ([#136](https://github.com/buttercup/buttercup-mobile/issues/136)) Unable to create new vaults on iOS
+
 ## v1.8.0
 _2019-01-17_
 
