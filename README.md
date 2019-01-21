@@ -22,6 +22,7 @@ The Buttercup for Mobile application boasts the following features:
  * Auto-lock vaults after a certain period of inactivity
  * Add/Edit/Delete entries
  * Unlock vaults even when offline (read-only)
+ * Autofilling of login forms in Safari (iOS only)
 
 You can read about the changes and releases of the application in the [changelog](CHANGELOG.md).
 
