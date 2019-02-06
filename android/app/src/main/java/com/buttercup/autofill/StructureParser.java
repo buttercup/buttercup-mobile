@@ -33,7 +33,6 @@ class StructureParser {
         for (int i=0; i<structure.getWindowNodeCount(); ++i) {
             AssistStructure.WindowNode windowNode = structure.getWindowNodeAt(i);
             result.title.add(windowNode.getTitle());
-            result.webDomain.add(windowNode.getRootViewNode().getWebDomain());
             parseViewNode(windowNode.getRootViewNode());
         }
         return result;
@@ -74,8 +73,16 @@ class StructureParser {
             }
         }
 
-        for (int i=0; i<node.getChildCount(); ++i)
+        // Finally look for domain names
+        String webDomain = node.getWebDomain();
+        if (webDomain != null) {
+            result.webDomain.add(webDomain);
+        }
+
+        for (int i=0; i<node.getChildCount(); ++i) {
             parseViewNode(node.getChildAt(i));
+        }
+
     }
 
     // Attempt to infer the AutoFill type from a string
