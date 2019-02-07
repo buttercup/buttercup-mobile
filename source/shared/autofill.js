@@ -5,7 +5,7 @@ const { AutoFillBridge } = NativeModules;
 
 export function addSourceToAutoFill(sourceID, archive) {
     return new Promise((resolve, reject) => {
-        if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+        if (!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
             // AutoFill is only implemented on iOS at the moment
             resolve();
             return;
@@ -37,7 +37,7 @@ export function addSourceToAutoFill(sourceID, archive) {
 
 export function removeSourceFromAutoFill(sourceID) {
     return new Promise((resolve, reject) => {
-        if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+        if (!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
             // AutoFill is only implemented on iOS at the moment
             resolve();
             return;

@@ -2,6 +2,7 @@ package com.buttercup;
 
 import android.app.Application;
 
+import com.buttercup.autofill.AutoFillPackage;
 import com.facebook.react.ReactApplication;
 import com.oblador.keychain.KeychainPackage;
 import li.yunqi.rnsecurestorage.RNSecureStoragePackage;
@@ -41,7 +42,8 @@ public class MainApplication extends Application implements ReactApplication {
                 new RandomBytesPackage(),
                 new ActionSheetPackage(),
                 new VectorIconsPackage(),
-                new CryptoPackage()
+                new CryptoPackage(),
+                new AutoFillPackage()
             );
         }
     };
