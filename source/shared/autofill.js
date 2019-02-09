@@ -5,52 +5,46 @@ const { AutoFillBridge } = NativeModules;
 
 export function addSourceToAutoFill(sourceID, archive) {
     return new Promise((resolve, reject) => {
-        if (!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
-            // AutoFill is only implemented on iOS at the moment
-            resolve();
-            return;
-        }
+        if (AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+            // We need to flatten all the Archive Entries, then send them to the native module
+            const finder = new EntryFinder([archive]);
+            let entries = {}; // Entries will be keyed by ID
 
-        // We need to flatten all the Archive Entries, then send them to the native module
-        const finder = new EntryFinder([archive]);
-        let entries = {}; // Entries will be keyed by ID
+            // Create the Map to be sent to the AutoFill store, keyed by credential ID
+            for (let entrySearchInfo of finder._items) {
+                const entry = entrySearchInfo.entry;
+                if (!entry.isInTrash()) {
+                    entries[entry.id] = {
+                        username: entry.getProperty("username"),
+                        password: entry.getProperty("password"),
 
-        // Create the Map to be sent to the AutoFill store, keyed by credential ID
-        for (let entrySearchInfo of finder._items) {
-            const entry = entrySearchInfo.entry;
-            if (!entry.isInTrash()) {
-                entries[entry.id] = {
-                    username: entry.getProperty("username"),
-                    password: entry.getProperty("password"),
-
-                    // Send all general urls so multiple page variants can be matched
-                    urls: entry.getURLs("general")
-                };
+                        // Send all general urls so multiple page variants can be matched
+                        urls: entry.getURLs("general")
+                    };
+                }
             }
-        }
 
-        // Note: Entries are stored against their sourceID in case a source is deleted,
-        // that way we can remove from AutoFill without needing to unlock the source (to find the archive ID)
-        return AutoFillBridge.updateEntriesForSourceID(sourceID, entries);
+            // Note: Entries are stored against their sourceID in case a source is deleted,
+            // that way we can remove from AutoFill without needing to unlock the source (to find the archive ID)
+            return AutoFillBridge.updateEntriesForSourceID(sourceID, entries);
+        }
+        resolve();
     });
 }
 
 export function removeSourceFromAutoFill(sourceID) {
     return new Promise((resolve, reject) => {
-        if (!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
-            // AutoFill is only implemented on iOS at the moment
-            resolve();
-            return;
+        if (AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+            return AutoFillBridge.removeEntriesForSourceID(sourceID);
         }
-
-        return AutoFillBridge.removeEntriesForSourceID(sourceID);
+        resolve();
     });
 }
 
 export function completeAutoFillWithEntry(entry) {
     return new Promise((resolve, reject) => {
         if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
-            // AutoFill is only implemented on iOS at the moment
+            // UI Based AutoFill is only implemented on iOS at the moment
             resolve();
             return;
         }
@@ -64,7 +58,7 @@ export function completeAutoFillWithEntry(entry) {
 export function cancelAutoFill() {
     return new Promise((resolve, reject) => {
         if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
-            // AutoFill is only implemented on iOS at the moment
+            // UI Based AutoFill is only implemented on iOS at the moment
             resolve();
             return;
         }

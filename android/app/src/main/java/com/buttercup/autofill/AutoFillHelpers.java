@@ -2,13 +2,13 @@ package com.buttercup.autofill;
 
 /**
  * Helper class for saving and retrieving AutoFill entries from Secure Storage
+ *
+ * se1exin - 9/2/19
  */
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -21,90 +21,194 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
-import li.yunqi.rnsecurestorage.RNSecureStorageModule;
+import li.yunqi.rnsecurestorage.PrefsStorage;
+import li.yunqi.rnsecurestorage.cipherstorage.CipherStorage;
+import li.yunqi.rnsecurestorage.cipherstorage.CipherStorageKeystoreAESCBC;
 
 public class AutoFillHelpers {
     private static final String TAG = "AutoFillHelpers";
-    private static final String key = "pw.buttercup.mobile.autofillstore";
+    private static final String autoFillKey = "pw.buttercup.mobile.autofillstore";
+    private static final String domainMapKey = "pw.buttercup.mobile.domainmapstore";
     private static final String service = "pw.buttercup.mobile.autofillstore";
 
-    private ReactApplicationContext reactContext;
-    private RNSecureStorageModule rnSecureStorageModule;
+    private PrefsStorage prefsStorage;
+    private CipherStorage cipherStorage;
 
     public AutoFillHelpers(ReactApplicationContext reactContext) {
-        this.reactContext = reactContext;
-        rnSecureStorageModule = new RNSecureStorageModule(reactContext);
+        cipherStorage = new CipherStorageKeystoreAESCBC();
+        prefsStorage = new PrefsStorage(reactContext, service);
     }
 
-    public void getAutoFillEntries(@NonNull AutoFillGetEntriesCallback callback) {
-        // We're just going to access the RNSecureStorage module directly
-        // For this we need to create a Promise, so as to emulate the intended JS behaviour
-        rnSecureStorageModule.getItem(key, service, new Promise() {
-            @Override
-            public void resolve(@Nullable Object value) {
-                WritableMap autoFillEntries = Arguments.createMap();
-                try {
-                    if (value != null) {
-                        // Log.d(TAG, "GOT VALUE: " + value);
-                        autoFillEntries = AutoFillHelpers.jsonToReact(new JSONObject((String) value));
+    /**
+     * Retrieve the AutoFill Entries from encrypted storage
+     * @return A WritableMap containing the AutoFill Entries. Will return an empty Map if no values exist
+     * @throws Exception - There was an error decrypting or parsing the map from JSON
+     */
+    public WritableMap getAutoFillEntries() throws Exception {
+        return getItem(autoFillKey);
+    }
+
+    /**
+     * Set the AutoFill Entries in encrypted storage
+     * @param autoFillEntries - The entries to store
+     * @throws Exception - There was an error encrypting or parsing the map into JSON
+     */
+    public void setAutoFillEntries(@NonNull ReadableMap autoFillEntries) throws Exception {
+        setItem(autoFillKey, autoFillEntries);
+    }
+
+    /**
+     * Retrieve the DomainMap Entries from encrypted storage
+     * @return A WritableMap containing the DomainMap Entries. Will return an empty Map if no values exist
+     * @throws Exception - There was an error decrypting or parsing the map from JSON
+     */
+    public WritableMap getDomainMap() throws Exception {
+        return getItem(domainMapKey);
+    }
+
+    /**
+     * Retrieve the DomainMap Entries from encrypted storage
+     * @return A WritableMap containing the DomainMap Entries. Will return an empty Map if no values exist
+     * @throws Exception - There was an error decrypting or parsing the map from JSON
+     */
+    public void setDomainMap(@NonNull ReadableMap domainMap) throws Exception {
+        setItem(domainMapKey, domainMap);
+    }
+
+    /**
+     * Take AutoFill Entries and transform them into an index of domain name/URLs mapped to each AutoFill entry's 'recordIdentifier'
+     *  The 'recordIdentifier' is simply the sourceID and entryID combined (in the format sourceID:entryID).
+     *  The idea here is to both make the domain lookup process quicker than iterating the entire AutoFill structurem
+     *  and to reduce the need to constantly decrypt the AutoFIll structure as well
+     * @param autoFillEntries - The AutoFill Entries to map to Domain Names
+     * @throws Exception - There was an error decrypting or parsing the info to/from JSON
+     */
+    public void updateDomainMap(ReadableMap autoFillEntries) throws Exception {
+        HashMap<String, ArrayList<String>> domainMap = new HashMap<>();
+        // Iterate the entries and add them to the Domain Map so they can be quickly looked up by domain name
+        ReadableMapKeySetIterator autoFillEntriesIterator = autoFillEntries.keySetIterator();
+        while(autoFillEntriesIterator.hasNextKey()){
+            String sourceID = autoFillEntriesIterator.nextKey();
+            ReadableMap childEntries = autoFillEntries.getMap(sourceID);
+
+            // Then iterate each child entries of the source to create the final Domain Map
+            ReadableMapKeySetIterator childEntriesIterator = childEntries.keySetIterator();
+            while(childEntriesIterator.hasNextKey()){
+                String entryID = childEntriesIterator.nextKey();
+                ReadableMap entry = childEntries.getMap(entryID);
+
+                // Set the record identifier based on the Source and Entry IDs so we can easily map back to this entry
+                // Format: sourceID:entryID
+                String recordIdentifier = sourceID + ":" + entryID;
+                // Add a service identifier for every URL associated with the Entry
+                ReadableArray urls = entry.getArray("urls");
+                if (urls != null) {
+                    for (int i = 0; i < urls.size(); i++) {
+                        String url = urls.getString(i);
+                        if (url != null && !url.isEmpty()) {
+                            // If we haven't seen this URL before we need to add a new array to the domainMap
+                            if (domainMap.get(url) == null) {
+                                domainMap.put(url, new ArrayList<>());
+                            }
+                            domainMap.get(url).add(recordIdentifier);
+                        }
                     }
-                    callback.onSuccess(autoFillEntries);
-                } catch (Exception ex) {
-                    Log.e(TAG, ex.getMessage());
-                    callback.onError(ex.getMessage());
+                }
+            }
+        }
+
+        // Now we have created the domainMap, we need to convert it to a React Native WritableMap so we can save it
+        WritableMap finalDomainMap = Arguments.createMap();
+        for (Map.Entry<String, ArrayList<String>> entry: domainMap.entrySet()) {
+            WritableArray recordIdentifiers = Arguments.createArray();
+            for (String recordIdentifier: entry.getValue()) {
+             recordIdentifiers.pushString(recordIdentifier);
+            }
+            finalDomainMap.putArray(entry.getKey(), recordIdentifiers);
+        }
+
+        setDomainMap(finalDomainMap);
+    }
+
+    /**
+     * For a given domain name, attempt to find matching AutoFill credentials
+     * @param domain - The domain name to search for
+     * @return - List of matching Username/Passwords in the form of the AutoFillEntry class.
+     */
+    public ArrayList<AutoFillEntry> getAutoFillEntriesForDomain(String domain) {
+        ArrayList<AutoFillEntry> entries = new ArrayList<>();
+        try {
+            WritableMap domainMap = getDomainMap();
+            ArrayList<String> matchingRecordIdentifiers = new ArrayList<>();
+
+            // Search they domain map keys and build a list of matching recordIdentifiers
+            ReadableMapKeySetIterator iterator = domainMap.keySetIterator();
+            while (iterator.hasNextKey()) {
+                String url = iterator.nextKey();
+                if (url.toLowerCase().contains(domain.toLowerCase())) {
+                    // There are credentials for this domain, add all the recordIndentifiers
+                    // for the domain so they can be loaded later
+                    ReadableArray recordIdentifiers = domainMap.getArray(url);
+                    for (int i = 0; i < recordIdentifiers.size(); i++) {
+                        matchingRecordIdentifiers.add(recordIdentifiers.getString(i));
+                    }
                 }
             }
 
-            // Just chain the reject promises back to the calling JS
-            @Override
-            public void reject(String code, Throwable e) { callback.onError(e.getMessage()); }
-            @Override
-            public void reject(String code, String message) { callback.onError(message); }
-            @Override
-            public void reject(String code, String message, Throwable e) { callback.onError(message); }
-            @Override
-            public void reject(String message) { callback.onError(message); }
-            @Override
-            public void reject(Throwable reason) { callback.onError(reason.getMessage()); }
-        });
+            if (matchingRecordIdentifiers.size() > 0) {
+                // We have matching records, now load the AutoFill entries and extract the actual usernames/passwords
+                WritableMap autoFillEntries = getAutoFillEntries();
+                for (String recordIdentifier: matchingRecordIdentifiers) {
+                    // Try to pull the actual Entry credential out of the AutoFill store
+                    String sourceID = recordIdentifier.split(":")[0];
+                    String entryID = recordIdentifier.split(":")[1];
+
+                    if (autoFillEntries.hasKey(sourceID) && autoFillEntries.getMap(sourceID).hasKey(entryID)) {
+                        ReadableMap entry = autoFillEntries.getMap(sourceID).getMap(entryID);
+                        String username = entry.getString("username");
+                        String password = entry.getString("password");
+                        entries.add(new AutoFillEntry(username, password));
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            return entries;
+        }
+
+        return entries;
     }
 
-    public void setAutoFillEntries(ReadableMap autoFillEntries, @NonNull AutoFillSetEntriesCallback callback) {
-
-        try {
-            rnSecureStorageModule.setItem(
-                    key,
-                    AutoFillHelpers.reactToJSON(autoFillEntries).toString(),
-                    service,
-                    new Promise() {
-                        @Override
-                        public void resolve(@Nullable Object value) {
-                            callback.onSuccess();
-                        }
-
-                        // Just chain the reject promises back to the calling JS
-                        @Override
-                        public void reject(String code, Throwable e) { callback.onError(e.getMessage()); }
-                        @Override
-                        public void reject(String code, String message) { callback.onError(message); }
-                        @Override
-                        public void reject(String code, String message, Throwable e) { callback.onError(message); }
-                        @Override
-                        public void reject(String message) { callback.onError(message); }
-                        @Override
-                        public void reject(Throwable reason) { callback.onError(reason.getMessage()); }
-                    }
-            );
-        } catch (JSONException ex) {
-            Log.e(TAG, ex.getMessage());
-            callback.onError(ex.getMessage());
+    /**
+     * Get an Item from Encrypted Storage
+     * @param key - Key to retrieve from
+     * @return - The value that was in the store as a Writable Map. Will return an empty Map if the item could not be found.
+     */
+    private WritableMap getItem(String key) throws Exception {
+        PrefsStorage.ResultSet resultSet = prefsStorage.getEncryptedEntry(key);
+        if (resultSet == null) {
+            return Arguments.createMap(); // Always return a writable map - even if empty
         }
+
+        CipherStorage.DecryptionResult decryptionResult = cipherStorage.decrypt(service, key, resultSet.valueBytes);
+
+        return AutoFillHelpers.jsonToReact(new JSONObject(decryptionResult.value));
+    }
+
+    /**
+     * Set an Item in Encrypted Storage
+     * @param key - Key to store as
+     * @param value - Value to store
+     */
+    private void setItem(String key, ReadableMap value) throws Exception {
+        prefsStorage.storeEncryptedEntry(
+                cipherStorage.encrypt(service, key, AutoFillHelpers.reactToJSON(value).toString())
+        );
     }
 
     /*

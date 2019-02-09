@@ -17,6 +17,12 @@ import android.util.Log;
 import android.view.autofill.AutofillValue;
 import android.widget.RemoteViews;
 
+import com.buttercup.MainApplication;
+import com.buttercup.R;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.WritableMap;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @TargetApi(Build.VERSION_CODES.O)
@@ -27,6 +33,10 @@ public class BCAutoFillService extends AutofillService {
                               @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback callback) {
         Log.d(TAG, "onFillRequest");
 
+        // Needed to pull our autofill entries from RNSecureStorage
+        ReactApplicationContext reactContext = new ReactApplicationContext(getApplicationContext());
+        AutoFillHelpers autoFillHelper = new AutoFillHelpers(reactContext);
+
         // Get the structure from the request
         List<FillContext> context = request.getFillContexts();
         AssistStructure structure = context.get(context.size() - 1).getStructure();
@@ -34,31 +44,31 @@ public class BCAutoFillService extends AutofillService {
         // Parse the structure into fillable view IDs
         StructureParser.Result parseResult = new StructureParser(structure).parse();
 
-        // Build the presentation of the datasets
-        RemoteViews remoteView = new RemoteViews(getPackageName(), android.R.layout.simple_list_item_1);
-
         // Add a dataset to the response
         FillResponse.Builder fillResponseBuilder = new FillResponse.Builder();
 
-        for (String domain: parseResult.webDomain) {
-            Log.d(TAG, "Domain: " + domain);
-        }
-
-        String username = "test@buttercup.pw";
-        String password = "testpassword";
-
-        remoteView.setTextViewText(android.R.id.text1, "Autofill using " + username);
-        Dataset.Builder builder = new Dataset.Builder(remoteView);
-
-        // Assign the username/password to any found view IDs
-        parseResult.email.forEach(id -> builder.setValue(id, AutofillValue.forText(username)));
-        parseResult.username.forEach(id -> builder.setValue(id, AutofillValue.forText(username)));
-        parseResult.password.forEach(id -> builder.setValue(id, AutofillValue.forText(password)));
         try {
-            Dataset dataSet = builder.build();
-            fillResponseBuilder.addDataset(dataSet);
+            for (String domain: parseResult.webDomain) {
+                // Search Buttercup Entries that match this domain name
+                ArrayList<AutoFillEntry> matchedEntries = autoFillHelper.getAutoFillEntriesForDomain(domain);
+                for (AutoFillEntry entry: matchedEntries) {
+                    // Build the presentation of the datasets
+                    RemoteViews remoteView = new RemoteViews(getPackageName(), R.layout.autofill_list_item);
+                    remoteView.setTextViewText(R.id.autofill_username, "Login with " + entry.getUsername());
+                    remoteView.setTextViewText(R.id.autofill_domain, domain);
+                    Dataset.Builder builder = new Dataset.Builder(remoteView);
+
+                    // Assign the username/password to any found view IDs
+                    parseResult.email.forEach(id -> builder.setValue(id, AutofillValue.forText(entry.getUsername())));
+                    parseResult.username.forEach(id -> builder.setValue(id, AutofillValue.forText(entry.getUsername())));
+                    parseResult.password.forEach(id -> builder.setValue(id, AutofillValue.forText(entry.getPassword())));
+
+                    Dataset dataSet = builder.build();
+                    fillResponseBuilder.addDataset(dataSet);
+                }
+            }
             callback.onSuccess(fillResponseBuilder.build());
-        } catch (Exception e) {
+        } catch (Exception ex) {
             callback.onSuccess(null);
         }
     }
@@ -66,6 +76,7 @@ public class BCAutoFillService extends AutofillService {
     @Override
     public void onSaveRequest(@NonNull SaveRequest request, @NonNull SaveCallback callback) {
         Log.d(TAG, "onSaveRequest");
+        callback.onFailure("Unfortunately Buttercup does not support saving credentials yet.");
     }
 
     @Override
