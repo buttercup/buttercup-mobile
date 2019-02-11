@@ -7,6 +7,7 @@ package com.buttercup.autofill;
  */
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -172,12 +173,14 @@ public class AutoFillHelpers {
                         ReadableMap entry = autoFillEntries.getMap(sourceID).getMap(entryID);
                         String username = entry.getString("username");
                         String password = entry.getString("password");
-                        entries.add(new AutoFillEntry(username, password));
+                        String entryPath = entry.getString("entryPath");
+                        entries.add(new AutoFillEntry(username, password, entryPath));
                     }
                 }
             }
 
         } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
             return entries;
         }
 

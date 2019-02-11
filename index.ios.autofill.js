@@ -1,6 +1,6 @@
 import "./shim.js";
 import React, { Component, Fragment } from "react";
-import { AppRegistry, View, Button, Text } from "react-native";
+import { AppRegistry } from "react-native";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";

@@ -1,5 +1,6 @@
 import { NativeModules, Platform } from "react-native";
 import { EntryFinder } from "../library/buttercupCore";
+import { getEntryPathString } from "./entry";
 
 const { AutoFillBridge } = NativeModules;
 
@@ -17,7 +18,7 @@ export function addSourceToAutoFill(sourceID, archive) {
                     entries[entry.id] = {
                         username: entry.getProperty("username"),
                         password: entry.getProperty("password"),
-
+                        entryPath: getEntryPathString(sourceID, entry.id),
                         // Send all general urls so multiple page variants can be matched
                         urls: entry.getURLs("general")
                     };
@@ -41,28 +42,23 @@ export function removeSourceFromAutoFill(sourceID) {
     });
 }
 
-export function completeAutoFillWithEntry(entry) {
+export function completeAutoFillWithEntry(sourceID, entry) {
     return new Promise((resolve, reject) => {
-        if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
-            // UI Based AutoFill is only implemented on iOS at the moment
-            resolve();
-            return;
+        if (AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+            const username = entry.getProperty("username");
+            const password = entry.getProperty("password");
+            const entryPath = getEntryPathString(sourceID, entry.id);
+            return AutoFillBridge.completeAutoFill(username, password, entryPath);
         }
-
-        const username = entry.getProperty("username");
-        const password = entry.getProperty("password");
-        return AutoFillBridge.completeAutoFill(username, password);
+        resolve();
     });
 }
 
 export function cancelAutoFill() {
     return new Promise((resolve, reject) => {
-        if (Platform.OS !== "ios" || !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
-            // UI Based AutoFill is only implemented on iOS at the moment
-            resolve();
-            return;
+        if (AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+            return AutoFillBridge.cancelAutoFill();
         }
-
-        return AutoFillBridge.cancelAutoFill();
+        resolve();
     });
 }

@@ -1,7 +1,18 @@
 package com.buttercup.autofill;
 
+import android.app.Activity;
+import android.app.assist.AssistStructure;
+import android.content.Intent;
 import android.os.Build;
+import android.service.autofill.Dataset;
+import android.service.autofill.FillResponse;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
+import android.view.autofill.AutofillManager;
+import android.view.autofill.AutofillValue;
+import android.widget.RemoteViews;
 
+import com.buttercup.R;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -14,6 +25,8 @@ import com.facebook.react.bridge.WritableMap;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE;
 
 public class AutoFillBridge extends ReactContextBaseJavaModule {
     private static final String TAG = "AutoFillBridge";
@@ -95,6 +108,58 @@ public class AutoFillBridge extends ReactContextBaseJavaModule {
             }
 
             autoFillHelper.setAutoFillEntries(updatedEntries);
+            promise.resolve(true);
+        } catch (Exception ex) {
+            promise.reject(ex);
+        }
+    }
+
+    /**
+     * Complete the Manual AutoFill Process by sending a desired username and password back to the Android AutoFill Service.
+     * Note: This method should ONLY be used when the module is loaded from an AutoFill Context.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @ReactMethod
+    public void completeAutoFill(String username, String password, String entryPath, Promise promise) {
+        try {
+            // Get the auth intent that came from the AutoFill service and re-parse the assist structre
+            Intent autoIntent = getCurrentActivity().getIntent();
+            AssistStructure structure = autoIntent.getParcelableExtra(EXTRA_ASSIST_STRUCTURE);
+            // Parse the structure into fillable view IDs
+            StructureParser.Result parseResult = new StructureParser(structure).parse();
+
+            // Fill out the remote views with the selected credential
+            RemoteViews remoteView = new RemoteViews(getCurrentActivity().getPackageName(), R.layout.autofill_list_item);
+            remoteView.setTextViewText(R.id.autofill_username, "Login with " + username);
+            remoteView.setTextViewText(R.id.autofill_domain, entryPath);
+            Dataset.Builder builder = new Dataset.Builder(remoteView);
+
+            // Assign the username/password to any found view IDs
+            parseResult.email.forEach(id -> builder.setValue(id, AutofillValue.forText(username)));
+            parseResult.username.forEach(id -> builder.setValue(id, AutofillValue.forText(username)));
+            parseResult.password.forEach(id -> builder.setValue(id, AutofillValue.forText(password)));
+            FillResponse fillResponse = new FillResponse.Builder()
+                    .addDataset(
+                            builder.build()
+                    ).build();
+
+            // Send the data back to the service.
+            Intent replyIntent = new Intent();
+            replyIntent.putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, fillResponse);
+            getCurrentActivity().setResult(Activity.RESULT_OK, replyIntent);
+            getCurrentActivity().finish();
+
+            promise.resolve(true);
+        } catch (Exception ex) {
+            promise.reject(ex);
+        }
+    }
+
+    @ReactMethod
+    public void cancelAutoFill(Promise promise) {
+        try {
+            getCurrentActivity().setResult(Activity.RESULT_CANCELED);
+            getCurrentActivity().finish();
             promise.resolve(true);
         } catch (Exception ex) {
             promise.reject(ex);

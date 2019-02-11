@@ -19,6 +19,7 @@ import { navigateBack } from "../actions/navigation.js";
 import { doAsyncWork } from "../global/async.js";
 import { updateCurrentArchive } from "./archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
+import { getNameForSource } from "./entries";
 
 export function deleteEntry(sourceID, entryID) {
     const entry = getEntry(sourceID, entryID);
@@ -53,6 +54,15 @@ export function getEntryPath(sourceID, entryID) {
         group = parent;
     }
     return entryPath.map(pathGroup => pathGroup.getTitle());
+}
+
+export function getEntryPathString(sourceID, entryID) {
+    let entryPath = getNameForSource(sourceID) + " > ";
+    getEntryPath(sourceID, entryID).forEach((group, index) => {
+        if (index > 0) entryPath += " > ";
+        entryPath += group;
+    });
+    return entryPath;
 }
 
 export function loadEntry(sourceID, entryID) {

@@ -118,5 +118,15 @@ class StructureParser {
             email = new ArrayList<>();
             password = new ArrayList<>();
         }
+
+        public AutofillId[] getAllAutoFillIds() {
+            ArrayList<AutofillId> autofillIds = new ArrayList<>();
+            autofillIds.addAll(username);
+            autofillIds.addAll(email);
+            autofillIds.addAll(password);
+
+            AutofillId[] finalAutoFillIds = new AutofillId[autofillIds.size()];
+            return autofillIds.toArray(finalAutoFillIds);
+        }
     }
 }
