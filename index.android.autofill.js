@@ -8,20 +8,12 @@ import store from "./source/store.js";
 import App from "./source/autofill/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
 import { patchCrypto } from "./source/library/crypto";
-import { backToRoot, navigateBackIfPossible } from "./source/shared/nav";
+import { navigateBackIfPossible } from "./source/shared/nav";
 import { resetAppState } from "./source/shared/app";
 
 export default class ButtercupAutoFill extends Component {
     constructor(...args) {
         super(...args);
-
-        // React Native mixes the state between AutoFill and the main app.
-        // The AutoFill routes do not include most of the App routes, which may throw a fatal
-        //  error if the AutoFill app loads while the regular app is in background on a (missing) route
-
-        // The simplest thing to do here is force the nav state back to the root so that the
-        //  user can't possibly be on a missing route
-        backToRoot();
 
         // Setup native crypto
         patchCrypto();
@@ -72,5 +64,3 @@ export default class ButtercupAutoFill extends Component {
         );
     }
 }
-
-AppRegistry.registerComponent("ButtercupAutoFill", () => ButtercupAutoFill);
