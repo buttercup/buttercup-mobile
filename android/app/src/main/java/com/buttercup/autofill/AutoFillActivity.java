@@ -81,7 +81,7 @@ public class AutoFillActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "ButtercupAutoFill";
+        return "Buttercup";
     }
 
     @Override

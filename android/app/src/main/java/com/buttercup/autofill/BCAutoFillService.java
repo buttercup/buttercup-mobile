@@ -30,6 +30,8 @@ import com.facebook.react.bridge.WritableMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
+
 @TargetApi(Build.VERSION_CODES.O)
 public class BCAutoFillService extends AutofillService {
     private static final String TAG = "BCAutoFillService";
@@ -59,7 +61,7 @@ public class BCAutoFillService extends AutofillService {
                 for (AutoFillEntry entry: matchedEntries) {
                     // Build the presentation of the datasets
                     RemoteViews remoteView = new RemoteViews(getPackageName(), R.layout.autofill_list_item);
-                    remoteView.setTextViewText(R.id.autofill_username, "Login with " + entry.getUsername());
+                    remoteView.setTextViewText(R.id.autofill_username, getString(R.string.autofill_use_title, entry.getUsername()));
                     remoteView.setTextViewText(R.id.autofill_domain, entry.getEntryPath());
                     Dataset.Builder builder = new Dataset.Builder(remoteView);
 
@@ -76,8 +78,8 @@ public class BCAutoFillService extends AutofillService {
 
             // Add the Login With Buttercup option
             RemoteViews remoteView = new RemoteViews(getPackageName(), R.layout.autofill_list_item);
-            remoteView.setTextViewText(R.id.autofill_username, "Continue with Buttercup ");
-            remoteView.setTextViewText(R.id.autofill_domain, "Login to Buttercup for more...");
+            remoteView.setTextViewText(R.id.autofill_username, getString(R.string.autofill_continue_title));
+            remoteView.setViewVisibility(R.id.autofill_domain, GONE);
 
             // Create the sender intent so that we can start the Buttercup app and let the user choose a credential
             Intent authIntent = new Intent(this, AutoFillActivity.class);

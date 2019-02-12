@@ -1,7 +1,6 @@
 import React from "react";
 import { AppRegistry, BackHandler } from "react-native";
 import ButtercupShared from "./index.shared.js";
-import ButtercupAutoFill from "./index.android.autofill";
 import { navigateBackIfPossible } from "./source/shared/nav.js";
 import { resetAppState } from "./source/shared/app.js";
 
@@ -35,7 +34,3 @@ export default class Buttercup extends ButtercupShared {
 }
 
 AppRegistry.registerComponent("Buttercup", () => Buttercup);
-
-// Note: We can't easily (or at all?) reference a different bundle file from the Autofill Service,
-// so instead we're going to expose it here to Android
-AppRegistry.registerComponent("ButtercupAutoFill", () => ButtercupAutoFill);
