@@ -3,7 +3,12 @@ import { EntryFinder } from "../library/buttercupCore";
 import { getEntryPathString } from "./entry";
 
 const { AutoFillBridge } = NativeModules;
-export const autoFillAvailable = !!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL;
+
+// Note: AutoFillBridge is not available in jest, and cannot be mocked without mocking
+//  every single NativeModule from node_modules as well (not something I have time to do)
+//  Instead, just check for both the existence of AutoFillBridge and the value of DEVICE_SUPPORTS_AUTOFILL
+//  - @se1exin 17/2/19
+export const autoFillAvailable = AutoFillBridge && !!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL;
 
 export function getAutoFillSystemStatus() {
     return new Promise((resolve, reject) => {
