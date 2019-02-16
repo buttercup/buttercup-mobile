@@ -45,7 +45,6 @@ public class AutoFillBridge extends ReactContextBaseJavaModule {
         @Override
         public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
             if (requestCode == AUTOFILL_REQ_CODE) {
-                Log.d(TAG, "user enabled autofill");
                 if (requestPermissionsPromise != null) {
                     requestPermissionsPromise.resolve(true);
                 }
@@ -91,10 +90,11 @@ public class AutoFillBridge extends ReactContextBaseJavaModule {
             if (mAutofillManager == null) {
                 Log.d(TAG, "mAutofillManager == null");
                 promise.reject("404", "Failed to init AutofillManager");
-            } else if (!mAutofillManager.hasEnabledAutofillServices()) {
-                promise.resolve(false);
-            } else{
+            } else if (mAutofillManager.hasEnabledAutofillServices()) {
+                Log.d(TAG, "hasEnabledAutofillServices");
                 promise.resolve(true);
+            } else{
+                promise.resolve(false);
             }
         } else {
             promise.resolve(false);

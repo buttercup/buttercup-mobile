@@ -19,7 +19,9 @@ export function getAutoFillSystemStatus() {
 export function openAutoFillSystemSettings() {
     return new Promise((resolve, reject) => {
         if (autoFillAvailable) {
-            return AutoFillBridge.openAutoFillSystemSettings();
+            return AutoFillBridge.openAutoFillSystemSettings().then(() => {
+                resolve();
+            });
         }
         resolve(false);
     });
