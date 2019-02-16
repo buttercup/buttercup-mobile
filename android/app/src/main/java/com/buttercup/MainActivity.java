@@ -10,14 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
-import android.view.autofill.AutofillManager;
 
 public class MainActivity extends ReactActivity {
 
     public static final int PERMISSION_REQ_CODE = 1234;
     public static final int OVERLAY_PERMISSION_REQ_CODE = 1235;
-    public static final int AUTOFILL_REQ_CODE = 1236;
 
     String[] perms = {
             "android.permission.READ_EXTERNAL_STORAGE",
@@ -42,21 +39,6 @@ public class MainActivity extends ReactActivity {
         super.onCreate(savedInstanceState);
         // Checking permissions on init
         checkPerms();
-
-        checkForAutoFillPerms(); // @TODO: (testing only) Dont call on load, move to RN Module
-    }
-
-    private void checkForAutoFillPerms() {
-        // @TODO: (testing only) Dont call on load, move to RN Module
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-            AutofillManager mAutofillManager = getSystemService(AutofillManager.class);
-
-            if (mAutofillManager != null && !mAutofillManager.hasEnabledAutofillServices()) {
-                Intent intent = new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE);
-                intent.setData(Uri.parse("package:com.buttercup"));
-                startActivityForResult(intent, 1);
-            }
-        }
     }
 
 
@@ -88,10 +70,6 @@ public class MainActivity extends ReactActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == OVERLAY_PERMISSION_REQ_CODE) {
             checkPerms();
-        }
-
-        if (requestCode == AUTOFILL_REQ_CODE) { // @TODO: (testing only) Move to RN Module
-            Log.d("BCUP", "user enabled autofill");
         }
     }
 

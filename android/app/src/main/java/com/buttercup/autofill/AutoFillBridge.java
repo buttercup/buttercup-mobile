@@ -1,9 +1,12 @@
 package com.buttercup.autofill;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.assist.AssistStructure;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.service.autofill.Dataset;
 import android.service.autofill.FillResponse;
 import android.support.annotation.RequiresApi;
@@ -13,7 +16,9 @@ import android.view.autofill.AutofillValue;
 import android.widget.RemoteViews;
 
 import com.buttercup.R;
+import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -21,6 +26,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
+import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 
 import java.util.HashMap;
@@ -30,11 +36,27 @@ import static android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE;
 
 public class AutoFillBridge extends ReactContextBaseJavaModule {
     private static final String TAG = "AutoFillBridge";
+    private static final int AUTOFILL_REQ_CODE = 1236;
     private AutoFillHelpers autoFillHelper;
+
+    // Promise and ActivityEventListener to handle requesting AutoFill Permissions from RN
+    private Promise requestPermissionsPromise;
+    private final ActivityEventListener requestPermisssionsActivityEventListener = new BaseActivityEventListener() {
+        @Override
+        public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
+            if (requestCode == AUTOFILL_REQ_CODE) {
+                Log.d(TAG, "user enabled autofill");
+                if (requestPermissionsPromise != null) {
+                    requestPermissionsPromise.resolve(true);
+                }
+            }
+        }
+    };
 
     public AutoFillBridge(ReactApplicationContext reactContext) {
         super(reactContext);
         autoFillHelper = new AutoFillHelpers(reactContext);
+        reactContext.addActivityEventListener(requestPermisssionsActivityEventListener);
     }
 
     @Override
@@ -46,12 +68,90 @@ public class AutoFillBridge extends ReactContextBaseJavaModule {
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
         // Only Android 8+ supports autofill
-        constants.put("DEVICE_SUPPORTS_AUTOFILL", (Build.VERSION.SDK_INT > Build.VERSION_CODES.O));
+        boolean deviceSupportsAutofill = false;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            AutofillManager mAutofillManager = getReactApplicationContext().getSystemService(AutofillManager.class);
+            if (mAutofillManager != null && mAutofillManager.isAutofillSupported()) {
+                deviceSupportsAutofill = true;
+            }
+        }
+
+        constants.put("DEVICE_SUPPORTS_AUTOFILL", deviceSupportsAutofill);
         return constants;
     }
 
     /**
-     * Merge Buttercup Credential Entries from a single Archive to the intermediate entry store (RNSecureStorage,
+     * Check if AutoFill is enabled and set to buttercup in the System Settings
+     * @param promise
+     */
+    @ReactMethod
+    public void getAutoFillSystemStatus(Promise promise) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            AutofillManager mAutofillManager = getReactApplicationContext().getSystemService(AutofillManager.class);
+            if (mAutofillManager == null) {
+                Log.d(TAG, "mAutofillManager == null");
+                promise.reject("404", "Failed to init AutofillManager");
+            } else if (!mAutofillManager.hasEnabledAutofillServices()) {
+                promise.resolve(false);
+            } else{
+                promise.resolve(true);
+            }
+        } else {
+            promise.resolve(false);
+        }
+    }
+
+    /**
+     * Attempt to open the Android Autofill settings panel
+     * @param promise
+     */
+    @ReactMethod
+    public void openAutoFillSystemSettings(Promise promise) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            Activity currentActivity = getCurrentActivity();
+
+            if (currentActivity == null) {
+                Log.d(TAG, "Auto fill - no activity");
+                promise.reject("500", "Activity doesn't exist");
+                return;
+            }
+            AutofillManager mAutofillManager = getReactApplicationContext().getSystemService(AutofillManager.class);
+
+            if (mAutofillManager != null) {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE);
+                intent.setData(Uri.parse("package:com.buttercup"));
+                requestPermissionsPromise = promise;
+                currentActivity.startActivityForResult(intent, AUTOFILL_REQ_CODE);
+            } else {
+                promise.reject("404", "Autofill not supported");
+            }
+        } else {
+            promise.reject("404", "Autofill not supported");
+        }
+    }
+
+    /**
+     * Retrieve a list of Source IDs that have autofill enabled
+     * @param promise
+     */
+    @ReactMethod
+    public void getAutoFillEnabledSources(Promise promise) {
+        try {
+            WritableMap autoFillEntries = autoFillHelper.getAutoFillEntries();
+            WritableArray autoFillSources = Arguments.createArray();
+            ReadableMapKeySetIterator iterator = autoFillEntries.keySetIterator();
+            while(iterator.hasNextKey()) {
+                String sourceID = iterator.nextKey();
+                autoFillSources.pushString(sourceID);
+            }
+            promise.resolve(autoFillSources);
+        } catch (Exception ex) {
+            promise.reject(ex);
+        }
+    }
+
+    /**
+     * Merge Buttercup Credential Entries from a single Archive to the intermediate entry store
      *
      * The AutoFill Service will use the intermediate store to reverse map a matching domain back to a
      *   to a Buttercup Credential (and password) to complete the AutoFill process

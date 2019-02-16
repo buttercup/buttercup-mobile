@@ -3,10 +3,43 @@ import { EntryFinder } from "../library/buttercupCore";
 import { getEntryPathString } from "./entry";
 
 const { AutoFillBridge } = NativeModules;
+export const autoFillAvailable = !!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL;
+
+export function getAutoFillSystemStatus() {
+    return new Promise((resolve, reject) => {
+        if (autoFillAvailable) {
+            return AutoFillBridge.getAutoFillSystemStatus().then(isAutoFillEnabled => {
+                resolve(isAutoFillEnabled);
+            });
+        }
+        resolve(false);
+    });
+}
+
+export function openAutoFillSystemSettings() {
+    return new Promise((resolve, reject) => {
+        if (autoFillAvailable) {
+            return AutoFillBridge.openAutoFillSystemSettings();
+        }
+        resolve(false);
+    });
+}
+
+export function autoFillEnabledForSource(sourceID) {
+    return new Promise((resolve, reject) => {
+        if (autoFillAvailable) {
+            return AutoFillBridge.getAutoFillEnabledSources().then(autoFillSources => {
+                const isEnabled = autoFillSources.indexOf(sourceID) > -1;
+                resolve(isEnabled);
+            });
+        }
+        resolve(false);
+    });
+}
 
 export function addSourceToAutoFill(sourceID, archive) {
     return new Promise((resolve, reject) => {
-        if (AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+        if (autoFillAvailable) {
             // We need to flatten all the Archive Entries, then send them to the native module
             const finder = new EntryFinder([archive]);
             let entries = {}; // Entries will be keyed by ID
@@ -35,7 +68,7 @@ export function addSourceToAutoFill(sourceID, archive) {
 
 export function removeSourceFromAutoFill(sourceID) {
     return new Promise((resolve, reject) => {
-        if (AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+        if (autoFillAvailable) {
             return AutoFillBridge.removeEntriesForSourceID(sourceID);
         }
         resolve();
@@ -44,7 +77,7 @@ export function removeSourceFromAutoFill(sourceID) {
 
 export function completeAutoFillWithEntry(sourceID, entry) {
     return new Promise((resolve, reject) => {
-        if (AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+        if (autoFillAvailable) {
             const username = entry.getProperty("username");
             const password = entry.getProperty("password");
             const entryPath = getEntryPathString(sourceID, entry.id);
@@ -56,7 +89,7 @@ export function completeAutoFillWithEntry(sourceID, entry) {
 
 export function cancelAutoFill() {
     return new Promise((resolve, reject) => {
-        if (AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+        if (autoFillAvailable) {
             return AutoFillBridge.cancelAutoFill();
         }
         resolve();
