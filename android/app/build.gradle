@@ -122,6 +122,7 @@ android {
             manifestPlaceholders = [usesCleartextTraffic:"true"]
         }
         release {
+            manifestPlaceholders = [usesCleartextTraffic:"false"]
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
