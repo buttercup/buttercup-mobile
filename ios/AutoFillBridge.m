@@ -40,6 +40,33 @@ API_AVAILABLE(ios(12.0)){
     return @{ @"DEVICE_SUPPORTS_AUTOFILL": @([AutoFillHelpers deviceSupportsAutoFill]) };
 }
 
+RCT_EXPORT_METHOD(getAutoFillSystemStatus: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    // We can actual check if the user has/has not enabled Autofill in system settings, to maintain compat with Android we just return true
+    resolve(@YES);
+}
+
+RCT_EXPORT_METHOD(openAutoFillSystemSettings: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    // Apple does not allow us to use the 'private' API to access the settings app.
+    // Immediately resolve to maintain compat with Android
+    resolve(@YES);
+}
+
+/**
+ * Retrieve a list of Source IDs that have autofill enabled
+ */
+RCT_EXPORT_METHOD(getAutoFillEnabledSources: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSMutableDictionary *autoFillEntries = [[AutoFillHelpers getAutoFillEntries] mutableCopy];
+    NSMutableArray *autoFillSources = [[NSMutableArray alloc] init];
+    [autoFillEntries enumerateKeysAndObjectsUsingBlock:^(NSString* sourceID, NSDictionary* childEntries, BOOL* outerStop) {
+        [autoFillSources addObject:sourceID];
+    }];
+    
+    resolve(autoFillSources);
+}
+
 /**
  * Merge Buttercup Credential Entries from a single Archive to the intermediate entry store (iOS Keychain),
  *   then update the ASCredentialIdentityStore with the final list of Entries so they are available in the QuickBar

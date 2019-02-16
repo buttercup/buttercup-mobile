@@ -1,4 +1,4 @@
-import { Platform } from "react-native";
+import { Alert, Platform } from "react-native";
 import ActionSheet from "@yfuks/react-native-action-sheet";
 import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
@@ -203,7 +203,7 @@ export function showAutoFillToggleSheet() {
     const currentSourceID = getSelectedSourceID(state);
     const itemEnableAutoFill = "Enable Autofill";
     const itemDisableAutoFill = "Disable Autofill";
-    const itemSystemSettings = (Platform.OS === "ios" ? "iOS" : "Android") + " Settings";
+    const itemSystemSettings = "Android Settings";
     const itemCancel = "Cancel";
     return Promise.all([getAutoFillSystemStatus(), autoFillEnabledForSource(currentSourceID)]).then(
         results => {
@@ -214,9 +214,9 @@ export function showAutoFillToggleSheet() {
             // We are only able to detect if AutoFill is enabled on Android, and furthermore we cannot
             // open the Android autofill settings if autofill is already set to buttercup
 
-            // On iOS we always show the option to open system settings as there is no way
-            // to detect if the user has enabled it
-            if ((Platform.OS === "android" && !autoFillEnabled) || Platform.OS === "ios") {
+            // On iOS we are not allowed to open the settings app at all as Apple has marked access to it as a 'Private' API
+            // Instead we will just inform the user they must do it themselves
+            if (Platform.OS === "android" && !autoFillEnabled) {
                 options.push(itemSystemSettings);
             }
             // Finally add the cancel button
@@ -240,6 +240,18 @@ export function showAutoFillToggleSheet() {
                             } else {
                                 addSourceToAutoFill(currentSourceID, archive);
                             }
+                            if (Platform.OS === "ios") {
+                                Alert.alert(
+                                    "Enable Autofill in iOS Settings",
+                                    "Please ensure you have also enabled Buttercup in iOS Settings > Passwords and Accounts > Autofill Passwords",
+                                    [{ text: "OK", onPress: () => {} }],
+                                    { cancelable: true }
+                                );
+                            }
+                            break;
+                        }
+                        case itemDisableAutoFill: {
+                            removeSourceFromAutoFill(currentSourceID);
                             break;
                         }
                         case itemSystemSettings: {
@@ -247,10 +259,6 @@ export function showAutoFillToggleSheet() {
                                 // Reopen these settings when the user returns
                                 showAutoFillToggleSheet();
                             });
-                            break;
-                        }
-                        case itemDisableAutoFill: {
-                            removeSourceFromAutoFill(currentSourceID);
                             break;
                         }
                     }

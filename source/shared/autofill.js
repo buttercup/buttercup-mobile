@@ -32,6 +32,7 @@ export function autoFillEnabledForSource(sourceID) {
         if (autoFillAvailable) {
             return AutoFillBridge.getAutoFillEnabledSources().then(autoFillSources => {
                 const isEnabled = autoFillSources.indexOf(sourceID) > -1;
+                console.log("isEnabled", sourceID, isEnabled);
                 resolve(isEnabled);
             });
         }
