@@ -123,9 +123,9 @@ RCT_EXPORT_METHOD(removeEntriesForSourceID:(NSString *)sourceID resolver:(RCTPro
 /**
  * Complete the Manual AutoFill Process by sending a desired username and password back to the iOS AutoFill Extension Context.
  * Note: This method should ONLY be used when the module is loaded inside an iOS AutoFill Overlay.
- * Use the AutoFillBridgeDelegate
+ * Note: param entryPath is only used on Android, but needed here to main bridge compat
  */
-RCT_EXPORT_METHOD(completeAutoFill:(NSString *)username password:(NSString *)password resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(completeAutoFill:(NSString *)username password:(NSString *)password entryPath:(NSString *)entryPath resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     if (![AutoFillHelpers deviceSupportsAutoFill]) {
         reject(@"", @"Device does not support AutoFill.", nil);

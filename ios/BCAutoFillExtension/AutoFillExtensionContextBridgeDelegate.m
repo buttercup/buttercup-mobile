@@ -21,7 +21,7 @@
 @implementation AutoFillExtensionContextBridgeDelegate
 + (NSString *)moduleNameForBridge
 {
-    return @"ButtercupAutoFill";
+    return @"Buttercup";
 }
 
 - (instancetype)initWithExtensionContext:(ASCredentialProviderExtensionContext *)extensionContext
@@ -43,7 +43,7 @@
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
-    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios.autofill" fallbackResource:nil];
+    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 }
 
 - (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge
