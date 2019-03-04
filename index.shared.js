@@ -16,7 +16,6 @@ export default class ButtercupShared extends Component {
         super(...args);
         // Setup native crypto
         patchCrypto();
-        console.log("OPENED FROM SHARED");
 
         // Ensure that the users storage has migrated to Keychain
         migrateStorage().then(() => {

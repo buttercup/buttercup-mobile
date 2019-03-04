@@ -67,7 +67,9 @@ export function addSourceToAutoFill(sourceID, archive) {
 
             // Note: Entries are stored against their sourceID in case a source is deleted,
             // that way we can remove from AutoFill without needing to unlock the source (to find the archive ID)
-            return AutoFillBridge.updateEntriesForSourceID(sourceID, entries);
+            return AutoFillBridge.updateEntriesForSourceID(sourceID, entries).then(() => {
+                resolve();
+            });
         }
         resolve();
     });
@@ -76,7 +78,9 @@ export function addSourceToAutoFill(sourceID, archive) {
 export function removeSourceFromAutoFill(sourceID) {
     return new Promise((resolve, reject) => {
         if (autoFillAvailable) {
-            return AutoFillBridge.removeEntriesForSourceID(sourceID);
+            return AutoFillBridge.removeEntriesForSourceID(sourceID).then(() => {
+                resolve();
+            });
         }
         resolve();
     });
@@ -88,7 +92,9 @@ export function completeAutoFillWithEntry(sourceID, entry) {
             const username = entry.getProperty("username");
             const password = entry.getProperty("password");
             const entryPath = getEntryPathString(sourceID, entry.id);
-            return AutoFillBridge.completeAutoFill(username, password, entryPath);
+            return AutoFillBridge.completeAutoFill(username, password, entryPath).then(() => {
+                resolve();
+            });
         }
         resolve();
     });
@@ -97,7 +103,9 @@ export function completeAutoFillWithEntry(sourceID, entry) {
 export function cancelAutoFill() {
     return new Promise((resolve, reject) => {
         if (autoFillAvailable) {
-            return AutoFillBridge.cancelAutoFill();
+            return AutoFillBridge.cancelAutoFill().then(() => {
+                resolve();
+            });
         }
         resolve();
     });
