@@ -8,6 +8,7 @@ import {
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
 import { getToken, isAuthenticated } from "../selectors/dropbox.js";
+import { getGoogleDriveToken, isGoogleDriveAuthenticated } from "../selectors/googleDrive.js";
 import {
     clearArchiveDetails,
     disconnect,
@@ -26,7 +27,8 @@ function handleConnectionCreation(dispatch, getState) {
     const state = getState();
     const remoteConnInfo = getRemoteConnectionInfo(state);
     const dropboxToken = getToken(state);
-    return createRemoteConnection({ ...remoteConnInfo, dropboxToken })
+    const googleToken = getGoogleDriveToken(state);
+    return createRemoteConnection({ ...remoteConnInfo, dropboxToken, googleToken })
         .then(function __onConnected() {
             const state = getState();
             let title = "Remote";
@@ -36,6 +38,8 @@ function handleConnectionCreation(dispatch, getState) {
                 title = domain;
             } else if (dropboxToken) {
                 title = "dropbox.com";
+            } else if (dropboxToken) {
+                title = "drive.google.com";
             }
             dispatch(onConnected());
             dispatch(navigateToRemoteExplorer({ title }));
@@ -51,6 +55,7 @@ export default connect(
         archiveType: getArchiveType(state),
         connecting: isConnecting(state),
         dropboxAuthenticated: isAuthenticated(state),
+        googleDriveAuthenticated: isGoogleDriveAuthenticated(state),
         url: getRemoteURL(state),
         ...getRemoteCredentials(state)
     }),
