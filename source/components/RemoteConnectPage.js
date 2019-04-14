@@ -3,6 +3,7 @@ import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-nati
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import PropTypes from "prop-types";
 import DropboxAuthButton from "../containers/DropboxAuthButton.js";
+import GoogleDriveAuthButton from "../containers/GoogleDriveAuthButton.js";
 import Spinner from "./Spinner.js";
 
 const styles = StyleSheet.create({
@@ -30,6 +31,8 @@ class RemoteConnectPage extends Component {
 
     render() {
         switch (this.props.archiveType) {
+            case "googleDrive":
+                return this.renderGoogleDrive();
             case "dropbox":
                 return this.renderDropbox();
             case "webdav":
@@ -42,6 +45,28 @@ class RemoteConnectPage extends Component {
             default:
                 throw new Error(`Unknown type: ${this.props.archiveType}`);
         }
+    }
+
+    renderGoogleDrive() {
+        return (
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <View>
+                        <GoogleDriveAuthButton />
+                        <CellGroup>
+                            <Cell
+                                title="Connect"
+                                icon="cloud"
+                                onPress={() => this.submit()}
+                                tintColor="#1144FF"
+                                disabled={!this.props.googledriveAuthenticated}
+                            />
+                        </CellGroup>
+                    </View>
+                    <Spinner visible={this.props.connecting} text="Connecting" />
+                </View>
+            </TouchableWithoutFeedback>
+        );
     }
 
     renderDropbox() {
@@ -127,6 +152,7 @@ RemoteConnectPage.propTypes = {
     archiveType: PropTypes.string,
     connecting: PropTypes.bool,
     dropboxAuthenticated: PropTypes.bool,
+    googledriveAuthenticated: PropTypes.bool,
     initiateConnection: PropTypes.func,
     onChangePassword: PropTypes.func,
     onChangeURL: PropTypes.func,
@@ -138,7 +164,8 @@ RemoteConnectPage.propTypes = {
 };
 
 RemoteConnectPage.defaultProps = {
-    dropboxAuthenticated: false
+    dropboxAuthenticated: false,
+    googledriveAuthenticated: false
 };
 
 export default RemoteConnectPage;

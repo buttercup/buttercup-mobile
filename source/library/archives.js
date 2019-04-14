@@ -3,6 +3,11 @@ import { formatArchiveTypeTitle } from "./format.js";
 export function getArchiveTypeDetails() {
     return [
         {
+            type: "googleDrive",
+            title: formatArchiveTypeTitle("googleDrive"),
+            image: require("../../resources/images/googledrive-256.png")
+        },
+        {
             type: "dropbox",
             title: formatArchiveTypeTitle("dropbox"),
             image: require("../../resources/images/dropbox-256.png")

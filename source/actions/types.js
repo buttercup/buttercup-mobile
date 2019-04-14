@@ -33,6 +33,11 @@ export const DROPBOX_SET_AUTHENTICATED = "dropbox/setAuthenticated";
 export const DROPBOX_SET_AUTHENTICATING = "dropbox/setAuthenticating";
 export const DROPBOX_SET_AUTH_TOKEN = "dropbox/setAuthToken";
 
+export const GOOGLE_DRIVE_RESET_AUTH = "googleDrive/resetAuthentication";
+export const GOOGLE_DRIVE_SET_AUTHENTICATED = "googleDrive/setAuthenticated";
+export const GOOGLE_DRIVE_SET_AUTHENTICATING = "googleDrive/setAuthenticating";
+export const GOOGLE_DRIVE_SET_AUTH_TOKEN = "googleDrive/setAuthToken";
+
 export const ENTRY_LOAD = "entry/load";
 export const ENTRY_NEW_CLEAR = "entry/clearNew";
 export const ENTRY_NEW_META_CLEAR = "entry/clearNewMeta";
