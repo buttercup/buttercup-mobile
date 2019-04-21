@@ -88,7 +88,7 @@ export function getMatchingEntriesForURL(url, archives) {
             const entryDomain = extractDomain(entryURL);
             return (
                 entryDomain.length > 0 &&
-                entryDomain === extractDomain(url) &&
+                (entryDomain === extractDomain(url) || entryDomain === url) &&
                 entry.isInTrash() === false
             );
         });

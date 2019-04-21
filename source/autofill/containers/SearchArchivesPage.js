@@ -26,9 +26,11 @@ export default connect(
         initialEntries: getInitialEntries(state)
     }),
     {
-        onEntryPress: (entryID, sourceID) => {
-            const entry = getEntry(sourceID, entryID);
-            completeAutoFillWithEntry(entry);
+        onEntryPress: (entryID, sourceID) => dispatch => {
+            dispatch(() => {
+                const entry = getEntry(sourceID, entryID);
+                completeAutoFillWithEntry(sourceID, entry);
+            });
         }
     }
 )(SearchArchivesPage);

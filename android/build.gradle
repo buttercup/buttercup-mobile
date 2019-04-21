@@ -2,10 +2,10 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "27.0.3"
+        buildToolsVersion = "28.0.3"
         minSdkVersion = 16
-        compileSdkVersion = 27
-        targetSdkVersion = 26
+        compileSdkVersion = 28
+        targetSdkVersion = 28
         supportLibVersion = "27.1.1"
     }
     repositories {
@@ -45,8 +45,8 @@ subprojects {
     afterEvaluate {project ->
         if (project.hasProperty("android")) {
             android {
-                compileSdkVersion 27
-                buildToolsVersion "27.0.3"
+                compileSdkVersion 28
+                buildToolsVersion "28.0.3"
             }
         }
     }

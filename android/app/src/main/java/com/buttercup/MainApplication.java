@@ -2,6 +2,7 @@ package com.buttercup;
 
 import android.app.Application;
 
+import com.buttercup.autofill.AutoFillPackage;
 import com.facebook.react.ReactApplication;
 import com.oblador.keychain.KeychainPackage;
 import li.yunqi.rnsecurestorage.RNSecureStoragePackage;
@@ -13,15 +14,9 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.facebook.react.bridge.JavaScriptModule;
-import com.facebook.react.uimanager.ViewManager;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.NativeModule;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Collections;
-import java.util.ArrayList;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -41,7 +36,8 @@ public class MainApplication extends Application implements ReactApplication {
                 new RandomBytesPackage(),
                 new ActionSheetPackage(),
                 new VectorIconsPackage(),
-                new CryptoPackage()
+                new CryptoPackage(),
+                new AutoFillPackage()
             );
         }
     };
