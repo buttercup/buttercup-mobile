@@ -28,6 +28,10 @@ class PopupBrowser extends Component {
         this._lastURL = "";
     }
 
+    componentWillUnmount() {
+        this.props.onClose();
+    }
+
     handleNavigationChange(webviewState) {
         const url = webviewState.url;
         if (this._lastURL !== url) {

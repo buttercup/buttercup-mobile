@@ -14,6 +14,10 @@ export default connect(
         url: getURL(state)
     }),
     {
+        onClose: () => dispatch => {
+            dispatch(setDropboxAuthenticated(false));
+            dispatch(setDropboxAuthenticating(false));
+        },
         onDropboxTokenReceived: token => dispatch => {
             dispatch(setDropboxAuthToken(token));
             dispatch(setDropboxAuthenticated(true));
