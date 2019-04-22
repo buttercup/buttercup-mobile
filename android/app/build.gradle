@@ -101,8 +101,8 @@ android {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 16
-        versionName "1.7.0"
+        versionCode 18
+        versionName "1.8.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -117,7 +117,12 @@ android {
         }
     }
     buildTypes {
+        debug {
+            // Fix for RN Debug on Android 8 - https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted/50834600#50834600
+            manifestPlaceholders = [usesCleartextTraffic:"true"]
+        }
         release {
+            manifestPlaceholders = [usesCleartextTraffic:"false"]
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -140,24 +145,28 @@ android {
             jni.srcDirs = [/*'src/main/jniLibs', 'src/main/jniLibs/'*/]
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    compile project(':react-native-keychain')
-    compile project(':react-native-secure-storage')
-    compile project(':react-native-touch-id')
-    compile project(':react-native-randombytes')
-    compile project(':@yfuks/react-native-action-sheet')
-    compile project(':react-native-vector-icons')
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
-    compile "com.madgag.spongycastle:prov:1.56.0.0"
-    testCompile "junit:junit:4.12"
-    androidTestCompile "junit:junit:4.12"
-    androidTestCompile "com.android.support.test:runner:0.4.1"
-    androidTestCompile "com.android.support.test:rules:0.4.1"
-    androidTestCompile "com.android.support:support-annotations:23.0.1"
+    implementation project(':react-native-keychain')
+    implementation project(':react-native-secure-storage')
+    implementation project(':react-native-touch-id')
+    implementation project(':react-native-randombytes')
+    implementation project(':@yfuks/react-native-action-sheet')
+    implementation project(':react-native-vector-icons')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.android.support:appcompat-v7:23.0.1"
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "com.madgag.spongycastle:prov:1.56.0.0"
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "junit:junit:4.12"
+    androidTestImplementation "com.android.support.test:runner:0.4.1"
+    androidTestImplementation "com.android.support.test:rules:0.4.1"
+    androidTestImplementation "com.android.support:support-annotations:23.0.1"
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules

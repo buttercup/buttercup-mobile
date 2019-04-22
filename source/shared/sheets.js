@@ -1,3 +1,4 @@
+import { Alert, Platform } from "react-native";
 import ActionSheet from "@yfuks/react-native-action-sheet";
 import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
@@ -16,6 +17,15 @@ import {
     touchIDAvailable,
     touchIDEnabledForSource
 } from "./touchUnlock.js";
+import {
+    autoFillAvailable,
+    getAutoFillSystemStatus,
+    openAutoFillSystemSettings,
+    autoFillEnabledForSource,
+    addSourceToAutoFill,
+    removeSourceFromAutoFill
+} from "./autofill";
+import { getSelectedArchive } from "../selectors/archiveContents";
 
 const SHEET_ADD_ARCHIVE = "Add";
 const SHEET_ADD_ENTRY = "New Entry";
@@ -25,6 +35,7 @@ const SHEET_DELETE_GROUP = "Delete Group";
 const SHEET_LOCK_ALL = "Lock All";
 const SHEET_RENAME_GROUP = "Rename Group";
 const SHEET_TOGGLE_TOUCH_ID = "Toggle Touch Unlock";
+const SHEET_TOGGLE_AUTOFILL = "Toggle Autofill";
 const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Archive";
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
@@ -33,6 +44,7 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_DELETE_GROUP,
     SHEET_RENAME_GROUP,
     SHEET_TOGGLE_TOUCH_ID,
+    SHEET_TOGGLE_AUTOFILL,
     SHEET_CANCEL,
     SHEET_SEARCH_CURRENT_ARCHIVE
 ];
@@ -60,6 +72,9 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
         }
         if (!isRoot || !touchIDAvailable) {
             removeTextFromArray(buttons, SHEET_TOGGLE_TOUCH_ID);
+        }
+        if (!isRoot || !autoFillAvailable) {
+            removeTextFromArray(buttons, SHEET_TOGGLE_AUTOFILL);
         }
         if (readOnly) {
             removeTextFromArray(buttons, SHEET_ADD_GROUP);
@@ -93,6 +108,10 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
                     }
                     case SHEET_TOGGLE_TOUCH_ID: {
                         showTouchIDToggleSheet();
+                        break;
+                    }
+                    case SHEET_TOGGLE_AUTOFILL: {
+                        showAutoFillToggleSheet();
                         break;
                     }
                     case SHEET_SEARCH_CURRENT_ARCHIVE: {
@@ -177,4 +196,74 @@ export function showTouchIDToggleSheet() {
             }
         );
     });
+}
+
+export function showAutoFillToggleSheet() {
+    const state = getState();
+    const currentSourceID = getSelectedSourceID(state);
+    const itemEnableAutoFill = "Enable Autofill";
+    const itemDisableAutoFill = "Disable Autofill";
+    const itemSystemSettings = "Android Settings";
+    const itemCancel = "Cancel";
+    return Promise.all([getAutoFillSystemStatus(), autoFillEnabledForSource(currentSourceID)]).then(
+        results => {
+            const autoFillEnabled = results[0];
+            const archiveEnabled = results[1];
+
+            const options = [archiveEnabled ? itemDisableAutoFill : itemEnableAutoFill];
+            // We are only able to detect if AutoFill is enabled on Android, and furthermore we cannot
+            // open the Android autofill settings if autofill is already set to buttercup
+
+            // On iOS we are not allowed to open the settings app at all as Apple has marked access to it as a 'Private' API
+            // Instead we will just inform the user they must do it themselves
+            if (Platform.OS === "android" && !autoFillEnabled) {
+                options.push(itemSystemSettings);
+            }
+            // Finally add the cancel button
+            options.push(itemCancel);
+            ActionSheet.showActionSheetWithOptions(
+                {
+                    options,
+                    cancelButtonIndex: options.indexOf(itemCancel),
+                    title: "Autofill"
+                },
+                selectedIndex => {
+                    switch (options[selectedIndex]) {
+                        case itemEnableAutoFill: {
+                            const archive = getSelectedArchive(state);
+                            // We need to check if AutoFill is enabled,
+                            // if not we need to open the system permissions
+                            if (!autoFillEnabled) {
+                                openAutoFillSystemSettings().then(() => {
+                                    addSourceToAutoFill(currentSourceID, archive);
+                                });
+                            } else {
+                                addSourceToAutoFill(currentSourceID, archive);
+                            }
+                            if (Platform.OS === "ios") {
+                                Alert.alert(
+                                    "Enable Autofill in iOS Settings",
+                                    "Please ensure you have also enabled Buttercup in iOS Settings > Passwords and Accounts > Autofill Passwords",
+                                    [{ text: "OK", onPress: () => {} }],
+                                    { cancelable: true }
+                                );
+                            }
+                            break;
+                        }
+                        case itemDisableAutoFill: {
+                            removeSourceFromAutoFill(currentSourceID);
+                            break;
+                        }
+                        case itemSystemSettings: {
+                            openAutoFillSystemSettings().then(() => {
+                                // Reopen these settings when the user returns
+                                showAutoFillToggleSheet();
+                            });
+                            break;
+                        }
+                    }
+                }
+            );
+        }
+    );
 }

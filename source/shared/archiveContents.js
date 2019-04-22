@@ -5,7 +5,7 @@ import { getSelectedArchive } from "../selectors/archiveContents.js";
 import { doAsyncWork } from "../global/async.js";
 import { setNewEntryParentGroup } from "../actions/entry.js";
 import { showArchiveContentsAddItemSheet } from "../shared/sheets.js";
-import { addSourceToAutoFill } from "./autofill";
+import { autoFillEnabledForSource, addSourceToAutoFill } from "./autofill";
 import { getSelectedSourceID } from "../selectors/archiveContents";
 
 export function archiveToObject(archive) {
@@ -48,5 +48,9 @@ export function updateCurrentArchive() {
 
     // Make sure the updates are reflected in AutoFill as well
     const sourceID = getSelectedSourceID(state);
-    addSourceToAutoFill(sourceID, archive);
+    autoFillEnabledForSource(sourceID).then(isEnabled => {
+        if (isEnabled) {
+            addSourceToAutoFill(sourceID, archive);
+        }
+    });
 }

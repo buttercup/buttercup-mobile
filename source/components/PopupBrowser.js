@@ -26,6 +26,15 @@ class PopupBrowser extends Component {
     constructor(props) {
         super(props);
         this._lastURL = "";
+        this.state = {
+            detectedToken: false
+        };
+    }
+
+    componentWillUnmount() {
+        if (this.state.detectedToken === false) {
+            this.props.onClearToken();
+        }
     }
 
     handleNavigationChange(webviewState) {
@@ -44,7 +53,14 @@ class PopupBrowser extends Component {
         for (let i = 0; i < blockNum; i += 1) {
             const [key, value] = blocks[i].split("=");
             if (key === "access_token") {
-                this.props.onDropboxTokenReceived(value);
+                this.setState(
+                    {
+                        detectedToken: true
+                    },
+                    () => {
+                        this.props.onDropboxTokenReceived(value);
+                    }
+                );
                 break;
             }
         }
