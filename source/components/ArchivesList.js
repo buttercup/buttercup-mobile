@@ -6,8 +6,10 @@ import {
     Text,
     TouchableHighlight,
     ScrollView,
-    View
+    View,
+    Button
 } from "react-native";
+import { withNamespaces } from "react-i18next";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { List, ListItem } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -302,6 +304,7 @@ class ArchivesList extends Component {
     }
 
     render() {
+        console.log(this.props);
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
@@ -321,7 +324,14 @@ class ArchivesList extends Component {
                         />
                     </When>
                     <Otherwise>
-                        <EmptyView text="Add a new archive to begin" imageSource={BENCH_IMAGE} />
+                        <Button
+                            onPress={() => this.props.i18n.changeLanguage("de")}
+                            title="change"
+                        />
+                        <EmptyView
+                            text={this.props.t("archives.add-to-begin")}
+                            imageSource={BENCH_IMAGE}
+                        />
                     </Otherwise>
                 </Choose>
                 <Prompt
@@ -338,4 +348,4 @@ class ArchivesList extends Component {
     }
 }
 
-export default ArchivesList;
+export default withNamespaces()(ArchivesList);

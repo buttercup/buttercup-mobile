@@ -1,0 +1,12 @@
+{
+    "types": ["base"],
+    "fallbackLng": "en",
+    "languages": {
+        "en": {
+            "name": "English"
+        },
+        "de": {
+            "name": "Deutsch"
+        }
+    }
+}
