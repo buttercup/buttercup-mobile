@@ -40,7 +40,11 @@ export default connect(
     {
         copyToClipboard: (name, value) => dispatch => {
             Clipboard.setString(value);
-            executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
+            executeNotification(
+                "success",
+                i18n.t("copied-value"),
+                i18n.t("copied-value-description", { name })
+            );
         },
         onAddMeta: () => dispatch => {
             dispatch(navigateToNewMeta());

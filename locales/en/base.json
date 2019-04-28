@@ -52,7 +52,7 @@
       "name": "Name",
       "value": "Value"
     },
-    "delete-confirm": "Are you sure that you want to delete the entry {{title}}?"
+    "delete-confirm": "Are you sure that you want to delete the entry '{{title}}'?"
   },
   "remote": {
     "connect": "Connect",
@@ -75,7 +75,7 @@
       "filename": "Filename"
     },
     "remove-archive": "Remove Archive",
-    "remove-archive-description": "Are you sure that you want to remove {{name}}?",
+    "remove-archive-description": "Are you sure that you want to remove '{{name}}'?",
     "add": "Add",
     "search": "Search Archive"
   },
@@ -88,7 +88,7 @@
   },
   "group": {
     "delete": "Delete Group",
-    "confirm-delete": "Are you sure that you want to delete the group {{title}}?",
+    "confirm-delete": "Are you sure that you want to delete the group '{{title}}'?",
     "new": "New Group",
     "rename": "Renam Group",
     "trash": "Trash"
@@ -118,5 +118,7 @@
     "disable": "Disable Autofill",
     "self": "Autofill"
   },
-  "android-settings": "Android Settings"
+  "android-settings": "Android Settings",
+  "copied-value": "Copied value",
+  "copied-value-description": "Copied '{{name}}' to clipboard"
 }

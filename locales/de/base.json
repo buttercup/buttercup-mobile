@@ -52,7 +52,7 @@
       "name": "Name",
       "value": "Wert"
     },
-    "delete-confirm": "Bist du dir sicher, dass du den Eintrag {{title}} löschen möchtest?"
+    "delete-confirm": "Bist du dir sicher, dass du den Eintrag '{{title}}' löschen möchtest?"
   },
   "remote": {
     "connect": "Verbinden",
@@ -75,7 +75,7 @@
       "filename": "Dateiname"
     },
     "remove-archive": "Archiv entfernen",
-    "remove-archive-description": "Bist du dir sicher, dass du {{name}} löschen möchtest?",
+    "remove-archive-description": "Bist du dir sicher, dass du '{{name}}' löschen möchtest?",
     "add": "Hinzufügen",
     "search": "Archiv durchsuchen"
   },
@@ -88,7 +88,7 @@
   },
   "group": {
     "delete": "Gruppe löschen",
-    "confirm-delete": "Bist du sicher, dass du die Gruppe {{title}} löschen möchtest?",
+    "confirm-delete": "Bist du sicher, dass du die Gruppe '{{title}}' löschen möchtest?",
     "new": "Neue Gruppe",
     "rename": "Gruppe umbennen",
     "trash": "Papierkorb"
@@ -118,5 +118,7 @@
     "disable": "Autofill deaktivieren",
     "self": "Autofill"
   },
-  "android-settings": "Android Einstellungen"
+  "android-settings": "Android Einstellungen",
+  "copied-value": "Wert kopiert",
+  "copied-value-description": "'{{name}}' in Zwischenablage kopiert"
 }
