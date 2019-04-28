@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Cell, CellGroup } from "react-native-cell-components";
 import Prompt from "@perrymitchell/react-native-prompt";
+import { withNamespaces } from "react-i18next";
 import PropTypes from "prop-types";
 import { beginNewArchiveProcedure } from "../shared/archives.js";
 import Spinner from "./Spinner.js";
@@ -34,7 +35,9 @@ class RemoteExplorer extends Component {
         const { params = {} } = navigation.state;
         return {
             title: `${params.title}`,
-            headerRight: <Button title="New" onPress={beginNewArchiveProcedure} />
+            headerRight: (
+                <Button title={this.props.t("archive.new")} onPress={beginNewArchiveProcedure} />
+            )
         };
     };
 
@@ -60,8 +63,8 @@ class RemoteExplorer extends Component {
                     </CellGroup>
                 </ScrollView>
                 <Prompt
-                    title="Archive Filename"
-                    placeholder="Filename"
+                    title={this.props.t("archive.filename")}
+                    placeholder={this.props.t("archive.placeholder.filename")}
                     visible={this.props.showNewPrompt}
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewFilename(value)}
@@ -72,7 +75,7 @@ class RemoteExplorer extends Component {
                     }}
                 />
                 <Prompt
-                    title="Archive Password"
+                    title={this.props.t("archive.password")}
                     placeholder=""
                     visible={this.props.showNewPassword}
                     onCancel={() => this.props.cancelNewPrompt()}
@@ -80,16 +83,22 @@ class RemoteExplorer extends Component {
                     textInputProps={{ secureTextEntry: true }}
                 />
                 <Prompt
-                    title="Archive Name"
+                    title={this.props.t("archive.name")}
                     placeholder=""
                     visible={this.props.showNewName}
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewArchiveName(value)}
                     textInputProps={{ keyboardType: "default" }}
                 />
-                <Spinner visible={this.props.creatingFile} text="Creating Archive" />
-                <Spinner visible={this.props.loading} text="Fetching Contents" />
-                <Spinner visible={this.props.addingArchive} text="Adding Archive" />
+                <Spinner
+                    visible={this.props.creatingFile}
+                    text={this.props.t("archive.creating")}
+                />
+                <Spinner
+                    visible={this.props.loading}
+                    text={this.props.t("archive.fetching-contents")}
+                />
+                <Spinner visible={this.props.addingArchive} text={this.props.t("archive.adding")} />
             </View>
         );
     }
@@ -132,4 +141,4 @@ RemoteExplorer.defaultProps = {
     remoteDirectory: "/"
 };
 
-export default RemoteExplorer;
+export default withNamespaces()(RemoteExplorer);

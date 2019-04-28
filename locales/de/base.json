@@ -1,5 +1,55 @@
 {
-    "archives": {
-        "add-to-begin": "Füge ein Archiv hinzu um loszulegen"
+  "archives": {
+    "add-to-begin": "Füge ein Archiv hinzu um loszulegen",
+    "archive-password": "Archiv Passwort",
+    "add-archive": "Archiv hinzufügen"
+  },
+  "manage-archive": "Verwalte Archive",
+  "edit-group": "Bearbeite Gruppe",
+  "remove": "Löschen",
+  "enable-touch-unlock": "Aktiviere Touch Unlock",
+  "disable-touch-unlock": "Deaktiviere Touch Unlock",
+  "cancel": "Abbrechen",
+  "touch-unlock": "Touch Unlock",
+  "groups": {
+    "add-a-group-or-entry": "Füge eine Gruppe oder einen Eintrag hinzu",
+    "rename-group": "Gruppe umbenennen",
+    "create-group": "Gruppe erstellen",
+    "group-name": "Gruppenname"
+  },
+  "dropbox": {
+    "authenticated": "Authenticate",
+    "authenticate": "Authentifizieren"
+  },
+  "entry": {
+    "add": "Hinzufügen",
+    "cancel": "Abbrechen",
+    "hide-hidden": "Eingabe verstecken",
+    "new-entry": "Neuer Eintrag",
+    "create": "Erstellen",
+    "title": "Titel",
+    "username": "Benutzername",
+    "password": "Password"
+  },
+  "remote": {
+    "connect": "Verbinden",
+    "connecting": "Verbinde",
+    "url": "Remote-URL",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "connection-details": "Verbindungsdaten",
+    "self": "Extern"
+  },
+  "archive": {
+    "new": "New",
+    "filename": "Archiv Dateiname",
+    "password": "Archiv Passwort",
+    "name": "Archive-Name",
+    "creating": "Archiv erstellen",
+    "fetching-contents": "Rufe Inhalte ab",
+    "adding": "Archiv hinzufügen",
+    "placeholder": {
+      "filename": "Dateiname"
     }
+  }
 }

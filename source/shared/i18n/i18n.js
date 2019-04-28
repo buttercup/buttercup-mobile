@@ -1,9 +1,12 @@
 import i18n from "i18next";
-import localesConfig from "../../../locales/config.json";
+import DeviceInfo from "react-native-device-info";
+import localesConfig from "../../../locales/config";
 
-const langs = {
-    en: require("../../../locales/en/base.json"),
-    de: require("../../../locales/de/base.json")
+const languageDetector = {
+    init: Function.prototype,
+    type: "languageDetector",
+    detect: () => DeviceInfo.getDeviceLocale(),
+    cacheUserLanguage: Function.prototype
 };
 
 // get all configurated languages
@@ -14,23 +17,13 @@ Object.keys(localesConfig.languages).forEach(key => {
 
     console.log(languages[key]);
     localesConfig.types.forEach(type => {
-        languages[key][type] = langs[key];
+        languages[key][type] = localesConfig.languages[key].data;
     });
 });
 
-const resources = Object.keys(languages).reduce((accumulator, key) => {
-    accumulator[key] = {};
-
-    localesConfig.types.forEach(type => {
-        accumulator[key][type] = languages[key][type];
-    });
-
-    return accumulator;
-}, {});
-
-i18n.init({
+i18n.use(languageDetector).init({
     fallbackLng: localesConfig.fallbackLng,
-    resources,
+    resources: languages,
     react: {
         wait: false
     },

@@ -297,14 +297,13 @@ class ArchivesList extends Component {
                 underlayColor="white"
             >
                 <View style={styles.swipedViewContainer}>
-                    <Text style={styles.swipedViewText}>Remove</Text>
+                    <Text style={styles.swipedViewText}>{this.props.t("remove")}</Text>
                 </View>
             </TouchableHighlight>
         );
     }
 
     render() {
-        console.log(this.props);
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
@@ -324,10 +323,6 @@ class ArchivesList extends Component {
                         />
                     </When>
                     <Otherwise>
-                        <Button
-                            onPress={() => this.props.i18n.changeLanguage("de")}
-                            title="change"
-                        />
                         <EmptyView
                             text={this.props.t("archives.add-to-begin")}
                             imageSource={BENCH_IMAGE}
@@ -335,7 +330,7 @@ class ArchivesList extends Component {
                     </Otherwise>
                 </Choose>
                 <Prompt
-                    title="Archive Password"
+                    title={this.props.t("archives.archive-password")}
                     placeholder=""
                     visible={this.props.showUnlockPrompt}
                     onCancel={() => this.props.showUnlockPasswordPrompt(false)}

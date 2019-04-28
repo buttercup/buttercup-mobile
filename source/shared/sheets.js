@@ -26,6 +26,7 @@ import {
     removeSourceFromAutoFill
 } from "./autofill";
 import { getSelectedArchive } from "../selectors/archiveContents";
+import i18n from "../shared/i18n/i18n";
 
 const SHEET_ADD_ARCHIVE = "Add";
 const SHEET_ADD_ENTRY = "New Entry";
@@ -59,7 +60,7 @@ function removeTextFromArray(arr, text) {
 
 export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGroup) {
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
-    const title = isRoot ? "Manage Archive" : "Edit Group";
+    const title = isRoot ? i18n.t("manage-archive") : i18n.t("edit-group");
     const state = getState();
     const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {

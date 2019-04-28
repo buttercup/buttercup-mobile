@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import PropTypes from "prop-types";
+import { withNamespaces } from "react-i18next";
 import DropboxAuthButton from "../containers/DropboxAuthButton.js";
 import Spinner from "./Spinner.js";
 
@@ -52,7 +53,7 @@ class RemoteConnectPage extends Component {
                         <DropboxAuthButton />
                         <CellGroup>
                             <Cell
-                                title="Connect"
+                                title={this.props.t("remote.connect")}
                                 icon="cloud"
                                 onPress={() => this.submit()}
                                 tintColor="#1144FF"
@@ -60,7 +61,10 @@ class RemoteConnectPage extends Component {
                             />
                         </CellGroup>
                     </View>
-                    <Spinner visible={this.props.connecting} text="Connecting" />
+                    <Spinner
+                        visible={this.props.connecting}
+                        text={this.props.t("remote.connecting")}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -79,23 +83,23 @@ class RemoteConnectPage extends Component {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <CellGroup header="Connection details">
+                    <CellGroup header={this.props.t("remote.connection-details")}>
                         <CellInput
-                            title="Remote URL"
+                            title={this.props.t("remote.url")}
                             value={this.props.url}
                             icon="laptop"
                             onChangeText={newText => this.props.onChangeURL(newText)}
                             {...urlInputOptions}
                         />
                         <CellInput
-                            title="Username"
+                            title={this.props.t("remote.username")}
                             value={this.props.username}
                             icon="face"
                             onChangeText={newText => this.props.onChangeUsername(newText)}
                             {...usernameInputOptions}
                         />
                         <CellInput
-                            title="Password"
+                            title={this.props.t("remote.password")}
                             value={this.props.password}
                             icon="fingerprint"
                             onChangeText={newText => this.props.onChangePassword(newText)}
@@ -104,13 +108,16 @@ class RemoteConnectPage extends Component {
                     </CellGroup>
                     <CellGroup>
                         <Cell
-                            title="Connect"
+                            title={this.props.t("remote.connect")}
                             icon="cloud"
                             onPress={() => this.submit()}
                             tintColor="#1144FF"
                         />
                     </CellGroup>
-                    <Spinner visible={this.props.connecting} text="Connecting" />
+                    <Spinner
+                        visible={this.props.connecting}
+                        text={this.props.t("remote.connecting")}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         );
@@ -141,4 +148,4 @@ RemoteConnectPage.defaultProps = {
     dropboxAuthenticated: false
 };
 
-export default RemoteConnectPage;
+export default withNamespaces()(RemoteConnectPage);

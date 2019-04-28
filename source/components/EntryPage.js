@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, ScrollView, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
+import { withNamespaces } from "react-i18next";
 import Spinner from "./Spinner.js";
 import ToolbarIcon from "./ToolbarIcon.js";
 
@@ -124,7 +125,7 @@ class EntryPage extends Component {
                         <If condition={this.props.editing}>
                             <Cell
                                 key="$add"
-                                title="Add"
+                                title={this.props.t("entry.add")}
                                 onPress={() => this.props.onAddMeta()}
                                 tintColor="#1144FF"
                                 icon={{ name: "tag-plus", source: "material-community-icons" }}
@@ -167,7 +168,9 @@ class EntryPage extends Component {
             const onPressCallback = this.props.editing
                 ? () => this.props.onCancelEdit()
                 : () => this.props.onCancelViewingHidden();
-            const buttonText = this.props.editing ? "Cancel" : "Hide hidden";
+            const buttonText = this.props.editing
+                ? this.props.t("entry.cancel")
+                : this.props.t("entry.hide-hidden");
             return (
                 <CellGroup>
                     <Cell
@@ -227,4 +230,4 @@ class EntryPage extends Component {
     }
 }
 
-export default EntryPage;
+export default withNamespaces()(EntryPage);
