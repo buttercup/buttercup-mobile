@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import { Cell, CellGroup } from "react-native-cell-components";
-import i18next from "i18next";
+import i18n from "../shared/i18n";
 
 class DropboxAuthButton extends Component {
     beginAuthentication() {
@@ -12,8 +12,8 @@ class DropboxAuthButton extends Component {
 
     render() {
         const title = this.props.authenticated
-            ? i18next.t("dropbox.authenticated")
-            : i18next.t("dropbox.authenticate");
+            ? i18n.t("dropbox.authenticated")
+            : i18n.t("dropbox.authenticate");
         return (
             <CellGroup>
                 <Cell

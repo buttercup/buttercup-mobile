@@ -3,7 +3,7 @@ import { Button, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { CellGroup, CellInput } from "react-native-cell-components";
 import { withNamespaces } from "react-i18next";
-import i18next from "i18next";
+import i18n from "../shared/i18n";
 import { saveNewEntry } from "../shared/entry.js";
 import Spinner from "./Spinner.js";
 
@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
 
 class NewEntryPage extends Component {
     static navigationOptions = {
-        title: i18next.t("entry.new-entry"),
-        headerRight: <Button title={i18next.t("entry.create")} onPress={saveNewEntry} />
+        title: i18n.t("entry.new-entry"),
+        headerRight: <Button title={i18n.t("entry.create")} onPress={saveNewEntry} />
     };
 
     componentWillUnmount() {

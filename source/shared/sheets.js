@@ -26,18 +26,18 @@ import {
     removeSourceFromAutoFill
 } from "./autofill";
 import { getSelectedArchive } from "../selectors/archiveContents";
-import i18n from "../shared/i18n/i18n";
+import i18n from "../shared/i18n";
 
-const SHEET_ADD_ARCHIVE = "Add";
-const SHEET_ADD_ENTRY = "New Entry";
-const SHEET_ADD_GROUP = "New Group";
-const SHEET_CANCEL = "Cancel";
-const SHEET_DELETE_GROUP = "Delete Group";
-const SHEET_LOCK_ALL = "Lock All";
-const SHEET_RENAME_GROUP = "Rename Group";
-const SHEET_TOGGLE_TOUCH_ID = "Toggle Touch Unlock";
-const SHEET_TOGGLE_AUTOFILL = "Toggle Autofill";
-const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Archive";
+const SHEET_ADD_ARCHIVE = i18n.t("archive.add");
+const SHEET_ADD_ENTRY = i18n.t("entry.new");
+const SHEET_ADD_GROUP = i18n.t("group.new");
+const SHEET_CANCEL = i18n.t("cancel");
+const SHEET_DELETE_GROUP = i18n.t("group.delete");
+const SHEET_LOCK_ALL = i18n.t("archives.lock-all");
+const SHEET_RENAME_GROUP = i18n.t("group.rename");
+const SHEET_TOGGLE_TOUCH_ID = i18n.t("touch-unlock.toggle");
+const SHEET_TOGGLE_AUTOFILL = i18n.t("autofill.toggle");
+const SHEET_SEARCH_CURRENT_ARCHIVE = i18n.t("archive.search");
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -130,7 +130,7 @@ export function showArchivesPageRightSheet() {
         {
             options: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS,
             cancelButtonIndex: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
-            title: "Archives"
+            title: i18n.t("archives.self")
         },
         selectedIndex => {
             switch (ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
@@ -150,16 +150,16 @@ export function showArchivesPageRightSheet() {
 export function showTouchIDToggleSheet() {
     const state = getState();
     const currentSourceID = getSelectedSourceID(state);
-    const itemEnableTouchID = "Enable Touch Unlock";
-    const itemDisableTouchID = "Disable Touch Unlock";
-    const itemCancel = "Cancel";
+    const itemEnableTouchID = i18n.t("touch-unlock.enable");
+    const itemDisableTouchID = i18n.t("touch-unlock.disable");
+    const itemCancel = i18n.t("cancel");
     return touchIDEnabledForSource(currentSourceID).then(enabled => {
         const options = [enabled ? itemDisableTouchID : itemEnableTouchID, itemCancel];
         ActionSheet.showActionSheetWithOptions(
             {
                 options,
                 cancelButtonIndex: options.indexOf(itemCancel),
-                title: "Touch Unlock"
+                title: i18n.t("touch-unlock.self")
             },
             selectedIndex => {
                 switch (options[selectedIndex]) {
@@ -202,10 +202,10 @@ export function showTouchIDToggleSheet() {
 export function showAutoFillToggleSheet() {
     const state = getState();
     const currentSourceID = getSelectedSourceID(state);
-    const itemEnableAutoFill = "Enable Autofill";
-    const itemDisableAutoFill = "Disable Autofill";
-    const itemSystemSettings = "Android Settings";
-    const itemCancel = "Cancel";
+    const itemEnableAutoFill = i18n.t("autofill.enable");
+    const itemDisableAutoFill = i18n.t("autofill.disable");
+    const itemSystemSettings = i18n.t("android-settings");
+    const itemCancel = i18n.t("cancel");
     return Promise.all([getAutoFillSystemStatus(), autoFillEnabledForSource(currentSourceID)]).then(
         results => {
             const autoFillEnabled = results[0];
@@ -226,7 +226,7 @@ export function showAutoFillToggleSheet() {
                 {
                     options,
                     cancelButtonIndex: options.indexOf(itemCancel),
-                    title: "Autofill"
+                    title: i18n.t("autofill.self")
                 },
                 selectedIndex => {
                     switch (options[selectedIndex]) {

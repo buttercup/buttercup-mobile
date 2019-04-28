@@ -1,93 +1,109 @@
 {
-    "archives": {
-        "add-to-begin": "Add a new archive to begin",
-        "archive-password": "Archive Password",
-        "add-archive": "Add Archive"
-    },
-    "manage-archive": "Manage Archive",
-    "edit-group": "Edit Group",
-    "remove": "Remove",
+  "archives": {
+    "add-to-begin": "Add a new archive to begin",
+    "archive-password": "Archive Password",
+    "add-archive": "Add Archive",
+    "lock-all": "Lock All",
+    "self": "Archives"
+  },
+  "manage-archive": "Manage Archive",
+  "edit-group": "Edit Group",
+  "remove": "Remove",
+  "cancel": "Cancel",
+  "groups": {
+    "add-a-group-or-entry": "Add a group or entry",
+    "rename-group": "Rename Group",
+    "create-group": "Create Group",
+    "group-name": "Group Name"
+  },
+  "dropbox": {
+    "authenticated": "Authenticated",
+    "authenticate": "Authenticate"
+  },
+  "entry": {
+    "add": "Add",
     "cancel": "Cancel",
-    "groups": {
-        "add-a-group-or-entry": "Add a group or entry",
-        "rename-group": "Rename Group",
-        "create-group": "Create Group",
-        "group-name": "Group Name"
-    },
-    "dropbox": {
-        "authenticated": "Authenticated",
-        "authenticate": "Authenticate"
-    },
-    "entry": {
-        "add": "Add",
-        "cancel": "Cancel",
-        "hide-hidden": "Hide Hidden",
-        "new-entry": "New Entry",
-        "create": "Create",
-        "title": "Title",
-        "username": "Username",
-        "password": "Password",
-        "open-url": "Open URL",
-        "open-url-description": "Press OK to launch the URL. The password will be copied to the clipboard.",
-        "no-url": "No URL",
-        "no-url-description": "This entry doesn't contain a URL meta field.",
-        "saved-entry": "Saving entry",
-        "saved-entry-description": "Successfully saved changes to the entry",
-        "ok": "OK",
-        "properties": "Properties",
-        "view-hidden": "View hidden",
-        "edit": "Edit",
-        "delete": "Delete"
-    },
-    "remote": {
-        "connect": "Connect",
-        "connecting": "Connecting",
-        "url": "Remote-URL",
-        "username": "Username",
-        "password": "Password",
-        "connection-details": "Connection details",
-        "self": "Remote"
-    },
-    "archive": {
-        "new": "New",
-        "filename": "Archive Filename",
-        "password": "Archive Password",
-        "name": "Archive Name",
-        "creating": "Creating Archive",
-        "adding": "Adding Archive",
-        "fetching-contents": "Fetching Contents",
-        "placeholder": {
-            "filename": "Filename"
-        },
-        "remove-archive": "Remove Archive",
-        "remove-archive-description": "Are you sure that you want to remove {{name}}?"
-    },
-    "use-offline": "Use Offline",
-    "busy-state": {
-        "checking-connection": "Checking Connection",
-        "unlocking": "Unlocking",
-        "unlocking-touch-archives": "Unlocking Touch Archives",
-        "saving": "Saving"
-    },
-    "group": {
-        "delete-group": "Delete Group",
-        "confirm-delete": "Are you sure that you want to delete the group {{title}}?"
-    },
+    "hide-hidden": "Hide Hidden",
+    "new-entry": "New Entry",
+    "create": "Create",
+    "title": "Title",
+    "username": "Username",
+    "password": "Password",
+    "open-url": "Open URL",
+    "open-url-description": "Press OK to launch the URL. The password will be copied to the clipboard.",
+    "no-url": "No URL",
+    "no-url-description": "This entry doesn't contain a URL meta field.",
+    "saved-entry": "Saving entry",
+    "saved-entry-description": "Successfully saved changes to the entry",
+    "ok": "OK",
+    "properties": "Properties",
+    "view-hidden": "View hidden",
+    "edit": "Edit",
     "delete": "Delete",
-    "touch-unlock": {
-        "self": "Touch Unlock",
-        "touch-unlock-disabled": "Successfully disabled touch unlock",
-        "touch-unlock-enabled": "Successfully enabled touch unlock",
-        "errors": {
-            "touch-unlock-disabled": "Failed disabling touch unlock",
-            "source-not-found": "Current source was not found",
-            "unable-locate-credentials": "Unable to locate current credentials",
-            "not-for-archive": "Touch unlock is not enabled for this source",
-            "no-credentials": "No credentials found under touch ID for this source"
-        },
-        "authenticate-to-enable": "Authenticate to enable touch unlock",
-        "authenticate-to-open": "Authenticate to open archive",
-        "enable": "Enable Touch Unlock",
-        "disable": "Disable Touch Unlock"
-    }
+    "new": "New Entry"
+  },
+  "remote": {
+    "connect": "Connect",
+    "connecting": "Connecting",
+    "url": "Remote-URL",
+    "username": "Username",
+    "password": "Password",
+    "connection-details": "Connection details",
+    "self": "Remote"
+  },
+  "archive": {
+    "new": "New",
+    "filename": "Archive Filename",
+    "password": "Archive Password",
+    "name": "Archive Name",
+    "creating": "Creating Archive",
+    "adding": "Adding Archive",
+    "fetching-contents": "Fetching Contents",
+    "placeholder": {
+      "filename": "Filename"
+    },
+    "remove-archive": "Remove Archive",
+    "remove-archive-description": "Are you sure that you want to remove {{name}}?",
+    "add": "Add",
+    "search": "Search Archive"
+  },
+  "use-offline": "Use Offline",
+  "busy-state": {
+    "checking-connection": "Checking Connection",
+    "unlocking": "Unlocking",
+    "unlocking-touch-archives": "Unlocking Touch Archives",
+    "saving": "Saving"
+  },
+  "group": {
+    "delete": "Delete Group",
+    "confirm-delete": "Are you sure that you want to delete the group {{title}}?",
+    "new": "New Group",
+    "rename": "Renam Group"
+  },
+  "delete": "Delete",
+  "touch-unlock": {
+    "self": "Touch Unlock",
+    "touch-unlock-disabled": "Successfully disabled touch unlock",
+    "touch-unlock-enabled": "Successfully enabled touch unlock",
+    "errors": {
+      "touch-unlock-disabled": "Failed disabling touch unlock",
+      "source-not-found": "Current source was not found",
+      "unable-locate-credentials": "Unable to locate current credentials",
+      "not-for-archive": "Touch unlock is not enabled for this source",
+      "no-credentials": "No credentials found under touch ID for this source",
+      "failed-enabling": "Failed enabling touch unlock"
+    },
+    "authenticate-to-enable": "Authenticate to enable touch unlock",
+    "authenticate-to-open": "Authenticate to open archive",
+    "enable": "Enable Touch Unlock",
+    "disable": "Disable Touch Unlock",
+    "toggle": "Toggle Touch Unlock"
+  },
+  "autofill": {
+    "toggle": "Toggle Autofill",
+    "enable": "Enable Autofill",
+    "disable": "Disable Autofill",
+    "self": "Autofill"
+  },
+  "android-settings": "Android Settings"
 }

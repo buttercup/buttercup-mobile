@@ -1,6 +1,6 @@
 import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
-import i18next from "i18next";
+import i18n from "../shared/i18n";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
 import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
@@ -73,10 +73,10 @@ export default connect(
             const url = getEntryURL(state);
             const password = getEntryPassword(state);
             if (url) {
-                Alert.alert(i18next.t("entry.open-url"), i18next.t("entry.open-url-description"), [
-                    { text: i18next.t("cancel"), style: "cancel" },
+                Alert.alert(i18n.t("entry.open-url"), i18n.t("entry.open-url-description"), [
+                    { text: i18n.t("cancel"), style: "cancel" },
                     {
-                        text: i18next.t("entry.ok"),
+                        text: i18n.t("entry.ok"),
                         style: "default",
                         onPress: () => {
                             Clipboard.setString(password);
@@ -86,9 +86,9 @@ export default connect(
                 ]);
             } else {
                 Alert.alert(
-                    i18next.t("entry.no-url"),
-                    i18next.t("entry.no-url-description"),
-                    [{ text: i18next.t("entry.ok"), onPress: () => {} }],
+                    i18n.t("entry.no-url"),
+                    i18n.t("entry.no-url-description"),
+                    [{ text: i18n.t("entry.ok"), onPress: () => {} }],
                     { cancelable: false }
                 );
             }
@@ -102,7 +102,7 @@ export default connect(
             const facade = createEntryFacade(entry);
             facade.fields = fields;
             consumeEntryFacade(entry, facade);
-            dispatch(setBusyState(i18next.t("busy-state.saving")));
+            dispatch(setBusyState(i18n.t("busy-state.saving")));
             return saveCurrentArchive()
                 .then(() => {
                     updateCurrentArchive();
@@ -110,8 +110,8 @@ export default connect(
                     dispatch(setEntryEditing(false));
                     executeNotification(
                         "success",
-                        i18next.t("entry.saved-entry"),
-                        i18next.t("entry.saved-entry-description")
+                        i18n.t("entry.saved-entry"),
+                        i18n.t("entry.saved-entry-description")
                     );
                 })
                 .catch(err => {

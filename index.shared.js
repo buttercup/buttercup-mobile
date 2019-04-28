@@ -11,7 +11,7 @@ import ButtercupApp from "./source/routing.js";
 import AutoFillApp from "./source/autofill/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
 import { migrateStorage } from "./source/library/storage.js";
-import i18n from "./source/shared/i18n/i18n";
+import i18n from "./source/shared/i18n";
 
 export default class ButtercupShared extends Component {
     constructor(...args) {

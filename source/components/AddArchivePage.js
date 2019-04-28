@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { Cell, CellGroup } from "react-native-cell-components";
 import PropTypes from "prop-types";
-import i18next from "i18next";
 import { withNamespaces } from "react-i18next";
+import i18n from "../shared/i18n";
 import { getArchiveTypeDetails } from "../library/archives.js";
 
 const styles = StyleSheet.create({
@@ -20,7 +20,7 @@ const ARCHIVE_TYPES = getArchiveTypeDetails();
 
 class AddArchive extends Component {
     static navigationOptions = {
-        title: i18next.t("archives.add-archive")
+        title: i18n.t("archives.add-archive")
     };
 
     getMenuContents() {
