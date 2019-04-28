@@ -1,78 +1,93 @@
 {
-  "archives": {
-    "add-to-begin": "Füge ein Archiv hinzu um loszulegen",
-    "archive-password": "Archiv Passwort",
-    "add-archive": "Archiv hinzufügen"
-  },
-  "manage-archive": "Verwalte Archive",
-  "edit-group": "Bearbeite Gruppe",
-  "remove": "Löschen",
-  "enable-touch-unlock": "Aktiviere Touch Unlock",
-  "disable-touch-unlock": "Deaktiviere Touch Unlock",
-  "cancel": "Abbrechen",
-  "touch-unlock": "Touch Unlock",
-  "groups": {
-    "add-a-group-or-entry": "Füge eine Gruppe oder einen Eintrag hinzu",
-    "rename-group": "Gruppe umbenennen",
-    "create-group": "Gruppe erstellen",
-    "group-name": "Gruppenname"
-  },
-  "dropbox": {
-    "authenticated": "Authenticate",
-    "authenticate": "Authentifizieren"
-  },
-  "entry": {
-    "add": "Hinzufügen",
+    "archives": {
+        "add-to-begin": "Füge ein Archiv hinzu um loszulegen",
+        "archive-password": "Archiv Passwort",
+        "add-archive": "Archiv hinzufügen"
+    },
+    "manage-archive": "Verwalte Archive",
+    "edit-group": "Bearbeite Gruppe",
+    "remove": "Löschen",
     "cancel": "Abbrechen",
-    "hide-hidden": "Felder ausblenden",
-    "new-entry": "Neuer Eintrag",
-    "create": "Erstellen",
-    "title": "Titel",
-    "username": "Benutzername",
-    "password": "Password",
-    "open-url": "URL öffnen",
-    "open-url-description": "Drücke OK, um die URL zu starten. Das Passwort wird in die Zwischenablage kopiert.",
-    "no-url": "Keine URL",
-    "no-url-description": "Dieser Eintrag enthält kein URL-Meta-Feld.",
-    "saved-entry": "Eintrag speichern",
-    "saved-entry-description": "Erfolgreich die Eintrags-Änderungen gespeichert",
-    "ok": "OK",
-    "properties": "Eigenschaften",
-    "view-hidden": "Einblenden versteckter Felder",
-    "edit": "Bearbeiten",
-    "delete": "Löschen"
-  },
-  "remote": {
-    "connect": "Verbinden",
-    "connecting": "Verbinde",
-    "url": "Remote-URL",
-    "username": "Benutzername",
-    "password": "Passwort",
-    "connection-details": "Verbindungsdaten",
-    "self": "Extern"
-  },
-  "archive": {
-    "new": "New",
-    "filename": "Archiv Dateiname",
-    "password": "Archiv Passwort",
-    "name": "Archive-Name",
-    "creating": "Archiv erstellen",
-    "fetching-contents": "Rufe Inhalte ab",
-    "adding": "Archiv hinzufügen",
-    "placeholder": {
-      "filename": "Dateiname"
+    "groups": {
+        "add-a-group-or-entry": "Füge eine Gruppe oder einen Eintrag hinzu",
+        "rename-group": "Gruppe umbenennen",
+        "create-group": "Gruppe erstellen",
+        "group-name": "Gruppenname"
+    },
+    "dropbox": {
+        "authenticated": "Authenticate",
+        "authenticate": "Authentifizieren"
+    },
+    "entry": {
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen",
+        "hide-hidden": "Felder ausblenden",
+        "new-entry": "Neuer Eintrag",
+        "create": "Erstellen",
+        "title": "Titel",
+        "username": "Benutzername",
+        "password": "Password",
+        "open-url": "URL öffnen",
+        "open-url-description": "Drücke OK, um die URL zu starten. Das Passwort wird in die Zwischenablage kopiert.",
+        "no-url": "Keine URL",
+        "no-url-description": "Dieser Eintrag enthält kein URL-Meta-Feld.",
+        "saved-entry": "Eintrag speichern",
+        "saved-entry-description": "Erfolgreich die Eintrags-Änderungen gespeichert",
+        "ok": "OK",
+        "properties": "Eigenschaften",
+        "view-hidden": "Einblenden versteckter Felder",
+        "edit": "Bearbeiten",
+        "delete": "Löschen"
+    },
+    "remote": {
+        "connect": "Verbinden",
+        "connecting": "Verbinde",
+        "url": "Remote-URL",
+        "username": "Benutzername",
+        "password": "Passwort",
+        "connection-details": "Verbindungsdaten",
+        "self": "Extern"
+    },
+    "archive": {
+        "new": "New",
+        "filename": "Archiv Dateiname",
+        "password": "Archiv Passwort",
+        "name": "Archive-Name",
+        "creating": "Archiv erstellen",
+        "fetching-contents": "Rufe Inhalte ab",
+        "adding": "Archiv hinzufügen",
+        "placeholder": {
+            "filename": "Dateiname"
+        },
+        "remove-archive": "Archiv entfernen",
+        "remove-archive-description": "Bist du dir sicher, dass du {{name}} löschen möchtest?"
+    },
+    "use-offline": "Offline nutzen",
+    "busy-state": {
+        "checking-connection": "Verbindung prüfen",
+        "unlocking": "Entsperren",
+        "unlocking-touch-archives": "Entsperren von Touch-Archiven",
+        "saving": "Speichere"
+    },
+    "group": {
+        "delete-group": "Gruppe löschen",
+        "confirm-delete": "Bist du sicher, dass du die Gruppe {{title}} löschen möchtest?"
+    },
+    "delete": "Löschen",
+    "touch-unlock": {
+        "self": "Berührungsfreigabe",
+        "touch-unlock-disabled": "Berührungsfreigabe erfolgreich deaktiviert",
+        "touch-unlock-enabled": "Berührungsfreigabe erfolgreich aktiviert",
+        "errors": {
+            "touch-unlock-disabled": "Deaktivierung von Berührungsfreigabe fehlgeschlagen",
+            "source-not-found": "Aktuelle Quelle nicht gefunden",
+            "unable-locate-credentials": "Aktuelle Anmeldeinformationen können nicht gefunden werden",
+            "not-for-archive": "Berührungsfreigabe ist für diese Quelle nicht aktiviert",
+            "no-credentials": "Unter der Touch-ID für diese Quelle wurden keine Anmeldeinformationen gefunden"
+        },
+        "authenticate-to-enable": "Authentifizieren zur Aktivierung von Touch-Unlock",
+        "authenticate-to-open": "Authentifizieren zum Öffnen des Archivs",
+        "enable": "Berührungsfreigabe aktivieren",
+        "disable": "Berührungsfreigabe deaktivieren"
     }
-  },
-  "use-offline": "Offline nutzen",
-  "busy-state": {
-    "checking-connection": "Verbindung prüfen",
-    "unlocking": "Entsperren",
-    "unlocking-touch-archives": "Entsperren von Touch-Archiven",
-    "saving": "Speichere"
-  },
-  "group": {
-    "delete-group": "Gruppe löschen",
-    "confirm-delete": "Bist du sicher, dass du die Gruppe {{title}} löschen möchtest?"
-  },
-  "delete": "Löschen"
 }

@@ -1,4 +1,5 @@
 import TouchID from "react-native-touch-id";
+import i18next from "i18next";
 import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
 import { handleError } from "../global/exceptions.js";
 import { executeNotification } from "../global/notify.js";
@@ -39,16 +40,20 @@ export function disableTouchUnlock(sourceID) {
             return setTouchUnlockCredentials(newCreds);
         })
         .then(() => {
-            executeNotification("success", "Touch Unlock", "Successfully disabled touch unlock");
+            executeNotification(
+                "success",
+                i18next.t("touch-unlock.self"),
+                i18next.t("touch-unlock.touch-unlock-disabled")
+            );
         })
         .then(() => updateTouchEnabledSources())
         .catch(error => {
-            handleError("Failed disabling touch unlock", error);
+            handleError(i18next.t("touch-unlock.errors.touch-unlock-disabled"), error);
         });
 }
 
 export function enableTouchUnlock(sourceID) {
-    return TouchID.authenticate("Authenticate to enable touch unlock")
+    return TouchID.authenticate(i18next.t("touch-unlock.authenticate-to-enable"))
         .then(() => getTouchUnlockCredentials())
         .then(keychainCreds => {
             const archiveManager = getSharedArchiveManager();
@@ -56,17 +61,21 @@ export function enableTouchUnlock(sourceID) {
             const sourceID = getSelectedSourceID(state);
             const source = archiveManager.getSourceForID(sourceID);
             if (!source) {
-                throw new Error("Current source was not found");
+                throw new Error(i18next.t("touch-unlock.errors.source-not-found"));
             }
             const masterPassword = source.workspace.masterCredentials.password;
             if (!masterPassword) {
-                throw new Error("Unable to locate current credentials");
+                throw new Error(i18next.t("touch-unlock.errors.unable-locate-credentials"));
             }
             const newCreds = updateKeychainCredentials(keychainCreds, sourceID, masterPassword);
             return setTouchUnlockCredentials(newCreds);
         })
         .then(() => {
-            executeNotification("success", "Touch Unlock", "Successfully enabled touch unlock");
+            executeNotification(
+                "success",
+                i18next.t("touch-unlock.self"),
+                i18next.t("touch-unlock.touch-unlock-enabled")
+            );
             return updateTouchEnabledSources().then(() => ({ action: "none" }));
         })
         .catch(err => {
@@ -85,7 +94,7 @@ export function enableTouchUnlock(sourceID) {
 }
 
 export function getKeychainCredentialsFromTouchUnlock() {
-    return TouchID.authenticate("Authenticate to open archive")
+    return TouchID.authenticate(i18next.t("touch-unlock.authenticate-to-open"))
         .then(() => getTouchUnlockCredentials())
         .catch(err => {
             switch (err.name) {
@@ -105,14 +114,14 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
     return touchIDEnabledForSource(sourceID)
         .then(enabled => {
             if (!enabled) {
-                throw new Error("Touch unlock is not enabled for this source");
+                throw new Error(i18next.t("touch-unlock.errors.not-for-archive"));
             }
             return getKeychainCredentialsFromTouchUnlock();
         })
         .then(keychainCreds => {
             const sourcePassword = keychainCreds[sourceID];
             if (!sourcePassword) {
-                throw new Error("No credentials found under touch ID for this source");
+                throw new Error(i18next.t("touch-unlock.errors.no-credentials"));
             }
             return sourcePassword;
         });

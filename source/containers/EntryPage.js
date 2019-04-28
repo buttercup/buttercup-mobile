@@ -88,7 +88,7 @@ export default connect(
                 Alert.alert(
                     i18next.t("entry.no-url"),
                     i18next.t("entry.no-url-description"),
-                    [{ text: "OK", onPress: () => {} }],
+                    [{ text: i18next.t("entry.ok"), onPress: () => {} }],
                     { cancelable: false }
                 );
             }
