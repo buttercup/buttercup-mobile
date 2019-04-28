@@ -140,7 +140,7 @@ class EntryPage extends Component {
     }
 
     renderContentCell(field) {
-        const { editing } = this.props;
+        const { editing, t } = this.props;
         const cellOptions = editing
             ? {
                   autoCapitalize: "none",
@@ -150,10 +150,14 @@ class EntryPage extends Component {
               }
             : {};
         const CellType = editing ? CellInput : Cell;
+
+        const i18nTitleKey = `entry.field.${field.title.toLowerCase()}`;
+        const i18nTitle = t(i18nTitleKey) === i18nTitleKey ? field.title : t(i18nTitleKey);
+
         return (
             <CellType
                 key={field.property}
-                title={field.title}
+                title={i18nTitle}
                 value={this.displayValueForProp(field.property, field.value)}
                 icon={iconLabelForProp(field.property)}
                 onPress={() => this.handleCellPress(field.title, field.value)}

@@ -9,6 +9,7 @@ import { cancelAutoFill } from "../../shared/autofill";
 import ToolbarButton from "../../components/ToolbarButton";
 import SearchResult from "../../components/SearchResult";
 import { searchCurrentArchive } from "../../shared/entries";
+import i18n from "../../shared/i18n";
 
 const styles = StyleSheet.create({
     container: {
@@ -25,7 +26,7 @@ function getRightToolbarButton() {
 
 class SearchArchivesPage extends Component {
     static navigationOptions = {
-        title: "Search Archives",
+        title: i18n.t("archive.search"),
         headerRight: getRightToolbarButton()
     };
 

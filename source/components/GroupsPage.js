@@ -6,6 +6,7 @@ import { Cell, CellGroup } from "react-native-cell-components";
 import { withNamespaces } from "react-i18next";
 import { editGroup } from "../shared/archiveContents.js";
 import { rawGroupIsTrash } from "../shared/group.js";
+import i18n from "../shared/i18n";
 import Spinner from "./Spinner.js";
 import EmptyView from "./EmptyView.js";
 import ToolbarIcon from "./ToolbarIcon.js";
@@ -39,7 +40,7 @@ class GroupsPage extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
         const { groupID = "0", title, isTrash } = params;
-        const options = { title };
+        const options = { title: isTrash ? i18n.t("group.trash") : title };
         if (!isTrash) {
             options.headerRight = (
                 <ToolbarIcon icon={MENU_ICON} onPress={() => editGroup(groupID)} />
@@ -90,7 +91,11 @@ class GroupsPage extends Component {
                                             )
                                         }
                                     >
-                                        <Text>{group.title}</Text>
+                                        <Text>
+                                            {rawGroupIsTrash(group)
+                                                ? this.props.t("group.trash")
+                                                : group.title}
+                                        </Text>
                                     </Cell>
                                 ))}
                                 {childEntries.map(entry => (

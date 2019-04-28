@@ -16,6 +16,7 @@ import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { setBusyState } from "../actions/app.js";
 import { handleError } from "../global/exceptions.js";
+import i18n from "../shared/i18n";
 
 function getGroupContents(state, props) {
     const navGroupID =
@@ -56,7 +57,7 @@ export default connect(
         },
         onGroupCreate: (parentID, groupTitle) => dispatch => {
             dispatch(showCreateGroupPrompt(false));
-            dispatch(setBusyState("Saving"));
+            dispatch(setBusyState(i18n.t("busy-state.saving")));
             createGroup(parentID, groupTitle);
             updateCurrentArchive();
             return saveCurrentArchive()
@@ -73,7 +74,7 @@ export default connect(
         },
         onGroupRename: (groupID, groupName) => dispatch => {
             dispatch(showGroupRenamePrompt(false));
-            dispatch(setBusyState("Saving"));
+            dispatch(setBusyState(i18n.t("busy-state.saving")));
             renameGroup(groupID, groupName);
             updateCurrentArchive();
             return saveCurrentArchive()

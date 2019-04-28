@@ -40,7 +40,19 @@
     "view-hidden": "Versteckte Felder einblenden",
     "edit": "Bearbeiten",
     "delete": "Löschen",
-    "new": "Neuer Eintrag"
+    "new": "Neuer Eintrag",
+    "field": {
+      "username": "Benutzername",
+      "password": "Passwort",
+      "title": "Titel"
+    },
+    "property": {
+      "add": "Eigenschaft hinzufügen",
+      "save": "Speichern",
+      "name": "Name",
+      "value": "Wert"
+    },
+    "delete-confirm": "Bist du dir sicher, dass du den Eintrag {{title}} löschen möchtest?"
   },
   "remote": {
     "connect": "Verbinden",
@@ -78,7 +90,8 @@
     "delete": "Gruppe löschen",
     "confirm-delete": "Bist du sicher, dass du die Gruppe {{title}} löschen möchtest?",
     "new": "Neue Gruppe",
-    "rename": "Gruppe umbennen"
+    "rename": "Gruppe umbennen",
+    "trash": "Papierkorb"
   },
   "delete": "Löschen",
   "touch-unlock": {

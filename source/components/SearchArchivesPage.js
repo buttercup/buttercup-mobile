@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
 import { searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
+import i18n from "../shared/i18n";
 import SearchResult from "./SearchResult";
 
 /*TODO:
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 
 class SearchArchives extends Component {
     static navigationOptions = {
-        title: "Search Archives"
+        title: i18n.t("archive.search")
     };
 
     static propTypes = {

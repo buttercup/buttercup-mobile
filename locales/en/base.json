@@ -40,7 +40,19 @@
     "view-hidden": "View hidden",
     "edit": "Edit",
     "delete": "Delete",
-    "new": "New Entry"
+    "new": "New Entry",
+    "field": {
+      "username": "Username",
+      "password": "Password",
+      "title": "Title"
+    },
+    "property": {
+      "add": "Add Property",
+      "save": "Save",
+      "name": "Name",
+      "value": "Value"
+    },
+    "delete-confirm": "Are you sure that you want to delete the entry {{title}}?"
   },
   "remote": {
     "connect": "Connect",
@@ -78,7 +90,8 @@
     "delete": "Delete Group",
     "confirm-delete": "Are you sure that you want to delete the group {{title}}?",
     "new": "New Group",
-    "rename": "Renam Group"
+    "rename": "Renam Group",
+    "trash": "Trash"
   },
   "delete": "Delete",
   "touch-unlock": {
