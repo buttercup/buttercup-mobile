@@ -24,12 +24,23 @@
   "entry": {
     "add": "Hinzufügen",
     "cancel": "Abbrechen",
-    "hide-hidden": "Eingabe verstecken",
+    "hide-hidden": "Felder ausblenden",
     "new-entry": "Neuer Eintrag",
     "create": "Erstellen",
     "title": "Titel",
     "username": "Benutzername",
-    "password": "Password"
+    "password": "Password",
+    "open-url": "URL öffnen",
+    "open-url-description": "Drücke OK, um die URL zu starten. Das Passwort wird in die Zwischenablage kopiert.",
+    "no-url": "Keine URL",
+    "no-url-description": "Dieser Eintrag enthält kein URL-Meta-Feld.",
+    "saved-entry": "Eintrag speichern",
+    "saved-entry-description": "Erfolgreich die Eintrags-Änderungen gespeichert",
+    "ok": "OK",
+    "properties": "Eigenschaften",
+    "view-hidden": "Einblenden versteckter Felder",
+    "edit": "Bearbeiten",
+    "delete": "Löschen"
   },
   "remote": {
     "connect": "Verbinden",
@@ -51,5 +62,17 @@
     "placeholder": {
       "filename": "Dateiname"
     }
-  }
+  },
+  "use-offline": "Offline nutzen",
+  "busy-state": {
+    "checking-connection": "Verbindung prüfen",
+    "unlocking": "Entsperren",
+    "unlocking-touch-archives": "Entsperren von Touch-Archiven",
+    "saving": "Speichere"
+  },
+  "group": {
+    "delete-group": "Gruppe löschen",
+    "confirm-delete": "Bist du sicher, dass du die Gruppe {{title}} löschen möchtest?"
+  },
+  "delete": "Löschen"
 }

@@ -118,7 +118,7 @@ class EntryPage extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <CellGroup header="Properties">
+                    <CellGroup header={this.props.t("entry.properties")}>
                         <For each="field" of={this.filterFields(this.props.properties)}>
                             {this.renderContentCell(field)}
                         </For>
@@ -187,14 +187,14 @@ class EntryPage extends Component {
             <CellGroup>
                 <Cell
                     key="view"
-                    title="View hidden"
+                    title={this.props.t("entry.view-hidden")}
                     onPress={() => this.props.onViewHiddenPressed()}
                     tintColor="#1144FF"
                     icon={{ name: "eye", source: "material-community-icons" }}
                 />
                 <Cell
                     key="edit"
-                    title="Edit"
+                    title={this.props.t("entry.edit")}
                     onPress={() => this.props.onEditPressed()}
                     tintColor="#1144FF"
                     icon={{ name: "keyboard", source: "material-community-icons" }}
@@ -202,7 +202,7 @@ class EntryPage extends Component {
                 />
                 <Cell
                     key="delete"
-                    title="Delete"
+                    title={this.props.t("entry.delete")}
                     onPress={() => this.props.onDeletePressed()}
                     tintColor="#FF0000"
                     icon={{ name: "close", source: "material-community-icons" }}

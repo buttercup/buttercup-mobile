@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { Alert } from "react-native";
 import VError from "verror";
+import i18next from "i18next";
 import ArchivesList from "../components/ArchivesList.js";
 import {
     getArchivesDisplayList,
@@ -64,14 +65,14 @@ const performOfflineProcedure = (sourceID, password, isOffline = false) => (disp
             "Would you like to try and load this archive in offline (read-only) mode?",
             [
                 {
-                    text: "Cancel",
+                    text: i18next.t("cancel"),
                     style: "cancel",
                     onPress: () => {
                         dispatch(setBusyState(null));
                     }
                 },
                 {
-                    text: "Use Offline",
+                    text: i18next.t("use-offline"),
                     style: "default",
                     onPress: () => {
                         dispatch(performSourceUnlock(sourceID, password, true))
@@ -99,9 +100,9 @@ const performOfflineProcedure = (sourceID, password, isOffline = false) => (disp
 const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatch, getState) => {
     const isContextAutoFill = getIsContextAutoFill(getState());
     dispatch(showUnlockPasswordPrompt(false));
-    dispatch(setBusyState("Checking Connection"));
+    dispatch(setBusyState(i18next.t("busy-state.checking-connection")));
     return getConnectedStatus().then(connected => {
-        dispatch(setBusyState("Unlocking"));
+        dispatch(setBusyState(i18next.t("busy-state.unlocking")));
         if (!connected && isContextAutoFill) {
             // It is assumed the user is online when attempting to autofill
             // @TODO: Test and handle offline cases (perhaps with offline login??)
@@ -124,7 +125,7 @@ const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatc
 };
 
 const unlockAllTouchArchives = () => dispatch => {
-    dispatch(setBusyState("Unlocking Touch Archives"));
+    dispatch(setBusyState(i18next.t("busy-state.unlocking-touch-archives")));
     // Find all the sources that have TouchID Enabled
     const sources = getSharedArchiveManager().sourcesList;
     return Promise.all(sources.map(source => touchIDEnabledForSource(source.id))).then(results => {
@@ -141,9 +142,9 @@ const unlockAllTouchArchives = () => dispatch => {
             return getKeychainCredentialsFromTouchUnlock()
                 .then(keychainCreds => {
                     // Great we're in, now check for internet and unlock
-                    dispatch(setBusyState("Checking Connection"));
+                    dispatch(setBusyState(i18next.t("busy-state.checking-connection")));
                     return getConnectedStatus().then(connected => {
-                        dispatch(setBusyState("Unlocking Touch Archives"));
+                        dispatch(setBusyState(i18next.t("busy-state.unlocking-touch-archives")));
                         if (!connected) {
                             throw new Error("Failed unlocking: Device not online");
                         }

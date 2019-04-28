@@ -29,7 +29,18 @@
     "create": "Create",
     "title": "Title",
     "username": "Username",
-    "password": "Password"
+    "password": "Password",
+    "open-url": "Open URL",
+    "open-url-description": "Press OK to launch the URL. The password will be copied to the clipboard.",
+    "no-url": "No URL",
+    "no-url-description": "This entry doesn't contain a URL meta field.",
+    "saved-entry": "Saving entry",
+    "saved-entry-description": "Successfully saved changes to the entry",
+    "ok": "OK",
+    "properties": "Properties",
+    "view-hidden": "View hidden",
+    "edit": "Edit",
+    "delete": "Delete"
   },
   "remote": {
     "connect": "Connect",
@@ -46,11 +57,22 @@
     "password": "Archive Password",
     "name": "Archive Name",
     "creating": "Creating Archive",
-    "fetching-ontents": "Fetching Contents",
     "adding": "Adding Archive",
-    "fetching-contents": "",
+    "fetching-contents": "Fetching Contents",
     "placeholder": {
       "filename": "Filename"
     }
-  }
+  },
+  "use-offline": "Use Offline",
+  "busy-state": {
+    "checking-connection": "Checking Connection",
+    "unlocking": "Unlocking",
+    "unlocking-touch-archives": "Unlocking Touch Archives",
+    "saving": "Saving"
+  },
+  "group": {
+    "delete-group": "Delete Group",
+    "confirm-delete": "Are you sure that you want to delete the group {{title}}?"
+  },
+  "delete": "Delete"
 }

@@ -1,5 +1,6 @@
 import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
+import i18next from "i18next";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
 import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
@@ -72,27 +73,22 @@ export default connect(
             const url = getEntryURL(state);
             const password = getEntryPassword(state);
             if (url) {
-                Alert.alert(
-                    "Open URL",
-                    "Press OK to launch the URL. The password will be copied to the clipboard.",
-                    [
-                        { text: "Cancel", style: "cancel" },
-                        {
-                            text: "OK",
-                            style: "default",
-                            onPress: () => {
-                                Clipboard.setString(password);
-                                Linking.openURL(prepareURLForLaunch(url));
-                            }
+                Alert.alert(i18next.t("entry.open-url"), i18next.t("entry.open-url-description"), [
+                    { text: i18next.t("cancel"), style: "cancel" },
+                    {
+                        text: i18next.t("entry.ok"),
+                        style: "default",
+                        onPress: () => {
+                            Clipboard.setString(password);
+                            Linking.openURL(prepareURLForLaunch(url));
                         }
-                    ]
-                );
+                    }
+                ]);
             } else {
                 Alert.alert(
-                    "No URL",
-                    "This entry doesn't contain a URL meta field."[
-                        { text: "OK", onPress: () => {} }
-                    ],
+                    i18next.t("entry.no-url"),
+                    i18next.t("entry.no-url-description"),
+                    [{ text: "OK", onPress: () => {} }],
                     { cancelable: false }
                 );
             }
@@ -106,7 +102,7 @@ export default connect(
             const facade = createEntryFacade(entry);
             facade.fields = fields;
             consumeEntryFacade(entry, facade);
-            dispatch(setBusyState("Saving"));
+            dispatch(setBusyState(i18next.t("busy-state.saving")));
             return saveCurrentArchive()
                 .then(() => {
                     updateCurrentArchive();
@@ -114,8 +110,8 @@ export default connect(
                     dispatch(setEntryEditing(false));
                     executeNotification(
                         "success",
-                        "Saved entry",
-                        "Successfully saved changes to the entry"
+                        i18next.t("entry.saved-entry"),
+                        i18next.t("entry.saved-entry-description")
                     );
                 })
                 .catch(err => {

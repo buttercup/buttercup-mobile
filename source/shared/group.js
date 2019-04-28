@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import i18next from "i18next";
 import { getGroup, getSelectedArchive } from "../selectors/archiveContents.js";
 import { dispatch, getState } from "../store.js";
 import { getTopGroupID } from "../selectors/nav.js";
@@ -29,13 +30,13 @@ export function promptDeleteGroup() {
     const state = getState();
     const topGroupID = getTopGroupID(state);
     const { title } = getGroup(state, topGroupID);
-    Alert.alert("Delete Group", `Are you sure that you want to delete the group '${title}'?`, [
-        { text: "Cancel", style: "cancel" },
+    Alert.alert(i18next.t("group.delete-group"), i18next.t("group.confirm-delete", { title }), [
+        { text: i18next.t("cancel"), style: "cancel" },
         {
-            text: "Delete",
+            text: i18next.t("delete"),
             style: "default",
             onPress: () => {
-                dispatch(setBusyState("Saving"));
+                dispatch(setBusyState(i18next.t("busy-state.saving")));
                 Promise.resolve()
                     .then(() => deleteGroup(topGroupID))
                     .then(() => saveCurrentArchive())
