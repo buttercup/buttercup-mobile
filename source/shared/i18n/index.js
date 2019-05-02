@@ -1,11 +1,13 @@
 import i18n from "i18next";
-import DeviceInfo from "react-native-device-info";
 import localesConfig from "../../../locales/config";
+import * as RNLocalize from "react-native-localize";
 
 const languageDetector = {
     init: Function.prototype,
     type: "languageDetector",
-    detect: () => DeviceInfo.getDeviceLocale(),
+    detect: () =>
+        RNLocalize.getLocales().find(locale => locale.countryCode === RNLocalize.getCountry())
+            .languageCode || localesConfig.fallbackLng,
     cacheUserLanguage: Function.prototype
 };
 
@@ -15,7 +17,6 @@ Object.keys(localesConfig.languages).forEach(key => {
     languages[key] = {};
     languages[key].name = localesConfig.languages[key].name;
 
-    console.log(languages[key]);
     localesConfig.types.forEach(type => {
         languages[key][type] = localesConfig.languages[key].data;
     });
@@ -33,7 +34,7 @@ i18n.use(languageDetector).init({
     keySeparator: ".",
     pluralSeparator: "_",
     contextSeparator: "-",
-    debug: true,
+    debug: false,
     saveMissingTo: "all",
     saveMissing: false,
     returnEmptyString: false
