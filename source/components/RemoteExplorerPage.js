@@ -4,6 +4,7 @@ import { Cell, CellGroup } from "react-native-cell-components";
 import Prompt from "@perrymitchell/react-native-prompt";
 import { withNamespaces } from "react-i18next";
 import PropTypes from "prop-types";
+import i18n from "../shared/i18n";
 import { beginNewArchiveProcedure } from "../shared/archives.js";
 import Spinner from "./Spinner.js";
 
@@ -35,9 +36,7 @@ class RemoteExplorer extends Component {
         const { params = {} } = navigation.state;
         return {
             title: `${params.title}`,
-            headerRight: (
-                <Button title={this.props.t("archive.new")} onPress={beginNewArchiveProcedure} />
-            )
+            headerRight: <Button title={i18n.t("archive.new")} onPress={beginNewArchiveProcedure} />
         };
     };
 

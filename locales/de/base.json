@@ -64,7 +64,7 @@
     "self": "Extern"
   },
   "archive": {
-    "new": "New",
+    "new": "Erstellen",
     "filename": "Archiv Dateiname",
     "password": "Archiv Passwort",
     "name": "Archive-Name",
