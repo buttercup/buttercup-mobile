@@ -159,16 +159,13 @@ dependencies {
     implementation project(':react-native-randombytes')
     implementation project(':@yfuks/react-native-action-sheet')
     implementation project(':react-native-vector-icons')
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:23.0.1"
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "com.madgag.spongycastle:prov:1.56.0.0"
     testImplementation "junit:junit:4.12"
     androidTestImplementation "junit:junit:4.12"
     androidTestImplementation "com.android.support.test:runner:0.4.1"
     androidTestImplementation "com.android.support.test:rules:0.4.1"
-    androidTestImplementation "com.android.support:support-annotations:23.0.1"
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    androidTestImplementation "com.android.support:support-annotations:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
