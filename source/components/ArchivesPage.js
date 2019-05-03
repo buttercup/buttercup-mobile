@@ -6,7 +6,6 @@ import ToolbarIcon from "./ToolbarIcon.js";
 import { navigateToSearchArchives } from "../actions/navigation.js";
 import { setSearchContext } from "../actions/app.js";
 import { dispatch } from "../store.js";
-import { withTranslation } from "react-i18next";
 
 const BUTTERCUP_LOGO = require("../../resources/images/buttercup-header.png");
 const CLOUD_ADD = require("../../resources/images/boxes-1.png");
