@@ -178,7 +178,7 @@ class ArchivesList extends Component {
         if (status === "unlocked") {
             this.props.lockArchive(sourceID);
         } else {
-            alert("Cannot lock archive that is not unlocked");
+            alert(this.props.t("archive.cannot-lock-not-unlocked"));
         }
     }
 

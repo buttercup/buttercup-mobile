@@ -77,7 +77,8 @@
     "remove-archive": "Remove Archive",
     "remove-archive-description": "Are you sure that you want to remove '{{name}}'?",
     "add": "Add",
-    "search": "Search Archive"
+    "search": "Search Archive",
+    "cannot-lock-not-unlocked": "Cannot lock archive that is not unlocked"
   },
   "use-offline": "Use Offline",
   "busy-state": {

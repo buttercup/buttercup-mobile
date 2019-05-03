@@ -77,7 +77,8 @@
     "remove-archive": "Archiv entfernen",
     "remove-archive-description": "Bist du dir sicher, dass du '{{name}}' löschen möchtest?",
     "add": "Hinzufügen",
-    "search": "Archiv durchsuchen"
+    "search": "Archiv durchsuchen",
+    "cannot-lock-not-unlocked": "Archiv, das nicht entsperrt ist, kann nicht gesperrt werden."
   },
   "use-offline": "Offline nutzen",
   "busy-state": {
