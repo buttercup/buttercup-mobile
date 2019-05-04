@@ -90,6 +90,7 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({
                     routeName: "GroupsPage",
+                    key: groupID,
                     params: { groupID, title, isTrash }
                 }),
                 state

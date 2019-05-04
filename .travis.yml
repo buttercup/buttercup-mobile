@@ -9,31 +9,31 @@ matrix:
       install:
         - npm install
       node_js:
-        - 8
+        - "8"
     - language: objective-c
-      env:
-        - NAME=iOS-11_iPhone-7_arm64
+      node_js:
+        - "10.13.0"
+
       os: osx
-      osx_image: xcode10
-      script:
-        - brew update
-        - brew install bash
-        - brew install nvm
-        - nvm install 8.4.0
-        - npm install
-        - ./scripts/testIOS.sh "iPhone 7" "11.2"
+      osx_image: xcode10.2
+
+      install:
+        - npm ci &>/dev/null
+        - ./scripts/testIOS.sh "iPhone XS" "12.0" "build"
+        - ./scripts/testIOS.sh "iPhone XS" "12.0" "test"
+
     - language: objective-c
-      env:
-        - NAME=iOS-10_iPhone-5_armv7s
+      node_js:
+        - "10.13.0"
+
       os: osx
-      osx_image: xcode10
-      script:
-        - brew update
-        - brew install bash
-        - brew install nvm
-        - nvm install 8.4.0
-        - npm install
-        - ./scripts/testIOS.sh "iPhone 5" "10.3.1"
+      osx_image: xcode10.2
+
+      install:
+        - npm ci &>/dev/null
+        - ./scripts/testIOS.sh "iPhone 6s" "10.3.1" "build"
+        - ./scripts/testIOS.sh "iPhone 6s" "10.3.1" "test"
+
     - language: android
       sudo: required
       jdk: oraclejdk8
@@ -59,9 +59,9 @@ matrix:
       install:
         - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid harmless sdkmanager warning
         - echo y | sdkmanager "platform-tools" >/dev/null
-        - echo "y" | sdkmanager "ndk-bundle"
-        - echo "y" | sdkmanager "cmake;3.6.4111459"
-        - echo "y" | sdkmanager "lldb;3.1"
+        - echo y | sdkmanager "ndk-bundle"
+        - echo y | sdkmanager "cmake;3.6.4111459"
+        - echo y | sdkmanager "lldb;3.1"
         - echo y | sdkmanager "tools" >/dev/null # A second time per Travis docs, gets latest versions
         - echo y | sdkmanager "build-tools;28.0.3" >/dev/null # Implicit gradle dependency - gradle drives changes
         - echo y | sdkmanager "platforms;android-$ANDROID_API" >/dev/null # We need the ANDROID_API of the emulator we will run

@@ -1,11 +1,10 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { StackNavigator, addNavigationHelpers } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-// for react-navigation 1.0.0-beta.30
 import {
-    createReduxBoundAddListener,
+    reduxifyNavigator,
     createReactNavigationReduxMiddleware
 } from "react-navigation-redux-helpers";
 
@@ -21,7 +20,7 @@ import PopupBrowser from "./containers/PopupBrowser.js";
 import GroupsPage from "./containers/GroupsPage.js";
 import LockPage from "./components/LockPage.js";
 
-export const AppNavigator = StackNavigator(
+export const AppNavigator = createStackNavigator(
     {
         Home: { screen: ArchivesPage },
         Entry: { screen: EntryPage },
@@ -51,19 +50,15 @@ export const AppNavigator = StackNavigator(
 );
 
 const middleware = createReactNavigationReduxMiddleware("root", state => state.nav);
-const addListener = createReduxBoundAddListener("root");
-
-const AppWithNavigationState = ({ dispatch, nav }) => (
-    <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav, addListener })} />
-);
+const AppWithNavigationState = reduxifyNavigator(AppNavigator, "root");
 
 AppWithNavigationState.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    nav: PropTypes.object.isRequired
+    state: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    nav: state.nav
+    state: state.nav
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState);

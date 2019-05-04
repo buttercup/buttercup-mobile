@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-    Image,
-    StyleSheet,
-    ListView,
-    Text,
-    TouchableHighlight,
-    ScrollView,
-    View,
-    Button
-} from "react-native";
+import { Image, StyleSheet, ListView, Text, TouchableHighlight, View, Button } from "react-native";
 import { withNamespaces } from "react-i18next";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { List, ListItem } from "react-native-elements";
