@@ -87,6 +87,10 @@ To build a signed APK:
  3. In Android Studio, choose _Build > Generate Signed APK_.
  4. Build a release APK by following the instructions in the GUI.
 
+#### Publishing error: duplicate resources
+
+If you encounter a publishing error when generating a signed APK, follow [these instructions](https://stackoverflow.com/questions/52632950/react-native-0-57-1-android-duplicate-resources#answer-55245362).
+
 ### Crypto Library Development
 
 Buttercup Mobile's crypto functionality is written in Rust and lives under `./crypto` directory. The binaries are already built and placed inside the relevant directories and you don't usually need to change those. However, if you want to work on the Rust library, the following are required:
