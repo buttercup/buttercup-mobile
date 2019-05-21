@@ -1,5 +1,11 @@
 # Buttercup Mobile Changelog
 
+## 1.8.2
+_2019-05-16_
+
+ * **Bugfix**: ([#158](https://github.com/buttercup/buttercup-mobile/issues/158)) Android devices throw `Unknown type: null` error
+ * Update icons for Android
+
 ## v1.8.1
 _2019-01-19_
 

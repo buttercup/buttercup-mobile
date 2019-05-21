@@ -39,9 +39,8 @@ class RemoteConnectPage extends Component {
                 return this.renderWebDAV();
             case "nextcloud":
                 return this.renderWebDAV();
-
             default:
-                throw new Error(`Unknown type: ${this.props.archiveType}`);
+                return null;
         }
     }
 
