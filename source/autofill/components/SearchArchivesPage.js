@@ -25,7 +25,7 @@ function getRightToolbarButton() {
 
 class SearchArchivesPage extends Component {
     static navigationOptions = {
-        title: "Search Archives",
+        title: "Search Vaults",
         headerRight: getRightToolbarButton()
     };
 
