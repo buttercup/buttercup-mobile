@@ -34,9 +34,9 @@ const SHEET_CANCEL = "Cancel";
 const SHEET_DELETE_GROUP = "Delete Group";
 const SHEET_LOCK_ALL = "Lock All";
 const SHEET_RENAME_GROUP = "Rename Group";
-const SHEET_TOGGLE_TOUCH_ID = "Toggle Touch Unlock";
+const SHEET_TOGGLE_TOUCH_ID = "Toggle Biometric Unlock";
 const SHEET_TOGGLE_AUTOFILL = "Toggle Autofill";
-const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Archive";
+const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Vault";
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -59,7 +59,7 @@ function removeTextFromArray(arr, text) {
 
 export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGroup) {
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
-    const title = isRoot ? "Manage Archive" : "Edit Group";
+    const title = isRoot ? "Manage Vault" : "Edit Group";
     const state = getState();
     const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {
@@ -129,7 +129,7 @@ export function showArchivesPageRightSheet() {
         {
             options: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS,
             cancelButtonIndex: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
-            title: "Archives"
+            title: "Vaults"
         },
         selectedIndex => {
             switch (ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
@@ -149,8 +149,8 @@ export function showArchivesPageRightSheet() {
 export function showTouchIDToggleSheet() {
     const state = getState();
     const currentSourceID = getSelectedSourceID(state);
-    const itemEnableTouchID = "Enable Touch Unlock";
-    const itemDisableTouchID = "Disable Touch Unlock";
+    const itemEnableTouchID = "Enable Biometric Unlock";
+    const itemDisableTouchID = "Disable Biometric Unlock";
     const itemCancel = "Cancel";
     return touchIDEnabledForSource(currentSourceID).then(enabled => {
         const options = [enabled ? itemDisableTouchID : itemEnableTouchID, itemCancel];
@@ -158,7 +158,7 @@ export function showTouchIDToggleSheet() {
             {
                 options,
                 cancelButtonIndex: options.indexOf(itemCancel),
-                title: "Touch Unlock"
+                title: "Biometric Unlock"
             },
             selectedIndex => {
                 switch (options[selectedIndex]) {
@@ -172,16 +172,16 @@ export function showTouchIDToggleSheet() {
                                     break;
                                 case "fallback":
                                     handleError(
-                                        "Failed enabling touch unlock",
+                                        "Failed enabling biometric unlock",
                                         new Error(
-                                            "Password not supported for enabling touch unlock"
+                                            "Password not supported for enabling biometric unlock"
                                         )
                                     );
                                     break;
                                 default:
                                     handleError(
-                                        "Failed enabling touch unlock",
-                                        new Error("Unrecognised touch unlock response")
+                                        "Failed enabling biometric unlock",
+                                        new Error("Unrecognised biometric unlock response")
                                     );
                                     break;
                             }

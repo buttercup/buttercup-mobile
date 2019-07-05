@@ -60,7 +60,7 @@ class RemoteExplorer extends Component {
                     </CellGroup>
                 </ScrollView>
                 <Prompt
-                    title="Archive Filename"
+                    title="Vault Filename"
                     placeholder="Filename"
                     visible={this.props.showNewPrompt}
                     onCancel={() => this.props.cancelNewPrompt()}
@@ -72,7 +72,7 @@ class RemoteExplorer extends Component {
                     }}
                 />
                 <Prompt
-                    title="Archive Password"
+                    title="Vault Password"
                     placeholder=""
                     visible={this.props.showNewPassword}
                     onCancel={() => this.props.cancelNewPrompt()}
@@ -80,16 +80,16 @@ class RemoteExplorer extends Component {
                     textInputProps={{ secureTextEntry: true }}
                 />
                 <Prompt
-                    title="Archive Name"
+                    title="Vault Name"
                     placeholder=""
                     visible={this.props.showNewName}
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewArchiveName(value)}
                     textInputProps={{ keyboardType: "default" }}
                 />
-                <Spinner visible={this.props.creatingFile} text="Creating Archive" />
+                <Spinner visible={this.props.creatingFile} text="Creating Vault" />
                 <Spinner visible={this.props.loading} text="Fetching Contents" />
-                <Spinner visible={this.props.addingArchive} text="Adding Archive" />
+                <Spinner visible={this.props.addingArchive} text="Adding Vault" />
             </View>
         );
     }
