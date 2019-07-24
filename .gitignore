@@ -63,3 +63,6 @@ android/app/libs
 
 # Bundle artifact
 *.jsbundle
+
+# Buttercup
+/secrets.json

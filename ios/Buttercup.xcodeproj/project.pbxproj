@@ -15,6 +15,7 @@
 		00E356F31AD99517003FC87E /* ButtercupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ButtercupTests.m */; };
 		0BCA912401874173B41F21C1 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4CDACA32E214A28AD3AF336 /* Ionicons.ttf */; };
 		11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		12BAB1FE6B6F4C7FAF399723 /* libRNAppAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC17EA90BCD4D4B940D5503 /* libRNAppAuth.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -25,6 +26,7 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1762568010D24CE2B88E6F1D /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 476FD2FED5464740BFA551B3 /* FontAwesome.ttf */; };
+		23F5A5D872140264AA5259AB /* Pods_Buttercup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C246D8354F7DD7909797092B /* Pods_Buttercup.framework */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -38,7 +40,9 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* ButtercupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ButtercupTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		2F9D41E10C29313271FADE95 /* Pods_BCAutoFillExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9957AC4CCF9C43746C7D470 /* Pods_BCAutoFillExtension.framework */; };
 		3E603D47F48440489E0182E4 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2F0EE59F70430699DE22E3 /* libRNVectorIcons.a */; };
+		45930BB5BB02594C270A3A58 /* Pods_Buttercup_tvOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 995161BDCE04993130CEF288 /* Pods_Buttercup_tvOSTests.framework */; };
 		51E12EC1CBF641D7910FC691 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C526BB0D8D7F42AFB7E8DF31 /* SimpleLineIcons.ttf */; };
 		55502B73129D4E8AA4FDFC1D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE6B43702ADD4E138BE40FF9 /* libTouchID.a */; };
 		6F973D1D5BED41C8ACE160AD /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D1436390EF8481595521599 /* EvilIcons.ttf */; };
@@ -96,8 +100,11 @@
 		C26F52DE1F5739B6000EB570 /* BCHelpersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52DD1F5739B6000EB570 /* BCHelpersTests.m */; };
 		C26F52DF1F5739BB000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
 		C2B9132D20FBE9640010DAD6 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488A20FB5463000EC30D /* Crypto.m */; };
+		C2CBB45AB9AC5984951F390B /* Pods_ButtercupTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843F2F022EB9EE3CD7794EF2 /* Pods_ButtercupTests.framework */; };
 		C2F3488B20FB5463000EC30D /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488A20FB5463000EC30D /* Crypto.m */; };
 		C2F3488D20FB7EEA000EC30D /* CryptoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488C20FB7EEA000EC30D /* CryptoTests.m */; };
+		C2F71F5A22E5C04B006A6E46 /* RNAppAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = C2F71F5922E5C04B006A6E46 /* RNAppAuth.h */; };
+		C7EA0FA91F0B512757DC0201 /* Pods_Buttercup_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CCBFDA6963002E6896B739 /* Pods_Buttercup_tvOS.framework */; };
 		C9661C6B6D9A4BC688834D4B /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FCC2D269F844C8BF09D78C /* Octicons.ttf */; };
 		ED8D557A1F1E48098EC1E8FC /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CEA96C243934CE395797F2D /* MaterialIcons.ttf */; };
 /* End PBXBuildFile section */
@@ -425,6 +432,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = TouchID;
 		};
+		C2F71F5622E5BECC006A6E46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D42C7902ABB34259A2C0676E /* RNAppAuth.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNAppAuth;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -451,6 +465,7 @@
 		00E356EE1AD99517003FC87E /* ButtercupTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ButtercupTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ButtercupTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtercupTests.m; sourceTree = "<group>"; };
+		01112F1225216D9A184FB2E9 /* Pods-ButtercupTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ButtercupTests.debug.xcconfig"; path = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		10B32057C9914AD5AC8E2D10 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -463,7 +478,10 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Buttercup/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Buttercup/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		16B7CDDF9D8D25E1365EE80C /* Pods-Buttercup-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Buttercup-tvOS/Pods-Buttercup-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		19FCC2D269F844C8BF09D78C /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		2044CFED78201C42F5BFD77D /* Pods-Buttercup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup.release.xcconfig"; path = "Target Support Files/Pods-Buttercup/Pods-Buttercup.release.xcconfig"; sourceTree = "<group>"; };
+		276568E6106FBFC78592DB6C /* Pods-BCAutoFillExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCAutoFillExtension.release.xcconfig"; path = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.release.xcconfig"; sourceTree = "<group>"; };
 		29C796149C7F4A96A29E4D40 /* libRNKeychain.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNKeychain.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Buttercup-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Buttercup-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Buttercup-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Buttercup-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -480,6 +498,11 @@
 		6D1436390EF8481595521599 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		83CCBFDA6963002E6896B739 /* Pods_Buttercup_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buttercup_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		843F2F022EB9EE3CD7794EF2 /* Pods_ButtercupTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ButtercupTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E8B025A902462DFF6E06E8A /* Pods-Buttercup-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Buttercup-tvOSTests/Pods-Buttercup-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		95F9F38B2A445996FA502D40 /* Pods-Buttercup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup.debug.xcconfig"; path = "Target Support Files/Pods-Buttercup/Pods-Buttercup.debug.xcconfig"; sourceTree = "<group>"; };
+		995161BDCE04993130CEF288 /* Pods_Buttercup_tvOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buttercup_tvOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99851D6F20C984E800EAC115 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../crypto/target/universal/release/libcrypto.a; sourceTree = "<group>"; };
 		99851D7120C985FA00EAC115 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		99851D7320C9B7FC00EAC115 /* CryptoBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoBridge.h; sourceTree = "<group>"; };
@@ -501,18 +524,27 @@
 		9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillHelpers.m; sourceTree = "<group>"; };
 		9E44190E21E1775A00CA5E79 /* AutoFillExtensionContextBridgeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillExtensionContextBridgeDelegate.h; sourceTree = "<group>"; };
 		9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillExtensionContextBridgeDelegate.m; sourceTree = "<group>"; };
+		9E67E2E224C7EC6CC5A965C0 /* Pods-Buttercup-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Buttercup-tvOS/Pods-Buttercup-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		AAC17EA90BCD4D4B940D5503 /* libRNAppAuth.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAppAuth.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
+		C246D8354F7DD7909797092B /* Pods_Buttercup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buttercup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C26F52BE1F5736CE000EB570 /* BCHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCHelpers.h; sourceTree = "<group>"; };
 		C26F52BF1F5736CE000EB570 /* BCHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHelpers.m; sourceTree = "<group>"; };
 		C26F52DD1F5739B6000EB570 /* BCHelpersTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHelpersTests.m; sourceTree = "<group>"; };
 		C2F3488920FB5463000EC30D /* Crypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Crypto.h; sourceTree = "<group>"; };
 		C2F3488A20FB5463000EC30D /* Crypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Crypto.m; sourceTree = "<group>"; };
 		C2F3488C20FB7EEA000EC30D /* CryptoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CryptoTests.m; sourceTree = "<group>"; };
+		C2F71F5922E5C04B006A6E46 /* RNAppAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNAppAuth.h; path = "../node_modules/react-native-app-auth/ios/RNAppAuth.h"; sourceTree = "<group>"; };
+		C3CA7369ED62733292A3E0F7 /* Pods-ButtercupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ButtercupTests.release.xcconfig"; path = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests.release.xcconfig"; sourceTree = "<group>"; };
 		C4CDACA32E214A28AD3AF336 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		C526BB0D8D7F42AFB7E8DF31 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		D42C7902ABB34259A2C0676E /* RNAppAuth.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAppAuth.xcodeproj; path = "../node_modules/react-native-app-auth/ios/RNAppAuth.xcodeproj"; sourceTree = "<group>"; };
+		DD7168EC82214DB68E569F3A /* Pods-BCAutoFillExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCAutoFillExtension.debug.xcconfig"; path = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		EE6B43702ADD4E138BE40FF9 /* libTouchID.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libTouchID.a; sourceTree = "<group>"; };
+		F9957AC4CCF9C43746C7D470 /* Pods_BCAutoFillExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BCAutoFillExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF6B0E67BDD99687D46DC5FE /* Pods-Buttercup-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Buttercup-tvOSTests/Pods-Buttercup-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -521,6 +553,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
+				C2CBB45AB9AC5984951F390B /* Pods_ButtercupTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +579,8 @@
 				BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */,
 				55502B73129D4E8AA4FDFC1D /* libTouchID.a in Frameworks */,
 				9E13615B21DC466600EE48B0 /* libRNSecureStorage.a in Frameworks */,
+				12BAB1FE6B6F4C7FAF399723 /* libRNAppAuth.a in Frameworks */,
+				23F5A5D872140264AA5259AB /* Pods_Buttercup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +596,7 @@
 				2D02E4C61E0B4AEC006451C7 /* libRCTSettings-tvOS.a in Frameworks */,
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
+				C7EA0FA91F0B512757DC0201 /* Pods_Buttercup_tvOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
+				45930BB5BB02594C270A3A58 /* Pods_Buttercup_tvOSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +631,7 @@
 				9E13611421DC437500EE48B0 /* libRNRandomBytes.a in Frameworks */,
 				9E13611621DC437C00EE48B0 /* libTouchID.a in Frameworks */,
 				9E13615A21DC465E00EE48B0 /* libRNSecureStorage.a in Frameworks */,
+				2F9D41E10C29313271FADE95 /* Pods_BCAutoFillExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,6 +776,11 @@
 				99851D7120C985FA00EAC115 /* libresolv.tbd */,
 				99851D6F20C984E800EAC115 /* libcrypto.a */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
+				F9957AC4CCF9C43746C7D470 /* Pods_BCAutoFillExtension.framework */,
+				C246D8354F7DD7909797092B /* Pods_Buttercup.framework */,
+				83CCBFDA6963002E6896B739 /* Pods_Buttercup_tvOS.framework */,
+				995161BDCE04993130CEF288 /* Pods_Buttercup_tvOSTests.framework */,
+				843F2F022EB9EE3CD7794EF2 /* Pods_ButtercupTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -749,6 +792,24 @@
 				5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		66E5E43960BB0CF867F56FA3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DD7168EC82214DB68E569F3A /* Pods-BCAutoFillExtension.debug.xcconfig */,
+				276568E6106FBFC78592DB6C /* Pods-BCAutoFillExtension.release.xcconfig */,
+				95F9F38B2A445996FA502D40 /* Pods-Buttercup.debug.xcconfig */,
+				2044CFED78201C42F5BFD77D /* Pods-Buttercup.release.xcconfig */,
+				16B7CDDF9D8D25E1365EE80C /* Pods-Buttercup-tvOS.debug.xcconfig */,
+				9E67E2E224C7EC6CC5A965C0 /* Pods-Buttercup-tvOS.release.xcconfig */,
+				8E8B025A902462DFF6E06E8A /* Pods-Buttercup-tvOSTests.debug.xcconfig */,
+				FF6B0E67BDD99687D46DC5FE /* Pods-Buttercup-tvOSTests.release.xcconfig */,
+				01112F1225216D9A184FB2E9 /* Pods-ButtercupTests.debug.xcconfig */,
+				C3CA7369ED62733292A3E0F7 /* Pods-ButtercupTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -780,6 +841,7 @@
 				A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */,
 				B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */,
 				46771EDC56994001BF7A4321 /* TouchID.xcodeproj */,
+				D42C7902ABB34259A2C0676E /* RNAppAuth.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -796,6 +858,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C2F71F5922E5C04B006A6E46 /* RNAppAuth.h */,
 				13B07FAE1A68108700A75B9A /* Buttercup */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ButtercupTests */,
@@ -804,6 +867,7 @@
 				F06253306B464B5FBAA6636B /* Resources */,
 				C2756AA21F8742D00036B825 /* Recovered References */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				66E5E43960BB0CF867F56FA3 /* Pods */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -867,6 +931,7 @@
 				2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */,
 				EE6B43702ADD4E138BE40FF9 /* libTouchID.a */,
 				29C796149C7F4A96A29E4D40 /* libRNKeychain.a */,
+				AAC17EA90BCD4D4B940D5503 /* libRNAppAuth.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -897,6 +962,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C2F71F5322E5BECC006A6E46 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C2F71F5722E5BECC006A6E46 /* libRNAppAuth.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F06253306B464B5FBAA6636B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -916,11 +989,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		C2F71F5822E5BFEB006A6E46 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2F71F5A22E5C04B006A6E46 /* RNAppAuth.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		00E356ED1AD99517003FC87E /* ButtercupTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ButtercupTests" */;
 			buildPhases = (
+				6784A6016969C86899F506EB /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -939,11 +1024,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Buttercup" */;
 			buildPhases = (
+				50F99D3589A4F6CE1576E319 /* [CP] Check Pods Manifest.lock */,
+				C2F71F5822E5BFEB006A6E46 /* Headers */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				9E13610421DC420F00EE48B0 /* Embed App Extensions */,
+				B33573CE20D74511EC35A7EF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -959,6 +1047,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Buttercup-tvOS" */;
 			buildPhases = (
+				B7DA5DD2700822DAA670715C /* [CP] Check Pods Manifest.lock */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
 				2D02E4791E0B4A5D006451C7 /* Resources */,
@@ -977,6 +1066,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Buttercup-tvOSTests" */;
 			buildPhases = (
+				2787F9E444BD62C02E34271B /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -995,6 +1085,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E13610321DC420F00EE48B0 /* Build configuration list for PBXNativeTarget "BCAutoFillExtension" */;
 			buildPhases = (
+				C9329BD68F536AB39F74917B /* [CP] Check Pods Manifest.lock */,
 				9EFFBC4321ED42D700E6D853 /* Copy App Versioning */,
 				9E1360C421DC420E00EE48B0 /* Sources */,
 				9E1360C521DC420E00EE48B0 /* Frameworks */,
@@ -1016,7 +1107,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Buttercup;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -1058,6 +1149,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1112,6 +1204,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = C2F71F5322E5BECC006A6E46 /* Products */;
+					ProjectRef = D42C7902ABB34259A2C0676E /* RNAppAuth.xcodeproj */;
 				},
 				{
 					ProductGroup = C23C4D611ED58FA6008B5786 /* Products */;
@@ -1447,6 +1543,13 @@
 			remoteRef = C2AF3D53207916FC00A40A70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C2F71F5722E5BECC006A6E46 /* libRNAppAuth.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAppAuth.a;
+			remoteRef = C2F71F5622E5BECC006A6E46 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1526,6 +1629,28 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		2787F9E444BD62C02E34271B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Buttercup-tvOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1539,6 +1664,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		50F99D3589A4F6CE1576E319 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Buttercup-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6784A6016969C86899F506EB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ButtercupTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		9E44190D21E0729B00CA5E79 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1575,6 +1744,68 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\nversionString=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"$SRCROOT/Buttercup/Info.plist\")\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$SRCROOT/Buttercup/Info.plist\")\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $versionString\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n";
+		};
+		B33573CE20D74511EC35A7EF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppAuth.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7DA5DD2700822DAA670715C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Buttercup-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9329BD68F536AB39F74917B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BCAutoFillExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1679,6 +1910,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01112F1225216D9A184FB2E9 /* Pods-ButtercupTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 9D8F4J769D;
@@ -1693,12 +1925,14 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
 				);
 				INFOPLIST_FILE = ButtercupTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1717,6 +1951,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3CA7369ED62733292A3E0F7 /* Pods-ButtercupTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -1728,12 +1963,14 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
 				);
 				INFOPLIST_FILE = ButtercupTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1752,6 +1989,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 95F9F38B2A445996FA502D40 /* Pods-Buttercup.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
@@ -1766,6 +2004,7 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
 				);
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1784,6 +2023,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2044CFED78201C42F5BFD77D /* Pods-Buttercup.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
@@ -1797,6 +2037,7 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
 				);
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1815,6 +2056,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16B7CDDF9D8D25E1365EE80C /* Pods-Buttercup-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1832,11 +2074,13 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
 				);
 				INFOPLIST_FILE = "Buttercup-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1857,6 +2101,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E67E2E224C7EC6CC5A965C0 /* Pods-Buttercup-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1874,11 +2119,13 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
 				);
 				INFOPLIST_FILE = "Buttercup-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1899,6 +2146,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8E8B025A902462DFF6E06E8A /* Pods-Buttercup-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1908,10 +2156,15 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
+				);
 				INFOPLIST_FILE = "Buttercup-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1928,6 +2181,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF6B0E67BDD99687D46DC5FE /* Pods-Buttercup-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1937,10 +2191,15 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
+				);
 				INFOPLIST_FILE = "Buttercup-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -2058,6 +2317,7 @@
 		};
 		9E1360D621DC420F00EE48B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD7168EC82214DB68E569F3A /* Pods-BCAutoFillExtension.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2072,12 +2332,17 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
+				);
 				INFOPLIST_FILE = BCAutoFillExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2095,6 +2360,7 @@
 		};
 		9E1360D721DC420F00EE48B0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 276568E6106FBFC78592DB6C /* Pods-BCAutoFillExtension.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2110,12 +2376,17 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-app-auth/ios",
+				);
 				INFOPLIST_FILE = BCAutoFillExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
