@@ -1,125 +1,130 @@
 {
-  "archives": {
-    "add-to-begin": "Add a new archive to begin",
-    "archive-password": "Archive Password",
-    "add-archive": "Add Archive",
-    "lock-all": "Lock All",
-    "self": "Archives"
-  },
-  "manage-archive": "Manage Archive",
-  "edit-group": "Edit Group",
-  "remove": "Remove",
-  "cancel": "Cancel",
-  "groups": {
-    "add-a-group-or-entry": "Add a group or entry",
-    "rename-group": "Rename Group",
-    "create-group": "Create Group",
-    "group-name": "Group Name"
-  },
-  "dropbox": {
-    "authenticated": "Authenticated",
-    "authenticate": "Authenticate"
-  },
-  "entry": {
-    "add": "Add",
+    "vaults": {
+        "add-to-begin": "Add a new vault to begin",
+        "vault-password": "Vault Password",
+        "add-vault": "Add Vault",
+        "lock-all": "Lock All",
+        "self": "Vaults",
+        "search": "Search Vaults"
+    },
+    "manage-vault": "Manage Vault",
+    "edit-group": "Edit Group",
+    "remove": "Remove",
     "cancel": "Cancel",
-    "hide-hidden": "Hide Hidden",
-    "new-entry": "New Entry",
-    "create": "Create",
-    "title": "Title",
-    "username": "Username",
-    "password": "Password",
-    "open-url": "Open URL",
-    "open-url-description": "Press OK to launch the URL. The password will be copied to the clipboard.",
-    "no-url": "No URL",
-    "no-url-description": "This entry doesn't contain a URL meta field.",
-    "saved-entry": "Saving entry",
-    "saved-entry-description": "Successfully saved changes to the entry",
-    "ok": "OK",
-    "properties": "Properties",
-    "view-hidden": "View hidden",
-    "edit": "Edit",
+    "groups": {
+        "add-a-group-or-entry": "Add a group or entry",
+        "rename-group": "Rename Group",
+        "create-group": "Create Group",
+        "group-name": "Group Name"
+    },
+    "dropbox": {
+        "authenticated": "Authenticated",
+        "authenticate": "Authenticate"
+    },
+    "entry": {
+        "add": "Add",
+        "cancel": "Cancel",
+        "hide-hidden": "Hide Hidden",
+        "new-entry": "New Entry",
+        "create": "Create",
+        "title": "Title",
+        "username": "Username",
+        "password": "Password",
+        "open-url": "Open URL",
+        "open-url-description": "Press OK to launch the URL. The password will be copied to the clipboard.",
+        "no-url": "No URL",
+        "no-url-description": "This entry doesn't contain a URL meta field.",
+        "saved-entry": "Saving entry",
+        "saved-entry-description": "Successfully saved changes to the entry",
+        "ok": "OK",
+        "properties": "Properties",
+        "view-hidden": "View hidden",
+        "edit": "Edit",
+        "delete": "Delete",
+        "new": "New Entry",
+        "field": {
+            "username": "Username",
+            "password": "Password",
+            "title": "Title"
+        },
+        "property": {
+            "add": "Add Property",
+            "save": "Save",
+            "name": "Name",
+            "value": "Value"
+        },
+        "delete-confirm": "Are you sure that you want to delete the entry '{{title}}'?"
+    },
+    "remote": {
+        "connect": "Connect",
+        "connecting": "Connecting",
+        "url": "Remote-URL",
+        "username": "Username",
+        "password": "Password",
+        "connection-details": "Connection details",
+        "self": "Remote"
+    },
+    "vault": {
+        "new": "New",
+        "filename": "Vault Filename",
+        "password": "Vault Password",
+        "name": "Vault Name",
+        "creating": "Creating Vault",
+        "adding": "Adding Vault",
+        "fetching-contents": "Fetching Contents",
+        "placeholder": {
+            "filename": "Filename"
+        },
+        "remove-vault": "Remove Vault",
+        "remove-vault-description": "Are you sure that you want to remove '{{name}}'?",
+        "add": "Add",
+        "search": "Search Vault",
+        "cannot-lock-not-unlocked": "Cannot lock vault that is not unlocked"
+    },
+    "use-offline": "Use Offline",
+    "busy-state": {
+        "checking-connection": "Checking Connection",
+        "unlocking": "Unlocking",
+        "unlocking-vaults": "Unlocking Vaults",
+        "saving": "Saving"
+    },
+    "group": {
+        "delete": "Delete Group",
+        "confirm-delete": "Are you sure that you want to delete the group '{{title}}'?",
+        "new": "New Group",
+        "rename": "Rename Group",
+        "trash": "Trash"
+    },
     "delete": "Delete",
-    "new": "New Entry",
-    "field": {
-      "username": "Username",
-      "password": "Password",
-      "title": "Title"
+    "biometric-unlock": {
+        "self": "Biometric Unlock",
+        "biometric-unlock-disabled": "Successfully disabled biometric unlock",
+        "biometric-unlock-enabled": "Successfully enabled biometric unlock",
+        "errors": {
+            "failed-disabling": "Failed disabling biometric unlock",
+            "password-not-supported": "Password not supported for enabling biometric unlock",
+            "source-not-found": "Current source was not found",
+            "unrecognised-response": "Unrecognised biometric unlock response",
+            "unable-locate-credentials": "Unable to locate current credentials",
+            "not-for-vault": "Biometric unlock is not enabled for this source",
+            "no-credentials": "No credentials found under biometric ID for this source",
+            "failed-enabling": "Failed enabling biometric unlock"
+        },
+        "authenticate-to-enable": "Authenticate to enable biometric unlock",
+        "authenticate-to-unlock": "Authenticate to unlock vault",
+        "enable": "Enable Biometric Unlock",
+        "disable": "Disable Biometric Unlock",
+        "toggle": "Toggle Biometric Unlock"
     },
-    "property": {
-      "add": "Add Property",
-      "save": "Save",
-      "name": "Name",
-      "value": "Value"
+    "autofill": {
+        "toggle": "Toggle Autofill",
+        "enable": "Enable Autofill",
+        "disable": "Disable Autofill",
+        "self": "Autofill",
+        "enable-in-ios-settings": "Enable Autofill in iOS Settings",
+        "enable-in-ios-settings-description": "Please ensure you have also enabled Buttercup in iOS Settings > Passwords and Accounts > Autofill Passwords"
     },
-    "delete-confirm": "Are you sure that you want to delete the entry '{{title}}'?"
-  },
-  "remote": {
-    "connect": "Connect",
-    "connecting": "Connecting",
-    "url": "Remote-URL",
-    "username": "Username",
-    "password": "Password",
-    "connection-details": "Connection details",
-    "self": "Remote"
-  },
-  "archive": {
-    "new": "New",
-    "filename": "Archive Filename",
-    "password": "Archive Password",
-    "name": "Archive Name",
-    "creating": "Creating Archive",
-    "adding": "Adding Archive",
-    "fetching-contents": "Fetching Contents",
-    "placeholder": {
-      "filename": "Filename"
-    },
-    "remove-archive": "Remove Archive",
-    "remove-archive-description": "Are you sure that you want to remove '{{name}}'?",
-    "add": "Add",
-    "search": "Search Archive",
-    "cannot-lock-not-unlocked": "Cannot lock archive that is not unlocked"
-  },
-  "use-offline": "Use Offline",
-  "busy-state": {
-    "checking-connection": "Checking Connection",
-    "unlocking": "Unlocking",
-    "unlocking-touch-archives": "Unlocking Touch Archives",
-    "saving": "Saving"
-  },
-  "group": {
-    "delete": "Delete Group",
-    "confirm-delete": "Are you sure that you want to delete the group '{{title}}'?",
-    "new": "New Group",
-    "rename": "Renam Group",
-    "trash": "Trash"
-  },
-  "delete": "Delete",
-  "touch-unlock": {
-    "self": "Touch Unlock",
-    "touch-unlock-disabled": "Successfully disabled touch unlock",
-    "touch-unlock-enabled": "Successfully enabled touch unlock",
-    "errors": {
-      "touch-unlock-disabled": "Failed disabling touch unlock",
-      "source-not-found": "Current source was not found",
-      "unable-locate-credentials": "Unable to locate current credentials",
-      "not-for-archive": "Touch unlock is not enabled for this source",
-      "no-credentials": "No credentials found under touch ID for this source",
-      "failed-enabling": "Failed enabling touch unlock"
-    },
-    "authenticate-to-enable": "Authenticate to enable touch unlock",
-    "authenticate-to-open": "Authenticate to open archive",
-    "enable": "Enable Touch Unlock",
-    "disable": "Disable Touch Unlock",
-    "toggle": "Toggle Touch Unlock"
-  },
-  "autofill": {
-    "toggle": "Toggle Autofill",
-    "enable": "Enable Autofill",
-    "disable": "Disable Autofill",
-    "self": "Autofill"
-  },
-  "android-settings": "Android Settings",
-  "copied-value": "Copied value",
-  "copied-value-description": "Copied '{{name}}' to clipboard"
+    "android-settings": "Android Settings",
+    "copied-value": "Copied value",
+    "copied-value-description": "Copied '{{name}}' to clipboard"
 }

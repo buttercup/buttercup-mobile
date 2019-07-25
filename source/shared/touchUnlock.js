@@ -42,18 +42,18 @@ export function disableTouchUnlock(sourceID) {
         .then(() => {
             executeNotification(
                 "success",
-                i18n.t("touch-unlock.self"),
-                i18n.t("touch-unlock.touch-unlock-disabled")
+                i18n.t("biometric-unlock.self"),
+                i18n.t("biometric-unlock.touch-unlock-disabled")
             );
         })
         .then(() => updateTouchEnabledSources())
         .catch(error => {
-            handleError(i18n.t("touch-unlock.errors.touch-unlock-disabled"), error);
+            handleError(i18n.t("biometric-unlock.errors.failed-disabling"), error);
         });
 }
 
 export function enableTouchUnlock(sourceID) {
-    return TouchID.authenticate(i18n.t("touch-unlock.authenticate-to-enable"))
+    return TouchID.authenticate(i18n.t("biometric-unlock.authenticate-to-enable"))
         .then(() => getTouchUnlockCredentials())
         .then(keychainCreds => {
             const archiveManager = getSharedArchiveManager();
@@ -61,11 +61,11 @@ export function enableTouchUnlock(sourceID) {
             const sourceID = getSelectedSourceID(state);
             const source = archiveManager.getSourceForID(sourceID);
             if (!source) {
-                throw new Error(i18n.t("touch-unlock.errors.source-not-found"));
+                throw new Error(i18n.t("biometric-unlock.errors.source-not-found"));
             }
             const masterPassword = source.workspace.masterCredentials.password;
             if (!masterPassword) {
-                throw new Error(i18n.t("touch-unlock.errors.unable-locate-credentials"));
+                throw new Error(i18n.t("biometric-unlock.errors.unable-locate-credentials"));
             }
             const newCreds = updateKeychainCredentials(keychainCreds, sourceID, masterPassword);
             return setTouchUnlockCredentials(newCreds);
@@ -73,8 +73,8 @@ export function enableTouchUnlock(sourceID) {
         .then(() => {
             executeNotification(
                 "success",
-                i18n.t("touch-unlock.self"),
-                i18n.t("touch-unlock.touch-unlock-enabled")
+                i18n.t("biometric-unlock.self"),
+                i18n.t("biometric-unlock.touch-unlock-enabled")
             );
             return updateTouchEnabledSources().then(() => ({ action: "none" }));
         })
@@ -87,14 +87,14 @@ export function enableTouchUnlock(sourceID) {
                 case "LAErrorUserFallback":
                     return { action: "fallback" };
                 default:
-                    handleError(i18n.t("touch-unlock.errors.failed-enabling"), err);
+                    handleError(i18n.t("biometric-unlock.errors.failed-enabling"), err);
                     break;
             }
         });
 }
 
 export function getKeychainCredentialsFromTouchUnlock() {
-    return TouchID.authenticate(i18n.t("touch-unlock.authenticate-to-open"))
+    return TouchID.authenticate(i18n.t("biometric-unlock.authenticate-to-unlock"))
         .then(() => getTouchUnlockCredentials())
         .catch(err => {
             switch (err.name) {
@@ -114,14 +114,14 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
     return touchIDEnabledForSource(sourceID)
         .then(enabled => {
             if (!enabled) {
-                throw new Error(i18n.t("touch-unlock.errors.not-for-archive"));
+                throw new Error(i18n.t("biometric-unlock.errors.not-for-vault"));
             }
             return getKeychainCredentialsFromTouchUnlock();
         })
         .then(keychainCreds => {
             const sourcePassword = keychainCreds[sourceID];
             if (!sourcePassword) {
-                throw new Error(i18n.t("touch-unlock.errors.no-credentials"));
+                throw new Error(i18n.t("biometric-unlock.errors.no-credentials"));
             }
             return sourcePassword;
         });

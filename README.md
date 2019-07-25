@@ -36,7 +36,7 @@ This project uses **React Native** to build _native_ iOS and Android application
 As Buttercup makes use of strong cryptography, certain encryption/decryption tasks are performed using pure native code (Objective-C/Java). Only the bare minimum required for increased performance is handled on the native side, with the rest being solely JavaScript.
 
 ## Installation
-Ensure that you're using **NodeJS 6** or newer on OSX. Android projects can be built and tested on Linux and Windows, but these platforms are _not officially supported_.
+Ensure that you're using **NodeJS 8** or newer on OSX. Android projects can be built and tested on Linux and Windows, but these platforms are _not officially supported_.
 
 Before getting started, ensure you follow the [official React Native Getting Started guide](https://facebook.github.io/react-native/docs/getting-started.html) for your desired platform (iOS/Android). It is also recommended to have the react-native-cli installed:
 

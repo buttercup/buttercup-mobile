@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 class SearchArchives extends Component {
     static navigationOptions = {
-        title: i18n.t("archive.search")
+        title: i18n.t("vaults.search")
     };
 
     static propTypes = {

@@ -189,7 +189,7 @@ class ArchivesList extends Component {
                     handleError("Unlocking failed", err);
                 });
         } else {
-            handleError("Unlocking failed", new Error(`Unexpected archive state: ${status}`));
+            handleError("Unlocking failed", new Error(`Unexpected vault state: ${status}`));
         }
     }
 
@@ -315,13 +315,13 @@ class ArchivesList extends Component {
                     </When>
                     <Otherwise>
                         <EmptyView
-                            text={this.props.t("archives.add-to-begin")}
+                            text={this.props.t("vaults.add-to-begin")}
                             imageSource={BENCH_IMAGE}
                         />
                     </Otherwise>
                 </Choose>
                 <Prompt
-                    title={this.props.t("archives.archive-password")}
+                    title={this.props.t("vaults.archive-password")}
                     placeholder=""
                     visible={this.props.showUnlockPrompt}
                     onCancel={() => this.props.showUnlockPasswordPrompt(false)}

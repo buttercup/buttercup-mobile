@@ -62,7 +62,7 @@ const performOfflineProcedure = (sourceID, password, isOffline = false) => (disp
         }
         Alert.alert(
             isOffline ? "Offline Content (currently offline)" : "Offline Content",
-            "Would you like to try and load this archive in offline (read-only) mode?",
+            "Would you like to try and load this vault in offline (read-only) mode?",
             [
                 {
                     text: i18n.t("cancel"),
@@ -81,13 +81,13 @@ const performOfflineProcedure = (sourceID, password, isOffline = false) => (disp
                                     executeNotification(
                                         "info",
                                         "Read-Only Mode",
-                                        "This archive was opened in read-only mode due to being offline. " +
+                                        "This vault was opened in read-only mode due to being offline. " +
                                             "Changes will not be possible and certain features will be disabled."
                                     );
                                 }, 1000);
                             })
                             .catch(err => {
-                                handleError("Failed unlocking archive", err);
+                                handleError("Failed unlocking vault", err);
                             });
                     }
                 }
@@ -125,7 +125,7 @@ const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatc
 };
 
 const unlockAllTouchArchives = () => dispatch => {
-    dispatch(setBusyState(i18n.t("busy-state.unlocking-touch-archives")));
+    dispatch(setBusyState(i18n.t("busy-state.unlocking-vaults")));
     // Find all the sources that have TouchID Enabled
     const sources = getSharedArchiveManager().sourcesList;
     return Promise.all(sources.map(source => touchIDEnabledForSource(source.id))).then(results => {
@@ -144,7 +144,7 @@ const unlockAllTouchArchives = () => dispatch => {
                     // Great we're in, now check for internet and unlock
                     dispatch(setBusyState(i18n.t("busy-state.checking-connection")));
                     return getConnectedStatus().then(connected => {
-                        dispatch(setBusyState(i18n.t("busy-state.unlocking-touch-archives")));
+                        dispatch(setBusyState("Unlocking Vaults"));
                         if (!connected) {
                             throw new Error("Failed unlocking: Device not online");
                         }
@@ -187,7 +187,7 @@ export default connect(
     {
         lockArchive: sourceID => dispatch => {
             lockSource(sourceID).catch(err => {
-                handleError("Failed locking archive(s)", err);
+                handleError("Failed locking vault(s)", err);
             });
         },
         removeArchive: sourceID => () => {
@@ -198,7 +198,7 @@ export default connect(
         unlockArchive: (sourceID, password) => dispatch => {
             return dispatch(performSourceUnlock(sourceID, password)).catch(err => {
                 dispatch(setBusyState(null));
-                handleError("Failed unlocking archive", err);
+                handleError("Failed unlocking vault", err);
                 const { code: errorCode } = VError.info(err);
                 if ((errorCode && errorCode !== ERROR_CODE_DECRYPT_ERROR) || !errorCode) {
                     return dispatch(performOfflineProcedure(sourceID, password));

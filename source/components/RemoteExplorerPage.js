@@ -36,7 +36,7 @@ class RemoteExplorer extends Component {
         const { params = {} } = navigation.state;
         return {
             title: `${params.title}`,
-            headerRight: <Button title={i18n.t("archive.new")} onPress={beginNewArchiveProcedure} />
+            headerRight: <Button title={i18n.t("vault.new")} onPress={beginNewArchiveProcedure} />
         };
     };
 
@@ -62,8 +62,8 @@ class RemoteExplorer extends Component {
                     </CellGroup>
                 </ScrollView>
                 <Prompt
-                    title={this.props.t("archive.filename")}
-                    placeholder={this.props.t("archive.placeholder.filename")}
+                    title={this.props.t("vault.filename")}
+                    placeholder={this.props.t("vault.placeholder.filename")}
                     visible={this.props.showNewPrompt}
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewFilename(value)}
@@ -74,7 +74,7 @@ class RemoteExplorer extends Component {
                     }}
                 />
                 <Prompt
-                    title={this.props.t("archive.password")}
+                    title={this.props.t("vault.password")}
                     placeholder=""
                     visible={this.props.showNewPassword}
                     onCancel={() => this.props.cancelNewPrompt()}
@@ -82,22 +82,19 @@ class RemoteExplorer extends Component {
                     textInputProps={{ secureTextEntry: true }}
                 />
                 <Prompt
-                    title={this.props.t("archive.name")}
+                    title={this.props.t("vault.name")}
                     placeholder=""
                     visible={this.props.showNewName}
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewArchiveName(value)}
                     textInputProps={{ keyboardType: "default" }}
                 />
-                <Spinner
-                    visible={this.props.creatingFile}
-                    text={this.props.t("archive.creating")}
-                />
+                <Spinner visible={this.props.creatingFile} text={this.props.t("vault.creating")} />
                 <Spinner
                     visible={this.props.loading}
-                    text={this.props.t("archive.fetching-contents")}
+                    text={this.props.t("vault.fetching-contents")}
                 />
-                <Spinner visible={this.props.addingArchive} text={this.props.t("archive.adding")} />
+                <Spinner visible={this.props.addingArchive} text={this.props.t("vault.adding")} />
             </View>
         );
     }

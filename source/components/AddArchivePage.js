@@ -20,7 +20,7 @@ const ARCHIVE_TYPES = getArchiveTypeDetails();
 
 class AddArchive extends Component {
     static navigationOptions = {
-        title: i18n.t("archives.add-archive")
+        title: i18n.t("vaults.add-vault")
     };
 
     getMenuContents() {

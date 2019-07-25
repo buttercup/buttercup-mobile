@@ -28,16 +28,16 @@ import {
 import { getSelectedArchive } from "../selectors/archiveContents";
 import i18n from "../shared/i18n";
 
-const SHEET_ADD_ARCHIVE = i18n.t("archive.add");
+const SHEET_ADD_ARCHIVE = i18n.t("vault.add");
 const SHEET_ADD_ENTRY = i18n.t("entry.new");
 const SHEET_ADD_GROUP = i18n.t("group.new");
 const SHEET_CANCEL = i18n.t("cancel");
 const SHEET_DELETE_GROUP = i18n.t("group.delete");
-const SHEET_LOCK_ALL = i18n.t("archives.lock-all");
+const SHEET_LOCK_ALL = i18n.t("vaults.lock-all");
 const SHEET_RENAME_GROUP = i18n.t("group.rename");
-const SHEET_TOGGLE_TOUCH_ID = i18n.t("touch-unlock.toggle");
+const SHEET_TOGGLE_TOUCH_ID = i18n.t("biometric-unlock.toggle");
 const SHEET_TOGGLE_AUTOFILL = i18n.t("autofill.toggle");
-const SHEET_SEARCH_CURRENT_ARCHIVE = i18n.t("archive.search");
+const SHEET_SEARCH_CURRENT_ARCHIVE = i18n.t("vault.search");
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -60,7 +60,9 @@ function removeTextFromArray(arr, text) {
 
 export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGroup) {
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
-    const title = isRoot ? i18n.t("manage-archive") : i18n.t("edit-group");
+
+    const title = isRoot ? i18n.t("manage-vault") : i18n.t("edit-group");
+
     const state = getState();
     const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {
@@ -130,7 +132,7 @@ export function showArchivesPageRightSheet() {
         {
             options: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS,
             cancelButtonIndex: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
-            title: i18n.t("archives.self")
+            title: i18n.t("vaults.self")
         },
         selectedIndex => {
             switch (ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
@@ -150,16 +152,17 @@ export function showArchivesPageRightSheet() {
 export function showTouchIDToggleSheet() {
     const state = getState();
     const currentSourceID = getSelectedSourceID(state);
-    const itemEnableTouchID = i18n.t("touch-unlock.enable");
-    const itemDisableTouchID = i18n.t("touch-unlock.disable");
+    const itemEnableTouchID = i18n.t("biometric-unlock.enable");
+    const itemDisableTouchID = i18n.t("biometric-unlock.disable");
     const itemCancel = i18n.t("cancel");
+
     return touchIDEnabledForSource(currentSourceID).then(enabled => {
         const options = [enabled ? itemDisableTouchID : itemEnableTouchID, itemCancel];
         ActionSheet.showActionSheetWithOptions(
             {
                 options,
                 cancelButtonIndex: options.indexOf(itemCancel),
-                title: i18n.t("touch-unlock.self")
+                title: i18n.t("biometric-unlock.self")
             },
             selectedIndex => {
                 switch (options[selectedIndex]) {
@@ -173,16 +176,18 @@ export function showTouchIDToggleSheet() {
                                     break;
                                 case "fallback":
                                     handleError(
-                                        "Failed enabling touch unlock",
+                                        i18n.t("biometric-unlock.errors.failed-enabling"),
                                         new Error(
-                                            "Password not supported for enabling touch unlock"
+                                            i18n.t("biometric-unlock.errors.password-not-supported")
                                         )
                                     );
                                     break;
                                 default:
                                     handleError(
-                                        "Failed enabling touch unlock",
-                                        new Error("Unrecognised touch unlock response")
+                                        i18n.t("biometric-unlock.errors.failed-enabling"),
+                                        new Error(
+                                            i18n.t("biometric-unlock.errors.unrecognised-response")
+                                        )
                                     );
                                     break;
                             }
@@ -243,8 +248,8 @@ export function showAutoFillToggleSheet() {
                             }
                             if (Platform.OS === "ios") {
                                 Alert.alert(
-                                    "Enable Autofill in iOS Settings",
-                                    "Please ensure you have also enabled Buttercup in iOS Settings > Passwords and Accounts > Autofill Passwords",
+                                    i18next.t("enable-in-ios-settings"),
+                                    i18next.t("enable-in-ios-settings-description"),
                                     [{ text: "OK", onPress: () => {} }],
                                     { cancelable: true }
                                 );

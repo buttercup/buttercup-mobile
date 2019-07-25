@@ -76,7 +76,7 @@ function handleNewArchiveName(name, dispatch, getState) {
         })
         .catch(function __handleAddError(err) {
             dispatch(setAddingArchive(false));
-            handleError("Failed adding archive", err);
+            handleError("Failed adding vault", err);
         });
 }
 
