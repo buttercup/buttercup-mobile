@@ -1,12 +1,16 @@
 import { createClient as createDropboxClient } from "@buttercup/dropbox-client";
+import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
 import { createClient as createWebDAVClient } from "webdav";
 import joinURL from "url-join";
 
-const NOOP = () => {};
-
 export function getDropboxConnection(token) {
-    const dropboxAdapter = createDropboxClient(token);
-    return testRemoteFSConnection(dropboxAdapter).then(() => wrapDropboxClient(dropboxAdapter));
+    const dropboxAdapter = wrapDropboxClient(createDropboxClient(token));
+    return testRemoteFSConnection(dropboxAdapter);
+}
+
+export function getGoogleDriveConnection(token) {
+    const googleDriveAdapter = wrapGoogleDriveClient(createGoogleDriveClient(token));
+    return testRemoteFSConnection(googleDriveAdapter);
 }
 
 export function getNextcloudConnection(remoteURL, username, password) {
@@ -23,11 +27,12 @@ export function getWebDAVConnection(remoteURL, username, password) {
     const webdavClient = username
         ? createWebDAVClient(remoteURL, { username, password })
         : createWebDAVClient(remoteURL);
-    return testRemoteFSConnection(webdavClient).then(() => wrapWebDAVClient(webdavClient));
+    const webdavAdapter = wrapWebDAVClient(webdavClient);
+    return testRemoteFSConnection(webdavAdapter);
 }
 
 export function testRemoteFSConnection(client) {
-    return client.getDirectoryContents("/").then(NOOP);
+    return client.getDirectoryContents("/").then(() => client);
 }
 
 function wrapDropboxClient(client) {
@@ -37,6 +42,21 @@ function wrapDropboxClient(client) {
                 items.map(item => ({
                     name: item.name,
                     path: item.path,
+                    isDirectory: () => item.type === "directory"
+                }))
+            ),
+        getFileContents: remotePath => client.getFileContents(remotePath),
+        writeFile: (remotePath, data /* , encoding */) => client.putFileContents(remotePath, data)
+    };
+}
+
+function wrapGoogleDriveClient(client) {
+    return {
+        getDirectoryContents: remoteDir =>
+            client.mapDirectoryContents(remoteDir).then(items =>
+                items.map(item => ({
+                    name: item.filename,
+                    path: item.fullPath,
                     isDirectory: () => item.type === "directory"
                 }))
             ),

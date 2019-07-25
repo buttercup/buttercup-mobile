@@ -136,6 +136,15 @@ We love contributions - anything from new features and bug fixes to suggestions 
 ### Development
 Please keep in-line with the code style of each file, regardless of what tests are run (linting etc.). When creating new files their format is expected to closely resemble that of other existing source files.
 
+To use certain services like Google Drive, the client secret details must be provided in the `secrets.json` file in the root of the project. If you're not going to use services like Google Drive, an empty JSON file is fine. The file should look like the following when credentials are provided:
+
+```json
+{
+    "googleDriveClientID": "...",
+    "googleDriveClientSecret": "..."
+}
+```
+
 ### Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).

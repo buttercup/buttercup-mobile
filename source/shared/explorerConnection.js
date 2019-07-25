@@ -1,6 +1,7 @@
 import { Credentials } from "../library/buttercupCore.js";
 import {
     getDropboxConnection,
+    getGoogleDriveConnection,
     getNextcloudConnection,
     getOwnCloudConnection,
     getWebDAVConnection
@@ -55,7 +56,14 @@ export function createRemoteConnection(connectionInfo) {
     const __storeSharedInstance = fsInstance => {
         __remoteFSConnection = fsInstance;
     };
-    const { archiveType, remoteUsername, remotePassword, remoteURL, dropboxToken } = connectionInfo;
+    const {
+        archiveType,
+        remoteUsername,
+        remotePassword,
+        remoteURL,
+        dropboxToken,
+        googleDriveToken
+    } = connectionInfo;
     if (archiveType === "webdav") {
         return getWebDAVConnection(remoteURL, remoteUsername, remotePassword).then(
             __storeSharedInstance
@@ -70,8 +78,10 @@ export function createRemoteConnection(connectionInfo) {
         );
     } else if (archiveType === "dropbox") {
         return getDropboxConnection(dropboxToken).then(__storeSharedInstance);
+    } else if (archiveType === "googledrive") {
+        return getGoogleDriveConnection(googleDriveToken).then(__storeSharedInstance);
     }
-    return Promise.reject(new Error(`Unknown archive type: ${archiveType}`));
+    return Promise.reject(new Error(`Unknown archive source type: ${archiveType}`));
 }
 
 export function getDirectoryContents(remoteDir) {

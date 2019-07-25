@@ -108,6 +108,11 @@ function handlePathSelection(nextItem, isDir, resetScroll, dispatch, getState) {
                 resetScroll();
                 dispatch(onChangeDirectory(nextPath));
                 dispatch(setLoading(false));
+            })
+            .catch(err => {
+                dispatch(setLoading(false));
+                console.error(err);
+                handleError("Failed fetching remote contents", err);
             });
     }
     // file

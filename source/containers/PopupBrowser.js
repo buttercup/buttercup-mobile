@@ -6,6 +6,7 @@ import {
     setDropboxAuthenticating,
     setDropboxAuthToken
 } from "../actions/dropbox.js";
+import { setGoogleDriveAuthCode } from "../actions/googleDrive.js";
 import { navigateBack } from "../actions/navigation.js";
 import { executeNotification } from "../global/notify.js";
 
@@ -17,6 +18,8 @@ export default connect(
         onClearToken: () => dispatch => {
             dispatch(setDropboxAuthenticated(false));
             dispatch(setDropboxAuthenticating(false));
+            dispatch(setGoogleDriveAuthenticated(false));
+            dispatch(setGoogleDriveAuthenticating(false));
         },
         onDropboxTokenReceived: token => dispatch => {
             dispatch(setDropboxAuthToken(token));
@@ -27,6 +30,15 @@ export default connect(
                 "success",
                 "Dropbox authentication",
                 "Successfully authenticated Dropbox account"
+            );
+        },
+        onGoogleDriveAuthCodeReceived: authCode => dispatch => {
+            dispatch(setGoogleDriveAuthCode(authCode));
+            dispatch(navigateBack());
+            executeNotification(
+                "success",
+                "Google Drive authentication",
+                "Successfully authenticated Google Drive account"
             );
         }
     }
