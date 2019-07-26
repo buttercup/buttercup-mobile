@@ -2,10 +2,7 @@ import { connect } from "react-redux";
 import GoogleDriveAuthButton from "../components/GoogleDriveAuthButton.js";
 import { isAuthenticated, isAuthenticating } from "../selectors/googleDrive";
 import { authenticateWithoutToken } from "../library/googleDrive.js";
-// import { setBrowserURL } from "../actions/browser.js";
-// import { generateAuthorisationURL } from "../library/dropbox.js";
-// import { navigateToPopupBrowser } from "../actions/navigation.js";
-// import { setGoogleDriveAuthenticating } from "../actions/googleDrive";
+import { handleError } from "../global/exceptions.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -14,11 +11,10 @@ export default connect(
     }),
     {
         onClick: () => () => {
-            authenticateWithoutToken();
-            // const url = generateAuthorisationURL();
-            // dispatch(setBrowserURL(url));
-            // dispatch(setGoogleDriveAuthenticating(true));
-            // dispatch(navigateToPopupBrowser("Google Drive"));
+            authenticateWithoutToken().catch(err => {
+                console.error(err);
+                handleError("Failed authenticating with Google", err);
+            });
         }
     }
 )(GoogleDriveAuthButton);

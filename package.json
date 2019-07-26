@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@buttercup/dropbox-client": "^0.1.1",
-    "@buttercup/googledrive-client": "^0.4.1",
+    "@buttercup/googledrive-client": "^0.4.2",
     "@perrymitchell/react-native-prompt": "^1.1.0",
     "@tradle/react-native-http": "^2.0.0",
     "@yfuks/react-native-action-sheet": "0.0.4",

@@ -2,7 +2,6 @@ import watch from "redux-watch";
 import { Platform } from "react-native";
 import ms from "ms";
 import { authorize, refresh } from "react-native-app-auth";
-// import { OAuth2Client } from "@buttercup/google-oauth2-client";
 import store, { dispatch, getState } from "../store.js";
 import { setBrowserURL } from "../actions/browser.js";
 import { navigateToPopupBrowser } from "../actions/navigation.js";
@@ -17,22 +16,26 @@ import {
 import secrets from "../../secrets.json";
 
 export async function authenticateWithoutToken() {
-    // Clear state
     dispatch(setGoogleDriveAuthenticating(true));
     dispatch(setGoogleDriveAuthenticated(false));
     dispatch(setGoogleDriveAuthToken(null));
     dispatch(setGoogleDriveRefreshToken(null));
-    // Authenticate
-    const { accessToken, refreshToken } = await authorize(getConfig());
-    // Update state
-    dispatch(setGoogleDriveAuthToken(accessToken));
-    dispatch(setGoogleDriveRefreshToken(refreshToken));
-    dispatch(setGoogleDriveAuthenticating(false));
-    dispatch(setGoogleDriveAuthenticated(true));
-    return {
-        accessToken,
-        refreshToken
-    };
+    try {
+        // Authenticate
+        const { accessToken, refreshToken } = await authorize(getConfig());
+        dispatch(setGoogleDriveAuthToken(accessToken));
+        dispatch(setGoogleDriveRefreshToken(refreshToken));
+        dispatch(setGoogleDriveAuthenticating(false));
+        dispatch(setGoogleDriveAuthenticated(true));
+    } catch (err) {
+        dispatch(setGoogleDriveAuthenticating(false));
+        dispatch(setGoogleDriveAuthenticated(false));
+        dispatch(setGoogleDriveAuthToken(null));
+        dispatch(setGoogleDriveRefreshToken(null));
+        if (!/cancell?ed/i.test(err.message)) {
+            throw err;
+        }
+    }
 }
 
 export async function authenticateWithRefreshToken(accessToken, refreshToken) {

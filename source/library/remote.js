@@ -40,13 +40,14 @@ function wrapDropboxClient(client) {
         getDirectoryContents: remoteDir =>
             client.getDirectoryContents(remoteDir).then(items =>
                 items.map(item => ({
+                    identifier: item.path,
                     name: item.name,
                     path: item.path,
                     isDirectory: () => item.type === "directory"
                 }))
             ),
-        getFileContents: remotePath => client.getFileContents(remotePath),
-        writeFile: (remotePath, data /* , encoding */) => client.putFileContents(remotePath, data)
+        getFileContents: identifier => client.getFileContents(identifier),
+        writeFile: (identifier, data /* , encoding */) => client.putFileContents(identifier, data)
     };
 }
 
@@ -55,13 +56,14 @@ function wrapGoogleDriveClient(client) {
         getDirectoryContents: remoteDir =>
             client.mapDirectoryContents(remoteDir).then(items =>
                 items.map(item => ({
+                    identifier: item.id,
                     name: item.filename,
-                    path: item.fullPath,
+                    path: joinURL(item.dirPath, item.filename),
                     isDirectory: () => item.type === "directory"
                 }))
             ),
-        getFileContents: remotePath => client.getFileContents(remotePath),
-        writeFile: (remotePath, data /* , encoding */) => client.putFileContents(remotePath, data)
+        getFileContents: identifier => client.getFileContents(identifier),
+        writeFile: (identifier, data /* , encoding */) => client.putFileContents(identifier, data)
     };
 }
 
@@ -70,12 +72,13 @@ function wrapWebDAVClient(client) {
         getDirectoryContents: dir =>
             client.getDirectoryContents(dir).then(items =>
                 items.map(item => ({
+                    identifier: item.filename,
                     name: item.basename,
                     path: item.filename,
                     isDirectory: () => item.type === "directory"
                 }))
             ),
-        getFileContents: remotePath => client.getFileContents(remotePath, { format: "text" }),
-        writeFile: (remotePath, data /* , encoding */) => client.putFileContents(remotePath, data)
+        getFileContents: identifier => client.getFileContents(identifier, { format: "text" }),
+        writeFile: (identifier, data /* , encoding */) => client.putFileContents(identifier, data)
     };
 }

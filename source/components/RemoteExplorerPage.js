@@ -39,14 +39,14 @@ class RemoteExplorer extends Component {
     };
 
     componentDidMount() {
-        this.handlePathSelected("/", /* is dir */ true);
+        this.handlePathSelected(null, "/", /* is dir */ true);
     }
 
-    handlePathSelected(newPath, isDir) {
+    handlePathSelected(identifier, newPath, isDir) {
         const scrollResetCB = () => {
             this.refs.directoryScrollView.scrollTo({ y: 0, animated: false });
         };
-        this.props.onPathSelected(newPath, isDir, scrollResetCB);
+        this.props.onPathSelected(identifier, newPath, isDir, scrollResetCB);
     }
 
     render() {
@@ -103,7 +103,7 @@ class RemoteExplorer extends Component {
             <Cell
                 key={item.name}
                 icon={() => <Image source={image} style={styles.icon} />}
-                onPress={() => this.handlePathSelected(item.path, item.isDir)}
+                onPress={() => this.handlePathSelected(item.identifier, item.path, item.isDir)}
             >
                 <Text>{item.name}</Text>
             </Cell>

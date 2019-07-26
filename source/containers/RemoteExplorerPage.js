@@ -96,7 +96,7 @@ function handleNewMasterPassword(password, dispatch, getState) {
     }
 }
 
-function handlePathSelection(nextItem, isDir, resetScroll, dispatch, getState) {
+function handlePathSelection(nextIdentifier, nextItem, isDir, resetScroll, dispatch, getState) {
     const currentPath = getCurrentPath(getState());
     const nextPath = nextItem === ".." ? removeLastPathItem(currentPath) : nextItem;
     if (isDir) {
@@ -117,7 +117,7 @@ function handlePathSelection(nextItem, isDir, resetScroll, dispatch, getState) {
     }
     // file
     dispatch(setCreateNew(false));
-    dispatch(selectArchive(nextPath));
+    dispatch(selectArchive(nextIdentifier));
     dispatch(showNewMasterPasswordPrompt());
 }
 
@@ -149,7 +149,17 @@ export default connect(
             handleNewFile(filename, dispatch, getState),
         onNewMasterPassword: password => (dispatch, getState) =>
             handleNewMasterPassword(password, dispatch, getState),
-        onPathSelected: (remoteItem, isDir, scrollResetCB) => (dispatch, getState) =>
-            handlePathSelection(remoteItem, isDir, scrollResetCB, dispatch, getState)
+        onPathSelected: (remoteIdentifier, remoteItem, isDir, scrollResetCB) => (
+            dispatch,
+            getState
+        ) =>
+            handlePathSelection(
+                remoteIdentifier,
+                remoteItem,
+                isDir,
+                scrollResetCB,
+                dispatch,
+                getState
+            )
     }
 )(RemoteExplorer);
