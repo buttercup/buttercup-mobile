@@ -33,7 +33,7 @@ matrix:
         - brew install nvm
         - nvm install 8.4.0
         - npm install
-        - ./scripts/testIOS.sh "iPhone 5" "10.3.1"
+        - ./scripts/testIOS.sh "iPhone 5s" "10.3.1"
     - language: android
       sudo: required
       jdk: oraclejdk8
