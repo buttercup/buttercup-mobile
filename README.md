@@ -140,8 +140,14 @@ To use certain services like Google Drive, the client secret details must be pro
 
 ```json
 {
-    "googleDriveClientID": "...",
-    "googleDriveClientSecret": "..."
+    "ios": {
+        "googleDriveClientID": "...",
+        "googleDriveOAuthRedirectURL": "..."
+    },
+    "android": {
+        "googleDriveClientID": "...",
+        "googleDriveOAuthRedirectURL": "..."
+    }
 }
 ```
 

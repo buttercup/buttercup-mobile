@@ -56,12 +56,11 @@ export async function authenticateWithRefreshToken(accessToken, refreshToken) {
 }
 
 function getConfig() {
-    const { googleDriveClientID } = Platform.select(secrets);
+    const { googleDriveClientID, googleDriveOAuthRedirectURL } = Platform.select(secrets);
     return {
         issuer: "https://accounts.google.com",
         clientId: googleDriveClientID,
-        redirectUrl:
-            "com.googleusercontent.apps.327941947801-4ggb9b579a6o509pff2qi0u25g28rs7r:/oauth2redirect/google",
+        redirectUrl: googleDriveOAuthRedirectURL,
         scopes: ["email", "profile", "https://www.googleapis.com/auth/drive"]
     };
 }
