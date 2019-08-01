@@ -25,7 +25,7 @@
     ]
   },
   "dependencies": {
-    "@buttercup/dropbox-client": "^0.1.1",
+    "@buttercup/dropbox-client": "^0.3.2",
     "@buttercup/googledrive-client": "^0.4.2",
     "@perrymitchell/react-native-prompt": "^1.1.0",
     "@tradle/react-native-http": "^2.0.0",
@@ -34,7 +34,7 @@
     "asyncstorage-down": "^4.2.0",
     "browserify-zlib": "^0.1.4",
     "buffer": "^3.6.0",
-    "buttercup": "^2.8.1",
+    "buttercup": "^2.15.2",
     "console-browserify": "^1.1.0",
     "constants-browserify": "0.0.1",
     "debounce": "^1.2.0",
