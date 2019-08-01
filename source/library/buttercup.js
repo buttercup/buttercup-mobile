@@ -67,6 +67,17 @@ export function createRemoteCredentials(archiveType, options) {
                 })
             );
             return credentials;
+        case "googledrive":
+            credentials.setValue(
+                "datasource",
+                JSON.stringify({
+                    type: "googledrive",
+                    token: options.googleDriveToken,
+                    refreshToken: options.googleDriveRefreshToken,
+                    fileID: options.path
+                })
+            );
+            return credentials;
         case "nextcloud":
         /* falls-through */
         case "owncloud":

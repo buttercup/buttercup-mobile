@@ -99,6 +99,7 @@ export function getDirectoryContents(remoteDir) {
         })
         .then(items =>
             items.map(item => ({
+                identifier: item.identifier,
                 name: item.name,
                 path: item.path,
                 isDir: item.isDirectory()

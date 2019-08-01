@@ -14,7 +14,11 @@ import {
     willCreateNewArchive
 } from "../selectors/RemoteExplorerPage.js";
 import { getRemoteConnectionInfo } from "../selectors/RemoteConnectPage.js";
-import { getToken } from "../selectors/dropbox.js";
+import { getToken as getDropboxToken } from "../selectors/dropbox.js";
+import {
+    getAuthToken as getGoogleDriveToken,
+    getRefreshToken as getGoogleDriveRefreshToken
+} from "../selectors/googleDrive";
 import {
     cancelNewPrompt,
     onChangeDirectory,
@@ -48,13 +52,17 @@ function addToArchiveManager(state) {
         remotePassword,
         remoteURL
     } = { ...getNewArchiveDetails(state), ...getRemoteConnectionInfo(state) };
-    const dropboxToken = getToken(state);
+    const dropboxToken = getDropboxToken(state);
+    const googleDriveToken = getGoogleDriveToken(state);
+    const googleDriveRefreshToken = getGoogleDriveRefreshToken(state);
     const sourceCredentials = createRemoteCredentials(archiveType, {
         username: remoteUsername,
         password: remotePassword,
         url: remoteURL,
         path: archivePath,
-        dropboxToken
+        dropboxToken,
+        googleDriveToken,
+        googleDriveRefreshToken
     });
     const archiveCredentials = createArchiveCredentials(archivePassword);
     return addArchiveToArchiveManager(
@@ -111,7 +119,6 @@ function handlePathSelection(nextIdentifier, nextItem, isDir, resetScroll, dispa
             })
             .catch(err => {
                 dispatch(setLoading(false));
-                console.error(err);
                 handleError("Failed fetching remote contents", err);
             });
     }

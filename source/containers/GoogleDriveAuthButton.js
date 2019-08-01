@@ -12,7 +12,6 @@ export default connect(
     {
         onClick: () => () => {
             authenticateWithoutToken().catch(err => {
-                console.error(err);
                 handleError("Failed authenticating with Google", err);
             });
         }
