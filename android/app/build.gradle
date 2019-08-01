@@ -107,6 +107,9 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        manifestPlaceholders = [
+            appAuthRedirectScheme: 'com.googleusercontent.apps.327941947801-9kabd23u7hr75vuo64duritspnqj2nfj'
+        ]
     }
     splits {
         abi {
