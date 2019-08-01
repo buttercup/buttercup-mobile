@@ -39,16 +39,20 @@ export function disableTouchUnlock(sourceID) {
             return setTouchUnlockCredentials(newCreds);
         })
         .then(() => {
-            executeNotification("success", "Touch Unlock", "Successfully disabled touch unlock");
+            executeNotification(
+                "success",
+                "Biometric Unlock",
+                "Successfully disabled biometric unlock"
+            );
         })
         .then(() => updateTouchEnabledSources())
         .catch(error => {
-            handleError("Failed disabling touch unlock", error);
+            handleError("Failed disabling biometric unlock", error);
         });
 }
 
 export function enableTouchUnlock(sourceID) {
-    return TouchID.authenticate("Authenticate to enable touch unlock")
+    return TouchID.authenticate("Authenticate to enable biometric unlock")
         .then(() => getTouchUnlockCredentials())
         .then(keychainCreds => {
             const archiveManager = getSharedArchiveManager();
@@ -66,7 +70,11 @@ export function enableTouchUnlock(sourceID) {
             return setTouchUnlockCredentials(newCreds);
         })
         .then(() => {
-            executeNotification("success", "Touch Unlock", "Successfully enabled touch unlock");
+            executeNotification(
+                "success",
+                "Biometric Unlock",
+                "Successfully enabled biometric unlock"
+            );
             return updateTouchEnabledSources().then(() => ({ action: "none" }));
         })
         .catch(err => {
@@ -78,14 +86,14 @@ export function enableTouchUnlock(sourceID) {
                 case "LAErrorUserFallback":
                     return { action: "fallback" };
                 default:
-                    handleError("Failed enabling touch unlock", err);
+                    handleError("Failed enabling biometric unlock", err);
                     break;
             }
         });
 }
 
 export function getKeychainCredentialsFromTouchUnlock() {
-    return TouchID.authenticate("Authenticate to open archive")
+    return TouchID.authenticate("Authenticate to unlock vault")
         .then(() => getTouchUnlockCredentials())
         .catch(err => {
             switch (err.name) {
@@ -105,14 +113,14 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
     return touchIDEnabledForSource(sourceID)
         .then(enabled => {
             if (!enabled) {
-                throw new Error("Touch unlock is not enabled for this source");
+                throw new Error("Biometric unlock is not enabled for this source");
             }
             return getKeychainCredentialsFromTouchUnlock();
         })
         .then(keychainCreds => {
             const sourcePassword = keychainCreds[sourceID];
             if (!sourcePassword) {
-                throw new Error("No credentials found under touch ID for this source");
+                throw new Error("No credentials found under biometric ID for this source");
             }
             return sourcePassword;
         });

@@ -96,7 +96,7 @@ export function createRemoteCredentials(archiveType, options) {
             return credentials;
         }
         default:
-            throw new Error(`Unrecognised archive type: ${archiveType}`);
+            throw new Error(`Unrecognised vault type: ${archiveType}`);
     }
 }
 

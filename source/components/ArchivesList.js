@@ -176,7 +176,7 @@ class ArchivesList extends Component {
         if (status === "unlocked") {
             this.props.lockArchive(sourceID);
         } else {
-            alert("Cannot lock archive that is not unlocked");
+            alert("Cannot lock vault that is not unlocked");
         }
     }
 
@@ -196,7 +196,7 @@ class ArchivesList extends Component {
                     handleError("Unlocking failed", err);
                 });
         } else {
-            handleError("Unlocking failed", new Error(`Unexpected archive state: ${status}`));
+            handleError("Unlocking failed", new Error(`Unexpected vault state: ${status}`));
         }
     }
 
@@ -321,11 +321,11 @@ class ArchivesList extends Component {
                         />
                     </When>
                     <Otherwise>
-                        <EmptyView text="Add a new archive to begin" imageSource={BENCH_IMAGE} />
+                        <EmptyView text="Add a new vault to begin" imageSource={BENCH_IMAGE} />
                     </Otherwise>
                 </Choose>
                 <Prompt
-                    title="Archive Password"
+                    title="Vault Password"
                     placeholder=""
                     visible={this.props.showUnlockPrompt}
                     onCancel={() => this.props.showUnlockPasswordPrompt(false)}

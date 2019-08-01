@@ -36,7 +36,7 @@ export function createNewArchive(state, dispatch) {
                 dispatch(showNewNamePrompt());
             });
     } else {
-        throw new Error("Failed creating new archive: Missing filename and/or password");
+        throw new Error("Failed creating new vault: Missing filename and/or password");
     }
 }
 
@@ -81,7 +81,7 @@ export function createRemoteConnection(connectionInfo) {
     } else if (archiveType === "googledrive") {
         return getGoogleDriveConnection(googleDriveToken).then(__storeSharedInstance);
     }
-    return Promise.reject(new Error(`Unknown archive source type: ${archiveType}`));
+    return Promise.reject(new Error(`Unknown vault type: ${archiveType}`));
 }
 
 export function getDirectoryContents(remoteDir) {
