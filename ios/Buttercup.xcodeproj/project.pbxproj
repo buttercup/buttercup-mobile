@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -15,7 +14,6 @@
 		00E356F31AD99517003FC87E /* ButtercupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ButtercupTests.m */; };
 		0BCA912401874173B41F21C1 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4CDACA32E214A28AD3AF336 /* Ionicons.ttf */; };
 		11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
-		12BAB1FE6B6F4C7FAF399723 /* libRNAppAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC17EA90BCD4D4B940D5503 /* libRNAppAuth.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -107,6 +105,7 @@
 		C7EA0FA91F0B512757DC0201 /* Pods_Buttercup_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CCBFDA6963002E6896B739 /* Pods_Buttercup_tvOS.framework */; };
 		C9661C6B6D9A4BC688834D4B /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FCC2D269F844C8BF09D78C /* Octicons.ttf */; };
 		ED8D557A1F1E48098EC1E8FC /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CEA96C243934CE395797F2D /* MaterialIcons.ttf */; };
+		B31BC87FA1FD4CC5B19747E1 /* libRNAppAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A00ACE67B3884219A5A3A8AA /* libRNAppAuth.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -432,13 +431,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = TouchID;
 		};
-		C2F71F5622E5BECC006A6E46 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D42C7902ABB34259A2C0676E /* RNAppAuth.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNAppAuth;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -526,7 +518,6 @@
 		9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillExtensionContextBridgeDelegate.m; sourceTree = "<group>"; };
 		9E67E2E224C7EC6CC5A965C0 /* Pods-Buttercup-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Buttercup-tvOS/Pods-Buttercup-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
-		AAC17EA90BCD4D4B940D5503 /* libRNAppAuth.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAppAuth.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
 		C246D8354F7DD7909797092B /* Pods_Buttercup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buttercup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -540,11 +531,12 @@
 		C3CA7369ED62733292A3E0F7 /* Pods-ButtercupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ButtercupTests.release.xcconfig"; path = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests.release.xcconfig"; sourceTree = "<group>"; };
 		C4CDACA32E214A28AD3AF336 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		C526BB0D8D7F42AFB7E8DF31 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		D42C7902ABB34259A2C0676E /* RNAppAuth.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAppAuth.xcodeproj; path = "../node_modules/react-native-app-auth/ios/RNAppAuth.xcodeproj"; sourceTree = "<group>"; };
 		DD7168EC82214DB68E569F3A /* Pods-BCAutoFillExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCAutoFillExtension.debug.xcconfig"; path = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		EE6B43702ADD4E138BE40FF9 /* libTouchID.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libTouchID.a; sourceTree = "<group>"; };
 		F9957AC4CCF9C43746C7D470 /* Pods_BCAutoFillExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BCAutoFillExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF6B0E67BDD99687D46DC5FE /* Pods-Buttercup-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Buttercup-tvOSTests/Pods-Buttercup-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		2B76BE7905EE478E89DB342C /* RNAppAuth.xcodeproj */ = {isa = PBXFileReference; name = "RNAppAuth.xcodeproj"; path = "../node_modules/react-native-app-auth/ios/RNAppAuth.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A00ACE67B3884219A5A3A8AA /* libRNAppAuth.a */ = {isa = PBXFileReference; name = "libRNAppAuth.a"; path = "libRNAppAuth.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -579,8 +571,8 @@
 				BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */,
 				55502B73129D4E8AA4FDFC1D /* libTouchID.a in Frameworks */,
 				9E13615B21DC466600EE48B0 /* libRNSecureStorage.a in Frameworks */,
-				12BAB1FE6B6F4C7FAF399723 /* libRNAppAuth.a in Frameworks */,
 				23F5A5D872140264AA5259AB /* Pods_Buttercup.framework in Frameworks */,
+				B31BC87FA1FD4CC5B19747E1 /* libRNAppAuth.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,7 +833,7 @@
 				A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */,
 				B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */,
 				46771EDC56994001BF7A4321 /* TouchID.xcodeproj */,
-				D42C7902ABB34259A2C0676E /* RNAppAuth.xcodeproj */,
+				2B76BE7905EE478E89DB342C /* RNAppAuth.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -958,14 +950,6 @@
 			isa = PBXGroup;
 			children = (
 				C2AF3D54207916FC00A40A70 /* libTouchID.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C2F71F5322E5BECC006A6E46 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C2F71F5722E5BECC006A6E46 /* libRNAppAuth.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1204,10 +1188,6 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-				{
-					ProductGroup = C2F71F5322E5BECC006A6E46 /* Products */;
-					ProjectRef = D42C7902ABB34259A2C0676E /* RNAppAuth.xcodeproj */;
 				},
 				{
 					ProductGroup = C23C4D611ED58FA6008B5786 /* Products */;
@@ -1541,13 +1521,6 @@
 			fileType = archive.ar;
 			path = libTouchID.a;
 			remoteRef = C2AF3D53207916FC00A40A70 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C2F71F5722E5BECC006A6E46 /* libRNAppAuth.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNAppAuth.a;
-			remoteRef = C2F71F5622E5BECC006A6E46 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1933,11 +1906,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1970,11 +1938,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -2081,11 +2044,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2126,11 +2084,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2165,7 +2118,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2199,7 +2151,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
