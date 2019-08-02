@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 const BUTTERCUP_DOMAIN_REXP = /^https:\/\/buttercup.pw\//;
 const DROPBOX_ACCESS_TOKEN_REXP = /access_token=([^&]+)/;
-const GOOGLE_DRIVE_AUTH_CODE_REXP = /\?googleauth&code=([^&#?]+)/;
 
 const styles = StyleSheet.create({
     container: {
@@ -52,17 +51,11 @@ class PopupBrowser extends Component {
     }
 
     processURLToken(url) {
-        const googleDriveAuthCodeMatch = url.match(GOOGLE_DRIVE_AUTH_CODE_REXP);
         const dropboxTokenMatch = url.match(DROPBOX_ACCESS_TOKEN_REXP);
-        if (googleDriveAuthCodeMatch) {
-            this.setState({ detectedToken: true });
-            const authCode = googleDriveAuthCodeMatch[1];
-            console.log(`Retrieved Google Drive auth code from tab: ${tabID}`);
-            this.props.onGoogleDriveAuthCodeReceived(authCode);
-        } else if (dropboxTokenMatch) {
+        if (dropboxTokenMatch) {
             this.setState({ detectedToken: true });
             const token = dropboxTokenMatch[1];
-            console.log(`Retrieved Dropbox access token from tab: ${tabID}`);
+            console.log("Retrieved Dropbox access token from browser");
             this.props.onDropboxTokenReceived(token);
         }
     }
@@ -81,13 +74,11 @@ class PopupBrowser extends Component {
 
 PopupBrowser.propTypes = {
     onDropboxTokenReceived: PropTypes.func.isRequired,
-    onGoogleDriveAuthCodeReceived: PropTypes.func.isRequired,
     url: PropTypes.string.isRequired
 };
 
 PopupBrowser.defaultProps = {
-    onDropboxTokenReceived: () => {},
-    onGoogleDriveAuthCodeReceived: () => {}
+    onDropboxTokenReceived: () => {}
 };
 
 export default PopupBrowser;
