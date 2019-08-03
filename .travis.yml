@@ -1,3 +1,7 @@
+addons:
+  homebrew:
+    update: true
+    brewfile: true
 matrix:
   include:
     - language: node_js
@@ -16,9 +20,6 @@ matrix:
       os: osx
       osx_image: xcode9.4
       script:
-        - brew update
-        - brew install bash
-        - brew install nvm
         - nvm install 8.4.0
         - npm install
         - ./scripts/testIOS.sh "iPhone 7" "11.2"
@@ -28,9 +29,6 @@ matrix:
       os: osx
       osx_image: xcode9.4
       script:
-        - brew update
-        - brew install bash
-        - brew install nvm
         - nvm install 8.4.0
         - npm install
         - ./scripts/testIOS.sh "iPhone 5" "10.3.1"
