@@ -9,6 +9,7 @@ import remoteExplorer from "./remoteExplorer.js";
 import entry from "./entry.js";
 import app from "./app.js";
 import dropbox from "./dropbox.js";
+import googleDrive from "./googleDrive.js";
 import browser from "./browser.js";
 
 const appReducer = combineReducers({
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
     browser,
     dropbox,
     entry,
+    googleDrive,
     nav,
     remoteExplorer
 });

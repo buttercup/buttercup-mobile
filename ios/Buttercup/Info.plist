@@ -81,5 +81,16 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>CFBundleURLTypes</key>
+    <array>
+    <dict>
+        <key>CFBundleURLName</key>
+        <string>pw.buttercup.mobile</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+        <string>com.googleusercontent.apps.327941947801-4ggb9b579a6o509pff2qi0u25g28rs7r</string>
+        </array>
+    </dict>
+    </array>
 </dict>
 </plist>

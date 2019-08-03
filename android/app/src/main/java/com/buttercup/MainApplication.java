@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.buttercup.autofill.AutoFillPackage;
 import com.facebook.react.ReactApplication;
+import com.rnappauth.RNAppAuthPackage;
 import com.oblador.keychain.KeychainPackage;
 import li.yunqi.rnsecurestorage.RNSecureStoragePackage;
 import com.rnfingerprint.FingerprintAuthPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
+                new RNAppAuthPackage(),
                 new KeychainPackage(),
                 new RNSecureStoragePackage(),
                 new FingerprintAuthPackage(),

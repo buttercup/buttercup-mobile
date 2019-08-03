@@ -1,0 +1,1497 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		049DC9CDA35C4596A38B1E27564D6B68 /* OIDAuthState+IOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F274EF52F44DC3C887A24F4D7447809 /* OIDAuthState+IOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		06AAEEAD3647A2559F1E95A0F4A0D8CE /* Pods-Buttercup-tvOSTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9CD9C54BBC0F850CEE589259293D0B /* Pods-Buttercup-tvOSTests-dummy.m */; };
+		0A732A144E48FA5CAF946E5BEF6A4F79 /* AppAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B39AC946C6363293247628333FB3C7 /* AppAuth.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0B4B3CD063844C4CFC2EE82E99CED7BC /* OIDServiceDiscovery.h in Headers */ = {isa = PBXBuildFile; fileRef = 82C6C0AC3FFC1734CA0514A1051E0A46 /* OIDServiceDiscovery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0C7CEDD43FAC6B2DD1DE90CCBB312DA6 /* OIDAuthorizationService+IOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 05D242795D117FF2D0982E641C4B925F /* OIDAuthorizationService+IOS.m */; };
+		0DB1F446CAD4AEAF4C178F0094DC811F /* OIDURLQueryComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6185C57C6F0BD7086C21294488234559 /* OIDURLQueryComponent.m */; };
+		16F172A41A2D6934C8B245B1AE0DC158 /* OIDScopeUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AB22E4ED9E3661CAD30D1ABB6177DC /* OIDScopeUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1B9FE079DBE68DCA7C221350CFE942FE /* OIDError.m in Sources */ = {isa = PBXBuildFile; fileRef = C54BD37A685D563857DE4E8C7A398990 /* OIDError.m */; };
+		1ED0DE911FC0A52C50C9D1D08089962D /* OIDExternalUserAgentIOSCustomBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ABA59F30D13500006E9587ECAD8E0F8 /* OIDExternalUserAgentIOSCustomBrowser.m */; };
+		1EFBD97D27FC45C05EE8D3E0A7138B89 /* OIDError.h in Headers */ = {isa = PBXBuildFile; fileRef = FC8EF5F3C209A83ECA941DBB884689EC /* OIDError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		22A090C7BA68F6C87B43BE0047AE7E78 /* OIDAuthorizationRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 99D18CD5AE950CD182829F22A4F78E8D /* OIDAuthorizationRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2597D3380B812D8B87A626C3F59F9801 /* OIDAuthState+IOS.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7A82B7C603EE637762540C269F8F22 /* OIDAuthState+IOS.m */; };
+		28640D76E01B18690847DA4093CF0863 /* OIDAuthorizationFlowSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 10023D60B1C757B34FF7F3FCA0DE639D /* OIDAuthorizationFlowSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A259286B603521D2D9EF014565354CB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0411839220E45EC154A9AC5BCC457F /* Foundation.framework */; };
+		3009756F0345FC0F083E5445C41E54C2 /* OIDIDToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 127B907E8CEACFDC4FE848188C64F522 /* OIDIDToken.m */; };
+		3167426381C9D76610BD9FB8119773D6 /* Pods-Buttercup-tvOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E39D2A38C46CEADA0D26FA442845BE /* Pods-Buttercup-tvOS-dummy.m */; };
+		39F42C44FD55C983519F6BA090CE3C3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0411839220E45EC154A9AC5BCC457F /* Foundation.framework */; };
+		3F15AEF65F18817CED6A4A7E936924A2 /* OIDScopeUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6355F37E00C3403F2BE7810094823352 /* OIDScopeUtilities.m */; };
+		4271D6994166DC5A673DA68BE8EE823A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF797C97B93A53941C1308BDC275766 /* Foundation.framework */; };
+		430F4A7BE0567BA3D2D03BAC2CB8CB7F /* OIDFieldMapping.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AEB99C1CFAF77CAE80E574FEA0F9F82 /* OIDFieldMapping.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4857712762DA0A9AC967D20FAF29DAFA /* OIDDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 983D7C1FF990CE09A220A93AEA813CFB /* OIDDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4B393738C17CDB5F74E99C0E698F1DA8 /* OIDAuthorizationResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 12F22BBB1166176A3F113462ABC499C4 /* OIDAuthorizationResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		524A5F5A2F7695E4149CB67EF5458239 /* OIDAuthorizationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 5964B20AFD0DA01AD16E6E09E1056D5A /* OIDAuthorizationResponse.m */; };
+		532BD91BA012CC40D00E300F7CEECD56 /* Pods-ButtercupTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B16F8E8336C5D65AA32EEA7A34130C2D /* Pods-ButtercupTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5393A620EF2F1F5EBF112B8AB5360597 /* Pods-Buttercup-tvOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D60D8497090F61A2D7323B4C11F3EB /* Pods-Buttercup-tvOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5599FF3F080908CA536271A1F87A42D5 /* OIDAuthStateErrorDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 93F2AB885D292DD50AF61352D797A373 /* OIDAuthStateErrorDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		57CD989225AC6CCFEDF704DA0AE6DC94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0411839220E45EC154A9AC5BCC457F /* Foundation.framework */; };
+		5D1A06D90B142105022ABDEF5190ECC9 /* OIDAuthorizationService.m in Sources */ = {isa = PBXBuildFile; fileRef = CCCE2077443572804333E488865E3101 /* OIDAuthorizationService.m */; };
+		5D461CF0BDBC858EA7E67123EBF538A9 /* OIDServiceConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 84A552CC24D4171A08C2C84495ED1B98 /* OIDServiceConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DFF7CD14DFDEFD3FB9D59B910A78285 /* OIDResponseTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 75595D55E1D0EA487AF0D08CC67B502B /* OIDResponseTypes.m */; };
+		5F196531FD27703580D69E8A2A284831 /* OIDExternalUserAgentRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = B0B7A93EA7400234831E25385B084FA0 /* OIDExternalUserAgentRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5F98DCA5BA5E3775988D0BC379F51A5B /* OIDResponseTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 276CA9F7614819223BCCDC3F41077989 /* OIDResponseTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		635D974749A9D275241B455D8DB7F708 /* Pods-BCAutoFillExtension-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 289AA547B889014F344A4E02A1E9058E /* Pods-BCAutoFillExtension-dummy.m */; };
+		64CE45F91EE3B98CCC88BB968AD469A9 /* OIDClientMetadataParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 82698FD0B0E5E958950CCE7546277729 /* OIDClientMetadataParameters.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C5B4F5059D721F9C974AC273A5DBBA1 /* OIDRegistrationResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 50231836B74A24620FBD6BD60DE818DE /* OIDRegistrationResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6CE74F8B9BFC073194EEEA705B8506C3 /* OIDServiceConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 201248F50D6938191A921C14F90FCD16 /* OIDServiceConfiguration.m */; };
+		6D6D217C638AB866DC59AB739286C553 /* OIDExternalUserAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = BB6F42F3BFA34376A1BE6CBB33A03895 /* OIDExternalUserAgent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E0183D0AE05ACD341CA2717963FE5C3 /* Pods-BCAutoFillExtension-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E8994210C064AD36DCBD6680A013BA /* Pods-BCAutoFillExtension-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		71637974B56079D4EBBF10CF84925E57 /* OIDTokenUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 89F6367BD5B6B0F6143D37FDE120151E /* OIDTokenUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		736FBDA79557EA63CE3963727D19E68B /* OIDURLSessionProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB605BBC87EE0B704C5BB0B5311FAF4 /* OIDURLSessionProvider.m */; };
+		74FA8835A553876EE91C9F45A0D7AD85 /* OIDTokenResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 526C7810D5C594571B9D9A65E341DA72 /* OIDTokenResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7E56AEF2519F1FDC8779D872A9E43257 /* OIDScopes.m in Sources */ = {isa = PBXBuildFile; fileRef = 105192731FDFE34E0D2822CB8FE05C46 /* OIDScopes.m */; };
+		80C88C291155F5091F4BB89D336CD77F /* OIDURLQueryComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 596FBAB2D45B6C2166FD99B4953501DB /* OIDURLQueryComponent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		810B7631FC8F79B421A69660E4841980 /* OIDRegistrationRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = BE5E580F496D40AE927F26C238167B6F /* OIDRegistrationRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8116E3800C66F339C88D2A9A05FB4808 /* OIDRegistrationResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E206B11F107B13FA2D093DE696117B7 /* OIDRegistrationResponse.m */; };
+		836650FC7E024AE6B8BD4ADE0B630688 /* OIDTokenUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A11A1F9C266E1EF0EDF498EAC7ECB /* OIDTokenUtilities.m */; };
+		847C24CA1EDE3A89E20872C949D21666 /* OIDTokenResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 676FF1EC860132B1354512125AC91B72 /* OIDTokenResponse.m */; };
+		8623ABE8F93009575534F19C90C47D0D /* OIDExternalUserAgentIOSCustomBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D98BD9FAF1A301CFC687B5DF8B7D0E1 /* OIDExternalUserAgentIOSCustomBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86D097D702E790B9489E51A2BA5010C6 /* AppAuth-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 39959A5283C022DD813BD9BE09559AF5 /* AppAuth-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		88336AC1CCC2615D60BBFE161406770B /* OIDAuthorizationService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EA2C33F3FE6D5AA28622EA417FD4E86 /* OIDAuthorizationService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		89ABC0765CBA981C44269AB7195C474E /* OIDExternalUserAgentIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 79183FA3344E304C4463C736C7282B9A /* OIDExternalUserAgentIOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8D83E4AC8847F789F38FCCB3052F27D9 /* OIDExternalUserAgentIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 6AA02E0707ED73B745307EE8C7D90420 /* OIDExternalUserAgentIOS.m */; };
+		8E6B9D211304654DCBC1861679B89F03 /* OIDAuthState.m in Sources */ = {isa = PBXBuildFile; fileRef = C1B1B37C7380CA10AE0F6D6BC3CF8477 /* OIDAuthState.m */; };
+		8E789EE22685AFD33428EE66678B5D10 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0527A8BF9002F2B0B8038D1CA64A2D /* SafariServices.framework */; };
+		90719E96D6D92236CD8115E6D8B76343 /* OIDIDToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 44B4A0550BB36C9385E768D9F5152167 /* OIDIDToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		95A9A547164A1CA3B3837A83D60CF7C6 /* OIDGrantTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 592F2B32CD6280DE2C83F57C8AFB0C22 /* OIDGrantTypes.m */; };
+		986BF3AC735FE961C4E1DB9038ADD4F9 /* Pods-Buttercup-tvOSTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B560E0DF1690BE28BF0C0B347760B896 /* Pods-Buttercup-tvOSTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9A0D688FF0DD648F49FCAA22BA920B0E /* Pods-ButtercupTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53DBD53082D9C690BE5E9D222C4B30 /* Pods-ButtercupTests-dummy.m */; };
+		AA6B7492F74334FBC6082527953A1082 /* OIDAuthState.h in Headers */ = {isa = PBXBuildFile; fileRef = 35B668A4E56E1DBF0829E1C6879E8425 /* OIDAuthState.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE75845B469F9031E538AD3BF383F295 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0411839220E45EC154A9AC5BCC457F /* Foundation.framework */; };
+		B3C6CF8FAAA7CB0D8A9633E722EA2D5F /* AppAuth-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C31A142DFCF5CE3D43D25C36F427AC21 /* AppAuth-dummy.m */; };
+		B8B4D85250C85ACB6C627A77FDCC7953 /* Pods-Buttercup-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DD302D5A99258F247E5A0709D2C345AD /* Pods-Buttercup-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BB89DEFDB70A30FFB495ED70BFAE4921 /* OIDClientMetadataParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 428915ABE39689C19C76ABF6A5ECC69B /* OIDClientMetadataParameters.m */; };
+		BCCE77AF2F7EFE077A0A429657878B5C /* Pods-Buttercup-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBF13F3392832BB1AFF53C3D83685DF /* Pods-Buttercup-dummy.m */; };
+		C148105FBBA820DDC3908EB868134D6A /* OIDURLSessionProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = E2E417579BEF6EB460530BA387A7C3FA /* OIDURLSessionProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C29C7F4F586E26DCA253DDB3B993ECBE /* OIDGrantTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = B04459F363965EFF69EBB0BCB58D4455 /* OIDGrantTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C8353A33C9FB72DB60844BE3C0339770 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF797C97B93A53941C1308BDC275766 /* Foundation.framework */; };
+		D08317997E8392352E43394EBDD45259 /* OIDRegistrationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = C16964C4CC66EA16DDEAF42810EB5D75 /* OIDRegistrationRequest.m */; };
+		D4B04F498322218518394DC7A581E827 /* OIDTokenRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C137924122165C095D3CF457BB71000 /* OIDTokenRequest.m */; };
+		D8FF3F8C609AE42DF2DDE63877553707 /* OIDAuthorizationService+IOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 18C7397981B4731E8E29A30C801D5180 /* OIDAuthorizationService+IOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DA208BD501BCFFD0A3EB018E943CDDAC /* OIDErrorUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F09B3FD01ADCF28BC973E0D60DD847D1 /* OIDErrorUtilities.m */; };
+		DD6640ADE2DD5316A59C1462F27FDABA /* OIDAuthorizationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 364192A6946321D7B5868034452F507D /* OIDAuthorizationRequest.m */; };
+		E883674D4344D247C901259679E78FCA /* OIDScopes.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE9FF93B58BC0A31740480EF9978255 /* OIDScopes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EC89797EABDB5F9067F8A4F900D34AE9 /* OIDTokenRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 9839A0F4FDDCBA28C0DF7086D10DAF6E /* OIDTokenRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0252D384A4CCCCBC5A673A5AB512BB1 /* OIDAuthStateChangeDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 16C3865B240310C73A221F9E47B76EA1 /* OIDAuthStateChangeDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FA4E985B0B09184DE2A8454E6E159C29 /* OIDErrorUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 746D8C7C8060C87E4CEDCB12EBA6BCE2 /* OIDErrorUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FC8ACF3E107BD3B6D496D1067EC6081A /* OIDExternalUserAgentSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 531FF0435BAD48002CC3FD390F249E7A /* OIDExternalUserAgentSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD8FA5C77EF932F8A3B11431584DE769 /* OIDServiceDiscovery.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA6A74DD0AF9BD31C11A38D432DA26F /* OIDServiceDiscovery.m */; };
+		FEC8B49009DDDA6D7FE2594F9025626B /* OIDFieldMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1A5E200145BC2DDE16CE7A0814E23A /* OIDFieldMapping.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B105201BF8106187288A81EB12F57EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C642AA10FB29936669CC269F42079C6;
+			remoteInfo = AppAuth;
+		};
+		32ACEF224E5C077278715E8DFA752CCE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7DF525239E4B6D2E671EC2C88DB76AA9;
+			remoteInfo = "Pods-Buttercup-tvOS";
+		};
+		3D975A3172CB229F1D3B4ED296A26005 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8783A803B4214F81C26D011B291E6307;
+			remoteInfo = "Pods-Buttercup";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		05D242795D117FF2D0982E641C4B925F /* OIDAuthorizationService+IOS.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "OIDAuthorizationService+IOS.m"; path = "Source/iOS/OIDAuthorizationService+IOS.m"; sourceTree = "<group>"; };
+		0DB605BBC87EE0B704C5BB0B5311FAF4 /* OIDURLSessionProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDURLSessionProvider.m; path = Source/OIDURLSessionProvider.m; sourceTree = "<group>"; };
+		0EA2C33F3FE6D5AA28622EA417FD4E86 /* OIDAuthorizationService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDAuthorizationService.h; path = Source/OIDAuthorizationService.h; sourceTree = "<group>"; };
+		0FA6A74DD0AF9BD31C11A38D432DA26F /* OIDServiceDiscovery.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDServiceDiscovery.m; path = Source/OIDServiceDiscovery.m; sourceTree = "<group>"; };
+		10023D60B1C757B34FF7F3FCA0DE639D /* OIDAuthorizationFlowSession.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDAuthorizationFlowSession.h; path = Source/OIDAuthorizationFlowSession.h; sourceTree = "<group>"; };
+		105192731FDFE34E0D2822CB8FE05C46 /* OIDScopes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDScopes.m; path = Source/OIDScopes.m; sourceTree = "<group>"; };
+		127B907E8CEACFDC4FE848188C64F522 /* OIDIDToken.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDIDToken.m; path = Source/OIDIDToken.m; sourceTree = "<group>"; };
+		129312E6F55214AAC6D17D8EA254417B /* Pods_Buttercup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Buttercup.framework; path = "Pods-Buttercup.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		12F22BBB1166176A3F113462ABC499C4 /* OIDAuthorizationResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDAuthorizationResponse.h; path = Source/OIDAuthorizationResponse.h; sourceTree = "<group>"; };
+		16C3865B240310C73A221F9E47B76EA1 /* OIDAuthStateChangeDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDAuthStateChangeDelegate.h; path = Source/OIDAuthStateChangeDelegate.h; sourceTree = "<group>"; };
+		174CE6ACE4F6546C1DB6A107172F714F /* Pods-ButtercupTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ButtercupTests.modulemap"; sourceTree = "<group>"; };
+		18C7397981B4731E8E29A30C801D5180 /* OIDAuthorizationService+IOS.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "OIDAuthorizationService+IOS.h"; path = "Source/iOS/OIDAuthorizationService+IOS.h"; sourceTree = "<group>"; };
+		1AEB99C1CFAF77CAE80E574FEA0F9F82 /* OIDFieldMapping.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDFieldMapping.h; path = Source/OIDFieldMapping.h; sourceTree = "<group>"; };
+		1C137924122165C095D3CF457BB71000 /* OIDTokenRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDTokenRequest.m; path = Source/OIDTokenRequest.m; sourceTree = "<group>"; };
+		201248F50D6938191A921C14F90FCD16 /* OIDServiceConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDServiceConfiguration.m; path = Source/OIDServiceConfiguration.m; sourceTree = "<group>"; };
+		26610151E741AC5C3BCDC9E6B197234B /* Pods-BCAutoFillExtension.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-BCAutoFillExtension.modulemap"; sourceTree = "<group>"; };
+		276CA9F7614819223BCCDC3F41077989 /* OIDResponseTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDResponseTypes.h; path = Source/OIDResponseTypes.h; sourceTree = "<group>"; };
+		289AA547B889014F344A4E02A1E9058E /* Pods-BCAutoFillExtension-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-BCAutoFillExtension-dummy.m"; sourceTree = "<group>"; };
+		299081ED408CE02C2D7263078205DD35 /* Pods-BCAutoFillExtension-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BCAutoFillExtension-acknowledgements.plist"; sourceTree = "<group>"; };
+		299C859956B2CEFDD6D913FD43F1B6C1 /* Pods-ButtercupTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ButtercupTests-Info.plist"; sourceTree = "<group>"; };
+		2BBF13F3392832BB1AFF53C3D83685DF /* Pods-Buttercup-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Buttercup-dummy.m"; sourceTree = "<group>"; };
+		2E206B11F107B13FA2D093DE696117B7 /* OIDRegistrationResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDRegistrationResponse.m; path = Source/OIDRegistrationResponse.m; sourceTree = "<group>"; };
+		32F37EC4A796D279D60C493AB82F615D /* Pods_Buttercup_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Buttercup_tvOS.framework; path = "Pods-Buttercup-tvOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		344D78C1DF24DA5FFB970BC2AF7DA8B4 /* Pods-Buttercup-tvOS-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Buttercup-tvOS-acknowledgements.plist"; sourceTree = "<group>"; };
+		35B668A4E56E1DBF0829E1C6879E8425 /* OIDAuthState.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDAuthState.h; path = Source/OIDAuthState.h; sourceTree = "<group>"; };
+		364192A6946321D7B5868034452F507D /* OIDAuthorizationRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDAuthorizationRequest.m; path = Source/OIDAuthorizationRequest.m; sourceTree = "<group>"; };
+		3663405EA6C7EFC808F265D787A5540B /* Pods_Buttercup_tvOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Buttercup_tvOSTests.framework; path = "Pods-Buttercup-tvOSTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		39959A5283C022DD813BD9BE09559AF5 /* AppAuth-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AppAuth-umbrella.h"; sourceTree = "<group>"; };
+		3FD1B4C1246D643E9476438C28048FA8 /* AppAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AppAuth.framework; path = AppAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		428915ABE39689C19C76ABF6A5ECC69B /* OIDClientMetadataParameters.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDClientMetadataParameters.m; path = Source/OIDClientMetadataParameters.m; sourceTree = "<group>"; };
+		44B4A0550BB36C9385E768D9F5152167 /* OIDIDToken.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDIDToken.h; path = Source/OIDIDToken.h; sourceTree = "<group>"; };
+		4C0527A8BF9002F2B0B8038D1CA64A2D /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/SafariServices.framework; sourceTree = DEVELOPER_DIR; };
+		4FA99DEE67B74ECE80EAF3A81EE67D9F /* Pods-Buttercup-tvOS-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Buttercup-tvOS-acknowledgements.markdown"; sourceTree = "<group>"; };
+		50231836B74A24620FBD6BD60DE818DE /* OIDRegistrationResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDRegistrationResponse.h; path = Source/OIDRegistrationResponse.h; sourceTree = "<group>"; };
+		50AB22E4ED9E3661CAD30D1ABB6177DC /* OIDScopeUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDScopeUtilities.h; path = Source/OIDScopeUtilities.h; sourceTree = "<group>"; };
+		50D60D8497090F61A2D7323B4C11F3EB /* Pods-Buttercup-tvOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Buttercup-tvOS-umbrella.h"; sourceTree = "<group>"; };
+		526C7810D5C594571B9D9A65E341DA72 /* OIDTokenResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDTokenResponse.h; path = Source/OIDTokenResponse.h; sourceTree = "<group>"; };
+		531FF0435BAD48002CC3FD390F249E7A /* OIDExternalUserAgentSession.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDExternalUserAgentSession.h; path = Source/OIDExternalUserAgentSession.h; sourceTree = "<group>"; };
+		58A18BD2C306B987842F2C75FA22540C /* Pods-Buttercup-tvOSTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Buttercup-tvOSTests.modulemap"; sourceTree = "<group>"; };
+		592F2B32CD6280DE2C83F57C8AFB0C22 /* OIDGrantTypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDGrantTypes.m; path = Source/OIDGrantTypes.m; sourceTree = "<group>"; };
+		5964B20AFD0DA01AD16E6E09E1056D5A /* OIDAuthorizationResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDAuthorizationResponse.m; path = Source/OIDAuthorizationResponse.m; sourceTree = "<group>"; };
+		596FBAB2D45B6C2166FD99B4953501DB /* OIDURLQueryComponent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDURLQueryComponent.h; path = Source/OIDURLQueryComponent.h; sourceTree = "<group>"; };
+		5B398255BF7038F105E824C4BA8FBBBF /* Pods-ButtercupTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ButtercupTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		5BD88960564FCFE73A0CD35B4CBBCB65 /* Pods-Buttercup-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Buttercup-Info.plist"; sourceTree = "<group>"; };
+		5DC0ABB96C188B09467F8A42983BBEE4 /* Pods-Buttercup-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Buttercup-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6185C57C6F0BD7086C21294488234559 /* OIDURLQueryComponent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDURLQueryComponent.m; path = Source/OIDURLQueryComponent.m; sourceTree = "<group>"; };
+		62B2C23CFFCCE00F720C3F4CF0E6DDBE /* Pods-Buttercup.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Buttercup.modulemap"; sourceTree = "<group>"; };
+		6355F37E00C3403F2BE7810094823352 /* OIDScopeUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDScopeUtilities.m; path = Source/OIDScopeUtilities.m; sourceTree = "<group>"; };
+		63D34F042A6D97B5BF1838877D820FD9 /* Pods-BCAutoFillExtension-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-BCAutoFillExtension-Info.plist"; sourceTree = "<group>"; };
+		6457108FDCB4E8B6A39F1A4BA38B0BA5 /* Pods-Buttercup-tvOSTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Buttercup-tvOSTests-Info.plist"; sourceTree = "<group>"; };
+		65DB0AD9ED1A10BD1EBE25D069F8F81E /* Pods-ButtercupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ButtercupTests.release.xcconfig"; sourceTree = "<group>"; };
+		676FF1EC860132B1354512125AC91B72 /* OIDTokenResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDTokenResponse.m; path = Source/OIDTokenResponse.m; sourceTree = "<group>"; };
+		6AA02E0707ED73B745307EE8C7D90420 /* OIDExternalUserAgentIOS.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDExternalUserAgentIOS.m; path = Source/iOS/OIDExternalUserAgentIOS.m; sourceTree = "<group>"; };
+		746D8C7C8060C87E4CEDCB12EBA6BCE2 /* OIDErrorUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDErrorUtilities.h; path = Source/OIDErrorUtilities.h; sourceTree = "<group>"; };
+		75595D55E1D0EA487AF0D08CC67B502B /* OIDResponseTypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDResponseTypes.m; path = Source/OIDResponseTypes.m; sourceTree = "<group>"; };
+		79183FA3344E304C4463C736C7282B9A /* OIDExternalUserAgentIOS.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDExternalUserAgentIOS.h; path = Source/iOS/OIDExternalUserAgentIOS.h; sourceTree = "<group>"; };
+		7F1285AE3C2998B58544791D83ED880B /* Pods-BCAutoFillExtension-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-BCAutoFillExtension-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7F274EF52F44DC3C887A24F4D7447809 /* OIDAuthState+IOS.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "OIDAuthState+IOS.h"; path = "Source/iOS/OIDAuthState+IOS.h"; sourceTree = "<group>"; };
+		7F38D44D3EAA72EC8670346CF8B16E1A /* Pods-BCAutoFillExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BCAutoFillExtension.release.xcconfig"; sourceTree = "<group>"; };
+		82698FD0B0E5E958950CCE7546277729 /* OIDClientMetadataParameters.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDClientMetadataParameters.h; path = Source/OIDClientMetadataParameters.h; sourceTree = "<group>"; };
+		82C6C0AC3FFC1734CA0514A1051E0A46 /* OIDServiceDiscovery.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDServiceDiscovery.h; path = Source/OIDServiceDiscovery.h; sourceTree = "<group>"; };
+		8395A8330425841D55DB1F045A03C502 /* Pods-Buttercup-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Buttercup-acknowledgements.markdown"; sourceTree = "<group>"; };
+		84A552CC24D4171A08C2C84495ED1B98 /* OIDServiceConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDServiceConfiguration.h; path = Source/OIDServiceConfiguration.h; sourceTree = "<group>"; };
+		879F9B325901FD0A82E703782D5667A4 /* Pods-Buttercup-tvOSTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Buttercup-tvOSTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		89F6367BD5B6B0F6143D37FDE120151E /* OIDTokenUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDTokenUtilities.h; path = Source/OIDTokenUtilities.h; sourceTree = "<group>"; };
+		8E9A11A1F9C266E1EF0EDF498EAC7ECB /* OIDTokenUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDTokenUtilities.m; path = Source/OIDTokenUtilities.m; sourceTree = "<group>"; };
+		8FC216CFEE624C0346790C0F37C5ACE3 /* AppAuth-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "AppAuth-Info.plist"; sourceTree = "<group>"; };
+		92A8FBE6F7D2DCC918F03700DA3B9ADB /* Pods-Buttercup-tvOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Buttercup-tvOS-Info.plist"; sourceTree = "<group>"; };
+		92BFC771AA8A2BF666B124E58CFA2152 /* Pods-Buttercup-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Buttercup-acknowledgements.plist"; sourceTree = "<group>"; };
+		933966E81C849F4566A07344EB9E802D /* Pods-Buttercup-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Buttercup-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		93F2AB885D292DD50AF61352D797A373 /* OIDAuthStateErrorDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDAuthStateErrorDelegate.h; path = Source/OIDAuthStateErrorDelegate.h; sourceTree = "<group>"; };
+		9839A0F4FDDCBA28C0DF7086D10DAF6E /* OIDTokenRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDTokenRequest.h; path = Source/OIDTokenRequest.h; sourceTree = "<group>"; };
+		983D7C1FF990CE09A220A93AEA813CFB /* OIDDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDDefines.h; path = Source/OIDDefines.h; sourceTree = "<group>"; };
+		99D18CD5AE950CD182829F22A4F78E8D /* OIDAuthorizationRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDAuthorizationRequest.h; path = Source/OIDAuthorizationRequest.h; sourceTree = "<group>"; };
+		9ABA59F30D13500006E9587ECAD8E0F8 /* OIDExternalUserAgentIOSCustomBrowser.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDExternalUserAgentIOSCustomBrowser.m; path = Source/iOS/OIDExternalUserAgentIOSCustomBrowser.m; sourceTree = "<group>"; };
+		9D3BA45BD96349AF39853D5F209C2859 /* Pods-BCAutoFillExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-BCAutoFillExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D98BD9FAF1A301CFC687B5DF8B7D0E1 /* OIDExternalUserAgentIOSCustomBrowser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDExternalUserAgentIOSCustomBrowser.h; path = Source/iOS/OIDExternalUserAgentIOSCustomBrowser.h; sourceTree = "<group>"; };
+		9EA1EE8F9364310CD6DAFCC3723832BD /* Pods-Buttercup-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Buttercup-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A5FEB1F75E082BA80E8379CBE25647E5 /* AppAuth.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = AppAuth.modulemap; sourceTree = "<group>"; };
+		AA388DEBEE26E72527037FAA8A6EDEF5 /* AppAuth-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AppAuth-prefix.pch"; sourceTree = "<group>"; };
+		AD1A5E200145BC2DDE16CE7A0814E23A /* OIDFieldMapping.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDFieldMapping.m; path = Source/OIDFieldMapping.m; sourceTree = "<group>"; };
+		AF914F89285E3B957D5548746E0194FA /* Pods-ButtercupTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ButtercupTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B04459F363965EFF69EBB0BCB58D4455 /* OIDGrantTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDGrantTypes.h; path = Source/OIDGrantTypes.h; sourceTree = "<group>"; };
+		B0B7A93EA7400234831E25385B084FA0 /* OIDExternalUserAgentRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDExternalUserAgentRequest.h; path = Source/OIDExternalUserAgentRequest.h; sourceTree = "<group>"; };
+		B16F8E8336C5D65AA32EEA7A34130C2D /* Pods-ButtercupTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ButtercupTests-umbrella.h"; sourceTree = "<group>"; };
+		B560E0DF1690BE28BF0C0B347760B896 /* Pods-Buttercup-tvOSTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Buttercup-tvOSTests-umbrella.h"; sourceTree = "<group>"; };
+		B6B39AC946C6363293247628333FB3C7 /* AppAuth.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AppAuth.h; path = Source/AppAuth.h; sourceTree = "<group>"; };
+		B6E39D2A38C46CEADA0D26FA442845BE /* Pods-Buttercup-tvOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Buttercup-tvOS-dummy.m"; sourceTree = "<group>"; };
+		BA53DBD53082D9C690BE5E9D222C4B30 /* Pods-ButtercupTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ButtercupTests-dummy.m"; sourceTree = "<group>"; };
+		BAED66017D3914E4EEE36B7A1D7A4BBF /* Pods-Buttercup-tvOSTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Buttercup-tvOSTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		BB6F42F3BFA34376A1BE6CBB33A03895 /* OIDExternalUserAgent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDExternalUserAgent.h; path = Source/OIDExternalUserAgent.h; sourceTree = "<group>"; };
+		BBD949C5DBA34F13CC1149C331E53802 /* Pods_BCAutoFillExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_BCAutoFillExtension.framework; path = "Pods-BCAutoFillExtension.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE29B0AC3ED8CA518A1E5D5293AC2970 /* Pods_ButtercupTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ButtercupTests.framework; path = "Pods-ButtercupTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE5E580F496D40AE927F26C238167B6F /* OIDRegistrationRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDRegistrationRequest.h; path = Source/OIDRegistrationRequest.h; sourceTree = "<group>"; };
+		C16964C4CC66EA16DDEAF42810EB5D75 /* OIDRegistrationRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDRegistrationRequest.m; path = Source/OIDRegistrationRequest.m; sourceTree = "<group>"; };
+		C1B1B37C7380CA10AE0F6D6BC3CF8477 /* OIDAuthState.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDAuthState.m; path = Source/OIDAuthState.m; sourceTree = "<group>"; };
+		C31A142DFCF5CE3D43D25C36F427AC21 /* AppAuth-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AppAuth-dummy.m"; sourceTree = "<group>"; };
+		C4ED3BA49D57B01A5C95C2D2BC0DEDA5 /* AppAuth.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AppAuth.xcconfig; sourceTree = "<group>"; };
+		C54BD37A685D563857DE4E8C7A398990 /* OIDError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDError.m; path = Source/OIDError.m; sourceTree = "<group>"; };
+		C6FCADE87D73AD523692264DF37BF071 /* Pods-Buttercup-tvOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Buttercup-tvOS.modulemap"; sourceTree = "<group>"; };
+		CB0411839220E45EC154A9AC5BCC457F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		CCCE2077443572804333E488865E3101 /* OIDAuthorizationService.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDAuthorizationService.m; path = Source/OIDAuthorizationService.m; sourceTree = "<group>"; };
+		D12220F6C5A19F5C98AC84FB4C715897 /* Pods-Buttercup-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Buttercup-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		DD302D5A99258F247E5A0709D2C345AD /* Pods-Buttercup-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Buttercup-umbrella.h"; sourceTree = "<group>"; };
+		E2E417579BEF6EB460530BA387A7C3FA /* OIDURLSessionProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDURLSessionProvider.h; path = Source/OIDURLSessionProvider.h; sourceTree = "<group>"; };
+		E3E8994210C064AD36DCBD6680A013BA /* Pods-BCAutoFillExtension-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BCAutoFillExtension-umbrella.h"; sourceTree = "<group>"; };
+		EB7A82B7C603EE637762540C269F8F22 /* OIDAuthState+IOS.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "OIDAuthState+IOS.m"; path = "Source/iOS/OIDAuthState+IOS.m"; sourceTree = "<group>"; };
+		EBF797C97B93A53941C1308BDC275766 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		EC9CD9C54BBC0F850CEE589259293D0B /* Pods-Buttercup-tvOSTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Buttercup-tvOSTests-dummy.m"; sourceTree = "<group>"; };
+		F09B3FD01ADCF28BC973E0D60DD847D1 /* OIDErrorUtilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = OIDErrorUtilities.m; path = Source/OIDErrorUtilities.m; sourceTree = "<group>"; };
+		F0B8BF7B6E304D7BFE66F46256DEC5A3 /* Pods-Buttercup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Buttercup.debug.xcconfig"; sourceTree = "<group>"; };
+		F7096DE3E1E94B7F20EFA02317126A3D /* Pods-Buttercup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Buttercup.release.xcconfig"; sourceTree = "<group>"; };
+		F74C9E28DA031C8B4E97AA28CA7D56DD /* Pods-ButtercupTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ButtercupTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FAE9FF93B58BC0A31740480EF9978255 /* OIDScopes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDScopes.h; path = Source/OIDScopes.h; sourceTree = "<group>"; };
+		FC8EF5F3C209A83ECA941DBB884689EC /* OIDError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDError.h; path = Source/OIDError.h; sourceTree = "<group>"; };
+		FDBFA25EC02D3E9C092789C359CB2B64 /* Pods-Buttercup-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Buttercup-frameworks.sh"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0139C2442B92942DC1941AD421E4FD0C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57CD989225AC6CCFEDF704DA0AE6DC94 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		223B3EF46F447BD127D748A161302E18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE75845B469F9031E538AD3BF383F295 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7AA29DA0AED59DE27854D1BDF7822EAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4271D6994166DC5A673DA68BE8EE823A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90CF8AB1748F4A38412183ACD2A49CAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				39F42C44FD55C983519F6BA090CE3C3E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A942345325D82A9CA84320080073A390 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8353A33C9FB72DB60844BE3C0339770 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1D667AA0D2D4A9E2D1305A7D6DD99DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A259286B603521D2D9EF014565354CB /* Foundation.framework in Frameworks */,
+				8E789EE22685AFD33428EE66678B5D10 /* SafariServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034A75E87A2D6BC0EF5EB1CACD8F3C42 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				832D441B31AA8F6516DB9D08374D325C /* Pods-BCAutoFillExtension */,
+				0AC3AF9A89A275C3A4572138C68CE22C /* Pods-Buttercup */,
+				AABC953A99E8E5C6466E3FAADD4D0FC9 /* Pods-Buttercup-tvOS */,
+				99E106EA9D7EAEDBAD317DB3E0D09953 /* Pods-Buttercup-tvOSTests */,
+				1ABE9593A5DA8E3242CAEEE775D6CA00 /* Pods-ButtercupTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		0484AE32406D14540A7317F8F7BEF4FA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				13B4A695CAFFA0227ABE0E287DF8B86C /* AppAuth */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		0AC3AF9A89A275C3A4572138C68CE22C /* Pods-Buttercup */ = {
+			isa = PBXGroup;
+			children = (
+				62B2C23CFFCCE00F720C3F4CF0E6DDBE /* Pods-Buttercup.modulemap */,
+				8395A8330425841D55DB1F045A03C502 /* Pods-Buttercup-acknowledgements.markdown */,
+				92BFC771AA8A2BF666B124E58CFA2152 /* Pods-Buttercup-acknowledgements.plist */,
+				2BBF13F3392832BB1AFF53C3D83685DF /* Pods-Buttercup-dummy.m */,
+				FDBFA25EC02D3E9C092789C359CB2B64 /* Pods-Buttercup-frameworks.sh */,
+				5BD88960564FCFE73A0CD35B4CBBCB65 /* Pods-Buttercup-Info.plist */,
+				DD302D5A99258F247E5A0709D2C345AD /* Pods-Buttercup-umbrella.h */,
+				F0B8BF7B6E304D7BFE66F46256DEC5A3 /* Pods-Buttercup.debug.xcconfig */,
+				F7096DE3E1E94B7F20EFA02317126A3D /* Pods-Buttercup.release.xcconfig */,
+			);
+			name = "Pods-Buttercup";
+			path = "Target Support Files/Pods-Buttercup";
+			sourceTree = "<group>";
+		};
+		13B4A695CAFFA0227ABE0E287DF8B86C /* AppAuth */ = {
+			isa = PBXGroup;
+			children = (
+				B6B39AC946C6363293247628333FB3C7 /* AppAuth.h */,
+				10023D60B1C757B34FF7F3FCA0DE639D /* OIDAuthorizationFlowSession.h */,
+				99D18CD5AE950CD182829F22A4F78E8D /* OIDAuthorizationRequest.h */,
+				364192A6946321D7B5868034452F507D /* OIDAuthorizationRequest.m */,
+				12F22BBB1166176A3F113462ABC499C4 /* OIDAuthorizationResponse.h */,
+				5964B20AFD0DA01AD16E6E09E1056D5A /* OIDAuthorizationResponse.m */,
+				0EA2C33F3FE6D5AA28622EA417FD4E86 /* OIDAuthorizationService.h */,
+				CCCE2077443572804333E488865E3101 /* OIDAuthorizationService.m */,
+				18C7397981B4731E8E29A30C801D5180 /* OIDAuthorizationService+IOS.h */,
+				05D242795D117FF2D0982E641C4B925F /* OIDAuthorizationService+IOS.m */,
+				35B668A4E56E1DBF0829E1C6879E8425 /* OIDAuthState.h */,
+				C1B1B37C7380CA10AE0F6D6BC3CF8477 /* OIDAuthState.m */,
+				7F274EF52F44DC3C887A24F4D7447809 /* OIDAuthState+IOS.h */,
+				EB7A82B7C603EE637762540C269F8F22 /* OIDAuthState+IOS.m */,
+				16C3865B240310C73A221F9E47B76EA1 /* OIDAuthStateChangeDelegate.h */,
+				93F2AB885D292DD50AF61352D797A373 /* OIDAuthStateErrorDelegate.h */,
+				82698FD0B0E5E958950CCE7546277729 /* OIDClientMetadataParameters.h */,
+				428915ABE39689C19C76ABF6A5ECC69B /* OIDClientMetadataParameters.m */,
+				983D7C1FF990CE09A220A93AEA813CFB /* OIDDefines.h */,
+				FC8EF5F3C209A83ECA941DBB884689EC /* OIDError.h */,
+				C54BD37A685D563857DE4E8C7A398990 /* OIDError.m */,
+				746D8C7C8060C87E4CEDCB12EBA6BCE2 /* OIDErrorUtilities.h */,
+				F09B3FD01ADCF28BC973E0D60DD847D1 /* OIDErrorUtilities.m */,
+				BB6F42F3BFA34376A1BE6CBB33A03895 /* OIDExternalUserAgent.h */,
+				79183FA3344E304C4463C736C7282B9A /* OIDExternalUserAgentIOS.h */,
+				6AA02E0707ED73B745307EE8C7D90420 /* OIDExternalUserAgentIOS.m */,
+				9D98BD9FAF1A301CFC687B5DF8B7D0E1 /* OIDExternalUserAgentIOSCustomBrowser.h */,
+				9ABA59F30D13500006E9587ECAD8E0F8 /* OIDExternalUserAgentIOSCustomBrowser.m */,
+				B0B7A93EA7400234831E25385B084FA0 /* OIDExternalUserAgentRequest.h */,
+				531FF0435BAD48002CC3FD390F249E7A /* OIDExternalUserAgentSession.h */,
+				1AEB99C1CFAF77CAE80E574FEA0F9F82 /* OIDFieldMapping.h */,
+				AD1A5E200145BC2DDE16CE7A0814E23A /* OIDFieldMapping.m */,
+				B04459F363965EFF69EBB0BCB58D4455 /* OIDGrantTypes.h */,
+				592F2B32CD6280DE2C83F57C8AFB0C22 /* OIDGrantTypes.m */,
+				44B4A0550BB36C9385E768D9F5152167 /* OIDIDToken.h */,
+				127B907E8CEACFDC4FE848188C64F522 /* OIDIDToken.m */,
+				BE5E580F496D40AE927F26C238167B6F /* OIDRegistrationRequest.h */,
+				C16964C4CC66EA16DDEAF42810EB5D75 /* OIDRegistrationRequest.m */,
+				50231836B74A24620FBD6BD60DE818DE /* OIDRegistrationResponse.h */,
+				2E206B11F107B13FA2D093DE696117B7 /* OIDRegistrationResponse.m */,
+				276CA9F7614819223BCCDC3F41077989 /* OIDResponseTypes.h */,
+				75595D55E1D0EA487AF0D08CC67B502B /* OIDResponseTypes.m */,
+				FAE9FF93B58BC0A31740480EF9978255 /* OIDScopes.h */,
+				105192731FDFE34E0D2822CB8FE05C46 /* OIDScopes.m */,
+				50AB22E4ED9E3661CAD30D1ABB6177DC /* OIDScopeUtilities.h */,
+				6355F37E00C3403F2BE7810094823352 /* OIDScopeUtilities.m */,
+				84A552CC24D4171A08C2C84495ED1B98 /* OIDServiceConfiguration.h */,
+				201248F50D6938191A921C14F90FCD16 /* OIDServiceConfiguration.m */,
+				82C6C0AC3FFC1734CA0514A1051E0A46 /* OIDServiceDiscovery.h */,
+				0FA6A74DD0AF9BD31C11A38D432DA26F /* OIDServiceDiscovery.m */,
+				9839A0F4FDDCBA28C0DF7086D10DAF6E /* OIDTokenRequest.h */,
+				1C137924122165C095D3CF457BB71000 /* OIDTokenRequest.m */,
+				526C7810D5C594571B9D9A65E341DA72 /* OIDTokenResponse.h */,
+				676FF1EC860132B1354512125AC91B72 /* OIDTokenResponse.m */,
+				89F6367BD5B6B0F6143D37FDE120151E /* OIDTokenUtilities.h */,
+				8E9A11A1F9C266E1EF0EDF498EAC7ECB /* OIDTokenUtilities.m */,
+				596FBAB2D45B6C2166FD99B4953501DB /* OIDURLQueryComponent.h */,
+				6185C57C6F0BD7086C21294488234559 /* OIDURLQueryComponent.m */,
+				E2E417579BEF6EB460530BA387A7C3FA /* OIDURLSessionProvider.h */,
+				0DB605BBC87EE0B704C5BB0B5311FAF4 /* OIDURLSessionProvider.m */,
+				6F6669BF8B8C1EC08A62329D17D46B03 /* Support Files */,
+			);
+			name = AppAuth;
+			path = AppAuth;
+			sourceTree = "<group>";
+		};
+		1ABE9593A5DA8E3242CAEEE775D6CA00 /* Pods-ButtercupTests */ = {
+			isa = PBXGroup;
+			children = (
+				174CE6ACE4F6546C1DB6A107172F714F /* Pods-ButtercupTests.modulemap */,
+				AF914F89285E3B957D5548746E0194FA /* Pods-ButtercupTests-acknowledgements.markdown */,
+				5B398255BF7038F105E824C4BA8FBBBF /* Pods-ButtercupTests-acknowledgements.plist */,
+				BA53DBD53082D9C690BE5E9D222C4B30 /* Pods-ButtercupTests-dummy.m */,
+				299C859956B2CEFDD6D913FD43F1B6C1 /* Pods-ButtercupTests-Info.plist */,
+				B16F8E8336C5D65AA32EEA7A34130C2D /* Pods-ButtercupTests-umbrella.h */,
+				F74C9E28DA031C8B4E97AA28CA7D56DD /* Pods-ButtercupTests.debug.xcconfig */,
+				65DB0AD9ED1A10BD1EBE25D069F8F81E /* Pods-ButtercupTests.release.xcconfig */,
+			);
+			name = "Pods-ButtercupTests";
+			path = "Target Support Files/Pods-ButtercupTests";
+			sourceTree = "<group>";
+		};
+		21017D6D394F60E7993F4F38E91F41C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3FD1B4C1246D643E9476438C28048FA8 /* AppAuth.framework */,
+				BBD949C5DBA34F13CC1149C331E53802 /* Pods_BCAutoFillExtension.framework */,
+				129312E6F55214AAC6D17D8EA254417B /* Pods_Buttercup.framework */,
+				32F37EC4A796D279D60C493AB82F615D /* Pods_Buttercup_tvOS.framework */,
+				3663405EA6C7EFC808F265D787A5540B /* Pods_Buttercup_tvOSTests.framework */,
+				BE29B0AC3ED8CA518A1E5D5293AC2970 /* Pods_ButtercupTests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		54D17D2D30D62C86689F200DED359C77 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CB0411839220E45EC154A9AC5BCC457F /* Foundation.framework */,
+				4C0527A8BF9002F2B0B8038D1CA64A2D /* SafariServices.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		6F6669BF8B8C1EC08A62329D17D46B03 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				A5FEB1F75E082BA80E8379CBE25647E5 /* AppAuth.modulemap */,
+				C4ED3BA49D57B01A5C95C2D2BC0DEDA5 /* AppAuth.xcconfig */,
+				C31A142DFCF5CE3D43D25C36F427AC21 /* AppAuth-dummy.m */,
+				8FC216CFEE624C0346790C0F37C5ACE3 /* AppAuth-Info.plist */,
+				AA388DEBEE26E72527037FAA8A6EDEF5 /* AppAuth-prefix.pch */,
+				39959A5283C022DD813BD9BE09559AF5 /* AppAuth-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AppAuth";
+			sourceTree = "<group>";
+		};
+		832D441B31AA8F6516DB9D08374D325C /* Pods-BCAutoFillExtension */ = {
+			isa = PBXGroup;
+			children = (
+				26610151E741AC5C3BCDC9E6B197234B /* Pods-BCAutoFillExtension.modulemap */,
+				7F1285AE3C2998B58544791D83ED880B /* Pods-BCAutoFillExtension-acknowledgements.markdown */,
+				299081ED408CE02C2D7263078205DD35 /* Pods-BCAutoFillExtension-acknowledgements.plist */,
+				289AA547B889014F344A4E02A1E9058E /* Pods-BCAutoFillExtension-dummy.m */,
+				63D34F042A6D97B5BF1838877D820FD9 /* Pods-BCAutoFillExtension-Info.plist */,
+				E3E8994210C064AD36DCBD6680A013BA /* Pods-BCAutoFillExtension-umbrella.h */,
+				9D3BA45BD96349AF39853D5F209C2859 /* Pods-BCAutoFillExtension.debug.xcconfig */,
+				7F38D44D3EAA72EC8670346CF8B16E1A /* Pods-BCAutoFillExtension.release.xcconfig */,
+			);
+			name = "Pods-BCAutoFillExtension";
+			path = "Target Support Files/Pods-BCAutoFillExtension";
+			sourceTree = "<group>";
+		};
+		99E106EA9D7EAEDBAD317DB3E0D09953 /* Pods-Buttercup-tvOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				58A18BD2C306B987842F2C75FA22540C /* Pods-Buttercup-tvOSTests.modulemap */,
+				BAED66017D3914E4EEE36B7A1D7A4BBF /* Pods-Buttercup-tvOSTests-acknowledgements.markdown */,
+				879F9B325901FD0A82E703782D5667A4 /* Pods-Buttercup-tvOSTests-acknowledgements.plist */,
+				EC9CD9C54BBC0F850CEE589259293D0B /* Pods-Buttercup-tvOSTests-dummy.m */,
+				6457108FDCB4E8B6A39F1A4BA38B0BA5 /* Pods-Buttercup-tvOSTests-Info.plist */,
+				B560E0DF1690BE28BF0C0B347760B896 /* Pods-Buttercup-tvOSTests-umbrella.h */,
+				5DC0ABB96C188B09467F8A42983BBEE4 /* Pods-Buttercup-tvOSTests.debug.xcconfig */,
+				D12220F6C5A19F5C98AC84FB4C715897 /* Pods-Buttercup-tvOSTests.release.xcconfig */,
+			);
+			name = "Pods-Buttercup-tvOSTests";
+			path = "Target Support Files/Pods-Buttercup-tvOSTests";
+			sourceTree = "<group>";
+		};
+		A689D4F57117C20956C0E4E9C44F42DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				54D17D2D30D62C86689F200DED359C77 /* iOS */,
+				B068BE12C349A33D1F8612FFCC2CBCF9 /* tvOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AABC953A99E8E5C6466E3FAADD4D0FC9 /* Pods-Buttercup-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				C6FCADE87D73AD523692264DF37BF071 /* Pods-Buttercup-tvOS.modulemap */,
+				4FA99DEE67B74ECE80EAF3A81EE67D9F /* Pods-Buttercup-tvOS-acknowledgements.markdown */,
+				344D78C1DF24DA5FFB970BC2AF7DA8B4 /* Pods-Buttercup-tvOS-acknowledgements.plist */,
+				B6E39D2A38C46CEADA0D26FA442845BE /* Pods-Buttercup-tvOS-dummy.m */,
+				92A8FBE6F7D2DCC918F03700DA3B9ADB /* Pods-Buttercup-tvOS-Info.plist */,
+				50D60D8497090F61A2D7323B4C11F3EB /* Pods-Buttercup-tvOS-umbrella.h */,
+				9EA1EE8F9364310CD6DAFCC3723832BD /* Pods-Buttercup-tvOS.debug.xcconfig */,
+				933966E81C849F4566A07344EB9E802D /* Pods-Buttercup-tvOS.release.xcconfig */,
+			);
+			name = "Pods-Buttercup-tvOS";
+			path = "Target Support Files/Pods-Buttercup-tvOS";
+			sourceTree = "<group>";
+		};
+		B068BE12C349A33D1F8612FFCC2CBCF9 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				EBF797C97B93A53941C1308BDC275766 /* Foundation.framework */,
+			);
+			name = tvOS;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				A689D4F57117C20956C0E4E9C44F42DA /* Frameworks */,
+				0484AE32406D14540A7317F8F7BEF4FA /* Pods */,
+				21017D6D394F60E7993F4F38E91F41C9 /* Products */,
+				034A75E87A2D6BC0EF5EB1CACD8F3C42 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1850F6F05704248C9FB2E5E2ABCE82E4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86D097D702E790B9489E51A2BA5010C6 /* AppAuth-umbrella.h in Headers */,
+				0A732A144E48FA5CAF946E5BEF6A4F79 /* AppAuth.h in Headers */,
+				28640D76E01B18690847DA4093CF0863 /* OIDAuthorizationFlowSession.h in Headers */,
+				22A090C7BA68F6C87B43BE0047AE7E78 /* OIDAuthorizationRequest.h in Headers */,
+				4B393738C17CDB5F74E99C0E698F1DA8 /* OIDAuthorizationResponse.h in Headers */,
+				D8FF3F8C609AE42DF2DDE63877553707 /* OIDAuthorizationService+IOS.h in Headers */,
+				88336AC1CCC2615D60BBFE161406770B /* OIDAuthorizationService.h in Headers */,
+				049DC9CDA35C4596A38B1E27564D6B68 /* OIDAuthState+IOS.h in Headers */,
+				AA6B7492F74334FBC6082527953A1082 /* OIDAuthState.h in Headers */,
+				F0252D384A4CCCCBC5A673A5AB512BB1 /* OIDAuthStateChangeDelegate.h in Headers */,
+				5599FF3F080908CA536271A1F87A42D5 /* OIDAuthStateErrorDelegate.h in Headers */,
+				64CE45F91EE3B98CCC88BB968AD469A9 /* OIDClientMetadataParameters.h in Headers */,
+				4857712762DA0A9AC967D20FAF29DAFA /* OIDDefines.h in Headers */,
+				1EFBD97D27FC45C05EE8D3E0A7138B89 /* OIDError.h in Headers */,
+				FA4E985B0B09184DE2A8454E6E159C29 /* OIDErrorUtilities.h in Headers */,
+				6D6D217C638AB866DC59AB739286C553 /* OIDExternalUserAgent.h in Headers */,
+				89ABC0765CBA981C44269AB7195C474E /* OIDExternalUserAgentIOS.h in Headers */,
+				8623ABE8F93009575534F19C90C47D0D /* OIDExternalUserAgentIOSCustomBrowser.h in Headers */,
+				5F196531FD27703580D69E8A2A284831 /* OIDExternalUserAgentRequest.h in Headers */,
+				FC8ACF3E107BD3B6D496D1067EC6081A /* OIDExternalUserAgentSession.h in Headers */,
+				430F4A7BE0567BA3D2D03BAC2CB8CB7F /* OIDFieldMapping.h in Headers */,
+				C29C7F4F586E26DCA253DDB3B993ECBE /* OIDGrantTypes.h in Headers */,
+				90719E96D6D92236CD8115E6D8B76343 /* OIDIDToken.h in Headers */,
+				810B7631FC8F79B421A69660E4841980 /* OIDRegistrationRequest.h in Headers */,
+				6C5B4F5059D721F9C974AC273A5DBBA1 /* OIDRegistrationResponse.h in Headers */,
+				5F98DCA5BA5E3775988D0BC379F51A5B /* OIDResponseTypes.h in Headers */,
+				E883674D4344D247C901259679E78FCA /* OIDScopes.h in Headers */,
+				16F172A41A2D6934C8B245B1AE0DC158 /* OIDScopeUtilities.h in Headers */,
+				5D461CF0BDBC858EA7E67123EBF538A9 /* OIDServiceConfiguration.h in Headers */,
+				0B4B3CD063844C4CFC2EE82E99CED7BC /* OIDServiceDiscovery.h in Headers */,
+				EC89797EABDB5F9067F8A4F900D34AE9 /* OIDTokenRequest.h in Headers */,
+				74FA8835A553876EE91C9F45A0D7AD85 /* OIDTokenResponse.h in Headers */,
+				71637974B56079D4EBBF10CF84925E57 /* OIDTokenUtilities.h in Headers */,
+				80C88C291155F5091F4BB89D336CD77F /* OIDURLQueryComponent.h in Headers */,
+				C148105FBBA820DDC3908EB868134D6A /* OIDURLSessionProvider.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CCE5B757C2B13337A80F820371BCD6D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E0183D0AE05ACD341CA2717963FE5C3 /* Pods-BCAutoFillExtension-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56CB669EA19E2F1E4B337BD1107E133A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532BD91BA012CC40D00E300F7CEECD56 /* Pods-ButtercupTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDBC4DFF8254FF2065C51B85A14F3197 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5393A620EF2F1F5EBF112B8AB5360597 /* Pods-Buttercup-tvOS-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0A0B43F91C0A8623D8D0477EF2D45E6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8B4D85250C85ACB6C627A77FDCC7953 /* Pods-Buttercup-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F11BE29B7F9C4C5C88F25B4A3B48748E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				986BF3AC735FE961C4E1DB9038ADD4F9 /* Pods-Buttercup-tvOSTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		103672367C663DCF8123A616829162EE /* Pods-ButtercupTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26CDC328D5E66E1D6DCE3ED6BA7B6E6A /* Build configuration list for PBXNativeTarget "Pods-ButtercupTests" */;
+			buildPhases = (
+				56CB669EA19E2F1E4B337BD1107E133A /* Headers */,
+				71C75404424F1D67D09F291DA3B56778 /* Sources */,
+				90CF8AB1748F4A38412183ACD2A49CAF /* Frameworks */,
+				55F3B3119E11DCD71E3CE4CE931526A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F526F0DF7A5620307428628D8F0BB4C8 /* PBXTargetDependency */,
+			);
+			name = "Pods-ButtercupTests";
+			productName = "Pods-ButtercupTests";
+			productReference = BE29B0AC3ED8CA518A1E5D5293AC2970 /* Pods_ButtercupTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5C642AA10FB29936669CC269F42079C6 /* AppAuth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 26AF85A55FBEA17321B748F87FF9CAC7 /* Build configuration list for PBXNativeTarget "AppAuth" */;
+			buildPhases = (
+				1850F6F05704248C9FB2E5E2ABCE82E4 /* Headers */,
+				37CCC10AFBD50AB01516FD61B1C2050B /* Sources */,
+				F1D667AA0D2D4A9E2D1305A7D6DD99DF /* Frameworks */,
+				E0E003FFB022AB33E163036183236441 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AppAuth;
+			productName = AppAuth;
+			productReference = 3FD1B4C1246D643E9476438C28048FA8 /* AppAuth.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7DF525239E4B6D2E671EC2C88DB76AA9 /* Pods-Buttercup-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6E812AD7629ABF37FC1E72BDBD1287C /* Build configuration list for PBXNativeTarget "Pods-Buttercup-tvOS" */;
+			buildPhases = (
+				EDBC4DFF8254FF2065C51B85A14F3197 /* Headers */,
+				5EF8DEFE584AA38EA375A29280429532 /* Sources */,
+				7AA29DA0AED59DE27854D1BDF7822EAC /* Frameworks */,
+				0F02FFD970710C840CCB83999233160E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-Buttercup-tvOS";
+			productName = "Pods-Buttercup-tvOS";
+			productReference = 32F37EC4A796D279D60C493AB82F615D /* Pods_Buttercup_tvOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8783A803B4214F81C26D011B291E6307 /* Pods-Buttercup */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07E3A5A5E88D2120FA802921FB534162 /* Build configuration list for PBXNativeTarget "Pods-Buttercup" */;
+			buildPhases = (
+				F0A0B43F91C0A8623D8D0477EF2D45E6 /* Headers */,
+				265DFB8EEC369D253DDA356853359E29 /* Sources */,
+				0139C2442B92942DC1941AD421E4FD0C /* Frameworks */,
+				D89E3CF44CA1B8ECFF17C5902FA21A58 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				22B8A111E57A36AF2F1341D43F073380 /* PBXTargetDependency */,
+			);
+			name = "Pods-Buttercup";
+			productName = "Pods-Buttercup";
+			productReference = 129312E6F55214AAC6D17D8EA254417B /* Pods_Buttercup.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A7BEBBD2704ED64A75ED8C01ED593A3D /* Pods-BCAutoFillExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FD47DC63EF4530250B87CEABD6F52A23 /* Build configuration list for PBXNativeTarget "Pods-BCAutoFillExtension" */;
+			buildPhases = (
+				3CCE5B757C2B13337A80F820371BCD6D /* Headers */,
+				AF253522FD4017160A80D5281AE07927 /* Sources */,
+				223B3EF46F447BD127D748A161302E18 /* Frameworks */,
+				A80E6D0EC03B21D781A4EAB68D7566EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-BCAutoFillExtension";
+			productName = "Pods-BCAutoFillExtension";
+			productReference = BBD949C5DBA34F13CC1149C331E53802 /* Pods_BCAutoFillExtension.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CD698FB0ABDE2AAC733381A541022698 /* Pods-Buttercup-tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E37D35FDEB290ACF6AB8BADBD605AFE7 /* Build configuration list for PBXNativeTarget "Pods-Buttercup-tvOSTests" */;
+			buildPhases = (
+				F11BE29B7F9C4C5C88F25B4A3B48748E /* Headers */,
+				800A14795A3103E83EA2434EFDBD22F0 /* Sources */,
+				A942345325D82A9CA84320080073A390 /* Frameworks */,
+				6FB970427521CA8883202F83729706D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				96F38422BD4B64DC1D7697B52AB0723C /* PBXTargetDependency */,
+			);
+			name = "Pods-Buttercup-tvOSTests";
+			productName = "Pods-Buttercup-tvOSTests";
+			productReference = 3663405EA6C7EFC808F265D787A5540B /* Pods_Buttercup_tvOSTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 21017D6D394F60E7993F4F38E91F41C9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5C642AA10FB29936669CC269F42079C6 /* AppAuth */,
+				A7BEBBD2704ED64A75ED8C01ED593A3D /* Pods-BCAutoFillExtension */,
+				8783A803B4214F81C26D011B291E6307 /* Pods-Buttercup */,
+				7DF525239E4B6D2E671EC2C88DB76AA9 /* Pods-Buttercup-tvOS */,
+				CD698FB0ABDE2AAC733381A541022698 /* Pods-Buttercup-tvOSTests */,
+				103672367C663DCF8123A616829162EE /* Pods-ButtercupTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0F02FFD970710C840CCB83999233160E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55F3B3119E11DCD71E3CE4CE931526A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FB970427521CA8883202F83729706D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A80E6D0EC03B21D781A4EAB68D7566EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D89E3CF44CA1B8ECFF17C5902FA21A58 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0E003FFB022AB33E163036183236441 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		265DFB8EEC369D253DDA356853359E29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCCE77AF2F7EFE077A0A429657878B5C /* Pods-Buttercup-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37CCC10AFBD50AB01516FD61B1C2050B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3C6CF8FAAA7CB0D8A9633E722EA2D5F /* AppAuth-dummy.m in Sources */,
+				DD6640ADE2DD5316A59C1462F27FDABA /* OIDAuthorizationRequest.m in Sources */,
+				524A5F5A2F7695E4149CB67EF5458239 /* OIDAuthorizationResponse.m in Sources */,
+				0C7CEDD43FAC6B2DD1DE90CCBB312DA6 /* OIDAuthorizationService+IOS.m in Sources */,
+				5D1A06D90B142105022ABDEF5190ECC9 /* OIDAuthorizationService.m in Sources */,
+				2597D3380B812D8B87A626C3F59F9801 /* OIDAuthState+IOS.m in Sources */,
+				8E6B9D211304654DCBC1861679B89F03 /* OIDAuthState.m in Sources */,
+				BB89DEFDB70A30FFB495ED70BFAE4921 /* OIDClientMetadataParameters.m in Sources */,
+				1B9FE079DBE68DCA7C221350CFE942FE /* OIDError.m in Sources */,
+				DA208BD501BCFFD0A3EB018E943CDDAC /* OIDErrorUtilities.m in Sources */,
+				8D83E4AC8847F789F38FCCB3052F27D9 /* OIDExternalUserAgentIOS.m in Sources */,
+				1ED0DE911FC0A52C50C9D1D08089962D /* OIDExternalUserAgentIOSCustomBrowser.m in Sources */,
+				FEC8B49009DDDA6D7FE2594F9025626B /* OIDFieldMapping.m in Sources */,
+				95A9A547164A1CA3B3837A83D60CF7C6 /* OIDGrantTypes.m in Sources */,
+				3009756F0345FC0F083E5445C41E54C2 /* OIDIDToken.m in Sources */,
+				D08317997E8392352E43394EBDD45259 /* OIDRegistrationRequest.m in Sources */,
+				8116E3800C66F339C88D2A9A05FB4808 /* OIDRegistrationResponse.m in Sources */,
+				5DFF7CD14DFDEFD3FB9D59B910A78285 /* OIDResponseTypes.m in Sources */,
+				7E56AEF2519F1FDC8779D872A9E43257 /* OIDScopes.m in Sources */,
+				3F15AEF65F18817CED6A4A7E936924A2 /* OIDScopeUtilities.m in Sources */,
+				6CE74F8B9BFC073194EEEA705B8506C3 /* OIDServiceConfiguration.m in Sources */,
+				FD8FA5C77EF932F8A3B11431584DE769 /* OIDServiceDiscovery.m in Sources */,
+				D4B04F498322218518394DC7A581E827 /* OIDTokenRequest.m in Sources */,
+				847C24CA1EDE3A89E20872C949D21666 /* OIDTokenResponse.m in Sources */,
+				836650FC7E024AE6B8BD4ADE0B630688 /* OIDTokenUtilities.m in Sources */,
+				0DB1F446CAD4AEAF4C178F0094DC811F /* OIDURLQueryComponent.m in Sources */,
+				736FBDA79557EA63CE3963727D19E68B /* OIDURLSessionProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5EF8DEFE584AA38EA375A29280429532 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3167426381C9D76610BD9FB8119773D6 /* Pods-Buttercup-tvOS-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71C75404424F1D67D09F291DA3B56778 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A0D688FF0DD648F49FCAA22BA920B0E /* Pods-ButtercupTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		800A14795A3103E83EA2434EFDBD22F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06AAEEAD3647A2559F1E95A0F4A0D8CE /* Pods-Buttercup-tvOSTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF253522FD4017160A80D5281AE07927 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				635D974749A9D275241B455D8DB7F708 /* Pods-BCAutoFillExtension-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		22B8A111E57A36AF2F1341D43F073380 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AppAuth;
+			target = 5C642AA10FB29936669CC269F42079C6 /* AppAuth */;
+			targetProxy = 0B105201BF8106187288A81EB12F57EB /* PBXContainerItemProxy */;
+		};
+		96F38422BD4B64DC1D7697B52AB0723C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-Buttercup-tvOS";
+			target = 7DF525239E4B6D2E671EC2C88DB76AA9 /* Pods-Buttercup-tvOS */;
+			targetProxy = 32ACEF224E5C077278715E8DFA752CCE /* PBXContainerItemProxy */;
+		};
+		F526F0DF7A5620307428628D8F0BB4C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-Buttercup";
+			target = 8783A803B4214F81C26D011B291E6307 /* Pods-Buttercup */;
+			targetProxy = 3D975A3172CB229F1D3B4ED296A26005 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1E05792C6CC589B7DC1B8538861FA9EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		2376BF7E371F66048FD47B15974C8F9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F7096DE3E1E94B7F20EFA02317126A3D /* Pods-Buttercup.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Buttercup/Pods-Buttercup-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Buttercup/Pods-Buttercup.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		2E5D56111BE06574E1DD195646FDE69F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9EA1EE8F9364310CD6DAFCC3723832BD /* Pods-Buttercup-tvOS.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Buttercup-tvOS/Pods-Buttercup-tvOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Buttercup-tvOS/Pods-Buttercup-tvOS.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5A02DFACC7A4E6BB483E97F3D9B47A91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4ED3BA49D57B01A5C95C2D2BC0DEDA5 /* AppAuth.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/AppAuth/AppAuth-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/AppAuth/AppAuth-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/AppAuth/AppAuth.modulemap";
+				PRODUCT_MODULE_NAME = AppAuth;
+				PRODUCT_NAME = AppAuth;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		633711153EB7A953DB4BBEF55E5BE94F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 933966E81C849F4566A07344EB9E802D /* Pods-Buttercup-tvOS.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Buttercup-tvOS/Pods-Buttercup-tvOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Buttercup-tvOS/Pods-Buttercup-tvOS.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8390B02E4873CA397E1E4E7FB2390DE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		84541723623FDDDC0C0E6CDE73AADB44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DC0ABB96C188B09467F8A42983BBEE4 /* Pods-Buttercup-tvOSTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Buttercup-tvOSTests/Pods-Buttercup-tvOSTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Buttercup-tvOSTests/Pods-Buttercup-tvOSTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		88F53CA151AE69BBDCD8B377BC8CA668 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F74C9E28DA031C8B4E97AA28CA7D56DD /* Pods-ButtercupTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8A06B7D98018AD6C639E7CAF211E9C55 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4ED3BA49D57B01A5C95C2D2BC0DEDA5 /* AppAuth.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/AppAuth/AppAuth-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/AppAuth/AppAuth-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/AppAuth/AppAuth.modulemap";
+				PRODUCT_MODULE_NAME = AppAuth;
+				PRODUCT_NAME = AppAuth;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A168B16D546E9F96D31CD3D1803EEEBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0B8BF7B6E304D7BFE66F46256DEC5A3 /* Pods-Buttercup.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Buttercup/Pods-Buttercup-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Buttercup/Pods-Buttercup.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A86828C821A274940F3B4691E07FBFF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F38D44D3EAA72EC8670346CF8B16E1A /* Pods-BCAutoFillExtension.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B213AFC821B461A88ADD65C73211BBF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D12220F6C5A19F5C98AC84FB4C715897 /* Pods-Buttercup-tvOSTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Buttercup-tvOSTests/Pods-Buttercup-tvOSTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Buttercup-tvOSTests/Pods-Buttercup-tvOSTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E6AEEFE301677F41F828E7E38BA57348 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D3BA45BD96349AF39853D5F209C2859 /* Pods-BCAutoFillExtension.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F595312573209024C47C80276F8F3020 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65DB0AD9ED1A10BD1EBE25D069F8F81E /* Pods-ButtercupTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		07E3A5A5E88D2120FA802921FB534162 /* Build configuration list for PBXNativeTarget "Pods-Buttercup" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A168B16D546E9F96D31CD3D1803EEEBA /* Debug */,
+				2376BF7E371F66048FD47B15974C8F9B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26AF85A55FBEA17321B748F87FF9CAC7 /* Build configuration list for PBXNativeTarget "AppAuth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A06B7D98018AD6C639E7CAF211E9C55 /* Debug */,
+				5A02DFACC7A4E6BB483E97F3D9B47A91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		26CDC328D5E66E1D6DCE3ED6BA7B6E6A /* Build configuration list for PBXNativeTarget "Pods-ButtercupTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88F53CA151AE69BBDCD8B377BC8CA668 /* Debug */,
+				F595312573209024C47C80276F8F3020 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1E05792C6CC589B7DC1B8538861FA9EE /* Debug */,
+				8390B02E4873CA397E1E4E7FB2390DE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B6E812AD7629ABF37FC1E72BDBD1287C /* Build configuration list for PBXNativeTarget "Pods-Buttercup-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E5D56111BE06574E1DD195646FDE69F /* Debug */,
+				633711153EB7A953DB4BBEF55E5BE94F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E37D35FDEB290ACF6AB8BADBD605AFE7 /* Build configuration list for PBXNativeTarget "Pods-Buttercup-tvOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84541723623FDDDC0C0E6CDE73AADB44 /* Debug */,
+				B213AFC821B461A88ADD65C73211BBF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD47DC63EF4530250B87CEABD6F52A23 /* Build configuration list for PBXNativeTarget "Pods-BCAutoFillExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6AEEFE301677F41F828E7E38BA57348 /* Debug */,
+				A86828C821A274940F3B4691E07FBFF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

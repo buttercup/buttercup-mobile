@@ -15,6 +15,8 @@ export function formatArchiveTypeTitle(type) {
             return "Nextcloud";
         case "dropbox":
             return "Dropbox";
+        case "googledrive":
+            return "Google Drive";
         default:
             return type;
     }

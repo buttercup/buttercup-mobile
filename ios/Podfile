@@ -1,0 +1,37 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'BCAutoFillExtension' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for BCAutoFillExtension
+
+end
+
+target 'Buttercup' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Buttercup
+  pod 'AppAuth', '0.95.0'
+
+  target 'ButtercupTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'Buttercup-tvOS' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Buttercup-tvOS
+
+  target 'Buttercup-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
