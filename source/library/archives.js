@@ -8,6 +8,11 @@ export function getArchiveTypeDetails() {
             image: require("../../resources/images/dropbox-256.png")
         },
         {
+            type: "googledrive",
+            title: formatArchiveTypeTitle("googledrive"),
+            image: require("../../resources/images/googledrive-256.png")
+        },
+        {
             type: "owncloud",
             title: formatArchiveTypeTitle("owncloud"),
             image: require("../../resources/images/owncloud-256.png")
