@@ -1,0 +1,2 @@
+brew 'bash'
+brew 'nvm'
