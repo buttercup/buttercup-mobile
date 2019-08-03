@@ -1,3 +1,7 @@
+addons:
+  homebrew:
+    update: true
+    brewfile: true
 matrix:
   include:
     - language: node_js
@@ -14,11 +18,8 @@ matrix:
       env:
         - NAME=iOS-11_iPhone-7_arm64
       os: osx
-      osx_image: xcode9.4
+      osx_image: xcode10
       script:
-        - brew update
-        - brew install bash
-        - brew install nvm
         - nvm install 8.4.0
         - npm install
         - ./scripts/testIOS.sh "iPhone 7" "11.2"
@@ -26,14 +27,11 @@ matrix:
       env:
         - NAME=iOS-10_iPhone-5_armv7s
       os: osx
-      osx_image: xcode9.4
+      osx_image: xcode10
       script:
-        - brew update
-        - brew install bash
-        - brew install nvm
         - nvm install 8.4.0
         - npm install
-        - ./scripts/testIOS.sh "iPhone 5" "10.3.1"
+        - ./scripts/testIOS.sh "iPhone 5s" "10.3.1"
     - language: android
       sudo: required
       jdk: oraclejdk8
