@@ -9,73 +9,67 @@ matrix:
       install:
         - npm install
       node_js:
-        - "8"
+        - 8
     - language: objective-c
-      node_js:
-        - "10.13.0"
-
+      env:
+        - NAME=iOS-11_iPhone-7_arm64
       os: osx
-      osx_image: xcode10.2
-
-      install:
-        - npm ci &>/dev/null
-        - ./scripts/testIOS.sh "iPhone XS" "12.0" "build"
-        - ./scripts/testIOS.sh "iPhone XS" "12.0" "test"
-
+      osx_image: xcode9.4
+      script:
+        - brew update
+        - brew install bash
+        - brew install nvm
+        - nvm install 8.4.0
+        - npm install
+        - ./scripts/testIOS.sh "iPhone 7" "11.2"
     - language: objective-c
-      node_js:
-        - "10.13.0"
-
+      env:
+        - NAME=iOS-10_iPhone-5_armv7s
       os: osx
-      osx_image: xcode10.2
-
-      install:
-        - npm ci &>/dev/null
-        - ./scripts/testIOS.sh "iPhone 6s" "10.3.1" "build"
-        - ./scripts/testIOS.sh "iPhone 6s" "10.3.1" "test"
-
+      osx_image: xcode9.4
+      script:
+        - brew update
+        - brew install bash
+        - brew install nvm
+        - nvm install 8.4.0
+        - npm install
+        - ./scripts/testIOS.sh "iPhone 5" "10.3.1"
     - language: android
       sudo: required
       jdk: oraclejdk8
       env:
+        - NAME=Android-23-ARMv7
+        - ANDROID_TARGET=android-23
         - ANDROID_API=23
-        - ADB_INSTALL_TIMEOUT=8 # minutes
-        - ANDROID_ABI=x86_64
-        - EMU_FLAVOR=default
-        - ANDROID_HOME=/usr/local/android-sdk
-        - TOOLS=${ANDROID_HOME}/tools
-        - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
-        - ANDROID_NDK_HOME=${ANDROID_HOME}/ndk-bundle
-
+        - ANDROID_ABI=armeabi-v7a
+        - ANDROID_BUILD_TOOLS=23.0.1
+        - ANDROID_ABI=armeabi-v7a
+        - ANDROID_TAG=google_apis
+        - ADB_INSTALL_TIMEOUT=5 # minutes
       android:
         components:
           - tools
-
-        licenses:
-          - 'android-sdk-preview-license-.+'
-          - 'android-sdk-license-.+'
-          - 'google-gdk-license-.+'
-
-      install:
-        - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid harmless sdkmanager warning
-        - echo y | sdkmanager "platform-tools" >/dev/null
-        - echo y | sdkmanager "ndk-bundle"
-        - echo y | sdkmanager "cmake;3.6.4111459"
-        - echo y | sdkmanager "lldb;3.1"
-        - echo y | sdkmanager "tools" >/dev/null # A second time per Travis docs, gets latest versions
-        - echo y | sdkmanager "build-tools;28.0.3" >/dev/null # Implicit gradle dependency - gradle drives changes
-        - echo y | sdkmanager "platforms;android-$ANDROID_API" >/dev/null # We need the ANDROID_API of the emulator we will run
-        - echo y | sdkmanager "platforms;android-28" >/dev/null # We need the API of the current compileSdkVersion from gradle.properties
-        - echo y | sdkmanager --channel=4 "emulator" # Experiment with canary, specifying 28.0.3 (prior version) did not work
-        - echo y | sdkmanager "extras;android;m2repository" >/dev/null
-        - echo y | sdkmanager "system-images;android-$ANDROID_API;$EMU_FLAVOR;$ANDROID_ABI" #>/dev/null # install our emulator
-        - echo no | avdmanager create avd --force -n test -k "system-images;android-$ANDROID_API;$EMU_FLAVOR;$ANDROID_ABI" -c 10M
-        - emulator -verbose -avd test -no-accel -no-snapshot -no-window $AUDIO -camera-back none -camera-front none -selinux permissive -qemu -m 2048 &
+          - platform-tools
+          - build-tools-$ANDROID_BUILD_TOOLS
+          - android-$ANDROID_API
+          - extra-android-support
+          - extra-google-google_play_services
+          - extra-google-m2repository
+          - extra-android-m2repository
+          - sys-img-$ANDROID_ABI-$ANDROID_TAG-$ANDROID_API
+      before_script:
+        - echo "y" | android update sdk -a --no-ui --filter $ANDROID_TARGET
+        - echo "y" | android update sdk -a --no-ui --filter sys-img-$ANDROID_ABI-$ANDROID_TAG-$ANDROID_API
+        - echo "y" | sdkmanager "ndk-bundle"
+        - echo "y" | sdkmanager "cmake;3.6.4111459"
+        - echo "y" | sdkmanager "lldb;3.1"
+        - export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
+        - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI --tag $ANDROID_TAG
+        - QEMU_AUDIO_DRV=none emulator -avd test -no-window &
         - android-wait-for-emulator
         - adb shell input keyevent 82 &
         - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
         - sudo apt-get install -y nodejs
         - npm install
-
       script:
         - ./scripts/testAndroid.sh
