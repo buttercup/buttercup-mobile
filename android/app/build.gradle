@@ -152,6 +152,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-google-signin')
     implementation project(':react-native-keychain')
     implementation project(':react-native-secure-storage')
     implementation project(':react-native-touch-id')

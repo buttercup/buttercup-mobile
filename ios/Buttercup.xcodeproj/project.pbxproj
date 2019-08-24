@@ -38,13 +38,16 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* ButtercupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ButtercupTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		3035FB6D09264CD6A49847AA /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 318EC4BC6E244A6193361262 /* libRNGoogleSignin.a */; };
 		3E603D47F48440489E0182E4 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2F0EE59F70430699DE22E3 /* libRNVectorIcons.a */; };
 		51E12EC1CBF641D7910FC691 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C526BB0D8D7F42AFB7E8DF31 /* SimpleLineIcons.ttf */; };
 		55502B73129D4E8AA4FDFC1D /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE6B43702ADD4E138BE40FF9 /* libTouchID.a */; };
+		692EF8BEC14F192BD40C0BC2 /* Pods_BCAutoFillExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F14E6CC20F35951757D07E2 /* Pods_BCAutoFillExtension.framework */; };
 		6F973D1D5BED41C8ACE160AD /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D1436390EF8481595521599 /* EvilIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89B5C41CA3CA429FAD873211 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DF36A447445434284F83319 /* Entypo.ttf */; };
 		92F0ABE1593340309BF78086 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F492DA2907E4FEDAC51BB80 /* Foundation.ttf */; };
+		9686A4D52A27B27B9C7DC232 /* Pods_ButtercupTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B23E501C9A15D8ECF3E8598F /* Pods_ButtercupTests.framework */; };
 		99851D7220C985FA00EAC115 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D7120C985FA00EAC115 /* libresolv.tbd */; };
 		99851D7520C9B83E00EAC115 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 99851D7420C9B83E00EAC115 /* CryptoBridge.m */; };
 		99A6776F215AC7DF0023B45E /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
@@ -98,6 +101,7 @@
 		C2B9132D20FBE9640010DAD6 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488A20FB5463000EC30D /* Crypto.m */; };
 		C2F3488B20FB5463000EC30D /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488A20FB5463000EC30D /* Crypto.m */; };
 		C2F3488D20FB7EEA000EC30D /* CryptoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F3488C20FB7EEA000EC30D /* CryptoTests.m */; };
+		C7867BD3A2B8F1EF3DE57FF5 /* Pods_Buttercup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 249AF8E425B052C5EB7F3367 /* Pods_Buttercup.framework */; };
 		C9661C6B6D9A4BC688834D4B /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19FCC2D269F844C8BF09D78C /* Octicons.ttf */; };
 		ED8D557A1F1E48098EC1E8FC /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CEA96C243934CE395797F2D /* MaterialIcons.ttf */; };
 /* End PBXBuildFile section */
@@ -397,6 +401,13 @@
 			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
 			remoteInfo = RNFS;
 		};
+		C24863E92311ABDE00CE94EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38A6C3826EA84BC3B5DBE2E8 /* RNGoogleSignin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
+			remoteInfo = RNGoogleSignin;
+		};
 		C2ADA9D01F5735CA009D97EB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */;
@@ -463,23 +474,31 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Buttercup/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Buttercup/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		15410A9AC6216F1019F0ED7F /* Pods-Buttercup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup.release.xcconfig"; path = "Target Support Files/Pods-Buttercup/Pods-Buttercup.release.xcconfig"; sourceTree = "<group>"; };
 		19FCC2D269F844C8BF09D78C /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		1F14E6CC20F35951757D07E2 /* Pods_BCAutoFillExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BCAutoFillExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		249AF8E425B052C5EB7F3367 /* Pods_Buttercup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Buttercup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29C796149C7F4A96A29E4D40 /* libRNKeychain.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNKeychain.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Buttercup-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Buttercup-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Buttercup-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Buttercup-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
+		318EC4BC6E244A6193361262 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = "<group>"; };
+		38A6C3826EA84BC3B5DBE2E8 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		3B2F0EE59F70430699DE22E3 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		3CEA96C243934CE395797F2D /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		46771EDC56994001BF7A4321 /* TouchID.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		476FD2FED5464740BFA551B3 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		57292B6051723BEF166E0071 /* Pods-ButtercupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ButtercupTests.release.xcconfig"; path = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests.release.xcconfig"; sourceTree = "<group>"; };
 		5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		5DF36A447445434284F83319 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		5F492DA2907E4FEDAC51BB80 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		6D1436390EF8481595521599 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		7801BFF1ED4C8C2A11E220A5 /* Pods-BCAutoFillExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCAutoFillExtension.release.xcconfig"; path = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8D05DDD18DF67B1081D63DC8 /* Pods-BCAutoFillExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCAutoFillExtension.debug.xcconfig"; path = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		99851D6F20C984E800EAC115 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../crypto/target/universal/release/libcrypto.a; sourceTree = "<group>"; };
 		99851D7120C985FA00EAC115 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		99851D7320C9B7FC00EAC115 /* CryptoBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoBridge.h; sourceTree = "<group>"; };
@@ -502,8 +521,11 @@
 		9E44190E21E1775A00CA5E79 /* AutoFillExtensionContextBridgeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoFillExtensionContextBridgeDelegate.h; sourceTree = "<group>"; };
 		9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoFillExtensionContextBridgeDelegate.m; sourceTree = "<group>"; };
 		A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		A42F5ACBA4C1AA257F8952E3 /* Pods-ButtercupTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ButtercupTests.debug.xcconfig"; path = "Target Support Files/Pods-ButtercupTests/Pods-ButtercupTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		B23E501C9A15D8ECF3E8598F /* Pods_ButtercupTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ButtercupTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
+		B84386E2463170FDE0435B3C /* Pods-Buttercup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup.debug.xcconfig"; path = "Target Support Files/Pods-Buttercup/Pods-Buttercup.debug.xcconfig"; sourceTree = "<group>"; };
 		C26F52BE1F5736CE000EB570 /* BCHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCHelpers.h; sourceTree = "<group>"; };
 		C26F52BF1F5736CE000EB570 /* BCHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHelpers.m; sourceTree = "<group>"; };
 		C26F52DD1F5739B6000EB570 /* BCHelpersTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHelpersTests.m; sourceTree = "<group>"; };
@@ -521,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
+				9686A4D52A27B27B9C7DC232 /* Pods_ButtercupTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +569,8 @@
 				BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */,
 				55502B73129D4E8AA4FDFC1D /* libTouchID.a in Frameworks */,
 				9E13615B21DC466600EE48B0 /* libRNSecureStorage.a in Frameworks */,
+				3035FB6D09264CD6A49847AA /* libRNGoogleSignin.a in Frameworks */,
+				C7867BD3A2B8F1EF3DE57FF5 /* Pods_Buttercup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +619,7 @@
 				9E13611421DC437500EE48B0 /* libRNRandomBytes.a in Frameworks */,
 				9E13611621DC437C00EE48B0 /* libTouchID.a in Frameworks */,
 				9E13615A21DC465E00EE48B0 /* libRNSecureStorage.a in Frameworks */,
+				692EF8BEC14F192BD40C0BC2 /* Pods_BCAutoFillExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,6 +764,9 @@
 				99851D7120C985FA00EAC115 /* libresolv.tbd */,
 				99851D6F20C984E800EAC115 /* libcrypto.a */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
+				1F14E6CC20F35951757D07E2 /* Pods_BCAutoFillExtension.framework */,
+				249AF8E425B052C5EB7F3367 /* Pods_Buttercup.framework */,
+				B23E501C9A15D8ECF3E8598F /* Pods_ButtercupTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -749,6 +778,19 @@
 				5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6498414321008B3FED7A4E2A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8D05DDD18DF67B1081D63DC8 /* Pods-BCAutoFillExtension.debug.xcconfig */,
+				7801BFF1ED4C8C2A11E220A5 /* Pods-BCAutoFillExtension.release.xcconfig */,
+				B84386E2463170FDE0435B3C /* Pods-Buttercup.debug.xcconfig */,
+				15410A9AC6216F1019F0ED7F /* Pods-Buttercup.release.xcconfig */,
+				A42F5ACBA4C1AA257F8952E3 /* Pods-ButtercupTests.debug.xcconfig */,
+				57292B6051723BEF166E0071 /* Pods-ButtercupTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -780,6 +822,7 @@
 				A1621F22B5024BD3988E93F0 /* RNVectorIcons.xcodeproj */,
 				B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */,
 				46771EDC56994001BF7A4321 /* TouchID.xcodeproj */,
+				38A6C3826EA84BC3B5DBE2E8 /* RNGoogleSignin.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -804,6 +847,7 @@
 				F06253306B464B5FBAA6636B /* Resources */,
 				C2756AA21F8742D00036B825 /* Recovered References */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				6498414321008B3FED7A4E2A /* Pods */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -860,6 +904,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		C24863E62311ABDE00CE94EF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C24863EA2311ABDE00CE94EF /* libRNGoogleSignin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		C2756AA21F8742D00036B825 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -867,6 +919,7 @@
 				2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */,
 				EE6B43702ADD4E138BE40FF9 /* libTouchID.a */,
 				29C796149C7F4A96A29E4D40 /* libRNKeychain.a */,
+				318EC4BC6E244A6193361262 /* libRNGoogleSignin.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -921,6 +974,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ButtercupTests" */;
 			buildPhases = (
+				3965A415334071E8887C4556 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -939,11 +993,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Buttercup" */;
 			buildPhases = (
+				E5DE7999BEB1C5451AA92983 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				9E13610421DC420F00EE48B0 /* Embed App Extensions */,
+				451E67A4AE057F8CEC4F0419 /* [CP] Embed Pods Frameworks */,
+				A9461DCA18CF73C746999073 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -995,11 +1052,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E13610321DC420F00EE48B0 /* Build configuration list for PBXNativeTarget "BCAutoFillExtension" */;
 			buildPhases = (
+				1C40A877193F1963213AFA7D /* [CP] Check Pods Manifest.lock */,
 				9EFFBC4321ED42D700E6D853 /* Copy App Versioning */,
 				9E1360C421DC420E00EE48B0 /* Sources */,
 				9E1360C521DC420E00EE48B0 /* Frameworks */,
 				9E1360C621DC420E00EE48B0 /* Resources */,
 				9E44190D21E0729B00CA5E79 /* Bundle React Native code and images */,
+				DF3309424A11F656D20E9AF5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1016,7 +1075,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Buttercup;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -1058,6 +1117,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1116,6 +1176,10 @@
 				{
 					ProductGroup = C23C4D611ED58FA6008B5786 /* Products */;
 					ProjectRef = 10B32057C9914AD5AC8E2D10 /* RNFS.xcodeproj */;
+				},
+				{
+					ProductGroup = C24863E62311ABDE00CE94EF /* Products */;
+					ProjectRef = 38A6C3826EA84BC3B5DBE2E8 /* RNGoogleSignin.xcodeproj */;
 				},
 				{
 					ProductGroup = C2ADA9B41F5735CA009D97EB /* Products */;
@@ -1419,6 +1483,13 @@
 			remoteRef = C23C4D7D1ED58FA6008B5786 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		C24863EA2311ABDE00CE94EF /* libRNGoogleSignin.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGoogleSignin.a;
+			remoteRef = C24863E92311ABDE00CE94EF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C2ADA9D11F5735CA009D97EB /* libRNRandomBytes.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1526,6 +1597,28 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		1C40A877193F1963213AFA7D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BCAutoFillExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1539,6 +1632,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		3965A415334071E8887C4556 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ButtercupTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		451E67A4AE057F8CEC4F0419 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		9E44190D21E0729B00CA5E79 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1575,6 +1710,64 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\nversionString=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"$SRCROOT/Buttercup/Info.plist\")\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$SRCROOT/Buttercup/Info.plist\")\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $versionString\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n";
+		};
+		A9461DCA18CF73C746999073 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF3309424A11F656D20E9AF5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5DE7999BEB1C5451AA92983 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Buttercup-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1679,6 +1872,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A42F5ACBA4C1AA257F8952E3 /* Pods-ButtercupTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 9D8F4J769D;
@@ -1693,16 +1887,13 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
 				);
 				INFOPLIST_FILE = ButtercupTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1717,6 +1908,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57292B6051723BEF166E0071 /* Pods-ButtercupTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -1728,16 +1920,13 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
 				);
 				INFOPLIST_FILE = ButtercupTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1752,6 +1941,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B84386E2463170FDE0435B3C /* Pods-Buttercup.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
@@ -1766,6 +1956,7 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
 				);
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1784,6 +1975,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15410A9AC6216F1019F0ED7F /* Pods-Buttercup.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
@@ -1797,6 +1989,7 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
 				);
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1832,15 +2025,12 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
 				);
 				INFOPLIST_FILE = "Buttercup-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1874,15 +2064,12 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-touch-id",
 					"$(SRCROOT)/../node_modules/react-native-keychain/RNKeychainManager",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
 				);
 				INFOPLIST_FILE = "Buttercup-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1908,6 +2095,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+				);
 				INFOPLIST_FILE = "Buttercup-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1937,6 +2128,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+				);
 				INFOPLIST_FILE = "Buttercup-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -2058,6 +2253,7 @@
 		};
 		9E1360D621DC420F00EE48B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8D05DDD18DF67B1081D63DC8 /* Pods-BCAutoFillExtension.debug.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2072,12 +2268,17 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+				);
 				INFOPLIST_FILE = BCAutoFillExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2095,6 +2296,7 @@
 		};
 		9E1360D721DC420F00EE48B0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7801BFF1ED4C8C2A11E220A5 /* Pods-BCAutoFillExtension.release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2110,12 +2312,17 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
+				);
 				INFOPLIST_FILE = BCAutoFillExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (

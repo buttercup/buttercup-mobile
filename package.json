@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@buttercup/dropbox-client": "^0.3.2",
+    "@buttercup/google-oauth2-client": "^0.1.1",
     "@buttercup/googledrive-client": "^0.5.0",
     "@perrymitchell/react-native-prompt": "^1.1.0",
     "@tradle/react-native-http": "^2.0.0",
@@ -59,6 +60,7 @@
     "react-native-dropdownalert": "^3.4.0",
     "react-native-elements": "^0.19.0",
     "react-native-exception-handler": "^1.1.0",
+    "react-native-google-signin": "^2.0.0",
     "react-native-keychain": "^3.0.0",
     "react-native-level-fs": "^3.0.0",
     "react-native-loading-spinner-overlay": "^0.5.2",

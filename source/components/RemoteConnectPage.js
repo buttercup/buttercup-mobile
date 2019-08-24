@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import PropTypes from "prop-types";
+import { GoogleSigninButton } from "react-native-google-signin";
 import DropboxAuthButton from "../containers/DropboxAuthButton.js";
 import Spinner from "./Spinner.js";
 
@@ -32,6 +33,8 @@ class RemoteConnectPage extends Component {
         switch (this.props.archiveType) {
             case "dropbox":
                 return this.renderDropbox();
+            case "googledrive":
+                return this.renderGoogleDrive();
             case "webdav":
                 return this.renderWebDAV();
             case "owncloud":
@@ -56,6 +59,37 @@ class RemoteConnectPage extends Component {
                                 onPress={() => this.submit()}
                                 tintColor="#1144FF"
                                 disabled={!this.props.dropboxAuthenticated}
+                            />
+                        </CellGroup>
+                    </View>
+                    <Spinner visible={this.props.connecting} text="Connecting" />
+                </View>
+            </TouchableWithoutFeedback>
+        );
+    }
+
+    renderGoogleDrive() {
+        return (
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <View>
+                        <GoogleSigninButton
+                            style={{ width: 192, height: 48 }}
+                            size={GoogleSigninButton.Size.Standard}
+                            color={GoogleSigninButton.Color.Light}
+                            onPress={() => this.props.beginGoogleDriveAuth()}
+                            disabled={
+                                this.props.googleDriveAuthenticated ||
+                                this.props.googleDriveAuthenticating
+                            }
+                        />
+                        <CellGroup>
+                            <Cell
+                                title="Connect"
+                                icon="cloud"
+                                onPress={() => this.submit()}
+                                tintColor="#1144FF"
+                                disabled={!this.props.googleDriveAuthenticated}
                             />
                         </CellGroup>
                     </View>
@@ -124,8 +158,11 @@ class RemoteConnectPage extends Component {
 
 RemoteConnectPage.propTypes = {
     archiveType: PropTypes.string,
+    beginGoogleDriveAuth: PropTypes.func.isRequired,
     connecting: PropTypes.bool,
     dropboxAuthenticated: PropTypes.bool,
+    googleDriveAuthenticated: PropTypes.bool,
+    googleDriveAuthenticating: PropTypes.bool,
     initiateConnection: PropTypes.func,
     onChangePassword: PropTypes.func,
     onChangeURL: PropTypes.func,
