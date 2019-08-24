@@ -44,6 +44,12 @@ export const ENTRY_SET_NEW_PROPERTY_VALUE = "entry/setNewEntryPropertyValue";
 export const ENTRY_SET_VIEWING_HIDDEN = "entry/setViewingHidden";
 export const ENTRY_UNLOAD = "entry/unload";
 
+export const GOOGLEDRIVE_RESET_AUTH = "googleDrive/resetAuthentication";
+export const GOOGLEDRIVE_SET_AUTHENTICATED = "googleDrive/setAuthenticated";
+export const GOOGLEDRIVE_SET_AUTHENTICATING = "googleDrive/setAuthenticating";
+export const GOOGLEDRIVE_SET_AUTH_TOKEN = "googleDrive/setAuthToken";
+export const GOOGLEDRIVE_SET_REFRESH_TOKEN = "googleDrive/setRefreshToken";
+
 export const NAVIGATE_ADD_ARCHIVE = "navigation/addArchive";
 export const NAVIGATE_SEARCH_ARCHIVES = "navigation/searchArchives";
 export const NAVIGATE_BACK = "navigation/back";

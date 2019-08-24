@@ -10,6 +10,7 @@ import entry from "./entry.js";
 import app from "./app.js";
 import dropbox from "./dropbox.js";
 import browser from "./browser.js";
+import googleDrive from "./googleDrive.js";
 
 const appReducer = combineReducers({
     addArchive,
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
     browser,
     dropbox,
     entry,
+    googleDrive,
     nav,
     remoteExplorer
 });
