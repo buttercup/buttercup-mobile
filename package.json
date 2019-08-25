@@ -6,7 +6,7 @@
     "build:android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "format": "prettier --write '{{source,scripts,__tests__}/**/*.js,index.*.js,shim.js}'",
     "nodeify": "rn-nodeify --install --hack",
-    "postinstall": "npm run nodeify && npm run patch-package",
+    "postinstall": "npm run nodeify && patch-package",
     "precommit": "lint-staged",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:android": "react-native run-android",
