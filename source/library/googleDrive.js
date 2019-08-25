@@ -12,11 +12,15 @@ import {
 import secrets from "../../secrets.json";
 
 export async function authenticate() {
-    const { googleDriveClientID } = Platform.select(secrets);
+    const {
+        googleDriveClientID,
+        googleDriveWebClientID,
+        googleDriveWebClientSecret
+    } = Platform.select(secrets);
     // Configure google auth
     GoogleSignin.configure({
         scopes: ["email", "profile", "https://www.googleapis.com/auth/drive"],
-        webClientId: googleDriveClientID,
+        webClientId: googleDriveWebClientID,
         offlineAccess: true,
         forceConsentPrompt: true,
         iosClientId: googleDriveClientID
@@ -32,7 +36,9 @@ export async function authenticate() {
             await GoogleSignin.signOut();
         }
         const { serverAuthCode } = await GoogleSignin.signIn();
-        const oauth2Client = new OAuth2Client(googleDriveClientID, null, null);
+        const oauth2Client = googleDriveWebClientSecret
+            ? new OAuth2Client(googleDriveWebClientID, googleDriveWebClientSecret, null)
+            : new OAuth2Client(googleDriveWebClientID, null, null);
         const { tokens } = await oauth2Client.exchangeAuthCodeForToken(serverAuthCode);
         dispatch(setGoogleDriveAuthToken(tokens.access_token));
         dispatch(setGoogleDriveRefreshToken(tokens.refresh_token));
@@ -54,7 +60,6 @@ export async function authenticateWithRefreshToken(accessToken, refreshToken) {
     dispatch(setGoogleDriveRefreshToken(null));
     const { googleDriveClientID } = Platform.select(secrets);
     const oauth2Client = new OAuth2Client(googleDriveClientID, null, null);
-    console.log("Client", oauth2Client);
     const { tokens } = await oauth2Client.refreshAccessToken(refreshToken);
     const newRefreshToken = tokens.refresh_token || refreshToken;
     dispatch(setGoogleDriveAuthToken(tokens.access_token));
