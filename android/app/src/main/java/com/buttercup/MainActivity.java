@@ -69,7 +69,7 @@ public class MainActivity extends ReactActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == OVERLAY_PERMISSION_REQ_CODE) {
-            checkPerms();
+            // checkPerms();
         }
     }
 
@@ -86,7 +86,7 @@ public class MainActivity extends ReactActivity {
                 // boolean readAccepted = grantResults[0]==PackageManager.PERMISSION_GRANTED;
                 // boolean writeAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
                 // checking permissions to prevent situation when user denied some permission
-                checkPerms();
+                // checkPerms();
                 break;
 
         }
