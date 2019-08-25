@@ -15,7 +15,9 @@
     "test": "run-s test:format test:react-native",
     "test:android": "./scripts/testAndroid.sh",
     "test:format": "prettier-check '{{source,scripts,__tests__}/**/*.js,index.*.js,shim.js}'",
-    "test:react-native": "NODE_ENV=test jest --no-cache"
+    "test:react-native": "NODE_ENV=test jest --no-cache",
+    "ide:android": "open -a /Applications/Android\\ Studio.app ./android",
+    "ide:ios": "open ios/Buttercup.xcodeproj"
   },
   "lint-staged": {
     "{{source,scripts,__tests__}/**/*.js,index.*.js,shim.js}": [
