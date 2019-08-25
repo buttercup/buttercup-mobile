@@ -1,3 +1,7 @@
+addons:
+  homebrew:
+    update: true
+    brewfile: true
 matrix:
   include:
     - language: node_js
@@ -8,30 +12,22 @@ matrix:
         - npm i -g jest-cli
       install:
         - npm install
-      node_js:
-        - 8
     - language: objective-c
       env:
         - NAME=iOS-11_iPhone-7_arm64
       os: osx
       osx_image: xcode9.4
       script:
-        - brew update
-        - brew install bash
-        - brew install nvm
-        - nvm install 8.4.0
+        - nvm install
         - npm install
         - ./scripts/testIOS.sh "iPhone 7" "11.2"
     - language: objective-c
       env:
-        - NAME=iOS-10_iPhone-5_armv7s
+        - NAME=iOS-10_iPhone-5s_arm64
       os: osx
       osx_image: xcode9.4
       script:
-        - brew update
-        - brew install bash
-        - brew install nvm
-        - nvm install 8.4.0
+        - nvm install
         - npm install
         - ./scripts/testIOS.sh "iPhone 5" "10.3.1"
     - language: android
@@ -68,8 +64,7 @@ matrix:
         - QEMU_AUDIO_DRV=none emulator -avd test -no-window &
         - android-wait-for-emulator
         - adb shell input keyevent 82 &
-        - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-        - sudo apt-get install -y nodejs
+        - nvm install
         - npm install
       script:
         - ./scripts/testAndroid.sh

@@ -34,7 +34,7 @@ function searchForEntries(term, archives) {
                 source => source.workspace.archive.id === result.archive.id
             );
             if (!source) {
-                throw new Error(`Failed finding source for archive with ID: ${result.archive.id}`);
+                throw new Error(`Failed finding source for vault with ID: ${result.archive.id}`);
             }
             return {
                 sourceID: source.id,
@@ -81,14 +81,14 @@ export function getMatchingEntriesForURL(url, archives) {
             source => source.workspace.archive.id === archive.id
         );
         if (!source) {
-            throw new Error(`Failed finding source for archive with ID: ${archive.id}`);
+            throw new Error(`Failed finding source for vault with ID: ${archive.id}`);
         }
         const newEntries = archive.findEntriesByMeta("url", /.+/).filter(entry => {
             const entryURL = entry.getMeta("url");
             const entryDomain = extractDomain(entryURL);
             return (
                 entryDomain.length > 0 &&
-                entryDomain === extractDomain(url) &&
+                (entryDomain === extractDomain(url) || entryDomain === url) &&
                 entry.isInTrash() === false
             );
         });

@@ -36,7 +36,7 @@ This project uses **React Native** to build _native_ iOS and Android application
 As Buttercup makes use of strong cryptography, certain encryption/decryption tasks are performed using pure native code (Objective-C/Java). Only the bare minimum required for increased performance is handled on the native side, with the rest being solely JavaScript.
 
 ## Installation
-Ensure that you're using **NodeJS 6** or newer on OSX. Android projects can be built and tested on Linux and Windows, but these platforms are _not officially supported_.
+Ensure that you're using **NodeJS 8** or newer on OSX. Android projects can be built and tested on Linux and Windows, but these platforms are _not officially supported_.
 
 Before getting started, ensure you follow the [official React Native Getting Started guide](https://facebook.github.io/react-native/docs/getting-started.html) for your desired platform (iOS/Android). It is also recommended to have the react-native-cli installed:
 
@@ -86,6 +86,10 @@ To build a signed APK:
  2. Run `npm run build:android` to first build the project.
  3. In Android Studio, choose _Build > Generate Signed APK_.
  4. Build a release APK by following the instructions in the GUI.
+
+#### Publishing error: duplicate resources
+
+If you encounter a publishing error when generating a signed APK, follow [these instructions](https://stackoverflow.com/questions/52632950/react-native-0-57-1-android-duplicate-resources#answer-55245362).
 
 ### Crypto Library Development
 

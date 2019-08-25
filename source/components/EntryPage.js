@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, ScrollView, StyleSheet, View } from "react-native";
+import { Button, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import Spinner from "./Spinner.js";
@@ -31,6 +31,11 @@ function iconLabelForProp(propName) {
         default:
             return "label";
     }
+}
+
+function monospacedText(text) {
+    const fontName = Platform.OS === "ios" ? "Menlo" : "monospace";
+    return <Text style={{ fontFamily: fontName }}>{text}</Text>;
 }
 
 class EntryPage extends Component {
@@ -88,7 +93,7 @@ class EntryPage extends Component {
         }
         switch (propName) {
             case "password":
-                return this.props.viewHidden ? value : "••••••••••";
+                return this.props.viewHidden ? monospacedText(value) : "••••••••••";
             default:
                 return value;
         }

@@ -1,3 +1,4 @@
+import { Alert, Platform } from "react-native";
 import ActionSheet from "@yfuks/react-native-action-sheet";
 import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
@@ -16,6 +17,15 @@ import {
     touchIDAvailable,
     touchIDEnabledForSource
 } from "./touchUnlock.js";
+import {
+    autoFillAvailable,
+    getAutoFillSystemStatus,
+    openAutoFillSystemSettings,
+    autoFillEnabledForSource,
+    addSourceToAutoFill,
+    removeSourceFromAutoFill
+} from "./autofill";
+import { getSelectedArchive } from "../selectors/archiveContents";
 
 const SHEET_ADD_ARCHIVE = "Add";
 const SHEET_ADD_ENTRY = "New Entry";
@@ -24,8 +34,9 @@ const SHEET_CANCEL = "Cancel";
 const SHEET_DELETE_GROUP = "Delete Group";
 const SHEET_LOCK_ALL = "Lock All";
 const SHEET_RENAME_GROUP = "Rename Group";
-const SHEET_TOGGLE_TOUCH_ID = "Toggle Touch Unlock";
-const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Archive";
+const SHEET_TOGGLE_TOUCH_ID = "Toggle Biometric Unlock";
+const SHEET_TOGGLE_AUTOFILL = "Toggle Autofill";
+const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Vault";
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -33,6 +44,7 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_DELETE_GROUP,
     SHEET_RENAME_GROUP,
     SHEET_TOGGLE_TOUCH_ID,
+    SHEET_TOGGLE_AUTOFILL,
     SHEET_CANCEL,
     SHEET_SEARCH_CURRENT_ARCHIVE
 ];
@@ -47,7 +59,7 @@ function removeTextFromArray(arr, text) {
 
 export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGroup) {
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
-    const title = isRoot ? "Manage Archive" : "Edit Group";
+    const title = isRoot ? "Manage Vault" : "Edit Group";
     const state = getState();
     const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {
@@ -60,6 +72,9 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
         }
         if (!isRoot || !touchIDAvailable) {
             removeTextFromArray(buttons, SHEET_TOGGLE_TOUCH_ID);
+        }
+        if (!isRoot || !autoFillAvailable) {
+            removeTextFromArray(buttons, SHEET_TOGGLE_AUTOFILL);
         }
         if (readOnly) {
             removeTextFromArray(buttons, SHEET_ADD_GROUP);
@@ -95,6 +110,10 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
                         showTouchIDToggleSheet();
                         break;
                     }
+                    case SHEET_TOGGLE_AUTOFILL: {
+                        showAutoFillToggleSheet();
+                        break;
+                    }
                     case SHEET_SEARCH_CURRENT_ARCHIVE: {
                         dispatch(navigateToSearchArchives());
                         break;
@@ -110,7 +129,7 @@ export function showArchivesPageRightSheet() {
         {
             options: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS,
             cancelButtonIndex: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
-            title: "Archives"
+            title: "Vaults"
         },
         selectedIndex => {
             switch (ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
@@ -130,8 +149,8 @@ export function showArchivesPageRightSheet() {
 export function showTouchIDToggleSheet() {
     const state = getState();
     const currentSourceID = getSelectedSourceID(state);
-    const itemEnableTouchID = "Enable Touch Unlock";
-    const itemDisableTouchID = "Disable Touch Unlock";
+    const itemEnableTouchID = "Enable Biometric Unlock";
+    const itemDisableTouchID = "Disable Biometric Unlock";
     const itemCancel = "Cancel";
     return touchIDEnabledForSource(currentSourceID).then(enabled => {
         const options = [enabled ? itemDisableTouchID : itemEnableTouchID, itemCancel];
@@ -139,7 +158,7 @@ export function showTouchIDToggleSheet() {
             {
                 options,
                 cancelButtonIndex: options.indexOf(itemCancel),
-                title: "Touch Unlock"
+                title: "Biometric Unlock"
             },
             selectedIndex => {
                 switch (options[selectedIndex]) {
@@ -153,16 +172,16 @@ export function showTouchIDToggleSheet() {
                                     break;
                                 case "fallback":
                                     handleError(
-                                        "Failed enabling touch unlock",
+                                        "Failed enabling biometric unlock",
                                         new Error(
-                                            "Password not supported for enabling touch unlock"
+                                            "Password not supported for enabling biometric unlock"
                                         )
                                     );
                                     break;
                                 default:
                                     handleError(
-                                        "Failed enabling touch unlock",
-                                        new Error("Unrecognised touch unlock response")
+                                        "Failed enabling biometric unlock",
+                                        new Error("Unrecognised biometric unlock response")
                                     );
                                     break;
                             }
@@ -177,4 +196,74 @@ export function showTouchIDToggleSheet() {
             }
         );
     });
+}
+
+export function showAutoFillToggleSheet() {
+    const state = getState();
+    const currentSourceID = getSelectedSourceID(state);
+    const itemEnableAutoFill = "Enable Autofill";
+    const itemDisableAutoFill = "Disable Autofill";
+    const itemSystemSettings = "Android Settings";
+    const itemCancel = "Cancel";
+    return Promise.all([getAutoFillSystemStatus(), autoFillEnabledForSource(currentSourceID)]).then(
+        results => {
+            const autoFillEnabled = results[0];
+            const archiveEnabled = results[1];
+
+            const options = [archiveEnabled ? itemDisableAutoFill : itemEnableAutoFill];
+            // We are only able to detect if AutoFill is enabled on Android, and furthermore we cannot
+            // open the Android autofill settings if autofill is already set to buttercup
+
+            // On iOS we are not allowed to open the settings app at all as Apple has marked access to it as a 'Private' API
+            // Instead we will just inform the user they must do it themselves
+            if (Platform.OS === "android" && !autoFillEnabled) {
+                options.push(itemSystemSettings);
+            }
+            // Finally add the cancel button
+            options.push(itemCancel);
+            ActionSheet.showActionSheetWithOptions(
+                {
+                    options,
+                    cancelButtonIndex: options.indexOf(itemCancel),
+                    title: "Autofill"
+                },
+                selectedIndex => {
+                    switch (options[selectedIndex]) {
+                        case itemEnableAutoFill: {
+                            const archive = getSelectedArchive(state);
+                            // We need to check if AutoFill is enabled,
+                            // if not we need to open the system permissions
+                            if (!autoFillEnabled) {
+                                openAutoFillSystemSettings().then(() => {
+                                    addSourceToAutoFill(currentSourceID, archive);
+                                });
+                            } else {
+                                addSourceToAutoFill(currentSourceID, archive);
+                            }
+                            if (Platform.OS === "ios") {
+                                Alert.alert(
+                                    "Enable Autofill in iOS Settings",
+                                    "Please ensure you have also enabled Buttercup in iOS Settings > Passwords and Accounts > Autofill Passwords",
+                                    [{ text: "OK", onPress: () => {} }],
+                                    { cancelable: true }
+                                );
+                            }
+                            break;
+                        }
+                        case itemDisableAutoFill: {
+                            removeSourceFromAutoFill(currentSourceID);
+                            break;
+                        }
+                        case itemSystemSettings: {
+                            openAutoFillSystemSettings().then(() => {
+                                // Reopen these settings when the user returns
+                                showAutoFillToggleSheet();
+                            });
+                            break;
+                        }
+                    }
+                }
+            );
+        }
+    );
 }
