@@ -63,3 +63,7 @@ android/app/libs
 
 # Bundle artifact
 *.jsbundle
+
+# android studio
+android/.project
+android/.settings/*
