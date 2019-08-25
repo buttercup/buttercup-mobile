@@ -65,5 +65,7 @@ android/app/libs
 *.jsbundle
 
 # android studio
-android/.project
+*.project
 android/.settings/*
+android/app/.classpath
+org.eclipse.buildship.core.prefs
