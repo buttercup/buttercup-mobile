@@ -1,0 +1,26 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '10.0'
+
+target 'BCAutoFillExtension' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for BCAutoFillExtension
+  pod 'GoogleSignIn', '~> 4.4.0'
+
+end
+
+target 'Buttercup' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Buttercup
+  pod 'GoogleSignIn', '~> 4.4.0'
+
+  target 'ButtercupTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+

@@ -7,7 +7,15 @@ import {
     getRemoteURL,
     isConnecting
 } from "../selectors/RemoteConnectPage.js";
-import { getToken, isAuthenticated } from "../selectors/dropbox.js";
+import {
+    getToken as getDropboxToken,
+    isAuthenticated as isDropboxAuthenticated
+} from "../selectors/dropbox.js";
+import {
+    getAuthToken as getGoogleDriveToken,
+    isAuthenticated as isGoogleDriveAuthenticated,
+    isAuthenticating as isGoogleDriveAuthenticating
+} from "../selectors/googleDrive.js";
 import {
     clearArchiveDetails,
     disconnect,
@@ -21,12 +29,19 @@ import { createRemoteConnection } from "../shared/explorerConnection.js";
 import { handleError } from "../global/exceptions.js";
 import { getDomain } from "../library/helpers.js";
 import { navigateToRemoteExplorer } from "../actions/navigation.js";
+import {
+    setGoogleDriveAuthenticated,
+    setGoogleDriveAuthenticating
+} from "../actions/googleDrive.js";
+import { authenticate as authenticateGoogleDrive } from "../library/googleDrive.js";
 
 function handleConnectionCreation(dispatch, getState) {
     const state = getState();
     const remoteConnInfo = getRemoteConnectionInfo(state);
-    const dropboxToken = getToken(state);
-    return createRemoteConnection({ ...remoteConnInfo, dropboxToken })
+    const archiveType = getArchiveType(state);
+    const dropboxToken = getDropboxToken(state);
+    const googleDriveToken = getGoogleDriveToken(state);
+    return createRemoteConnection({ ...remoteConnInfo, dropboxToken, googleDriveToken })
         .then(function __onConnected() {
             const state = getState();
             let title = "Remote";
@@ -34,8 +49,10 @@ function handleConnectionCreation(dispatch, getState) {
             if (url) {
                 const domain = getDomain(url);
                 title = domain;
-            } else if (dropboxToken) {
-                title = "dropbox.com";
+            } else if (archiveType === "dropbox") {
+                title = "Dropbox";
+            } else if (archiveType === "googledrive") {
+                title = "Google Drive";
             }
             dispatch(onConnected());
             dispatch(navigateToRemoteExplorer({ title }));
@@ -50,11 +67,20 @@ export default connect(
     (state, ownProps) => ({
         archiveType: getArchiveType(state),
         connecting: isConnecting(state),
-        dropboxAuthenticated: isAuthenticated(state),
+        dropboxAuthenticated: isDropboxAuthenticated(state),
+        googleDriveAuthenticated: isGoogleDriveAuthenticated(state),
+        googleDriveAuthenticating: isGoogleDriveAuthenticating(state),
         url: getRemoteURL(state),
         ...getRemoteCredentials(state)
     }),
     {
+        beginGoogleDriveAuth: () => dispatch => {
+            dispatch(setGoogleDriveAuthenticated(false));
+            dispatch(setGoogleDriveAuthenticating(true));
+            authenticateGoogleDrive().catch(err => {
+                handleError("Google Drive authentication failed", err);
+            });
+        },
         initiateConnection: () => (...args) => handleConnectionCreation(...args),
         onChangePassword,
         onChangeURL,

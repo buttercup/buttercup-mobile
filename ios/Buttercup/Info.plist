@@ -20,6 +20,17 @@
 	<string>1.8.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.327941947801-osqgahih8s59aldrh91n7dmp7vps247g</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>26</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
