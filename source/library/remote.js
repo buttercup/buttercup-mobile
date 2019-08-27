@@ -47,7 +47,8 @@ function wrapDropboxClient(client) {
                 }))
             ),
         getFileContents: identifier => client.getFileContents(identifier),
-        writeFile: (identifier, data /* , encoding */) => client.putFileContents(identifier, data)
+        writeFile: ({ parentID, identifier, filename, data }) =>
+            client.putFileContents(identifier, data).then(() => identifier)
     };
 }
 
@@ -58,12 +59,18 @@ function wrapGoogleDriveClient(client) {
                 items.map(item => ({
                     identifier: item.id,
                     name: item.filename,
-                    path: joinURL(item.dirPath, item.filename),
+                    path: joinURL(item.dirPath, item.filename).replace(/\/+/g, "/"),
                     isDirectory: () => item.type === "directory"
                 }))
             ),
         getFileContents: identifier => client.getFileContents(identifier),
-        writeFile: (identifier, data /* , encoding */) => client.putFileContents(identifier, data)
+        writeFile: ({ parentID, identifier, filename, data, isNew = false }) =>
+            client.putFileContents({
+                id: isNew ? null : identifier,
+                parent: parentID,
+                name: filename,
+                contents: data
+            }) // returns new file identifier
     };
 }
 
@@ -79,6 +86,7 @@ function wrapWebDAVClient(client) {
                 }))
             ),
         getFileContents: identifier => client.getFileContents(identifier, { format: "text" }),
-        writeFile: (identifier, data /* , encoding */) => client.putFileContents(identifier, data)
+        writeFile: ({ parentID, identifier, filename, data }) =>
+            client.putFileContents(identifier, data).then(() => identifier)
     };
 }

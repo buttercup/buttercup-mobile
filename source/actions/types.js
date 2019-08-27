@@ -73,6 +73,7 @@ export const REMOTE_EXPLORER_SET_ADDING_ARCHIVE = "remoteExplorer/setAddingArchi
 export const REMOTE_EXPLORER_SET_CREATE_NEW = "remoteExplorer/setCreateNew";
 export const REMOTE_EXPLORER_SET_CREATING_ARCHIVE = "remoteExplorer/setCreatingArchive";
 export const REMOTE_EXPLORER_SET_CURRENT_DIR = "remoteExplorer/setCurrentDir";
+export const REMOTE_EXPLORER_SET_PARENT_ID = "remoteExplorer/setCurrentParentID";
 export const REMOTE_EXPLORER_SET_ITEMS = "remoteExplorer/setItems";
 export const REMOTE_EXPLORER_SET_NEW_FILENAME = "remoteExplorer/setNewFilename";
 export const REMOTE_EXPLORER_SET_NEW_MASTERPASS = "remoteExplorer/setNewMasterPassword";

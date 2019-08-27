@@ -4,6 +4,10 @@ export function getCurrentItems(state) {
     return state[STATE_KEY].items;
 }
 
+export function getCurrentParent(state) {
+    return state[STATE_KEY].remoteParent;
+}
+
 export function getCurrentPath(state) {
     return state[STATE_KEY].remotePath;
 }

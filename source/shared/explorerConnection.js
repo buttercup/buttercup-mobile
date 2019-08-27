@@ -8,7 +8,12 @@ import {
 } from "../library/remote.js";
 import { createEmptyArchive, getArchiveEncryptedContent } from "../library/buttercup.js";
 import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
-import { getCurrentPath, getNewFilename, getNewPassword } from "../selectors/RemoteExplorerPage.js";
+import {
+    getCurrentParent,
+    getCurrentPath,
+    getNewFilename,
+    getNewPassword
+} from "../selectors/RemoteExplorerPage.js";
 import {
     selectArchive,
     setCreatingArchive,
@@ -22,14 +27,20 @@ let __remoteFSConnection = null;
 
 export function createNewArchive(state, dispatch) {
     const currentPath = getCurrentPath(state);
+    const currentParentID = getCurrentParent(state);
     const newPromptFilename = getNewFilename(state);
     const newPromptPassword = getNewPassword(state);
     if (newPromptFilename.length > 0 && newPromptPassword.length > 0) {
-        // clear state for new item
-        // dispatch(cancelNewPrompt());
         dispatch(setCreatingArchive(true));
         return doAsyncWork()
-            .then(() => createNewArchiveFile(currentPath, newPromptFilename, newPromptPassword))
+            .then(() =>
+                createNewArchiveFile(
+                    currentParentID,
+                    currentPath,
+                    newPromptFilename,
+                    newPromptPassword
+                )
+            )
             .then(function __handleCreated(filePath) {
                 dispatch(setCreatingArchive(false));
                 dispatch(selectArchive(filePath));
@@ -40,14 +51,19 @@ export function createNewArchive(state, dispatch) {
     }
 }
 
-export function createNewArchiveFile(currentDir, filename, password) {
+function createNewArchiveFile(parentID, currentDir, filename, password) {
     const archive = createEmptyArchive();
-    const filePath = addBCUPExtension(joinPathAndFilename(currentDir, filename));
+    const fullFilename = addBCUPExtension(filename);
+    const filePath = joinPathAndFilename(currentDir, fullFilename);
     return getArchiveEncryptedContent(archive, Credentials.fromPassword(password)).then(
         function __handleEncryptedContents(encText) {
-            return getSharedConnection()
-                .writeFile(filePath, encText, "utf8")
-                .then(() => filePath);
+            return getSharedConnection().writeFile({
+                parentID,
+                identifier: filePath,
+                filename: fullFilename,
+                data: encText,
+                isNew: true
+            }); // returns file identifier (or path)
         }
     );
 }

@@ -13,7 +13,8 @@ import {
     REMOTE_EXPLORER_SET_LOADING,
     REMOTE_EXPLORER_SET_NEW_FILENAME,
     REMOTE_EXPLORER_SET_NEW_MASTERPASS,
-    REMOTE_EXPLORER_SET_NEW_NAME
+    REMOTE_EXPLORER_SET_NEW_NAME,
+    REMOTE_EXPLORER_SET_PARENT_ID
 } from "../actions/types.js";
 
 const INITIAL = {
@@ -25,6 +26,7 @@ const INITIAL = {
     newPromptArchiveName: "",
     newPromptFilename: "",
     newPromptPassword: "",
+    remoteParent: null,
     remotePath: "/",
     selectedArchivePath: null,
     showNewNamePrompt: false,
@@ -43,6 +45,11 @@ export default function remoteExplorerReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 remotePath: action.payload
+            };
+        case REMOTE_EXPLORER_SET_PARENT_ID:
+            return {
+                ...state,
+                remoteParent: action.payload
             };
         case REMOTE_EXPLORER_SET_LOADING:
             return {

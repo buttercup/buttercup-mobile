@@ -22,6 +22,7 @@ import {
 import {
     cancelNewPrompt,
     onChangeDirectory,
+    onChangeParentID,
     onReceiveItems,
     selectArchive,
     setAddingArchive,
@@ -115,6 +116,7 @@ function handlePathSelection(nextIdentifier, nextItem, isDir, resetScroll, dispa
             .then(function __afterContentsLoaded() {
                 resetScroll();
                 dispatch(onChangeDirectory(nextPath));
+                dispatch(onChangeParentID(nextIdentifier));
                 dispatch(setLoading(false));
             })
             .catch(err => {

@@ -14,11 +14,13 @@ import {
     REMOTE_EXPLORER_SET_LOADING,
     REMOTE_EXPLORER_SET_NEW_FILENAME,
     REMOTE_EXPLORER_SET_NEW_MASTERPASS,
-    REMOTE_EXPLORER_SET_NEW_NAME
+    REMOTE_EXPLORER_SET_NEW_NAME,
+    REMOTE_EXPLORER_SET_PARENT_ID
 } from "./types.js";
 
 export const cancelNewPrompt = createAction(REMOTE_EXPLORER_CANCEL_NEW);
 export const onChangeDirectory = createAction(REMOTE_EXPLORER_SET_CURRENT_DIR);
+export const onChangeParentID = createAction(REMOTE_EXPLORER_SET_PARENT_ID);
 export const onReceiveItems = createAction(REMOTE_EXPLORER_SET_ITEMS);
 export const selectArchive = createAction(REMOTE_EXPLORER_SELECT_ARCHIVE);
 export const setAddingArchive = createAction(REMOTE_EXPLORER_SET_ADDING_ARCHIVE);
