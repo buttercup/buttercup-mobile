@@ -13,8 +13,7 @@ import {
 } from "../selectors/dropbox.js";
 import {
     getAuthToken as getGoogleDriveToken,
-    isAuthenticated as isGoogleDriveAuthenticated,
-    isAuthenticating as isGoogleDriveAuthenticating
+    isAuthenticated as isGoogleDriveAuthenticated
 } from "../selectors/googleDrive.js";
 import {
     clearArchiveDetails,
@@ -29,11 +28,6 @@ import { createRemoteConnection } from "../shared/explorerConnection.js";
 import { handleError } from "../global/exceptions.js";
 import { getDomain } from "../library/helpers.js";
 import { navigateToRemoteExplorer } from "../actions/navigation.js";
-import {
-    setGoogleDriveAuthenticated,
-    setGoogleDriveAuthenticating
-} from "../actions/googleDrive.js";
-import { authenticate as authenticateGoogleDrive } from "../library/googleDrive.js";
 
 function handleConnectionCreation(dispatch, getState) {
     const state = getState();
@@ -69,18 +63,10 @@ export default connect(
         connecting: isConnecting(state),
         dropboxAuthenticated: isDropboxAuthenticated(state),
         googleDriveAuthenticated: isGoogleDriveAuthenticated(state),
-        googleDriveAuthenticating: isGoogleDriveAuthenticating(state),
         url: getRemoteURL(state),
         ...getRemoteCredentials(state)
     }),
     {
-        beginGoogleDriveAuth: () => dispatch => {
-            dispatch(setGoogleDriveAuthenticated(false));
-            dispatch(setGoogleDriveAuthenticating(true));
-            authenticateGoogleDrive().catch(err => {
-                handleError("Google Drive authentication failed", err);
-            });
-        },
         initiateConnection: () => (...args) => handleConnectionCreation(...args),
         onChangePassword,
         onChangeURL,

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import PropTypes from "prop-types";
-import { GoogleSigninButton } from "react-native-google-signin";
 import DropboxAuthButton from "../containers/DropboxAuthButton.js";
+import GoogleDriveAuthButton from "../containers/GoogleDriveAuthButton.js";
 import Spinner from "./Spinner.js";
 
 const styles = StyleSheet.create({
@@ -73,16 +73,7 @@ class RemoteConnectPage extends Component {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
                     <View>
-                        <GoogleSigninButton
-                            style={{ width: 192, height: 48 }}
-                            size={GoogleSigninButton.Size.Standard}
-                            color={GoogleSigninButton.Color.Light}
-                            onPress={() => this.props.beginGoogleDriveAuth()}
-                            disabled={
-                                this.props.googleDriveAuthenticated ||
-                                this.props.googleDriveAuthenticating
-                            }
-                        />
+                        <GoogleDriveAuthButton />
                         <CellGroup>
                             <Cell
                                 title="Connect"
@@ -158,11 +149,9 @@ class RemoteConnectPage extends Component {
 
 RemoteConnectPage.propTypes = {
     archiveType: PropTypes.string,
-    beginGoogleDriveAuth: PropTypes.func.isRequired,
     connecting: PropTypes.bool,
     dropboxAuthenticated: PropTypes.bool,
     googleDriveAuthenticated: PropTypes.bool,
-    googleDriveAuthenticating: PropTypes.bool,
     initiateConnection: PropTypes.func,
     onChangePassword: PropTypes.func,
     onChangeURL: PropTypes.func,
