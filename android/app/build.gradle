@@ -101,10 +101,10 @@ android {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 19
-        versionName "1.8.2"
+        versionCode 22
+        versionName "1.9.1"
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
@@ -113,7 +113,7 @@ android {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86"
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
     buildTypes {
@@ -180,4 +180,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply plugin: 'com.google.gms.google-services'
-

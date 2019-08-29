@@ -1,10 +1,19 @@
 # Buttercup Mobile Changelog
 
+## v1.9.1
+_2019-08-29_
+
+ * Android 64bit support
+
+_Released to Android only._
+
 ## v1.9.0
 _2019-08-27_
 
  * Google Drive integration
  * Password display uses monospace font
+
+_Released to iOS only._
 
 ## v1.8.2
 _2019-05-16_
