@@ -1,6 +1,6 @@
 {
   "name": "Buttercup",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "private": true,
   "scripts": {
     "build:android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
@@ -28,7 +28,7 @@
   "dependencies": {
     "@buttercup/dropbox-client": "^0.3.2",
     "@buttercup/google-oauth2-client": "^0.2.0",
-    "@buttercup/googledrive-client": "^0.6.1",
+    "@buttercup/googledrive-client": "^0.7.0",
     "@perrymitchell/react-native-prompt": "^1.1.0",
     "@tradle/react-native-http": "^2.0.0",
     "@yfuks/react-native-action-sheet": "0.0.4",

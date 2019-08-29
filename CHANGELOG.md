@@ -1,6 +1,12 @@
 # Buttercup Mobile Changelog
 
-## 1.8.2
+## v1.9.0
+_2019-08-27_
+
+ * Google Drive integration
+ * Password display uses monospace font
+
+## v1.8.2
 _2019-05-16_
 
  * **Bugfix**: ([#158](https://github.com/buttercup/buttercup-mobile/issues/158)) Android devices throw `Unknown type: null` error
