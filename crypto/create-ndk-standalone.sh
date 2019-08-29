@@ -40,6 +40,7 @@ create_ndk() {
 }
 
 create_ndk arm64 21
+create_ndk x86_64 21
 create_ndk arm 14
 create_ndk x86 14
 
