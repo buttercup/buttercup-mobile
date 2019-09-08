@@ -1,5 +1,5 @@
 import { Alert, Platform } from "react-native";
-import ActionSheet from "@yfuks/react-native-action-sheet";
+import ActionSheet from "react-native-action-sheet";
 import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
 import { getState, dispatch } from "../store.js";

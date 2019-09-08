@@ -152,12 +152,12 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-action-sheet')
     implementation project(':react-native-google-signin')
     implementation project(':react-native-keychain')
     implementation project(':react-native-secure-storage')
     implementation project(':react-native-touch-id')
     implementation project(':react-native-randombytes')
-    implementation project(':@yfuks/react-native-action-sheet')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.buttercup.autofill.AutoFillPackage;
 import com.facebook.react.ReactApplication;
+import com.actionsheet.ActionSheetPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.oblador.keychain.KeychainPackage;
 import li.yunqi.rnsecurestorage.RNSecureStoragePackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
+            new ActionSheetPackage(),
             new RNGoogleSigninPackage(),
                 new RNGoogleSigninPackage(),
                 new KeychainPackage(),
