@@ -17,6 +17,8 @@ target 'Buttercup' do
   # Pods for Buttercup
   pod 'GoogleSignIn', '~> 4.4.0'
 
+  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
+
   target 'ButtercupTests' do
     inherit! :search_paths
     # Pods for testing
