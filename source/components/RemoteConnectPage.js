@@ -55,7 +55,7 @@ class RemoteConnectPage extends Component {
                         <CellGroup>
                             <Cell
                                 title="Connect"
-                                icon="cloud"
+                                icon={{ name: "cloud", source: "material-community-icons" }}
                                 onPress={() => this.submit()}
                                 tintColor="#1144FF"
                                 disabled={!this.props.dropboxAuthenticated}
@@ -77,7 +77,7 @@ class RemoteConnectPage extends Component {
                         <CellGroup>
                             <Cell
                                 title="Connect"
-                                icon="cloud"
+                                icon={{ name: "cloud", source: "material-community-icons" }}
                                 onPress={() => this.submit()}
                                 tintColor="#1144FF"
                                 disabled={!this.props.googleDriveAuthenticated}
@@ -107,21 +107,21 @@ class RemoteConnectPage extends Component {
                         <CellInput
                             title="Remote URL"
                             value={this.props.url}
-                            icon="laptop"
+                            icon={{ name: "laptop", source: "material-community-icons" }}
                             onChangeText={newText => this.props.onChangeURL(newText)}
                             {...urlInputOptions}
                         />
                         <CellInput
                             title="Username"
                             value={this.props.username}
-                            icon="face"
+                            icon={{ name: "face", source: "material-community-icons" }}
                             onChangeText={newText => this.props.onChangeUsername(newText)}
                             {...usernameInputOptions}
                         />
                         <CellInput
                             title="Password"
                             value={this.props.password}
-                            icon="fingerprint"
+                            icon={{ name: "fingerprint", source: "material" }}
                             onChangeText={newText => this.props.onChangePassword(newText)}
                             {...passwordInputOptions}
                         />
@@ -129,7 +129,7 @@ class RemoteConnectPage extends Component {
                     <CellGroup>
                         <Cell
                             title="Connect"
-                            icon="cloud"
+                            icon={{ name: "cloud", source: "material-community-icons" }}
                             onPress={() => this.submit()}
                             tintColor="#1144FF"
                         />

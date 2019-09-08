@@ -97,7 +97,7 @@ class SearchArchivesPage extends Component {
             <View style={styles.container}>
                 <CellInput
                     title=""
-                    icon="search"
+                    icon={{ name: "search", source: "material" }}
                     onChangeText={text => this.changeInput(text)}
                     ref={input => (this._input = input)}
                     {...cellOptions}
