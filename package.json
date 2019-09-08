@@ -12,7 +12,7 @@
     "precommit": "lint-staged",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "start:android": "react-native run-android",
-    "start:ios": "react-native run-ios",
+    "start:ios": "react-native run-ios --simulator='iPhone Xs'",
     "start:ios:6s": "react-native run-ios --simulator='iPhone 6s'",
     "test": "run-s test:format test:react-native",
     "test:android": "./scripts/testAndroid.sh",
