@@ -1,6 +1,6 @@
 rootProject.name = 'Buttercup'
 include ':react-native-action-sheet'
-project(':react-native-action-sheet').projectDir = new File(rootProject.projectDir, '../../../../../../usr/local/lib/node_modules/react-native-action-sheet/android')
+project(':react-native-action-sheet').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-action-sheet/android')
 include ':react-native-google-signin'
 project(':react-native-google-signin').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-google-signin/android')
 include ':react-native-keychain'
