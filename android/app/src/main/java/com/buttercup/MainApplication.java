@@ -32,14 +32,12 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
-            new ActionSheetPackage(),
-            new RNGoogleSigninPackage(),
+                new ActionSheetPackage(),
                 new RNGoogleSigninPackage(),
                 new KeychainPackage(),
                 new RNSecureStoragePackage(),
                 new FingerprintAuthPackage(),
                 new RandomBytesPackage(),
-                new ActionSheetPackage(),
                 new VectorIconsPackage(),
                 new CryptoPackage(),
                 new AutoFillPackage()
