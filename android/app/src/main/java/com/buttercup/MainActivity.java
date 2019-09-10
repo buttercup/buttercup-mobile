@@ -80,8 +80,10 @@ public class MainActivity extends ReactActivity {
         System.out.println("Checking result");
         for (int grantResult: grantResults) {
             System.out.println("Result: " + (grantResult == PackageManager.PERMISSION_GRANTED ? "Granted" : "Denied"));
-            Toast.makeText(MainActivity.this, "Required permissions not granted", Toast.LENGTH_SHORT);
-            return;
+            if (grantResult == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(MainActivity.this, "Required permissions not granted", Toast.LENGTH_SHORT);
+                return;
+            }
         }
         switch(permsRequestCode){
             case PERMISSION_REQ_CODE:
