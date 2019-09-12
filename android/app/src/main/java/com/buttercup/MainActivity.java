@@ -42,6 +42,14 @@ public class MainActivity extends ReactActivity {
         checkPerms();
     }
 
+    public void closeApplication() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            this.finishAffinity();
+        } else{
+            this.finish();
+            System.exit(0);
+        }
+    }
 
     public void checkPerms() {
         System.out.println("Checking perms");
@@ -54,10 +62,12 @@ public class MainActivity extends ReactActivity {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + getPackageName()));
                 startActivityForResult(intent, OVERLAY_PERMISSION_REQ_CODE);
+                closeApplication();
+                return;
             }
-            for(String perm : perms){
+            for (String perm : perms){
                 // Checking each permission and if denied then requesting permissions
-                if(checkSelfPermission(perm) == PackageManager.PERMISSION_DENIED){
+                if (checkSelfPermission(perm) == PackageManager.PERMISSION_DENIED){
                     requestPermissions(perms, PERMISSION_REQ_CODE);
                     break;
                 }
