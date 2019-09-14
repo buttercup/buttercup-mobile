@@ -101,7 +101,7 @@ android {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 22
+        versionCode 23
         versionName "1.9.1"
         ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
@@ -118,11 +118,13 @@ android {
     }
     buildTypes {
         debug {
-            // Fix for RN Debug on Android 8 - https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted/50834600#50834600
-            manifestPlaceholders = [usesCleartextTraffic:"true"]
+            manifestPlaceholders = [
+                    usesCleartextTraffic:"true", // Fix for RN Debug on Android 8 - https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted/50834600#50834600
+                    excludeSystemAlertWindowPermission: "false" // Fix for stripping unwanted permissions - https://github.com/facebook/react-native/issues/5886#issuecomment-224397883
+            ]
         }
         release {
-            manifestPlaceholders = [usesCleartextTraffic:"false"]
+            manifestPlaceholders = [usesCleartextTraffic:"false", excludeSystemAlertWindowPermission: "true"]
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -132,7 +134,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -152,12 +154,12 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-action-sheet')
     implementation project(':react-native-google-signin')
     implementation project(':react-native-keychain')
     implementation project(':react-native-secure-storage')
     implementation project(':react-native-touch-id')
     implementation project(':react-native-randombytes')
-    implementation project(':@yfuks/react-native-action-sheet')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
