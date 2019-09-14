@@ -118,11 +118,13 @@ android {
     }
     buildTypes {
         debug {
-            // Fix for RN Debug on Android 8 - https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted/50834600#50834600
-            manifestPlaceholders = [usesCleartextTraffic:"true"]
+            manifestPlaceholders = [
+                    usesCleartextTraffic:"true", // Fix for RN Debug on Android 8 - https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted/50834600#50834600
+                    excludeSystemAlertWindowPermission: "false" // Fix for stripping unwanted permissions - https://github.com/facebook/react-native/issues/5886#issuecomment-224397883
+            ]
         }
         release {
-            manifestPlaceholders = [usesCleartextTraffic:"false"]
+            manifestPlaceholders = [usesCleartextTraffic:"false", excludeSystemAlertWindowPermission: "true"]
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
