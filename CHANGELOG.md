@@ -1,6 +1,12 @@
 # Buttercup Mobile Changelog
 
-## v.1.10.0
+## v1.10.1
+_2019-09-15_
+
+ * **Bugfix**:
+   * Android bundle not built
+
+## v1.10.0
 _2019-09-14_
 
  * React Native to 0.59
