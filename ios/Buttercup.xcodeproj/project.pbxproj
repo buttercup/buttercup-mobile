@@ -96,7 +96,7 @@
 		9E44190C21E042A000CA5E79 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */; };
 		9E44191021E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */; };
 		9E44E8E62217990D00BB8F64 /* AutoFillBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */; };
-		9EFEB97C2324872C00463B64 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		9EFEB97C2324872C00463B64 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		BBC4A737D75245BFB27E789A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
 		BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */; };
 		C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
@@ -624,7 +624,7 @@
 				9E13611421DC437500EE48B0 /* libRNRandomBytes.a in Frameworks */,
 				9E13611621DC437C00EE48B0 /* libTouchID.a in Frameworks */,
 				9E13615A21DC465E00EE48B0 /* libRNSecureStorage.a in Frameworks */,
-				9EFEB97C2324872C00463B64 /* BuildFile in Frameworks */,
+				9EFEB97C2324872C00463B64 /* (null) in Frameworks */,
 				692EF8BEC14F192BD40C0BC2 /* Pods_BCAutoFillExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

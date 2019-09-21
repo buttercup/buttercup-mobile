@@ -6,6 +6,8 @@ _2019-09-15_
  * **Bugfix**:
    * Android bundle not built
 
+_Released on iOS 2019-09-21_
+
 ## v1.10.0
 _2019-09-14_
 
