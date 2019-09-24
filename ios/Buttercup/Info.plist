@@ -64,8 +64,6 @@
 	</dict>
 	<key>NSFaceIDUsageDescription</key>
 	<string>NSFaceIDUsageDescription</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
