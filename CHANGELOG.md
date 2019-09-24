@@ -1,5 +1,11 @@
 # Buttercup Mobile Changelog
 
+## v1.10.2
+_2019-09-24_
+
+ * **Bugfix**:
+   * Google Drive would fail on Android with `DEVELOPER_ERROR`
+
 ## v1.10.1
 _2019-09-15_
 
