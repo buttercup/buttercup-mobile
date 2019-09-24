@@ -13,6 +13,14 @@
             }
         },
         "oauth_client": [{
+                "client_id": "327941947801-drr9d34q8s1785m8bm087d1fqh5gphs7.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.buttercup",
+                    "certificate_hash": "53e7b9ddb9d898b12a983a3adb9cc68d67a2d2dd"
+                }
+            },
+            {
                 "client_id": "327941947801-p4gvjtoptrcdt3gt02tt3v58muoj3qba.apps.googleusercontent.com",
                 "client_type": 1,
                 "android_info": {
@@ -35,7 +43,7 @@
         "services": {
             "appinvite_service": {
                 "other_platform_oauth_client": [{
-                        "client_id": "327941947801-77omjmf78j5ad6fgnvbliv34rngb1mhd.apps.googleusercontent.com",
+                        "client_id": "327941947801-fumr4be9juk0bu3ekfuq9fr5bm7trh30.apps.googleusercontent.com",
                         "client_type": 3
                     },
                     {
