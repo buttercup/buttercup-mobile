@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
 function iconLabelForProp(propName) {
     switch (propName.toLowerCase()) {
         case "username":
-            return "face";
+            return "person";
         case "password":
-            return "fingerprint";
+            return "finger-print";
         case "title":
             return "layers";
         case "url":
