@@ -1,8 +1,13 @@
 import extractDomain from "extract-domain";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { EntryFinder } from "../library/buttercupCore.js";
-import { getState } from "../store.js";
+import { dispatch, getState } from "../store.js";
+import { navigateToSearchArchives } from "../actions/navigation.js";
 import { getSelectedArchive } from "../selectors/archiveContents.js";
+
+export function gotoSearch() {
+    dispatch(navigateToSearchArchives());
+}
 
 export function getNameForSource(sourceID) {
     const source = getSharedArchiveManager().getSourceForID(sourceID);
