@@ -9,7 +9,7 @@ import {
     setGoogleDriveAuthToken,
     setGoogleDriveRefreshToken
 } from "../actions/googleDrive.js";
-import secrets from "../../secrets.json";
+import secrets from "../shared/resources/google-client.json";
 
 export async function authenticate() {
     const {
