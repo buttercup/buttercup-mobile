@@ -27,7 +27,7 @@ DEPENDENCIES:
   - GoogleSignIn (~> 4.4.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - boost-for-react-native
     - GoogleSignIn
     - GoogleToolboxForMac
@@ -50,6 +50,6 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
 
-PODFILE CHECKSUM: 9c05b4352b1e6636f3986030a6e2a3c50864186d
+PODFILE CHECKSUM: b3821149ea20084f9024744e92356a1f1e28f7f3
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4
