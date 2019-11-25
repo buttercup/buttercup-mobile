@@ -1,5 +1,13 @@
 # Buttercup Mobile Changelog
 
+## v1.11.0
+_2019-11-25_
+
+ * ([#196](https://github.com/buttercup/buttercup-mobile/issues/196)) Search button in header menu
+ * ([#189](https://github.com/buttercup/buttercup-mobile/issues/189)) Remove iOS RCTGelocation build dependency
+ * **Bugfix**:
+   * ([#187](https://github.com/buttercup/buttercup-mobile/issues/187)) Entry property icons missing/incorrect
+
 ## v1.10.2
 _2019-09-24_
 
