@@ -10,10 +10,12 @@ const styles = StyleSheet.create({
     }
 });
 
-export default function ToolbarIcon({ icon, onPress }) {
+export default function ToolbarIcon({ icon, onPress, style = {} } = {}) {
+    const containerStyle = StyleSheet.flatten([styles.container, style.container || {}]);
+    const imageStyle = StyleSheet.flatten([styles.image, style.image || {}]);
     return (
-        <TouchableOpacity style={styles.container} onPress={onPress}>
-            <Image style={styles.image} source={icon} />
+        <TouchableOpacity style={containerStyle} onPress={onPress}>
+            <Image style={imageStyle} source={icon} />
         </TouchableOpacity>
     );
 }

@@ -89,7 +89,8 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             const { id: groupID, title, isTrash = false } = action.payload;
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({
-                    routeName: "GroupsPage",
+                    // routeName: "GroupsPage",
+                    routeName: "VaultContents",
                     params: { groupID, title, isTrash }
                 }),
                 state
