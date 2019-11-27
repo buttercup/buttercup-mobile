@@ -1,3 +1,4 @@
+import { createArchiveFacade } from "@buttercup/facades";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { dispatch, getState } from "../store.js";
 import { setGroups } from "../actions/archiveContents.js";
@@ -7,6 +8,8 @@ import { setNewEntryParentGroup } from "../actions/entry.js";
 import { showArchiveContentsAddItemSheet } from "../shared/sheets.js";
 import { autoFillEnabledForSource, addSourceToAutoFill } from "./autofill";
 import { getSelectedSourceID } from "../selectors/archiveContents";
+
+const ENTRY_FIELD_OTP_PREFIX = /^BC_ENTRY_FIELD_TYPE:/;
 
 export function archiveToObject(archive) {
     return archive.toObject();
@@ -43,9 +46,31 @@ export function unlockSource(sourceID, password, useOffline = false) {
 export function updateCurrentArchive() {
     const state = getState();
     const archive = getSelectedArchive(state);
-
+    const archiveFacade = createArchiveFacade(archive);
+    // Process groups
     dispatch(setGroups(archiveToObject(archive).groups));
-
+    // Process OTP codes
+    const otpEntries = archiveFacade.entries.reduce((output, entry) => {
+        const otpFieldDescriptors = entry.fields.filter(
+            field =>
+                field.propertyType === "attribute" &&
+                ENTRY_FIELD_OTP_PREFIX.test(field.property) &&
+                field.value === "otp"
+        );
+        const otpItems = otpFieldDescriptors.reduce((allOtpItems, nextDesc) => {
+            const fieldPropName = nextDesc.property.replace(ENTRY_FIELD_OTP_PREFIX, "");
+            const targetField = entry.fields.find(
+                entryField =>
+                    entryField.propertyType === "property" && entryField.property === fieldPropName
+            );
+            if (targetField) {
+                allOtpItems.push(targetField);
+            }
+            return allOtpItems;
+        }, []);
+        return [...output, ...otpItems];
+    }, []);
+    console.log("OTP", otpEntries);
     // Make sure the updates are reflected in AutoFill as well
     const sourceID = getSelectedSourceID(state);
     autoFillEnabledForSource(sourceID).then(isEnabled => {
