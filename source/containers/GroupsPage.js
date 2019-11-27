@@ -2,13 +2,13 @@ import { connect } from "react-redux";
 import GroupsPage from "../components/GroupsPage.js";
 import {
     getGroup,
+    getSelectedSourceID,
     shouldShowCreateGroupPrompt,
     shouldShowGroupRenamePrompt
 } from "../selectors/archiveContents.js";
 import { navigateToEntry, navigateToGroups } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getEntryTitle, loadEntry } from "../shared/entry.js";
-import { getSelectedSourceID } from "../selectors/archiveContents.js";
 import { getBusyState } from "../selectors/app.js";
 import { getTopGroupID } from "../selectors/nav.js";
 import { createGroup, renameGroup } from "../shared/group.js";

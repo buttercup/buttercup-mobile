@@ -2,9 +2,8 @@ import React from "react";
 import { Image, StyleSheet } from "react-native";
 import { TabNavigator } from "react-navigation";
 import GroupsPage from "../containers/GroupsPage.js";
+import CodesPage from "../containers/CodesPage.js";
 import ToolbarIcon from "./ToolbarIcon.js";
-
-import { Text, View } from "react-native";
 
 const CODES = require("../../resources/images/pin-code.png");
 const VAULT = require("../../resources/images/folder.png");
@@ -16,16 +15,6 @@ const styles = StyleSheet.create({
     }
 });
 
-class TestScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Text>Test!</Text>
-            </View>
-        );
-    }
-}
-
 export default TabNavigator(
     {
         Vault: {
@@ -36,7 +25,7 @@ export default TabNavigator(
             }
         },
         Codes: {
-            screen: TestScreen,
+            screen: CodesPage,
             navigationOptions: {
                 // title: "Vault",
                 tabBarIcon: <Image style={styles.image} source={CODES} />
