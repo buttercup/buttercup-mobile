@@ -1,7 +1,7 @@
 import { createArchiveFacade } from "@buttercup/facades";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { dispatch, getState } from "../store.js";
-import { setGroups } from "../actions/archiveContents.js";
+import { setGroups, setOTPCodes } from "../actions/archiveContents.js";
 import { getSelectedArchive } from "../selectors/archiveContents.js";
 import { doAsyncWork } from "../global/async.js";
 import { setNewEntryParentGroup } from "../actions/entry.js";
@@ -63,14 +63,23 @@ export function updateCurrentArchive() {
                 entryField =>
                     entryField.propertyType === "property" && entryField.property === fieldPropName
             );
-            if (targetField) {
-                allOtpItems.push(targetField);
+            const titleField = entry.fields.find(
+                entryField =>
+                    entryField.propertyType === "property" && entryField.property === "title"
+            );
+            if (targetField && titleField) {
+                allOtpItems.push({
+                    entryID: entry.id,
+                    title: titleField.value,
+                    otpURL: targetField.value
+                });
             }
             return allOtpItems;
         }, []);
         return [...output, ...otpItems];
     }, []);
     console.log("OTP", otpEntries);
+    dispatch(setOTPCodes(otpEntries));
     // Make sure the updates are reflected in AutoFill as well
     const sourceID = getSelectedSourceID(state);
     autoFillEnabledForSource(sourceID).then(isEnabled => {

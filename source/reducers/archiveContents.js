@@ -1,6 +1,7 @@
 import {
     ARCHIVE_CONTENTS_MARK_READONLY,
     ARCHIVE_CONTENTS_SET_GROUPS,
+    ARCHIVE_CONTENTS_SET_OTP_CODES,
     ARCHIVE_CONTENTS_SET_SOURCE,
     ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT,
     ARCHIVE_CONTENTS_TOGGLE_REN_GROUP_PROMPT
@@ -8,6 +9,7 @@ import {
 
 const INITIAL = {
     groups: {},
+    otpCodes: [],
     readOnly: false,
     selectedSourceID: null,
     showCreateGroupPrompt: false,
@@ -20,6 +22,11 @@ export default function archiveContentsReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 groups: action.payload
+            };
+        case ARCHIVE_CONTENTS_SET_OTP_CODES:
+            return {
+                ...state,
+                otpCodes: [...action.payload]
             };
         case ARCHIVE_CONTENTS_SET_SOURCE:
             return {
