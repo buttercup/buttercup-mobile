@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import PropTypes from "prop-types";
+import * as OTPAuth from "otpauth";
 
 const styles = StyleSheet.create({
     container: {
@@ -31,18 +32,55 @@ const styles = StyleSheet.create({
     }
 });
 
+function splitDigits(digits) {
+    return `${digits.slice(0, 3)} ${digits.slice(3, 6)}`;
+}
+
 export default class CodesPage extends Component {
+    static navigationOptions = {
+        title: "Codes"
+    };
+
     static propTypes = {
         otpCodes: PropTypes.arrayOf(PropTypes.object).isRequired
     };
 
-    renderCodeItem({ entryID, title, otpURL }) {
+    interval = null;
+
+    state = {
+        codes: []
+    };
+
+    componentDidMount() {
+        this.setState(
+            {
+                codes: this.props.otpCodes.map(otpCodeItem => ({
+                    ...otpCodeItem,
+                    period: 30,
+                    timeLeft: 30,
+                    digits: "",
+                    totp: null
+                }))
+            },
+            () => {
+                this.interval = setInterval(() => this.update(), 1000);
+                this.update();
+            }
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+        this.interval = null;
+    }
+
+    renderCodeItem({ entryID, title, otpURL, digits }) {
         return (
             <TouchableHighlight key={`${entryID}:${otpURL}`}>
                 <View style={styles.itemView}>
                     <Text style={styles.description}>{title}</Text>
                     <View style={styles.codeView}>
-                        <Text style={styles.code}>123 456</Text>
+                        <Text style={styles.code}>{splitDigits(digits)}</Text>
                     </View>
                 </View>
             </TouchableHighlight>
@@ -52,34 +90,28 @@ export default class CodesPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView>
-                    {this.props.otpCodes.map(item => this.renderCodeItem(item))}
-                    {/* {childGroups.map(group => (
-                            <Cell
-                                key={group.id}
-                                icon={() => getGroupIcon(group)}
-                                onPress={() =>
-                                    this.props.onGroupPress(
-                                        group.id,
-                                        group.title,
-                                        isTrash || rawGroupIsTrash(group)
-                                    )
-                                }
-                            >
-                                <Text>{group.title}</Text>
-                            </Cell>
-                        ))}
-                        {childEntries.map(entry => (
-                            <Cell
-                                key={entry.id}
-                                icon={getEntryIcon}
-                                onPress={() => this.props.onEntryPress(entry.id)}
-                            >
-                                <Text>{entry.properties.title || ""}</Text>
-                            </Cell>
-                        ))} */}
-                </ScrollView>
+                <ScrollView>{this.state.codes.map(item => this.renderCodeItem(item))}</ScrollView>
             </View>
         );
+    }
+
+    update() {
+        if (this.props.otpCodes.length <= 0 || !this.props.navigation.isFocused()) {
+            return;
+        }
+        const updatedItems = this.state.codes.map(codeItem => {
+            const totp = codeItem.totp || OTPAuth.URI.parse(codeItem.otpURL);
+            const period = totp.period;
+            return {
+                ...codeItem,
+                totp,
+                period,
+                digits: totp.generate(),
+                timeLeft: period - (Math.floor(Date.now() / 1000) % period)
+            };
+        });
+        this.setState({
+            codes: updatedItems
+        });
     }
 }
