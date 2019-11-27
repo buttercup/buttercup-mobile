@@ -70,6 +70,7 @@
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-navbar": "^1.7.1",
     "react-native-os": "^1.2.5",
+    "react-native-progress-wheel": "^1.0.4",
     "react-native-randombytes": "^3.5.3",
     "react-native-secure-storage": "^0.1.2",
     "react-native-swipe-list-view": "^0.4.1",

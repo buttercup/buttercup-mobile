@@ -78,7 +78,6 @@ export function updateCurrentArchive() {
         }, []);
         return [...output, ...otpItems];
     }, []);
-    console.log("OTP", otpEntries);
     dispatch(setOTPCodes(otpEntries));
     // Make sure the updates are reflected in AutoFill as well
     const sourceID = getSelectedSourceID(state);

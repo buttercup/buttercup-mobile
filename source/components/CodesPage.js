@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import PropTypes from "prop-types";
 import * as OTPAuth from "otpauth";
+import ProgressWheel from "react-native-progress-wheel";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    itemView: {
+    itemContainerView: {
         flex: 1,
-        flexDirection: "column",
+        flexDirection: "row",
         padding: 12,
         marginVertical: 8,
         marginHorizontal: 0,
@@ -18,6 +19,10 @@ const styles = StyleSheet.create({
         borderBottomColor: "#DDD",
         borderBottomWidth: 0.5,
         backgroundColor: "#FFF"
+    },
+    entryContainerView: {
+        flex: 1,
+        flexDirection: "column"
     },
     codeView: {
         flex: 1,
@@ -74,13 +79,24 @@ export default class CodesPage extends Component {
         this.interval = null;
     }
 
-    renderCodeItem({ entryID, title, otpURL, digits }) {
+    renderCodeItem({ entryID, title, otpURL, digits, period, timeLeft }) {
         return (
             <TouchableHighlight key={`${entryID}:${otpURL}`}>
-                <View style={styles.itemView}>
-                    <Text style={styles.description}>{title}</Text>
-                    <View style={styles.codeView}>
-                        <Text style={styles.code}>{splitDigits(digits)}</Text>
+                <View style={styles.itemContainerView}>
+                    <View style={styles.entryContainerView}>
+                        <Text style={styles.description}>{title}</Text>
+                        <View style={styles.codeView}>
+                            <Text style={styles.code}>{splitDigits(digits)}</Text>
+                        </View>
+                    </View>
+                    <View>
+                        <ProgressWheel
+                            size={46}
+                            width={5}
+                            progress={(timeLeft / period) * 100}
+                            color={"#24B5AB"}
+                            backgroundColor={"#FFF"}
+                        />
                     </View>
                 </View>
             </TouchableHighlight>
