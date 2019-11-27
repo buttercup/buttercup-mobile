@@ -20,24 +20,15 @@ export default TabNavigator(
         Vault: {
             screen: GroupsPage,
             navigationOptions: {
-                // title: "Vault",
                 tabBarIcon: <Image style={styles.image} source={VAULT} />
             }
         },
         Codes: {
             screen: CodesPage,
             navigationOptions: {
-                // title: "Vault",
                 tabBarIcon: <Image style={styles.image} source={CODES} />
             }
         }
     },
-    {
-        // tabBarOptions: {
-        //     iconStyle: {
-        //         width: 30,
-        //         height: 30
-        //     }
-        // }
-    }
+    {}
 );
