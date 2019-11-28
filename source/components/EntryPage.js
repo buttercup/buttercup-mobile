@@ -161,7 +161,7 @@ class EntryPage extends Component {
                 title={title}
                 value={this.displayValueForProp(field.property, field.value)}
                 icon={iconLabelForProp(field.property)}
-                onPress={() => this.handleCellPress(field.title, field.value)}
+                onPress={() => this.handleCellPress(title, field.value)}
                 onChangeText={newText => this.modifyField(field, newText)}
                 {...cellOptions}
             />
