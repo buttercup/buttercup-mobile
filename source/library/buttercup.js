@@ -3,11 +3,12 @@ import {
     ArchiveManager,
     ArchiveSource,
     Datasources,
-    Credentials,
-    entryFacade
+    Credentials
 } from "./buttercupCore.js";
 import SecureStorageInterface from "../compat/SecureStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
+
+export { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
 
 const { TextDatasource } = Datasources;
 const { Status: ArchiveSourceStatus } = ArchiveSource;
@@ -38,20 +39,12 @@ export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds, arch
         );
 }
 
-export function consumeEntryFacade(entry, facade) {
-    entryFacade.consumeEntryFacade(entry, facade);
-}
-
 export function createEmptyArchive() {
     return Archive.createWithDefaults();
 }
 
 export function createArchiveCredentials(password) {
     return Credentials.fromPassword(password);
-}
-
-export function createEntryFacade(entry) {
-    return entryFacade.createEntryFacade(entry);
 }
 
 export function createRemoteCredentials(archiveType, options) {

@@ -25,11 +25,11 @@ function iconLabelForProp(propName) {
         case "password":
             return "finger-print";
         case "title":
-            return "layers";
+            return "text";
         case "url":
             return "laptop";
         default:
-            return "label";
+            return "arrow-round-forward";
     }
 }
 
@@ -105,8 +105,8 @@ class EntryPage extends Component {
         }
         return fields.filter(
             item =>
-                item.field !== "property" ||
-                (item.field === "property" && item.property !== "title")
+                item.propertyType !== "property" ||
+                (item.propertyType === "property" && item.property !== "title")
         );
     }
 
@@ -115,7 +115,7 @@ class EntryPage extends Component {
     }
 
     modifyField(field, newValue) {
-        this.props.onFieldValueChange(field.field, field.property, newValue);
+        this.props.onFieldValueChange(field.propertyType, field.property, newValue);
     }
 
     render() {
@@ -154,10 +154,11 @@ class EntryPage extends Component {
               }
             : {};
         const CellType = editing ? CellInput : Cell;
+        const title = editing ? field.property : field.title || field.property;
         return (
             <CellType
                 key={field.property}
-                title={field.title}
+                title={title}
                 value={this.displayValueForProp(field.property, field.value)}
                 icon={iconLabelForProp(field.property)}
                 onPress={() => this.handleCellPress(field.title, field.value)}

@@ -24,7 +24,7 @@ const INITIAL = {
         key: "",
         value: ""
     },
-    fields: [],
+    facade: null,
     sourceID: null,
     viewingHidden: false
 };
@@ -36,7 +36,7 @@ export default function entryReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 id: entryData.id,
-                fields: entryData.fields,
+                facade: entryData.facade,
                 sourceID: entryData.sourceID
             };
         case ENTRY_UNLOAD:
@@ -91,17 +91,20 @@ export default function entryReducer(state = INITIAL, action = {}) {
             };
         case ENTRY_SET_FACADE_VALUE:
             const { field, property, value } = action.payload;
-            const targetIndex = state.fields.findIndex(
-                item => item.field === field && item.property === property
+            const targetIndex = state.facade.fields.findIndex(
+                item => item.propertyType === field && item.property === property
             );
-            const newFields = [...state.fields];
+            const newFields = [...state.facade.fields];
             newFields[targetIndex] = {
                 ...newFields[targetIndex],
                 value
             };
             return {
                 ...state,
-                fields: newFields
+                facade: {
+                    ...state.facade,
+                    fields: newFields
+                }
             };
 
         default:

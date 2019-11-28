@@ -35,8 +35,7 @@ export function getEntry(sourceID, entryID) {
 
 export function getEntryFacade(sourceID, entryID) {
     const entry = getEntry(sourceID, entryID);
-    const facade = createEntryFacade(entry);
-    return facade;
+    return createEntryFacade(entry);
 }
 
 export function getEntryTitle(sourceID, entryID) {
@@ -70,7 +69,7 @@ export function loadEntry(sourceID, entryID) {
     dispatch(
         loadNewEntry({
             id: entryID,
-            fields: facade.fields,
+            facade,
             sourceID
         })
     );

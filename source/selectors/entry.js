@@ -1,7 +1,7 @@
 const STATE_KEY = "entry";
 
-export function getEntryFields(state) {
-    return state[STATE_KEY].fields;
+export function getEntryFacade(state) {
+    return state[STATE_KEY].facade;
 }
 
 export function getEntryID(state) {
@@ -14,11 +14,13 @@ export function getEntryPassword(state) {
 }
 
 export function getEntryProperties(state) {
-    return getEntryFields(state).filter(f => f.field === "property");
+    return getEntryFacade(state).fields.filter(f => f.propertyType === "property");
 }
 
 export function getEntryTitle(state) {
-    const titleField = getEntryProperties(state).find(item => item.property === "title");
+    const titleField = getEntryProperties(state).find(
+        item => item.propertyType === "property" && item.property === "title"
+    );
     return (titleField && titleField.value) || "";
 }
 

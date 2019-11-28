@@ -6,7 +6,7 @@ import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/en
 import { navigateBack, navigateToNewMeta } from "../actions/navigation.js";
 import { setBusyState } from "../actions/app.js";
 import {
-    getEntryFields,
+    getEntryFacade,
     getEntryID,
     getEntryPassword,
     getEntryProperties,
@@ -99,13 +99,11 @@ export default connect(
         },
         onSavePressed: () => (dispatch, getState) => {
             const state = getState();
-            const fields = getEntryFields(state);
+            const entryFacade = getEntryFacade(state);
             const sourceID = getSourceID(state);
             const entryID = getEntryID(state);
             const entry = getEntry(sourceID, entryID);
-            const facade = createEntryFacade(entry);
-            facade.fields = fields;
-            consumeEntryFacade(entry, facade);
+            consumeEntryFacade(entry, entryFacade);
             dispatch(setBusyState("Saving"));
             return saveCurrentArchive()
                 .then(() => {
