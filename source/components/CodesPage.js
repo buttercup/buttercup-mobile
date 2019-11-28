@@ -38,7 +38,11 @@ const styles = StyleSheet.create({
 });
 
 function splitDigits(digits) {
-    return `${digits.slice(0, 3)} ${digits.slice(3, 6)}`;
+    return digits.length === 6
+        ? `${digits.slice(0, 3)} ${digits.slice(3, 6)}`
+        : digits.length === 8
+        ? `${digits.slice(0, 4)} ${digits.slice(4, 8)}`
+        : digits;
 }
 
 export default class CodesPage extends Component {
