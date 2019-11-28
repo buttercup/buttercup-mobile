@@ -12,13 +12,15 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         padding: 12,
-        marginVertical: 8,
         marginHorizontal: 0,
-        borderTopColor: "#DDD",
-        borderTopWidth: 0.5,
         borderBottomColor: "#DDD",
         borderBottomWidth: 0.5,
         backgroundColor: "#FFF"
+    },
+    itemContainerViewFirst: {
+        borderTopColor: "#DDD",
+        borderTopWidth: 0.5,
+        marginTop: 8
     },
     entryContainerView: {
         flex: 1,
@@ -83,10 +85,19 @@ export default class CodesPage extends Component {
         this.interval = null;
     }
 
-    renderCodeItem({ entryID, title, otpURL, digits, period, timeLeft }) {
+    renderCodeItem({ entryID, title, otpURL, digits, period, timeLeft }, index) {
         return (
             <TouchableHighlight key={`${entryID}:${otpURL}`}>
-                <View style={styles.itemContainerView}>
+                <View
+                    style={
+                        index === 0
+                            ? StyleSheet.flatten([
+                                  styles.itemContainerView,
+                                  styles.itemContainerViewFirst
+                              ])
+                            : styles.itemContainerView
+                    }
+                >
                     <View style={styles.entryContainerView}>
                         <Text style={styles.description}>{title}</Text>
                         <View style={styles.codeView}>
@@ -110,7 +121,9 @@ export default class CodesPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView>{this.state.codes.map(item => this.renderCodeItem(item))}</ScrollView>
+                <ScrollView>
+                    {this.state.codes.map((item, idx) => this.renderCodeItem(item, idx))}
+                </ScrollView>
             </View>
         );
     }
