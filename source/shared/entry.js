@@ -1,11 +1,14 @@
 import { Alert } from "react-native";
+import { createEntryFacade } from "@buttercup/facades";
 import { dispatch, getState } from "../store.js";
-import { createEntryFacade, getSharedArchiveManager } from "../library/buttercup.js";
+import { getSharedArchiveManager } from "../library/buttercup.js";
+import { Entry } from "../library/buttercupCore.js";
 import { loadEntry as loadNewEntry } from "../actions/entry.js";
 import {
     getEntryID,
     getNewMetaKey,
     getNewMetaValue,
+    getNewMetaValueType,
     getNewParentID,
     getNewPassword,
     getNewTitle,
@@ -133,6 +136,7 @@ export function saveNewMeta() {
     const state = getState();
     const key = getNewMetaKey(state);
     const value = getNewMetaValue(state);
+    const valueType = getNewMetaValueType(state);
     if (key.trim().length <= 0) {
         handleError("Failed saving meta", new Error("Key cannot be empty"));
         return;
@@ -144,6 +148,9 @@ export function saveNewMeta() {
     const archive = source.workspace.archive;
     const entry = archive.findEntryByID(entryID);
     entry.setMeta(key, value);
+    if (valueType && typeof valueType === "string") {
+        entry.setAttribute(`${Entry.Attributes.FieldTypePrefix}${key}`, valueType);
+    }
     dispatch(navigateBack());
     loadEntry(sourceID, entryID);
 }

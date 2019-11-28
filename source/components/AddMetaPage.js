@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
-import { CellGroup, CellInput } from "react-native-cell-components";
+import { Cell, CellGroup, CellInput } from "react-native-cell-components";
+import { FIELD_VALUE_TYPE_TEXT } from "@buttercup/facades";
 import { saveNewMeta } from "../shared/entry.js";
+import { FIELD_TYPE_OPTIONS } from "../library/buttercup.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -15,6 +17,17 @@ class AddMetaPage extends Component {
         title: "Add Property",
         headerRight: <Button title="Save" onPress={saveNewMeta} />
     };
+
+    componentDidMount() {
+        const initialKey = this.props.navigation.getParam("initialKey", "");
+        const initialValue = this.props.navigation.getParam("initialValue", "");
+        if (initialKey) {
+            this.handleKeyChange(initialKey);
+        }
+        if (initialValue) {
+            this.handleValueChange(initialValue);
+        }
+    }
 
     componentWillUnmount() {
         this.props.onUnmount();
@@ -36,6 +49,11 @@ class AddMetaPage extends Component {
             spellCheck: false
         };
         const isUrl = /url\b/i.test(this.props.metaKey);
+        const currentTypeField = FIELD_TYPE_OPTIONS.find(
+            fieldOption =>
+                (!this.props.metaValueType && fieldOption.type === FIELD_VALUE_TYPE_TEXT) ||
+                fieldOption.type === this.props.metaValueType
+        );
         return (
             <View style={styles.container}>
                 <CellGroup>
@@ -53,6 +71,15 @@ class AddMetaPage extends Component {
                         onChangeText={text => this.handleValueChange(text)}
                         {...cellOptions}
                         keyboardType={isUrl ? "url" : "default"}
+                    />
+                </CellGroup>
+                <CellGroup>
+                    <Cell
+                        key="valueType"
+                        title="Type"
+                        value={currentTypeField.title}
+                        icon="planet"
+                        onPress={() => this.props.onChooseValueType()}
                     />
                 </CellGroup>
             </View>

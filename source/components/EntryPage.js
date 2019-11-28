@@ -63,6 +63,7 @@ class EntryPage extends Component {
         onOpenPressed: PropTypes.func.isRequired,
         onSavePressed: PropTypes.func.isRequired,
         onViewHiddenPressed: PropTypes.func.isRequired,
+        pendingOTPURL: PropTypes.string,
         properties: PropTypes.arrayOf(PropTypes.object).isRequired,
         title: PropTypes.string.isRequired,
         viewHidden: PropTypes.bool.isRequired
@@ -137,9 +138,31 @@ class EntryPage extends Component {
                         </If>
                     </CellGroup>
                     {this.renderEditButtons()}
+                    {this.renderAdditionalButtons()}
                 </ScrollView>
                 <Spinner visible={this.props.busyState !== null} text={this.props.busyState} />
             </View>
+        );
+    }
+
+    renderAdditionalButtons() {
+        return (
+            <CellGroup>
+                <If condition={this.props.pendingOTPURL}>
+                    <Cell
+                        key="otpURL"
+                        title="Add Pending OTP URL"
+                        onPress={() => {
+                            this.props.onAddMeta({
+                                initialKey: "OTP",
+                                initialValue: this.props.pendingOTPURL
+                            });
+                        }}
+                        tintColor="#fc8c03"
+                        icon={{ name: "barcode-scan", source: "material-community-icons" }}
+                    />
+                </If>
+            </CellGroup>
         );
     }
 

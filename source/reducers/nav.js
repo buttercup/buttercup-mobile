@@ -19,10 +19,6 @@ function getInitialState() {
     const firstAction = AppNavigator.router.getActionForPathAndParams("Home");
     const initialNavState = AppNavigator.router.getStateForAction(firstAction);
     return initialNavState;
-    // return AppNavigator.router.getStateForAction(
-    //     firstAction,
-    //     tempNavState
-    // );
 }
 
 export default function routesReducer(state = getInitialState(), action = {}) {
@@ -41,8 +37,15 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             );
         }
         case NAVIGATE_NEW_META: {
+            const { initialKey = "", initialValue = "" } = action.payload;
             return AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({ routeName: "AddMeta" }),
+                NavigationActions.navigate({
+                    routeName: "AddMeta",
+                    params: {
+                        initialKey,
+                        initialValue
+                    }
+                }),
                 state
             );
         }

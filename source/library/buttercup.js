@@ -1,4 +1,12 @@
 import {
+    FIELD_VALUE_TYPE_NOTE,
+    FIELD_VALUE_TYPE_OTP,
+    FIELD_VALUE_TYPE_PASSWORD,
+    FIELD_VALUE_TYPE_TEXT,
+    consumeEntryFacade,
+    createEntryFacade
+} from "@buttercup/facades";
+import {
     Archive,
     ArchiveManager,
     ArchiveSource,
@@ -8,10 +16,15 @@ import {
 import SecureStorageInterface from "../compat/SecureStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
 
-export { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
-
 const { TextDatasource } = Datasources;
 const { Status: ArchiveSourceStatus } = ArchiveSource;
+
+export const FIELD_TYPE_OPTIONS = [
+    { type: FIELD_VALUE_TYPE_TEXT, title: "Text (default)" },
+    { type: FIELD_VALUE_TYPE_NOTE, title: "Note" },
+    { type: FIELD_VALUE_TYPE_PASSWORD, title: "Password" },
+    { type: FIELD_VALUE_TYPE_OTP, title: "OTP" }
+];
 
 let __sharedManager = null;
 

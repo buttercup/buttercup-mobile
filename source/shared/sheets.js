@@ -1,5 +1,6 @@
 import { Alert, Platform } from "react-native";
 import ActionSheet from "react-native-action-sheet";
+import { FIELD_TYPE_OPTIONS } from "../library/buttercup.js";
 import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
 import { getState, dispatch } from "../store.js";
@@ -10,6 +11,7 @@ import {
     navigateToSearchArchives
 } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
+import { setNewMetaValueType } from "../actions/entry.js";
 import { getSelectedSourceID, isCurrentlyReadOnly } from "../selectors/archiveContents.js";
 import {
     disableTouchUnlock,
@@ -49,6 +51,10 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_SEARCH_CURRENT_ARCHIVE
 ];
 const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [SHEET_ADD_ARCHIVE, SHEET_LOCK_ALL, SHEET_CANCEL];
+const ENTRY_META_VALUETYPE_SHEET_BUTTONS = [
+    ...FIELD_TYPE_OPTIONS.map(option => option.title),
+    SHEET_CANCEL
+];
 
 function removeTextFromArray(arr, text) {
     const ind = arr.indexOf(text);
@@ -141,6 +147,23 @@ export function showArchivesPageRightSheet() {
                     lockAllArchives();
                     break;
                 }
+            }
+        }
+    );
+}
+
+export function showEntryMetaValueTypeSheet() {
+    ActionSheet.showActionSheetWithOptions(
+        {
+            options: ENTRY_META_VALUETYPE_SHEET_BUTTONS,
+            cancelButtonIndex: ENTRY_META_VALUETYPE_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
+            title: "Value Type"
+        },
+        selectedIndex => {
+            const typeTitle = ENTRY_META_VALUETYPE_SHEET_BUTTONS[selectedIndex];
+            const newFieldType = FIELD_TYPE_OPTIONS.find(option => option.title === typeTitle);
+            if (newFieldType) {
+                dispatch(setNewMetaValueType(newFieldType.type));
             }
         }
     );

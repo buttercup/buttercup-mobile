@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Button, Image, Platform, StyleSheet, View } from "react-native";
+import { Button, Image, Linking, Platform, StyleSheet, View } from "react-native";
 import ArchivesList from "../containers/ArchivesList.js";
 import { showArchivesPageRightSheet } from "../shared/sheets.js";
 import ToolbarIcon from "./ToolbarIcon.js";
 import { navigateToSearchArchives } from "../actions/navigation.js";
-import { setSearchContext } from "../actions/app.js";
+import { setPendingOTPURL, setSearchContext } from "../actions/app.js";
 import { dispatch } from "../store.js";
+import { executeNotification } from "../global/notify.js";
+import { handleError } from "../global/exceptions.js";
 
 const BUTTERCUP_LOGO = require("../../resources/images/buttercup-header.png");
 const CLOUD_ADD = require("../../resources/images/boxes-1.png");
@@ -49,6 +51,23 @@ class ArchivesPage extends Component {
         headerRight: getRightToolbarButton(),
         headerTitle: getHeaderImage()
     };
+
+    componentDidMount() {
+        Linking.getInitialURL()
+            .then(url => {
+                if (url) {
+                    dispatch(setPendingOTPURL(url));
+                    executeNotification(
+                        "success",
+                        "OTP URL detected",
+                        "Detected a new OTP - edit an entry to save it!"
+                    );
+                }
+            })
+            .catch(err => {
+                handleError("OTP URL collection failed", err);
+            });
+    }
 
     render() {
         return (

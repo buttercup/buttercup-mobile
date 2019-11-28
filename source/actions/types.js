@@ -8,6 +8,7 @@ export const ADD_ARCHIVE_SET_URL = "addArchive/setURL";
 export const ADD_ARCHIVE_SET_USERNAME = "addArchive/setUsername";
 
 export const APP_MASTER_RESET = "app/reset";
+export const APP_PENDING_OTP_SET = "app/pendingOTP/set";
 export const APP_SET_BUSY_STATE = "app/setBusyState";
 export const APP_SET_SEARCH_CONTEXT = "app/search/setContext";
 
@@ -37,7 +38,8 @@ export const DROPBOX_SET_AUTH_TOKEN = "dropbox/setAuthToken";
 export const ENTRY_LOAD = "entry/load";
 export const ENTRY_NEW_CLEAR = "entry/clearNew";
 export const ENTRY_NEW_META_CLEAR = "entry/clearNewMeta";
-export const ENTRY_NEW_META_SET = "entry/setNewMetaValues";
+export const ENTRY_NEW_META_SET = "entry/newMeta/setValues";
+export const ENTRY_NEW_META_VALUETYPE_SET = "entry/newMeta/setValueType";
 export const ENTRY_SET_EDITING = "entry/setEditing";
 export const ENTRY_SET_FACADE_VALUE = "entry/setFacadeValue";
 export const ENTRY_SET_NEW_PARENT_GROUP = "entry/setNewEntryParentGroup";

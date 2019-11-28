@@ -3,6 +3,7 @@ import {
     ENTRY_NEW_CLEAR,
     ENTRY_NEW_META_CLEAR,
     ENTRY_NEW_META_SET,
+    ENTRY_NEW_META_VALUETYPE_SET,
     ENTRY_SET_EDITING,
     ENTRY_SET_FACADE_VALUE,
     ENTRY_SET_NEW_PARENT_GROUP,
@@ -22,7 +23,8 @@ const INITIAL = {
     },
     newMeta: {
         key: "",
-        value: ""
+        value: "",
+        valueType: null
     },
     facade: null,
     sourceID: null,
@@ -57,8 +59,17 @@ export default function entryReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 newMeta: {
+                    ...state.newMeta,
                     key: action.payload.key,
                     value: action.payload.value
+                }
+            };
+        case ENTRY_NEW_META_VALUETYPE_SET:
+            return {
+                ...state,
+                newMeta: {
+                    ...state.newMeta,
+                    valueType: action.payload
                 }
             };
         case ENTRY_SET_NEW_PROPERTY_VALUE:

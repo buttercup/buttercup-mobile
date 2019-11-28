@@ -28,6 +28,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.327941947801-osqgahih8s59aldrh91n7dmp7vps247g</string>
+                <string>otpauth</string>
 			</array>
 		</dict>
 	</array>

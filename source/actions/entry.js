@@ -4,6 +4,7 @@ import {
     ENTRY_NEW_CLEAR,
     ENTRY_NEW_META_CLEAR,
     ENTRY_NEW_META_SET,
+    ENTRY_NEW_META_VALUETYPE_SET,
     ENTRY_SET_EDITING,
     ENTRY_SET_FACADE_VALUE,
     ENTRY_SET_NEW_PARENT_GROUP,
@@ -20,5 +21,6 @@ export const setFacadeValue = createAction(ENTRY_SET_FACADE_VALUE);
 export const setNewEntryParentGroup = createAction(ENTRY_SET_NEW_PARENT_GROUP);
 export const setNewEntryProperty = createAction(ENTRY_SET_NEW_PROPERTY_VALUE);
 export const setNewMeta = createAction(ENTRY_NEW_META_SET);
+export const setNewMetaValueType = createAction(ENTRY_NEW_META_VALUETYPE_SET);
 export const setViewingHidden = createAction(ENTRY_SET_VIEWING_HIDDEN);
 export const unloadEntry = createAction(ENTRY_UNLOAD);

@@ -1,5 +1,6 @@
 import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
+import { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
 import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
@@ -18,9 +19,8 @@ import {
     isViewingHidden
 } from "../selectors/entry.js";
 import { isCurrentlyReadOnly } from "../selectors/archiveContents.js";
-import { getBusyState } from "../selectors/app.js";
+import { getBusyState, getPendingOTPURL } from "../selectors/app.js";
 import { getEntry, loadEntry } from "../shared/entry.js";
-import { consumeEntryFacade, createEntryFacade } from "../library/buttercup.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { promptDeleteEntry } from "../shared/entry.js";
@@ -32,6 +32,7 @@ export default connect(
         busyState: getBusyState(state),
         editing: isEditing(state),
         isReadOnly: isCurrentlyReadOnly(state),
+        pendingOTPURL: getPendingOTPURL(state),
         properties: getEntryProperties(state),
         title: getEntryTitle(state),
         viewHidden: isViewingHidden(state)
@@ -41,8 +42,13 @@ export default connect(
             Clipboard.setString(value);
             executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
         },
-        onAddMeta: () => dispatch => {
-            dispatch(navigateToNewMeta());
+        onAddMeta: ({ initialKey = "", initialValue = "" } = {}) => dispatch => {
+            dispatch(
+                navigateToNewMeta({
+                    initialKey,
+                    initialValue
+                })
+            );
         },
         onCancelEdit: () => (dispatch, getState) => {
             const state = getState();

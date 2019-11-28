@@ -18,7 +18,6 @@ import SearchArchivesPage from "./containers/SearchArchivesPage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
 import RemoteExplorerPage from "./containers/RemoteExplorerPage.js";
 import PopupBrowser from "./containers/PopupBrowser.js";
-// import GroupsPage from "./containers/GroupsPage.js";
 import LockPage from "./components/LockPage.js";
 import VaultNavigator from "./components/VaultNavigator.js";
 
@@ -33,7 +32,6 @@ export const AppNavigator = StackNavigator(
         RemoteConnect: { screen: RemoteConnectPage },
         RemoteExplorer: { screen: RemoteExplorerPage },
         PopupBrowser: { screen: PopupBrowser },
-        // GroupsPage: { screen: GroupsPage },
         VaultContents: { screen: VaultNavigator },
         LockPage: { screen: LockPage }
     },

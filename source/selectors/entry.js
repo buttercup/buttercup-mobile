@@ -39,6 +39,11 @@ export function getNewMetaValue(state) {
     return newMeta.value || "";
 }
 
+export function getNewMetaValueType(state) {
+    const newMeta = state[STATE_KEY].newMeta || {};
+    return newMeta.valueType || null;
+}
+
 export function getNewParentID(state) {
     return state[STATE_KEY].newEntry.parentID;
 }
