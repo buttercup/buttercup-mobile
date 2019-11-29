@@ -3,19 +3,6 @@ import { StyleSheet, Image } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-// import { StackNavigator, addNavigationHelpers } from "react-navigation";
-
-// for react-navigation 1.0.0-beta.30
-// import {
-//     createReduxBoundAddListener,
-//     createReactNavigationReduxMiddleware
-// } from "react-navigation-redux-helpers";
-
-// import {
-//     createReduxContainer,
-//     createReactNavigationReduxMiddleware,
-//     createNavigationReducer
-// } from "react-navigation-redux-helpers";
 
 import ArchivesPage from "./components/ArchivesPage.js";
 import EntryPage from "./containers/EntryPage.js";
@@ -43,17 +30,28 @@ import {
     ROOT_SCREEN
 } from "./shared/nav.js";
 
-const CODES = require("../resources/images/pin-code.png");
-const VAULT = require("../resources/images/folder.png");
+const CODES = require("../resources/images/password-approved.png");
+const VAULT = require("../resources/images/password-lock.png");
+const SEARCH = require("../resources/images/search-bar.png");
 
 const styles = StyleSheet.create({
     image: {
-        width: 20,
-        height: 20
+        width: 25,
+        height: 25
     }
 });
 
 const sharedStackStyles = {
+    defaultNavigationOptions: {
+        headerTintColor: "#454545",
+        headerStyle: {
+            borderBottomColor: "#24B5AB",
+            borderBottomWidth: 3
+        },
+        headerTitleStyle: {
+            flex: 1
+        }
+    },
     cardStyle: {
         backgroundColor: "#F8F8FD"
     }
@@ -72,37 +70,22 @@ export const AppNavigator = createStackNavigator(
         [VAULT_CONTENTS_SCREEN]: { screen: GroupsPage },
         [LOCK_SCREEN]: { screen: LockPage }
     },
-    {
-        defaultNavigationOptions: {
-            headerTintColor: "#454545",
-            headerStyle: {
-                borderBottomColor: "#24B5AB",
-                borderBottomWidth: 3
-            },
-            headerTitleStyle: {
-                flex: 1
-            }
-        },
-        ...sharedStackStyles
-    }
+    sharedStackStyles
 );
 
 const CodesStack = createStackNavigator(
     {
         CodesPage
     },
-    {
-        ...sharedStackStyles
-    }
+    sharedStackStyles
 );
 
 const SearchStack = createStackNavigator(
     {
-        SearchArchivesPage
+        SearchArchivesPage,
+        [ENTRY_SCREEN]: { screen: EntryPage }
     },
-    {
-        ...sharedStackStyles
-    }
+    sharedStackStyles
 );
 
 const TabNavigator = createBottomTabNavigator(
@@ -110,28 +93,39 @@ const TabNavigator = createBottomTabNavigator(
         Vaults: {
             screen: AppNavigator,
             navigationOptions: {
-                tabBarIcon: <Image style={styles.image} source={VAULT} />
+                tabBarIcon: ({ tintColor }) => (
+                    <Image style={[styles.image, { tintColor }]} source={VAULT} />
+                )
             }
         },
         Codes: {
             screen: CodesStack,
             navigationOptions: {
-                tabBarIcon: <Image style={styles.image} source={CODES} />
+                tabBarIcon: ({ tintColor }) => (
+                    <Image style={[styles.image, { tintColor }]} source={CODES} />
+                )
             }
         },
         Search: {
-            screen: SearchStack
+            screen: SearchStack,
+            navigationOptions: {
+                tabBarIcon: ({ tintColor }) => (
+                    <Image style={[styles.image, { tintColor }]} source={SEARCH} />
+                )
+            }
         }
     },
     {
         tabBarOptions: {
-            tabStyle: {
-                color: "#000",
-                backgroundColor: "#FFF"
-            },
-            labelStyle: {
-                color: "#000"
-            }
+            activeTintColor: "#454545",
+            inactiveTintColor: "#999999"
+            // tabStyle: {
+            //     color: "#000",
+            //     backgroundColor: "#FFF"
+            // },
+            // labelStyle: {
+            //     color: "#000"
+            // }
         }
     }
 );

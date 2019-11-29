@@ -30,8 +30,6 @@ const getCurrentGroupID = props => {
 function getGroupContents(state, props) {
     const navGroupID = getCurrentGroupID(props);
     const targetGroupID = props.groupID || navGroupID || "0";
-    console.log("current", navGroupID);
-    console.log("targeT", targetGroupID);
     return getGroup(state, targetGroupID);
 }
 

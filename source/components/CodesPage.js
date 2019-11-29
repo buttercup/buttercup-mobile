@@ -3,6 +3,9 @@ import { Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from
 import PropTypes from "prop-types";
 import ProgressWheel from "react-native-progress-wheel";
 import { otpInstanceFromURL } from "../library/otp.js";
+import EmptyView from "./EmptyView.js";
+
+const SECURITY_SHIELD = require("../../resources/images/security-system-shield-lock.png");
 
 const DIGIT_SEPARATOR = " ";
 
@@ -133,9 +136,19 @@ export default class CodesPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView>
-                    {this.state.codes.map((item, idx) => this.renderCodeItem(item, idx))}
-                </ScrollView>
+                <Choose>
+                    <When condition={this.state.codes.length > 0}>
+                        <ScrollView>
+                            {this.state.codes.map((item, idx) => this.renderCodeItem(item, idx))}
+                        </ScrollView>
+                    </When>
+                    <Otherwise>
+                        <EmptyView
+                            text="Unlock more vaults or add more codes."
+                            imageSource={SECURITY_SHIELD}
+                        />
+                    </Otherwise>
+                </Choose>
             </View>
         );
     }

@@ -26,7 +26,7 @@ import { handleError } from "../global/exceptions.js";
 const ARCHIVE_ITEM_HEIGHT = 70;
 const ARCHIVE_ITEM_CONTENTS_HEIGHT = 45;
 const ARCHIVE_SWIPE_BUTTON_WIDTH = 80;
-const BENCH_IMAGE = require("../../resources/images/bench.png");
+const VAULT_SAFE_IMAGE = require("../../resources/images/vault-bank-safe.png");
 const FINGERPRINT_IMAGE = require("../../resources/images/fingerprint.png");
 const LOCK_IMAGE = require("../../resources/images/locked.png");
 const READONLY_IMAGE = require("../../resources/images/readonly.png");
@@ -320,7 +320,7 @@ class ArchivesList extends Component {
                         />
                     </When>
                     <Otherwise>
-                        <EmptyView text="Add a new vault to begin" imageSource={BENCH_IMAGE} />
+                        <EmptyView text="Add a new vault to begin" imageSource={VAULT_SAFE_IMAGE} />
                     </Otherwise>
                 </Choose>
                 <Prompt
