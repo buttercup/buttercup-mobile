@@ -23,9 +23,13 @@ export default class ButtercupShared extends Component {
             getSharedArchiveManager().rehydrate();
         });
         // Setup notifications
-        setNotificationFunction((type, title, message) => {
+        setNotificationFunction((type, title, message, timeOverride = null) => {
             if (this.dropdown) {
-                this.dropdown.alertWithType(type, title, message);
+                if (timeOverride && timeOverride > 0) {
+                    this.dropdown.alertWithType(type, title, message, undefined, timeOverride);
+                } else {
+                    this.dropdown.alertWithType(type, title, message);
+                }
             }
         });
         // Watch for auth failures and handle refreshing of tokens

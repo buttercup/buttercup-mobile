@@ -45,6 +45,18 @@ function gotoSearch() {
     dispatch(navigateToSearchArchives());
 }
 
+function handleDeepLink(evt) {
+    const url = typeof evt === "string" ? evt : evt.url;
+    console.log("Received deep link URL:", url);
+    dispatch(setPendingOTPURL(url));
+    executeNotification(
+        "success",
+        "OTP URL detected",
+        "Detected a new OTP - edit an entry to save it!",
+        15000
+    );
+}
+
 class ArchivesPage extends Component {
     static navigationOptions = {
         headerLeft: getLeftToolbarButton(),
@@ -52,21 +64,25 @@ class ArchivesPage extends Component {
         headerTitle: getHeaderImage()
     };
 
-    componentDidMount() {
+    checkLinking() {
         Linking.getInitialURL()
             .then(url => {
                 if (url) {
-                    dispatch(setPendingOTPURL(url));
-                    executeNotification(
-                        "success",
-                        "OTP URL detected",
-                        "Detected a new OTP - edit an entry to save it!"
-                    );
+                    handleDeepLink(url);
                 }
             })
             .catch(err => {
                 handleError("OTP URL collection failed", err);
             });
+    }
+
+    componentDidMount() {
+        this.checkLinking();
+        Linking.addEventListener("url", handleDeepLink);
+    }
+
+    componentWillUnmount() {
+        Linking.removeEventListener("url", handleDeepLink);
     }
 
     render() {

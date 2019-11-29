@@ -61,7 +61,7 @@
     "react-native-cell-components": "^0.7.5",
     "react-native-collapsible": "^0.8.0",
     "react-native-crypto": "^2.0.2",
-    "react-native-dropdownalert": "^3.4.0",
+    "react-native-dropdownalert": "^3.11.0",
     "react-native-elements": "^0.19.0",
     "react-native-exception-handler": "^1.1.0",
     "react-native-google-signin": "^2.0.0",

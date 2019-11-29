@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Button, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
+import { FIELD_VALUE_TYPE_OTP } from "@buttercup/facades";
 import Spinner from "./Spinner.js";
 import ToolbarIcon from "./ToolbarIcon.js";
+import { getOTPTitleFromURL } from "../library/otp.js";
 
 const NOOP = () => {};
 const RIGHT_TITLE_OPEN = "Open";
@@ -148,14 +150,16 @@ class EntryPage extends Component {
     renderAdditionalButtons() {
         return (
             <CellGroup>
-                <If condition={this.props.pendingOTPURL}>
+                <If condition={this.props.editing && this.props.pendingOTPURL}>
                     <Cell
                         key="otpURL"
                         title="Add Pending OTP URL"
                         onPress={() => {
+                            console.log("PROCESSING URL", this.props.pendingOTPURL);
                             this.props.onAddMeta({
-                                initialKey: "OTP",
-                                initialValue: this.props.pendingOTPURL
+                                initialKey: getOTPTitleFromURL(this.props.pendingOTPURL),
+                                initialValue: this.props.pendingOTPURL,
+                                initialValueType: FIELD_VALUE_TYPE_OTP
                             });
                         }}
                         tintColor="#fc8c03"

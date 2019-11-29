@@ -1,5 +1,6 @@
 import { createArchiveFacade } from "@buttercup/facades";
 import { getSharedArchiveManager } from "../library/buttercup.js";
+import { Group } from "../library/buttercupCore.js";
 import { dispatch, getState } from "../store.js";
 import { setGroups, setOTPCodes } from "../actions/archiveContents.js";
 import { getSelectedArchive } from "../selectors/archiveContents.js";
@@ -31,6 +32,14 @@ export function getSourceReadonlyStatus(sourceID) {
     return getSharedArchiveManager().getSourceForID(sourceID).workspace.archive.readOnly;
 }
 
+function getTopMostFacadeGroup(archiveFacade, groupID, previousGroup = null) {
+    if (groupID == "0") {
+        return previousGroup;
+    }
+    const group = archiveFacade.groups.find(grp => grp.id === groupID);
+    return getTopMostFacadeGroup(archiveFacade, group.parentID, group);
+}
+
 export function lockSource(sourceID) {
     const archiveManager = getSharedArchiveManager();
     return archiveManager.getSourceForID(sourceID).lock();
@@ -51,11 +60,22 @@ export function updateCurrentArchive() {
     dispatch(setGroups(archiveToObject(archive).groups));
     // Process OTP codes
     const otpEntries = archiveFacade.entries.reduce((output, entry) => {
+        const parentGroup = getTopMostFacadeGroup(archiveFacade, entry.parentID);
+        const isTrashGroup =
+            parentGroup && parentGroup.attributes[Group.Attributes.Role] === "trash";
+        if (isTrashGroup) {
+            return output;
+        }
         const otpFieldDescriptors = entry.fields.filter(
             field =>
                 field.propertyType === "attribute" &&
                 ENTRY_FIELD_OTP_PREFIX.test(field.property) &&
                 field.value === "otp"
+            // // Show only OTP codes that are present (matching property field)
+            // !!entry.fields.find(matchingField =>
+            //     matchingField.propertyType === "property" &&
+            //     matchingField.property === field.property.replace(ENTRY_FIELD_OTP_PREFIX, "")
+            // )
         );
         const otpItems = otpFieldDescriptors.reduce((allOtpItems, nextDesc) => {
             const fieldPropName = nextDesc.property.replace(ENTRY_FIELD_OTP_PREFIX, "");

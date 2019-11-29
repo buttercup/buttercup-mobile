@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import PropTypes from "prop-types";
-import * as OTPAuth from "otpauth";
 import ProgressWheel from "react-native-progress-wheel";
+import { otpInstanceFromURL } from "../library/otp.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -138,7 +138,7 @@ export default class CodesPage extends Component {
             return;
         }
         const updatedItems = this.state.codes.map(codeItem => {
-            const totp = codeItem.totp || OTPAuth.URI.parse(codeItem.otpURL);
+            const totp = codeItem.totp || otpInstanceFromURL(codeItem.otpURL);
             const period = totp.period;
             return {
                 ...codeItem,

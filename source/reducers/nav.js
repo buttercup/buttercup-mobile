@@ -37,13 +37,14 @@ export default function routesReducer(state = getInitialState(), action = {}) {
             );
         }
         case NAVIGATE_NEW_META: {
-            const { initialKey = "", initialValue = "" } = action.payload;
+            const { initialKey = "", initialValue = "", initialValueType = null } = action.payload;
             return AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({
                     routeName: "AddMeta",
                     params: {
                         initialKey,
-                        initialValue
+                        initialValue,
+                        initialValueType
                     }
                 }),
                 state

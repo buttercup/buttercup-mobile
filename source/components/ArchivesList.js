@@ -164,7 +164,6 @@ class ArchivesList extends Component {
         // If in AutoFill mode, attempt to unlock the archives once the have rehydrated
         if (!this.rehydrationComplete && nextProps.archives.length) {
             this.rehydrationComplete = true;
-
             if (this.props.isContextAutoFill) {
                 // Delay a little bit to allow the render to finish
                 setTimeout(this.props.unlockAllTouchArchives, 500);

@@ -21,11 +21,10 @@ class AddMetaPage extends Component {
     componentDidMount() {
         const initialKey = this.props.navigation.getParam("initialKey", "");
         const initialValue = this.props.navigation.getParam("initialValue", "");
-        if (initialKey) {
-            this.handleKeyChange(initialKey);
-        }
-        if (initialValue) {
-            this.handleValueChange(initialValue);
+        const initialValueType = this.props.navigation.getParam("initialValueType", null);
+        this.props.setMetaValues(initialKey, initialValue);
+        if (initialValueType) {
+            this.props.setmetaValueType(initialValueType);
         }
     }
 

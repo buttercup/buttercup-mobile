@@ -148,6 +148,7 @@ export function saveNewMeta() {
     const archive = source.workspace.archive;
     const entry = archive.findEntryByID(entryID);
     entry.setMeta(key, value);
+    console.log("SAVE VALUE TYPE?", key, value, valueType);
     if (valueType && typeof valueType === "string") {
         entry.setAttribute(`${Entry.Attributes.FieldTypePrefix}${key}`, valueType);
     }

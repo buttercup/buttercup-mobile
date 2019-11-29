@@ -42,11 +42,16 @@ export default connect(
             Clipboard.setString(value);
             executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
         },
-        onAddMeta: ({ initialKey = "", initialValue = "" } = {}) => dispatch => {
+        onAddMeta: ({
+            initialKey = "",
+            initialValue = "",
+            initialValueType = null
+        } = {}) => dispatch => {
             dispatch(
                 navigateToNewMeta({
                     initialKey,
-                    initialValue
+                    initialValue,
+                    initialValueType
                 })
             );
         },
