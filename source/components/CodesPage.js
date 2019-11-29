@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import ProgressWheel from "react-native-progress-wheel";
 import { otpInstanceFromURL } from "../library/otp.js";
 
+const DIGIT_SEPARATOR = " ";
+
 const styles = StyleSheet.create({
     container: {
         flex: 1
@@ -45,9 +47,9 @@ const styles = StyleSheet.create({
 
 function splitDigits(digits) {
     return digits.length === 6
-        ? `${digits.slice(0, 3)} ${digits.slice(3, 6)}`
+        ? `${digits.slice(0, 3)}${DIGIT_SEPARATOR}${digits.slice(3, 6)}`
         : digits.length === 8
-        ? `${digits.slice(0, 4)} ${digits.slice(4, 8)}`
+        ? `${digits.slice(0, 4)}${DIGIT_SEPARATOR}${digits.slice(4, 8)}`
         : digits;
 }
 
