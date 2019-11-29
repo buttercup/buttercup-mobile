@@ -38,7 +38,7 @@ export default connect(
         viewHidden: isViewingHidden(state)
     }),
     {
-        copyToClipboard: (name, value) => dispatch => {
+        copyToClipboard: (name, value) => () => {
             Clipboard.setString(value);
             executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
         },

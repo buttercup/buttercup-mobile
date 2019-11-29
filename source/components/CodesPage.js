@@ -53,6 +53,7 @@ export default class CodesPage extends Component {
     };
 
     static propTypes = {
+        copyToClipboard: PropTypes.func.isRequired,
         otpCodes: PropTypes.arrayOf(PropTypes.object).isRequired
     };
 
@@ -87,7 +88,11 @@ export default class CodesPage extends Component {
 
     renderCodeItem({ entryID, title, otpURL, digits, period, timeLeft }, index) {
         return (
-            <TouchableHighlight key={`${entryID}:${otpURL}`}>
+            <TouchableHighlight
+                key={`${entryID}:${otpURL}`}
+                onPress={() => this.props.copyToClipboard(title, digits)}
+                underlayColor="white"
+            >
                 <View
                     style={
                         index === 0
