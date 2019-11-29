@@ -16,15 +16,23 @@ import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { setBusyState } from "../actions/app.js";
 import { handleError } from "../global/exceptions.js";
+import { navigate } from "../shared/nav.js";
 
-function getGroupContents(state, props) {
+const getCurrentGroupID = props => {
     const navGroupID =
         (props.navigation &&
             props.navigation.state &&
             props.navigation.state.params &&
             props.navigation.state.params.groupID) ||
         null;
+    return navGroupID;
+};
+
+function getGroupContents(state, props) {
+    const navGroupID = getCurrentGroupID(props);
     const targetGroupID = props.groupID || navGroupID || "0";
+    console.log("current", navGroupID);
+    console.log("targeT", targetGroupID);
     return getGroup(state, targetGroupID);
 }
 
@@ -39,7 +47,7 @@ function loadAndOpenEntry(entryID, dispatch, getState) {
 export default connect(
     (state, ownProps) => ({
         busyState: getBusyState(state),
-        currentGroupID: getTopGroupID(state) || "0",
+        currentGroupID: getCurrentGroupID(ownProps),
         group: getGroupContents(state, ownProps),
         showGroupCreatePrompt: shouldShowCreateGroupPrompt(state),
         showGroupRenamePrompt: shouldShowGroupRenamePrompt(state)
@@ -69,7 +77,7 @@ export default connect(
                 });
         },
         onGroupPress: (groupID, groupTitle, isTrash) => dispatch => {
-            dispatch(navigateToGroups({ id: groupID, title: groupTitle, isTrash }));
+            navigate("VaultContents", { groupID, title: groupTitle, isTrash });
         },
         onGroupRename: (groupID, groupName) => dispatch => {
             dispatch(showGroupRenamePrompt(false));

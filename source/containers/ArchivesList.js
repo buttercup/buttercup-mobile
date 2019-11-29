@@ -31,6 +31,7 @@ import {
 } from "../shared/touchUnlock";
 import { navigateToSearchArchives } from "../actions/navigation";
 import { getIsContextAutoFill } from "../selectors/autofill";
+import { navigate } from "../shared/nav.js";
 
 const openArchive = sourceID => (dispatch, getState) => {
     const state = getState();
@@ -50,7 +51,8 @@ const openArchive = sourceID => (dispatch, getState) => {
         // To keep things lightweight, in autofill mode (ios) we can only browse entries via Search
         dispatch(navigateToSearchArchives());
     } else {
-        dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
+        // dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
+        navigate("VaultContents", { groupID: "0", title: `🗂 ${targetSource.name}` });
     }
 };
 

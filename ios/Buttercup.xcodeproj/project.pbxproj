@@ -55,6 +55,12 @@
 		99DD138223253EFF0088275C /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99DD138123253EE10088275C /* libRNGoogleSignin.a */; };
 		99DD138323253F080088275C /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99DD138123253EE10088275C /* libRNGoogleSignin.a */; };
 		99F6139E2391984500B40637 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F613732391984500B40637 /* JavaScriptCore.framework */; };
+		99F614B723919E1800B40637 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F614B423919DF500B40637 /* libRNGestureHandler.a */; };
+		99F614B823919E3200B40637 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F614B423919DF500B40637 /* libRNGestureHandler.a */; };
+		99F615122391A04A00B40637 /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6150C2391A04000B40637 /* libRNReanimated.a */; };
+		99F615132391A05000B40637 /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6150C2391A04000B40637 /* libRNReanimated.a */; };
+		99F6151D2391A06800B40637 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6151A2391A06200B40637 /* libRNScreens.a */; };
+		99F6151E2391A06E00B40637 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6151A2391A06200B40637 /* libRNScreens.a */; };
 		9A1586680933407B88BBBF6E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
 		9E1360C921DC420F00EE48B0 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
 		9E1360CD21DC420F00EE48B0 /* CredentialProviderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */; };
@@ -95,7 +101,7 @@
 		9E44190C21E042A000CA5E79 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */; };
 		9E44191021E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E44190F21E177CA00CA5E79 /* AutoFillExtensionContextBridgeDelegate.m */; };
 		9E44E8E62217990D00BB8F64 /* AutoFillBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */; };
-		9EFEB97C2324872C00463B64 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		9EFEB97C2324872C00463B64 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		BBC4A737D75245BFB27E789A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDEC782F5AC468DB7A1AD40 /* MaterialCommunityIcons.ttf */; };
 		BEB97DFEB83643518C9C49E2 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DDF6BBB133149AC94941F54 /* libRNRandomBytes.a */; };
 		C26F52C11F5736CE000EB570 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C26F52BF1F5736CE000EB570 /* BCHelpers.m */; };
@@ -376,6 +382,48 @@
 			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
 			remoteInfo = RNGoogleSignin;
 		};
+		99F614B323919DF500B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNGestureHandler;
+		};
+		99F614B523919DF500B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5C32A36220C603B000FFB8D;
+			remoteInfo = "RNGestureHandler-tvOS";
+		};
+		99F6150B2391A04000B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNReanimated;
+		};
+		99F6150D2391A04000B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FDBB176E229BF04900D1E455;
+			remoteInfo = "RNReanimated-tvOS";
+		};
+		99F615192391A06200B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F615142391A06200B40637 /* RNScreens.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNScreens;
+		};
+		99F6151B2391A06200B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F615142391A06200B40637 /* RNScreens.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5C32A4F220C6379000FFB8D;
+			remoteInfo = "RNScreens-tvOS";
+		};
 		9E1360D321DC420F00EE48B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -501,6 +549,12 @@
 		99A67770215AC7DF0023B45E /* Buttercup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Buttercup.entitlements; path = Buttercup/Buttercup.entitlements; sourceTree = "<group>"; };
 		99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		99F613732391984500B40637 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		99F6141623919B4A00B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99F6141823919B5600B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99F6143623919C6E00B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
+		99F615142391A06200B40637 /* RNScreens.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNScreens.xcodeproj; path = "../node_modules/react-native-screens/ios/RNScreens.xcodeproj"; sourceTree = "<group>"; };
 		9E1360C821DC420E00EE48B0 /* BCAutoFillExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BCAutoFillExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1360CB21DC420F00EE48B0 /* CredentialProviderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CredentialProviderViewController.h; sourceTree = "<group>"; };
 		9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CredentialProviderViewController.m; sourceTree = "<group>"; };
@@ -546,6 +600,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99F6151D2391A06800B40637 /* libRNScreens.a in Frameworks */,
+				99F615132391A05000B40637 /* libRNReanimated.a in Frameworks */,
+				99F614B723919E1800B40637 /* libRNGestureHandler.a in Frameworks */,
 				99DD138223253EFF0088275C /* libRNGoogleSignin.a in Frameworks */,
 				99DD137A23253E5A0088275C /* JavaScriptCore.framework in Frameworks */,
 				99A6776F215AC7DF0023B45E /* AuthenticationServices.framework in Frameworks */,
@@ -596,6 +653,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99F6151E2391A06E00B40637 /* libRNScreens.a in Frameworks */,
+				99F615122391A04A00B40637 /* libRNReanimated.a in Frameworks */,
+				99F614B823919E3200B40637 /* libRNGestureHandler.a in Frameworks */,
 				99DD138323253F080088275C /* libRNGoogleSignin.a in Frameworks */,
 				99DD137B23253E670088275C /* JavaScriptCore.framework in Frameworks */,
 				9E1360C921DC420F00EE48B0 /* AuthenticationServices.framework in Frameworks */,
@@ -615,7 +675,7 @@
 				9E13611421DC437500EE48B0 /* libRNRandomBytes.a in Frameworks */,
 				9E13611621DC437C00EE48B0 /* libTouchID.a in Frameworks */,
 				9E13615A21DC465E00EE48B0 /* libRNSecureStorage.a in Frameworks */,
-				9EFEB97C2324872C00463B64 /* (null) in Frameworks */,
+				9EFEB97C2324872C00463B64 /* BuildFile in Frameworks */,
 				692EF8BEC14F192BD40C0BC2 /* Pods_BCAutoFillExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -748,6 +808,9 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99F6143623919C6E00B40637 /* RNGestureHandler.framework */,
+				99F6141823919B5600B40637 /* RNGestureHandler.framework */,
+				99F6141623919B4A00B40637 /* RNGestureHandler.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				99F613732391984500B40637 /* JavaScriptCore.framework */,
@@ -794,6 +857,9 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				99F615142391A06200B40637 /* RNScreens.xcodeproj */,
+				99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */,
+				99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */,
 				99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */,
 				9E13615421DC465800EE48B0 /* RNSecureStorage.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -858,6 +924,33 @@
 			isa = PBXGroup;
 			children = (
 				99DD138123253EE10088275C /* libRNGoogleSignin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99F614AF23919DF500B40637 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99F614B423919DF500B40637 /* libRNGestureHandler.a */,
+				99F614B623919DF500B40637 /* libRNGestureHandler-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99F614DE2391A04000B40637 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99F6150C2391A04000B40637 /* libRNReanimated.a */,
+				99F6150E2391A04000B40637 /* libRNReanimated-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99F615152391A06200B40637 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99F6151A2391A06200B40637 /* libRNScreens.a */,
+				99F6151C2391A06200B40637 /* libRNScreens-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1161,12 +1254,24 @@
 					ProjectRef = 10B32057C9914AD5AC8E2D10 /* RNFS.xcodeproj */;
 				},
 				{
+					ProductGroup = 99F614AF23919DF500B40637 /* Products */;
+					ProjectRef = 99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */;
+				},
+				{
 					ProductGroup = 99DD137D23253EE10088275C /* Products */;
 					ProjectRef = 99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */;
 				},
 				{
 					ProductGroup = C2ADA9B41F5735CA009D97EB /* Products */;
 					ProjectRef = B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */;
+				},
+				{
+					ProductGroup = 99F614DE2391A04000B40637 /* Products */;
+					ProjectRef = 99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */;
+				},
+				{
+					ProductGroup = 99F615152391A06200B40637 /* Products */;
+					ProjectRef = 99F615142391A06200B40637 /* RNScreens.xcodeproj */;
 				},
 				{
 					ProductGroup = 9E13615521DC465800EE48B0 /* Products */;
@@ -1445,6 +1550,48 @@
 			remoteRef = 99DD138023253EE10088275C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		99F614B423919DF500B40637 /* libRNGestureHandler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGestureHandler.a;
+			remoteRef = 99F614B323919DF500B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F614B623919DF500B40637 /* libRNGestureHandler-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNGestureHandler-tvOS.a";
+			remoteRef = 99F614B523919DF500B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F6150C2391A04000B40637 /* libRNReanimated.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNReanimated.a;
+			remoteRef = 99F6150B2391A04000B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F6150E2391A04000B40637 /* libRNReanimated-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNReanimated-tvOS.a";
+			remoteRef = 99F6150D2391A04000B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F6151A2391A06200B40637 /* libRNScreens.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNScreens.a;
+			remoteRef = 99F615192391A06200B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F6151C2391A06200B40637 /* libRNScreens-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNScreens-tvOS.a";
+			remoteRef = 99F6151B2391A06200B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		9E13615921DC465900EE48B0 /* libRNSecureStorage.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1621,9 +1768,7 @@
 				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/React/React.framework",
 				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
-				"${BUILT_PRODUCTS_DIR}/yoga/yoga.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1631,9 +1776,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2272,7 +2415,7 @@
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Buttercup" */ = {
 			isa = XCConfigurationList;
@@ -2281,7 +2424,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Buttercup-tvOS" */ = {
 			isa = XCConfigurationList;
@@ -2290,7 +2433,7 @@
 				2D02E4981E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Buttercup-tvOSTests" */ = {
 			isa = XCConfigurationList;
@@ -2299,7 +2442,7 @@
 				2D02E49A1E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Buttercup" */ = {
 			isa = XCConfigurationList;
@@ -2308,7 +2451,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		9E13610321DC420F00EE48B0 /* Build configuration list for PBXNativeTarget "BCAutoFillExtension" */ = {
 			isa = XCConfigurationList;
@@ -2317,7 +2460,7 @@
 				9E1360D721DC420F00EE48B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,4 +1,5 @@
 import "./shim.js";
+import "react-native-gesture-handler";
 import React, { Component, Fragment } from "react";
 import { AppRegistry } from "react-native";
 import { Provider } from "react-redux";
@@ -11,6 +12,7 @@ import AutoFillApp from "./source/autofill/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
 import { migrateStorage } from "./source/library/storage.js";
 import { registerAuthWatchers } from "./source/library/auth.js";
+import { setTopLevelNavigator } from "./source/shared/nav.js";
 
 export default class ButtercupShared extends Component {
     constructor(...args) {
@@ -41,7 +43,9 @@ export default class ButtercupShared extends Component {
             <Provider store={store}>
                 <Fragment>
                     {/* Show the main app stack when NOT in autofill mode */}
-                    {!this.props.isContextAutoFill && <ButtercupApp />}
+                    {!this.props.isContextAutoFill && (
+                        <ButtercupApp ref={navigator => setTopLevelNavigator(navigator)} />
+                    )}
                     {/* Show the AutoFill app stack when IN autofill mode */}
                     {!!this.props.isContextAutoFill && <AutoFillApp screenProps={this.props} />}
                     <DropdownAlert ref={ref => (this.dropdown = ref)} closeInterval={8000} />

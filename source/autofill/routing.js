@@ -1,18 +1,19 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { addNavigationHelpers, StackNavigator } from "react-navigation";
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
 import ArchivesPage from "./components/ArchivesPage.js";
 import SearchArchivesPage from "./containers/SearchArchivesPage.js";
 import LockPage from "../components/LockPage";
-import {
-    createReactNavigationReduxMiddleware,
-    createReduxBoundAddListener
-} from "react-navigation-redux-helpers";
+// import {
+//     createReactNavigationReduxMiddleware,
+//     createReduxBoundAddListener
+// } from "react-navigation-redux-helpers";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-export const AppNavigator = StackNavigator(
+export const AppNavigator = createStackNavigator(
     {
         Home: { screen: ArchivesPage },
         SearchArchives: { screen: SearchArchivesPage },
@@ -33,24 +34,28 @@ export const AppNavigator = StackNavigator(
     }
 );
 
-const middleware = createReactNavigationReduxMiddleware("root", state => state.nav);
-const addListener = createReduxBoundAddListener("root");
+// const middleware = createReactNavigationReduxMiddleware("root", state => state.nav);
+// const addListener = createReduxBoundAddListener("root");
 
-const AppWithNavigationState = ({ dispatch, nav, screenProps }) => (
-    <AppNavigator
-        screenProps={screenProps}
-        navigation={addNavigationHelpers({ dispatch, state: nav, addListener })}
-    />
-);
+// const AppWithNavigationState = ({ dispatch, nav, screenProps }) => (
+//     <AppNavigator
+//         screenProps={screenProps}
+//         navigation={addNavigationHelpers({ dispatch, state: nav, addListener })}
+//     />
+// );
 
-AppWithNavigationState.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    nav: PropTypes.object.isRequired
-};
+const AppWithNavigationState = createAppContainer(AppNavigator);
 
-const mapStateToProps = (state, ownProps) => ({
-    nav: state.nav,
-    screenProps: ownProps.screenProps
-});
+// AppWithNavigationState.propTypes = {
+//     dispatch: PropTypes.func.isRequired,
+//     nav: PropTypes.object.isRequired
+// };
 
-export default connect(mapStateToProps)(AppWithNavigationState);
+// const mapStateToProps = (state, ownProps) => ({
+//     nav: state.nav,
+//     screenProps: ownProps.screenProps
+// });
+
+// export default connect(mapStateToProps)(AppWithNavigationState);
+
+export default AppWithNavigationState;
