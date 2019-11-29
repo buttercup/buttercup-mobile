@@ -60,9 +60,11 @@ export function updateCurrentArchive() {
     dispatch(setGroups(archiveToObject(archive).groups));
     // Process OTP codes
     const otpEntries = archiveFacade.entries.reduce((output, entry) => {
+        // Check if entry is in Trash
         const parentGroup = getTopMostFacadeGroup(archiveFacade, entry.parentID);
         const isTrashGroup =
             parentGroup && parentGroup.attributes[Group.Attributes.Role] === "trash";
+        // Ignore deleted entries
         if (isTrashGroup) {
             return output;
         }
@@ -71,11 +73,6 @@ export function updateCurrentArchive() {
                 field.propertyType === "attribute" &&
                 ENTRY_FIELD_OTP_PREFIX.test(field.property) &&
                 field.value === "otp"
-            // // Show only OTP codes that are present (matching property field)
-            // !!entry.fields.find(matchingField =>
-            //     matchingField.propertyType === "property" &&
-            //     matchingField.property === field.property.replace(ENTRY_FIELD_OTP_PREFIX, "")
-            // )
         );
         const otpItems = otpFieldDescriptors.reduce((allOtpItems, nextDesc) => {
             const fieldPropName = nextDesc.property.replace(ENTRY_FIELD_OTP_PREFIX, "");

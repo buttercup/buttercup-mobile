@@ -5,7 +5,7 @@ import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
 import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
 import { navigateBack, navigateToNewMeta } from "../actions/navigation.js";
-import { setBusyState } from "../actions/app.js";
+import { setBusyState, setPendingOTPURL } from "../actions/app.js";
 import {
     getEntryFacade,
     getEntryID,
@@ -115,12 +115,21 @@ export default connect(
             const entryID = getEntryID(state);
             const entry = getEntry(sourceID, entryID);
             consumeEntryFacade(entry, entryFacade);
+            // Check to see if the OTP URL was used
+            const pendingOTPURL = getPendingOTPURL(state);
+            const usedOTPURL = !!entryFacade.fields.find(
+                field => field.propertyType === "property" && field.value === pendingOTPURL
+            );
             dispatch(setBusyState("Saving"));
             return saveCurrentArchive()
                 .then(() => {
                     updateCurrentArchive();
                     dispatch(setBusyState(null));
                     dispatch(setEntryEditing(false));
+                    if (usedOTPURL) {
+                        // clear the OTP URL
+                        dispatch(setPendingOTPURL(null));
+                    }
                     executeNotification(
                         "success",
                         "Saved entry",

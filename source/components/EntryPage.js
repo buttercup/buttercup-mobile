@@ -155,7 +155,6 @@ class EntryPage extends Component {
                         key="otpURL"
                         title="Add Pending OTP URL"
                         onPress={() => {
-                            console.log("PROCESSING URL", this.props.pendingOTPURL);
                             this.props.onAddMeta({
                                 initialKey: getOTPTitleFromURL(this.props.pendingOTPURL),
                                 initialValue: this.props.pendingOTPURL,
