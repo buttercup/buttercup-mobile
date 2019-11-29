@@ -54,6 +54,7 @@
 		99DD137B23253E670088275C /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		99DD138223253EFF0088275C /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99DD138123253EE10088275C /* libRNGoogleSignin.a */; };
 		99DD138323253F080088275C /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99DD138123253EE10088275C /* libRNGoogleSignin.a */; };
+		99F6139E2391984500B40637 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F613732391984500B40637 /* JavaScriptCore.framework */; };
 		9A1586680933407B88BBBF6E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
 		9E1360C921DC420F00EE48B0 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
 		9E1360CD21DC420F00EE48B0 /* CredentialProviderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */; };
@@ -499,6 +500,7 @@
 		99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		99A67770215AC7DF0023B45E /* Buttercup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Buttercup.entitlements; path = Buttercup/Buttercup.entitlements; sourceTree = "<group>"; };
 		99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
+		99F613732391984500B40637 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		9E1360C821DC420E00EE48B0 /* BCAutoFillExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BCAutoFillExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1360CB21DC420F00EE48B0 /* CredentialProviderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CredentialProviderViewController.h; sourceTree = "<group>"; };
 		9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CredentialProviderViewController.m; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99F6139E2391984500B40637 /* JavaScriptCore.framework in Frameworks */,
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -747,6 +750,7 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				99F613732391984500B40637 /* JavaScriptCore.framework */,
 				9E13610721DC434000EE48B0 /* libcrypto.a */,
 				99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */,
 				99851D7120C985FA00EAC115 /* libresolv.tbd */,
@@ -1617,7 +1621,9 @@
 				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/React/React.framework",
 				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
+				"${BUILT_PRODUCTS_DIR}/yoga/yoga.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1625,7 +1631,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
