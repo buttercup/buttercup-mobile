@@ -30,7 +30,11 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row"
     },
-    description: {
+    entryTitle: {
+        fontSize: 10,
+        color: "#666"
+    },
+    title: {
         fontSize: 11
     },
     code: {
@@ -86,7 +90,7 @@ export default class CodesPage extends Component {
         this.interval = null;
     }
 
-    renderCodeItem({ entryID, title, otpURL, digits, period, timeLeft }, index) {
+    renderCodeItem({ entryID, entryTitle, title, otpURL, digits, period, timeLeft }, index) {
         return (
             <TouchableHighlight
                 key={`${entryID}:${otpURL}`}
@@ -104,7 +108,8 @@ export default class CodesPage extends Component {
                     }
                 >
                     <View style={styles.entryContainerView}>
-                        <Text style={styles.description}>{title}</Text>
+                        <Text style={styles.entryTitle}>{entryTitle}</Text>
+                        <Text style={styles.title}>{title}</Text>
                         <View style={styles.codeView}>
                             <Text style={styles.code}>{splitDigits(digits)}</Text>
                         </View>

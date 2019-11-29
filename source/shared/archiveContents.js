@@ -87,7 +87,8 @@ export function updateCurrentArchive() {
             if (targetField && titleField) {
                 allOtpItems.push({
                     entryID: entry.id,
-                    title: titleField.value,
+                    entryTitle: titleField.value,
+                    title: targetField.title || targetField.property,
                     otpURL: targetField.value
                 });
             }
