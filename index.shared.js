@@ -1,7 +1,7 @@
 import "./shim.js";
 import "react-native-gesture-handler";
 import React, { Component, Fragment } from "react";
-import { AppRegistry } from "react-native";
+import { AppRegistry, View } from "react-native";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
 import { patchCrypto } from "./source/library/crypto.js";

@@ -1,7 +1,17 @@
 import { dispatch, getState } from "../store.js";
-import { navigateBack, navigateToLockPage, navigateToRoot } from "../actions/navigation.js";
 // import { isRoot } from "../selectors/nav.js";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
+
+export const VAULT_CONTENTS_SCREEN = "VaultContents";
+export const ENTRY_SCREEN = "Entry";
+export const ENTRY_NEW_SCREEN = "EntryNew";
+export const ENTRY_NEW_META_SCREEN = "EntryNewMeta";
+export const ADD_VAULT_SCREEN = "AddVault";
+export const REMOTE_CONNECT_SCREEN = "RemoteConnect";
+export const REMOTE_EXPLORER_SCREEN = "RemoteExplorer";
+export const LOCK_SCREEN = "Lock";
+export const POPUP_BROWSER_SCREEN = "PopupBrowser";
+export const ROOT_SCREEN = "Root";
 
 let __lockPageShown = false;
 
@@ -12,12 +22,12 @@ export function setTopLevelNavigator(navigatorRef) {
 }
 
 export function backToRoot() {
-    dispatch(navigateToRoot());
+    navigateToRoot();
 }
 
 export function hideLockPage() {
     if (__lockPageShown) {
-        dispatch(navigateBack());
+        navigateBack();
         __lockPageShown = false;
     }
 }
@@ -36,9 +46,23 @@ export function navigateBackIfPossible() {
 }
 
 export function showLockPage() {
-    dispatch(navigateToLockPage());
+    navigate(LOCK_SCREEN);
     __lockPageShown = true;
 }
+
+export const navigateBack = () => {
+    _navigator.dispatch(NavigationActions.back());
+};
+
+export const navigateToRoot = () => {
+    // navigate(ROOT_SCREEN);
+    _navigator.dispatch(
+        StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: ROOT_SCREEN })]
+        })
+    );
+};
 
 export const navigate = (routeName, params) => {
     _navigator.dispatch(

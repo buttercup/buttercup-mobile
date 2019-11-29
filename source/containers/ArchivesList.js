@@ -11,7 +11,6 @@ import { setBusyState, setSearchContext } from "../actions/app.js";
 import { getBusyState } from "../selectors/app.js";
 import { showUnlockPasswordPrompt } from "../actions/archives.js";
 import { markCurrentSourceReadOnly, setSelectedSource } from "../actions/archiveContents.js";
-import { navigateToGroups } from "../actions/navigation.js";
 import {
     checkSourceHasOfflineCopy,
     getSourceReadonlyStatus,
@@ -29,9 +28,8 @@ import {
     getKeychainCredentialsFromTouchUnlock,
     touchIDEnabledForSource
 } from "../shared/touchUnlock";
-import { navigateToSearchArchives } from "../actions/navigation";
 import { getIsContextAutoFill } from "../selectors/autofill";
-import { navigate } from "../shared/nav.js";
+import { navigate, VAULT_CONTENTS_SCREEN } from "../shared/nav.js";
 
 const openArchive = sourceID => (dispatch, getState) => {
     const state = getState();
@@ -49,10 +47,10 @@ const openArchive = sourceID => (dispatch, getState) => {
     dispatch(setSearchContext("archive"));
     if (isContextAutoFill) {
         // To keep things lightweight, in autofill mode (ios) we can only browse entries via Search
-        dispatch(navigateToSearchArchives());
+        // @TODO: Navigation
+        // dispatch(navigateToSearchArchives());
     } else {
-        // dispatch(navigateToGroups({ groupID: "0", title: `🗂 ${targetSource.name}` }));
-        navigate("VaultContents", { groupID: "0", title: `🗂 ${targetSource.name}` });
+        navigate(VAULT_CONTENTS_SCREEN, { groupID: "0", title: targetSource.name });
     }
 };
 
@@ -165,10 +163,6 @@ const unlockAllTouchArchives = () => dispatch => {
                 .then(() => {
                     // success!
                     dispatch(setBusyState(null));
-
-                    // Go directly to the search page. The user can come back and manually unlock others if they want.
-                    dispatch(setSearchContext("root"));
-                    dispatch(navigateToSearchArchives());
                 });
         } else {
             // No Touch enabled sources.. thats fine, the user can unlock manually

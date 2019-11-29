@@ -5,7 +5,6 @@ import Prompt from "@perrymitchell/react-native-prompt";
 import { Cell, CellGroup } from "react-native-cell-components";
 import { editGroup } from "../shared/archiveContents.js";
 import { rawGroupIsTrash } from "../shared/group.js";
-import { gotoSearch } from "../shared/entries.js";
 import Spinner from "./Spinner.js";
 import EmptyView from "./EmptyView.js";
 import ToolbarIcon from "./ToolbarIcon.js";
@@ -15,7 +14,6 @@ const GROUP_ICON = require("../../resources/images/group-256.png");
 const TRASH_ICON = require("../../resources/images/trash-256.png");
 const MENU_ICON = require("../../resources/images/menu.png");
 const KEY_IMAGE = require("../../resources/images/key.png");
-const SEARCH = require("../../resources/images/search.png");
 
 const styles = StyleSheet.create({
     container: {
@@ -39,7 +37,6 @@ function getGroupIcon(group) {
 function getHeaderRight(groupID) {
     return (
         <>
-            <ToolbarIcon icon={SEARCH} onPress={gotoSearch} />
             <ToolbarIcon icon={MENU_ICON} onPress={() => editGroup(groupID)} />
         </>
     );

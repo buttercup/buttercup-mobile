@@ -6,8 +6,8 @@ import {
     setDropboxAuthenticating,
     setDropboxAuthToken
 } from "../actions/dropbox.js";
-import { navigateBack } from "../actions/navigation.js";
 import { executeNotification } from "../global/notify.js";
+import { navigateBack } from "../shared/nav.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -22,7 +22,7 @@ export default connect(
             dispatch(setDropboxAuthToken(token));
             dispatch(setDropboxAuthenticated(true));
             dispatch(setDropboxAuthenticating(false));
-            dispatch(navigateBack());
+            navigateBack();
             executeNotification(
                 "success",
                 "Dropbox authentication",

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Button, Image, Platform, StyleSheet, View } from "react-native";
 import ArchivesList from "../../containers/ArchivesList.js";
 import ToolbarIcon from "../../components/ToolbarIcon.js";
-import { navigateToSearchArchives } from "../../actions/navigation.js";
 import { setSearchContext } from "../../actions/app.js";
 import { dispatch } from "../../store.js";
 import { setAutoFillIdentity, setAutoFillURLs, setIsContextAutoFill } from "../../actions/autofill";
@@ -31,22 +30,12 @@ function getHeaderImage() {
     });
 }
 
-function getLeftToolbarButton() {
-    return <ToolbarIcon icon={SEARCH} onPress={gotoSearch} />;
-}
-
 function getRightToolbarButton() {
     return <ToolbarButton title={"Cancel"} onPress={cancelAutoFill} />;
 }
 
-function gotoSearch() {
-    dispatch(setSearchContext("root"));
-    dispatch(navigateToSearchArchives());
-}
-
 class ArchivesPage extends Component {
     static navigationOptions = {
-        headerLeft: getLeftToolbarButton(),
         headerRight: getRightToolbarButton(),
         headerTitle: getHeaderImage()
     };

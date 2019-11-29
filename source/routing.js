@@ -30,6 +30,18 @@ import LockPage from "./components/LockPage.js";
 import VaultNavigator from "./components/VaultNavigator.js";
 import CodesPage from "./containers/CodesPage.js";
 import GroupsPage from "./containers/GroupsPage.js";
+import {
+    VAULT_CONTENTS_SCREEN,
+    ENTRY_SCREEN,
+    ADD_VAULT_SCREEN,
+    REMOTE_CONNECT_SCREEN,
+    REMOTE_EXPLORER_SCREEN,
+    ENTRY_NEW_META_SCREEN,
+    ENTRY_NEW_SCREEN,
+    LOCK_SCREEN,
+    POPUP_BROWSER_SCREEN,
+    ROOT_SCREEN
+} from "./shared/nav.js";
 
 const CODES = require("../resources/images/pin-code.png");
 const VAULT = require("../resources/images/folder.png");
@@ -41,38 +53,57 @@ const styles = StyleSheet.create({
     }
 });
 
+const sharedStackStyles = {
+    cardStyle: {
+        backgroundColor: "#F8F8FD"
+    }
+};
+
 export const AppNavigator = createStackNavigator(
     {
-        Home: { screen: ArchivesPage },
-        Entry: { screen: EntryPage },
-        NewEntry: { screen: NewEntryPage },
-        AddMeta: { screen: AddMetaPage },
-        AddArchive: { screen: AddArchivePage },
-        SearchArchives: { screen: SearchArchivesPage },
-        RemoteConnect: { screen: RemoteConnectPage },
-        RemoteExplorer: { screen: RemoteExplorerPage },
-        PopupBrowser: { screen: PopupBrowser },
-        VaultContents: { screen: GroupsPage },
-        LockPage: { screen: LockPage }
+        [ROOT_SCREEN]: { screen: ArchivesPage },
+        [ENTRY_SCREEN]: { screen: EntryPage },
+        [ENTRY_NEW_SCREEN]: { screen: NewEntryPage },
+        [ENTRY_NEW_META_SCREEN]: { screen: AddMetaPage },
+        [ADD_VAULT_SCREEN]: { screen: AddArchivePage },
+        [REMOTE_CONNECT_SCREEN]: { screen: RemoteConnectPage },
+        [REMOTE_EXPLORER_SCREEN]: { screen: RemoteExplorerPage },
+        [POPUP_BROWSER_SCREEN]: { screen: PopupBrowser },
+        [VAULT_CONTENTS_SCREEN]: { screen: GroupsPage },
+        [LOCK_SCREEN]: { screen: LockPage }
     },
     {
         defaultNavigationOptions: {
             headerTintColor: "#454545",
             headerStyle: {
-                // backgroundColor: "#ffffff",
                 borderBottomColor: "#24B5AB",
                 borderBottomWidth: 3
             },
             headerTitleStyle: {
                 flex: 1
             }
-        }
+        },
+        ...sharedStackStyles
     }
 );
 
-const CodesStack = createStackNavigator({
-    CodesPage
-});
+const CodesStack = createStackNavigator(
+    {
+        CodesPage
+    },
+    {
+        ...sharedStackStyles
+    }
+);
+
+const SearchStack = createStackNavigator(
+    {
+        SearchArchivesPage
+    },
+    {
+        ...sharedStackStyles
+    }
+);
 
 const TabNavigator = createBottomTabNavigator(
     {
@@ -89,7 +120,7 @@ const TabNavigator = createBottomTabNavigator(
             }
         },
         Search: {
-            screen: SearchArchivesPage
+            screen: SearchStack
         }
     },
     {

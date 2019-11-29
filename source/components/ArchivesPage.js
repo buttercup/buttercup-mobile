@@ -3,7 +3,6 @@ import { Button, Image, Linking, Platform, StyleSheet, View } from "react-native
 import ArchivesList from "../containers/ArchivesList.js";
 import { showArchivesPageRightSheet } from "../shared/sheets.js";
 import ToolbarIcon from "./ToolbarIcon.js";
-import { navigateToSearchArchives } from "../actions/navigation.js";
 import { setPendingOTPURL, setSearchContext } from "../actions/app.js";
 import { dispatch } from "../store.js";
 import { executeNotification } from "../global/notify.js";
@@ -32,17 +31,8 @@ function getHeaderImage() {
     });
 }
 
-function getLeftToolbarButton() {
-    return <ToolbarIcon icon={SEARCH} onPress={gotoSearch} />;
-}
-
 function getRightToolbarButton() {
     return <ToolbarIcon icon={CLOUD_ADD} onPress={showArchivesPageRightSheet} />;
-}
-
-function gotoSearch() {
-    dispatch(setSearchContext("root"));
-    dispatch(navigateToSearchArchives());
 }
 
 function handleDeepLink(evt) {
@@ -59,7 +49,6 @@ function handleDeepLink(evt) {
 
 class ArchivesPage extends Component {
     static navigationOptions = {
-        headerLeft: getLeftToolbarButton(),
         headerRight: getRightToolbarButton(),
         headerTitle: getHeaderImage()
     };

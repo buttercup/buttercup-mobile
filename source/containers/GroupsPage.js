@@ -6,7 +6,6 @@ import {
     shouldShowCreateGroupPrompt,
     shouldShowGroupRenamePrompt
 } from "../selectors/archiveContents.js";
-import { navigateToEntry, navigateToGroups } from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getEntryTitle, loadEntry } from "../shared/entry.js";
 import { getBusyState } from "../selectors/app.js";
@@ -16,7 +15,7 @@ import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { setBusyState } from "../actions/app.js";
 import { handleError } from "../global/exceptions.js";
-import { navigate } from "../shared/nav.js";
+import { navigate, VAULT_CONTENTS_SCREEN, ENTRY_SCREEN } from "../shared/nav.js";
 
 const getCurrentGroupID = props => {
     const navGroupID =
@@ -41,7 +40,7 @@ function loadAndOpenEntry(entryID, dispatch, getState) {
     const sourceID = getSelectedSourceID(state);
     const entryTitle = getEntryTitle(sourceID, entryID);
     loadEntry(sourceID, entryID);
-    dispatch(navigateToEntry({ title: entryTitle }));
+    navigate(ENTRY_SCREEN, { title: entryTitle });
 }
 
 export default connect(
@@ -77,7 +76,7 @@ export default connect(
                 });
         },
         onGroupPress: (groupID, groupTitle, isTrash) => dispatch => {
-            navigate("VaultContents", { groupID, title: groupTitle, isTrash });
+            navigate(VAULT_CONTENTS_SCREEN, { groupID, title: groupTitle, isTrash });
         },
         onGroupRename: (groupID, groupName) => dispatch => {
             dispatch(showGroupRenamePrompt(false));

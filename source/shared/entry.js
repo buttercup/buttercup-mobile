@@ -18,11 +18,11 @@ import {
 import { setBusyState } from "../actions/app.js";
 import { getSelectedSourceID } from "../selectors/archiveContents.js";
 import { handleError } from "../global/exceptions.js";
-import { navigateBack } from "../actions/navigation.js";
 import { doAsyncWork } from "../global/async.js";
 import { updateCurrentArchive } from "./archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { getNameForSource } from "./entries";
+import { navigateBack } from "./nav.js";
 
 export function deleteEntry(sourceID, entryID) {
     const entry = getEntry(sourceID, entryID);
@@ -96,7 +96,7 @@ export function promptDeleteEntry() {
                     .then(() => saveCurrentArchive())
                     .then(() => {
                         dispatch(setBusyState(null));
-                        dispatch(navigateBack());
+                        navigateBack();
                         updateCurrentArchive();
                     })
                     .catch(err => {
@@ -128,7 +128,7 @@ export function saveNewEntry() {
     return saveCurrentArchive(source.workspace).then(() => {
         updateCurrentArchive();
         dispatch(setBusyState(null));
-        dispatch(navigateBack());
+        navigateBack();
     });
 }
 
@@ -151,6 +151,6 @@ export function saveNewMeta() {
     if (valueType && typeof valueType === "string") {
         entry.setAttribute(`${Entry.Attributes.FieldTypePrefix}${key}`, valueType);
     }
-    dispatch(navigateBack());
+    navigateBack();
     loadEntry(sourceID, entryID);
 }

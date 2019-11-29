@@ -5,11 +5,6 @@ import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
 import { getState, dispatch } from "../store.js";
 import { handleError } from "../global/exceptions.js";
-import {
-    navigateToAddArchive,
-    navigateToNewEntry,
-    navigateToSearchArchives
-} from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { setNewMetaValueType } from "../actions/entry.js";
 import { getSelectedSourceID, isCurrentlyReadOnly } from "../selectors/archiveContents.js";
@@ -28,6 +23,7 @@ import {
     removeSourceFromAutoFill
 } from "./autofill";
 import { getSelectedArchive } from "../selectors/archiveContents";
+import { navigate, ADD_VAULT_SCREEN, ENTRY_NEW_SCREEN } from "./nav.js";
 
 const SHEET_ADD_ARCHIVE = "Add";
 const SHEET_ADD_ENTRY = "New Entry";
@@ -38,7 +34,6 @@ const SHEET_LOCK_ALL = "Lock All";
 const SHEET_RENAME_GROUP = "Rename Group";
 const SHEET_TOGGLE_TOUCH_ID = "Toggle Biometric Unlock";
 const SHEET_TOGGLE_AUTOFILL = "Toggle Autofill";
-const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Vault";
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -47,8 +42,7 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_RENAME_GROUP,
     SHEET_TOGGLE_TOUCH_ID,
     SHEET_TOGGLE_AUTOFILL,
-    SHEET_CANCEL,
-    SHEET_SEARCH_CURRENT_ARCHIVE
+    SHEET_CANCEL
 ];
 const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [SHEET_ADD_ARCHIVE, SHEET_LOCK_ALL, SHEET_CANCEL];
 const ENTRY_META_VALUETYPE_SHEET_BUTTONS = [
@@ -97,7 +91,7 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
             selectedIndex => {
                 switch (buttons[selectedIndex]) {
                     case SHEET_ADD_ENTRY: {
-                        dispatch(navigateToNewEntry());
+                        navigate(ENTRY_NEW_SCREEN);
                         break;
                     }
                     case SHEET_ADD_GROUP: {
@@ -120,10 +114,6 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
                         showAutoFillToggleSheet();
                         break;
                     }
-                    case SHEET_SEARCH_CURRENT_ARCHIVE: {
-                        dispatch(navigateToSearchArchives());
-                        break;
-                    }
                 }
             }
         );
@@ -140,7 +130,7 @@ export function showArchivesPageRightSheet() {
         selectedIndex => {
             switch (ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
                 case SHEET_ADD_ARCHIVE: {
-                    dispatch(navigateToAddArchive());
+                    navigate(ADD_VAULT_SCREEN);
                     break;
                 }
                 case SHEET_LOCK_ALL: {

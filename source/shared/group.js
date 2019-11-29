@@ -3,10 +3,10 @@ import { getGroup, getSelectedArchive } from "../selectors/archiveContents.js";
 import { dispatch, getState } from "../store.js";
 import { getTopGroupID } from "../selectors/nav.js";
 import { setBusyState } from "../actions/app.js";
-import { navigateBack } from "../actions/navigation.js";
 import { saveCurrentArchive } from "./archive.js";
 import { handleError } from "../global/exceptions.js";
 import { updateCurrentArchive } from "./archiveContents.js";
+import { navigateBack } from "./nav.js";
 
 const TRASH_KEY = "bc_group_role";
 const TRASH_ROLE = "trash";
@@ -41,7 +41,7 @@ export function promptDeleteGroup() {
                     .then(() => saveCurrentArchive())
                     .then(() => {
                         dispatch(setBusyState(null));
-                        dispatch(navigateBack());
+                        navigateBack();
                         updateCurrentArchive();
                     })
                     .catch(err => {

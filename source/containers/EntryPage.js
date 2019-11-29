@@ -4,7 +4,6 @@ import { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
 import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
-import { navigateBack, navigateToNewMeta } from "../actions/navigation.js";
 import { setBusyState, setPendingOTPURL } from "../actions/app.js";
 import {
     getEntryFacade,
@@ -26,6 +25,7 @@ import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { promptDeleteEntry } from "../shared/entry.js";
 import { executeNotification } from "../global/notify.js";
 import { prepareURLForLaunch } from "../library/helpers.js";
+import { navigate, ENTRY_NEW_META_SCREEN } from "../shared/nav.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -42,18 +42,12 @@ export default connect(
             Clipboard.setString(value);
             executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
         },
-        onAddMeta: ({
-            initialKey = "",
-            initialValue = "",
-            initialValueType = null
-        } = {}) => dispatch => {
-            dispatch(
-                navigateToNewMeta({
-                    initialKey,
-                    initialValue,
-                    initialValueType
-                })
-            );
+        onAddMeta: ({ initialKey = "", initialValue = "", initialValueType = null } = {}) => () => {
+            navigate(ENTRY_NEW_META_SCREEN, {
+                initialKey,
+                initialValue,
+                initialValueType
+            });
         },
         onCancelEdit: () => (dispatch, getState) => {
             const state = getState();
