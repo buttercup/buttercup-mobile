@@ -75,6 +75,7 @@
     "react-native-secure-storage": "^0.1.2",
     "react-native-swipe-list-view": "^0.4.1",
     "react-native-swipeout": "^2.1.1",
+    "react-native-tab-view": "^2.11.0",
     "react-native-tcp": "^2.0.4",
     "react-native-touch-id": "^4.4.1",
     "react-native-udp": "^1.2.9",
