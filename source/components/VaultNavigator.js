@@ -30,5 +30,15 @@ export default TabNavigator(
             }
         }
     },
-    {}
+    {
+        tabBarOptions: {
+            tabStyle: {
+                color: "#000",
+                backgroundColor: "#FFF"
+            },
+            labelStyle: {
+                color: "#000"
+            }
+        }
+    }
 );
