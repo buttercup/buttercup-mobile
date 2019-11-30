@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import PropTypes from "prop-types";
 import ProgressWheel from "react-native-progress-wheel";
@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
     itemContainerView: {
         flex: 1,
         flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
         padding: 12,
         marginHorizontal: 0,
         borderBottomColor: "#DDD",
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     }
 });
 
-function splitDigits(digits) {
+function splitDigits(digits = "") {
     return digits.length === 6
         ? `${digits.slice(0, 3)}${DIGIT_SEPARATOR}${digits.slice(3, 6)}`
         : digits.length === 8
@@ -56,7 +58,7 @@ function splitDigits(digits) {
         : digits;
 }
 
-export default class CodesPage extends Component {
+export default class CodesPage extends PureComponent {
     static navigationOptions = {
         title: "Codes"
     };
@@ -66,28 +68,15 @@ export default class CodesPage extends Component {
         otpCodes: PropTypes.arrayOf(PropTypes.object).isRequired
     };
 
-    interval = null;
-
     state = {
         codes: []
     };
 
+    interval = null;
+
     componentDidMount() {
-        this.setState(
-            {
-                codes: this.props.otpCodes.map(otpCodeItem => ({
-                    ...otpCodeItem,
-                    period: 30,
-                    timeLeft: 30,
-                    digits: "",
-                    totp: null
-                }))
-            },
-            () => {
-                this.interval = setInterval(() => this.update(), 1000);
-                this.update();
-            }
-        );
+        this.update();
+        this.interval = setInterval(() => this.update(), 1000);
     }
 
     componentWillUnmount() {
@@ -121,11 +110,11 @@ export default class CodesPage extends Component {
                     </View>
                     <View>
                         <ProgressWheel
-                            size={46}
+                            size={30}
                             width={5}
                             progress={(timeLeft / period) * 100}
-                            color={"#24B5AB"}
-                            backgroundColor={"#FFF"}
+                            color="#24B5AB"
+                            backgroundColor="#ededed"
                         />
                     </View>
                 </View>
@@ -154,22 +143,24 @@ export default class CodesPage extends Component {
     }
 
     update() {
-        if (this.props.otpCodes.length <= 0 || !this.props.navigation.isFocused()) {
+        const { otpCodes, navigation } = this.props;
+
+        if (otpCodes.length <= 0 || !navigation.isFocused()) {
             return;
         }
-        const updatedItems = this.state.codes.map(codeItem => {
-            const totp = codeItem.totp || otpInstanceFromURL(codeItem.otpURL);
-            const period = totp.period;
-            return {
-                ...codeItem,
-                totp,
-                period,
-                digits: totp.generate(),
-                timeLeft: period - (Math.floor(Date.now() / 1000) % period)
-            };
-        });
+
         this.setState({
-            codes: updatedItems
+            codes: otpCodes.map(codeItem => {
+                const totp = codeItem.totp;
+                const period = totp.period;
+                return {
+                    ...codeItem,
+                    totp,
+                    period,
+                    digits: totp.generate(),
+                    timeLeft: period - (Math.floor(Date.now() / 1000) % period)
+                };
+            })
         });
     }
 }

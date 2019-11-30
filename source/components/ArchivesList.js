@@ -38,13 +38,20 @@ const ARCHIVE_TYPES = getArchiveTypeDetails().reduce((types, nextType) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingTop: 8
     },
     swipeRow: {
         flex: 1,
         height: ARCHIVE_ITEM_HEIGHT,
         backgroundColor: "#fff",
-        flexDirection: "row"
+        flexDirection: "row",
+        borderBottomColor: "#DDD",
+        borderBottomWidth: 0.5
+    },
+    swipeRowFirst: {
+        borderTopColor: "#DDD",
+        borderTopWidth: 0.5
     },
     rowContents: {
         flex: 1,
@@ -226,7 +233,7 @@ class ArchivesList extends Component {
         this.props.removeArchive(sourceID);
     }
 
-    renderArchiveItem(archiveInfo) {
+    renderArchiveItem(archiveInfo, index) {
         const { title: typeTitle, image: typeImage } = ARCHIVE_TYPES[archiveInfo.type];
         return (
             <TouchableHighlight
@@ -236,7 +243,7 @@ class ArchivesList extends Component {
                 }
                 underlayColor="white"
             >
-                <View style={styles.swipeRow}>
+                <View style={[styles.swipeRow, index === 0 ? styles.swipeRowFirst : {}]}>
                     <View style={styles.rowContents}>
                         <View
                             style={[
@@ -286,7 +293,6 @@ class ArchivesList extends Component {
     }
 
     renderArchiveItemSubview(archiveInfo) {
-        // this.handleSwipeoutButtonPress(info, archiveInfo)
         return (
             <TouchableHighlight
                 style={styles.swipedViewTouchView}
@@ -310,7 +316,9 @@ class ArchivesList extends Component {
                     <When condition={this.props.archives.length > 0}>
                         <SwipeListView
                             dataSource={ds.cloneWithRows(this.props.archives)}
-                            renderRow={archiveInfo => this.renderArchiveItem(archiveInfo)}
+                            renderRow={(archiveInfo, secId, rowId) =>
+                                this.renderArchiveItem(archiveInfo, parseInt(rowId, 10))
+                            }
                             renderHiddenRow={archiveInfo =>
                                 this.renderArchiveItemSubview(archiveInfo)
                             }
