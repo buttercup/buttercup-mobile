@@ -112,7 +112,7 @@ class SearchArchives extends PureComponent {
                     tintColor="#454545"
                     onChangeText={text => this.changeInput(text)}
                 />
-                <ScrollView style={styles.container} keyboardShouldPersistTaps={"handled"}>
+                <ScrollView style={styles.container} keyboardShouldPersistTaps="never">
                     {this.renderSearchResults()}
                 </ScrollView>
             </View>
