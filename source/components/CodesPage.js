@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     },
     code: {
         fontSize: 30,
+        color: "#222",
         fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace"
     }
 });

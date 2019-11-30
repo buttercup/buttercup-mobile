@@ -1,5 +1,3 @@
-import { dispatch, getState } from "../store.js";
-// import { isRoot } from "../selectors/nav.js";
 import { NavigationActions, StackActions } from "react-navigation";
 
 export const VAULT_CONTENTS_SCREEN = "VaultContents";
@@ -31,19 +29,6 @@ export function hideLockPage() {
         navigateBack();
         __lockPageShown = false;
     }
-}
-
-/**
- * Navigates back a page if not on main screen
- * @returns {Boolean} True if navigation possible, false otherwise
- */
-export function navigateBackIfPossible() {
-    const state = getState();
-    if (isRoot(state) === false) {
-        dispatch(navigateBack());
-        return true;
-    }
-    return false;
 }
 
 export function showLockPage() {
