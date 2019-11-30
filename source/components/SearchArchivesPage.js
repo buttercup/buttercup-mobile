@@ -1,15 +1,12 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import SearchBar from "react-native-search-bar";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
 import { searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
 import SearchResult from "./SearchResult";
-
-/*TODO:
-    maybe add search highlight
-    Test on Device
-*/
+import EmptyView from "./EmptyView.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -17,14 +14,18 @@ const styles = StyleSheet.create({
     }
 });
 
-class SearchArchives extends Component {
+class SearchArchives extends PureComponent {
     static navigationOptions = {
         title: "Search Vaults"
     };
 
     static propTypes = {
-        searchContext: PropTypes.oneOf(["root", "archive"])
+        searchContext: PropTypes.oneOf(["root", "archive"]),
+        initialEntries: PropTypes.arrayOf(PropTypes.object).isRequired,
+        onEntryPress: PropTypes.func.isRequired
     };
+
+    focusSubscription = null;
 
     state = {
         entries: [],
@@ -50,7 +51,13 @@ class SearchArchives extends Component {
     }, 250);
 
     componentDidMount() {
-        setTimeout(() => this.focus(), 150);
+        this.focusSubscription = this.props.navigation.addListener("didFocus", payload => {
+            this.focus();
+        });
+    }
+
+    componentWillUnmount() {
+        this.focusSubscription.remove();
     }
 
     focus() {
@@ -61,34 +68,49 @@ class SearchArchives extends Component {
 
     renderSearchResults() {
         return (
-            <CellGroup>
-                <For each="result" of={this.state.entries}>
-                    <SearchResult
-                        key={result.entry.id}
-                        sourceID={result.sourceID}
-                        entryID={result.entry.id}
-                        onEntryPress={this.props.onEntryPress}
-                    />
-                </For>
-            </CellGroup>
+            <Choose>
+                <When
+                    condition={
+                        this.state.entries.length > 0 || this.props.initialEntries.length > 0
+                    }
+                >
+                    <CellGroup>
+                        <For
+                            each="result"
+                            of={
+                                this.state.entries.length
+                                    ? this.state.entries
+                                    : this.props.initialEntries
+                            }
+                        >
+                            <SearchResult
+                                key={result.entry.id}
+                                sourceID={result.sourceID}
+                                entryID={result.entry.id}
+                                onEntryPress={this.props.onEntryPress}
+                            />
+                        </For>
+                    </CellGroup>
+                </When>
+                <Otherwise>
+                    <EmptyView text="Start typing to search..." />
+                </Otherwise>
+            </Choose>
         );
     }
 
     render() {
-        const cellOptions = {
-            autoCapitalize: "none",
-            autoCorrect: false,
-            keyboardType: "default",
-            spellCheck: false
-        };
         return (
             <View style={styles.container}>
-                <CellInput
-                    title=""
-                    icon={{ name: "search", source: "material" }}
-                    onChangeText={text => this.changeInput(text)}
+                <SearchBar
                     ref={input => (this._input = input)}
-                    {...cellOptions}
+                    barStyle="default"
+                    placeholder="Search"
+                    autoCapitalize="none"
+                    keyboardType="default"
+                    spellCheck={false}
+                    tintColor="#454545"
+                    onChangeText={text => this.changeInput(text)}
                 />
                 <ScrollView style={styles.container} keyboardShouldPersistTaps={"handled"}>
                     {this.renderSearchResults()}

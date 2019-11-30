@@ -154,6 +154,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-search-bar')
     implementation project(':react-native-screens')
     implementation project(':react-native-reanimated')
     implementation project(':react-native-gesture-handler')

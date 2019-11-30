@@ -74,7 +74,7 @@ export default connect(
                 });
         },
         onGroupPress: (groupID, groupTitle, isTrash) => dispatch => {
-            navigate(VAULT_CONTENTS_SCREEN, { groupID, title: groupTitle, isTrash });
+            navigate(VAULT_CONTENTS_SCREEN, { groupID, title: groupTitle, isTrash }, groupID);
         },
         onGroupRename: (groupID, groupName) => dispatch => {
             dispatch(showGroupRenamePrompt(false));

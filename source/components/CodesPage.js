@@ -144,7 +144,7 @@ export default class CodesPage extends Component {
                     </When>
                     <Otherwise>
                         <EmptyView
-                            text="Unlock more vaults or add more codes."
+                            text="Unlock vaults or add codes."
                             imageSource={SECURITY_SHIELD}
                         />
                     </Otherwise>

@@ -39,6 +39,7 @@ target 'Buttercup' do
 
   # Pods for Buttercup
   shared_pods
+
 end
 
 post_install do |installer|

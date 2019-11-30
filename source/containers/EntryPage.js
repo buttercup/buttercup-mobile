@@ -1,5 +1,6 @@
 import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
+import pathOr from "ramda/es/pathOr";
 import { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
@@ -27,11 +28,13 @@ import { executeNotification } from "../global/notify.js";
 import { prepareURLForLaunch } from "../library/helpers.js";
 import { navigate, ENTRY_NEW_META_SCREEN } from "../shared/nav.js";
 
+const isReadOnly = props => pathOr(false, ["navigation", "state", "params", "readOnly"], props);
+
 export default connect(
     (state, ownProps) => ({
         busyState: getBusyState(state),
         editing: isEditing(state),
-        isReadOnly: isCurrentlyReadOnly(state),
+        isReadOnly: isCurrentlyReadOnly(state) || isReadOnly(ownProps),
         pendingOTPURL: getPendingOTPURL(state),
         properties: getEntryProperties(state),
         title: getEntryTitle(state),

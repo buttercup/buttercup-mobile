@@ -12,6 +12,7 @@ export const REMOTE_EXPLORER_SCREEN = "RemoteExplorer";
 export const LOCK_SCREEN = "Lock";
 export const POPUP_BROWSER_SCREEN = "PopupBrowser";
 export const ROOT_SCREEN = "Root";
+export const SEARCH_SCREEN = "SearchScreen";
 
 let __lockPageShown = false;
 
@@ -64,12 +65,12 @@ export const navigateToRoot = () => {
     );
 };
 
-export const navigate = (routeName, params) => {
+export const navigate = (routeName, params, key) => {
     _navigator.dispatch(
         NavigationActions.navigate({
             routeName,
             params,
-            key: routeName + Math.random().toString()
+            key: `${routeName}${key || ""}`
         })
     );
 };

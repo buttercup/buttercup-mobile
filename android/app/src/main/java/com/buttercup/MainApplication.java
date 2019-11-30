@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.buttercup.autofill.AutoFillPackage;
 import com.facebook.react.ReactApplication;
+import org.umhan35.RNSearchBarPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
+            new RNSearchBarPackage(),
             new RNScreensPackage(),
             new ReanimatedPackage(),
             new RNGestureHandlerPackage(),

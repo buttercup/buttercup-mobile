@@ -29,7 +29,7 @@ import {
     touchIDEnabledForSource
 } from "../shared/touchUnlock";
 import { getIsContextAutoFill } from "../selectors/autofill";
-import { navigate, VAULT_CONTENTS_SCREEN } from "../shared/nav.js";
+import { navigate, VAULT_CONTENTS_SCREEN, SEARCH_SCREEN } from "../shared/nav.js";
 
 const openArchive = sourceID => (dispatch, getState) => {
     const state = getState();
@@ -47,8 +47,7 @@ const openArchive = sourceID => (dispatch, getState) => {
     dispatch(setSearchContext("archive"));
     if (isContextAutoFill) {
         // To keep things lightweight, in autofill mode (ios) we can only browse entries via Search
-        // @TODO: Navigation
-        // dispatch(navigateToSearchArchives());
+        navigate(SEARCH_SCREEN);
     } else {
         navigate(VAULT_CONTENTS_SCREEN, { groupID: "0", title: targetSource.name });
     }

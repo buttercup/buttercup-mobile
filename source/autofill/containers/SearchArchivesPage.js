@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import SearchArchivesPage from "../components/SearchArchivesPage";
+import SearchArchivesPage from "../../components/SearchArchivesPage";
 import { getEntry } from "../../shared/entry";
 import { completeAutoFillWithEntry } from "../../shared/autofill";
 import { searchAllArchivesForURLs, searchCurrentArchiveForURLs } from "../../shared/entries";
@@ -16,7 +16,6 @@ const getInitialEntries = state => {
             return searchCurrentArchiveForURLs(autoFillURLs);
         }
     }
-
     return [];
 };
 

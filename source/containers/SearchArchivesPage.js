@@ -6,13 +6,14 @@ import { navigate, ENTRY_SCREEN } from "../shared/nav.js";
 
 export default connect(
     (state, ownProps) => ({
-        searchContext: getSearchContext(state)
+        searchContext: getSearchContext(state),
+        initialEntries: []
     }),
     {
         onEntryPress: (entryID, sourceID) => dispatch => {
             const entryTitle = getEntryTitle(sourceID, entryID);
             loadEntry(sourceID, entryID);
-            navigate(ENTRY_SCREEN, { title: entryTitle });
+            navigate(ENTRY_SCREEN, { title: entryTitle, readOnly: true });
         }
     }
 )(SearchArchivesPage);

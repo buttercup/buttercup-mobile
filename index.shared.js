@@ -47,7 +47,12 @@ export default class ButtercupShared extends Component {
                         <ButtercupApp ref={navigator => setTopLevelNavigator(navigator)} />
                     )}
                     {/* Show the AutoFill app stack when IN autofill mode */}
-                    {!!this.props.isContextAutoFill && <AutoFillApp screenProps={this.props} />}
+                    {!!this.props.isContextAutoFill && (
+                        <AutoFillApp
+                            screenProps={this.props}
+                            ref={navigator => setTopLevelNavigator(navigator)}
+                        />
+                    )}
                     <DropdownAlert ref={ref => (this.dropdown = ref)} closeInterval={8000} />
                 </Fragment>
             </Provider>
