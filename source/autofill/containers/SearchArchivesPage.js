@@ -9,11 +9,7 @@ const getInitialEntries = state => {
     const autoFillURLs = getAutoFillURLs(state);
     if (autoFillURLs.length) {
         // AutoFill UI Started with a list of URLs to prioritize potential credentials with
-        if (getSearchContext(state) === "root") {
-            return searchAllArchivesForURLs(autoFillURLs);
-        } else {
-            return searchCurrentArchiveForURLs(autoFillURLs);
-        }
+        return searchAllArchivesForURLs(autoFillURLs);
     }
     return [];
 };
