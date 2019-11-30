@@ -3,7 +3,6 @@ import SearchArchivesPage from "../../components/SearchArchivesPage";
 import { getEntry } from "../../shared/entry";
 import { completeAutoFillWithEntry } from "../../shared/autofill";
 import { searchAllArchivesForURLs, searchCurrentArchiveForURLs } from "../../shared/entries";
-import { getSearchContext } from "../../selectors/app";
 import { getAutoFillURLs } from "../../selectors/autofill";
 
 const getInitialEntries = state => {
@@ -21,7 +20,7 @@ const getInitialEntries = state => {
 
 export default connect(
     (state, ownProps) => ({
-        searchContext: getSearchContext(state),
+        searchContext: "root",
         initialEntries: getInitialEntries(state)
     }),
     {
