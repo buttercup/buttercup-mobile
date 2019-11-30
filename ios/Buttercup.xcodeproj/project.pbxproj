@@ -51,6 +51,8 @@
 		99851D7220C985FA00EAC115 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D7120C985FA00EAC115 /* libresolv.tbd */; };
 		99851D7520C9B83E00EAC115 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 99851D7420C9B83E00EAC115 /* CryptoBridge.m */; };
 		99A6776F215AC7DF0023B45E /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
+		99CEE44C2391FD5E00DF8F3C /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CEE4492391FD5600DF8F3C /* libRNReanimated.a */; };
+		99CEE44D2391FD6500DF8F3C /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CEE4492391FD5600DF8F3C /* libRNReanimated.a */; };
 		99D0F23020E2929B00FD05D7 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D6F20C984E800EAC115 /* libcrypto.a */; };
 		99DD137A23253E5A0088275C /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		99DD137B23253E670088275C /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
@@ -59,8 +61,6 @@
 		99F6139E2391984500B40637 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F613732391984500B40637 /* JavaScriptCore.framework */; };
 		99F614B723919E1800B40637 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F614B423919DF500B40637 /* libRNGestureHandler.a */; };
 		99F614B823919E3200B40637 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F614B423919DF500B40637 /* libRNGestureHandler.a */; };
-		99F615122391A04A00B40637 /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6150C2391A04000B40637 /* libRNReanimated.a */; };
-		99F615132391A05000B40637 /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6150C2391A04000B40637 /* libRNReanimated.a */; };
 		99F6151D2391A06800B40637 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6151A2391A06200B40637 /* libRNScreens.a */; };
 		99F6151E2391A06E00B40637 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6151A2391A06200B40637 /* libRNScreens.a */; };
 		9A1586680933407B88BBBF6E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
@@ -356,6 +356,20 @@
 			remoteGlobalIDString = 163CDE4E2087CAD3001065FB;
 			remoteInfo = "RNRandomBytes-tvOS";
 		};
+		99CEE4482391FD5600DF8F3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNReanimated;
+		};
+		99CEE44A2391FD5600DF8F3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FDBB176E229BF04900D1E455;
+			remoteInfo = "RNReanimated-tvOS";
+		};
 		99DD136D23253E440088275C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -404,20 +418,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = B5C32A36220C603B000FFB8D;
 			remoteInfo = "RNGestureHandler-tvOS";
-		};
-		99F6150B2391A04000B40637 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNReanimated;
-		};
-		99F6150D2391A04000B40637 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FDBB176E229BF04900D1E455;
-			remoteInfo = "RNReanimated-tvOS";
 		};
 		99F615192391A06200B40637 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -557,13 +557,13 @@
 		99851D7620C9B89C00EAC115 /* CryptoBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CryptoBindings.h; path = ../crypto/src/CryptoBindings.h; sourceTree = "<group>"; };
 		99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		99A67770215AC7DF0023B45E /* Buttercup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Buttercup.entitlements; path = Buttercup/Buttercup.entitlements; sourceTree = "<group>"; };
+		99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		99F613732391984500B40637 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		99F6141623919B4A00B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99F6141823919B5600B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99F6143623919C6E00B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
-		99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		99F615142391A06200B40637 /* RNScreens.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNScreens.xcodeproj; path = "../node_modules/react-native-screens/ios/RNScreens.xcodeproj"; sourceTree = "<group>"; };
 		9E1360C821DC420E00EE48B0 /* BCAutoFillExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BCAutoFillExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1360CB21DC420F00EE48B0 /* CredentialProviderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CredentialProviderViewController.h; sourceTree = "<group>"; };
@@ -610,9 +610,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CEE44D2391FD6500DF8F3C /* libRNReanimated.a in Frameworks */,
 				9913E6902391E376003E810A /* libRNSearchBar.a in Frameworks */,
 				99F6151D2391A06800B40637 /* libRNScreens.a in Frameworks */,
-				99F615132391A05000B40637 /* libRNReanimated.a in Frameworks */,
 				99F614B723919E1800B40637 /* libRNGestureHandler.a in Frameworks */,
 				99DD138223253EFF0088275C /* libRNGoogleSignin.a in Frameworks */,
 				99DD137A23253E5A0088275C /* JavaScriptCore.framework in Frameworks */,
@@ -664,9 +664,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CEE44C2391FD5E00DF8F3C /* libRNReanimated.a in Frameworks */,
 				9913E6912391E37C003E810A /* libRNSearchBar.a in Frameworks */,
 				99F6151E2391A06E00B40637 /* libRNScreens.a in Frameworks */,
-				99F615122391A04A00B40637 /* libRNReanimated.a in Frameworks */,
 				99F614B823919E3200B40637 /* libRNGestureHandler.a in Frameworks */,
 				99DD138323253F080088275C /* libRNGoogleSignin.a in Frameworks */,
 				99DD137B23253E670088275C /* JavaScriptCore.framework in Frameworks */,
@@ -869,9 +869,9 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */,
 				9913E65A2391E36A003E810A /* RNSearchBar.xcodeproj */,
 				99F615142391A06200B40637 /* RNScreens.xcodeproj */,
-				99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */,
 				99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */,
 				99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */,
 				9E13615421DC465800EE48B0 /* RNSecureStorage.xcodeproj */,
@@ -941,6 +941,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		99CEE4442391FD5600DF8F3C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99CEE4492391FD5600DF8F3C /* libRNReanimated.a */,
+				99CEE44B2391FD5600DF8F3C /* libRNReanimated-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		99DD137D23253EE10088275C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -954,15 +963,6 @@
 			children = (
 				99F614B423919DF500B40637 /* libRNGestureHandler.a */,
 				99F614B623919DF500B40637 /* libRNGestureHandler-tvOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		99F614DE2391A04000B40637 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				99F6150C2391A04000B40637 /* libRNReanimated.a */,
-				99F6150E2391A04000B40637 /* libRNReanimated-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1287,8 +1287,8 @@
 					ProjectRef = B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */;
 				},
 				{
-					ProductGroup = 99F614DE2391A04000B40637 /* Products */;
-					ProjectRef = 99F614DD2391A04000B40637 /* RNReanimated.xcodeproj */;
+					ProductGroup = 99CEE4442391FD5600DF8F3C /* Products */;
+					ProjectRef = 99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */;
 				},
 				{
 					ProductGroup = 99F615152391A06200B40637 /* Products */;
@@ -1547,6 +1547,20 @@
 			remoteRef = 99A6776A215AC7DE0023B45E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		99CEE4492391FD5600DF8F3C /* libRNReanimated.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNReanimated.a;
+			remoteRef = 99CEE4482391FD5600DF8F3C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99CEE44B2391FD5600DF8F3C /* libRNReanimated-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNReanimated-tvOS.a";
+			remoteRef = 99CEE44A2391FD5600DF8F3C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		99DD136E23253E440088275C /* libjsi.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1594,20 +1608,6 @@
 			fileType = archive.ar;
 			path = "libRNGestureHandler-tvOS.a";
 			remoteRef = 99F614B523919DF500B40637 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		99F6150C2391A04000B40637 /* libRNReanimated.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNReanimated.a;
-			remoteRef = 99F6150B2391A04000B40637 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		99F6150E2391A04000B40637 /* libRNReanimated-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libRNReanimated-tvOS.a";
-			remoteRef = 99F6150D2391A04000B40637 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		99F6151A2391A06200B40637 /* libRNScreens.a */ = {
