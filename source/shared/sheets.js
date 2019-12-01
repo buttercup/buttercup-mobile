@@ -5,13 +5,8 @@ import { lockAllArchives } from "./archives.js";
 import { promptDeleteGroup } from "./group.js";
 import { getState, dispatch } from "../store.js";
 import { handleError } from "../global/exceptions.js";
-import {
-    navigateToAddArchive,
-    navigateToNewEntry,
-    navigateToSearchArchives
-} from "../actions/navigation.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
-import { setNewMetaValueType } from "../actions/entry.js";
+import { mergeEntryPropertyEdit, setNewMetaValueType } from "../actions/entry.js";
 import { getSelectedSourceID, isCurrentlyReadOnly } from "../selectors/archiveContents.js";
 import {
     disableTouchUnlock,
@@ -28,6 +23,7 @@ import {
     removeSourceFromAutoFill
 } from "./autofill";
 import { getSelectedArchive } from "../selectors/archiveContents";
+import { navigate, ADD_VAULT_SCREEN, ENTRY_NEW_SCREEN } from "./nav.js";
 
 const SHEET_ADD_ARCHIVE = "Add";
 const SHEET_ADD_ENTRY = "New Entry";
@@ -38,7 +34,6 @@ const SHEET_LOCK_ALL = "Lock All";
 const SHEET_RENAME_GROUP = "Rename Group";
 const SHEET_TOGGLE_TOUCH_ID = "Toggle Biometric Unlock";
 const SHEET_TOGGLE_AUTOFILL = "Toggle Autofill";
-const SHEET_SEARCH_CURRENT_ARCHIVE = "Search Vault";
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -47,8 +42,7 @@ const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_RENAME_GROUP,
     SHEET_TOGGLE_TOUCH_ID,
     SHEET_TOGGLE_AUTOFILL,
-    SHEET_CANCEL,
-    SHEET_SEARCH_CURRENT_ARCHIVE
+    SHEET_CANCEL
 ];
 const ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS = [SHEET_ADD_ARCHIVE, SHEET_LOCK_ALL, SHEET_CANCEL];
 const ENTRY_META_VALUETYPE_SHEET_BUTTONS = [
@@ -63,16 +57,15 @@ function removeTextFromArray(arr, text) {
     }
 }
 
-export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGroup) {
+export function showArchiveContentsAddItemSheet(currentGroupID) {
+    const isRoot = currentGroupID == "0";
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
     const title = isRoot ? "Manage Vault" : "Edit Group";
     const state = getState();
     const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {
-        if (!showEntryAdd) {
+        if (isRoot) {
             removeTextFromArray(buttons, SHEET_ADD_ENTRY);
-        }
-        if (!showEditGroup) {
             removeTextFromArray(buttons, SHEET_RENAME_GROUP);
             removeTextFromArray(buttons, SHEET_DELETE_GROUP);
         }
@@ -97,7 +90,7 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
             selectedIndex => {
                 switch (buttons[selectedIndex]) {
                     case SHEET_ADD_ENTRY: {
-                        dispatch(navigateToNewEntry());
+                        navigate(ENTRY_NEW_SCREEN);
                         break;
                     }
                     case SHEET_ADD_GROUP: {
@@ -105,7 +98,7 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
                         break;
                     }
                     case SHEET_DELETE_GROUP: {
-                        promptDeleteGroup();
+                        promptDeleteGroup(currentGroupID);
                         break;
                     }
                     case SHEET_RENAME_GROUP: {
@@ -118,10 +111,6 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
                     }
                     case SHEET_TOGGLE_AUTOFILL: {
                         showAutoFillToggleSheet();
-                        break;
-                    }
-                    case SHEET_SEARCH_CURRENT_ARCHIVE: {
-                        dispatch(navigateToSearchArchives());
                         break;
                     }
                 }
@@ -140,7 +129,7 @@ export function showArchivesPageRightSheet() {
         selectedIndex => {
             switch (ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
                 case SHEET_ADD_ARCHIVE: {
-                    dispatch(navigateToAddArchive());
+                    navigate(ADD_VAULT_SCREEN);
                     break;
                 }
                 case SHEET_LOCK_ALL: {
@@ -152,7 +141,7 @@ export function showArchivesPageRightSheet() {
     );
 }
 
-export function showEntryMetaValueTypeSheet() {
+export function showEntryPropertyValueTypeSheet() {
     ActionSheet.showActionSheetWithOptions(
         {
             options: ENTRY_META_VALUETYPE_SHEET_BUTTONS,
@@ -163,7 +152,11 @@ export function showEntryMetaValueTypeSheet() {
             const typeTitle = ENTRY_META_VALUETYPE_SHEET_BUTTONS[selectedIndex];
             const newFieldType = FIELD_TYPE_OPTIONS.find(option => option.title === typeTitle);
             if (newFieldType) {
-                dispatch(setNewMetaValueType(newFieldType.type));
+                dispatch(
+                    mergeEntryPropertyEdit({
+                        newValueType: newFieldType.type
+                    })
+                );
             }
         }
     );

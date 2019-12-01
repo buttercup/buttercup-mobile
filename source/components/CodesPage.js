@@ -1,8 +1,19 @@
-import React, { Component } from "react";
-import { Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import React, { PureComponent } from "react";
+import {
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    View,
+    SectionList
+} from "react-native";
 import PropTypes from "prop-types";
 import ProgressWheel from "react-native-progress-wheel";
 import { otpInstanceFromURL } from "../library/otp.js";
+import EmptyView from "./EmptyView.js";
+
+const SECURITY_SHIELD = require("../../resources/images/security-system-shield-lock.png");
 
 const DIGIT_SEPARATOR = " ";
 
@@ -13,6 +24,8 @@ const styles = StyleSheet.create({
     itemContainerView: {
         flex: 1,
         flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
         padding: 12,
         marginHorizontal: 0,
         borderBottomColor: "#DDD",
@@ -21,8 +34,7 @@ const styles = StyleSheet.create({
     },
     itemContainerViewFirst: {
         borderTopColor: "#DDD",
-        borderTopWidth: 0.5,
-        marginTop: 8
+        borderTopWidth: 0.5
     },
     entryContainerView: {
         flex: 1,
@@ -41,11 +53,23 @@ const styles = StyleSheet.create({
     },
     code: {
         fontSize: 30,
+        color: "#222",
         fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace"
+    },
+    groupTitle: {
+        fontWeight: "500",
+        fontSize: 12,
+        textTransform: "uppercase",
+        color: "#999"
+    },
+    groupTitleContainer: {
+        paddingHorizontal: 8,
+        marginTop: 8,
+        marginBottom: 4
     }
 });
 
-function splitDigits(digits) {
+function splitDigits(digits = "") {
     return digits.length === 6
         ? `${digits.slice(0, 3)}${DIGIT_SEPARATOR}${digits.slice(3, 6)}`
         : digits.length === 8
@@ -53,43 +77,58 @@ function splitDigits(digits) {
         : digits;
 }
 
-export default class CodesPage extends Component {
+export default class CodesPage extends PureComponent {
     static navigationOptions = {
         title: "Codes"
     };
 
     static propTypes = {
         copyToClipboard: PropTypes.func.isRequired,
-        otpCodes: PropTypes.arrayOf(PropTypes.object).isRequired
+        otpGroups: PropTypes.arrayOf(PropTypes.object).isRequired
+    };
+
+    state = {
+        groups: []
     };
 
     interval = null;
-
-    state = {
-        codes: []
-    };
+    focusSubscription = null;
 
     componentDidMount() {
-        this.setState(
-            {
-                codes: this.props.otpCodes.map(otpCodeItem => ({
-                    ...otpCodeItem,
-                    period: 30,
-                    timeLeft: 30,
-                    digits: "",
-                    totp: null
-                }))
-            },
-            () => {
-                this.interval = setInterval(() => this.update(), 1000);
-                this.update();
-            }
-        );
+        this.update();
+        this.interval = setInterval(() => this.update(), 1000);
+        this.focusSubscription = this.props.navigation.addListener("didFocus", payload => {
+            this.update();
+        });
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
         this.interval = null;
+        this.focusSubscription.remove();
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Choose>
+                    <When condition={this.state.groups.length > 0}>
+                        <SectionList
+                            sections={this.state.groups}
+                            renderItem={({ item, index }) => this.renderCodeItem(item, index)}
+                            renderSectionHeader={({ section }) => this.renderSectionHeader(section)}
+                            keyExtractor={(item, index) => item.entryID + index}
+                        />
+                    </When>
+                    <Otherwise>
+                        <EmptyView
+                            text="Unlock vaults or add codes."
+                            imageSource={SECURITY_SHIELD}
+                        />
+                    </Otherwise>
+                </Choose>
+            </View>
+        );
     }
 
     renderCodeItem({ entryID, entryTitle, title, otpURL, digits, period, timeLeft }, index) {
@@ -118,11 +157,11 @@ export default class CodesPage extends Component {
                     </View>
                     <View>
                         <ProgressWheel
-                            size={46}
+                            size={30}
                             width={5}
                             progress={(timeLeft / period) * 100}
-                            color={"#24B5AB"}
-                            backgroundColor={"#FFF"}
+                            color="#24B5AB"
+                            backgroundColor="#ededed"
                         />
                     </View>
                 </View>
@@ -130,33 +169,33 @@ export default class CodesPage extends Component {
         );
     }
 
-    render() {
+    renderSectionHeader({ sourceTitle }) {
         return (
-            <View style={styles.container}>
-                <ScrollView>
-                    {this.state.codes.map((item, idx) => this.renderCodeItem(item, idx))}
-                </ScrollView>
+            <View style={styles.groupTitleContainer}>
+                <Text style={styles.groupTitle}>{sourceTitle}</Text>
             </View>
         );
     }
 
     update() {
-        if (this.props.otpCodes.length <= 0 || !this.props.navigation.isFocused()) {
+        const { otpGroups, navigation } = this.props;
+        if (otpGroups.length <= 0 || !navigation.isFocused()) {
             return;
         }
-        const updatedItems = this.state.codes.map(codeItem => {
-            const totp = codeItem.totp || otpInstanceFromURL(codeItem.otpURL);
-            const period = totp.period;
-            return {
-                ...codeItem,
-                totp,
-                period,
-                digits: totp.generate(),
-                timeLeft: period - (Math.floor(Date.now() / 1000) % period)
-            };
-        });
         this.setState({
-            codes: updatedItems
+            groups: otpGroups.map(group => ({
+                sourceTitle: group.sourceTitle,
+                key: group.sourceID,
+                data: group.entries.map(codeItem => {
+                    const totp = codeItem.totp;
+                    const period = totp.period;
+                    return {
+                        ...codeItem,
+                        digits: totp.generate(),
+                        timeLeft: period - (Math.floor(Date.now() / 1000) % period)
+                    };
+                })
+            }))
         });
     }
 }

@@ -4,6 +4,10 @@ import com.facebook.react.ReactActivity;
 import org.spongycastle.jce.provider.BouncyCastleProvider;
 import java.security.Security;
 
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+
 import android.os.Bundle;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -29,6 +33,16 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "Buttercup";
+    }
+
+    @Override
+    protected ReactActivityDelegate createReactActivityDelegate() {
+        return new ReactActivityDelegate(this, getMainComponentName()) {
+            @Override
+            protected ReactRootView createRootView() {
+                return new RNGestureHandlerEnabledRootView(MainActivity.this);
+            }
+        };
     }
 
     @Override

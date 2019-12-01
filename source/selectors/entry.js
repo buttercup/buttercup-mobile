@@ -1,5 +1,9 @@
 const STATE_KEY = "entry";
 
+export function getEntryEditingProperty(state) {
+    return state[STATE_KEY].editProperty;
+}
+
 export function getEntryFacade(state) {
     return state[STATE_KEY].facade;
 }
@@ -27,21 +31,6 @@ export function getEntryTitle(state) {
 export function getEntryURL(state) {
     const urlField = getEntryProperties(state).find(item => /url/i.test(item.property));
     return (urlField && urlField.value) || null;
-}
-
-export function getNewMetaKey(state) {
-    const newMeta = state[STATE_KEY].newMeta || {};
-    return newMeta.key || "";
-}
-
-export function getNewMetaValue(state) {
-    const newMeta = state[STATE_KEY].newMeta || {};
-    return newMeta.value || "";
-}
-
-export function getNewMetaValueType(state) {
-    const newMeta = state[STATE_KEY].newMeta || {};
-    return newMeta.valueType || null;
 }
 
 export function getNewParentID(state) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
-import { TabNavigator } from "react-navigation";
+import { createTabNavigator } from "react-navigation-tabs";
 import GroupsPage from "../containers/GroupsPage.js";
 import CodesPage from "../containers/CodesPage.js";
 import ToolbarIcon from "./ToolbarIcon.js";
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default TabNavigator(
+export default createTabNavigator(
     {
         Vault: {
             screen: GroupsPage,

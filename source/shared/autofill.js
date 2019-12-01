@@ -92,6 +92,7 @@ export function completeAutoFillWithEntry(sourceID, entry) {
             const username = entry.getProperty("username");
             const password = entry.getProperty("password");
             const entryPath = getEntryPathString(sourceID, entry.id);
+            console.log(username);
             return AutoFillBridge.completeAutoFill(username, password, entryPath).then(() => {
                 resolve();
             });

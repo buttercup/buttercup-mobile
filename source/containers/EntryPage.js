@@ -1,10 +1,15 @@
 import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
+import pathOr from "ramda/es/pathOr";
 import { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
-import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
-import { navigateBack, navigateToNewMeta } from "../actions/navigation.js";
+import {
+    setEntryEditing,
+    setEntryPropertyEdit,
+    setFacadeValue,
+    setViewingHidden
+} from "../actions/entry.js";
 import { setBusyState, setPendingOTPURL } from "../actions/app.js";
 import {
     getEntryFacade,
@@ -26,12 +31,15 @@ import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { promptDeleteEntry } from "../shared/entry.js";
 import { executeNotification } from "../global/notify.js";
 import { prepareURLForLaunch } from "../library/helpers.js";
+import { navigate, ENTRY_NEW_META_SCREEN, ENTRY_EDIT_PROPERTY_SCREEN } from "../shared/nav.js";
+
+const isReadOnly = props => pathOr(false, ["navigation", "state", "params", "readOnly"], props);
 
 export default connect(
     (state, ownProps) => ({
         busyState: getBusyState(state),
         editing: isEditing(state),
-        isReadOnly: isCurrentlyReadOnly(state),
+        isReadOnly: isCurrentlyReadOnly(state) || isReadOnly(ownProps),
         pendingOTPURL: getPendingOTPURL(state),
         properties: getEntryProperties(state),
         title: getEntryTitle(state),
@@ -42,18 +50,20 @@ export default connect(
             Clipboard.setString(value);
             executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
         },
-        onAddMeta: ({
+        onAddProperty: ({
             initialKey = "",
             initialValue = "",
             initialValueType = null
         } = {}) => dispatch => {
             dispatch(
-                navigateToNewMeta({
-                    initialKey,
-                    initialValue,
-                    initialValueType
+                setEntryPropertyEdit({
+                    originalProperty: null,
+                    newProperty: initialKey,
+                    newValue: initialValue,
+                    newValueType: initialValueType
                 })
             );
+            navigate(ENTRY_EDIT_PROPERTY_SCREEN);
         },
         onCancelEdit: () => (dispatch, getState) => {
             const state = getState();
@@ -67,6 +77,17 @@ export default connect(
         },
         onDeletePressed: () => () => {
             promptDeleteEntry();
+        },
+        onEditField: facadeField => dispatch => {
+            dispatch(
+                setEntryPropertyEdit({
+                    originalProperty: facadeField.property,
+                    newProperty: facadeField.property,
+                    newValue: facadeField.value,
+                    newValueType: facadeField.valueType
+                })
+            );
+            navigate(ENTRY_EDIT_PROPERTY_SCREEN);
         },
         onEditPressed: () => dispatch => dispatch(setEntryEditing(true)),
         onFieldValueChange: (field, property, value) => dispatch => {

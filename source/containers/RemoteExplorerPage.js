@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import RemoteExplorer from "../components/RemoteExplorerPage.js";
-import { navigateToRoot } from "../actions/navigation.js";
 import {
     getCurrentItems,
     getCurrentPath,
@@ -42,6 +41,7 @@ import {
     createRemoteCredentials
 } from "../library/buttercup.js";
 import { handleError } from "../global/exceptions.js";
+import { navigateToRoot } from "../shared/nav.js";
 
 function addToArchiveManager(state) {
     const {
@@ -81,7 +81,7 @@ function handleNewArchiveName(name, dispatch, getState) {
     addToArchiveManager({ ...getState(), archiveName: name })
         .then(function __getOuttaHere() {
             dispatch(setAddingArchive(false));
-            dispatch(navigateToRoot());
+            navigateToRoot();
         })
         .catch(function __handleAddError(err) {
             dispatch(setAddingArchive(false));
