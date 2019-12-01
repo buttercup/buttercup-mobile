@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
         color: "#222",
         fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace"
     },
+    codeError: {
+        color: "rgba(241, 92, 92, 0.6)"
+    },
     groupTitle: {
         fontWeight: "500",
         fontSize: 12,
@@ -131,11 +134,15 @@ export default class CodesPage extends PureComponent {
         );
     }
 
-    renderCodeItem({ entryID, entryTitle, title, otpURL, digits, period, timeLeft }, index) {
+    renderCodeItem({ error, entryID, entryTitle, title, otpURL, digits, period, timeLeft }, index) {
         return (
             <TouchableHighlight
                 key={`${entryID}:${otpURL}`}
-                onPress={() => this.props.copyToClipboard(title, digits)}
+                onPress={() => {
+                    if (!error) {
+                        this.props.copyToClipboard(title, digits);
+                    }
+                }}
                 underlayColor="white"
             >
                 <View
@@ -152,14 +159,25 @@ export default class CodesPage extends PureComponent {
                         <Text style={styles.entryTitle}>{entryTitle}</Text>
                         <Text style={styles.title}>{title}</Text>
                         <View style={styles.codeView}>
-                            <Text style={styles.code}>{splitDigits(digits)}</Text>
+                            <Choose>
+                                <When condition={error}>
+                                    <Text
+                                        style={StyleSheet.flatten([styles.code, styles.codeError])}
+                                    >
+                                        ERROR
+                                    </Text>
+                                </When>
+                                <Otherwise>
+                                    <Text style={styles.code}>{splitDigits(digits)}</Text>
+                                </Otherwise>
+                            </Choose>
                         </View>
                     </View>
                     <View>
                         <ProgressWheel
                             size={30}
                             width={5}
-                            progress={(timeLeft / period) * 100}
+                            progress={error ? 0 : (timeLeft / period) * 100}
                             color="#24B5AB"
                             backgroundColor="#ededed"
                         />
@@ -187,6 +205,14 @@ export default class CodesPage extends PureComponent {
                 sourceTitle: group.sourceTitle,
                 key: group.sourceID,
                 data: group.entries.map(codeItem => {
+                    if (codeItem.error) {
+                        return codeItem;
+                        // return {
+                        //     ...codeItem,
+                        //     digits: "",
+                        //     timeLeft: 0
+                        // };
+                    }
                     const totp = codeItem.totp;
                     const period = totp.period;
                     return {

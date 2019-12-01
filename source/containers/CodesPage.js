@@ -8,15 +8,37 @@ import { otpInstanceFromURL } from "../library/otp.js";
 const attachOTPInstance = (otpGroups = []) =>
     otpGroups.map(group => ({
         ...group,
-        entries: group.entries.map(codeItem => ({
-            ...codeItem,
-            ...prepareOTPProps(otpInstanceFromURL(codeItem.otpURL))
-        }))
+        entries: group.entries.reduce((output, codeItem) => {
+            let otpInstance;
+            try {
+                otpInstance = otpInstanceFromURL(codeItem.otpURL);
+            } catch (err) {
+                return [
+                    ...output,
+                    {
+                        ...codeItem,
+                        ...prepareOTPProps(null),
+                        error: true
+                    }
+                ];
+            }
+            return [
+                ...output,
+                {
+                    ...codeItem,
+                    ...prepareOTPProps(otpInstance)
+                }
+            ];
+        }, [])
+        // entries: group.entries.map(codeItem => ({
+        //     ...codeItem,
+        //     ...prepareOTPProps(otpInstanceFromURL(codeItem.otpURL))
+        // }))
     }));
 const prepareOTPProps = otpInstance => ({
     totp: otpInstance,
-    period: otpInstance.period,
-    timeLeft: otpInstance.period,
+    period: (otpInstance && otpInstance.period) || null,
+    timeLeft: (otpInstance && otpInstance.period) || null,
     digits: ""
 });
 
