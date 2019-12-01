@@ -165,8 +165,8 @@ class EntryPage extends Component {
 
     renderAdditionalButtons() {
         return (
-            <CellGroup>
-                <If condition={this.props.editing && this.props.pendingOTPURL}>
+            <If condition={this.props.editing && this.props.pendingOTPURL}>
+                <CellGroup>
                     <Cell
                         key="otpURL"
                         title="Add Pending OTP URL"
@@ -180,8 +180,8 @@ class EntryPage extends Component {
                         tintColor="#fc8c03"
                         icon={{ name: "barcode-scan", source: "material-community-icons" }}
                     />
-                </If>
-            </CellGroup>
+                </CellGroup>
+            </If>
         );
     }
 
