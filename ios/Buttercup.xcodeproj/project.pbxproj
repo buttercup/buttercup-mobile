@@ -46,14 +46,23 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89B5C41CA3CA429FAD873211 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DF36A447445434284F83319 /* Entypo.ttf */; };
 		92F0ABE1593340309BF78086 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F492DA2907E4FEDAC51BB80 /* Foundation.ttf */; };
+		9913E6902391E376003E810A /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9913E68C2391E36A003E810A /* libRNSearchBar.a */; };
+		9913E6912391E37C003E810A /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9913E68C2391E36A003E810A /* libRNSearchBar.a */; };
 		99851D7220C985FA00EAC115 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D7120C985FA00EAC115 /* libresolv.tbd */; };
 		99851D7520C9B83E00EAC115 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 99851D7420C9B83E00EAC115 /* CryptoBridge.m */; };
 		99A6776F215AC7DF0023B45E /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
+		99CEE44C2391FD5E00DF8F3C /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CEE4492391FD5600DF8F3C /* libRNReanimated.a */; };
+		99CEE44D2391FD6500DF8F3C /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CEE4492391FD5600DF8F3C /* libRNReanimated.a */; };
 		99D0F23020E2929B00FD05D7 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D6F20C984E800EAC115 /* libcrypto.a */; };
 		99DD137A23253E5A0088275C /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		99DD137B23253E670088275C /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		99DD138223253EFF0088275C /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99DD138123253EE10088275C /* libRNGoogleSignin.a */; };
 		99DD138323253F080088275C /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99DD138123253EE10088275C /* libRNGoogleSignin.a */; };
+		99F6139E2391984500B40637 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F613732391984500B40637 /* JavaScriptCore.framework */; };
+		99F614B723919E1800B40637 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F614B423919DF500B40637 /* libRNGestureHandler.a */; };
+		99F614B823919E3200B40637 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F614B423919DF500B40637 /* libRNGestureHandler.a */; };
+		99F6151D2391A06800B40637 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6151A2391A06200B40637 /* libRNScreens.a */; };
+		99F6151E2391A06E00B40637 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F6151A2391A06200B40637 /* libRNScreens.a */; };
 		9A1586680933407B88BBBF6E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CF85AFBFDFD45758A3B2400 /* Zocial.ttf */; };
 		9E1360C921DC420F00EE48B0 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
 		9E1360CD21DC420F00EE48B0 /* CredentialProviderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */; };
@@ -333,12 +342,33 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		9913E68B2391E36A003E810A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9913E65A2391E36A003E810A /* RNSearchBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNSearchBar;
+		};
 		99A6776A215AC7DE0023B45E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 163CDE4E2087CAD3001065FB;
 			remoteInfo = "RNRandomBytes-tvOS";
+		};
+		99CEE4482391FD5600DF8F3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNReanimated;
+		};
+		99CEE44A2391FD5600DF8F3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FDBB176E229BF04900D1E455;
+			remoteInfo = "RNReanimated-tvOS";
 		};
 		99DD136D23253E440088275C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -374,6 +404,34 @@
 			proxyType = 2;
 			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
 			remoteInfo = RNGoogleSignin;
+		};
+		99F614B323919DF500B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNGestureHandler;
+		};
+		99F614B523919DF500B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5C32A36220C603B000FFB8D;
+			remoteInfo = "RNGestureHandler-tvOS";
+		};
+		99F615192391A06200B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F615142391A06200B40637 /* RNScreens.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNScreens;
+		};
+		99F6151B2391A06200B40637 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99F615142391A06200B40637 /* RNScreens.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5C32A4F220C6379000FFB8D;
+			remoteInfo = "RNScreens-tvOS";
 		};
 		9E1360D321DC420F00EE48B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -491,6 +549,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8D05DDD18DF67B1081D63DC8 /* Pods-BCAutoFillExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCAutoFillExtension.debug.xcconfig"; path = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		9420C5D0951842288C015861 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		9913E65A2391E36A003E810A /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/ios/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		99851D6F20C984E800EAC115 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../crypto/target/universal/release/libcrypto.a; sourceTree = "<group>"; };
 		99851D7120C985FA00EAC115 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		99851D7320C9B7FC00EAC115 /* CryptoBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoBridge.h; sourceTree = "<group>"; };
@@ -498,7 +557,14 @@
 		99851D7620C9B89C00EAC115 /* CryptoBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CryptoBindings.h; path = ../crypto/src/CryptoBindings.h; sourceTree = "<group>"; };
 		99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		99A67770215AC7DF0023B45E /* Buttercup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Buttercup.entitlements; path = Buttercup/Buttercup.entitlements; sourceTree = "<group>"; };
+		99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
+		99F613732391984500B40637 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		99F6141623919B4A00B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99F6141823919B5600B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99F6143623919C6E00B40637 /* RNGestureHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RNGestureHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		99F615142391A06200B40637 /* RNScreens.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNScreens.xcodeproj; path = "../node_modules/react-native-screens/ios/RNScreens.xcodeproj"; sourceTree = "<group>"; };
 		9E1360C821DC420E00EE48B0 /* BCAutoFillExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BCAutoFillExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1360CB21DC420F00EE48B0 /* CredentialProviderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CredentialProviderViewController.h; sourceTree = "<group>"; };
 		9E1360CC21DC420F00EE48B0 /* CredentialProviderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CredentialProviderViewController.m; sourceTree = "<group>"; };
@@ -535,6 +601,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99F6139E2391984500B40637 /* JavaScriptCore.framework in Frameworks */,
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,6 +610,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CEE44D2391FD6500DF8F3C /* libRNReanimated.a in Frameworks */,
+				9913E6902391E376003E810A /* libRNSearchBar.a in Frameworks */,
+				99F6151D2391A06800B40637 /* libRNScreens.a in Frameworks */,
+				99F614B723919E1800B40637 /* libRNGestureHandler.a in Frameworks */,
 				99DD138223253EFF0088275C /* libRNGoogleSignin.a in Frameworks */,
 				99DD137A23253E5A0088275C /* JavaScriptCore.framework in Frameworks */,
 				99A6776F215AC7DF0023B45E /* AuthenticationServices.framework in Frameworks */,
@@ -593,6 +664,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CEE44C2391FD5E00DF8F3C /* libRNReanimated.a in Frameworks */,
+				9913E6912391E37C003E810A /* libRNSearchBar.a in Frameworks */,
+				99F6151E2391A06E00B40637 /* libRNScreens.a in Frameworks */,
+				99F614B823919E3200B40637 /* libRNGestureHandler.a in Frameworks */,
 				99DD138323253F080088275C /* libRNGoogleSignin.a in Frameworks */,
 				99DD137B23253E670088275C /* JavaScriptCore.framework in Frameworks */,
 				9E1360C921DC420F00EE48B0 /* AuthenticationServices.framework in Frameworks */,
@@ -745,8 +820,12 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99F6143623919C6E00B40637 /* RNGestureHandler.framework */,
+				99F6141823919B5600B40637 /* RNGestureHandler.framework */,
+				99F6141623919B4A00B40637 /* RNGestureHandler.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				99F613732391984500B40637 /* JavaScriptCore.framework */,
 				9E13610721DC434000EE48B0 /* libcrypto.a */,
 				99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */,
 				99851D7120C985FA00EAC115 /* libresolv.tbd */,
@@ -790,6 +869,10 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */,
+				9913E65A2391E36A003E810A /* RNSearchBar.xcodeproj */,
+				99F615142391A06200B40637 /* RNScreens.xcodeproj */,
+				99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */,
 				99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */,
 				9E13615421DC465800EE48B0 /* RNSecureStorage.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -850,10 +933,45 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9913E65B2391E36A003E810A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9913E68C2391E36A003E810A /* libRNSearchBar.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99CEE4442391FD5600DF8F3C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99CEE4492391FD5600DF8F3C /* libRNReanimated.a */,
+				99CEE44B2391FD5600DF8F3C /* libRNReanimated-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		99DD137D23253EE10088275C /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				99DD138123253EE10088275C /* libRNGoogleSignin.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99F614AF23919DF500B40637 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99F614B423919DF500B40637 /* libRNGestureHandler.a */,
+				99F614B623919DF500B40637 /* libRNGestureHandler-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		99F615152391A06200B40637 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99F6151A2391A06200B40637 /* libRNScreens.a */,
+				99F6151C2391A06200B40637 /* libRNScreens-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1157,12 +1275,28 @@
 					ProjectRef = 10B32057C9914AD5AC8E2D10 /* RNFS.xcodeproj */;
 				},
 				{
+					ProductGroup = 99F614AF23919DF500B40637 /* Products */;
+					ProjectRef = 99F614AE23919DF500B40637 /* RNGestureHandler.xcodeproj */;
+				},
+				{
 					ProductGroup = 99DD137D23253EE10088275C /* Products */;
 					ProjectRef = 99DD137C23253EE10088275C /* RNGoogleSignin.xcodeproj */;
 				},
 				{
 					ProductGroup = C2ADA9B41F5735CA009D97EB /* Products */;
 					ProjectRef = B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */;
+				},
+				{
+					ProductGroup = 99CEE4442391FD5600DF8F3C /* Products */;
+					ProjectRef = 99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */;
+				},
+				{
+					ProductGroup = 99F615152391A06200B40637 /* Products */;
+					ProjectRef = 99F615142391A06200B40637 /* RNScreens.xcodeproj */;
+				},
+				{
+					ProductGroup = 9913E65B2391E36A003E810A /* Products */;
+					ProjectRef = 9913E65A2391E36A003E810A /* RNSearchBar.xcodeproj */;
 				},
 				{
 					ProductGroup = 9E13615521DC465800EE48B0 /* Products */;
@@ -1399,11 +1533,32 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		9913E68C2391E36A003E810A /* libRNSearchBar.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSearchBar.a;
+			remoteRef = 9913E68B2391E36A003E810A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		99A6776B215AC7DE0023B45E /* libRNRandomBytes-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libRNRandomBytes-tvOS.a";
 			remoteRef = 99A6776A215AC7DE0023B45E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99CEE4492391FD5600DF8F3C /* libRNReanimated.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNReanimated.a;
+			remoteRef = 99CEE4482391FD5600DF8F3C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99CEE44B2391FD5600DF8F3C /* libRNReanimated-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNReanimated-tvOS.a";
+			remoteRef = 99CEE44A2391FD5600DF8F3C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		99DD136E23253E440088275C /* libjsi.a */ = {
@@ -1439,6 +1594,34 @@
 			fileType = archive.ar;
 			path = libRNGoogleSignin.a;
 			remoteRef = 99DD138023253EE10088275C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F614B423919DF500B40637 /* libRNGestureHandler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGestureHandler.a;
+			remoteRef = 99F614B323919DF500B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F614B623919DF500B40637 /* libRNGestureHandler-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNGestureHandler-tvOS.a";
+			remoteRef = 99F614B523919DF500B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F6151A2391A06200B40637 /* libRNScreens.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNScreens.a;
+			remoteRef = 99F615192391A06200B40637 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99F6151C2391A06200B40637 /* libRNScreens-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNScreens-tvOS.a";
+			remoteRef = 99F6151B2391A06200B40637 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9E13615921DC465900EE48B0 /* libRNSecureStorage.a */ = {
@@ -2264,7 +2447,7 @@
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Buttercup" */ = {
 			isa = XCConfigurationList;
@@ -2273,7 +2456,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Buttercup-tvOS" */ = {
 			isa = XCConfigurationList;
@@ -2282,7 +2465,7 @@
 				2D02E4981E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Buttercup-tvOSTests" */ = {
 			isa = XCConfigurationList;
@@ -2291,7 +2474,7 @@
 				2D02E49A1E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Buttercup" */ = {
 			isa = XCConfigurationList;
@@ -2300,7 +2483,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		9E13610321DC420F00EE48B0 /* Build configuration list for PBXNativeTarget "BCAutoFillExtension" */ = {
 			isa = XCConfigurationList;
@@ -2309,7 +2492,7 @@
 				9E1360D721DC420F00EE48B0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

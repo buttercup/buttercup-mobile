@@ -1,7 +1,11 @@
 const STATE_KEY = "entry";
 
-export function getEntryFields(state) {
-    return state[STATE_KEY].fields;
+export function getEntryEditingProperty(state) {
+    return state[STATE_KEY].editProperty;
+}
+
+export function getEntryFacade(state) {
+    return state[STATE_KEY].facade;
 }
 
 export function getEntryID(state) {
@@ -14,27 +18,19 @@ export function getEntryPassword(state) {
 }
 
 export function getEntryProperties(state) {
-    return getEntryFields(state).filter(f => f.field === "property");
+    return getEntryFacade(state).fields.filter(f => f.propertyType === "property");
 }
 
 export function getEntryTitle(state) {
-    const titleField = getEntryProperties(state).find(item => item.property === "title");
+    const titleField = getEntryProperties(state).find(
+        item => item.propertyType === "property" && item.property === "title"
+    );
     return (titleField && titleField.value) || "";
 }
 
 export function getEntryURL(state) {
     const urlField = getEntryProperties(state).find(item => /url/i.test(item.property));
     return (urlField && urlField.value) || null;
-}
-
-export function getNewMetaKey(state) {
-    const newMeta = state[STATE_KEY].newMeta || {};
-    return newMeta.key || "";
-}
-
-export function getNewMetaValue(state) {
-    const newMeta = state[STATE_KEY].newMeta || {};
-    return newMeta.value || "";
 }
 
 export function getNewParentID(state) {

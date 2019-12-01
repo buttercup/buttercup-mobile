@@ -1,16 +1,30 @@
 import {
+    FIELD_VALUE_TYPE_NOTE,
+    FIELD_VALUE_TYPE_OTP,
+    FIELD_VALUE_TYPE_PASSWORD,
+    FIELD_VALUE_TYPE_TEXT,
+    consumeEntryFacade,
+    createEntryFacade
+} from "@buttercup/facades";
+import {
     Archive,
     ArchiveManager,
     ArchiveSource,
     Datasources,
-    Credentials,
-    entryFacade
+    Credentials
 } from "./buttercupCore.js";
 import SecureStorageInterface from "../compat/SecureStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
 
 const { TextDatasource } = Datasources;
 const { Status: ArchiveSourceStatus } = ArchiveSource;
+
+export const FIELD_TYPE_OPTIONS = [
+    { type: FIELD_VALUE_TYPE_TEXT, title: "Text (default)" },
+    { type: FIELD_VALUE_TYPE_NOTE, title: "Note" },
+    { type: FIELD_VALUE_TYPE_PASSWORD, title: "Password" },
+    { type: FIELD_VALUE_TYPE_OTP, title: "OTP" }
+];
 
 let __sharedManager = null;
 
@@ -38,20 +52,12 @@ export function addArchiveToArchiveManager(name, sourceCreds, archiveCreds, arch
         );
 }
 
-export function consumeEntryFacade(entry, facade) {
-    entryFacade.consumeEntryFacade(entry, facade);
-}
-
 export function createEmptyArchive() {
     return Archive.createWithDefaults();
 }
 
 export function createArchiveCredentials(password) {
     return Credentials.fromPassword(password);
-}
-
-export function createEntryFacade(entry) {
-    return entryFacade.createEntryFacade(entry);
 }
 
 export function createRemoteCredentials(archiveType, options) {

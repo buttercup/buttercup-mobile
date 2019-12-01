@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import AddArchivePage from "../components/AddArchivePage.js";
 import { getAdditionStage } from "../selectors/AddArchivePage.js";
 import { onArchiveTypeSelected } from "../actions/AddArchivePage.js";
-import { navigateToRemoteConnect } from "../actions/navigation.js";
+import { navigate, REMOTE_CONNECT_SCREEN } from "../shared/nav.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -11,7 +11,7 @@ export default connect(
     {
         onArchiveSelected: (type, title) => dispatch => {
             dispatch(onArchiveTypeSelected(type));
-            dispatch(navigateToRemoteConnect({ title }));
+            navigate(REMOTE_CONNECT_SCREEN, { title });
         }
     }
 )(AddArchivePage);

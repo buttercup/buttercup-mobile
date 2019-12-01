@@ -8,6 +8,7 @@ export const ADD_ARCHIVE_SET_URL = "addArchive/setURL";
 export const ADD_ARCHIVE_SET_USERNAME = "addArchive/setUsername";
 
 export const APP_MASTER_RESET = "app/reset";
+export const APP_PENDING_OTP_SET = "app/pendingOTP/set";
 export const APP_SET_BUSY_STATE = "app/setBusyState";
 export const APP_SET_SEARCH_CONTEXT = "app/search/setContext";
 
@@ -18,6 +19,7 @@ export const ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT = "archiveContents/toggleC
 export const ARCHIVE_CONTENTS_TOGGLE_REN_GROUP_PROMPT = "archiveContents/toggleGroupRenamePrompt";
 
 export const ARCHIVES_SET = "archives/set";
+export const ARCHIVES_SET_OTP_CODES = "archives/setOTPCodes";
 export const ARCHIVES_SET_TOUCHID_ENABLED = "archives/touchID/setEnabledArchives";
 export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT = "archives/toggleUnlockPasswordPrompt";
 
@@ -35,8 +37,8 @@ export const DROPBOX_SET_AUTH_TOKEN = "dropbox/setAuthToken";
 
 export const ENTRY_LOAD = "entry/load";
 export const ENTRY_NEW_CLEAR = "entry/clearNew";
-export const ENTRY_NEW_META_CLEAR = "entry/clearNewMeta";
-export const ENTRY_NEW_META_SET = "entry/setNewMetaValues";
+export const ENTRY_PROP_EDIT_MERGE = "entry/propertyEdit/merge";
+export const ENTRY_PROP_EDIT_SET = "entry/propertyEdit/set";
 export const ENTRY_SET_EDITING = "entry/setEditing";
 export const ENTRY_SET_FACADE_VALUE = "entry/setFacadeValue";
 export const ENTRY_SET_NEW_PARENT_GROUP = "entry/setNewEntryParentGroup";
@@ -49,19 +51,6 @@ export const GOOGLEDRIVE_SET_AUTHENTICATED = "googleDrive/setAuthenticated";
 export const GOOGLEDRIVE_SET_AUTHENTICATING = "googleDrive/setAuthenticating";
 export const GOOGLEDRIVE_SET_AUTH_TOKEN = "googleDrive/setAuthToken";
 export const GOOGLEDRIVE_SET_REFRESH_TOKEN = "googleDrive/setRefreshToken";
-
-export const NAVIGATE_ADD_ARCHIVE = "navigation/addArchive";
-export const NAVIGATE_SEARCH_ARCHIVES = "navigation/searchArchives";
-export const NAVIGATE_BACK = "navigation/back";
-export const NAVIGATE_ENTRY = "navigation/entry";
-export const NAVIGATE_GROUPS = "navigation/groups";
-export const NAVIGATE_LOCK_PAGE = "navigation/lock";
-export const NAVIGATE_NEW_ENTRY = "navigation/newEntry";
-export const NAVIGATE_NEW_META = "navigation/newMeta";
-export const NAVIGATE_POPUP_BROWSER = "navigation/popupBrowser";
-export const NAVIGATE_REMOTE_CONNECT = "navigation/remoteConnect";
-export const NAVIGATE_REMOTE_EXPLORER = "navigation/remoteExplorer";
-export const NAVIGATE_ROOT = "navigation/returnToRoot";
 
 export const REMOTE_EXPLORER_CANCEL_NEW = "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR = "remoteExplorer/clear";

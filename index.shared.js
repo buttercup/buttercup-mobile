@@ -1,6 +1,7 @@
 import "./shim.js";
+import "react-native-gesture-handler";
 import React, { Component, Fragment } from "react";
-import { AppRegistry } from "react-native";
+import { AppRegistry, View } from "react-native";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
 import { patchCrypto } from "./source/library/crypto.js";
@@ -11,6 +12,7 @@ import AutoFillApp from "./source/autofill/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
 import { migrateStorage } from "./source/library/storage.js";
 import { registerAuthWatchers } from "./source/library/auth.js";
+import { setTopLevelNavigator } from "./source/shared/nav.js";
 
 export default class ButtercupShared extends Component {
     constructor(...args) {
@@ -23,9 +25,13 @@ export default class ButtercupShared extends Component {
             getSharedArchiveManager().rehydrate();
         });
         // Setup notifications
-        setNotificationFunction((type, title, message) => {
+        setNotificationFunction((type, title, message, timeOverride = null) => {
             if (this.dropdown) {
-                this.dropdown.alertWithType(type, title, message);
+                if (timeOverride && timeOverride > 0) {
+                    this.dropdown.alertWithType(type, title, message, undefined, timeOverride);
+                } else {
+                    this.dropdown.alertWithType(type, title, message);
+                }
             }
         });
         // Watch for auth failures and handle refreshing of tokens
@@ -37,9 +43,16 @@ export default class ButtercupShared extends Component {
             <Provider store={store}>
                 <Fragment>
                     {/* Show the main app stack when NOT in autofill mode */}
-                    {!this.props.isContextAutoFill && <ButtercupApp />}
+                    {!this.props.isContextAutoFill && (
+                        <ButtercupApp ref={navigator => setTopLevelNavigator(navigator)} />
+                    )}
                     {/* Show the AutoFill app stack when IN autofill mode */}
-                    {!!this.props.isContextAutoFill && <AutoFillApp screenProps={this.props} />}
+                    {!!this.props.isContextAutoFill && (
+                        <AutoFillApp
+                            screenProps={this.props}
+                            ref={navigator => setTopLevelNavigator(navigator)}
+                        />
+                    )}
                     <DropdownAlert ref={ref => (this.dropdown = ref)} closeInterval={8000} />
                 </Fragment>
             </Provider>

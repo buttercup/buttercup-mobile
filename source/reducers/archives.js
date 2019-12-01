@@ -1,5 +1,6 @@
 import {
     ARCHIVES_SET,
+    ARCHIVES_SET_OTP_CODES,
     ARCHIVES_SET_TOUCHID_ENABLED,
     ARCHIVES_TOGGLE_IS_UNLOCKING,
     ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT
@@ -11,6 +12,7 @@ const { LOCKED, UNLOCKED } = ArchiveSourceStatus;
 const INITIAL = {
     archives: [],
     archivesUsingTouchID: [],
+    otpCodes: [],
     showUnlockPasswordPrompt: false
 };
 
@@ -20,6 +22,11 @@ export default function archivesReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 archives: [...action.payload]
+            };
+        case ARCHIVES_SET_OTP_CODES:
+            return {
+                ...state,
+                otpCodes: [...action.payload]
             };
         case ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT:
             return {

@@ -4,6 +4,10 @@ import android.app.Application;
 
 import com.buttercup.autofill.AutoFillPackage;
 import com.facebook.react.ReactApplication;
+import org.umhan35.RNSearchBarPackage;
+import com.swmansion.rnscreens.RNScreensPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.actionsheet.ActionSheetPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.oblador.keychain.KeychainPackage;
@@ -32,6 +36,10 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
+            new RNSearchBarPackage(),
+            new RNScreensPackage(),
+            new ReanimatedPackage(),
+            new RNGestureHandlerPackage(),
                 new ActionSheetPackage(),
                 new RNGoogleSigninPackage(),
                 new KeychainPackage(),

@@ -26,7 +26,7 @@ import { handleError } from "../global/exceptions.js";
 const ARCHIVE_ITEM_HEIGHT = 70;
 const ARCHIVE_ITEM_CONTENTS_HEIGHT = 45;
 const ARCHIVE_SWIPE_BUTTON_WIDTH = 80;
-const BENCH_IMAGE = require("../../resources/images/bench.png");
+const VAULT_SAFE_IMAGE = require("../../resources/images/vault-bank-safe.png");
 const FINGERPRINT_IMAGE = require("../../resources/images/fingerprint.png");
 const LOCK_IMAGE = require("../../resources/images/locked.png");
 const READONLY_IMAGE = require("../../resources/images/readonly.png");
@@ -38,13 +38,20 @@ const ARCHIVE_TYPES = getArchiveTypeDetails().reduce((types, nextType) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        paddingTop: 8
     },
     swipeRow: {
         flex: 1,
         height: ARCHIVE_ITEM_HEIGHT,
         backgroundColor: "#fff",
-        flexDirection: "row"
+        flexDirection: "row",
+        borderBottomColor: "#DDD",
+        borderBottomWidth: 0.5
+    },
+    swipeRowFirst: {
+        borderTopColor: "#DDD",
+        borderTopWidth: 0.5
     },
     rowContents: {
         flex: 1,
@@ -164,7 +171,6 @@ class ArchivesList extends Component {
         // If in AutoFill mode, attempt to unlock the archives once the have rehydrated
         if (!this.rehydrationComplete && nextProps.archives.length) {
             this.rehydrationComplete = true;
-
             if (this.props.isContextAutoFill) {
                 // Delay a little bit to allow the render to finish
                 setTimeout(this.props.unlockAllTouchArchives, 500);
@@ -227,7 +233,7 @@ class ArchivesList extends Component {
         this.props.removeArchive(sourceID);
     }
 
-    renderArchiveItem(archiveInfo) {
+    renderArchiveItem(archiveInfo, index) {
         const { title: typeTitle, image: typeImage } = ARCHIVE_TYPES[archiveInfo.type];
         return (
             <TouchableHighlight
@@ -237,7 +243,7 @@ class ArchivesList extends Component {
                 }
                 underlayColor="white"
             >
-                <View style={styles.swipeRow}>
+                <View style={[styles.swipeRow, index === 0 ? styles.swipeRowFirst : {}]}>
                     <View style={styles.rowContents}>
                         <View
                             style={[
@@ -287,7 +293,6 @@ class ArchivesList extends Component {
     }
 
     renderArchiveItemSubview(archiveInfo) {
-        // this.handleSwipeoutButtonPress(info, archiveInfo)
         return (
             <TouchableHighlight
                 style={styles.swipedViewTouchView}
@@ -311,7 +316,9 @@ class ArchivesList extends Component {
                     <When condition={this.props.archives.length > 0}>
                         <SwipeListView
                             dataSource={ds.cloneWithRows(this.props.archives)}
-                            renderRow={archiveInfo => this.renderArchiveItem(archiveInfo)}
+                            renderRow={(archiveInfo, secId, rowId) =>
+                                this.renderArchiveItem(archiveInfo, parseInt(rowId, 10))
+                            }
                             renderHiddenRow={archiveInfo =>
                                 this.renderArchiveItemSubview(archiveInfo)
                             }
@@ -321,7 +328,7 @@ class ArchivesList extends Component {
                         />
                     </When>
                     <Otherwise>
-                        <EmptyView text="Add a new vault to begin" imageSource={BENCH_IMAGE} />
+                        <EmptyView text="Add a new vault to begin" imageSource={VAULT_SAFE_IMAGE} />
                     </Otherwise>
                 </Choose>
                 <Prompt

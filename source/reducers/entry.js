@@ -1,8 +1,8 @@
 import {
     ENTRY_LOAD,
     ENTRY_NEW_CLEAR,
-    ENTRY_NEW_META_CLEAR,
-    ENTRY_NEW_META_SET,
+    ENTRY_PROP_EDIT_MERGE,
+    ENTRY_PROP_EDIT_SET,
     ENTRY_SET_EDITING,
     ENTRY_SET_FACADE_VALUE,
     ENTRY_SET_NEW_PARENT_GROUP,
@@ -13,6 +13,7 @@ import {
 
 const INITIAL = {
     editing: false,
+    editProperty: null,
     id: null,
     newEntry: {
         title: "",
@@ -20,11 +21,7 @@ const INITIAL = {
         parentID: "0",
         password: ""
     },
-    newMeta: {
-        key: "",
-        value: ""
-    },
-    fields: [],
+    facade: null,
     sourceID: null,
     viewingHidden: false
 };
@@ -36,7 +33,7 @@ export default function entryReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 id: entryData.id,
-                fields: entryData.fields,
+                facade: entryData.facade,
                 sourceID: entryData.sourceID
             };
         case ENTRY_UNLOAD:
@@ -47,19 +44,6 @@ export default function entryReducer(state = INITIAL, action = {}) {
             return {
                 ...state,
                 newEntry: INITIAL.newEntry
-            };
-        case ENTRY_NEW_META_CLEAR:
-            return {
-                ...state,
-                newMeta: INITIAL.newMeta
-            };
-        case ENTRY_NEW_META_SET:
-            return {
-                ...state,
-                newMeta: {
-                    key: action.payload.key,
-                    value: action.payload.value
-                }
             };
         case ENTRY_SET_NEW_PROPERTY_VALUE:
             return {
@@ -91,17 +75,33 @@ export default function entryReducer(state = INITIAL, action = {}) {
             };
         case ENTRY_SET_FACADE_VALUE:
             const { field, property, value } = action.payload;
-            const targetIndex = state.fields.findIndex(
-                item => item.field === field && item.property === property
+            const targetIndex = state.facade.fields.findIndex(
+                item => item.propertyType === field && item.property === property
             );
-            const newFields = [...state.fields];
+            const newFields = [...state.facade.fields];
             newFields[targetIndex] = {
                 ...newFields[targetIndex],
                 value
             };
             return {
                 ...state,
-                fields: newFields
+                facade: {
+                    ...state.facade,
+                    fields: newFields
+                }
+            };
+        case ENTRY_PROP_EDIT_SET:
+            return {
+                ...state,
+                editProperty: { ...action.payload }
+            };
+        case ENTRY_PROP_EDIT_MERGE:
+            return {
+                ...state,
+                editProperty: {
+                    ...state.editProperty,
+                    ...action.payload
+                }
             };
 
         default:

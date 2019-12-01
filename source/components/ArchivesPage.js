@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Button, Image, Platform, StyleSheet, View } from "react-native";
+import { Button, Image, Linking, Platform, StyleSheet, View } from "react-native";
 import ArchivesList from "../containers/ArchivesList.js";
 import { showArchivesPageRightSheet } from "../shared/sheets.js";
 import ToolbarIcon from "./ToolbarIcon.js";
-import { navigateToSearchArchives } from "../actions/navigation.js";
-import { setSearchContext } from "../actions/app.js";
+import { setPendingOTPURL, setSearchContext } from "../actions/app.js";
 import { dispatch } from "../store.js";
+import { executeNotification } from "../global/notify.js";
+import { handleError } from "../global/exceptions.js";
 
 const BUTTERCUP_LOGO = require("../../resources/images/buttercup-header.png");
 const CLOUD_ADD = require("../../resources/images/boxes-1.png");
@@ -30,25 +31,48 @@ function getHeaderImage() {
     });
 }
 
-function getLeftToolbarButton() {
-    return <ToolbarIcon icon={SEARCH} onPress={gotoSearch} />;
-}
-
 function getRightToolbarButton() {
     return <ToolbarIcon icon={CLOUD_ADD} onPress={showArchivesPageRightSheet} />;
 }
 
-function gotoSearch() {
-    dispatch(setSearchContext("root"));
-    dispatch(navigateToSearchArchives());
+function handleDeepLink(evt) {
+    const url = typeof evt === "string" ? evt : evt.url;
+    console.log("Received deep link URL:", url);
+    dispatch(setPendingOTPURL(url));
+    executeNotification(
+        "success",
+        "OTP URL detected",
+        "Detected a new OTP - edit an entry to save it!",
+        15000
+    );
 }
 
 class ArchivesPage extends Component {
     static navigationOptions = {
-        headerLeft: getLeftToolbarButton(),
         headerRight: getRightToolbarButton(),
         headerTitle: getHeaderImage()
     };
+
+    checkLinking() {
+        Linking.getInitialURL()
+            .then(url => {
+                if (url) {
+                    handleDeepLink(url);
+                }
+            })
+            .catch(err => {
+                handleError("OTP URL collection failed", err);
+            });
+    }
+
+    componentDidMount() {
+        this.checkLinking();
+        Linking.addEventListener("url", handleDeepLink);
+    }
+
+    componentWillUnmount() {
+        Linking.removeEventListener("url", handleDeepLink);
+    }
 
     render() {
         return (

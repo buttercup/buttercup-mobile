@@ -1,12 +1,11 @@
 import { Alert } from "react-native";
 import { getGroup, getSelectedArchive } from "../selectors/archiveContents.js";
 import { dispatch, getState } from "../store.js";
-import { getTopGroupID } from "../selectors/nav.js";
 import { setBusyState } from "../actions/app.js";
-import { navigateBack } from "../actions/navigation.js";
 import { saveCurrentArchive } from "./archive.js";
 import { handleError } from "../global/exceptions.js";
 import { updateCurrentArchive } from "./archiveContents.js";
+import { navigateBack } from "./nav.js";
 
 const TRASH_KEY = "bc_group_role";
 const TRASH_ROLE = "trash";
@@ -25,10 +24,9 @@ export function deleteGroup(groupID) {
     group.delete();
 }
 
-export function promptDeleteGroup() {
+export function promptDeleteGroup(groupID) {
     const state = getState();
-    const topGroupID = getTopGroupID(state);
-    const { title } = getGroup(state, topGroupID);
+    const { title } = getGroup(state, groupID);
     Alert.alert("Delete Group", `Are you sure that you want to delete the group '${title}'?`, [
         { text: "Cancel", style: "cancel" },
         {
@@ -37,11 +35,11 @@ export function promptDeleteGroup() {
             onPress: () => {
                 dispatch(setBusyState("Saving"));
                 Promise.resolve()
-                    .then(() => deleteGroup(topGroupID))
+                    .then(() => deleteGroup(groupID))
                     .then(() => saveCurrentArchive())
                     .then(() => {
                         dispatch(setBusyState(null));
-                        dispatch(navigateBack());
+                        navigateBack();
                         updateCurrentArchive();
                     })
                     .catch(err => {

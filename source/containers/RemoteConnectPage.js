@@ -27,7 +27,7 @@ import {
 import { createRemoteConnection } from "../shared/explorerConnection.js";
 import { handleError } from "../global/exceptions.js";
 import { getDomain } from "../library/helpers.js";
-import { navigateToRemoteExplorer } from "../actions/navigation.js";
+import { navigate, REMOTE_EXPLORER_SCREEN } from "../shared/nav.js";
 
 function handleConnectionCreation(dispatch, getState) {
     const state = getState();
@@ -49,7 +49,7 @@ function handleConnectionCreation(dispatch, getState) {
                 title = "Google Drive";
             }
             dispatch(onConnected());
-            dispatch(navigateToRemoteExplorer({ title }));
+            navigate(REMOTE_EXPLORER_SCREEN, { title });
         })
         .catch(function __handleError(err) {
             dispatch(disconnect());

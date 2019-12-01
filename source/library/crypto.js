@@ -21,7 +21,7 @@ function cacheUUIDs() {
     if (uuidCount > CACHE_UUID_MIN) {
         return Promise.resolve();
     }
-    console.log("Will fetch more UUIDs");
+    console.log("Will fetch more UUIDs...");
     const refill = () => {
         return fetchUUIDs().then(uuids => {
             console.log(`Received ${uuids.length} UUIDs...`);
