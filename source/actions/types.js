@@ -52,19 +52,6 @@ export const GOOGLEDRIVE_SET_AUTHENTICATING = "googleDrive/setAuthenticating";
 export const GOOGLEDRIVE_SET_AUTH_TOKEN = "googleDrive/setAuthToken";
 export const GOOGLEDRIVE_SET_REFRESH_TOKEN = "googleDrive/setRefreshToken";
 
-export const NAVIGATE_ADD_ARCHIVE = "navigation/addArchive";
-export const NAVIGATE_SEARCH_ARCHIVES = "navigation/searchArchives";
-export const NAVIGATE_BACK = "navigation/back";
-export const NAVIGATE_ENTRY = "navigation/entry";
-export const NAVIGATE_GROUPS = "navigation/groups";
-export const NAVIGATE_LOCK_PAGE = "navigation/lock";
-export const NAVIGATE_NEW_ENTRY = "navigation/newEntry";
-export const NAVIGATE_NEW_META = "navigation/newMeta";
-export const NAVIGATE_POPUP_BROWSER = "navigation/popupBrowser";
-export const NAVIGATE_REMOTE_CONNECT = "navigation/remoteConnect";
-export const NAVIGATE_REMOTE_EXPLORER = "navigation/remoteExplorer";
-export const NAVIGATE_ROOT = "navigation/returnToRoot";
-
 export const REMOTE_EXPLORER_CANCEL_NEW = "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR = "remoteExplorer/clear";
 export const REMOTE_EXPLORER_CREATE_NEW_FILENAME = "remoteExplorer/createNewFilename";

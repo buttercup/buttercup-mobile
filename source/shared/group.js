@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import { getGroup, getSelectedArchive } from "../selectors/archiveContents.js";
 import { dispatch, getState } from "../store.js";
-import { getTopGroupID } from "../selectors/nav.js";
+// import { getTopGroupID } from "../selectors/nav.js";
 import { setBusyState } from "../actions/app.js";
 import { saveCurrentArchive } from "./archive.js";
 import { handleError } from "../global/exceptions.js";
@@ -27,7 +27,7 @@ export function deleteGroup(groupID) {
 
 export function promptDeleteGroup() {
     const state = getState();
-    const topGroupID = getTopGroupID(state);
+    // const topGroupID = getTopGroupID(state); // @TODO
     const { title } = getGroup(state, topGroupID);
     Alert.alert("Delete Group", `Are you sure that you want to delete the group '${title}'?`, [
         { text: "Cancel", style: "cancel" },

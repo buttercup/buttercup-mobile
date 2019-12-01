@@ -1,5 +1,13 @@
 import React, { PureComponent } from "react";
-import { Platform, ScrollView, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import {
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    View,
+    SectionList
+} from "react-native";
 import PropTypes from "prop-types";
 import ProgressWheel from "react-native-progress-wheel";
 import { otpInstanceFromURL } from "../library/otp.js";
@@ -26,8 +34,7 @@ const styles = StyleSheet.create({
     },
     itemContainerViewFirst: {
         borderTopColor: "#DDD",
-        borderTopWidth: 0.5,
-        marginTop: 8
+        borderTopWidth: 0.5
     },
     entryContainerView: {
         flex: 1,
@@ -48,6 +55,17 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: "#222",
         fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace"
+    },
+    groupTitle: {
+        fontWeight: "500",
+        fontSize: 12,
+        textTransform: "uppercase",
+        color: "#999"
+    },
+    groupTitleContainer: {
+        paddingHorizontal: 8,
+        marginTop: 8,
+        marginBottom: 4
     }
 });
 
@@ -74,15 +92,20 @@ export default class CodesPage extends PureComponent {
     };
 
     interval = null;
+    focusSubscription = null;
 
     componentDidMount() {
         this.update();
         this.interval = setInterval(() => this.update(), 1000);
+        this.focusSubscription = this.props.navigation.addListener("didFocus", payload => {
+            this.update();
+        });
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
         this.interval = null;
+        this.focusSubscription.remove();
     }
 
     render() {
@@ -90,9 +113,12 @@ export default class CodesPage extends PureComponent {
             <View style={styles.container}>
                 <Choose>
                     <When condition={this.state.groups.length > 0}>
-                        <ScrollView>
-                            {this.state.groups.map(item => this.renderCodeGroup(item))}
-                        </ScrollView>
+                        <SectionList
+                            sections={this.state.groups}
+                            renderItem={({ item, index }) => this.renderCodeItem(item, index)}
+                            renderSectionHeader={({ section }) => this.renderSectionHeader(section)}
+                            keyExtractor={(item, index) => item.entryID + index}
+                        />
                     </When>
                     <Otherwise>
                         <EmptyView
@@ -143,11 +169,10 @@ export default class CodesPage extends PureComponent {
         );
     }
 
-    renderCodeGroup({ sourceID, sourceTitle, entries }) {
+    renderSectionHeader({ sourceTitle }) {
         return (
-            <View key={`sourceCodes:${sourceID}`}>
-                <Text>{sourceTitle}</Text>
-                {entries.map((item, idx) => this.renderCodeItem(item, idx))}
+            <View style={styles.groupTitleContainer}>
+                <Text style={styles.groupTitle}>{sourceTitle}</Text>
             </View>
         );
     }
@@ -159,8 +184,9 @@ export default class CodesPage extends PureComponent {
         }
         this.setState({
             groups: otpGroups.map(group => ({
-                ...group,
-                entries: group.entries.map(codeItem => {
+                sourceTitle: group.sourceTitle,
+                key: group.sourceID,
+                data: group.entries.map(codeItem => {
                     const totp = codeItem.totp;
                     const period = totp.period;
                     return {

@@ -9,7 +9,6 @@ import {
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
 import { getEntryTitle, loadEntry } from "../shared/entry.js";
 import { getBusyState } from "../selectors/app.js";
-import { getTopGroupID } from "../selectors/nav.js";
 import { createGroup, renameGroup } from "../shared/group.js";
 import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";

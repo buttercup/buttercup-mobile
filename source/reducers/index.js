@@ -3,7 +3,6 @@ import { APP_MASTER_RESET } from "../actions/types.js";
 import archives from "./archives.js";
 import archiveContents from "./archiveContents.js";
 import autofill from "./autofill.js";
-// import nav from "./nav.js";
 import addArchive from "./addArchive.js";
 import remoteExplorer from "./remoteExplorer.js";
 import entry from "./entry.js";
@@ -22,7 +21,6 @@ const appReducer = combineReducers({
     dropbox,
     entry,
     googleDrive,
-    // nav,
     remoteExplorer
 });
 
