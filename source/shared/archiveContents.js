@@ -24,9 +24,7 @@ export function checkSourceHasOfflineCopy(sourceID) {
 
 export function editGroup(groupID) {
     dispatch(setNewEntryParentGroup(groupID));
-    const showEntryAdd = groupID !== "0";
-    const showEditGroup = groupID !== "0";
-    showArchiveContentsAddItemSheet(/* is root */ groupID === "0", showEntryAdd, showEditGroup);
+    showArchiveContentsAddItemSheet(groupID);
 }
 
 export function getSourceReadonlyStatus(sourceID) {

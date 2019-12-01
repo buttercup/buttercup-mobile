@@ -25,10 +25,9 @@ export function deleteGroup(groupID) {
     group.delete();
 }
 
-export function promptDeleteGroup() {
+export function promptDeleteGroup(groupID) {
     const state = getState();
-    // const topGroupID = getTopGroupID(state); // @TODO
-    const { title } = getGroup(state, topGroupID);
+    const { title } = getGroup(state, groupID);
     Alert.alert("Delete Group", `Are you sure that you want to delete the group '${title}'?`, [
         { text: "Cancel", style: "cancel" },
         {
@@ -37,7 +36,7 @@ export function promptDeleteGroup() {
             onPress: () => {
                 dispatch(setBusyState("Saving"));
                 Promise.resolve()
-                    .then(() => deleteGroup(topGroupID))
+                    .then(() => deleteGroup(groupID))
                     .then(() => saveCurrentArchive())
                     .then(() => {
                         dispatch(setBusyState(null));

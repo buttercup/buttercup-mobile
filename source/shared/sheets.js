@@ -57,16 +57,15 @@ function removeTextFromArray(arr, text) {
     }
 }
 
-export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGroup) {
+export function showArchiveContentsAddItemSheet(currentGroupID) {
+    const isRoot = currentGroupID == "0";
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
     const title = isRoot ? "Manage Vault" : "Edit Group";
     const state = getState();
     const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {
-        if (!showEntryAdd) {
+        if (isRoot) {
             removeTextFromArray(buttons, SHEET_ADD_ENTRY);
-        }
-        if (!showEditGroup) {
             removeTextFromArray(buttons, SHEET_RENAME_GROUP);
             removeTextFromArray(buttons, SHEET_DELETE_GROUP);
         }
@@ -99,7 +98,7 @@ export function showArchiveContentsAddItemSheet(isRoot, showEntryAdd, showEditGr
                         break;
                     }
                     case SHEET_DELETE_GROUP: {
-                        promptDeleteGroup();
+                        promptDeleteGroup(currentGroupID);
                         break;
                     }
                     case SHEET_RENAME_GROUP: {
