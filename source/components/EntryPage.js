@@ -56,10 +56,11 @@ class EntryPage extends Component {
         copyToClipboard: PropTypes.func.isRequired,
         editing: PropTypes.bool.isRequired,
         isReadOnly: PropTypes.bool.isRequired,
-        onAddMeta: PropTypes.func.isRequired,
+        onAddProperty: PropTypes.func.isRequired,
         onCancelEdit: PropTypes.func.isRequired,
         onCancelViewingHidden: PropTypes.func.isRequired,
         onDeletePressed: PropTypes.func.isRequired,
+        onEditField: PropTypes.func.isRequired,
         onEditPressed: PropTypes.func.isRequired,
         onFieldValueChange: PropTypes.func.isRequired,
         onOpenPressed: PropTypes.func.isRequired,
@@ -148,7 +149,7 @@ class EntryPage extends Component {
                             <Cell
                                 key="$add"
                                 title="Add"
-                                onPress={() => this.props.onAddMeta()}
+                                onPress={() => this.props.onAddProperty()}
                                 tintColor="#1144FF"
                                 icon={{ name: "tag-plus", source: "material-community-icons" }}
                             />
@@ -170,7 +171,7 @@ class EntryPage extends Component {
                         key="otpURL"
                         title="Add Pending OTP URL"
                         onPress={() => {
-                            this.props.onAddMeta({
+                            this.props.onAddProperty({
                                 initialKey: getOTPTitleFromURL(this.props.pendingOTPURL),
                                 initialValue: this.props.pendingOTPURL,
                                 initialValueType: FIELD_VALUE_TYPE_OTP
@@ -217,15 +218,19 @@ class EntryPage extends Component {
             const buttonText = this.props.editing ? "Cancel" : "Hide hidden";
             return (
                 <CellGroup>
-                    <Cell
-                        key="edit"
-                        title="Edit mode"
-                        value={this.state.advancedEdit ? "Advanced" : "Normal"}
-                        onPress={() => this.setState({ advancedEdit: !this.state.advancedEdit })}
-                        tintColor="#1144FF"
-                        icon={{ name: "chip", source: "material-community-icons" }}
-                        disabled={this.props.isReadOnly}
-                    />
+                    <If condition={this.props.editing}>
+                        <Cell
+                            key="edit"
+                            title="Edit mode"
+                            value={this.state.advancedEdit ? "Advanced" : "Normal"}
+                            onPress={() =>
+                                this.setState({ advancedEdit: !this.state.advancedEdit })
+                            }
+                            tintColor="#1144FF"
+                            icon={{ name: "chip", source: "material-community-icons" }}
+                            disabled={this.props.isReadOnly}
+                        />
+                    </If>
                     <Cell
                         key="cancel"
                         title={buttonText}

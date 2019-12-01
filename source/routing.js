@@ -7,7 +7,6 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import ArchivesPage from "./components/ArchivesPage.js";
 import EntryPage from "./containers/EntryPage.js";
 import NewEntryPage from "./containers/NewEntryPage.js";
-import AddMetaPage from "./containers/AddMetaPage.js";
 import AddArchivePage from "./containers/AddArchivePage.js";
 import SearchArchivesPage from "./containers/SearchArchivesPage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
@@ -24,7 +23,6 @@ import {
     ADD_VAULT_SCREEN,
     REMOTE_CONNECT_SCREEN,
     REMOTE_EXPLORER_SCREEN,
-    ENTRY_NEW_META_SCREEN,
     ENTRY_NEW_SCREEN,
     ENTRY_EDIT_PROPERTY_SCREEN,
     LOCK_SCREEN,
@@ -64,7 +62,6 @@ export const AppNavigator = createStackNavigator(
         [ROOT_SCREEN]: { screen: ArchivesPage },
         [ENTRY_SCREEN]: { screen: EntryPage },
         [ENTRY_NEW_SCREEN]: { screen: NewEntryPage },
-        [ENTRY_NEW_META_SCREEN]: { screen: AddMetaPage },
         [ADD_VAULT_SCREEN]: { screen: AddArchivePage },
         [REMOTE_CONNECT_SCREEN]: { screen: RemoteConnectPage },
         [REMOTE_EXPLORER_SCREEN]: { screen: RemoteExplorerPage },

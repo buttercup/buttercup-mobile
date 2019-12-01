@@ -50,12 +50,20 @@ export default connect(
             Clipboard.setString(value);
             executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
         },
-        onAddMeta: ({ initialKey = "", initialValue = "", initialValueType = null } = {}) => () => {
-            navigate(ENTRY_NEW_META_SCREEN, {
-                initialKey,
-                initialValue,
-                initialValueType
-            });
+        onAddProperty: ({
+            initialKey = "",
+            initialValue = "",
+            initialValueType = null
+        } = {}) => dispatch => {
+            dispatch(
+                setEntryPropertyEdit({
+                    originalProperty: null,
+                    newProperty: initialKey,
+                    newValue: initialValue,
+                    newValueType: initialValueType
+                })
+            );
+            navigate(ENTRY_EDIT_PROPERTY_SCREEN);
         },
         onCancelEdit: () => (dispatch, getState) => {
             const state = getState();

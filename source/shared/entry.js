@@ -176,26 +176,3 @@ export function saveNewEntry() {
         navigateBack();
     });
 }
-
-export function saveNewMeta() {
-    const state = getState();
-    const key = getNewMetaKey(state);
-    const value = getNewMetaValue(state);
-    const valueType = getNewMetaValueType(state);
-    if (key.trim().length <= 0) {
-        handleError("Failed saving meta", new Error("Key cannot be empty"));
-        return;
-    }
-    const sourceID = getSourceID(state);
-    const entryID = getEntryID(state);
-    const archiveManager = getSharedArchiveManager();
-    const source = archiveManager.getSourceForID(sourceID);
-    const archive = source.workspace.archive;
-    const entry = archive.findEntryByID(entryID);
-    entry.setMeta(key, value);
-    if (valueType && typeof valueType === "string") {
-        entry.setAttribute(`${Entry.Attributes.FieldTypePrefix}${key}`, valueType);
-    }
-    navigateBack();
-    loadEntry(sourceID, entryID);
-}

@@ -142,23 +142,6 @@ export function showArchivesPageRightSheet() {
     );
 }
 
-export function showEntryMetaValueTypeSheet() {
-    ActionSheet.showActionSheetWithOptions(
-        {
-            options: ENTRY_META_VALUETYPE_SHEET_BUTTONS,
-            cancelButtonIndex: ENTRY_META_VALUETYPE_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
-            title: "Value Type"
-        },
-        selectedIndex => {
-            const typeTitle = ENTRY_META_VALUETYPE_SHEET_BUTTONS[selectedIndex];
-            const newFieldType = FIELD_TYPE_OPTIONS.find(option => option.title === typeTitle);
-            if (newFieldType) {
-                dispatch(setNewMetaValueType(newFieldType.type));
-            }
-        }
-    );
-}
-
 export function showEntryPropertyValueTypeSheet() {
     ActionSheet.showActionSheetWithOptions(
         {

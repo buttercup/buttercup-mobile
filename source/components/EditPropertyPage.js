@@ -30,35 +30,17 @@ class EditPropertyPage extends Component {
         onUnmount: PropTypes.func.isRequired
     };
 
-    // componentDidMount() {
-    //     const initialKey = this.props.navigation.getParam("initialKey", "");
-    //     const initialValue = this.props.navigation.getParam("initialValue", "");
-    //     const initialValueType = this.props.navigation.getParam("initialValueType", null);
-    //     this.props.setMetaValues(initialKey, initialValue);
-    //     if (initialValueType) {
-    //         this.props.setmetaValueType(initialValueType);
-    //     }
-    // }
-
     componentWillUnmount() {
         this.props.onUnmount();
     }
 
-    // handleKeyChange(key) {
-    //     this.props.setMetaValues(key, this.props.metaValue);
-    // }
-
-    // handleValueChange(value) {
-    //     this.props.setMetaValues(this.props.metaKey, value);
-    // }
-
     render() {
-        // const isUrl = /url\b/i.test(this.props.metaKey);
-        // const currentTypeField = FIELD_TYPE_OPTIONS.find(
-        //     fieldOption =>
-        //         (!this.props.metaValueType && fieldOption.type === FIELD_VALUE_TYPE_TEXT) ||
-        //         fieldOption.type === this.props.metaValueType
-        // );
+        const currentTypeField = FIELD_TYPE_OPTIONS.find(
+            fieldOption =>
+                (!this.props.fieldData.newValueType &&
+                    fieldOption.type === FIELD_VALUE_TYPE_TEXT) ||
+                fieldOption.type === this.props.fieldData.newValueType
+        );
         return (
             <View style={styles.container}>
                 <CellGroup>
@@ -75,14 +57,13 @@ class EditPropertyPage extends Component {
                         value={this.props.fieldData.newValue}
                         onChangeText={text => this.props.onEditValue(text)}
                         {...CELL_OPTIONS}
-                        // keyboardType={isUrl ? "url" : "default"}
                     />
                 </CellGroup>
                 <CellGroup>
                     <Cell
                         key="valueType"
                         title="Type"
-                        value={this.props.fieldData.newValueType}
+                        value={currentTypeField.title}
                         icon="planet"
                         onPress={() => this.props.onChooseValueType()}
                     />
@@ -91,18 +72,5 @@ class EditPropertyPage extends Component {
         );
     }
 }
-
-// EditPropertyPage.propTypes = {
-//     metaKey: PropTypes.string,
-//     metaValue: PropTypes.string,
-//     onUnmount: PropTypes.func,
-//     setMetaValues: PropTypes.func.isRequired
-// };
-
-// EditPropertyPage.defaultProps = {
-//     metaKey: "",
-//     metaValue: "",
-//     onUnmount: () => {}
-// };
 
 export default EditPropertyPage;
