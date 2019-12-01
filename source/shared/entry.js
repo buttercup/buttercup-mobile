@@ -1,10 +1,12 @@
 import { Alert } from "react-native";
-import { createEntryFacade } from "@buttercup/facades";
+import { createEntryFacade, createFieldDescriptor } from "@buttercup/facades";
 import { dispatch, getState } from "../store.js";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { Entry } from "../library/buttercupCore.js";
 import { loadEntry as loadNewEntry } from "../actions/entry.js";
 import {
+    getEntryEditingProperty,
+    getEntryFacade as getEntryFacadeFromState,
     getEntryID,
     getNewMetaKey,
     getNewMetaValue,
@@ -23,6 +25,7 @@ import { updateCurrentArchive } from "./archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
 import { getNameForSource } from "./entries";
 import { navigateBack } from "./nav.js";
+import { simpleCloneObject } from "../library/helpers.js";
 
 export function deleteEntry(sourceID, entryID) {
     const entry = getEntry(sourceID, entryID);
@@ -106,6 +109,48 @@ export function promptDeleteEntry() {
             }
         }
     ]);
+}
+
+export function saveEntryProperty() {
+    const state = getState();
+    const {
+        originalProperty = null,
+        newProperty,
+        newValue,
+        newValueType
+    } = getEntryEditingProperty(state);
+    const currentFacade = simpleCloneObject(getEntryFacadeFromState(state));
+    const sourceID = getSelectedSourceID(state);
+    const entryID = getEntryID(state);
+    if (originalProperty) {
+        // Edit existing
+        const targetField = currentFacade.fields.find(
+            field => field.propertyType === "property" && field.property === originalProperty
+        );
+        targetField.property = newProperty;
+        targetField.value = newValue;
+        if (newValueType) {
+            targetField.valueType = newValueType;
+        }
+    } else {
+        // New field
+        const newField = createFieldDescriptor(null, "", "property", newProperty, {
+            removeable: true,
+            valueType: newValueType
+        });
+        newField.value = newValue;
+        currentFacade.fields.push(newField);
+    }
+    // Here we load the same entry facade so saving will work, as we don't want
+    // to read from the vault but actually use the current facade in memory..
+    dispatch(
+        loadNewEntry({
+            id: entryID,
+            facade: currentFacade,
+            sourceID
+        })
+    );
+    navigateBack();
 }
 
 export function saveNewEntry() {

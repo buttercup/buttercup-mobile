@@ -4,7 +4,12 @@ import pathOr from "ramda/es/pathOr";
 import { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
-import { setEntryEditing, setFacadeValue, setViewingHidden } from "../actions/entry.js";
+import {
+    setEntryEditing,
+    setEntryPropertyEdit,
+    setFacadeValue,
+    setViewingHidden
+} from "../actions/entry.js";
 import { setBusyState, setPendingOTPURL } from "../actions/app.js";
 import {
     getEntryFacade,
@@ -26,7 +31,7 @@ import { updateCurrentArchive } from "../shared/archiveContents.js";
 import { promptDeleteEntry } from "../shared/entry.js";
 import { executeNotification } from "../global/notify.js";
 import { prepareURLForLaunch } from "../library/helpers.js";
-import { navigate, ENTRY_NEW_META_SCREEN } from "../shared/nav.js";
+import { navigate, ENTRY_NEW_META_SCREEN, ENTRY_EDIT_PROPERTY_SCREEN } from "../shared/nav.js";
 
 const isReadOnly = props => pathOr(false, ["navigation", "state", "params", "readOnly"], props);
 
@@ -64,6 +69,17 @@ export default connect(
         },
         onDeletePressed: () => () => {
             promptDeleteEntry();
+        },
+        onEditField: facadeField => dispatch => {
+            dispatch(
+                setEntryPropertyEdit({
+                    originalProperty: facadeField.property,
+                    newProperty: facadeField.property,
+                    newValue: facadeField.value,
+                    newValueType: facadeField.valueType
+                })
+            );
+            navigate(ENTRY_EDIT_PROPERTY_SCREEN);
         },
         onEditPressed: () => dispatch => dispatch(setEntryEditing(true)),
         onFieldValueChange: (field, property, value) => dispatch => {

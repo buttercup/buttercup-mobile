@@ -71,6 +71,10 @@ class EntryPage extends Component {
         viewHidden: PropTypes.bool.isRequired
     };
 
+    state = {
+        advancedEdit: false
+    };
+
     componentDidMount() {
         this.updateRightButton();
     }
@@ -113,8 +117,19 @@ class EntryPage extends Component {
         );
     }
 
-    handleCellPress(key, value) {
-        this.props.copyToClipboard(key, value);
+    handleCancelEdit() {
+        this.props.onCancelEdit();
+        this.setState({
+            advancedEdit: false
+        });
+    }
+
+    handleCellPress(key, field) {
+        if (this.props.editing) {
+            this.props.onEditField(field);
+            return;
+        }
+        this.props.copyToClipboard(key, field.value);
     }
 
     modifyField(field, newValue) {
@@ -179,7 +194,7 @@ class EntryPage extends Component {
                   spellCheck: false
               }
             : {};
-        const CellType = editing ? CellInput : Cell;
+        const CellType = editing && !this.state.advancedEdit ? CellInput : Cell;
         const title = editing ? field.property : field.title || field.property;
         return (
             <CellType
@@ -187,7 +202,7 @@ class EntryPage extends Component {
                 title={title}
                 value={this.displayValueForProp(field.property, field.value)}
                 icon={iconLabelForProp(field.property)}
-                onPress={() => this.handleCellPress(title, field.value)}
+                onPress={() => this.handleCellPress(title, field)}
                 onChangeText={newText => this.modifyField(field, newText)}
                 {...cellOptions}
             />
@@ -197,11 +212,20 @@ class EntryPage extends Component {
     renderEditButtons() {
         if (this.props.editing || this.props.viewHidden) {
             const onPressCallback = this.props.editing
-                ? () => this.props.onCancelEdit()
+                ? () => this.handleCancelEdit()
                 : () => this.props.onCancelViewingHidden();
             const buttonText = this.props.editing ? "Cancel" : "Hide hidden";
             return (
                 <CellGroup>
+                    <Cell
+                        key="edit"
+                        title="Edit mode"
+                        value={this.state.advancedEdit ? "Advanced" : "Normal"}
+                        onPress={() => this.setState({ advancedEdit: !this.state.advancedEdit })}
+                        tintColor="#1144FF"
+                        icon={{ name: "chip", source: "material-community-icons" }}
+                        disabled={this.props.isReadOnly}
+                    />
                     <Cell
                         key="cancel"
                         title={buttonText}

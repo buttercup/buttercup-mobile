@@ -6,7 +6,7 @@ import { promptDeleteGroup } from "./group.js";
 import { getState, dispatch } from "../store.js";
 import { handleError } from "../global/exceptions.js";
 import { showCreateGroupPrompt, showGroupRenamePrompt } from "../actions/archiveContents.js";
-import { setNewMetaValueType } from "../actions/entry.js";
+import { mergeEntryPropertyEdit, setNewMetaValueType } from "../actions/entry.js";
 import { getSelectedSourceID, isCurrentlyReadOnly } from "../selectors/archiveContents.js";
 import {
     disableTouchUnlock,
@@ -154,6 +154,27 @@ export function showEntryMetaValueTypeSheet() {
             const newFieldType = FIELD_TYPE_OPTIONS.find(option => option.title === typeTitle);
             if (newFieldType) {
                 dispatch(setNewMetaValueType(newFieldType.type));
+            }
+        }
+    );
+}
+
+export function showEntryPropertyValueTypeSheet() {
+    ActionSheet.showActionSheetWithOptions(
+        {
+            options: ENTRY_META_VALUETYPE_SHEET_BUTTONS,
+            cancelButtonIndex: ENTRY_META_VALUETYPE_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
+            title: "Value Type"
+        },
+        selectedIndex => {
+            const typeTitle = ENTRY_META_VALUETYPE_SHEET_BUTTONS[selectedIndex];
+            const newFieldType = FIELD_TYPE_OPTIONS.find(option => option.title === typeTitle);
+            if (newFieldType) {
+                dispatch(
+                    mergeEntryPropertyEdit({
+                        newValueType: newFieldType.type
+                    })
+                );
             }
         }
     );

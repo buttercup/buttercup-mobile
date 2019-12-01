@@ -4,6 +4,8 @@ import {
     ENTRY_NEW_META_CLEAR,
     ENTRY_NEW_META_SET,
     ENTRY_NEW_META_VALUETYPE_SET,
+    ENTRY_PROP_EDIT_MERGE,
+    ENTRY_PROP_EDIT_SET,
     ENTRY_SET_EDITING,
     ENTRY_SET_FACADE_VALUE,
     ENTRY_SET_NEW_PARENT_GROUP,
@@ -14,6 +16,7 @@ import {
 
 const INITIAL = {
     editing: false,
+    editProperty: null,
     id: null,
     newEntry: {
         title: "",
@@ -115,6 +118,19 @@ export default function entryReducer(state = INITIAL, action = {}) {
                 facade: {
                     ...state.facade,
                     fields: newFields
+                }
+            };
+        case ENTRY_PROP_EDIT_SET:
+            return {
+                ...state,
+                editProperty: { ...action.payload }
+            };
+        case ENTRY_PROP_EDIT_MERGE:
+            return {
+                ...state,
+                editProperty: {
+                    ...state.editProperty,
+                    ...action.payload
                 }
             };
 

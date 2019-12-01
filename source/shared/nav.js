@@ -6,6 +6,7 @@ export const VAULT_CONTENTS_SCREEN = "VaultContents";
 export const ENTRY_SCREEN = "Entry";
 export const ENTRY_NEW_SCREEN = "EntryNew";
 export const ENTRY_NEW_META_SCREEN = "EntryNewMeta";
+export const ENTRY_EDIT_PROPERTY_SCREEN = "EntryEditProperty";
 export const ADD_VAULT_SCREEN = "AddVault";
 export const REMOTE_CONNECT_SCREEN = "RemoteConnect";
 export const REMOTE_EXPLORER_SCREEN = "RemoteExplorer";
