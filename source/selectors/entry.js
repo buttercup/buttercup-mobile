@@ -33,21 +33,6 @@ export function getEntryURL(state) {
     return (urlField && urlField.value) || null;
 }
 
-export function getNewMetaKey(state) {
-    const newMeta = state[STATE_KEY].newMeta || {};
-    return newMeta.key || "";
-}
-
-export function getNewMetaValue(state) {
-    const newMeta = state[STATE_KEY].newMeta || {};
-    return newMeta.value || "";
-}
-
-export function getNewMetaValueType(state) {
-    const newMeta = state[STATE_KEY].newMeta || {};
-    return newMeta.valueType || null;
-}
-
 export function getNewParentID(state) {
     return state[STATE_KEY].newEntry.parentID;
 }

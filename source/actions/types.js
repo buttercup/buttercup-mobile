@@ -37,9 +37,6 @@ export const DROPBOX_SET_AUTH_TOKEN = "dropbox/setAuthToken";
 
 export const ENTRY_LOAD = "entry/load";
 export const ENTRY_NEW_CLEAR = "entry/clearNew";
-export const ENTRY_NEW_META_CLEAR = "entry/clearNewMeta";
-export const ENTRY_NEW_META_SET = "entry/newMeta/setValues";
-export const ENTRY_NEW_META_VALUETYPE_SET = "entry/newMeta/setValueType";
 export const ENTRY_PROP_EDIT_MERGE = "entry/propertyEdit/merge";
 export const ENTRY_PROP_EDIT_SET = "entry/propertyEdit/set";
 export const ENTRY_SET_EDITING = "entry/setEditing";
