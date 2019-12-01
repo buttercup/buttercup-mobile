@@ -7,7 +7,6 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import ArchivesPage from "./components/ArchivesPage.js";
 import EntryPage from "./containers/EntryPage.js";
 import NewEntryPage from "./containers/NewEntryPage.js";
-import AddMetaPage from "./containers/AddMetaPage.js";
 import AddArchivePage from "./containers/AddArchivePage.js";
 import SearchArchivesPage from "./containers/SearchArchivesPage.js";
 import RemoteConnectPage from "./containers/RemoteConnectPage.js";
@@ -17,14 +16,15 @@ import LockPage from "./components/LockPage.js";
 import VaultNavigator from "./components/VaultNavigator.js";
 import CodesPage from "./containers/CodesPage.js";
 import GroupsPage from "./containers/GroupsPage.js";
+import EditPropertyPage from "./containers/EditPropertyPage.js";
 import {
     VAULT_CONTENTS_SCREEN,
     ENTRY_SCREEN,
     ADD_VAULT_SCREEN,
     REMOTE_CONNECT_SCREEN,
     REMOTE_EXPLORER_SCREEN,
-    ENTRY_NEW_META_SCREEN,
     ENTRY_NEW_SCREEN,
+    ENTRY_EDIT_PROPERTY_SCREEN,
     LOCK_SCREEN,
     POPUP_BROWSER_SCREEN,
     ROOT_SCREEN
@@ -62,13 +62,13 @@ export const AppNavigator = createStackNavigator(
         [ROOT_SCREEN]: { screen: ArchivesPage },
         [ENTRY_SCREEN]: { screen: EntryPage },
         [ENTRY_NEW_SCREEN]: { screen: NewEntryPage },
-        [ENTRY_NEW_META_SCREEN]: { screen: AddMetaPage },
         [ADD_VAULT_SCREEN]: { screen: AddArchivePage },
         [REMOTE_CONNECT_SCREEN]: { screen: RemoteConnectPage },
         [REMOTE_EXPLORER_SCREEN]: { screen: RemoteExplorerPage },
         [POPUP_BROWSER_SCREEN]: { screen: PopupBrowser },
         [VAULT_CONTENTS_SCREEN]: { screen: GroupsPage },
-        [LOCK_SCREEN]: { screen: LockPage }
+        [LOCK_SCREEN]: { screen: LockPage },
+        [ENTRY_EDIT_PROPERTY_SCREEN]: { screen: EditPropertyPage }
     },
     sharedStackStyles
 );
@@ -119,35 +119,10 @@ const TabNavigator = createBottomTabNavigator(
         tabBarOptions: {
             activeTintColor: "#454545",
             inactiveTintColor: "#999999"
-            // tabStyle: {
-            //     color: "#000",
-            //     backgroundColor: "#FFF"
-            // },
-            // labelStyle: {
-            //     color: "#000"
-            // }
         }
     }
 );
 
-// const middleware = createReactNavigationReduxMiddleware(state => state.nav);
-// const addListener = createReduxBoundAddListener("root");
-
-// const AppWithNavigationState = ({ dispatch, nav }) => (
-//     <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav, addListener })} />
-// );
-
 const App = createAppContainer(TabNavigator);
-// const AppWithNavigationState = createReduxContainer(App);
 
-// AppWithNavigationState.propTypes = {
-//     dispatch: PropTypes.func.isRequired,
-//     nav: PropTypes.object.isRequired
-// };
-
-// const mapStateToProps = state => ({
-//     nav: state.nav
-// });
-
-// export default connect(mapStateToProps)(AppWithNavigationState);
 export default App;

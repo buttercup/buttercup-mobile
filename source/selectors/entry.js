@@ -1,5 +1,9 @@
 const STATE_KEY = "entry";
 
+export function getEntryEditingProperty(state) {
+    return state[STATE_KEY].editProperty;
+}
+
 export function getEntryFacade(state) {
     return state[STATE_KEY].facade;
 }
