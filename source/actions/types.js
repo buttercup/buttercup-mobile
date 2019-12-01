@@ -14,12 +14,12 @@ export const APP_SET_SEARCH_CONTEXT = "app/search/setContext";
 
 export const ARCHIVE_CONTENTS_MARK_READONLY = "archiveContents/markAsReadOnly";
 export const ARCHIVE_CONTENTS_SET_GROUPS = "archiveContents/setGroups";
-export const ARCHIVE_CONTENTS_SET_OTP_CODES = "archiveContents/setOTPCodes";
 export const ARCHIVE_CONTENTS_SET_SOURCE = "archiveContentsPage/setSource";
 export const ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT = "archiveContents/toggleCreateGroupPrompt";
 export const ARCHIVE_CONTENTS_TOGGLE_REN_GROUP_PROMPT = "archiveContents/toggleGroupRenamePrompt";
 
 export const ARCHIVES_SET = "archives/set";
+export const ARCHIVES_SET_OTP_CODES = "archives/setOTPCodes";
 export const ARCHIVES_SET_TOUCHID_ENABLED = "archives/touchID/setEnabledArchives";
 export const ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT = "archives/toggleUnlockPasswordPrompt";
 

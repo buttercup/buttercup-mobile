@@ -66,11 +66,11 @@ export default class CodesPage extends PureComponent {
 
     static propTypes = {
         copyToClipboard: PropTypes.func.isRequired,
-        otpCodes: PropTypes.arrayOf(PropTypes.object).isRequired
+        otpGroups: PropTypes.arrayOf(PropTypes.object).isRequired
     };
 
     state = {
-        codes: []
+        groups: []
     };
 
     interval = null;
@@ -83,6 +83,26 @@ export default class CodesPage extends PureComponent {
     componentWillUnmount() {
         clearInterval(this.interval);
         this.interval = null;
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Choose>
+                    <When condition={this.state.groups.length > 0}>
+                        <ScrollView>
+                            {this.state.groups.map(item => this.renderCodeGroup(item))}
+                        </ScrollView>
+                    </When>
+                    <Otherwise>
+                        <EmptyView
+                            text="Unlock vaults or add codes."
+                            imageSource={SECURITY_SHIELD}
+                        />
+                    </Otherwise>
+                </Choose>
+            </View>
+        );
     }
 
     renderCodeItem({ entryID, entryTitle, title, otpURL, digits, period, timeLeft }, index) {
@@ -123,45 +143,33 @@ export default class CodesPage extends PureComponent {
         );
     }
 
-    render() {
+    renderCodeGroup({ sourceID, sourceTitle, entries }) {
         return (
-            <View style={styles.container}>
-                <Choose>
-                    <When condition={this.state.codes.length > 0}>
-                        <ScrollView>
-                            {this.state.codes.map((item, idx) => this.renderCodeItem(item, idx))}
-                        </ScrollView>
-                    </When>
-                    <Otherwise>
-                        <EmptyView
-                            text="Unlock vaults or add codes."
-                            imageSource={SECURITY_SHIELD}
-                        />
-                    </Otherwise>
-                </Choose>
+            <View key={`sourceCodes:${sourceID}`}>
+                <Text>{sourceTitle}</Text>
+                {entries.map((item, idx) => this.renderCodeItem(item, idx))}
             </View>
         );
     }
 
     update() {
-        const { otpCodes, navigation } = this.props;
-
-        if (otpCodes.length <= 0 || !navigation.isFocused()) {
+        const { otpGroups, navigation } = this.props;
+        if (otpGroups.length <= 0 || !navigation.isFocused()) {
             return;
         }
-
         this.setState({
-            codes: otpCodes.map(codeItem => {
-                const totp = codeItem.totp;
-                const period = totp.period;
-                return {
-                    ...codeItem,
-                    totp,
-                    period,
-                    digits: totp.generate(),
-                    timeLeft: period - (Math.floor(Date.now() / 1000) % period)
-                };
-            })
+            groups: otpGroups.map(group => ({
+                ...group,
+                entries: group.entries.map(codeItem => {
+                    const totp = codeItem.totp;
+                    const period = totp.period;
+                    return {
+                        ...codeItem,
+                        digits: totp.generate(),
+                        timeLeft: period - (Math.floor(Date.now() / 1000) % period)
+                    };
+                })
+            }))
         });
     }
 }

@@ -59,10 +59,6 @@ export function getGroupsUnderID(state, id) {
     return foundGroup && foundGroup.groups ? sortGroups(foundGroup.groups) : [];
 }
 
-export function getOTPCodes(state) {
-    return state[STATE_KEY].otpCodes;
-}
-
 export function getSelectedArchive(state) {
     const id = getSelectedSourceID(state);
     const archiveManager = getSharedArchiveManager();
