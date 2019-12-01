@@ -1,7 +1,6 @@
 import { Alert } from "react-native";
 import { getGroup, getSelectedArchive } from "../selectors/archiveContents.js";
 import { dispatch, getState } from "../store.js";
-// import { getTopGroupID } from "../selectors/nav.js";
 import { setBusyState } from "../actions/app.js";
 import { saveCurrentArchive } from "./archive.js";
 import { handleError } from "../global/exceptions.js";
