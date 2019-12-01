@@ -22,18 +22,17 @@ const attachOTPInstance = (otpGroups = []) =>
                     }
                 ];
             }
+            const otpProps = prepareOTPProps(otpInstance);
             return [
                 ...output,
                 {
                     ...codeItem,
-                    ...prepareOTPProps(otpInstance)
+                    ...otpProps,
+                    // Error if no period (ie. HOTP)
+                    error: !otpProps.period
                 }
             ];
         }, [])
-        // entries: group.entries.map(codeItem => ({
-        //     ...codeItem,
-        //     ...prepareOTPProps(otpInstanceFromURL(codeItem.otpURL))
-        // }))
     }));
 const prepareOTPProps = otpInstance => ({
     totp: otpInstance,

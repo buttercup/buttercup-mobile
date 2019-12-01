@@ -177,7 +177,7 @@ export default class CodesPage extends PureComponent {
                         <ProgressWheel
                             size={30}
                             width={5}
-                            progress={error ? 0 : (timeLeft / period) * 100}
+                            progress={error || !period ? 0 : (timeLeft / period) * 100}
                             color="#24B5AB"
                             backgroundColor="#ededed"
                         />
@@ -207,11 +207,6 @@ export default class CodesPage extends PureComponent {
                 data: group.entries.map(codeItem => {
                     if (codeItem.error) {
                         return codeItem;
-                        // return {
-                        //     ...codeItem,
-                        //     digits: "",
-                        //     timeLeft: 0
-                        // };
                     }
                     const totp = codeItem.totp;
                     const period = totp.period;
