@@ -5,7 +5,10 @@
         "add-vault": "Add Vault",
         "lock-all": "Lock All",
         "self": "Vaults",
-        "search": "Search Vaults"
+        "search": "Search Vaults",
+        "errors": {
+            "unable-to-fetch-source": "Unable to fetch source information: No source found for ID: {{sourceID}}"
+        }
     },
     "manage-vault": "Manage Vault",
     "edit-group": "Edit Group",
@@ -84,7 +87,12 @@
         "remove-vault-description": "Are you sure that you want to remove '{{name}}'?",
         "add": "Add",
         "search": "Search Vault",
-        "cannot-lock-not-unlocked": "Cannot lock vault that is not unlocked"
+        "cannot-lock-not-unlocked": "Cannot lock vault that is not unlocked",
+        "errors": {
+            "failed-creating-new-vault": "Failed creating new vault: Missing filename and/or password",
+            "failed-finding-source": "Quelle für den Tresor mit ID {{id}} konnte nicht gefunden werden",
+            "failed-adding": "Failed adding vault"
+        }
     },
     "use-offline": "Use Offline",
     "busy-state": {
@@ -98,7 +106,10 @@
         "confirm-delete": "Are you sure that you want to delete the group '{{title}}'?",
         "new": "New Group",
         "rename": "Rename Group",
-        "trash": "Trash"
+        "trash": "Trash",
+        "errors": {
+            "failed-deleting-group": "Failed deleting group"
+        }
     },
     "delete": "Delete",
     "biometric-unlock": {
@@ -143,5 +154,13 @@
         "start-typing": "Start typing to search...",
         "cancel": "Cancel"
     },
-    "back": "Back"
+    "back": "Back",
+    "cloud": {
+        "errors": {
+            "unknown-vault-type": "Unknown vault type: {{archiveType}}"
+        }
+    },
+    "errors": {
+        "failed-fetching-remote-contents": "Failed fetching remote contents"
+    }
 }

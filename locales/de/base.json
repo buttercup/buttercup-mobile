@@ -5,7 +5,10 @@
         "add-vault": "Tresor hinzufügen",
         "lock-all": "Alle sperren",
         "self": "Tresore",
-        "search": "Tresore durchsuchen"
+        "search": "Tresore durchsuchen",
+        "errors": {
+            "unable-to-fetch-source": "Es ist nicht möglich, Quellinformationen abzurufen: Keine Quelle für ID {{sourceID}} gefunden"
+        }
     },
     "manage-vault": "Verwalte Tresor",
     "edit-group": "Bearbeite Gruppe",
@@ -84,7 +87,12 @@
         "remove-vault-description": "Bist du dir sicher, dass du '{{name}}' löschen möchtest?",
         "add": "Hinzufügen",
         "search": "Tresor durchsuchen",
-        "cannot-lock-not-unlocked": "Ein Tresor, der nicht entsperrt ist, kann nicht gesperrt werden."
+        "cannot-lock-not-unlocked": "Ein Tresor, der nicht entsperrt ist, kann nicht gesperrt werden.",
+        "errors": {
+            "failed-creating-new-vault": "Erstellung eines neuen Tresors fehlgeschlagen: Fehlender Dateiname und/oder Passwort",
+            "failed-finding-source": "Failed finding source for vault with ID: {{id}}",
+            "failed-adding": "Tresor Hinzufügen fehlgeschlagen"
+        }
     },
     "use-offline": "Offline nutzen",
     "busy-state": {
@@ -98,7 +106,10 @@
         "confirm-delete": "Bist du sicher, dass du die Gruppe '{{title}}' löschen möchtest?",
         "new": "Neue Gruppe",
         "rename": "Gruppe umbennen",
-        "trash": "Papierkorb"
+        "trash": "Papierkorb",
+        "errors": {
+            "failed-deleting-group": "Löschen der Gruppe fehlgeschlagen"
+        }
     },
     "delete": "Löschen",
     "biometric-unlock": {
@@ -143,5 +154,13 @@
         "start-typing": "Gib etwas ein um mit der Suche zu starten...",
         "cancel": "Abbrechen"
     },
-    "back": "Zurück"
+    "back": "Zurück",
+    "cloud": {
+        "errors": {
+            "unknown-vault-type": "Unbekannter Tresortyp: {{archiveType}}"
+        }
+    },
+    "errors": {
+        "failed-fetching-remote-contents": "Abrufen des Remote-Inhalts fehlgeschlagen"
+    }
 }

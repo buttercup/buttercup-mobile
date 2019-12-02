@@ -45,7 +45,7 @@ export function promptDeleteGroup(groupID) {
                     })
                     .catch(err => {
                         dispatch(setBusyState(null));
-                        handleError("Failed deleting group", err);
+                        handleError(i18n.t("group.errors.failed-deleting-group"), err);
                     });
             }
         }
