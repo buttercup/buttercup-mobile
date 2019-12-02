@@ -43,7 +43,7 @@ export function disableTouchUnlock(sourceID) {
             executeNotification(
                 "success",
                 i18n.t("biometric-unlock.self"),
-                i18n.t("biometric-unlock.touch-unlock-disabled")
+                i18n.t("biometric-unlock.biometric-unlock-disabled")
             );
         })
         .then(() => updateTouchEnabledSources())
@@ -74,7 +74,7 @@ export function enableTouchUnlock(sourceID) {
             executeNotification(
                 "success",
                 i18n.t("biometric-unlock.self"),
-                i18n.t("biometric-unlock.touch-unlock-enabled")
+                i18n.t("biometric-unlock.biometric-unlock-enabled")
             );
             return updateTouchEnabledSources().then(() => ({ action: "none" }));
         })

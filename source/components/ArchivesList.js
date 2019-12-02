@@ -175,7 +175,7 @@ class ArchivesList extends Component {
         if (status === "unlocked") {
             this.props.lockArchive(sourceID);
         } else {
-            alert(this.props.t("archive.cannot-lock-not-unlocked"));
+            alert(this.props.t("vault.cannot-lock-not-unlocked"));
         }
     }
 
@@ -328,7 +328,7 @@ class ArchivesList extends Component {
                     </Otherwise>
                 </Choose>
                 <Prompt
-                    title={this.props.t("vaults.archive-password")}
+                    title={this.props.t("vaults.vault-password")}
                     placeholder=""
                     visible={this.props.showUnlockPrompt}
                     onCancel={() => this.props.showUnlockPasswordPrompt(false)}

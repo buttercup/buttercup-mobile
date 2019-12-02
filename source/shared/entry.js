@@ -105,7 +105,7 @@ export function promptDeleteEntry() {
                     })
                     .catch(err => {
                         dispatch(setBusyState(null));
-                        handleError("Failed deleting entry", err);
+                        handleError(i18n.t("entry.errors.failed-deleting"), err);
                     });
             }
         }
@@ -160,7 +160,7 @@ export function saveNewEntry() {
     const username = getNewUsername(state);
     const password = getNewPassword(state);
     if (title.trim().length <= 0) {
-        handleError("Failed saving entry", new Error("Title cannot be empty"));
+        handleError(i18n.t("entry.errors.failed-saving"), i18n.t("entry.errors.empty-title"));
         return;
     }
     const sourceID = getSelectedSourceID(state);

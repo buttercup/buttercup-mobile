@@ -53,7 +53,12 @@
             "name": "Name",
             "value": "Value"
         },
-        "delete-confirm": "Are you sure that you want to delete the entry '{{title}}'?"
+        "delete-confirm": "Are you sure that you want to delete the entry '{{title}}'?",
+        "errors": {
+            "failed-saving": "Failed saving entry",
+            "empty-title": "Title cannot be empty",
+            "failed-deleting": "Failed deleting entry"
+        }
     },
     "remote": {
         "connect": "Connect",
@@ -121,10 +126,22 @@
         "enable": "Enable Autofill",
         "disable": "Disable Autofill",
         "self": "Autofill",
-        "enable-in-ios-settings": "Enable Autofill in iOS Settings",
-        "enable-in-ios-settings-description": "Please ensure you have also enabled Buttercup in iOS Settings > Passwords and Accounts > Autofill Passwords"
+        "ios": {
+            "enable-in-settings": "Enable Autofill in iOS Settings",
+            "enable-in-settings-description": "Please ensure you have also enabled Buttercup in iOS Settings > Passwords and Accounts > Autofill Passwords"
+        }
     },
     "android-settings": "Android Settings",
     "copied-value": "Copied value",
-    "copied-value-description": "Copied '{{name}}' to clipboard"
+    "copied-value-description": "Copied '{{name}}' to clipboard",
+    "codes": {
+        "self": "Codes",
+        "description": "Unlock vaults or add codes."
+    },
+    "search": {
+        "self": "Search",
+        "start-typing": "Start typing to search...",
+        "cancel": "Cancel"
+    },
+    "back": "Back"
 }

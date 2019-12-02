@@ -1,7 +1,7 @@
 {
     "vaults": {
         "add-to-begin": "Füge einen Tresor hinzu um loszulegen",
-        "vault-password": "Tresor-Passwort",
+        "vault-password": "Tresor Passwort",
         "add-vault": "Tresor hinzufügen",
         "lock-all": "Alle sperren",
         "self": "Tresore",
@@ -29,7 +29,7 @@
         "create": "Erstellen",
         "title": "Titel",
         "username": "Benutzername",
-        "password": "Password",
+        "password": "Passwort",
         "open-url": "URL öffnen",
         "open-url-description": "Drücke OK, um die URL zu starten. Das Passwort wird in die Zwischenablage kopiert.",
         "no-url": "Keine URL",
@@ -53,7 +53,12 @@
             "name": "Name",
             "value": "Wert"
         },
-        "delete-confirm": "Bist du dir sicher, dass du den Eintrag '{{title}}' löschen möchtest?"
+        "delete-confirm": "Bist du dir sicher, dass du den Eintrag '{{title}}' löschen möchtest?",
+        "errors": {
+            "failed-saving": "Speichern des Eintrags fehlgeschlagen",
+            "empty-title": "Der Titel darf nicht leer sein",
+            "failed-deleting": "Löschen des Eintrags fehlgeschlagen"
+        }
     },
     "remote": {
         "connect": "Verbinden",
@@ -97,32 +102,46 @@
     },
     "delete": "Löschen",
     "biometric-unlock": {
-        "self": "Berührungsfreigabe",
-        "biometric-unlock-disabled": "Berührungsfreigabe erfolgreich deaktiviert",
-        "biometric-unlock-enabled": "Berührungsfreigabe erfolgreich aktiviert",
+        "self": "Biometrischefreigabe",
+        "biometric-unlock-disabled": "Biometrischefreigabe erfolgreich deaktiviert",
+        "biometric-unlock-enabled": "Biometrischefreigabe erfolgreich aktiviert",
         "errors": {
             "password-not-supported": "Passwort wird nicht unterstützt, um die biometrische Freischaltung zu ermöglichen.",
-            "failed-disabling": "Deaktivierung von Berührungsfreigabe fehlgeschlagen",
+            "failed-disabling": "Deaktivierung von Biometrischefreigabe fehlgeschlagen",
             "source-not-found": "Aktuelle Quelle nicht gefunden",
             "unrecognised-response": "Nicht erkannte biometrische Freigabereaktion",
             "unable-locate-credentials": "Aktuelle Anmeldeinformationen können nicht gefunden werden",
-            "not-for-vault": "Berührungsfreigabe ist für diese Quelle nicht aktiviert",
+            "not-for-vault": "Biometrischefreigabe ist für diese Quelle nicht aktiviert",
             "no-credentials": "Unter der Touch-ID für diese Quelle wurden keine Anmeldeinformationen gefunden",
-            "failed-enabling": "Aktivierung der Berührungsfreigabe fehlgeschlagen"
+            "failed-enabling": "Aktivierung der Biometrischefreigabe fehlgeschlagen"
         },
         "authenticate-to-enable": "Authentifizieren zur Aktivierung von biometric-Unlock",
         "authenticate-to-unlock": "Authentifizieren zum Entsperren des Tresors",
-        "enable": "Berührungsfreigabe aktivieren",
-        "disable": "Berührungsfreigabe deaktivieren",
-        "toggle": "Berührungsfreigabe umschalten"
+        "enable": "Biometrischefreigabe aktivieren",
+        "disable": "Biometrischefreigabe deaktivieren",
+        "toggle": "Biometrischefreigabe ändern"
     },
     "autofill": {
-        "toggle": "Autofill umschalten",
+        "toggle": "Autofill ändern",
         "enable": "Autofill aktivieren",
         "disable": "Autofill deaktivieren",
-        "self": "Autofill"
+        "self": "Autofill",
+        "ios": {
+            "enable-in-settings": "Autofill in den iOS-Einstellungen aktivieren",
+            "enable-in-settings-description": "Bitte stell sicher, dass du Buttercup auch in den iOS-Einstellungen > Passwörter & Accounts > Automatisch ausfüllen aktiviert hast."
+        }
     },
     "android-settings": "Android Einstellungen",
     "copied-value": "Wert kopiert",
-    "copied-value-description": "'{{name}}' in Zwischenablage kopiert"
+    "copied-value-description": "'{{name}}' in Zwischenablage kopiert",
+    "codes": {
+        "self": "Codes",
+        "description": "Entsperre Tresore oder füge Codes hinzu."
+    },
+    "search": {
+        "self": "Suche",
+        "start-typing": "Gib etwas ein um mit der Suche zu starten...",
+        "cancel": "Abbrechen"
+    },
+    "back": "Zurück"
 }

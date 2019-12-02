@@ -264,8 +264,8 @@ export function showAutoFillToggleSheet() {
                             }
                             if (Platform.OS === "ios") {
                                 Alert.alert(
-                                    i18next.t("enable-in-ios-settings"),
-                                    i18next.t("enable-in-ios-settings-description"),
+                                    i18next.t("autofill.ios.enable-in-settings"),
+                                    i18next.t("autofill.ios.enable-in-settings-description"),
                                     [{ text: "OK", onPress: () => {} }],
                                     { cancelable: true }
                                 );

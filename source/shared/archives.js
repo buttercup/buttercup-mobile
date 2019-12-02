@@ -23,8 +23,8 @@ export function promptRemoveArchive(sourceID) {
     const archiveManager = getSharedArchiveManager();
     const source = archiveManager.getSourceForID(sourceID);
     Alert.alert(
-        i18n.t("archive.remove-archive"),
-        i18n.t("archive.remove-archive-description", { name: source.name }),
+        i18n.t("vault.remove-vault"),
+        i18n.t("vault.remove-vault-description", { name: source.name }),
         [
             { text: i18n.t("cancel"), style: "cancel" },
             {
