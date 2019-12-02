@@ -1,5 +1,20 @@
 # Buttercup Mobile Changelog
 
+## v1.12.0
+_2019-12-01_
+
+ * OTP/authentication codes area (TOTP only)
+ * OTP QR-code recognition (built-in camera) (TOTP only)
+ * OTP URI recognition (TOTP only)
+ * Improved search interface/design
+ * Upgraded navigation system
+ * Entry "advanced" editing mode
+   * Edit property keys
+   * Change value types
+ * **Bugfix**:
+   * New meta items would not be removed upon pressing "Cancel"
+   * Several entry property icons not working
+
 ## v1.11.0
 _2019-11-25_
 

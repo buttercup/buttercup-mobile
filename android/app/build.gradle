@@ -101,8 +101,8 @@ android {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 28
-        versionName "1.11.0"
+        versionCode 30
+        versionName "1.12.0"
         ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
