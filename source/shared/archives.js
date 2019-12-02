@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import i18n from "./i18n";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { removeSourceFromAutoFill } from "./autofill";
 import { doAsyncWork } from "../global/async.js";
@@ -21,16 +22,20 @@ export function lockAllArchives() {
 export function promptRemoveArchive(sourceID) {
     const archiveManager = getSharedArchiveManager();
     const source = archiveManager.getSourceForID(sourceID);
-    Alert.alert("Remove Archive", `Are you sure that you want to remove '${source.name}'?`, [
-        { text: "Cancel", style: "cancel" },
-        {
-            text: "Delete",
-            style: "default",
-            onPress: () => {
-                removeSource(sourceID);
+    Alert.alert(
+        i18n.t("archive.remove-archive"),
+        i18n.t("archive.remove-archive-description", { name: source.name }),
+        [
+            { text: i18n.t("cancel"), style: "cancel" },
+            {
+                text: i18n.t("delete"),
+                style: "default",
+                onPress: () => {
+                    removeSource(sourceID);
+                }
             }
-        }
-    ]);
+        ]
+    );
 }
 
 export function removeSource(sourceID) {

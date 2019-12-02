@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import {
-    Image,
-    StyleSheet,
-    ListView,
-    Text,
-    TouchableHighlight,
-    ScrollView,
-    View
-} from "react-native";
+import { Image, StyleSheet, ListView, Text, TouchableHighlight, View, Button } from "react-native";
+import { withNamespaces } from "react-i18next";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { List, ListItem } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -182,7 +175,7 @@ class ArchivesList extends Component {
         if (status === "unlocked") {
             this.props.lockArchive(sourceID);
         } else {
-            alert("Cannot lock vault that is not unlocked");
+            alert(this.props.t("archive.cannot-lock-not-unlocked"));
         }
     }
 
@@ -300,7 +293,7 @@ class ArchivesList extends Component {
                 underlayColor="white"
             >
                 <View style={styles.swipedViewContainer}>
-                    <Text style={styles.swipedViewText}>Remove</Text>
+                    <Text style={styles.swipedViewText}>{this.props.t("remove")}</Text>
                 </View>
             </TouchableHighlight>
         );
@@ -328,11 +321,14 @@ class ArchivesList extends Component {
                         />
                     </When>
                     <Otherwise>
-                        <EmptyView text="Add a new vault to begin" imageSource={VAULT_SAFE_IMAGE} />
+                        <EmptyView
+                            text={this.props.t("vaults.add-to-begin")}
+                            imageSource={VAULT_SAFE_IMAGE}
+                        />
                     </Otherwise>
                 </Choose>
                 <Prompt
-                    title="Vault Password"
+                    title={this.props.t("vaults.archive-password")}
                     placeholder=""
                     visible={this.props.showUnlockPrompt}
                     onCancel={() => this.props.showUnlockPasswordPrompt(false)}
@@ -345,4 +341,4 @@ class ArchivesList extends Component {
     }
 }
 
-export default ArchivesList;
+export default withNamespaces()(ArchivesList);

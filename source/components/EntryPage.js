@@ -3,6 +3,7 @@ import { Button, Platform, ScrollView, StyleSheet, Text, View } from "react-nati
 import PropTypes from "prop-types";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import { FIELD_VALUE_TYPE_OTP } from "@buttercup/facades";
+import { withNamespaces } from "react-i18next";
 import Spinner from "./Spinner.js";
 import ToolbarIcon from "./ToolbarIcon.js";
 import { getOTPTitleFromURL } from "../library/otp.js";
@@ -141,14 +142,14 @@ class EntryPage extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <CellGroup header="Properties">
+                    <CellGroup header={this.props.t("entry.properties")}>
                         <For each="field" of={this.filterFields(this.props.properties)}>
                             {this.renderContentCell(field)}
                         </For>
                         <If condition={this.props.editing}>
                             <Cell
                                 key="$add"
-                                title="Add"
+                                title={this.props.t("entry.add")}
                                 onPress={() => this.props.onAddProperty()}
                                 tintColor="#1144FF"
                                 icon={{ name: "tag-plus", source: "material-community-icons" }}
@@ -186,7 +187,7 @@ class EntryPage extends Component {
     }
 
     renderContentCell(field) {
-        const { editing } = this.props;
+        const { editing, t } = this.props;
         const cellOptions = editing
             ? {
                   autoCapitalize: "none",
@@ -215,7 +216,9 @@ class EntryPage extends Component {
             const onPressCallback = this.props.editing
                 ? () => this.handleCancelEdit()
                 : () => this.props.onCancelViewingHidden();
-            const buttonText = this.props.editing ? "Cancel" : "Hide hidden";
+            const buttonText = this.props.editing
+                ? this.props.t("entry.cancel")
+                : this.props.t("entry.hide-hidden");
             return (
                 <CellGroup>
                     <If condition={this.props.editing}>
@@ -245,14 +248,14 @@ class EntryPage extends Component {
             <CellGroup>
                 <Cell
                     key="view"
-                    title="View hidden"
+                    title={this.props.t("entry.view-hidden")}
                     onPress={() => this.props.onViewHiddenPressed()}
                     tintColor="#1144FF"
                     icon={{ name: "eye", source: "material-community-icons" }}
                 />
                 <Cell
                     key="edit"
-                    title="Edit"
+                    title={this.props.t("entry.edit")}
                     onPress={() => this.props.onEditPressed()}
                     tintColor="#1144FF"
                     icon={{ name: "keyboard", source: "material-community-icons" }}
@@ -260,7 +263,7 @@ class EntryPage extends Component {
                 />
                 <Cell
                     key="delete"
-                    title="Delete"
+                    title={this.props.t("entry.delete")}
                     onPress={() => this.props.onDeletePressed()}
                     tintColor="#FF0000"
                     icon={{ name: "close", source: "material-community-icons" }}
@@ -288,4 +291,4 @@ class EntryPage extends Component {
     }
 }
 
-export default EntryPage;
+export default withNamespaces()(EntryPage);

@@ -6,6 +6,7 @@
     "build:android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "clear:cache": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && npm cache clean --force && npm install && npm start -- --reset-cache",
     "format": "prettier --write '{{source,scripts,__tests__}/**/*.js,index.*.js,shim.js}'",
+    "i18next:parse-lang": "i18next-scanner --config ./config/i18next-scanner.config.js 'source/**/*.{js,jsx}'",
     "nodeify": "rn-nodeify --install --hack",
     "patch:rnios": "sed -i '' 's/startsWith/includes/g' node_modules/react-native/local-cli/runIOS/findMatchingSimulator.js",
     "postinstall": "rn-nodeify --install --hack && jetifier -r",
@@ -47,6 +48,7 @@
     "events": "^1.1.1",
     "extract-domain": "^2.0.4",
     "https-browserify": "0.0.1",
+    "i18next": "^15.1.0",
     "is-online": "^7.0.0",
     "os-browserify": "^0.1.2",
     "otpauth": "^5.0.3",
@@ -56,6 +58,7 @@
     "querystring-es3": "^0.2.1",
     "ramda": "^0.26.1",
     "react": "16.8.3",
+    "react-i18next": "^9.0.10",
     "react-native": "^0.59.10",
     "react-native-action-sheet": "^2.2.0",
     "react-native-browser": "^0.6.2",
@@ -70,6 +73,7 @@
     "react-native-keychain": "^3.0.0",
     "react-native-level-fs": "^3.0.0",
     "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-native-localize": "^1.1.2",
     "react-native-navbar": "^1.7.1",
     "react-native-os": "^1.2.5",
     "react-native-progress-wheel": "^1.0.4",
@@ -111,6 +115,7 @@
     "babel-plugin-jsx-control-statements": "^3.2.8",
     "babel-preset-react-native": "^4.0.0",
     "husky": "^0.14.3",
+    "i18next-scanner": "^2.10.1",
     "jest": "^23.6.0",
     "jest-cli": "^23.6.0",
     "jest-fetch-mock": "^1.6.2",
@@ -119,7 +124,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
     "prettier-check": "^2.0.0",
-    "react-test-renderer": "^16.3.0-alpha.1",
+    "react-test-renderer": "^16.6.1",
     "rn-nodeify": "^10.1.0"
   },
   "jest": {
@@ -128,6 +133,9 @@
     "setupFiles": [
       "./scripts/jestInit.js"
     ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    },
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|react-native-action-sheet)/"
     ],

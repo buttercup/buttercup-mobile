@@ -3,8 +3,10 @@ import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import PropTypes from "prop-types";
 import Prompt from "@perrymitchell/react-native-prompt";
 import { Cell, CellGroup } from "react-native-cell-components";
+import { withNamespaces } from "react-i18next";
 import { editGroup } from "../shared/archiveContents.js";
 import { rawGroupIsTrash } from "../shared/group.js";
+import i18n from "../shared/i18n";
 import Spinner from "./Spinner.js";
 import EmptyView from "./EmptyView.js";
 import ToolbarIcon from "./ToolbarIcon.js";
@@ -46,7 +48,7 @@ class GroupsPage extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
         const { groupID = "0", title, isTrash } = params;
-        const options = { title };
+        const options = { title: isTrash ? i18n.t("group.trash") : title };
         if (!isTrash) {
             options.headerRight = getHeaderRight(groupID);
         }
@@ -95,7 +97,11 @@ class GroupsPage extends Component {
                                             )
                                         }
                                     >
-                                        <Text>{group.title}</Text>
+                                        <Text>
+                                            {rawGroupIsTrash(group)
+                                                ? this.props.t("group.trash")
+                                                : group.title}
+                                        </Text>
                                     </Cell>
                                 ))}
                                 {childEntries.map(entry => (
@@ -111,11 +117,14 @@ class GroupsPage extends Component {
                         </ScrollView>
                     </When>
                     <Otherwise>
-                        <EmptyView text="Add a group or entry" imageSource={KEY_IMAGE} />
+                        <EmptyView
+                            text={this.props.t("groups.add-a-group-or-entry")}
+                            imageSource={KEY_IMAGE}
+                        />
                     </Otherwise>
                 </Choose>
                 <Prompt
-                    title="Rename Group"
+                    title={this.props.t("groups.rename-group")}
                     defaultValue={this.props.group.title}
                     visible={
                         this.props.showGroupRenamePrompt &&
@@ -126,8 +135,8 @@ class GroupsPage extends Component {
                     textInputProps={{ keyboardType: "default" }}
                 />
                 <Prompt
-                    title="Create Group"
-                    placeholder="Group Name"
+                    title={this.props.t("groups.create-group")}
+                    placeholder={this.props.t("groups.group-name")}
                     visible={
                         this.props.showGroupCreatePrompt &&
                         this.props.group.id === this.props.currentGroupID
@@ -142,4 +151,4 @@ class GroupsPage extends Component {
     }
 }
 
-export default GroupsPage;
+export default withNamespaces()(GroupsPage);

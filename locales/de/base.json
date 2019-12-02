@@ -1,0 +1,128 @@
+{
+    "vaults": {
+        "add-to-begin": "Füge einen Tresor hinzu um loszulegen",
+        "vault-password": "Tresor-Passwort",
+        "add-vault": "Tresor hinzufügen",
+        "lock-all": "Alle sperren",
+        "self": "Tresore",
+        "search": "Tresore durchsuchen"
+    },
+    "manage-vault": "Verwalte Tresor",
+    "edit-group": "Bearbeite Gruppe",
+    "remove": "Löschen",
+    "cancel": "Abbrechen",
+    "groups": {
+        "add-a-group-or-entry": "Füge eine Gruppe oder einen Eintrag hinzu",
+        "rename-group": "Gruppe umbenennen",
+        "create-group": "Gruppe erstellen",
+        "group-name": "Gruppenname"
+    },
+    "dropbox": {
+        "authenticated": "Authenticate",
+        "authenticate": "Authentifizieren"
+    },
+    "entry": {
+        "add": "Hinzufügen",
+        "cancel": "Abbrechen",
+        "hide-hidden": "Felder ausblenden",
+        "new-entry": "Neuer Eintrag",
+        "create": "Erstellen",
+        "title": "Titel",
+        "username": "Benutzername",
+        "password": "Password",
+        "open-url": "URL öffnen",
+        "open-url-description": "Drücke OK, um die URL zu starten. Das Passwort wird in die Zwischenablage kopiert.",
+        "no-url": "Keine URL",
+        "no-url-description": "Dieser Eintrag enthält kein URL-Meta-Feld.",
+        "saved-entry": "Eintrag speichern",
+        "saved-entry-description": "Erfolgreich die Eintrags-Änderungen gespeichert",
+        "ok": "OK",
+        "properties": "Eigenschaften",
+        "view-hidden": "Versteckte Felder einblenden",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "new": "Neuer Eintrag",
+        "field": {
+            "username": "Benutzername",
+            "password": "Passwort",
+            "title": "Titel"
+        },
+        "property": {
+            "add": "Eigenschaft hinzufügen",
+            "save": "Speichern",
+            "name": "Name",
+            "value": "Wert"
+        },
+        "delete-confirm": "Bist du dir sicher, dass du den Eintrag '{{title}}' löschen möchtest?"
+    },
+    "remote": {
+        "connect": "Verbinden",
+        "connecting": "Verbinde",
+        "url": "Remote-URL",
+        "username": "Benutzername",
+        "password": "Passwort",
+        "connection-details": "Verbindungsdaten",
+        "self": "Extern"
+    },
+    "vault": {
+        "new": "Erstellen",
+        "filename": "Tresor Dateiname",
+        "password": "Tresor Passwort",
+        "name": "Tresor-Name",
+        "creating": "Tresor erstellen",
+        "fetching-contents": "Rufe Inhalte ab",
+        "adding": "Tresor hinzufügen",
+        "placeholder": {
+            "filename": "Dateiname"
+        },
+        "remove-vault": "Tresor entfernen",
+        "remove-vault-description": "Bist du dir sicher, dass du '{{name}}' löschen möchtest?",
+        "add": "Hinzufügen",
+        "search": "Tresor durchsuchen",
+        "cannot-lock-not-unlocked": "Ein Tresor, der nicht entsperrt ist, kann nicht gesperrt werden."
+    },
+    "use-offline": "Offline nutzen",
+    "busy-state": {
+        "checking-connection": "Verbindung prüfen",
+        "unlocking": "Entsperren",
+        "unlocking-vaults": "Entsperren der Tresore",
+        "saving": "Speichere"
+    },
+    "group": {
+        "delete": "Gruppe löschen",
+        "confirm-delete": "Bist du sicher, dass du die Gruppe '{{title}}' löschen möchtest?",
+        "new": "Neue Gruppe",
+        "rename": "Gruppe umbennen",
+        "trash": "Papierkorb"
+    },
+    "delete": "Löschen",
+    "biometric-unlock": {
+        "self": "Berührungsfreigabe",
+        "biometric-unlock-disabled": "Berührungsfreigabe erfolgreich deaktiviert",
+        "biometric-unlock-enabled": "Berührungsfreigabe erfolgreich aktiviert",
+        "errors": {
+            "password-not-supported": "Passwort wird nicht unterstützt, um die biometrische Freischaltung zu ermöglichen.",
+            "failed-disabling": "Deaktivierung von Berührungsfreigabe fehlgeschlagen",
+            "source-not-found": "Aktuelle Quelle nicht gefunden",
+            "unrecognised-response": "Nicht erkannte biometrische Freigabereaktion",
+            "unable-locate-credentials": "Aktuelle Anmeldeinformationen können nicht gefunden werden",
+            "not-for-vault": "Berührungsfreigabe ist für diese Quelle nicht aktiviert",
+            "no-credentials": "Unter der Touch-ID für diese Quelle wurden keine Anmeldeinformationen gefunden",
+            "failed-enabling": "Aktivierung der Berührungsfreigabe fehlgeschlagen"
+        },
+        "authenticate-to-enable": "Authentifizieren zur Aktivierung von biometric-Unlock",
+        "authenticate-to-unlock": "Authentifizieren zum Entsperren des Tresors",
+        "enable": "Berührungsfreigabe aktivieren",
+        "disable": "Berührungsfreigabe deaktivieren",
+        "toggle": "Berührungsfreigabe umschalten"
+    },
+    "autofill": {
+        "toggle": "Autofill umschalten",
+        "enable": "Autofill aktivieren",
+        "disable": "Autofill deaktivieren",
+        "self": "Autofill"
+    },
+    "android-settings": "Android Einstellungen",
+    "copied-value": "Wert kopiert",
+    "copied-value-description": "'{{name}}' in Zwischenablage kopiert"
+}

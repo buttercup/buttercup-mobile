@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
 import { searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
+import i18n from "../shared/i18n";
 import SearchResult from "./SearchResult";
 import EmptyView from "./EmptyView.js";
 
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
 
 class SearchArchives extends PureComponent {
     static navigationOptions = {
-        title: "Search Vaults"
+        title: i18n.t("vaults.search")
     };
 
     static propTypes = {
