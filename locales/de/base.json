@@ -20,10 +20,6 @@
         "create-group": "Gruppe erstellen",
         "group-name": "Gruppenname"
     },
-    "dropbox": {
-        "authenticated": "Authenticate",
-        "authenticate": "Authentifizieren"
-    },
     "entry": {
         "add": "Hinzufügen",
         "cancel": "Abbrechen",
@@ -156,9 +152,12 @@
     },
     "back": "Zurück",
     "cloud": {
+        "authenticated": "Authentifiziert",
+        "authenticate": "Authentifizieren",
         "errors": {
             "unknown-vault-type": "Unbekannter Tresortyp: {{archiveType}}"
-        }
+        },
+        "sign-out": "Abmelden"
     },
     "errors": {
         "failed-fetching-remote-contents": "Abrufen des Remote-Inhalts fehlgeschlagen"

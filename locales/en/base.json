@@ -20,10 +20,6 @@
         "create-group": "Create Group",
         "group-name": "Group Name"
     },
-    "dropbox": {
-        "authenticated": "Authenticated",
-        "authenticate": "Authenticate"
-    },
     "entry": {
         "add": "Add",
         "cancel": "Cancel",
@@ -156,9 +152,12 @@
     },
     "back": "Back",
     "cloud": {
+        "authenticated": "Authenticated",
+        "authenticate": "Authenticate",
         "errors": {
             "unknown-vault-type": "Unknown vault type: {{archiveType}}"
-        }
+        },
+        "sign-out": "Sign Out"
     },
     "errors": {
         "failed-fetching-remote-contents": "Failed fetching remote contents"
