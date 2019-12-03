@@ -70,7 +70,7 @@ export default connect(
                 })
                 .catch(err => {
                     dispatch(setBusyState(null));
-                    handleError("Group creation failed", err);
+                    handleError(i18n.t("groups.errors.creation-failed"), err);
                 });
         },
         onGroupPress: (groupID, groupTitle, isTrash) => dispatch => {
@@ -87,7 +87,7 @@ export default connect(
                 })
                 .catch(err => {
                     dispatch(setBusyState(null));
-                    handleError("Group rename failed", err);
+                    handleError(i18n.t("groups.errors.rename-failed"), err);
                 });
         }
     }

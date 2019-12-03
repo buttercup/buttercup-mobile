@@ -112,7 +112,7 @@ export default connect(
                 Alert.alert(i18n.t("entry.open-url"), i18n.t("entry.open-url-description"), [
                     { text: i18n.t("cancel"), style: "cancel" },
                     {
-                        text: i18n.t("entry.ok"),
+                        text: i18n.t("ok"),
                         style: "default",
                         onPress: () => {
                             Clipboard.setString(password);
@@ -124,7 +124,7 @@ export default connect(
                 Alert.alert(
                     i18n.t("entry.no-url"),
                     i18n.t("entry.no-url-description"),
-                    [{ text: i18n.t("entry.ok"), onPress: () => {} }],
+                    [{ text: i18n.t("ok"), onPress: () => {} }],
                     { cancelable: false }
                 );
             }
@@ -159,7 +159,7 @@ export default connect(
                 })
                 .catch(err => {
                     dispatch(setBusyState(null));
-                    handleError("Saving failed", err);
+                    handleError(i18n.t("entry.errors.saving-failed"), err);
                 });
         },
         onViewHiddenPressed: () => dispatch => {

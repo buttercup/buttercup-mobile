@@ -10,6 +10,7 @@
             "unable-to-fetch-source": "Es ist nicht möglich, Quellinformationen abzurufen: Keine Quelle für ID {{sourceID}} gefunden"
         }
     },
+    "ok": "OK",
     "manage-vault": "Verwalte Tresor",
     "edit-group": "Bearbeite Gruppe",
     "remove": "Entfernen",
@@ -18,7 +19,11 @@
         "add-a-group-or-entry": "Füge eine Gruppe oder einen Eintrag hinzu",
         "rename-group": "Gruppe umbenennen",
         "create-group": "Gruppe erstellen",
-        "group-name": "Gruppenname"
+        "group-name": "Gruppenname",
+        "errors": {
+            "creation-failed": "Gruppenerstellung fehlgeschlagen",
+            "rename-failed": "Gruppenumbenennung fehlgeschlagen"
+        }
     },
     "entry": {
         "add": "Hinzufügen",
@@ -35,7 +40,6 @@
         "no-url-description": "Dieser Eintrag enthält kein URL-Meta-Feld.",
         "saved-entry": "Eintrag speichern",
         "saved-entry-description": "Erfolgreich die Eintrags-Änderungen gespeichert",
-        "ok": "OK",
         "properties": "Eigenschaften",
         "view-hidden": "Versteckte Felder einblenden",
         "edit": "Bearbeiten",
@@ -58,7 +62,8 @@
         "errors": {
             "failed-saving": "Speichern des Eintrags fehlgeschlagen",
             "empty-title": "Der Titel darf nicht leer sein",
-            "failed-deleting": "Löschen des Eintrags fehlgeschlagen"
+            "failed-deleting": "Löschen des Eintrags fehlgeschlagen",
+            "saving-failed": "Speichern fehlgeschlagen"
         },
         "edit-mode": {
             "self": "Bearbeitungsmodus",
@@ -77,9 +82,21 @@
         "authenticated": "Authentifiziert",
         "authenticate": "Authentifizieren",
         "errors": {
-            "unknown-vault-type": "Unbekannter Tresortyp: {{archiveType}}"
+            "unknown-vault-type": "Unbekannter Tresortyp: {{archiveType}}",
+            "google-drive": {
+                "authentication-failed": "Google Drive Authentifizierung fehlgeschlagen"
+            },
+            "connection-failed": "Verbindung fehlgeschlagen"
         },
-        "sign-out": "Abmelden"
+        "sign-out": "Abmelden",
+        "dropbox": {
+            "success": {
+                "authentication": {
+                    "title": "Dropbox-Authentifizierung",
+                    "description": "Dropbox-Konto erfolgreich authentifiziert"
+                }
+            }
+        }
     },
     "vault": {
         "new": "Erstellen",

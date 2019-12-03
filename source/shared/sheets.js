@@ -266,7 +266,7 @@ export function showAutoFillToggleSheet() {
                                 Alert.alert(
                                     i18next.t("autofill.ios.enable-in-settings"),
                                     i18next.t("autofill.ios.enable-in-settings-description"),
-                                    [{ text: "OK", onPress: () => {} }],
+                                    [{ text: i18next.t("ok"), onPress: () => {} }],
                                     { cancelable: true }
                                 );
                             }

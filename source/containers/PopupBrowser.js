@@ -8,6 +8,7 @@ import {
 } from "../actions/dropbox.js";
 import { executeNotification } from "../global/notify.js";
 import { navigateBack } from "../shared/nav.js";
+import i18n from "../shared/i18n";
 
 export default connect(
     (state, ownProps) => ({
@@ -25,8 +26,8 @@ export default connect(
             navigateBack();
             executeNotification(
                 "success",
-                "Dropbox authentication",
-                "Successfully authenticated Dropbox account"
+                i18n.t("remote.dropbox.success.authentication.title"),
+                i18n.t("remote.dropbox.success.authentication.description")
             );
         }
     }

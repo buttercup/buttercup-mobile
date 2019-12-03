@@ -10,6 +10,7 @@
             "unable-to-fetch-source": "Unable to fetch source information: No source found for ID: {{sourceID}}"
         }
     },
+    "ok": "OK",
     "manage-vault": "Manage Vault",
     "edit-group": "Edit Group",
     "remove": "Remove",
@@ -18,7 +19,11 @@
         "add-a-group-or-entry": "Add a group or entry",
         "rename-group": "Rename Group",
         "create-group": "Create Group",
-        "group-name": "Group Name"
+        "group-name": "Group Name",
+        "errors": {
+            "creation-failed": "Group creation failed",
+            "rename-failed": "Group rename failed"
+        }
     },
     "entry": {
         "add": "Add",
@@ -35,7 +40,6 @@
         "no-url-description": "This entry doesn't contain a URL meta field.",
         "saved-entry": "Saving entry",
         "saved-entry-description": "Successfully saved changes to the entry",
-        "ok": "OK",
         "properties": "Properties",
         "view-hidden": "View hidden",
         "edit": "Edit",
@@ -58,7 +62,8 @@
         "errors": {
             "failed-saving": "Failed saving entry",
             "empty-title": "Title cannot be empty",
-            "failed-deleting": "Failed deleting entry"
+            "failed-deleting": "Failed deleting entry",
+            "saving-failed": "Saving failed"
         },
         "edit-mode": {
             "self": "Edit mode",
@@ -77,9 +82,21 @@
         "authenticated": "Authenticated",
         "authenticate": "Authenticate",
         "errors": {
-            "unknown-vault-type": "Unknown vault type: {{archiveType}}"
+            "unknown-vault-type": "Unknown vault type: {{archiveType}}",
+            "google-drive": {
+                "authentication-failed": "Google Drive authentication failed"
+            },
+            "connection-failed": "Connection failed"
         },
-        "sign-out": "Sign Out"
+        "sign-out": "Sign Out",
+        "dropbox": {
+            "success": {
+                "authentication": {
+                    "title": "Dropbox authentication",
+                    "description": "Successfully authenticated Dropbox account"
+                }
+            }
+        }
     },
     "vault": {
         "new": "New",
