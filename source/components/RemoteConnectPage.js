@@ -80,7 +80,7 @@ class RemoteConnectPage extends Component {
                         <GoogleDriveAuthButton />
                         <CellGroup>
                             <Cell
-                                title="Connect"
+                                title={this.props.t("remote.connect")}
                                 icon={{ name: "cloud", source: "material-community-icons" }}
                                 onPress={() => this.submit()}
                                 tintColor="#1144FF"
@@ -88,7 +88,10 @@ class RemoteConnectPage extends Component {
                             />
                         </CellGroup>
                     </View>
-                    <Spinner visible={this.props.connecting} text="Connecting" />
+                    <Spinner
+                        visible={this.props.connecting}
+                        text={this.props.t("remote.connecting")}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         );

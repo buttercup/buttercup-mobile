@@ -50,13 +50,20 @@
             "add": "Add Property",
             "save": "Save",
             "name": "Name",
-            "value": "Value"
+            "value": "Value",
+            "edit": "Edit Property",
+            "type": "Type"
         },
         "delete-confirm": "Are you sure that you want to delete the entry '{{title}}'?",
         "errors": {
             "failed-saving": "Failed saving entry",
             "empty-title": "Title cannot be empty",
             "failed-deleting": "Failed deleting entry"
+        },
+        "edit-mode": {
+            "self": "Edit mode",
+            "advanced": "Advanced",
+            "normal": "Normal"
         }
     },
     "remote": {
@@ -66,7 +73,13 @@
         "username": "Username",
         "password": "Password",
         "connection-details": "Connection details",
-        "self": "Remote"
+        "self": "Remote",
+        "authenticated": "Authenticated",
+        "authenticate": "Authenticate",
+        "errors": {
+            "unknown-vault-type": "Unknown vault type: {{archiveType}}"
+        },
+        "sign-out": "Sign Out"
     },
     "vault": {
         "new": "New",
@@ -87,7 +100,10 @@
         "errors": {
             "failed-creating-new-vault": "Failed creating new vault: Missing filename and/or password",
             "failed-finding-source": "Quelle für den Tresor mit ID {{id}} konnte nicht gefunden werden",
-            "failed-adding": "Failed adding vault"
+            "failed-adding": "Failed adding vault",
+            "unlock-failed-unknown-authentication": "Unlock failed: Unknown authentication result: {{action}}",
+            "unlocking-failed": "Unlocking failed",
+            "unexpected-vault-state": "Unexpected vault state: {{status}}"
         }
     },
     "use-offline": "Use Offline",
@@ -143,7 +159,19 @@
     "copied-value-description": "Copied '{{name}}' to clipboard",
     "codes": {
         "self": "Codes",
-        "description": "Unlock vaults or add codes."
+        "description": "Unlock vaults or add codes.",
+        "errors": {
+            "otp-url-collection-failed": "OTP URL collection failed"
+        },
+        "success": {
+            "otp-detected": {
+                "title": "OTP URL detected",
+                "description": "Detected a new OTP - edit an entry to save it!"
+            }
+        },
+        "otp": {
+            "add-pending-url": "Add Pending OTP URL"
+        }
     },
     "search": {
         "self": "Search",
@@ -151,14 +179,6 @@
         "cancel": "Cancel"
     },
     "back": "Back",
-    "cloud": {
-        "authenticated": "Authenticated",
-        "authenticate": "Authenticate",
-        "errors": {
-            "unknown-vault-type": "Unknown vault type: {{archiveType}}"
-        },
-        "sign-out": "Sign Out"
-    },
     "errors": {
         "failed-fetching-remote-contents": "Failed fetching remote contents"
     }

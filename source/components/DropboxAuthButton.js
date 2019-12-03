@@ -12,8 +12,8 @@ class DropboxAuthButton extends Component {
 
     render() {
         const title = this.props.authenticated
-            ? i18n.t("cloud.authenticated")
-            : i18n.t("cloud.authenticate");
+            ? i18n.t("remote.authenticated")
+            : i18n.t("remote.authenticate");
         return (
             <CellGroup>
                 <Cell

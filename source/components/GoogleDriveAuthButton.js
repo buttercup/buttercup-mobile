@@ -8,8 +8,8 @@ import i18n from "../shared/i18n";
 class GoogleDriveAuthButton extends Component {
     render() {
         const title = this.props.authenticated
-            ? i18n.t("cloud.authenticated")
-            : i18n.t("cloud.authenticate");
+            ? i18n.t("remote.authenticated")
+            : i18n.t("remote.authenticate");
         return (
             <CellGroup>
                 <Cell
@@ -20,7 +20,7 @@ class GoogleDriveAuthButton extends Component {
                     disabled={this.props.authenticating || this.props.authenticated}
                 />
                 <Cell
-                    title={i18n.t("cloud.sign-out")}
+                    title={i18n.t("remote.sign-out")}
                     icon={{ name: "log-out", source: "entypo" }}
                     onPress={() => this.props.onSignOut()}
                     tintColor="#1144FF"

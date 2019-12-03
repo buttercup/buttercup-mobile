@@ -12,7 +12,7 @@
     },
     "manage-vault": "Verwalte Tresor",
     "edit-group": "Bearbeite Gruppe",
-    "remove": "Löschen",
+    "remove": "Entfernen",
     "cancel": "Abbrechen",
     "groups": {
         "add-a-group-or-entry": "Füge eine Gruppe oder einen Eintrag hinzu",
@@ -50,13 +50,20 @@
             "add": "Eigenschaft hinzufügen",
             "save": "Speichern",
             "name": "Name",
-            "value": "Wert"
+            "value": "Wert",
+            "edit": "Eigenschaft bearbeiten",
+            "type": "Typ"
         },
         "delete-confirm": "Bist du dir sicher, dass du den Eintrag '{{title}}' löschen möchtest?",
         "errors": {
             "failed-saving": "Speichern des Eintrags fehlgeschlagen",
             "empty-title": "Der Titel darf nicht leer sein",
             "failed-deleting": "Löschen des Eintrags fehlgeschlagen"
+        },
+        "edit-mode": {
+            "self": "Bearbeitungsmodus",
+            "advanced": "Erweitert",
+            "normal": "Normal"
         }
     },
     "remote": {
@@ -66,7 +73,13 @@
         "username": "Benutzername",
         "password": "Passwort",
         "connection-details": "Verbindungsdaten",
-        "self": "Extern"
+        "self": "Extern",
+        "authenticated": "Authentifiziert",
+        "authenticate": "Authentifizieren",
+        "errors": {
+            "unknown-vault-type": "Unbekannter Tresortyp: {{archiveType}}"
+        },
+        "sign-out": "Abmelden"
     },
     "vault": {
         "new": "Erstellen",
@@ -87,7 +100,10 @@
         "errors": {
             "failed-creating-new-vault": "Erstellung eines neuen Tresors fehlgeschlagen: Fehlender Dateiname und/oder Passwort",
             "failed-finding-source": "Failed finding source for vault with ID: {{id}}",
-            "failed-adding": "Tresor Hinzufügen fehlgeschlagen"
+            "failed-adding": "Tresor Hinzufügen fehlgeschlagen",
+            "unlock-failed-unknown-authentication": "Entsperren fehlgeschlagen: Unbekanntes Authentifizierungsergebnis: {{action}}",
+            "unlocking-failed": "Entsperren fehlgeschlagen",
+            "unexpected-vault-state": "Unerwarteter Zustand des Tresors: {{status}}"
         }
     },
     "use-offline": "Offline nutzen",
@@ -143,7 +159,19 @@
     "copied-value-description": "'{{name}}' in Zwischenablage kopiert",
     "codes": {
         "self": "Codes",
-        "description": "Entsperre Tresore oder füge Codes hinzu."
+        "description": "Entsperre Tresore oder füge Codes hinzu.",
+        "errors": {
+            "otp-url-collection-failed": "OTP-URL-Sammlung fehlgeschlagen"
+        },
+        "success": {
+            "otp-detected": {
+                "title": "OTP URL erkannt",
+                "description": "Ein neues OTP wurde erkannt - bearbeite den Eintrag, um es zu speichern!"
+            }
+        },
+        "otp": {
+            "add-pending-url": "Ausstehende OTP-URL hinzufügen"
+        }
     },
     "search": {
         "self": "Suche",
@@ -151,14 +179,6 @@
         "cancel": "Abbrechen"
     },
     "back": "Zurück",
-    "cloud": {
-        "authenticated": "Authentifiziert",
-        "authenticate": "Authentifizieren",
-        "errors": {
-            "unknown-vault-type": "Unbekannter Tresortyp: {{archiveType}}"
-        },
-        "sign-out": "Abmelden"
-    },
     "errors": {
         "failed-fetching-remote-contents": "Abrufen des Remote-Inhalts fehlgeschlagen"
     }

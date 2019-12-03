@@ -98,7 +98,7 @@ export function createRemoteConnection(connectionInfo) {
     } else if (archiveType === "googledrive") {
         return getGoogleDriveConnection(googleDriveToken).then(__storeSharedInstance);
     }
-    return Promise.reject(new Error(i18n.t("cloud.errors.unknown-vault-type", { archiveType })));
+    return Promise.reject(new Error(i18n.t("remote.errors.unknown-vault-type", { archiveType })));
 }
 
 export function getDirectoryContents(remoteDir) {

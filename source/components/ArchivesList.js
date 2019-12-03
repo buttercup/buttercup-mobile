@@ -10,6 +10,7 @@ import Spinner from "./Spinner.js";
 import SwipeoutButton from "./SwipeoutButton.js";
 import EmptyView from "./EmptyView.js";
 import { getArchiveTypeDetails } from "../library/archives.js";
+import i18n from "../shared/i18n";
 import {
     getMasterPasswordFromTouchUnlock,
     touchIDEnabledForSource
@@ -134,7 +135,11 @@ const styles = StyleSheet.create({
 });
 
 const ARCHIVE_SWIPE_BUTTONS = [
-    { text: "Remove", component: <SwipeoutButton>Remove</SwipeoutButton>, _type: "remove" }
+    {
+        text: "Remove",
+        component: <SwipeoutButton>{i18n.t("remove")}</SwipeoutButton>,
+        _type: "remove"
+    }
 ];
 
 function getArchiveAbbr(archiveName) {
@@ -192,10 +197,13 @@ class ArchivesList extends Component {
                     this.props.showUnlockPasswordPrompt(true);
                 })
                 .catch(err => {
-                    handleError("Unlocking failed", err);
+                    handleError(this.props.t("vault.errors.unlocking-failed"), err);
                 });
         } else {
-            handleError("Unlocking failed", new Error(`Unexpected vault state: ${status}`));
+            handleError(
+                this.props.t("vault.errors.unlocking-failed"),
+                new Error(this.props.t("vault.errors.unexpected-vault-state", { status }))
+            );
         }
     }
 
@@ -212,7 +220,11 @@ class ArchivesList extends Component {
                     // do nothing
                     break;
                 default:
-                    throw new Error(`Unlock failed: Unknown authentication result: ${action}`);
+                    throw new Error(
+                        this.props.t("vault.errors.unlock-failed-unknown-authentication", {
+                            action
+                        })
+                    );
             }
         });
     }

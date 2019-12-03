@@ -170,7 +170,7 @@ class EntryPage extends Component {
                 <CellGroup>
                     <Cell
                         key="otpURL"
-                        title="Add Pending OTP URL"
+                        title={this.props.t("codes.otp.add-pending-url")}
                         onPress={() => {
                             this.props.onAddProperty({
                                 initialKey: getOTPTitleFromURL(this.props.pendingOTPURL),
@@ -224,8 +224,12 @@ class EntryPage extends Component {
                     <If condition={this.props.editing}>
                         <Cell
                             key="edit"
-                            title="Edit mode"
-                            value={this.state.advancedEdit ? "Advanced" : "Normal"}
+                            title={this.props.t("entry.edit-mode.self")}
+                            value={
+                                this.state.advancedEdit
+                                    ? this.props.t("entry.edit-mode.advanced")
+                                    : this.props.t("entry.edit-mode.normal")
+                            }
                             onPress={() =>
                                 this.setState({ advancedEdit: !this.state.advancedEdit })
                             }
