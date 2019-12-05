@@ -27,7 +27,8 @@ import {
     ENTRY_EDIT_PROPERTY_SCREEN,
     LOCK_SCREEN,
     POPUP_BROWSER_SCREEN,
-    ROOT_SCREEN
+    ROOT_SCREEN,
+    QR_CODE_SCREEN
 } from "./shared/nav.js";
 
 const CODES = require("../resources/images/password-approved.png");
@@ -67,7 +68,6 @@ export const AppNavigator = createStackNavigator(
         [REMOTE_EXPLORER_SCREEN]: { screen: RemoteExplorerPage },
         [POPUP_BROWSER_SCREEN]: { screen: PopupBrowser },
         [VAULT_CONTENTS_SCREEN]: { screen: GroupsPage },
-        [LOCK_SCREEN]: { screen: LockPage },
         [ENTRY_EDIT_PROPERTY_SCREEN]: { screen: EditPropertyPage }
     },
     sharedStackStyles
@@ -123,6 +123,20 @@ const TabNavigator = createBottomTabNavigator(
     }
 );
 
-const App = createAppContainer(TabNavigator);
+const RootStack = createStackNavigator(
+    {
+        TabNavigator,
+        [LOCK_SCREEN]: { screen: LockPage },
+        [QR_CODE_SCREEN]: {
+            screen: LockPage
+        }
+    },
+    {
+        mode: "modal",
+        headerMode: "none"
+    }
+);
+
+const App = createAppContainer(RootStack);
 
 export default App;

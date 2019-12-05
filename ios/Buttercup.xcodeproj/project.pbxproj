@@ -50,6 +50,8 @@
 		9913E6912391E37C003E810A /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9913E68C2391E36A003E810A /* libRNSearchBar.a */; };
 		99851D7220C985FA00EAC115 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 99851D7120C985FA00EAC115 /* libresolv.tbd */; };
 		99851D7520C9B83E00EAC115 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 99851D7420C9B83E00EAC115 /* CryptoBridge.m */; };
+		9988C9F523996F910066D0DC /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9988C9E723996F810066D0DC /* libRNCamera.a */; };
+		9988C9F623996F990066D0DC /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9988C9E723996F810066D0DC /* libRNCamera.a */; };
 		99A6776F215AC7DF0023B45E /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */; };
 		99CEE44C2391FD5E00DF8F3C /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CEE4492391FD5600DF8F3C /* libRNReanimated.a */; };
 		99CEE44D2391FD6500DF8F3C /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99CEE4492391FD5600DF8F3C /* libRNReanimated.a */; };
@@ -349,6 +351,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNSearchBar;
 		};
+		9988C9E623996F810066D0DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9988C9BE23996F810066D0DC /* RNCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RNCamera;
+		};
 		99A6776A215AC7DE0023B45E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B678372F4B544A768BDE1E41 /* RNRandomBytes.xcodeproj */;
@@ -555,6 +564,7 @@
 		99851D7320C9B7FC00EAC115 /* CryptoBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CryptoBridge.h; sourceTree = "<group>"; };
 		99851D7420C9B83E00EAC115 /* CryptoBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CryptoBridge.m; sourceTree = "<group>"; };
 		99851D7620C9B89C00EAC115 /* CryptoBindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CryptoBindings.h; path = ../crypto/src/CryptoBindings.h; sourceTree = "<group>"; };
+		9988C9BE23996F810066D0DC /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
 		99A6776E215AC7DF0023B45E /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		99A67770215AC7DF0023B45E /* Buttercup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Buttercup.entitlements; path = Buttercup/Buttercup.entitlements; sourceTree = "<group>"; };
 		99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
@@ -610,6 +620,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9988C9F523996F910066D0DC /* libRNCamera.a in Frameworks */,
 				99CEE44D2391FD6500DF8F3C /* libRNReanimated.a in Frameworks */,
 				9913E6902391E376003E810A /* libRNSearchBar.a in Frameworks */,
 				99F6151D2391A06800B40637 /* libRNScreens.a in Frameworks */,
@@ -664,6 +675,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9988C9F623996F990066D0DC /* libRNCamera.a in Frameworks */,
 				99CEE44C2391FD5E00DF8F3C /* libRNReanimated.a in Frameworks */,
 				9913E6912391E37C003E810A /* libRNSearchBar.a in Frameworks */,
 				99F6151E2391A06E00B40637 /* libRNScreens.a in Frameworks */,
@@ -869,6 +881,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				9988C9BE23996F810066D0DC /* RNCamera.xcodeproj */,
 				99CEE4432391FD5600DF8F3C /* RNReanimated.xcodeproj */,
 				9913E65A2391E36A003E810A /* RNSearchBar.xcodeproj */,
 				99F615142391A06200B40637 /* RNScreens.xcodeproj */,
@@ -937,6 +950,14 @@
 			isa = PBXGroup;
 			children = (
 				9913E68C2391E36A003E810A /* libRNSearchBar.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9988C9BF23996F810066D0DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9988C9E723996F810066D0DC /* libRNCamera.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1271,6 +1292,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 9988C9BF23996F810066D0DC /* Products */;
+					ProjectRef = 9988C9BE23996F810066D0DC /* RNCamera.xcodeproj */;
+				},
+				{
 					ProductGroup = C23C4D611ED58FA6008B5786 /* Products */;
 					ProjectRef = 10B32057C9914AD5AC8E2D10 /* RNFS.xcodeproj */;
 				},
@@ -1538,6 +1563,13 @@
 			fileType = archive.ar;
 			path = libRNSearchBar.a;
 			remoteRef = 9913E68B2391E36A003E810A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9988C9E723996F810066D0DC /* libRNCamera.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCamera.a;
+			remoteRef = 9988C9E623996F810066D0DC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		99A6776B215AC7DE0023B45E /* libRNRandomBytes-tvOS.a */ = {

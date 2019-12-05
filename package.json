@@ -59,6 +59,7 @@
     "react-native": "^0.59.10",
     "react-native-action-sheet": "^2.2.0",
     "react-native-browser": "^0.6.2",
+    "react-native-camera": "^3.13.1",
     "react-native-cell-components": "^0.7.5",
     "react-native-collapsible": "^0.8.0",
     "react-native-crypto": "^2.0.2",

@@ -12,6 +12,7 @@ export const LOCK_SCREEN = "Lock";
 export const POPUP_BROWSER_SCREEN = "PopupBrowser";
 export const ROOT_SCREEN = "Root";
 export const SEARCH_SCREEN = "SearchScreen";
+export const QR_CODE_SCREEN = "QRCodeScreen";
 
 let __lockPageShown = false;
 
