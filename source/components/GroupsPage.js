@@ -48,7 +48,8 @@ class GroupsPage extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
         const { groupID = "0", title, isTrash } = params;
-        const options = { title: isTrash ? i18n.t("group.trash") : title };
+        const options = { title };
+
         if (!isTrash) {
             options.headerRight = getHeaderRight(groupID);
         }
@@ -97,11 +98,7 @@ class GroupsPage extends Component {
                                             )
                                         }
                                     >
-                                        <Text>
-                                            {rawGroupIsTrash(group)
-                                                ? this.props.t("group.trash")
-                                                : group.title}
-                                        </Text>
+                                        <Text>{group.title}</Text>
                                     </Cell>
                                 ))}
                                 {childEntries.map(entry => (
