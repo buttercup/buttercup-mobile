@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-    Image,
-    StyleSheet,
-    ListView,
-    Text,
-    TouchableHighlight,
-    ScrollView,
-    View
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableHighlight, ScrollView, View } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { List, ListItem } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -307,15 +299,12 @@ class ArchivesList extends Component {
     }
 
     render() {
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
         return (
             <View style={styles.container}>
                 <Choose>
                     <When condition={this.props.archives.length > 0}>
                         <SwipeListView
-                            dataSource={ds.cloneWithRows(this.props.archives)}
+                            data={this.props.archives}
                             renderRow={(archiveInfo, secId, rowId) =>
                                 this.renderArchiveItem(archiveInfo, parseInt(rowId, 10))
                             }

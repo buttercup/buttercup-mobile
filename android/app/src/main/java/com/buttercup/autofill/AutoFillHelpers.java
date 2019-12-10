@@ -6,7 +6,7 @@ package com.buttercup.autofill;
  * se1exin - 9/2/19
  */
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;

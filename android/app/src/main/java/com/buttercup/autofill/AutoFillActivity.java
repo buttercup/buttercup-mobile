@@ -14,7 +14,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.oblador.keychain.KeychainPackage;
+// import com.oblador.keychain.KeychainPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 
@@ -59,7 +59,7 @@ public class AutoFillActivity extends ReactActivity {
                     Log.d(TAG, "getPackages");
                     return Arrays.<ReactPackage>asList(
                             new MainReactPackage(),
-                            new KeychainPackage(),
+                            // new KeychainPackage(),
                             new RNSecureStoragePackage(),
                             new FingerprintAuthPackage(),
                             new RandomBytesPackage(),

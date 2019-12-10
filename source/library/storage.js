@@ -1,4 +1,4 @@
-import { getGenericPassword, resetGenericPassword } from "react-native-keychain";
+// import { getGenericPassword, resetGenericPassword } from "react-native-keychain";
 import { Platform } from "react-native";
 
 import AsyncStorageInterface from "../compat/AsyncStorageInterface";
@@ -19,17 +19,17 @@ export function migrateTouchIDToSecureStorage() {
             // compatible with the keychain module
             resolve();
         } else {
-            getGenericPassword().then(keychainCreds => {
-                if (typeof keychainCreds === "object") {
-                    // Move the Touch credentials across to Secure Storage
-                    const items = JSON.parse(keychainCreds.password);
-                    setTouchUnlockCredentials(items);
-
-                    // Delete old credentials from Keychain to completely clean up
-                    resetGenericPassword();
-                }
-                resolve();
-            });
+            // @TODO: Sallar
+            // getGenericPassword().then(keychainCreds => {
+            //     if (typeof keychainCreds === "object") {
+            //         // Move the Touch credentials across to Secure Storage
+            //         const items = JSON.parse(keychainCreds.password);
+            //         setTouchUnlockCredentials(items);
+            //         // Delete old credentials from Keychain to completely clean up
+            //         resetGenericPassword();
+            //     }
+            //     resolve();
+            // });
         }
     });
 }

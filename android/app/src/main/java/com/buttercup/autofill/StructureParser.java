@@ -2,8 +2,8 @@ package com.buttercup.autofill;
 
 import android.app.assist.AssistStructure;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
