@@ -26,6 +26,7 @@ import { saveCurrentArchive } from "../shared/archive.js";
 import { getNameForSource } from "./entries";
 import { navigateBack } from "./nav.js";
 import { simpleCloneObject } from "../library/helpers.js";
+import i18n from "../shared/i18n";
 
 export function deleteEntry(sourceID, entryID) {
     const entry = getEntry(sourceID, entryID);
@@ -87,13 +88,13 @@ export function promptDeleteEntry() {
     const entryID = getEntryID(state);
     const entry = getEntry(sourceID, entryID);
     const title = entry.getProperty("title");
-    Alert.alert("Delete Entry", `Are you sure that you want to delete the entry '${title}'?`, [
-        { text: "Cancel", style: "cancel" },
+    Alert.alert(i18n.t("entry.delete"), i18n.t("entry.delete-confirm", { title }), [
+        { text: i18n.t("cancel"), style: "cancel" },
         {
-            text: "Delete",
+            text: i18n.t("delete"),
             style: "default",
             onPress: () => {
-                dispatch(setBusyState("Saving"));
+                dispatch(setBusyState(i18n.t("busy-state.saving")));
                 Promise.resolve()
                     .then(() => deleteEntry(sourceID, entryID))
                     .then(() => saveCurrentArchive())
@@ -104,7 +105,7 @@ export function promptDeleteEntry() {
                     })
                     .catch(err => {
                         dispatch(setBusyState(null));
-                        handleError("Failed deleting entry", err);
+                        handleError(i18n.t("entry.errors.failed-deleting"), err);
                     });
             }
         }
@@ -159,7 +160,7 @@ export function saveNewEntry() {
     const username = getNewUsername(state);
     const password = getNewPassword(state);
     if (title.trim().length <= 0) {
-        handleError("Failed saving entry", new Error("Title cannot be empty"));
+        handleError(i18n.t("entry.errors.failed-saving"), i18n.t("entry.errors.empty-title"));
         return;
     }
     const sourceID = getSelectedSourceID(state);
@@ -169,7 +170,7 @@ export function saveNewEntry() {
     const archive = source.workspace.archive;
     const newEntry = archive.findGroupByID(parentGroupID).createEntry(title);
     newEntry.setProperty("username", username).setProperty("password", password);
-    dispatch(setBusyState("Saving"));
+    dispatch(setBusyState(i18n.t("busy-state.saving")));
     return saveCurrentArchive(source.workspace).then(() => {
         updateCurrentArchive();
         dispatch(setBusyState(null));

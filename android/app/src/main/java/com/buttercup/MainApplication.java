@@ -20,6 +20,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.reactcommunity.rnlocalize.RNLocalizePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
+                new RNLocalizePackage(),
                 new MainReactPackage(),
             new RNSearchBarPackage(),
             new RNScreensPackage(),

@@ -4,7 +4,9 @@ import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
+import { withNamespaces } from "react-i18next";
 import { searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
+import i18n from "../shared/i18n";
 import SearchResult from "./SearchResult";
 import EmptyView from "./EmptyView.js";
 
@@ -16,7 +18,7 @@ const styles = StyleSheet.create({
 
 class SearchArchives extends PureComponent {
     static navigationOptions = {
-        title: "Search Vaults"
+        title: i18n.t("vaults.search")
     };
 
     static propTypes = {
@@ -93,7 +95,7 @@ class SearchArchives extends PureComponent {
                     </CellGroup>
                 </When>
                 <Otherwise>
-                    <EmptyView text="Start typing to search..." />
+                    <EmptyView text={this.props.t("search.start-typing")} />
                 </Otherwise>
             </Choose>
         );
@@ -105,9 +107,10 @@ class SearchArchives extends PureComponent {
                 <SearchBar
                     ref={input => (this._input = input)}
                     barStyle="default"
-                    placeholder="Search"
+                    placeholder={this.props.t("search.self")}
                     autoCapitalize="none"
                     keyboardType="default"
+                    cancelButtonText={this.props.t("search.cancel")}
                     spellCheck={false}
                     tintColor="#454545"
                     onChangeText={text => this.changeInput(text)}
@@ -120,4 +123,4 @@ class SearchArchives extends PureComponent {
     }
 }
 
-export default SearchArchives;
+export default withNamespaces()(SearchArchives);

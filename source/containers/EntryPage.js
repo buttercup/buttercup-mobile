@@ -2,6 +2,7 @@ import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
 import pathOr from "ramda/es/pathOr";
 import { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
+import i18n from "../shared/i18n";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";
 import {
@@ -48,7 +49,11 @@ export default connect(
     {
         copyToClipboard: (name, value) => () => {
             Clipboard.setString(value);
-            executeNotification("success", "Copied value", `Copied '${name}' to clipboard`);
+            executeNotification(
+                "success",
+                i18n.t("copied-value"),
+                i18n.t("copied-value-description", { name })
+            );
         },
         onAddProperty: ({
             initialKey = "",
@@ -104,27 +109,22 @@ export default connect(
             const url = getEntryURL(state);
             const password = getEntryPassword(state);
             if (url) {
-                Alert.alert(
-                    "Open URL",
-                    "Press OK to launch the URL. The password will be copied to the clipboard.",
-                    [
-                        { text: "Cancel", style: "cancel" },
-                        {
-                            text: "OK",
-                            style: "default",
-                            onPress: () => {
-                                Clipboard.setString(password);
-                                Linking.openURL(prepareURLForLaunch(url));
-                            }
+                Alert.alert(i18n.t("entry.open-url"), i18n.t("entry.open-url-description"), [
+                    { text: i18n.t("cancel"), style: "cancel" },
+                    {
+                        text: i18n.t("ok"),
+                        style: "default",
+                        onPress: () => {
+                            Clipboard.setString(password);
+                            Linking.openURL(prepareURLForLaunch(url));
                         }
-                    ]
-                );
+                    }
+                ]);
             } else {
                 Alert.alert(
-                    "No URL",
-                    "This entry doesn't contain a URL meta field."[
-                        { text: "OK", onPress: () => {} }
-                    ],
+                    i18n.t("entry.no-url"),
+                    i18n.t("entry.no-url-description"),
+                    [{ text: i18n.t("ok"), onPress: () => {} }],
                     { cancelable: false }
                 );
             }
@@ -141,7 +141,7 @@ export default connect(
             const usedOTPURL = !!entryFacade.fields.find(
                 field => field.propertyType === "property" && field.value === pendingOTPURL
             );
-            dispatch(setBusyState("Saving"));
+            dispatch(setBusyState(i18n.t("busy-state.saving")));
             return saveCurrentArchive()
                 .then(() => {
                     updateCurrentArchive();
@@ -153,13 +153,13 @@ export default connect(
                     }
                     executeNotification(
                         "success",
-                        "Saved entry",
-                        "Successfully saved changes to the entry"
+                        i18n.t("entry.saved-entry"),
+                        i18n.t("entry.saved-entry-description")
                     );
                 })
                 .catch(err => {
                     dispatch(setBusyState(null));
-                    handleError("Saving failed", err);
+                    handleError(i18n.t("entry.errors.saving-failed"), err);
                 });
         },
         onViewHiddenPressed: () => dispatch => {

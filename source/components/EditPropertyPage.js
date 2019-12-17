@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
+import { withNamespaces } from "react-i18next";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import { FIELD_VALUE_TYPE_TEXT } from "@buttercup/facades";
 import { saveEntryProperty } from "../shared/entry.js";
 import { FIELD_TYPE_OPTIONS } from "../library/buttercup.js";
+import i18n from "../shared/i18n";
 
 const CELL_OPTIONS = {
     autoCapitalize: "none",
@@ -21,8 +23,8 @@ const styles = StyleSheet.create({
 
 class EditPropertyPage extends Component {
     static navigationOptions = {
-        title: "Edit Property",
-        headerRight: <Button title="Save" onPress={saveEntryProperty} />
+        title: i18n.t("entry.property.edit"),
+        headerRight: <Button title={i18n.t("entry.property.save")} onPress={saveEntryProperty} />
     };
 
     static propTypes = {
@@ -46,14 +48,14 @@ class EditPropertyPage extends Component {
                 <CellGroup>
                     <CellInput
                         key="key"
-                        title="Name"
+                        title={this.props.t("entry.property.name")}
                         value={this.props.fieldData.newProperty}
                         onChangeText={text => this.props.onEditProperty(text)}
                         {...CELL_OPTIONS}
                     />
                     <CellInput
                         key="value"
-                        title="Value"
+                        title={this.props.t("entry.property.value")}
                         value={this.props.fieldData.newValue}
                         onChangeText={text => this.props.onEditValue(text)}
                         {...CELL_OPTIONS}
@@ -62,7 +64,7 @@ class EditPropertyPage extends Component {
                 <CellGroup>
                     <Cell
                         key="valueType"
-                        title="Type"
+                        title={this.props.t("entry.property.type")}
                         value={currentTypeField.title}
                         icon="planet"
                         onPress={() => this.props.onChooseValueType()}
@@ -73,4 +75,4 @@ class EditPropertyPage extends Component {
     }
 }
 
-export default EditPropertyPage;
+export default withNamespaces()(EditPropertyPage);

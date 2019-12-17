@@ -1,4 +1,5 @@
 import extractDomain from "extract-domain";
+import i18n from "../shared/i18n";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { EntryFinder } from "../library/buttercupCore.js";
 import { dispatch, getState } from "../store.js";
@@ -7,7 +8,7 @@ import { getSelectedArchive } from "../selectors/archiveContents.js";
 export function getNameForSource(sourceID) {
     const source = getSharedArchiveManager().getSourceForID(sourceID);
     if (!source) {
-        throw new Error(`Unable to fetch source information: No source found for ID: ${sourceID}`);
+        throw new Error(i18n.t("vaults.errors.unable-to-fetch-source", { sourceID }));
     }
     return source.name;
 }
@@ -34,7 +35,9 @@ function searchForEntries(term, archives) {
                 source => source.workspace.archive.id === result.archive.id
             );
             if (!source) {
-                throw new Error(`Failed finding source for vault with ID: ${result.archive.id}`);
+                throw new Error(
+                    i18n.t("vault.errors.failed-finding-source", { id: result.archive.id })
+                );
             }
             return {
                 sourceID: source.id,
@@ -81,7 +84,7 @@ export function getMatchingEntriesForURL(url, archives) {
             source => source.workspace.archive.id === archive.id
         );
         if (!source) {
-            throw new Error(`Failed finding source for vault with ID: ${archive.id}`);
+            throw new Error(i18n.t("vault.errors.failed-finding-source", { id: archive.id }));
         }
         const newEntries = archive.findEntriesByMeta("url", /.+/).filter(entry => {
             const entryURL = entry.getMeta("url");

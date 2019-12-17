@@ -28,6 +28,7 @@ import { createRemoteConnection } from "../shared/explorerConnection.js";
 import { handleError } from "../global/exceptions.js";
 import { getDomain } from "../library/helpers.js";
 import { navigate, REMOTE_EXPLORER_SCREEN } from "../shared/nav.js";
+import i18n from "../shared/i18n";
 
 function handleConnectionCreation(dispatch, getState) {
     const state = getState();
@@ -38,7 +39,7 @@ function handleConnectionCreation(dispatch, getState) {
     return createRemoteConnection({ ...remoteConnInfo, dropboxToken, googleDriveToken })
         .then(function __onConnected() {
             const state = getState();
-            let title = "Remote";
+            let title = i18n.t("remote.self");
             const url = getRemoteURL(state);
             if (url) {
                 const domain = getDomain(url);
@@ -53,7 +54,7 @@ function handleConnectionCreation(dispatch, getState) {
         })
         .catch(function __handleError(err) {
             dispatch(disconnect());
-            handleError("Connection failed", err);
+            handleError(i18n.t("remote.errors.connection-failed"), err);
         });
 }
 
