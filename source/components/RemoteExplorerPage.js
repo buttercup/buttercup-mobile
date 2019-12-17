@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Cell, CellGroup } from "react-native-cell-components";
+import { Cell, CellGroup } from "@sallar/react-native-cell-components";
 import Prompt from "@perrymitchell/react-native-prompt";
 import PropTypes from "prop-types";
 import { beginNewArchiveProcedure } from "../shared/archives.js";

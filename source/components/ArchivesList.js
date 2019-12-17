@@ -159,7 +159,7 @@ class ArchivesList extends Component {
         this.rehydrationComplete = false;
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         // If in AutoFill mode, attempt to unlock the archives once the have rehydrated
         if (!this.rehydrationComplete && nextProps.archives.length) {
             this.rehydrationComplete = true;
@@ -225,7 +225,7 @@ class ArchivesList extends Component {
         this.props.removeArchive(sourceID);
     }
 
-    renderArchiveItem(archiveInfo, index) {
+    renderArchiveItem({ item: archiveInfo, index }) {
         const { title: typeTitle, image: typeImage } = ARCHIVE_TYPES[archiveInfo.type];
         return (
             <TouchableHighlight
@@ -305,9 +305,7 @@ class ArchivesList extends Component {
                     <When condition={this.props.archives.length > 0}>
                         <SwipeListView
                             data={this.props.archives}
-                            renderRow={(archiveInfo, secId, rowId) =>
-                                this.renderArchiveItem(archiveInfo, parseInt(rowId, 10))
-                            }
+                            renderItem={archiveInfo => this.renderArchiveItem(archiveInfo)}
                             renderHiddenRow={archiveInfo =>
                                 this.renderArchiveItemSubview(archiveInfo)
                             }

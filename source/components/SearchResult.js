@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Cell } from "react-native-cell-components";
+import { Cell } from "@sallar/react-native-cell-components";
 import PropTypes from "prop-types";
 import { getNameForSource } from "../shared/entries";
 import { getEntry, getEntryPath } from "../shared/entry";

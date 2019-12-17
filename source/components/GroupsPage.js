@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import Prompt from "@perrymitchell/react-native-prompt";
-import { Cell, CellGroup } from "react-native-cell-components";
+import { Cell, CellGroup } from "@sallar/react-native-cell-components";
 import { editGroup } from "../shared/archiveContents.js";
 import { rawGroupIsTrash } from "../shared/group.js";
 import Spinner from "./Spinner.js";
@@ -65,7 +65,7 @@ class GroupsPage extends Component {
         showGroupRenamePrompt: PropTypes.bool.isRequired
     };
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (this.props.group && newProps.group) {
             if (this.props.group.title !== newProps.group.title) {
                 this.props.navigation.setParams({ title: newProps.group.title });

@@ -195,14 +195,6 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
-  - react-native-camera (3.13.1):
-    - React
-    - react-native-camera/RCT (= 3.13.1)
-    - react-native-camera/RN (= 3.13.1)
-  - react-native-camera/RCT (3.13.1):
-    - React
-  - react-native-camera/RN (3.13.1):
-    - React
   - react-native-randombytes (3.5.3):
     - React
   - React-RCTActionSheet (0.61.5):
@@ -240,12 +232,14 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
     - ReactCommon/jscallinvoker (= 0.61.5)
-  - RNGestureHandler (1.3.0):
+  - RNGestureHandler (1.5.2):
     - React
   - RNGoogleSignin (2.0.0):
     - GoogleSignIn (~> 4.4.0)
     - React
-  - RNReanimated (1.2.0):
+  - RNOS (1.2.6):
+    - React
+  - RNReanimated (1.4.0):
     - React
   - RNScreens (1.0.0-alpha.23):
     - React
@@ -253,7 +247,7 @@ PODS:
     - React
   - RNSecureStorage (0.1.2):
     - React
-  - RNVectorIcons (4.6.0):
+  - RNVectorIcons (6.6.0):
     - React
   - TcpSockets (3.3.2):
     - React
@@ -279,7 +273,6 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
-  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -294,6 +287,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
+  - RNOS (from `../node_modules/react-native-os`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSearchBar (from `../node_modules/react-native-search-bar`)
@@ -339,8 +333,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
-  react-native-camera:
-    :path: "../node_modules/react-native-camera"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
   React-RCTActionSheet:
@@ -367,6 +359,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/react-native-google-signin"
+  RNOS:
+    :path: "../node_modules/react-native-os"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -403,8 +397,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
-  react-native-camera: 0a8d6bb1c1c8bcdf1d6d9105b418ac8b0fe35af9
-  react-native-randombytes: 991545e6eaaf700b4ee384c291ef3d572e0b2ca8
+  react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
   React-RCTBlob: d89293cc0236d9cb0933d85e430b0bbe81ad1d72
@@ -415,17 +408,18 @@ SPEC CHECKSUMS:
   React-RCTText: 9ccc88273e9a3aacff5094d2175a605efa854dbe
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
-  RNGestureHandler: 5329a942fce3d41c68b84c2c2276ce06a696d8b0
+  RNGestureHandler: 946a7691e41df61e2c4b1884deab41a4cdc3afff
   RNGoogleSignin: d030c6c6591db24c3cee649f64c7babf0a1699a0
-  RNReanimated: 1b52415c4302f198cb581282a0166690bad62c43
+  RNOS: 6f2f9a70895bbbfbdad7196abd952e7b01d45027
+  RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
-  RNSearchBar: 54ad41edd78385681730b02b5e069900436d996b
+  RNSearchBar: 9860431356b7d12a8449d2fddb2b5f3c78d1e99f
   RNSecureStorage: 24d433f7673a0daade43689de805933a70641731
-  RNVectorIcons: a3c395829c56e2cb054a0730126298bf805a2dca
-  TcpSockets: 8d839b9b14f6f344d98e4642ded13ab3112b462d
+  RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 41ba7670626f7fb688dec133735148a66f81a464
+PODFILE CHECKSUM: 4348ced8bc85aff7ae6bab2a7934cd14c1dd66cd
 
 COCOAPODS: 1.8.4

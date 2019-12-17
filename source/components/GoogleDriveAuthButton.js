@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
-import { Cell, CellGroup } from "react-native-cell-components";
+import { Cell, CellGroup } from "@sallar/react-native-cell-components";
 
 class GoogleDriveAuthButton extends Component {
     render() {
