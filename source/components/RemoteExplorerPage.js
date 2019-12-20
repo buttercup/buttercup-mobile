@@ -78,6 +78,7 @@ class RemoteExplorer extends Component {
                     onCancel={() => this.props.cancelNewPrompt()}
                     onSubmit={value => this.props.onNewMasterPassword(value)}
                     textInputProps={{ secureTextEntry: true }}
+                    inputStyle={{ color: "#000" }}
                 />
                 <Prompt
                     title="Vault Name"

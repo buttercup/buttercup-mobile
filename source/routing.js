@@ -28,7 +28,8 @@ import {
     LOCK_SCREEN,
     POPUP_BROWSER_SCREEN,
     ROOT_SCREEN,
-    QR_CODE_SCREEN
+    QR_CODE_SCREEN,
+    ROOT_NAVIGATOR
 } from "./shared/nav.js";
 
 const CODES = require("../resources/images/password-approved.png");
@@ -125,7 +126,7 @@ const TabNavigator = createBottomTabNavigator(
 
 const RootStack = createStackNavigator(
     {
-        TabNavigator,
+        [ROOT_NAVIGATOR]: { screen: TabNavigator },
         [LOCK_SCREEN]: { screen: LockPage },
         [QR_CODE_SCREEN]: {
             screen: LockPage

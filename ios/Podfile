@@ -44,16 +44,15 @@ target 'Buttercup' do
 
   target 'ButtercupTests' do
     inherit! :search_paths
-    # Pods for testing
   end
 
   use_native_modules!
 end
 
 target 'BCAutoFillExtension' do
-    # use_native_modules!
+  use_native_modules!
 
-    shared_pods
+  shared_pods
 end
 
 

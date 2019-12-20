@@ -64,7 +64,7 @@ class EditPropertyPage extends Component {
                         key="valueType"
                         title="Type"
                         value={currentTypeField.title}
-                        icon="planet"
+                        icon={{ name: "planet", source: "ionicons" }}
                         onPress={() => this.props.onChooseValueType()}
                     />
                 </CellGroup>
