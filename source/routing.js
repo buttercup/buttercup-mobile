@@ -31,6 +31,7 @@ import {
     QR_CODE_SCREEN,
     ROOT_NAVIGATOR
 } from "./shared/nav.js";
+import QRCodeScannerPage from "./components/QRCodeSanner.js";
 
 const CODES = require("../resources/images/password-approved.png");
 const VAULT = require("../resources/images/password-lock.png");
@@ -124,12 +125,19 @@ const TabNavigator = createBottomTabNavigator(
     }
 );
 
+const QRCodeStack = createStackNavigator(
+    {
+        QRCodeScannerPage
+    },
+    sharedStackStyles
+);
+
 const RootStack = createStackNavigator(
     {
         [ROOT_NAVIGATOR]: { screen: TabNavigator },
         [LOCK_SCREEN]: { screen: LockPage },
         [QR_CODE_SCREEN]: {
-            screen: LockPage
+            screen: QRCodeStack
         }
     },
     {

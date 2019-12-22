@@ -9,7 +9,7 @@ import { executeNotification } from "../global/notify.js";
 import { handleError } from "../global/exceptions.js";
 
 const BUTTERCUP_LOGO = require("../../resources/images/buttercup-header.png");
-const CLOUD_ADD = require("../../resources/images/boxes-1.png");
+const CLOUD_ADD = require("../../resources/images/settings-toggle-horizontal.png");
 const SEARCH = require("../../resources/images/search.png");
 
 const styles = StyleSheet.create({

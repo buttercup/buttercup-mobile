@@ -35,6 +35,7 @@ def shared_pods
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'GoogleSignIn', '~> 4.4.0'
+  pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
 end
 
 target 'Buttercup' do

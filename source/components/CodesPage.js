@@ -11,8 +11,11 @@ import {
 import PropTypes from "prop-types";
 import ProgressWheel from "react-native-progress-wheel";
 import { otpInstanceFromURL } from "../library/otp.js";
+import ToolbarIcon from "./ToolbarIcon.js";
 import EmptyView from "./EmptyView.js";
+import { navigate, QR_CODE_SCREEN } from "../shared/nav.js";
 
+const CLOUD_ADD = require("../../resources/images/qr-code-scan.png");
 const SECURITY_SHIELD = require("../../resources/images/security-system-shield-lock.png");
 
 const DIGIT_SEPARATOR = " ";
@@ -80,9 +83,21 @@ function splitDigits(digits = "") {
         : digits;
 }
 
+function getRightToolbarButton() {
+    return (
+        <ToolbarIcon
+            icon={CLOUD_ADD}
+            onPress={() => {
+                navigate(QR_CODE_SCREEN);
+            }}
+        />
+    );
+}
+
 export default class CodesPage extends PureComponent {
     static navigationOptions = {
-        title: "Codes"
+        title: "Codes",
+        headerRight: getRightToolbarButton()
     };
 
     static propTypes = {

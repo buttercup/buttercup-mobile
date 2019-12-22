@@ -51,6 +51,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Buttercup needs camera access to be able to read QR Codes.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>NSFaceIDUsageDescription</string>
 	<key>UIAppFonts</key>
@@ -84,7 +86,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-	<string>Buttercup needs camera access to be able to read QR Codes.</string>
 </dict>
 </plist>
