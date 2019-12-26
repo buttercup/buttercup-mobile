@@ -1,7 +1,6 @@
 import "./shim.js";
-import "react-native-gesture-handler";
 import React, { Component, Fragment } from "react";
-import { AppRegistry, View } from "react-native";
+import { AppRegistry, View, StatusBar, YellowBox } from "react-native";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
 import { patchCrypto } from "./source/library/crypto.js";
@@ -13,6 +12,10 @@ import { setNotificationFunction } from "./source/global/notify.js";
 import { migrateStorage } from "./source/library/storage.js";
 import { registerAuthWatchers } from "./source/library/auth.js";
 import { setTopLevelNavigator } from "./source/shared/nav.js";
+
+// Ignore some warnings
+// @TODO: remove this once we are fully upgraded
+YellowBox.ignoreWarnings(["Warning: componentWill"]);
 
 export default class ButtercupShared extends Component {
     constructor(...args) {
@@ -42,6 +45,7 @@ export default class ButtercupShared extends Component {
         return (
             <Provider store={store}>
                 <Fragment>
+                    <StatusBar barStyle="dark-content" />
                     {/* Show the main app stack when NOT in autofill mode */}
                     {!this.props.isContextAutoFill && (
                         <ButtercupApp ref={navigator => setTopLevelNavigator(navigator)} />

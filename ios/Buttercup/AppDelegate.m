@@ -27,6 +27,12 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  // Temporarily disable Dark Mode until we have it.
+  if (@available(iOS 13.0, *)) {
+    rootView.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+  }
+
   return YES;
 }
 

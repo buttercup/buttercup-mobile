@@ -1,7 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { View, StyleSheet, Dimensions, Button, Text, TouchableOpacity } from "react-native";
 import { navigateBack } from "../shared/nav";
 import QRCodeScanner from "react-native-qrcode-scanner";
+import { isOTP } from "../library/otp";
 
 const styles = StyleSheet.create({
     container: {
@@ -33,9 +35,12 @@ const styles = StyleSheet.create({
     }
 });
 
-const QRCodeScannerPage = () => {
+const QRCodeScannerPage = ({ onOTPUrlDiscovered }) => {
     const onSuccess = e => {
-        console.log(e);
+        if (isOTP(e.data)) {
+            onOTPUrlDiscovered(e.data);
+            navigateBack();
+        }
     };
     return (
         <View style={styles.container}>
@@ -52,6 +57,10 @@ const QRCodeScannerPage = () => {
             />
         </View>
     );
+};
+
+QRCodeScannerPage.propTypes = {
+    onOTPUrlDiscovered: PropTypes.func.isRequired
 };
 
 QRCodeScannerPage.navigationOptions = ({ navigation }) => ({

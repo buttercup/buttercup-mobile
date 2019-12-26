@@ -17,6 +17,7 @@ import VaultNavigator from "./components/VaultNavigator.js";
 import CodesPage from "./containers/CodesPage.js";
 import GroupsPage from "./containers/GroupsPage.js";
 import EditPropertyPage from "./containers/EditPropertyPage.js";
+import QRCodeScannerPage from "./containers/QRCodeScanner.js";
 import {
     VAULT_CONTENTS_SCREEN,
     ENTRY_SCREEN,
@@ -31,7 +32,6 @@ import {
     QR_CODE_SCREEN,
     ROOT_NAVIGATOR
 } from "./shared/nav.js";
-import QRCodeScannerPage from "./components/QRCodeSanner.js";
 
 const CODES = require("../resources/images/password-approved.png");
 const VAULT = require("../resources/images/password-lock.png");
