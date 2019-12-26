@@ -5,6 +5,7 @@ import { Cell, CellGroup, CellInput } from "@sallar/react-native-cell-components
 import { FIELD_VALUE_TYPE_TEXT } from "@buttercup/facades";
 import { saveEntryProperty } from "../shared/entry.js";
 import { FIELD_TYPE_OPTIONS } from "../library/buttercup.js";
+import { HeaderButtons, Item } from "./HeaderButtons.js";
 
 const CELL_OPTIONS = {
     autoCapitalize: "none",
@@ -22,7 +23,11 @@ const styles = StyleSheet.create({
 class EditPropertyPage extends Component {
     static navigationOptions = {
         title: "Edit Property",
-        headerRight: <Button title="Save" onPress={saveEntryProperty} />
+        headerRight: () => (
+            <HeaderButtons>
+                <Item title="save" onPress={saveEntryProperty} />
+            </HeaderButtons>
+        )
     };
 
     static propTypes = {
@@ -64,7 +69,7 @@ class EditPropertyPage extends Component {
                         key="valueType"
                         title="Type"
                         value={currentTypeField.title}
-                        icon={{ name: "planet", source: "ionicons" }}
+                        icon={{ name: "ios-planet", source: "ionicons" }}
                         onPress={() => this.props.onChooseValueType()}
                     />
                 </CellGroup>

@@ -46,6 +46,7 @@ export default class ButtercupShared extends Component {
         return (
             <Provider store={store}>
                 <Fragment>
+                    <DropdownAlert ref={ref => (this.dropdown = ref)} closeInterval={8000} />
                     <StatusBar barStyle="dark-content" />
                     {/* Show the main app stack when NOT in autofill mode */}
                     {!this.props.isContextAutoFill && (
@@ -58,7 +59,6 @@ export default class ButtercupShared extends Component {
                             ref={navigator => setTopLevelNavigator(navigator)}
                         />
                     )}
-                    <DropdownAlert ref={ref => (this.dropdown = ref)} closeInterval={8000} />
                 </Fragment>
             </Provider>
         );

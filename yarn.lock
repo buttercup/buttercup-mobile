@@ -7216,10 +7216,10 @@ react-native-crypto@^2.0.2:
     public-encrypt "^4.0.0"
     randomfill "^1.0.3"
 
-react-native-dropdownalert@^3.11.0:
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-3.11.0.tgz#ebcb136aafc8fd522731574570990cb5efe62a27"
-  integrity sha512-f2nQHHeiw/tgfl12P+t2ov1o0eqLknflwM/UiN3cvEzNH1HrEQK2rWaghjWrvmv+HKhSuDl01R3C9dJg8M5+FQ==
+react-native-dropdownalert@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-4.2.0.tgz#b7f418b6954058b0c822d8b49e87fa86ccbb6f1a"
+  integrity sha512-zz2W2t6UN6C/CM/z7VTEuvOTDQad8b5KBBL4YDpkdJKI9HOgLsTs0eIkZsXW2woEyp8Bj0SGpovSmf3SX756lg==
   dependencies:
     prop-types "15.5.10"
 
@@ -7282,6 +7282,11 @@ react-native-permissions@^2.0.2, react-native-permissions@^2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.0.8.tgz#e6d20a7b6e3df5333a3d80cc83024686fa2f49e3"
   integrity sha512-qK8Thp+9PTl/YjhKkRr8LPHfX5Evv5Zj/3CmAiqE45qCTB5UbWTKBWUfg3iqfMrjv9nE2rcS1PrIjZCDh6s/gQ==
+
+react-native-platform-touchable@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-platform-touchable/-/react-native-platform-touchable-1.1.1.tgz#fde4acc65eea585d28b164d0c3716a42129a68e4"
+  integrity sha1-/eSsxl7qWF0osWTQw3FqQhKaaOQ=
 
 react-native-progress-wheel@^1.0.4:
   version "1.0.4"
@@ -7443,6 +7448,13 @@ react-native@0.61.5:
     scheduler "0.15.0"
     stacktrace-parser "^0.1.3"
     whatwg-fetch "^3.0.0"
+
+react-navigation-header-buttons@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-navigation-header-buttons/-/react-navigation-header-buttons-3.0.4.tgz#63480ae356745549ede8b0232fda9c23c8526ea1"
+  integrity sha512-9wXSciaY1bxGxJQMhzVoPrVR20DQd487Re3119crVYZbAvQpugTznAc4VKc4rY4Z68LR//V7x7a00uEGAiZQDA==
+  dependencies:
+    react-native-platform-touchable "^1.1.1"
 
 react-navigation-redux-helpers@^4.0.1:
   version "4.0.1"

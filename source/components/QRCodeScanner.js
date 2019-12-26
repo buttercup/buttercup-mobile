@@ -1,6 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, StyleSheet, Dimensions, Button, Text, TouchableOpacity } from "react-native";
+import {
+    View,
+    StyleSheet,
+    Dimensions,
+    Button,
+    Text,
+    TouchableOpacity,
+    TouchableHighlight
+} from "react-native";
+import { HeaderButtons, Item } from "./HeaderButtons";
 import { navigateBack } from "../shared/nav";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { isOTP } from "../library/otp";
@@ -13,9 +22,7 @@ const styles = StyleSheet.create({
         height: 0,
         flex: 0
     },
-    cameraContainer: {
-        height: Dimensions.get("window").width + 200
-    },
+    cameraContainer: {},
     centerText: {
         fontSize: 18,
         padding: 32,
@@ -39,7 +46,6 @@ const QRCodeScannerPage = ({ onOTPUrlDiscovered }) => {
     const onSuccess = e => {
         if (isOTP(e.data)) {
             onOTPUrlDiscovered(e.data);
-            navigateBack();
         }
     };
     return (
@@ -65,7 +71,11 @@ QRCodeScannerPage.propTypes = {
 
 QRCodeScannerPage.navigationOptions = ({ navigation }) => ({
     title: "Scan QR Code",
-    headerRight: () => <Button color="#454545" onPress={() => navigateBack()} title="Dismiss" />
+    headerRight: () => (
+        <HeaderButtons>
+            <Item title="dismiss" onPress={() => navigateBack()} />
+        </HeaderButtons>
+    )
 });
 
 export default QRCodeScannerPage;

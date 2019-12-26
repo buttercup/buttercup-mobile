@@ -5,6 +5,7 @@ import Prompt from "@perrymitchell/react-native-prompt";
 import PropTypes from "prop-types";
 import { beginNewArchiveProcedure } from "../shared/archives.js";
 import Spinner from "./Spinner.js";
+import { HeaderButtons, Item } from "./HeaderButtons.js";
 
 const BCUP_IMAGE = require("../../resources/images/bcup-256.png");
 const FILE_IMAGE = require("../../resources/images/file-256.png");
@@ -34,7 +35,11 @@ class RemoteExplorer extends Component {
         const { params = {} } = navigation.state;
         return {
             title: `${params.title}`,
-            headerRight: <Button title="New" onPress={beginNewArchiveProcedure} />
+            headerRight: () => (
+                <HeaderButtons>
+                    <Item title="new" onPress={beginNewArchiveProcedure} />
+                </HeaderButtons>
+            )
         };
     };
 

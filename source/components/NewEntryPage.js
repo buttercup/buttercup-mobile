@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { CellGroup, CellInput } from "@sallar/react-native-cell-components";
 import { saveNewEntry } from "../shared/entry.js";
 import Spinner from "./Spinner.js";
+import { HeaderButtons, Item } from "./HeaderButtons.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -14,7 +15,11 @@ const styles = StyleSheet.create({
 class NewEntryPage extends Component {
     static navigationOptions = {
         title: "New Entry",
-        headerRight: <Button title="Create" onPress={saveNewEntry} />
+        headerRight: () => (
+            <HeaderButtons>
+                <Item title="create" onPress={saveNewEntry} />
+            </HeaderButtons>
+        )
     };
 
     componentWillUnmount() {

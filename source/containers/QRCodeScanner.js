@@ -14,5 +14,6 @@ export default connect((state, ownProps) => ({}), {
             "Detected a new OTP - edit an entry to save it!",
             15000
         );
+        navigateBack();
     }
 })(QRCodeScanner);
