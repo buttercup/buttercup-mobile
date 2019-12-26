@@ -299,14 +299,15 @@ class ArchivesList extends Component {
     }
 
     render() {
+        const { archives } = this.props;
         return (
             <View style={styles.container}>
                 <Choose>
-                    <When condition={this.props.archives.length > 0}>
+                    <When condition={archives.length > 0}>
                         <SwipeListView
-                            data={this.props.archives}
+                            data={archives}
                             renderItem={archiveInfo => this.renderArchiveItem(archiveInfo)}
-                            renderHiddenRow={archiveInfo =>
+                            renderHiddenItem={archiveInfo =>
                                 this.renderArchiveItemSubview(archiveInfo)
                             }
                             disableLeftSwipe={this.props.isContextAutoFill}

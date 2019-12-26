@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import "./shim.js";
 import React, { Component, Fragment } from "react";
 import { AppRegistry, View, StatusBar, YellowBox } from "react-native";
