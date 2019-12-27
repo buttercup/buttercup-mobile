@@ -3,7 +3,6 @@ import { StyleSheet, Image } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-
 import ArchivesPage from "./components/ArchivesPage.js";
 import EntryPage from "./containers/EntryPage.js";
 import NewEntryPage from "./containers/NewEntryPage.js";
@@ -32,6 +31,7 @@ import {
     QR_CODE_SCREEN,
     ROOT_NAVIGATOR
 } from "./shared/nav.js";
+import i18n from "./shared/i18n";
 
 const CODES = require("../resources/images/password-approved.png");
 const VAULT = require("../resources/images/password-lock.png");
@@ -46,6 +46,8 @@ const styles = StyleSheet.create({
 
 const sharedStackStyles = {
     defaultNavigationOptions: {
+        headerBackTitle: i18n.t("back"),
+        headerTruncatedBackTitle: i18n.t("back"),
         headerTintColor: "#454545",
         headerStyle: {
             borderBottomColor: "#24B5AB",
@@ -95,6 +97,7 @@ const TabNavigator = createBottomTabNavigator(
         Vaults: {
             screen: AppNavigator,
             navigationOptions: {
+                tabBarLabel: i18n.t("vaults.self"),
                 tabBarIcon: ({ tintColor }) => (
                     <Image style={[styles.image, { tintColor }]} source={VAULT} />
                 )
@@ -103,6 +106,7 @@ const TabNavigator = createBottomTabNavigator(
         Codes: {
             screen: CodesStack,
             navigationOptions: {
+                tabBarLabel: i18n.t("codes.self"),
                 tabBarIcon: ({ tintColor }) => (
                     <Image style={[styles.image, { tintColor }]} source={CODES} />
                 )
@@ -111,6 +115,7 @@ const TabNavigator = createBottomTabNavigator(
         Search: {
             screen: SearchStack,
             navigationOptions: {
+                tabBarLabel: i18n.t("search.self"),
                 tabBarIcon: ({ tintColor }) => (
                     <Image style={[styles.image, { tintColor }]} source={SEARCH} />
                 )

@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import "./shim.js";
 import React, { Component, Fragment } from "react";
 import { AppRegistry, View, StatusBar, YellowBox } from "react-native";
+import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
 import { patchCrypto } from "./source/library/crypto.js";
@@ -12,6 +13,7 @@ import AutoFillApp from "./source/autofill/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
 import { registerAuthWatchers } from "./source/library/auth.js";
 import { setTopLevelNavigator } from "./source/shared/nav.js";
+import i18n from "./source/shared/i18n";
 
 // Ignore some warnings
 // @TODO: remove this once we are fully upgraded
@@ -41,7 +43,7 @@ export default class ButtercupShared extends Component {
     render() {
         return (
             <Provider store={store}>
-                <Fragment>
+                <I18nextProvider i18n={i18n}>
                     <DropdownAlert ref={ref => (this.dropdown = ref)} closeInterval={8000} />
                     <StatusBar barStyle="dark-content" />
                     {/* Show the main app stack when NOT in autofill mode */}
@@ -55,7 +57,7 @@ export default class ButtercupShared extends Component {
                             ref={navigator => setTopLevelNavigator(navigator)}
                         />
                     )}
-                </Fragment>
+                </I18nextProvider>
             </Provider>
         );
     }
