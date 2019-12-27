@@ -10,7 +10,6 @@ import store from "./source/store.js";
 import ButtercupApp from "./source/routing.js";
 import AutoFillApp from "./source/autofill/routing.js";
 import { setNotificationFunction } from "./source/global/notify.js";
-import { migrateStorage } from "./source/library/storage.js";
 import { registerAuthWatchers } from "./source/library/auth.js";
 import { setTopLevelNavigator } from "./source/shared/nav.js";
 
@@ -23,11 +22,8 @@ export default class ButtercupShared extends Component {
         super(...args);
         // Setup native crypto
         patchCrypto();
-        // Ensure that the users storage has migrated to Keychain
-        migrateStorage().then(() => {
-            // Initialise the manager
-            getSharedArchiveManager().rehydrate();
-        });
+        // Initialise the manager
+        getSharedArchiveManager().rehydrate();
         // Setup notifications
         setNotificationFunction((type, title, message, timeOverride = null) => {
             if (this.dropdown) {
