@@ -61,9 +61,7 @@ function removeTextFromArray(arr, text) {
 export function showArchiveContentsAddItemSheet(currentGroupID) {
     const isRoot = currentGroupID == "0";
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
-
     const title = isRoot ? i18n.t("manage-vault") : i18n.t("edit-group");
-
     const state = getState();
     const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {
@@ -171,7 +169,6 @@ export function showTouchIDToggleSheet() {
     const itemEnableTouchID = i18n.t("biometric-unlock.enable");
     const itemDisableTouchID = i18n.t("biometric-unlock.disable");
     const itemCancel = i18n.t("cancel");
-
     return touchIDEnabledForSource(currentSourceID).then(enabled => {
         const options = [enabled ? itemDisableTouchID : itemEnableTouchID, itemCancel];
         ActionSheet.showActionSheetWithOptions(
