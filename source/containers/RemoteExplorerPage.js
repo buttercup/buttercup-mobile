@@ -42,6 +42,7 @@ import {
 } from "../library/buttercup.js";
 import { handleError } from "../global/exceptions.js";
 import { navigateToRoot } from "../shared/nav.js";
+import i18n from "../shared/i18n";
 
 function addToArchiveManager(state) {
     const {
@@ -85,7 +86,7 @@ function handleNewArchiveName(name, dispatch, getState) {
         })
         .catch(function __handleAddError(err) {
             dispatch(setAddingArchive(false));
-            handleError("Failed adding vault", err);
+            handleError(i18n.t("vault.errors.failed-adding"), err);
         });
 }
 
@@ -121,7 +122,7 @@ function handlePathSelection(nextIdentifier, nextItem, isDir, resetScroll, dispa
             })
             .catch(err => {
                 dispatch(setLoading(false));
-                handleError("Failed fetching remote contents", err);
+                handleError(i18n.t("errors.failed-fetching-remote-contents"), err);
             });
     }
     // file

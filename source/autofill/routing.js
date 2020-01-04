@@ -15,7 +15,9 @@ function getRightToolbarButton() {
 
 export const AppNavigator = createStackNavigator(
     {
-        [ROOT_SCREEN]: { screen: ArchivesPage },
+        [ROOT_SCREEN]: {
+            screen: ArchivesPage
+        },
         [SEARCH_SCREEN]: {
             screen: SearchArchivesPage,
             navigationOptions: {

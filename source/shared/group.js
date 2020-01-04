@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import i18n from "../shared/i18n";
 import { getGroup, getSelectedArchive } from "../selectors/archiveContents.js";
 import { dispatch, getState } from "../store.js";
 import { setBusyState } from "../actions/app.js";
@@ -27,13 +28,13 @@ export function deleteGroup(groupID) {
 export function promptDeleteGroup(groupID) {
     const state = getState();
     const { title } = getGroup(state, groupID);
-    Alert.alert("Delete Group", `Are you sure that you want to delete the group '${title}'?`, [
-        { text: "Cancel", style: "cancel" },
+    Alert.alert(i18n.t("group.delete"), i18n.t("group.confirm-delete", { title }), [
+        { text: i18n.t("cancel"), style: "cancel" },
         {
-            text: "Delete",
+            text: i18n.t("delete"),
             style: "default",
             onPress: () => {
-                dispatch(setBusyState("Saving"));
+                dispatch(setBusyState(i18n.t("busy-state.saving")));
                 Promise.resolve()
                     .then(() => deleteGroup(groupID))
                     .then(() => saveCurrentArchive())
@@ -44,7 +45,7 @@ export function promptDeleteGroup(groupID) {
                     })
                     .catch(err => {
                         dispatch(setBusyState(null));
-                        handleError("Failed deleting group", err);
+                        handleError(i18n.t("group.errors.failed-deleting-group"), err);
                     });
             }
         }

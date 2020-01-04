@@ -3,10 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 import PropTypes from "prop-types";
 import { Cell, CellGroup } from "@sallar/react-native-cell-components";
+import i18n from "../shared/i18n";
 
 class GoogleDriveAuthButton extends Component {
     render() {
-        const title = this.props.authenticated ? "Authenticated" : "Authenticate";
+        const title = this.props.authenticated
+            ? i18n.t("remote.authenticated")
+            : i18n.t("remote.authenticate");
         return (
             <CellGroup>
                 <Cell
@@ -17,7 +20,7 @@ class GoogleDriveAuthButton extends Component {
                     disabled={this.props.authenticating || this.props.authenticated}
                 />
                 <Cell
-                    title="Sign Out"
+                    title={i18n.t("remote.sign-out")}
                     icon={{ name: "log-out", source: "entypo" }}
                     onPress={() => this.props.onSignOut()}
                     tintColor="#1144FF"

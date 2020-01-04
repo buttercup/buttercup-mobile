@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { Cell, CellGroup } from "@sallar/react-native-cell-components";
 import PropTypes from "prop-types";
+import { withNamespaces } from "react-i18next";
+import i18n from "../shared/i18n";
 import { getArchiveTypeDetails } from "../library/archives.js";
 
 const styles = StyleSheet.create({
@@ -18,12 +20,12 @@ const ARCHIVE_TYPES = getArchiveTypeDetails();
 
 class AddArchive extends Component {
     static navigationOptions = {
-        title: "Add Vault"
+        title: i18n.t("vaults.add-vault")
     };
 
     getMenuContents() {
         return (
-            <CellGroup header="Remote">
+            <CellGroup header={this.props.t("remote.self")}>
                 {ARCHIVE_TYPES.map(({ type, title, image }) => (
                     <Cell
                         key={type}
@@ -55,4 +57,4 @@ AddArchive.defaultProps = {
     stage: "chooseType"
 };
 
-export default AddArchive;
+export default withNamespaces()(AddArchive);

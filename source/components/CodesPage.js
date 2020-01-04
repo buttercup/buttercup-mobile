@@ -8,12 +8,14 @@ import {
     View,
     SectionList
 } from "react-native";
+import { withNamespaces } from "react-i18next";
 import PropTypes from "prop-types";
 import ProgressWheel from "react-native-progress-wheel";
 import { otpInstanceFromURL } from "../library/otp.js";
 import ToolbarIcon from "./ToolbarIcon.js";
 import EmptyView from "./EmptyView.js";
 import { navigate, QR_CODE_SCREEN } from "../shared/nav.js";
+import i18n from "../shared/i18n";
 
 const CLOUD_ADD = require("../../resources/images/qr-code-scan.png");
 const SECURITY_SHIELD = require("../../resources/images/security-system-shield-lock.png");
@@ -94,9 +96,9 @@ function getRightToolbarButton() {
     );
 }
 
-export default class CodesPage extends PureComponent {
+class CodesPage extends PureComponent {
     static navigationOptions = {
-        title: "Codes",
+        title: i18n.t("codes.self"),
         headerRight: getRightToolbarButton()
     };
 
@@ -140,7 +142,7 @@ export default class CodesPage extends PureComponent {
                     </When>
                     <Otherwise>
                         <EmptyView
-                            text="Unlock vaults or add codes."
+                            text={this.props.t("codes.description")}
                             imageSource={SECURITY_SHIELD}
                         />
                     </Otherwise>
@@ -235,3 +237,5 @@ export default class CodesPage extends PureComponent {
         });
     }
 }
+
+export default withNamespaces()(CodesPage);
