@@ -5,6 +5,7 @@ import { GoogleSignin } from "react-native-google-signin";
 import { setGoogleDriveAuthenticated, setGoogleDriveAuthenticating } from "../actions/googleDrive";
 import { authenticate as authenticateGoogleDrive } from "../library/googleDrive.js";
 import { handleError } from "../global/exceptions.js";
+import i18n from "../shared/i18n";
 
 export default connect(
     (state, ownProps) => ({
@@ -16,7 +17,7 @@ export default connect(
             dispatch(setGoogleDriveAuthenticated(false));
             dispatch(setGoogleDriveAuthenticating(true));
             authenticateGoogleDrive().catch(err => {
-                handleError("Google Drive authentication failed", err);
+                handleError(i18n.t("remote.errors.google-drive.authentication-failed"), err);
             });
         },
         onSignOut: () => async dispatch => {

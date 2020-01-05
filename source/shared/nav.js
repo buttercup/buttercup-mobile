@@ -12,6 +12,8 @@ export const LOCK_SCREEN = "Lock";
 export const POPUP_BROWSER_SCREEN = "PopupBrowser";
 export const ROOT_SCREEN = "Root";
 export const SEARCH_SCREEN = "SearchScreen";
+export const QR_CODE_SCREEN = "QRCodeScreen";
+export const ROOT_NAVIGATOR = "RootNavigator";
 
 let __lockPageShown = false;
 
@@ -42,11 +44,10 @@ export const navigateBack = () => {
 };
 
 export const navigateToRoot = () => {
-    // navigate(ROOT_SCREEN);
     _navigator.dispatch(
         StackActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: ROOT_SCREEN })]
+            actions: [NavigationActions.navigate({ routeName: ROOT_NAVIGATOR })]
         })
     );
 };

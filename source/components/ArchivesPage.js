@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Image, Linking, Platform, StyleSheet, View } from "react-native";
+import { withNamespaces } from "react-i18next";
 import ArchivesList from "../containers/ArchivesList.js";
 import { showArchivesPageRightSheet } from "../shared/sheets.js";
 import ToolbarIcon from "./ToolbarIcon.js";
@@ -7,9 +8,10 @@ import { setPendingOTPURL, setSearchContext } from "../actions/app.js";
 import { dispatch } from "../store.js";
 import { executeNotification } from "../global/notify.js";
 import { handleError } from "../global/exceptions.js";
+import i18n from "../shared/i18n";
 
 const BUTTERCUP_LOGO = require("../../resources/images/buttercup-header.png");
-const CLOUD_ADD = require("../../resources/images/boxes-1.png");
+const CLOUD_ADD = require("../../resources/images/settings-toggle-horizontal.png");
 const SEARCH = require("../../resources/images/search.png");
 
 const styles = StyleSheet.create({
@@ -41,8 +43,8 @@ function handleDeepLink(evt) {
     dispatch(setPendingOTPURL(url));
     executeNotification(
         "success",
-        "OTP URL detected",
-        "Detected a new OTP - edit an entry to save it!",
+        i18n.t("codes.success.otp-detected.title"),
+        i18n.t("codes.success.otp-detected.description"),
         15000
     );
 }
@@ -61,7 +63,7 @@ class ArchivesPage extends Component {
                 }
             })
             .catch(err => {
-                handleError("OTP URL collection failed", err);
+                handleError(this.props.t("codes.errors.otp-url-collection-failed"), err);
             });
     }
 
@@ -83,4 +85,4 @@ class ArchivesPage extends Component {
     }
 }
 
-export default ArchivesPage;
+export default withNamespaces()(ArchivesPage);

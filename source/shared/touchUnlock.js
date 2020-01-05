@@ -1,4 +1,5 @@
 import TouchID from "react-native-touch-id";
+import i18n from "./i18n";
 import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
 import { handleError } from "../global/exceptions.js";
 import { executeNotification } from "../global/notify.js";
@@ -41,18 +42,18 @@ export function disableTouchUnlock(sourceID) {
         .then(() => {
             executeNotification(
                 "success",
-                "Biometric Unlock",
-                "Successfully disabled biometric unlock"
+                i18n.t("biometric-unlock.self"),
+                i18n.t("biometric-unlock.biometric-unlock-disabled")
             );
         })
         .then(() => updateTouchEnabledSources())
         .catch(error => {
-            handleError("Failed disabling biometric unlock", error);
+            handleError(i18n.t("biometric-unlock.errors.failed-disabling"), error);
         });
 }
 
 export function enableTouchUnlock(sourceID) {
-    return TouchID.authenticate("Authenticate to enable biometric unlock")
+    return TouchID.authenticate(i18n.t("biometric-unlock.authenticate-to-enable"))
         .then(() => getTouchUnlockCredentials())
         .then(keychainCreds => {
             const archiveManager = getSharedArchiveManager();
@@ -60,11 +61,11 @@ export function enableTouchUnlock(sourceID) {
             const sourceID = getSelectedSourceID(state);
             const source = archiveManager.getSourceForID(sourceID);
             if (!source) {
-                throw new Error("Current source was not found");
+                throw new Error(i18n.t("biometric-unlock.errors.source-not-found"));
             }
             const masterPassword = source.workspace.masterCredentials.password;
             if (!masterPassword) {
-                throw new Error("Unable to locate current credentials");
+                throw new Error(i18n.t("biometric-unlock.errors.unable-locate-credentials"));
             }
             const newCreds = updateKeychainCredentials(keychainCreds, sourceID, masterPassword);
             return setTouchUnlockCredentials(newCreds);
@@ -72,8 +73,8 @@ export function enableTouchUnlock(sourceID) {
         .then(() => {
             executeNotification(
                 "success",
-                "Biometric Unlock",
-                "Successfully enabled biometric unlock"
+                i18n.t("biometric-unlock.self"),
+                i18n.t("biometric-unlock.biometric-unlock-enabled")
             );
             return updateTouchEnabledSources().then(() => ({ action: "none" }));
         })
@@ -86,14 +87,14 @@ export function enableTouchUnlock(sourceID) {
                 case "LAErrorUserFallback":
                     return { action: "fallback" };
                 default:
-                    handleError("Failed enabling biometric unlock", err);
+                    handleError(i18n.t("biometric-unlock.errors.failed-enabling"), err);
                     break;
             }
         });
 }
 
 export function getKeychainCredentialsFromTouchUnlock() {
-    return TouchID.authenticate("Authenticate to unlock vault")
+    return TouchID.authenticate(i18n.t("biometric-unlock.authenticate-to-unlock"))
         .then(() => getTouchUnlockCredentials())
         .catch(err => {
             switch (err.name) {
@@ -113,14 +114,14 @@ export function getMasterPasswordFromTouchUnlock(sourceID) {
     return touchIDEnabledForSource(sourceID)
         .then(enabled => {
             if (!enabled) {
-                throw new Error("Biometric unlock is not enabled for this source");
+                throw new Error(i18n.t("biometric-unlock.errors.not-for-vault"));
             }
             return getKeychainCredentialsFromTouchUnlock();
         })
         .then(keychainCreds => {
             const sourcePassword = keychainCreds[sourceID];
             if (!sourcePassword) {
-                throw new Error("No credentials found under biometric ID for this source");
+                throw new Error(i18n.t("biometric-unlock.errors.no-credentials"));
             }
             return sourcePassword;
         });

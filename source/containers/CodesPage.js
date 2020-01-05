@@ -4,6 +4,7 @@ import CodesPage from "../components/CodesPage.js";
 import { getOTPCodes } from "../selectors/archives.js";
 import { executeNotification } from "../global/notify.js";
 import { otpInstanceFromURL } from "../library/otp.js";
+import i18n from "../shared/i18n";
 
 const attachOTPInstance = (otpGroups = []) =>
     otpGroups.map(group => ({
@@ -50,8 +51,8 @@ export default connect(
             Clipboard.setString(value);
             executeNotification(
                 "success",
-                "Copied value",
-                `Copied digits for '${name}' to clipboard`
+                i18n.t("copied-value"),
+                i18n.t("copied-value-description", { name })
             );
         }
     }

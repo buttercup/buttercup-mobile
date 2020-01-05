@@ -20,6 +20,7 @@ import {
     showNewNamePrompt
 } from "../actions/RemoteExplorerPage.js";
 import { doAsyncWork } from "../global/async.js";
+import i18n from "../shared/i18n";
 
 const PATH_PARENT = /^\.\./;
 
@@ -47,7 +48,7 @@ export function createNewArchive(state, dispatch) {
                 dispatch(showNewNamePrompt());
             });
     } else {
-        throw new Error("Failed creating new vault: Missing filename and/or password");
+        throw new Error(i18n.t("vault.errors.failed-creating-new-vault"));
     }
 }
 
@@ -97,7 +98,7 @@ export function createRemoteConnection(connectionInfo) {
     } else if (archiveType === "googledrive") {
         return getGoogleDriveConnection(googleDriveToken).then(__storeSharedInstance);
     }
-    return Promise.reject(new Error(`Unknown vault type: ${archiveType}`));
+    return Promise.reject(new Error(i18n.t("remote.errors.unknown-vault-type", { archiveType })));
 }
 
 export function getDirectoryContents(remoteDir) {

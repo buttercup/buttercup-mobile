@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { CellGroup, CellInput } from "react-native-cell-components";
+import { withNamespaces } from "react-i18next";
+import i18n from "../shared/i18n";
 import { saveNewEntry } from "../shared/entry.js";
 import Spinner from "./Spinner.js";
+import { HeaderButtons, Item } from "./HeaderButtons.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -13,8 +16,12 @@ const styles = StyleSheet.create({
 
 class NewEntryPage extends Component {
     static navigationOptions = {
-        title: "New Entry",
-        headerRight: <Button title="Create" onPress={saveNewEntry} />
+        title: i18n.t("entry.new-entry"),
+        headerRight: () => (
+            <HeaderButtons>
+                <Item title={i18n.t("entry.create")} onPress={saveNewEntry} />
+            </HeaderButtons>
+        )
     };
 
     componentWillUnmount() {
@@ -36,13 +43,13 @@ class NewEntryPage extends Component {
                 <CellGroup>
                     <CellInput
                         key="title"
-                        title="Title"
+                        title={this.props.t("entry.title")}
                         value={this.props.title}
                         onChangeText={text => this.handleValueChange("title", text)}
                     />
                     <CellInput
                         key="username"
-                        title="Username"
+                        title={this.props.t("entry.username")}
                         value={this.props.username}
                         keyboardType="email-address"
                         onChangeText={text => this.handleValueChange("username", text)}
@@ -50,7 +57,7 @@ class NewEntryPage extends Component {
                     />
                     <CellInput
                         key="password"
-                        title="Password"
+                        title={this.props.t("entry.password")}
                         value={this.props.password}
                         onChangeText={text => this.handleValueChange("password", text)}
                         {...boringProps}
@@ -75,4 +82,4 @@ NewEntryPage.defaultProps = {
     onUnmount: () => {}
 };
 
-export default NewEntryPage;
+export default withNamespaces()(NewEntryPage);

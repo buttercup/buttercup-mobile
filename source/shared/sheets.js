@@ -24,16 +24,17 @@ import {
 } from "./autofill";
 import { getSelectedArchive } from "../selectors/archiveContents";
 import { navigate, ADD_VAULT_SCREEN, ENTRY_NEW_SCREEN } from "./nav.js";
+import i18n from "../shared/i18n";
 
-const SHEET_ADD_ARCHIVE = "Add";
-const SHEET_ADD_ENTRY = "New Entry";
-const SHEET_ADD_GROUP = "New Group";
-const SHEET_CANCEL = "Cancel";
-const SHEET_DELETE_GROUP = "Delete Group";
-const SHEET_LOCK_ALL = "Lock All";
-const SHEET_RENAME_GROUP = "Rename Group";
-const SHEET_TOGGLE_TOUCH_ID = "Toggle Biometric Unlock";
-const SHEET_TOGGLE_AUTOFILL = "Toggle Autofill";
+const SHEET_ADD_ARCHIVE = i18n.t("vault.add");
+const SHEET_ADD_ENTRY = i18n.t("entry.new");
+const SHEET_ADD_GROUP = i18n.t("group.new");
+const SHEET_CANCEL = i18n.t("cancel");
+const SHEET_DELETE_GROUP = i18n.t("group.delete");
+const SHEET_LOCK_ALL = i18n.t("vaults.lock-all");
+const SHEET_RENAME_GROUP = i18n.t("group.rename");
+const SHEET_TOGGLE_TOUCH_ID = i18n.t("biometric-unlock.toggle");
+const SHEET_TOGGLE_AUTOFILL = i18n.t("autofill.toggle");
 
 const ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS = [
     SHEET_ADD_ENTRY,
@@ -60,7 +61,7 @@ function removeTextFromArray(arr, text) {
 export function showArchiveContentsAddItemSheet(currentGroupID) {
     const isRoot = currentGroupID == "0";
     const buttons = [...ARCHIVE_CONTENTS_ADD_ITEM_SHEET_BUTTONS];
-    const title = isRoot ? "Manage Vault" : "Edit Group";
+    const title = isRoot ? i18n.t("manage-vault") : i18n.t("edit-group");
     const state = getState();
     const readOnly = isCurrentlyReadOnly(state);
     return Promise.all([touchIDAvailable()]).then(([touchIDAvailable]) => {
@@ -124,7 +125,7 @@ export function showArchivesPageRightSheet() {
         {
             options: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS,
             cancelButtonIndex: ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS.indexOf(SHEET_CANCEL),
-            title: "Vaults"
+            title: i18n.t("vaults.self")
         },
         selectedIndex => {
             switch (ARCHIVES_PAGE_RIGHT_SHEET_BUTTONS[selectedIndex]) {
@@ -165,16 +166,16 @@ export function showEntryPropertyValueTypeSheet() {
 export function showTouchIDToggleSheet() {
     const state = getState();
     const currentSourceID = getSelectedSourceID(state);
-    const itemEnableTouchID = "Enable Biometric Unlock";
-    const itemDisableTouchID = "Disable Biometric Unlock";
-    const itemCancel = "Cancel";
+    const itemEnableTouchID = i18n.t("biometric-unlock.enable");
+    const itemDisableTouchID = i18n.t("biometric-unlock.disable");
+    const itemCancel = i18n.t("cancel");
     return touchIDEnabledForSource(currentSourceID).then(enabled => {
         const options = [enabled ? itemDisableTouchID : itemEnableTouchID, itemCancel];
         ActionSheet.showActionSheetWithOptions(
             {
                 options,
                 cancelButtonIndex: options.indexOf(itemCancel),
-                title: "Biometric Unlock"
+                title: i18n.t("biometric-unlock.self")
             },
             selectedIndex => {
                 switch (options[selectedIndex]) {
@@ -188,16 +189,18 @@ export function showTouchIDToggleSheet() {
                                     break;
                                 case "fallback":
                                     handleError(
-                                        "Failed enabling biometric unlock",
+                                        i18n.t("biometric-unlock.errors.failed-enabling"),
                                         new Error(
-                                            "Password not supported for enabling biometric unlock"
+                                            i18n.t("biometric-unlock.errors.password-not-supported")
                                         )
                                     );
                                     break;
                                 default:
                                     handleError(
-                                        "Failed enabling biometric unlock",
-                                        new Error("Unrecognised biometric unlock response")
+                                        i18n.t("biometric-unlock.errors.failed-enabling"),
+                                        new Error(
+                                            i18n.t("biometric-unlock.errors.unrecognised-response")
+                                        )
                                     );
                                     break;
                             }
@@ -217,10 +220,10 @@ export function showTouchIDToggleSheet() {
 export function showAutoFillToggleSheet() {
     const state = getState();
     const currentSourceID = getSelectedSourceID(state);
-    const itemEnableAutoFill = "Enable Autofill";
-    const itemDisableAutoFill = "Disable Autofill";
-    const itemSystemSettings = "Android Settings";
-    const itemCancel = "Cancel";
+    const itemEnableAutoFill = i18n.t("autofill.enable");
+    const itemDisableAutoFill = i18n.t("autofill.disable");
+    const itemSystemSettings = i18n.t("android-settings");
+    const itemCancel = i18n.t("cancel");
     return Promise.all([getAutoFillSystemStatus(), autoFillEnabledForSource(currentSourceID)]).then(
         results => {
             const autoFillEnabled = results[0];
@@ -241,7 +244,7 @@ export function showAutoFillToggleSheet() {
                 {
                     options,
                     cancelButtonIndex: options.indexOf(itemCancel),
-                    title: "Autofill"
+                    title: i18n.t("autofill.self")
                 },
                 selectedIndex => {
                     switch (options[selectedIndex]) {
@@ -258,9 +261,9 @@ export function showAutoFillToggleSheet() {
                             }
                             if (Platform.OS === "ios") {
                                 Alert.alert(
-                                    "Enable Autofill in iOS Settings",
-                                    "Please ensure you have also enabled Buttercup in iOS Settings > Passwords and Accounts > Autofill Passwords",
-                                    [{ text: "OK", onPress: () => {} }],
+                                    i18next.t("autofill.ios.enable-in-settings"),
+                                    i18next.t("autofill.ios.enable-in-settings-description"),
+                                    [{ text: i18next.t("ok"), onPress: () => {} }],
                                     { cancelable: true }
                                 );
                             }

@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import {
-    Image,
-    StyleSheet,
-    ListView,
-    Text,
-    TouchableHighlight,
-    ScrollView,
-    View
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableHighlight, ScrollView, View } from "react-native";
+import { withNamespaces } from "react-i18next";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { List, ListItem } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -17,6 +10,7 @@ import Spinner from "./Spinner.js";
 import SwipeoutButton from "./SwipeoutButton.js";
 import EmptyView from "./EmptyView.js";
 import { getArchiveTypeDetails } from "../library/archives.js";
+import i18n from "../shared/i18n";
 import {
     getMasterPasswordFromTouchUnlock,
     touchIDEnabledForSource
@@ -141,7 +135,11 @@ const styles = StyleSheet.create({
 });
 
 const ARCHIVE_SWIPE_BUTTONS = [
-    { text: "Remove", component: <SwipeoutButton>Remove</SwipeoutButton>, _type: "remove" }
+    {
+        text: "Remove",
+        component: <SwipeoutButton>{i18n.t("remove")}</SwipeoutButton>,
+        _type: "remove"
+    }
 ];
 
 function getArchiveAbbr(archiveName) {
@@ -167,7 +165,7 @@ class ArchivesList extends Component {
         this.rehydrationComplete = false;
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         // If in AutoFill mode, attempt to unlock the archives once the have rehydrated
         if (!this.rehydrationComplete && nextProps.archives.length) {
             this.rehydrationComplete = true;
@@ -182,7 +180,7 @@ class ArchivesList extends Component {
         if (status === "unlocked") {
             this.props.lockArchive(sourceID);
         } else {
-            alert("Cannot lock vault that is not unlocked");
+            alert(this.props.t("vault.cannot-lock-not-unlocked"));
         }
     }
 
@@ -199,10 +197,13 @@ class ArchivesList extends Component {
                     this.props.showUnlockPasswordPrompt(true);
                 })
                 .catch(err => {
-                    handleError("Unlocking failed", err);
+                    handleError(this.props.t("vault.errors.unlocking-failed"), err);
                 });
         } else {
-            handleError("Unlocking failed", new Error(`Unexpected vault state: ${status}`));
+            handleError(
+                this.props.t("vault.errors.unlocking-failed"),
+                new Error(this.props.t("vault.errors.unexpected-vault-state", { status }))
+            );
         }
     }
 
@@ -219,7 +220,11 @@ class ArchivesList extends Component {
                     // do nothing
                     break;
                 default:
-                    throw new Error(`Unlock failed: Unknown authentication result: ${action}`);
+                    throw new Error(
+                        this.props.t("vault.errors.unlock-failed-unknown-authentication", {
+                            action
+                        })
+                    );
             }
         });
     }
@@ -233,7 +238,7 @@ class ArchivesList extends Component {
         this.props.removeArchive(sourceID);
     }
 
-    renderArchiveItem(archiveInfo, index) {
+    renderArchiveItem({ item: archiveInfo, index }) {
         const { title: typeTitle, image: typeImage } = ARCHIVE_TYPES[archiveInfo.type];
         return (
             <TouchableHighlight
@@ -300,26 +305,22 @@ class ArchivesList extends Component {
                 underlayColor="white"
             >
                 <View style={styles.swipedViewContainer}>
-                    <Text style={styles.swipedViewText}>Remove</Text>
+                    <Text style={styles.swipedViewText}>{this.props.t("remove")}</Text>
                 </View>
             </TouchableHighlight>
         );
     }
 
     render() {
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
+        const { archives } = this.props;
         return (
             <View style={styles.container}>
                 <Choose>
-                    <When condition={this.props.archives.length > 0}>
+                    <When condition={archives.length > 0}>
                         <SwipeListView
-                            dataSource={ds.cloneWithRows(this.props.archives)}
-                            renderRow={(archiveInfo, secId, rowId) =>
-                                this.renderArchiveItem(archiveInfo, parseInt(rowId, 10))
-                            }
-                            renderHiddenRow={archiveInfo =>
+                            data={archives}
+                            renderItem={archiveInfo => this.renderArchiveItem(archiveInfo)}
+                            renderHiddenItem={archiveInfo =>
                                 this.renderArchiveItemSubview(archiveInfo)
                             }
                             disableLeftSwipe={this.props.isContextAutoFill}
@@ -328,16 +329,20 @@ class ArchivesList extends Component {
                         />
                     </When>
                     <Otherwise>
-                        <EmptyView text="Add a new vault to begin" imageSource={VAULT_SAFE_IMAGE} />
+                        <EmptyView
+                            text={this.props.t("vaults.add-to-begin")}
+                            imageSource={VAULT_SAFE_IMAGE}
+                        />
                     </Otherwise>
                 </Choose>
                 <Prompt
-                    title="Vault Password"
+                    title={this.props.t("vaults.vault-password")}
                     placeholder=""
                     visible={this.props.showUnlockPrompt}
                     onCancel={() => this.props.showUnlockPasswordPrompt(false)}
                     onSubmit={pass => this.handlePasswordEntered(pass)}
                     textInputProps={{ secureTextEntry: true }}
+                    inputStyle={{ color: "#000" }}
                 />
                 <Spinner visible={this.props.busyState !== null} text={this.props.busyState} />
             </View>
@@ -345,4 +350,4 @@ class ArchivesList extends Component {
     }
 }
 
-export default ArchivesList;
+export default withNamespaces()(ArchivesList);
