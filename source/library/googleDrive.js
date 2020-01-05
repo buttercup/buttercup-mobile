@@ -11,6 +11,12 @@ import {
 } from "../actions/googleDrive.js";
 import secrets from "../shared/resources/google-client.json";
 
+const GOOGLE_DRIVE_SCOPES = [
+    "email",
+    "profile",
+    "https://www.googleapis.com/auth/drive.file" // Per-file access
+];
+
 export async function authenticate() {
     const {
         googleDriveClientID,
@@ -19,7 +25,7 @@ export async function authenticate() {
     } = Platform.select(secrets);
     // Configure google auth
     GoogleSignin.configure({
-        scopes: ["email", "profile", "https://www.googleapis.com/auth/drive"],
+        scopes: [...GOOGLE_DRIVE_SCOPES],
         webClientId: googleDriveWebClientID,
         offlineAccess: true,
         forceConsentPrompt: true,
