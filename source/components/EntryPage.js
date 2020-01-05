@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
-import { Cell, CellGroup, CellInput } from "@sallar/react-native-cell-components";
+import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import { FIELD_VALUE_TYPE_OTP } from "@buttercup/facades";
 import { withNamespaces } from "react-i18next";
 import Spinner from "./Spinner.js";

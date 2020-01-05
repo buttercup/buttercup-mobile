@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import Prompt from "@perrymitchell/react-native-prompt";
-import { Cell, CellGroup } from "@sallar/react-native-cell-components";
+import { Cell, CellGroup } from "react-native-cell-components";
 import { withNamespaces } from "react-i18next";
 import { editGroup } from "../shared/archiveContents.js";
 import { rawGroupIsTrash } from "../shared/group.js";

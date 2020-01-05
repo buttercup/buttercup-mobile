@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import SearchBar from "react-native-search-bar";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import PropTypes from "prop-types";
-import { CellInput, CellGroup, Cell } from "@sallar/react-native-cell-components";
+import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
 import { withNamespaces } from "react-i18next";
 import { searchAllArchives, searchCurrentArchive } from "../shared/entries.js";

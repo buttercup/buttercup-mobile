@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
-import { Cell, CellGroup, CellInput } from "@sallar/react-native-cell-components";
+import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import PropTypes from "prop-types";
 import { withNamespaces } from "react-i18next";
 import DropboxAuthButton from "../containers/DropboxAuthButton.js";

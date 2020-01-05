@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
-import { Cell, CellGroup } from "@sallar/react-native-cell-components";
+import { Cell, CellGroup } from "react-native-cell-components";
 import PropTypes from "prop-types";
 import { withNamespaces } from "react-i18next";
 import i18n from "../shared/i18n";

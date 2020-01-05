@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
-import { CellGroup, CellInput } from "@sallar/react-native-cell-components";
+import { CellGroup, CellInput } from "react-native-cell-components";
 import { withNamespaces } from "react-i18next";
 import i18n from "../shared/i18n";
 import { saveNewEntry } from "../shared/entry.js";
