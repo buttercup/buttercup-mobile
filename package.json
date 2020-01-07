@@ -51,7 +51,7 @@
     "i18next": "^19.0.2",
     "is-online": "^7.0.0",
     "os-browserify": "^0.1.2",
-    "otpauth": "^5.0.3",
+    "otpauth": "^5.0.5",
     "path-browserify": "0.0.0",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
