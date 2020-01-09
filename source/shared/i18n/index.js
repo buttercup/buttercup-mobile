@@ -5,9 +5,13 @@ import * as RNLocalize from "react-native-localize";
 const languageDetector = {
     init: Function.prototype,
     type: "languageDetector",
-    detect: () =>
-        RNLocalize.getLocales().find(locale => locale.countryCode === RNLocalize.getCountry())
-            .languageCode || localesConfig.fallbackLng,
+    detect: () => {
+        const locales = RNLocalize.getLocales();
+        if (locales.length > 0) {
+            return locales[0].languageCode;
+        }
+        return localesConfig.fallbackLng;
+    },
     cacheUserLanguage: Function.prototype
 };
 
