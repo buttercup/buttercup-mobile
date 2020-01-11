@@ -1,0 +1,12 @@
+{
+    "ios": {
+        "googleDriveClientID": "327941947801-osqgahih8s59aldrh91n7dmp7vps247g.apps.googleusercontent.com",
+        "googleDriveWebClientID": "327941947801-osqgahih8s59aldrh91n7dmp7vps247g.apps.googleusercontent.com",
+        "googleDriveWebClientSecret": ""
+    },
+    "android": {
+        "googleDriveClientID": "327941947801-p4gvjtoptrcdt3gt02tt3v58muoj3qba.apps.googleusercontent.com",
+        "googleDriveWebClientID": "327941947801-77omjmf78j5ad6fgnvbliv34rngb1mhd.apps.googleusercontent.com",
+        "googleDriveWebClientSecret": "5FzFIyKIOVCcQhfdnHoHi3ZT"
+    }
+}

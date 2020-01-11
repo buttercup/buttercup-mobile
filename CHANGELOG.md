@@ -1,5 +1,13 @@
 # Buttercup Mobile Changelog
 
+## v1.13.0
+_2020-01-11_
+
+ * Localisation support
+   * German translation
+ * Camera support for OTP ingestion
+ * Numerous tweaks and fixes for idle-screen overlay
+
 ## v1.12.0
 _2019-12-01_
 

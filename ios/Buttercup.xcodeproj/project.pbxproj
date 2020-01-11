@@ -662,7 +662,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\nversionString=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"$SRCROOT/Buttercup/Info.plist\")\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$SRCROOT/Buttercup/Info.plist\")\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $versionString\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n";
+			shellScript = "#!/bin/bash\n\nAPP_MARKETING_VERSION=$(cat \"$SRCROOT/Buttercup.xcodeproj/project.pbxproj\" | grep -e \"^\\s*MARKETING_VERSION\\s*=\" | head -n 1 | cut -d '=' -f 2 | sed 's/;//g' | sed 's/ //g')\nAPP_BUILD_VERSION=$(cat \"$SRCROOT/Buttercup.xcodeproj/project.pbxproj\" | grep -e \"^\\s*CURRENT_PROJECT_VERSION\\s*=\" | head -n 1 | cut -d '=' -f 2 | sed 's/;//g' | sed 's/ //g')\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $APP_MARKETING_VERSION\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $APP_BUILD_VERSION\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n";
 		};
 		E3AF55ECF9BA091D11399F14 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -806,7 +806,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 38;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				INFOPLIST_FILE = Buttercup/Info.plist;
@@ -816,6 +816,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
 				);
+				MARKETING_VERSION = 1.13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile;
 				PRODUCT_NAME = Buttercup;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -830,7 +831,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -839,6 +840,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
 				);
+				MARKETING_VERSION = 1.13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile;
 				PRODUCT_NAME = Buttercup;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -893,7 +895,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -941,7 +943,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
