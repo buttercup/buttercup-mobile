@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { GoogleSignin } from "react-native-google-signin";
+import { GoogleSignin, statusCodes } from "@react-native-community/google-signin";
 import { OAuth2Client } from "@buttercup/google-oauth2-client";
 import { dispatch, getState } from "../store.js";
 import {
@@ -37,6 +37,8 @@ export async function authenticate() {
     dispatch(setGoogleDriveAuthToken(null));
     dispatch(setGoogleDriveRefreshToken(null));
     try {
+        // Check dependencies
+        await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
         // Authenticate
         if (await GoogleSignin.isSignedIn()) {
             await GoogleSignin.signOut();
@@ -55,9 +57,14 @@ export async function authenticate() {
         dispatch(setGoogleDriveAuthenticated(false));
         dispatch(setGoogleDriveAuthToken(null));
         dispatch(setGoogleDriveRefreshToken(null));
-        if (!/cancell?ed/i.test(err.message)) {
-            throw err;
+        if (
+            [statusCodes.PLAY_SERVICES_NOT_AVAILABLE, statusCodes.SIGN_IN_CANCELLED].includes(
+                err.code
+            )
+        ) {
+            return;
         }
+        throw err;
     }
 }
 

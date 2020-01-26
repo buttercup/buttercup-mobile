@@ -34,14 +34,12 @@ def shared_pods
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'GoogleSignIn', '~> 4.4.0'
+  pod 'GoogleSignIn', '~> 5.0.2'
   pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
 end
 
 target 'Buttercup' do
-
   shared_pods
-
 
   target 'ButtercupTests' do
     inherit! :search_paths
@@ -58,9 +56,9 @@ end
 
 
 post_install do |installer|
-    installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |config|
-        config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
-      end
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
     end
   end
+end
