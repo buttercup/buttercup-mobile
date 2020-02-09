@@ -116,7 +116,7 @@
         "cannot-lock-not-unlocked": "Cannot lock vault that is not unlocked",
         "errors": {
             "failed-creating-new-vault": "Failed creating new vault: Missing filename and/or password",
-            "failed-finding-source": "Quelle für den Tresor mit ID {{id}} konnte nicht gefunden werden",
+            "failed-finding-source": "Failed finding source for vault with ID: {{id}}",
             "failed-adding": "Failed adding vault",
             "unlock-failed-unknown-authentication": "Unlock failed: Unknown authentication result: {{action}}",
             "unlocking-failed": "Unlocking failed",
