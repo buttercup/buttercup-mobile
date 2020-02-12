@@ -116,7 +116,7 @@
         "cannot-lock-not-unlocked": "Ein Tresor, der nicht entsperrt ist, kann nicht gesperrt werden.",
         "errors": {
             "failed-creating-new-vault": "Erstellung eines neuen Tresors fehlgeschlagen: Fehlender Dateiname und/oder Passwort",
-            "failed-finding-source": "Failed finding source for vault with ID: {{id}}",
+            "failed-finding-source": "Quelle für den Tresor mit ID {{id}} konnte nicht gefunden werden",
             "failed-adding": "Tresor Hinzufügen fehlgeschlagen",
             "unlock-failed-unknown-authentication": "Entsperren fehlgeschlagen: Unbekanntes Authentifizierungsergebnis: {{action}}",
             "unlocking-failed": "Entsperren fehlgeschlagen",
