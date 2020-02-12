@@ -234,7 +234,9 @@ class ArchivesList extends Component {
     }
 
     handleSwipeoutButtonPress(archiveInfo) {
-        const { id: sourceID } = archiveInfo;
+        const {
+            item: { id: sourceID }
+        } = archiveInfo;
         this.props.removeArchive(sourceID);
     }
 
