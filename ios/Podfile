@@ -34,7 +34,6 @@ def shared_pods
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'GoogleSignIn', '~> 5.0.2'
   pod 'Permission-Camera', :path => "../node_modules/react-native-permissions/ios/Camera.podspec"
 end
 
