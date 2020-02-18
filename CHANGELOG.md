@@ -1,5 +1,14 @@
 # Buttercup Mobile Changelog
 
+## v1.14.0
+_2020-02-16_
+
+ * Google auth update (fix connection on Android) (partial fix for [#206](https://github.com/buttercup/buttercup-mobile/issues/206))
+ * Russian transation
+ * **Bugfix**:
+   * Google auth wouldn't work on Android
+   * German/English translations were mixed for some properties
+
 ## v1.13.0
 _2020-01-11_
 
