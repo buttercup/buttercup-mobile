@@ -71,8 +71,10 @@ export async function authenticate() {
 export async function authenticateWithRefreshToken(accessToken, refreshToken) {
     dispatch(setGoogleDriveAuthToken(null));
     dispatch(setGoogleDriveRefreshToken(null));
-    const { googleDriveClientID } = Platform.select(secrets);
-    const oauth2Client = new OAuth2Client(googleDriveClientID, null, null);
+    const { googleDriveWebClientID, googleDriveWebClientSecret } = Platform.select(secrets);
+    const oauth2Client = googleDriveWebClientSecret
+        ? new OAuth2Client(googleDriveWebClientID, googleDriveWebClientSecret, null)
+        : new OAuth2Client(googleDriveWebClientID, null, null);
     const { tokens } = await oauth2Client.refreshAccessToken(refreshToken);
     const newRefreshToken = tokens.refresh_token || refreshToken;
     dispatch(setGoogleDriveAuthToken(tokens.access_token));
