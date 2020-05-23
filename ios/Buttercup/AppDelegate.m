@@ -49,10 +49,7 @@
     if ([[url absoluteString] hasPrefix:@"otpauth://"]) {
         return [RCTLinkingManager application:application openURL:url options:options];
     }
-    return [RNGoogleSignin application:application
-                               openURL:url
-                     sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                            annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+    return [RNGoogleSignin application:application openURL:url options:options];
 }
 
 @end

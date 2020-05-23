@@ -28,7 +28,8 @@ export async function authenticate() {
         scopes: [...GOOGLE_DRIVE_SCOPES],
         webClientId: googleDriveWebClientID,
         offlineAccess: true,
-        forceConsentPrompt: true,
+        forceConsentPrompt: true, // maybe not needed?
+        forceCodeForRefreshToken: true,
         iosClientId: googleDriveClientID
     });
     // Reset state
