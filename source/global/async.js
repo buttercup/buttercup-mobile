@@ -1,4 +1,4 @@
-import { buildCache } from "../library/crypto.js";
+import { buildCache } from "../compat/crypto.js";
 
 let __asyncWorkQueue = null;
 

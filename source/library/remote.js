@@ -1,6 +1,6 @@
 import { createClient as createDropboxClient } from "@buttercup/dropbox-client";
 import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
-import { createClient as createWebDAVClient } from "webdav";
+import { createClient as createWebDAVClient } from "webdav/web";
 import joinURL from "url-join";
 
 export function getDropboxConnection(token) {
