@@ -1,0 +1,202 @@
+{
+    "vaults": {
+        "add-to-begin": "Tambahkan Lemari untuk memulai",
+        "vault-password": "Kata sandi Lemari",
+        "add-vault": "Tambahkan Lemari",
+        "lock-all": "Kunci Semua",
+        "self": "Lemari",
+        "search": "Cari Lemari",
+        "errors": {
+            "unable-to-fetch-source": "Tidak bnisa mengambil sumber informasi: Tidak ada sumber ditemukan untuk Identitas: {{sourceID}}"
+        }
+    },
+    "ok": "OK",
+    "manage-vault": "Kelola Lemari",
+    "edit-group": "Sunting Grup",
+    "remove": "Hapus",
+    "cancel": "Batal",
+    "groups": {
+        "add-a-group-or-entry": "Tambahkan sebuah grup atau masukan lain",
+        "rename-group": "Penamaan ulang Grup",
+        "create-group": "Buat Grup",
+        "group-name": "Nama Grup",
+        "errors": {
+            "creation-failed": "Gagal membuat Grup",
+            "rename-failed": "Gagal menamakan ulang Grup"
+        }
+    },
+    "entry": {
+        "add": "Tambah",
+        "cancel": "Batal",
+        "hide-hidden": "Sembunyikan yang tersembunyi",
+        "new-entry": "Masukan Baru",
+        "create": "Buat",
+        "title": "Judul",
+        "username": "Nama pengguna",
+        "password": "Kata sandi",
+        "open-url": "Buka tautan",
+        "open-url-description": "Ketuk OK untuk membuka tautan. Kata sandi akan disalin ke papan salinan.",
+        "no-url": "Tidak ada tautan",
+        "no-url-description": "Masukan ini tidak memuat sebuah tautan bidang meta.",
+        "saved-entry": "Menyimpan masukan",
+        "saved-entry-description": "Sukses menyimpan perubahan untuk masukan ini",
+        "properties": "Properti",
+        "view-hidden": "Tampilkan yang tersembunyi",
+        "edit": "Sunting",
+        "delete": "Hapus",
+        "new": "Masukan baru",
+        "field": {
+            "username": "Nama pengguna",
+            "password": "Kata sandi",
+            "title": "Judul"
+        },
+        "property": {
+            "add": "Tambahkan properti",
+            "save": "Simpan",
+            "name": "Nama",
+            "value": "Nilai",
+            "edit": "Sunting properti",
+            "type": "Tipe"
+        },
+        "delete-confirm": "Anda yakin mau menghapus masukan dengan judul '{{title}}'?",
+        "errors": {
+            "failed-saving": "Gagal menyimpan masukan",
+            "empty-title": "Judul tidak bisa kosong",
+            "failed-deleting": "Gagal menghapus masukan",
+            "saving-failed": "Gagal menyimpan"
+        },
+        "edit-mode": {
+            "self": "Mode sunting",
+            "advanced": "Lanjutan",
+            "normal": "Normal"
+        }
+    },
+    "remote": {
+        "connect": "Sambung",
+        "connecting": "Menyambungkan",
+        "url": "Tautan dari luar",
+        "username": "Nama pengguna",
+        "password": "Kata sandi",
+        "connection-details": "Detil koneksi",
+        "self": "Remote",
+        "authenticated": "Dikenali",
+        "authenticate": "Pengenalan",
+        "errors": {
+            "unknown-vault-type": "Tipe lemari tidak diketahui: {{archiveType}}",
+            "google-drive": {
+                "authentication-failed": "Otentifikasi Google Drive gagal"
+            },
+            "connection-failed": "Koneksi gagal"
+        },
+        "sign-out": "Keluar",
+        "dropbox": {
+            "success": {
+                "authentication": {
+                    "title": "Otentifikasi Dropbox",
+                    "description": "Berhasil mengenali akun Dropbox"
+                }
+            }
+        }
+    },
+    "vault": {
+        "new": "Baru",
+        "filename": "Nama berkas Lemari",
+        "password": "Kata Sandi Lemari",
+        "name": "Nama Lemari",
+        "creating": "Membuat Lemari",
+        "adding": "Menambahkan Lemari",
+        "fetching-contents": "Mengambil Konten",
+        "placeholder": {
+            "filename": "Nama berkas"
+        },
+        "remove-vault": "Singkirkan Lemari",
+        "remove-vault-description": "Apakah anda yakin mau menyingkirkan '{{name}}'?",
+        "add": "Tambah",
+        "search": "Cari Lemari",
+        "cannot-lock-not-unlocked": "Tidak bisa mengunci lemari yang tidak terkunci",
+        "errors": {
+            "failed-creating-new-vault": "Gagal membuat lemari baru: Nama berkas dan atau kata sandi tak ditemukan",
+            "failed-finding-source": "Gagal menemukan sumber untuk lemari dengan Identitas: {{id}}",
+            "failed-adding": "Gagal menambahkan lemari",
+            "unlock-failed-unknown-authentication": "Gagal membuka: Hasil otentifikasi tidak dikenal: {{action}}",
+            "unlocking-failed": "Pembukaan kunci gagal",
+            "unexpected-vault-state": "Kondisi lemari yang tak terduga: {{status}}"
+        }
+    },
+    "use-offline": "Gunakan Luring/Offline",
+    "busy-state": {
+        "checking-connection": "Memeriksa sambungan",
+        "unlocking": "Membuka kunci",
+        "unlocking-vaults": "Membuka lemari penyimpanan",
+        "saving": "Menyimpan"
+    },
+    "group": {
+        "delete": "Hapus Grup",
+        "confirm-delete": "Apakah anda yakin untuk menghapus grup '{{title}}'?",
+        "new": "Grup Baru",
+        "rename": "Penamaan ulang Grup",
+        "trash": "Sampah",
+        "errors": {
+            "failed-deleting-group": "Gagal menghapus Grup"
+        }
+    },
+    "delete": "Hapus",
+    "biometric-unlock": {
+        "self": "Pembuka kunci Biometrik",
+        "biometric-unlock-disabled": "Sukses melumpuhkan pembuka kuci Biometrik",
+        "biometric-unlock-enabled": "Berhasil menghidupkan pembuka kunci biometrik",
+        "errors": {
+            "failed-disabling": "Gagal melumpuhkan pembuka kunci Biometrik",
+            "password-not-supported": "Kata sandi tidak didukung untuk menghidupkan pembuka kunci Biometrik",
+            "source-not-found": "Sumber tidak ditemukan",
+            "unrecognised-response": "Tanggapan atas pembuka kunci Biometrik tidak dikenal",
+            "unable-locate-credentials": "Tidak bisa melacak pengenal yang sedang dipakai",
+            "not-for-vault": "Pembuka kunci biometrik tidak diaktfikan untuk sumber ini",
+            "no-credentials": "Tidak ada pengenal ditemukan untuk identitas Biometrik di sumber ini",
+            "failed-enabling": "Gagal menghidupkan pembuka kunci Biometrik"
+        },
+        "authenticate-to-enable": "Otentifikasi untuk menghidupkan pembuka kunci biometrik",
+        "authenticate-to-unlock": "Otentifikasi untuk membuka lemari penyimpanan",
+        "enable": "Hidupkan pembuka kunci Biometrik",
+        "disable": "Lumpuhkan pembuka kunci Biometrik",
+        "toggle": "Pengalih pembuka kunci Biometrik"
+    },
+    "autofill": {
+        "toggle": "Pengalih Pengisian Otomatis",
+        "enable": "Hidupkan Pengisian Otomatis",
+        "disable": "Lumpuhkan Pengisian Otomatis",
+        "self": "Pengisian Otomatis",
+        "ios": {
+            "enable-in-settings": "Hidupkan Pengisian Otomatis di Pengaturan iOS",
+            "enable-in-settings-description": "Mohon yakinkan bahwa anda juga telah menghidupkan  Buttercup di Pengaturan iOS > Kata Sandi dan Akun > Pengisian Otomatis Kata Sandi"
+        }
+    },
+    "android-settings": "Pengaturan Android",
+    "copied-value": "Masukan tersalin",
+    "copied-value-description": "tersalin '{{name}}' ke papan salinan",
+    "codes": {
+        "self": "Kode",
+        "description": "Buka lemari untuk menambahkan kode.",
+        "errors": {
+            "otp-url-collection-failed": "Pengumpulan tautan OTP gagal"
+        },
+        "success": {
+            "otp-detected": {
+                "title": "Tautan OTP terdeteksi",
+                "description": "Menemukan OTP baru - sunting sebuah masukan untuk menyimpannya!"
+            }
+        },
+        "otp": {
+            "add-pending-url": "Tambah tautan OTP yang tertunda"
+        }
+    },
+    "search": {
+        "self": "Cari",
+        "start-typing": "Mulai mengetik untuk mencari...",
+        "cancel": "Batal"
+    },
+    "back": "Kembali",
+    "errors": {
+        "failed-fetching-remote-contents": "Gagal mengambil konten dari luar"
+    }
+}
