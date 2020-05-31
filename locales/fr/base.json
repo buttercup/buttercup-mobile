@@ -1,0 +1,202 @@
+{
+    "vaults": {
+        "add-to-begin": "Ajoutez une nouvelle archive pour commencer",
+        "vault-password": "Mot de passe de l'archive",
+        "add-vault": "Ajouter une archive",
+        "lock-all": "Tout verrouiller",
+        "self": "Archives",
+        "search": "Chercher un archive",
+        "errors": {
+            "unable-to-fetch-source": "Impossible de récupérer les informations sur la source: Aucune source trouvée pour l'ID: {{sourceID}}"
+        }
+    },
+    "ok": "OK",
+    "manage-vault": "Gérer l'archive",
+    "edit-group": "Modifier le groupe",
+    "remove": "Supprimer",
+    "cancel": "Annuler",
+    "groups": {
+        "add-a-group-or-entry": "Ajouter un groupe ou une entrée",
+        "rename-group": "Renommer un groupe",
+        "create-group": "Créer un groupe",
+        "group-name": "Nom du groupe",
+        "errors": {
+            "creation-failed": "Erreur lors de la création du groupe",
+            "rename-failed": "Erreur lors du renommage du groupe"
+        }
+    },
+    "entry": {
+        "add": "Ajouter",
+        "cancel": "Annuler",
+        "hide-hidden": "Cacher caché",
+        "new-entry": "Nouvelle Entrée",
+        "create": "Créer",
+        "title": "Titre",
+        "username": "Nom d'utilisateur",
+        "password": "Mot de Passe",
+        "open-url": "Open URL",
+        "open-url-description": "Appuyez sur OK pour lancer l'URL. Le mot de passe sera copié dans le presse-papiers.",
+        "no-url": "Aucune URL",
+        "no-url-description": "Cette entrée ne contient aucun champ meta URL.",
+        "saved-entry": "Entrée sauvegardée",
+        "saved-entry-description": "Modification de l'entrée enregistré",
+        "properties": "Propriétés",
+        "view-hidden": "Voir ",
+        "edit": "Éditer",
+        "delete": "Supprimer",
+        "new": "Nouvelle entrée",
+        "field": {
+            "username": "Nom d'utilisateur",
+            "password": "Mot de passe",
+            "title": "Titre"
+        },
+        "property": {
+            "add": "Ajouter une propriété",
+            "save": "Sauvegarder",
+            "name": "Nom",
+            "value": "Valeur",
+            "edit": "Modifier propriété",
+            "type": "Type"
+        },
+        "delete-confirm": "Êtes-vous sûr de vouloir supprimer l'entrée '{{title}}'?",
+        "errors": {
+            "failed-saving": "Erreur pendant la sauvegarde de l'entrée",
+            "empty-title": "Le titre ne peut être vide",
+            "failed-deleting": "Erreur pendant la suppression de l'entrée",
+            "saving-failed": "Échec de l'enregistrement"
+        },
+        "edit-mode": {
+            "self": "Édition",
+            "advanced": "Avancé",
+            "normal": "Normal"
+        }
+    },
+    "remote": {
+        "connect": "Connect",
+        "connecting": "Connexion...",
+        "url": "URL distante",
+        "username": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "connection-details": "Détails de la connexion",
+        "self": "Distant",
+        "authenticated": "Authentifié",
+        "authenticate": "Authentifier",
+        "errors": {
+            "unknown-vault-type": "Type d'archive inconnu: {{archiveType}}",
+            "google-drive": {
+                "authentication-failed": "Authentification à Google Drive echouée"
+            },
+            "connection-failed": "Connexion échouée"
+        },
+        "sign-out": "Se déconnecter",
+        "dropbox": {
+            "success": {
+                "authentication": {
+                    "title": "Authentification Dropbox",
+                    "description": "Connexion au compte Dropbox réussie"
+                }
+            }
+        }
+    },
+    "vault": {
+        "new": "Nouveau",
+        "filename": "Nom de fichier de l'archive",
+        "password": "Mot de passe de l'archive",
+        "name": "Nom de l'archive",
+        "creating": "Création de l'archive",
+        "adding": "Ajout de l'archive",
+        "fetching-contents": "Récupération du contenu",
+        "placeholder": {
+            "filename": "Nom du fichier"
+        },
+        "remove-vault": "Enlever l'archive",
+        "remove-vault-description": "Êtes-vous sûr de vouloir enlever l'archive '{{name}}'?",
+        "add": "Ajouter",
+        "search": "Chercher une archive",
+        "cannot-lock-not-unlocked": "Impossible de verouiller une archive qui n'est pas déverouiller",
+        "errors": {
+            "failed-creating-new-vault": "Erreur pendant la création d'une nouvelle archive: Nom du fichier et/ou mot de passe manquant",
+            "failed-finding-source": "Échec de la recherche de la source pour l'archive avec l'ID: {{id}}",
+            "failed-adding": "Échec de l'ajout de l'archive",
+            "unlock-failed-unknown-authentication": "Échec du déverouillage: Résultat d'authentification inconnu : {{action}}",
+            "unlocking-failed": "Échec du déverouillage",
+            "unexpected-vault-state": "Statut de l'archive inattendu: {{status}}"
+        }
+    },
+    "use-offline": "Utiliser hors-ligne",
+    "busy-state": {
+        "checking-connection": "Vérification de la connexion",
+        "unlocking": "Déverouillage",
+        "unlocking-vaults": "Déverouillage des archives",
+        "saving": "Sauvegarde"
+    },
+    "group": {
+        "delete": "Supprimer le groupe",
+        "confirm-delete": "Êtes-vous sûr de vouloir supprimer le groupe '{{title}}'?",
+        "new": "Nouveau groupe",
+        "rename": "Renommer le groupe",
+        "trash": "Corbeille",
+        "errors": {
+            "failed-deleting-group": "Erreur pendant la suppression du groupe"
+        }
+    },
+    "delete": "Supprimer",
+    "biometric-unlock": {
+        "self": "Déverouillage biométrique",
+        "biometric-unlock-disabled": "Déverrouillage biométrique désactivé",
+        "biometric-unlock-enabled": "Déverrouillage biométrique activé",
+        "errors": {
+            "failed-disabling": "Échec de la désactivation du déverrouillage biométrique",
+            "password-not-supported": "Mot de passe non pris en charge pour activer le déverrouillage biométrique",
+            "source-not-found": "La source actuelle est introuvable",
+            "unrecognised-response": "Réponse du déverouillage biométrique inconnue",
+            "unable-locate-credentials": "Impossible de localiser les informations d'authentification actuellezs",
+            "not-for-vault": "Le déverouillage biométrique n'est pas activé pour cette archive",
+            "no-credentials": "Aucune information d'authentification trouvé pour l'ID biométrique pour cette source",
+            "failed-enabling": "Impossible d'activer le déverouillage biométrique"
+        },
+        "authenticate-to-enable": "Authentifiez-vous pour activer le déverrouillage biométrique",
+        "authenticate-to-unlock": "Authentifiez-vous pour déverouiller l'archive",
+        "enable": "Activer le déverouillage biométrique",
+        "disable": "Désactiver le déverouillage biométrique",
+        "toggle": "Activer/Désactiver le déverouillage biométrique"
+    },
+    "autofill": {
+        "toggle": "Activer/Désactiver le déverouillage automatique",
+        "enable": "Activer le remplissage automatique",
+        "disable": "Désactiver le remplissage automatique",
+        "self": "Remplissage automatique",
+        "ios": {
+            "enable-in-settings": "Activer le remplissage automatique dans les paramètres iOS",
+            "enable-in-settings-description": "Veuillez vous assurer que vous avez également activé Buttercup dans Paramètres iOS> Mots de passe et comptes> Remplir automatiquement les mots de passe"
+        }
+    },
+    "android-settings": "Paramètres Android",
+    "copied-value": "Valeur copiée",
+    "copied-value-description": "'{{name}}' copié dans le presse-papiers",
+    "codes": {
+        "self": "Codes",
+        "description": "Déverouiller une archive ou ajouter un code ",
+        "errors": {
+            "otp-url-collection-failed": "Échec de la collecte de l'URL OTP"
+        },
+        "success": {
+            "otp-detected": {
+                "title": "URL d'OTP détéctée",
+                "description": "Détéction d'un nouveau mot de passe à usage unique - modifiez une entrée pour l'enregistrer!"
+            }
+        },
+        "otp": {
+            "add-pending-url": "Ajouter une URL OTP en attente"
+        }
+    },
+    "search": {
+        "self": "Recherche",
+        "start-typing": "Commencez à écrire pour effectuer une recherche...",
+        "cancel": "Annuler"
+    },
+    "back": "Retour",
+    "errors": {
+        "failed-fetching-remote-contents": "Erreur pendant la récuperation des ressources distantes"
+    }
+}
