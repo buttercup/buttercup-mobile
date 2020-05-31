@@ -70,13 +70,14 @@ function addToArchiveManager(state) {
         },
         archivePassword
     );
-    const archiveCredentials = createArchiveCredentials(archivePassword);
-    return addArchiveToArchiveManager(
-        archiveName,
-        sourceCredentials,
-        archiveCredentials,
-        archiveType
-    );
+    return addArchiveToArchiveManager(archiveName, sourceCredentials, archiveType);
+    // const archiveCredentials = createArchiveCredentials(archivePassword);
+    // return addArchiveToArchiveManager(
+    //     archiveName,
+    //     sourceCredentials,
+    //     archiveCredentials,
+    //     archiveType
+    // );
 }
 
 function handleNewArchiveName(name, dispatch, getState) {

@@ -2,26 +2,14 @@ import { NativeModules, Platform } from "react-native";
 import { Buffer } from "buffer";
 import VError from "verror";
 import { createSession } from "iocane/web";
+import { v4 as uuid } from "uuid";
 import { addToStack, getStackCount, getStackItem } from "../library/cache.js";
-import { Uint8Array } from "../library/polyfill/typedArrays.js";
 import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 
 const { CryptoBridge: Crypto } = NativeModules;
 
 const BRIDGE_ERROR_REXP = /^Error:/i;
-const CACHE_UUID_MAX = 500;
-const CACHE_UUID_MIN = 50;
 const IV_LENGTH = 16; // Bytes
-
-function deriveKeyNatively(password, salt, rounds, bits) {
-    return Crypto.pbkdf2(password, salt, rounds, bits).then(
-        derivedKeyHex => new Buffer(derivedKeyHex, "hex")
-    );
-}
-
-function fetchUUIDs() {
-    return Crypto.generateUUIDs(CACHE_UUID_MIN).then(res => res.split(","));
-}
 
 function generateSalt(length) {
     return Crypto.generateSaltWithLength(length);
@@ -38,11 +26,11 @@ export function getPatchedCrypto() {
         .overrideDecryption("cbc", internalDecrypt)
         .overrideSaltGeneration(generateSalt)
         .overrideIVGeneration(generateIV)
-        .overrideKeyDerivation(deriveKeyNatively);
+        .overridePBKDF2(pbkdf2);
 }
 
 function getUUID() {
-    return getStackItem("uuid");
+    return uuid();
 }
 
 function internalDecrypt(encryptedComponents, keyDerivationInfo) {
@@ -83,13 +71,8 @@ function internalEncrypt(text, keyDerivationInfo, generatedIV) {
     });
 }
 
-// export function patchCrypto() {
-//     configureIocane()
-//         .use("cbc")
-//         .overrideEncryption("cbc", internalEncrypt)
-//         .overrideDecryption("cbc", internalDecrypt)
-//         .overrideSaltGeneration(generateSalt)
-//         .overrideIVGeneration(generateIV)
-//         .overrideKeyDerivation(deriveKeyNatively);
-//     tools.uuid.setUUIDGenerator(() => getUUID());
-// }
+function pbkdf2(password, salt, rounds, bits) {
+    return Crypto.pbkdf2(password, salt, rounds, bits).then(
+        derivedKeyHex => new Buffer(derivedKeyHex, "hex")
+    );
+}

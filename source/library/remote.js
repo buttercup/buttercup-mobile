@@ -1,7 +1,7 @@
 import { createClient as createDropboxClient } from "@buttercup/dropbox-client";
 import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
-import { createClient as createWebDAVClient } from "webdav/web";
 import joinURL from "url-join";
+import { getSharedAppEnv } from "./buttercupCore.js";
 
 export function getDropboxConnection(token) {
     const dropboxAdapter = wrapDropboxClient(createDropboxClient(token));
@@ -24,9 +24,10 @@ export function getOwnCloudConnection(remoteURL, username, password) {
 }
 
 export function getWebDAVConnection(remoteURL, username, password) {
+    const createClient = getSharedAppEnv().getProperty("net/webdav/v1/newClient");
     const webdavClient = username
-        ? createWebDAVClient(remoteURL, { username, password })
-        : createWebDAVClient(remoteURL);
+        ? createClient(remoteURL, { username, password })
+        : createClient(remoteURL);
     const webdavAdapter = wrapWebDAVClient(webdavClient);
     return testRemoteFSConnection(webdavAdapter);
 }

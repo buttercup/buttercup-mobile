@@ -1,7 +1,5 @@
 import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
-import { storage as ButtercupStorage } from "../library/buttercupCore.js";
-
-const { StorageInterface } = ButtercupStorage;
+import { StorageInterface } from "../library/buttercupCore.js";
 
 const config = {
     accessible: ACCESSIBLE.WHEN_UNLOCKED,

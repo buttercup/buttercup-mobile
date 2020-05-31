@@ -1,6 +1,5 @@
-import { createArchiveFacade } from "@buttercup/facades";
 import { getSharedArchiveManager } from "../library/buttercup.js";
-import { Group } from "../library/buttercupCore.js";
+import { Credentials, Group, createVaultFacade } from "../library/buttercupCore.js";
 import { dispatch, getState } from "../store.js";
 import { setGroups } from "../actions/archiveContents.js";
 import { setOTPCodes } from "../actions/archives.js";
@@ -13,10 +12,6 @@ import { getSelectedSourceID } from "../selectors/archiveContents";
 
 const ENTRY_FIELD_OTP_PREFIX = /^BC_ENTRY_FIELD_TYPE:/;
 
-export function archiveToObject(archive) {
-    return archive.toObject();
-}
-
 export function checkSourceHasOfflineCopy(sourceID) {
     const source = getSharedArchiveManager().getSourceForID(sourceID);
     return source.checkOfflineCopy();
@@ -28,42 +23,46 @@ export function editGroup(groupID) {
 }
 
 export function getSourceReadonlyStatus(sourceID) {
-    return getSharedArchiveManager().getSourceForID(sourceID).workspace.archive.readOnly;
+    return getSharedArchiveManager().getSourceForID(sourceID).vault.readOnly;
 }
 
-function getTopMostFacadeGroup(archiveFacade, groupID, previousGroup = null) {
+function getTopMostFacadeGroup(vaultFacade, groupID, previousGroup = null) {
     if (groupID == "0") {
         return previousGroup;
     }
-    const group = archiveFacade.groups.find(grp => grp.id === groupID);
-    return getTopMostFacadeGroup(archiveFacade, group.parentID, group);
+    const group = vaultFacade.groups.find(grp => grp.id === groupID);
+    return getTopMostFacadeGroup(vaultFacade, group.parentID, group);
 }
 
 export function lockSource(sourceID) {
-    const archiveManager = getSharedArchiveManager();
-    return archiveManager.getSourceForID(sourceID).lock();
+    const manager = getSharedArchiveManager();
+    return manager.getSourceForID(sourceID).lock();
 }
 
 export function unlockSource(sourceID, password, useOffline = false) {
-    const archiveManager = getSharedArchiveManager();
+    const manager = getSharedArchiveManager();
+    const credentials = Credentials.fromPassword(password);
     return doAsyncWork().then(() =>
-        archiveManager.getSourceForID(sourceID).unlock(password, /* init: */ false, useOffline)
+        manager.getSourceForID(sourceID).unlock(credentials, {
+            loadOfflineCopy: useOffline,
+            storeOfflineCopy: !useOffline
+        })
     );
 }
 
 function updateAllVaultCodes() {
-    const unlockedArchives = getSharedArchiveManager().unlockedSources.map(source => ({
+    const unlockedVaults = getSharedArchiveManager().unlockedSources.map(source => ({
         source,
-        archive: source.workspace.archive
+        vault: source.vault
     }));
     const otpGroups = [];
-    unlockedArchives.forEach(({ source, archive }) => {
-        const archiveFacade = createArchiveFacade(archive);
-        const otpEntries = archiveFacade.entries.reduce((output, entry) => {
+    unlockedVaults.forEach(({ source, vault }) => {
+        const vaultFacade = createVaultFacade(vault);
+        const otpEntries = vaultFacade.entries.reduce((output, entry) => {
             // Check if entry is in Trash
-            const parentGroup = getTopMostFacadeGroup(archiveFacade, entry.parentID);
+            const parentGroup = getTopMostFacadeGroup(vaultFacade, entry.parentID);
             const isTrashGroup =
-                parentGroup && parentGroup.attributes[Group.Attributes.Role] === "trash";
+                parentGroup && parentGroup.attributes[Group.Attribute.Role] === "trash";
             // Ignore deleted entries
             if (isTrashGroup) {
                 return output;
@@ -111,16 +110,16 @@ function updateAllVaultCodes() {
 
 export function updateCurrentArchive() {
     const state = getState();
-    const archive = getSelectedArchive(state);
+    const vault = getSelectedArchive(state);
     // Process groups
-    dispatch(setGroups(archiveToObject(archive).groups));
+    dispatch(setGroups(createVaultFacade(vault).groups || []));
     // Process OTP codes
     updateAllVaultCodes();
     // Make sure the updates are reflected in AutoFill as well
     const sourceID = getSelectedSourceID(state);
     autoFillEnabledForSource(sourceID).then(isEnabled => {
         if (isEnabled) {
-            addSourceToAutoFill(sourceID, archive);
+            addSourceToAutoFill(sourceID, vault);
         }
     });
 }

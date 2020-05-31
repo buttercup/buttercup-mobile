@@ -1,8 +1,7 @@
 import { Alert } from "react-native";
-import { createEntryFacade, createFieldDescriptor } from "@buttercup/facades";
 import { dispatch, getState } from "../store.js";
 import { getSharedArchiveManager } from "../library/buttercup.js";
-import { Entry } from "../library/buttercupCore.js";
+import { Entry, createEntryFacade, createFieldDescriptor } from "../library/buttercupCore.js";
 import { loadEntry as loadNewEntry } from "../actions/entry.js";
 import {
     getEntryEditingProperty,
@@ -171,7 +170,7 @@ export function saveNewEntry() {
     const newEntry = archive.findGroupByID(parentGroupID).createEntry(title);
     newEntry.setProperty("username", username).setProperty("password", password);
     dispatch(setBusyState(i18n.t("busy-state.saving")));
-    return saveCurrentArchive(source.workspace).then(() => {
+    return saveCurrentArchive(source).then(() => {
         updateCurrentArchive();
         dispatch(setBusyState(null));
         navigateBack();

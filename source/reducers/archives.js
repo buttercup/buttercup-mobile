@@ -5,9 +5,6 @@ import {
     ARCHIVES_TOGGLE_IS_UNLOCKING,
     ARCHIVES_TOGGLE_UNLOCK_PASS_PROMPT
 } from "../actions/types.js";
-import { ArchiveSourceStatus } from "../library/buttercup.js";
-
-const { LOCKED, UNLOCKED } = ArchiveSourceStatus;
 
 const INITIAL = {
     archives: [],

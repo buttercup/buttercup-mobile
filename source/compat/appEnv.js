@@ -1,5 +1,5 @@
 import gzip from "gzip-js";
-import { createClient } from "webdav/web";
+import { createClient } from "webdav";
 import { getSharedAppEnv } from "../library/buttercupCore.js";
 import { getPatchedCrypto } from "./crypto.js";
 

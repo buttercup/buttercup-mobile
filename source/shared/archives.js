@@ -41,7 +41,6 @@ export function promptRemoveArchive(sourceID) {
 export function removeSource(sourceID) {
     // Make sure the source and it's entries are removed from autofill
     removeSourceFromAutoFill(sourceID);
-
     const archiveManager = getSharedArchiveManager();
     return archiveManager.removeSource(sourceID);
 }

@@ -4,14 +4,17 @@ import { updateTouchEnabledSources } from "../shared/touchUnlock.js";
 
 export function linkArchiveManagerToStore(store) {
     const { dispatch } = store;
-    const archiveManager = getSharedArchiveManager();
+    const manager = getSharedArchiveManager();
     // listen for new archives
-    archiveManager.on("sourcesUpdated", sourcesList => {
-        const sources = sourcesList.map(sourceInfo => ({
-            ...sourceInfo,
+    manager.on("sourcesUpdated", () => {
+        const sources = manager.sources.map(source => ({
+            id: source.id,
+            name: source.name,
+            status: source.status,
+            type: source.type,
             readOnly:
                 sourceInfo.status === "unlocked" &&
-                archiveManager.getSourceForID(sourceInfo.id).workspace.archive.readOnly
+                manager.getSourceForID(sourceInfo.id).vault.readOnly
         }));
         dispatch(setArchives(sources));
         updateTouchEnabledSources();
