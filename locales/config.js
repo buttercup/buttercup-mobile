@@ -13,6 +13,10 @@ module.exports = {
         ru: {
             name: "Russian",
             data: require("./ru/base.json")
-        }
+        },
+	fr: {
+	    name: "French",
+	    data: require("./fr/base.json")
+	}
     }
 };

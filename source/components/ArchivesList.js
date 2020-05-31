@@ -343,7 +343,11 @@ class ArchivesList extends Component {
                     visible={this.props.showUnlockPrompt}
                     onCancel={() => this.props.showUnlockPasswordPrompt(false)}
                     onSubmit={pass => this.handlePasswordEntered(pass)}
-                    textInputProps={{ secureTextEntry: true }}
+                    textInputProps={{
+                        autoCapitalize: "none",
+                        autoFocus: true,
+                        secureTextEntry: true
+                    }}
                     inputStyle={{ color: "#000" }}
                 />
                 <Spinner visible={this.props.busyState !== null} text={this.props.busyState} />

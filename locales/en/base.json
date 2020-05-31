@@ -28,7 +28,7 @@
     "entry": {
         "add": "Add",
         "cancel": "Cancel",
-        "hide-hidden": "Hide Hidden",
+        "hide-hidden": "Hide Sensitive Information",
         "new-entry": "New Entry",
         "create": "Create",
         "title": "Title",
@@ -41,7 +41,7 @@
         "saved-entry": "Saving entry",
         "saved-entry-description": "Successfully saved changes to the entry",
         "properties": "Properties",
-        "view-hidden": "View hidden",
+        "view-hidden": "View Sensitive Information",
         "edit": "Edit",
         "delete": "Delete",
         "new": "New Entry",
