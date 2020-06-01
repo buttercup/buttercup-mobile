@@ -11,6 +11,12 @@ const { CryptoBridge: Crypto } = NativeModules;
 const BRIDGE_ERROR_REXP = /^Error:/i;
 const IV_LENGTH = 16; // Bytes
 
+function bufferToHex(buff) {
+    return Array.prototype.map
+        .call(new Uint8Array(buff), x => ("00" + x.toString(16)).slice(-2))
+        .join("");
+}
+
 function generateSalt(length) {
     return Crypto.generateSaltWithLength(length);
 }
@@ -36,10 +42,10 @@ function getUUID() {
 function internalDecrypt(encryptedComponents, keyDerivationInfo) {
     return Crypto.decryptText(
         encryptedComponents.content,
-        keyDerivationInfo.key.toString("hex"),
+        bufferToHex(keyDerivationInfo.key),
         encryptedComponents.iv,
         encryptedComponents.salt,
-        keyDerivationInfo.hmac.toString("hex"),
+        bufferToHex(keyDerivationInfo.hmac),
         encryptedComponents.auth
     )
         .then(content => {
@@ -55,10 +61,10 @@ function internalDecrypt(encryptedComponents, keyDerivationInfo) {
 function internalEncrypt(text, keyDerivationInfo, generatedIV) {
     return Crypto.encryptText(
         new Buffer(text, "utf8").toString("base64"),
-        keyDerivationInfo.key.toString("hex"),
+        bufferToHex(keyDerivationInfo.key),
         keyDerivationInfo.salt,
         generatedIV.toString("hex"),
-        keyDerivationInfo.hmac.toString("hex")
+        bufferToHex(keyDerivationInfo.hmac)
     ).then(res => {
         const [content, auth, iv, salt] = res.split("$");
         return {

@@ -62,7 +62,7 @@ export function getGroupsUnderID(state, id) {
 export function getSelectedArchive(state) {
     const id = getSelectedSourceID(state);
     const archiveManager = getSharedArchiveManager();
-    return archiveManager.getSourceForID(id).workspace.archive;
+    return archiveManager.getSourceForID(id).vault;
 }
 
 export function getSelectedSourceName(state) {

@@ -1,6 +1,7 @@
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { setArchives } from "../actions/archives.js";
 import { updateTouchEnabledSources } from "../shared/touchUnlock.js";
+import { VaultSource } from "../library/buttercupCore.js";
 
 export function linkArchiveManagerToStore(store) {
     const { dispatch } = store;
@@ -13,8 +14,8 @@ export function linkArchiveManagerToStore(store) {
             status: source.status,
             type: source.type,
             readOnly:
-                sourceInfo.status === "unlocked" &&
-                manager.getSourceForID(sourceInfo.id).vault.readOnly
+                source.status === VaultSource.STATUS_UNLOCKED &&
+                manager.getSourceForID(source.id).vault.readOnly
         }));
         dispatch(setArchives(sources));
         updateTouchEnabledSources();
