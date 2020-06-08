@@ -86,6 +86,9 @@
             "google-drive": {
                 "authentication-failed": "Google Drive authentication failed"
             },
+            "my-buttercup": {
+                "authentication-failed": "My Buttercup authentication failed"
+            },
             "connection-failed": "Connection failed"
         },
         "sign-out": "Sign Out",
@@ -94,6 +97,14 @@
                 "authentication": {
                     "title": "Dropbox authentication",
                     "description": "Successfully authenticated Dropbox account"
+                }
+            }
+        },
+        "my-buttercup": {
+            "success": {
+                "authentication": {
+                    "title": "My Buttercup authentication",
+                    "description": "Successfully authenticated My Buttercup account"
                 }
             }
         }

@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
 import PropTypes from "prop-types";
 import { withNamespaces } from "react-i18next";
+import Prompt from "@perrymitchell/react-native-prompt";
 import DropboxAuthButton from "../containers/DropboxAuthButton.js";
 import GoogleDriveAuthButton from "../containers/GoogleDriveAuthButton.js";
+import MyButtercupAuthButton from "../containers/MyButtercupAuthButton.js";
 import Spinner from "./Spinner.js";
 
 const styles = StyleSheet.create({
@@ -26,21 +28,41 @@ class RemoteConnectPage extends Component {
         };
     };
 
+    state = {
+        // myBcupName: "",
+        myBcupPassword: "",
+        showMyBcupPasswordPrompt: false
+        // showMyBcupNamePrompt: false
+    };
+
+    cancelMyBcupPrompts() {
+        this.setState({
+            // myBcupName: "",
+            myBcupPassword: "",
+            showMyBcupPasswordPrompt: false
+            // showMyBcupNamePrompt: false
+        });
+    }
+
     componentWillUnmount() {
         this.props.onUnmount();
     }
 
+    prepareMyButtercup() {
+        this.setState({
+            showMyBcupPasswordPrompt: true
+        });
+    }
+
     render() {
         switch (this.props.archiveType) {
+            case "mybuttercup":
+                return this.renderMyButtercup();
             case "dropbox":
                 return this.renderDropbox();
             case "googledrive":
                 return this.renderGoogleDrive();
             case "webdav":
-                return this.renderWebDAV();
-            case "owncloud":
-                return this.renderWebDAV();
-            case "nextcloud":
                 return this.renderWebDAV();
             default:
                 return null;
@@ -88,6 +110,50 @@ class RemoteConnectPage extends Component {
                             />
                         </CellGroup>
                     </View>
+                    <Spinner
+                        visible={this.props.connecting}
+                        text={this.props.t("remote.connecting")}
+                    />
+                </View>
+            </TouchableWithoutFeedback>
+        );
+    }
+
+    renderMyButtercup() {
+        return (
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <View>
+                        <MyButtercupAuthButton />
+                        <CellGroup>
+                            <Cell
+                                title={this.props.t("remote.connect")}
+                                icon={{ name: "cloud", source: "material-community-icons" }}
+                                onPress={() => this.prepareMyButtercup()}
+                                tintColor="#1144FF"
+                                disabled={!this.props.myButtercupAuthenticated}
+                            />
+                        </CellGroup>
+                    </View>
+                    <Prompt
+                        title={this.props.t("vault.password")}
+                        placeholder=""
+                        visible={this.state.showMyBcupPasswordPrompt}
+                        onCancel={() => this.props.cancelMyBcupPrompts()}
+                        onSubmit={value => {
+                            this.setState(
+                                {
+                                    myBcupPassword: value,
+                                    showMyBcupPasswordPrompt: false
+                                },
+                                () => {
+                                    this.submit();
+                                }
+                            );
+                        }}
+                        textInputProps={{ secureTextEntry: true }}
+                        inputStyle={{ color: "#000" }}
+                    />
                     <Spinner
                         visible={this.props.connecting}
                         text={this.props.t("remote.connecting")}
@@ -153,7 +219,9 @@ class RemoteConnectPage extends Component {
     submit() {
         Keyboard.dismiss();
         this.props.onConnectPressed();
-        this.props.initiateConnection();
+        this.props.initiateConnection({
+            myButtercupPassword: this.state.myBcupPassword
+        });
     }
 }
 
@@ -163,6 +231,7 @@ RemoteConnectPage.propTypes = {
     dropboxAuthenticated: PropTypes.bool,
     googleDriveAuthenticated: PropTypes.bool,
     initiateConnection: PropTypes.func,
+    myButtercupAuthenticated: PropTypes.bool,
     onChangePassword: PropTypes.func,
     onChangeURL: PropTypes.func,
     onChangeUsername: PropTypes.func,

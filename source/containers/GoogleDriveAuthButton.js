@@ -1,8 +1,11 @@
 import { connect } from "react-redux";
 import GoogleDriveAuthButton from "../components/GoogleDriveAuthButton.js";
-import { isAuthenticated, isAuthenticating } from "../selectors/googleDrive";
+import { isAuthenticated, isAuthenticating } from "../selectors/googleDrive.js";
 import { GoogleSignin } from "@react-native-community/google-signin";
-import { setGoogleDriveAuthenticated, setGoogleDriveAuthenticating } from "../actions/googleDrive";
+import {
+    setGoogleDriveAuthenticated,
+    setGoogleDriveAuthenticating
+} from "../actions/googleDrive.js";
 import { authenticate as authenticateGoogleDrive } from "../library/googleDrive.js";
 import { handleError } from "../global/exceptions.js";
 import i18n from "../shared/i18n";

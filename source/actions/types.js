@@ -52,6 +52,12 @@ export const GOOGLEDRIVE_SET_AUTHENTICATING = "googleDrive/setAuthenticating";
 export const GOOGLEDRIVE_SET_AUTH_TOKEN = "googleDrive/setAuthToken";
 export const GOOGLEDRIVE_SET_REFRESH_TOKEN = "googleDrive/setRefreshToken";
 
+export const MYBUTTERCUP_RESET_AUTH = "myButtercup/resetAuthentication";
+export const MYBUTTERCUP_SET_AUTHENTICATED = "myButtercup/setAuthenticated";
+export const MYBUTTERCUP_SET_AUTHENTICATING = "myButtercup/setAuthenticating";
+export const MYBUTTERCUP_SET_ACCESS_TOKEN = "myButtercup/setAuthToken";
+export const MYBUTTERCUP_SET_REFRESH_TOKEN = "myButtercup/setRefreshToken";
+
 export const REMOTE_EXPLORER_CANCEL_NEW = "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR = "remoteExplorer/clear";
 export const REMOTE_EXPLORER_CREATE_NEW_FILENAME = "remoteExplorer/createNewFilename";

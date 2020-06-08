@@ -1,15 +1,16 @@
 import { combineReducers } from "redux";
 import { APP_MASTER_RESET } from "../actions/types.js";
-import archives from "./archives.js";
-import archiveContents from "./archiveContents.js";
-import autofill from "./autofill.js";
 import addArchive from "./addArchive.js";
-import remoteExplorer from "./remoteExplorer.js";
-import entry from "./entry.js";
 import app from "./app.js";
-import dropbox from "./dropbox.js";
+import archiveContents from "./archiveContents.js";
+import archives from "./archives.js";
+import autofill from "./autofill.js";
 import browser from "./browser.js";
+import dropbox from "./dropbox.js";
+import entry from "./entry.js";
 import googleDrive from "./googleDrive.js";
+import myButtercup from "./myButtercup.js";
+import remoteExplorer from "./remoteExplorer.js";
 
 const appReducer = combineReducers({
     addArchive,
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
     dropbox,
     entry,
     googleDrive,
+    myButtercup,
     remoteExplorer
 });
 
