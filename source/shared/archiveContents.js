@@ -1,7 +1,7 @@
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import { Credentials, Group, createVaultFacade } from "../library/buttercupCore.js";
 import { dispatch, getState } from "../store.js";
-import { setGroups } from "../actions/archiveContents.js";
+import { setEntries, setGroups } from "../actions/archiveContents.js";
 import { setOTPCodes } from "../actions/archives.js";
 import { getSelectedArchive } from "../selectors/archiveContents.js";
 import { doAsyncWork } from "../global/async.js";
@@ -111,8 +111,10 @@ function updateAllVaultCodes() {
 export function updateCurrentArchive() {
     const state = getState();
     const vault = getSelectedArchive(state);
+    const facade = createVaultFacade(vault);
     // Process groups
-    dispatch(setGroups(createVaultFacade(vault).groups || []));
+    dispatch(setGroups(facade.groups || []));
+    dispatch(setEntries(facade.entries || []));
     // Process OTP codes
     updateAllVaultCodes();
     // Make sure the updates are reflected in AutoFill as well

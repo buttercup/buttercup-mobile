@@ -13,6 +13,7 @@ export const APP_SET_BUSY_STATE = "app/setBusyState";
 export const APP_SET_SEARCH_CONTEXT = "app/search/setContext";
 
 export const ARCHIVE_CONTENTS_MARK_READONLY = "archiveContents/markAsReadOnly";
+export const ARCHIVE_CONTENTS_SET_ENTRIES = "archiveContents/setEntries";
 export const ARCHIVE_CONTENTS_SET_GROUPS = "archiveContents/setGroups";
 export const ARCHIVE_CONTENTS_SET_SOURCE = "archiveContentsPage/setSource";
 export const ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT = "archiveContents/toggleCreateGroupPrompt";

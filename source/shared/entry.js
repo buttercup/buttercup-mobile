@@ -33,9 +33,9 @@ export function deleteEntry(sourceID, entryID) {
 }
 
 export function getEntry(sourceID, entryID) {
-    const archiveManager = getSharedArchiveManager();
-    const { archive } = archiveManager.getSourceForID(sourceID).workspace;
-    const entry = archive.findEntryByID(entryID);
+    const vaultManager = getSharedArchiveManager();
+    const { vault } = vaultManager.getSourceForID(sourceID);
+    const entry = vault.findEntryByID(entryID);
     return entry;
 }
 
@@ -166,8 +166,7 @@ export function saveNewEntry() {
     const parentGroupID = getNewParentID(state);
     const archiveManager = getSharedArchiveManager();
     const source = archiveManager.getSourceForID(sourceID);
-    const archive = source.workspace.archive;
-    const newEntry = archive.findGroupByID(parentGroupID).createEntry(title);
+    const newEntry = source.vault.findGroupByID(parentGroupID).createEntry(title);
     newEntry.setProperty("username", username).setProperty("password", password);
     dispatch(setBusyState(i18n.t("busy-state.saving")));
     return saveCurrentArchive(source).then(() => {

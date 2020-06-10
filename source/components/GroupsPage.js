@@ -102,13 +102,21 @@ class GroupsPage extends Component {
                                     </Cell>
                                 ))}
                                 {childEntries.map(entry => (
-                                    <Cell
-                                        key={entry.id}
-                                        icon={getEntryIcon}
-                                        onPress={() => this.props.onEntryPress(entry.id)}
+                                    <With
+                                        titleField={entry.fields.find(
+                                            field =>
+                                                field.property === "title" &&
+                                                field.propertyType === "property"
+                                        )}
                                     >
-                                        <Text>{entry.properties.title || ""}</Text>
-                                    </Cell>
+                                        <Cell
+                                            key={entry.id}
+                                            icon={getEntryIcon}
+                                            onPress={() => this.props.onEntryPress(entry.id)}
+                                        >
+                                            <Text>{(titleField && titleField.value) || ""}</Text>
+                                        </Cell>
+                                    </With>
                                 ))}
                             </CellGroup>
                         </ScrollView>

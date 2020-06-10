@@ -1,6 +1,7 @@
 import { createAction } from "redux-actions";
 import {
     ARCHIVE_CONTENTS_MARK_READONLY,
+    ARCHIVE_CONTENTS_SET_ENTRIES,
     ARCHIVE_CONTENTS_SET_GROUPS,
     ARCHIVE_CONTENTS_SET_SOURCE,
     ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT,
@@ -8,6 +9,7 @@ import {
 } from "./types.js";
 
 export const markCurrentSourceReadOnly = createAction(ARCHIVE_CONTENTS_MARK_READONLY);
+export const setEntries = createAction(ARCHIVE_CONTENTS_SET_ENTRIES);
 export const setGroups = createAction(ARCHIVE_CONTENTS_SET_GROUPS);
 export const setSelectedSource = createAction(ARCHIVE_CONTENTS_SET_SOURCE);
 export const showCreateGroupPrompt = createAction(ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT);
