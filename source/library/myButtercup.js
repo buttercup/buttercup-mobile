@@ -7,8 +7,8 @@ import { addArchiveToArchiveManager } from "./buttercup.js";
 
 export const MYBUTTERCUP_CLIENT_ID = "bcup_mobile";
 export const MYBUTTERCUP_CLIENT_SECRET = "5687c89af1f9b6e81c57937f55f4537a";
-// export const MYBUTTERCUP_REDIRECT_URI = "https://my.buttercup.pw/oauth/authorized/";
-export const MYBUTTERCUP_REDIRECT_URI = "http://localhost:8000/oauth/authorized/";
+export const MYBUTTERCUP_REDIRECT_URI = "https://my.buttercup.pw/oauth/authorized/";
+// export const MYBUTTERCUP_REDIRECT_URI = "http://localhost:8000/oauth/authorized/";
 
 export function authenticate() {
     const authURL = MyButtercupClient.generateAuthorisationURL(MYBUTTERCUP_CLIENT_ID);
