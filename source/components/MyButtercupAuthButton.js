@@ -28,13 +28,6 @@ class MyButtercupAuthButton extends Component {
                     tintColor="#1144FF"
                     disabled={this.props.authenticating || this.props.authenticated}
                 />
-                {/* <Cell
-                    title={i18n.t("remote.sign-out")}
-                    icon={{ name: "log-out", source: "entypo" }}
-                    onPress={() => this.props.onSignOut()}
-                    tintColor="#1144FF"
-                    disabled={!this.props.authenticated}
-                /> */}
             </CellGroup>
         );
     }
@@ -44,7 +37,6 @@ MyButtercupAuthButton.propTypes = {
     authenticated: PropTypes.bool.isRequired,
     authenticating: PropTypes.bool.isRequired,
     onSignIn: PropTypes.func.isRequired
-    // onSignOut: PropTypes.func.isRequired
 };
 
 export default MyButtercupAuthButton;
