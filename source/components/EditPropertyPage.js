@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
-import { FIELD_VALUE_TYPE_TEXT } from "@buttercup/facades";
+import { FIELD_VALUE_TYPE_TEXT } from "../library/buttercupCore.js";
 import { saveEntryProperty } from "../shared/entry.js";
 import { FIELD_TYPE_OPTIONS } from "../library/buttercup.js";
 import { HeaderButtons, Item } from "./HeaderButtons.js";

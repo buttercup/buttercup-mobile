@@ -1,7 +1,7 @@
 import { Alert, Clipboard, Linking } from "react-native";
 import { connect } from "react-redux";
 import pathOr from "ramda/es/pathOr";
-import { consumeEntryFacade, createEntryFacade } from "@buttercup/facades";
+import { consumeEntryFacade, createEntryFacade } from "../library/buttercupCore.js";
 import i18n from "../shared/i18n";
 import EntryPage from "../components/EntryPage.js";
 import { handleError } from "../global/exceptions.js";

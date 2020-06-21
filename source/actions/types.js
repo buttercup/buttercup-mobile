@@ -13,6 +13,7 @@ export const APP_SET_BUSY_STATE = "app/setBusyState";
 export const APP_SET_SEARCH_CONTEXT = "app/search/setContext";
 
 export const ARCHIVE_CONTENTS_MARK_READONLY = "archiveContents/markAsReadOnly";
+export const ARCHIVE_CONTENTS_SET_ENTRIES = "archiveContents/setEntries";
 export const ARCHIVE_CONTENTS_SET_GROUPS = "archiveContents/setGroups";
 export const ARCHIVE_CONTENTS_SET_SOURCE = "archiveContentsPage/setSource";
 export const ARCHIVE_CONTENTS_TOGGLE_NEW_GROUP_PROMPT = "archiveContents/toggleCreateGroupPrompt";
@@ -51,6 +52,12 @@ export const GOOGLEDRIVE_SET_AUTHENTICATED = "googleDrive/setAuthenticated";
 export const GOOGLEDRIVE_SET_AUTHENTICATING = "googleDrive/setAuthenticating";
 export const GOOGLEDRIVE_SET_AUTH_TOKEN = "googleDrive/setAuthToken";
 export const GOOGLEDRIVE_SET_REFRESH_TOKEN = "googleDrive/setRefreshToken";
+
+export const MYBUTTERCUP_RESET_AUTH = "myButtercup/resetAuthentication";
+export const MYBUTTERCUP_SET_AUTHENTICATED = "myButtercup/setAuthenticated";
+export const MYBUTTERCUP_SET_AUTHENTICATING = "myButtercup/setAuthenticating";
+export const MYBUTTERCUP_SET_ACCESS_TOKEN = "myButtercup/setAuthToken";
+export const MYBUTTERCUP_SET_REFRESH_TOKEN = "myButtercup/setRefreshToken";
 
 export const REMOTE_EXPLORER_CANCEL_NEW = "remoteExplorer/cancelNew";
 export const REMOTE_EXPLORER_CLEAR = "remoteExplorer/clear";

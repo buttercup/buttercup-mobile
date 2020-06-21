@@ -4,8 +4,13 @@ import { rawGroupIsTrash } from "../shared/group.js";
 const STATE_KEY = "archiveContents";
 const ARCHIVES_STATE_KEY = "archives";
 
+function getEntries(state) {
+    return state[STATE_KEY].entries;
+}
+
 export function getGroup(state, id, _groups = null) {
     const groups = _groups || getGroups(state);
+    const allEntries = getEntries(state);
     if (id === "0") {
         return {
             id: "0",
@@ -16,21 +21,23 @@ export function getGroup(state, id, _groups = null) {
     }
     const targetGroup = groups.find(group => group.id === id);
     if (targetGroup) {
+        const entries = allEntries.filter(entry => entry.parentID === targetGroup.id);
         return {
             id,
             title: targetGroup.title,
-            groups: sortGroups(targetGroup.groups) || [],
-            entries: sortEntries(targetGroup.entries) || []
+            groups: targetGroup.groups ? sortGroups(targetGroup.groups) : [],
+            entries: sortEntries(entries)
         };
     }
     for (let i = 0, groupCount = groups.length; i < groupCount; i += 1) {
         const foundGroup = getGroup(state, id, groups[i].groups || []);
         if (foundGroup) {
+            const entries = allEntries.filter(entry => entry.parentID === foundGroup.id);
             return {
                 id,
                 title: foundGroup.title,
-                groups: sortGroups(foundGroup.groups) || [],
-                entries: sortEntries(foundGroup.entries) || []
+                groups: foundGroup.groups ? sortGroups(foundGroup.groups) : [],
+                entries: sortEntries(entries)
             };
         }
     }
@@ -62,7 +69,7 @@ export function getGroupsUnderID(state, id) {
 export function getSelectedArchive(state) {
     const id = getSelectedSourceID(state);
     const archiveManager = getSharedArchiveManager();
-    return archiveManager.getSourceForID(id).workspace.archive;
+    return archiveManager.getSourceForID(id).vault;
 }
 
 export function getSelectedSourceName(state) {

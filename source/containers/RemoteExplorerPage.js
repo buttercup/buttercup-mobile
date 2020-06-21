@@ -57,22 +57,20 @@ function addToArchiveManager(state) {
     const dropboxToken = getDropboxToken(state);
     const googleDriveToken = getGoogleDriveToken(state);
     const googleDriveRefreshToken = getGoogleDriveRefreshToken(state);
-    const sourceCredentials = createRemoteCredentials(archiveType, {
-        username: remoteUsername,
-        password: remotePassword,
-        url: remoteURL,
-        path: archivePath,
-        dropboxToken,
-        googleDriveToken,
-        googleDriveRefreshToken
-    });
-    const archiveCredentials = createArchiveCredentials(archivePassword);
-    return addArchiveToArchiveManager(
-        archiveName,
-        sourceCredentials,
-        archiveCredentials,
-        archiveType
+    const sourceCredentials = createRemoteCredentials(
+        archiveType,
+        {
+            username: remoteUsername,
+            password: remotePassword,
+            url: remoteURL,
+            path: archivePath,
+            dropboxToken,
+            googleDriveToken,
+            googleDriveRefreshToken
+        },
+        archivePassword
     );
+    return addArchiveToArchiveManager(archiveName, sourceCredentials, archiveType);
 }
 
 function handleNewArchiveName(name, dispatch, getState) {

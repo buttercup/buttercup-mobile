@@ -3,6 +3,8 @@ import { StyleSheet, View } from "react-native";
 import WebView from "react-native-webview";
 import PropTypes from "prop-types";
 
+const MY_BUTTERCUP_AUTHENTICATED_URL = /^https?:\/\/(localhost\:8000|my\.buttercup\.pw)\/oauth\/authorized/;
+
 const styles = StyleSheet.create({
     container: {
         width: "100%"
@@ -43,11 +45,12 @@ class PopupBrowser extends Component {
         if (this._lastURL !== url) {
             this._lastURL = url;
             const fragment = url.match(/(#.+)?$/)[1] || "";
-            this.processAccessToken(fragment);
+            this.processTokensFromFragment(fragment);
+            this.processTokensFromQuery(url);
         }
     }
 
-    processAccessToken(fragment) {
+    processTokensFromFragment(fragment) {
         const frag = fragment.replace(/^#/, "");
         const blocks = (frag || "").split("&");
         const blockNum = blocks.length;
@@ -63,6 +66,22 @@ class PopupBrowser extends Component {
                     }
                 );
                 break;
+            }
+        }
+    }
+
+    processTokensFromQuery(url) {
+        if (MY_BUTTERCUP_AUTHENTICATED_URL.test(url)) {
+            const match = /[?&]code=([^#&?]+)/.exec(url);
+            if (match) {
+                this.setState(
+                    {
+                        detectedToken: true
+                    },
+                    () => {
+                        this.props.onMyButtercupTokenReceived(match[1]);
+                    }
+                );
             }
         }
     }

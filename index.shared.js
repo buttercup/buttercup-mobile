@@ -5,7 +5,7 @@ import { AppRegistry, View, YellowBox, StatusBar } from "react-native";
 import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
 import DropdownAlert from "react-native-dropdownalert";
-import { patchCrypto } from "./source/library/crypto.js";
+import { initButtercupCore } from "./source/compat/appEnv.js";
 import { getSharedArchiveManager } from "./source/library/buttercup.js";
 import store from "./source/store.js";
 import ButtercupApp from "./source/routing.js";
@@ -22,8 +22,8 @@ YellowBox.ignoreWarnings(["Warning: componentWill"]);
 export default class ButtercupShared extends Component {
     constructor(...args) {
         super(...args);
-        // Setup native crypto
-        patchCrypto();
+        // Setup native compatibility patches
+        initButtercupCore();
         // Initialise the manager
         getSharedArchiveManager().rehydrate();
         // Setup notifications

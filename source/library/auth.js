@@ -1,9 +1,8 @@
 import { authenticateWithRefreshToken } from "./googleDrive.js";
-import { Datasources } from "./buttercupCore.js";
+import { DatasourceAuthManager } from "./buttercupCore.js";
 
 export function registerAuthWatchers() {
-    const { AuthManager } = Datasources;
-    AuthManager.getSharedManager().registerHandler("googledrive", async datasource => {
+    DatasourceAuthManager.getSharedManager().registerHandler("googledrive", async datasource => {
         console.log("Google Drive datasource needs re-authentication");
         const { token: currentToken, refreshToken: currentRefreshToken } = datasource;
         if (!currentRefreshToken) {

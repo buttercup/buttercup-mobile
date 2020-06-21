@@ -16,8 +16,8 @@ export function getNameForSource(sourceID) {
 export function searchAllArchives(term) {
     const manager = getSharedArchiveManager();
     const unlockedSources = manager.unlockedSources;
-    const archives = unlockedSources.map(source => source.workspace.archive);
-    return searchForEntries(term, archives);
+    const vaults = unlockedSources.map(source => source.vault);
+    return searchForEntries(term, vaults);
 }
 
 export function searchCurrentArchive(term) {
