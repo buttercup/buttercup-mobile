@@ -29,18 +29,14 @@ class RemoteConnectPage extends Component {
     };
 
     state = {
-        // myBcupName: "",
         myBcupPassword: "",
         showMyBcupPasswordPrompt: false
-        // showMyBcupNamePrompt: false
     };
 
     cancelMyBcupPrompts() {
         this.setState({
-            // myBcupName: "",
             myBcupPassword: "",
             showMyBcupPasswordPrompt: false
-            // showMyBcupNamePrompt: false
         });
     }
 
