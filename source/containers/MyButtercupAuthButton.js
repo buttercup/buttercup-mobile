@@ -7,7 +7,6 @@ import {
 } from "../actions/myButtercup.js";
 import { authenticate as authenticateMyButtercup } from "../library/myButtercup.js";
 import { handleError } from "../global/exceptions.js";
-// import i18n from "../shared/i18n";
 
 export default connect(
     (state, ownProps) => ({
@@ -19,24 +18,6 @@ export default connect(
             dispatch(setMyButtercupAuthenticated(false));
             dispatch(setMyButtercupAuthenticating(true));
             authenticateMyButtercup();
-            // .catch(err => {
-            //     dispatch(setMyButtercupAuthenticating(false));
-            //     handleError(i18n.t("remote.errors.my-buttercup.authentication-failed"), err);
-            // });
         }
-        // onSignIn: () => dispatch => {
-        //     dispatch(setGoogleDriveAuthenticated(false));
-        //     dispatch(setGoogleDriveAuthenticating(true));
-        //     authenticateGoogleDrive().catch(err => {
-        //         handleError(i18n.t("remote.errors.google-drive.authentication-failed"), err);
-        //     });
-        // },
-        // onSignOut: () => async dispatch => {
-        //     if (await GoogleSignin.isSignedIn()) {
-        //         await GoogleSignin.signOut();
-        //         dispatch(setGoogleDriveAuthenticated(false));
-        //         dispatch(setGoogleDriveAuthenticating(false));
-        //     }
-        // }
     }
 )(MyButtercupAuthButton);
