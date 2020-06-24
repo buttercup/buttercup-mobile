@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const ARCHIVE_TYPES = getArchiveTypeDetails();
+const ARCHIVE_TYPES = getArchiveTypeDetails().filter(item => item.available);
 
 class AddArchive extends Component {
     static navigationOptions = {
