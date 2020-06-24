@@ -63,7 +63,7 @@ export function enableTouchUnlock(sourceID) {
             if (!source) {
                 throw new Error(i18n.t("biometric-unlock.errors.source-not-found"));
             }
-            const masterPassword = source.workspace.masterCredentials.password;
+            const masterPassword = source._credentials._getData().masterPassword;
             if (!masterPassword) {
                 throw new Error(i18n.t("biometric-unlock.errors.unable-locate-credentials"));
             }

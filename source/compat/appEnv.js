@@ -71,6 +71,7 @@ export function initButtercupCore() {
         "crypto/v1/decryptText": decryptData,
         "crypto/v1/encryptText": encryptData,
         "crypto/v1/setDerivationRounds": setDerivationRounds,
+        "env/v1/isClosedEnv": () => true,
         "net/webdav/v1/newClient": createClient
     });
 }

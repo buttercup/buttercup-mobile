@@ -32,7 +32,7 @@ function searchForEntries(term, archives) {
     return Promise.all(
         finder.search(term).map(result => {
             const source = manager.unlockedSources.find(
-                source => source.workspace.archive.id === result.archive.id
+                source => source.vault.id === result.archive.id
             );
             if (!source) {
                 throw new Error(
