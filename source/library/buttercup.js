@@ -89,7 +89,7 @@ export function createRemoteCredentials(vaultType, options, masterPassword) {
 }
 
 export function getArchiveEncryptedContent(vault, credentials) {
-    const tds = new TextDatasource();
+    const tds = new TextDatasource(credentials);
     return tds.save(vault.format.history, credentials).then(encryptedContent => {
         return doAsyncWork().then(() => encryptedContent);
     });
