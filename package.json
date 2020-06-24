@@ -38,7 +38,7 @@
     "bluebird": "^3.7.2",
     "browserify-zlib": "^0.1.4",
     "buffer": "^3.6.2",
-    "buttercup": "^4.3.0",
+    "buttercup": "^4.5.0",
     "console-browserify": "^1.2.0",
     "constants-browserify": "0.0.1",
     "debounce": "^1.2.0",
