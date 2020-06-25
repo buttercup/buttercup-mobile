@@ -54,7 +54,7 @@ export function getEntryPath(sourceID, entryID) {
     let group = entry.getGroup(),
         entryPath = [group];
     let parent;
-    while ((parent = group.getGroup()) !== null) {
+    while ((parent = group.getParentGroup()) !== null) {
         entryPath.unshift(parent);
         group = parent;
     }
