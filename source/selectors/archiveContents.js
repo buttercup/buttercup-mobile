@@ -99,9 +99,17 @@ export function shouldShowGroupRenamePrompt(state) {
 }
 
 export function sortEntries(entries) {
+    const getTitle = entry => {
+        const titleField = entry.fields.find(
+            field => field.propertyType === "property" && field.property === "title"
+        );
+        return (titleField && titleField.value) || "";
+    };
     return entries.sort((a, b) => {
-        const aTitle = a.properties.title.toLowerCase();
-        const bTitle = b.properties.title.toLowerCase();
+        const aTitle = getTitle(a);
+        const bTitle = getTitle(b);
+        if (!aTitle) return 1;
+        if (!bTitle) return -1;
         if (aTitle === bTitle) {
             return 0;
         }
