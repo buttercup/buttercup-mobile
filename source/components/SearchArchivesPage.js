@@ -94,6 +94,9 @@ class SearchArchives extends PureComponent {
                         </For>
                     </CellGroup>
                 </When>
+                <When condition={this.state.searchTerm.length > 0}>
+                    <EmptyView text={this.props.t("search.no-results")} />
+                </When>
                 <Otherwise>
                     <EmptyView text={this.props.t("search.start-typing")} />
                 </Otherwise>

@@ -204,6 +204,7 @@
     "search": {
         "self": "Search",
         "start-typing": "Start typing to search...",
+        "no-results": "No entries found",
         "cancel": "Cancel"
     },
     "back": "Back",
