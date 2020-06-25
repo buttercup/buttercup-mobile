@@ -143,10 +143,8 @@ export function touchIDAvailable() {
 }
 
 export function touchIDEnabledForSource(sourceID) {
-    return new Promise((resolve, reject) => {
-        getTouchUnlockCredentials().then(keychainCreds => {
-            resolve(keychainCreds.hasOwnProperty(sourceID));
-        });
+    return getTouchUnlockCredentials().then(keychainCreds => {
+        return keychainCreds.hasOwnProperty(sourceID);
     });
 }
 

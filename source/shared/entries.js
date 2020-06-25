@@ -5,6 +5,8 @@ import { EntryFinder } from "../library/buttercupCore.js";
 import { dispatch, getState } from "../store.js";
 import { getSelectedArchive } from "../selectors/archiveContents.js";
 
+const ENTRY_URL_REXP = /^(login ?)?ur[il]$/i;
+
 export function getNameForSource(sourceID) {
     const source = getSharedArchiveManager().getSourceForID(sourceID);
     if (!source) {
@@ -50,21 +52,20 @@ function searchForEntries(term, archives) {
 
 export function searchAllArchivesForURLs(urls) {
     const manager = getSharedArchiveManager();
-    const unlockedSources = manager.unlockedSources;
-    const archives = unlockedSources.map(source => source.workspace.archive);
-    return getMatchingEntriesForURLs(urls, archives);
+    const vaults = manager.unlockedSources.map(source => source.vault);
+    return getMatchingEntriesForURLs(urls, vaults);
 }
 
 export function searchCurrentArchiveForURLs(urls) {
-    const archive = getSelectedArchive(getState());
-    const archives = archive ? [archive] : [];
-    return getMatchingEntriesForURLs(urls, archives);
+    const vault = getSelectedArchive(getState());
+    const vaults = vault ? [vault] : [];
+    return getMatchingEntriesForURLs(urls, vaults);
 }
 
-export function getMatchingEntriesForURLs(urls, archives) {
+export function getMatchingEntriesForURLs(urls, vaults) {
     let entries = [];
     urls.forEach(url => {
-        getMatchingEntriesForURL(url, archives).forEach(result => {
+        getMatchingEntriesForURL(url, vaults).forEach(result => {
             // Check for duplicates (e.g. similar URLs may have duplicate results)
             if (!entries.find(_result => result.entry.id === _result.entry.id)) {
                 entries.push(result);
@@ -75,25 +76,24 @@ export function getMatchingEntriesForURLs(urls, archives) {
     return entries;
 }
 
-export function getMatchingEntriesForURL(url, archives) {
-    // Source - https://github.com/buttercup/buttercup-browser-extension/blob/3109fc2c788ee0a5f99a28c9cf520ca74f160f0b/source/background/library/archives.js#L280
+export function getMatchingEntriesForURL(url, vaults) {
     const entries = [];
     const manager = getSharedArchiveManager();
-    archives.forEach(archive => {
-        const source = manager.unlockedSources.find(
-            source => source.workspace.archive.id === archive.id
-        );
+    vaults.forEach(vault => {
+        const source = manager.unlockedSources.find(source => source.vault.id === vault.id);
         if (!source) {
-            throw new Error(i18n.t("vault.errors.failed-finding-source", { id: archive.id }));
+            throw new Error(i18n.t("vault.errors.failed-finding-source", { id: vault.id }));
         }
-        const newEntries = archive.findEntriesByMeta("url", /.+/).filter(entry => {
-            const entryURL = entry.getMeta("url");
-            const entryDomain = extractDomain(entryURL);
-            return (
-                entryDomain.length > 0 &&
-                (entryDomain === extractDomain(url) || entryDomain === url) &&
-                entry.isInTrash() === false
-            );
+        const newEntries = vault.findEntriesByProperty(ENTRY_URL_REXP, /.+/).filter(entry => {
+            const urlProps = entry.getProperties(ENTRY_URL_REXP);
+            return Object.values(urlProps).some(propURL => {
+                const domain = extractDomain(propURL);
+                return (
+                    domain.length > 0 &&
+                    (domain === extractDomain(url) || domain === url) &&
+                    entry.isInTrash() === false
+                );
+            });
         });
         entries.push(
             ...newEntries.map(entry => ({

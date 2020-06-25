@@ -126,16 +126,15 @@ const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatc
 const unlockAllTouchArchives = () => dispatch => {
     dispatch(setBusyState(i18n.t("busy-state.unlocking-vaults")));
     // Find all the sources that have TouchID Enabled
-    const sources = getSharedArchiveManager().sourcesList;
-    return Promise.all(sources.map(source => touchIDEnabledForSource(source.id))).then(results => {
+    const sourceIDs = getSharedArchiveManager().sources.map(source => source.id);
+    return Promise.all(sourceIDs.map(id => touchIDEnabledForSource(id))).then(results => {
         // Build a list of source that need to be unlock
-        let sourceIDsToUnlock = [];
+        const sourceIDsToUnlock = [];
         results.forEach((enabled, index) => {
             if (enabled) {
-                sourceIDsToUnlock.push(sources[index].id);
+                sourceIDsToUnlock.push(sourceIDs[index]);
             }
         });
-
         if (sourceIDsToUnlock.length) {
             // First check if we can access the Keychain (maybe the user disabled access?)
             return getKeychainCredentialsFromTouchUnlock()
