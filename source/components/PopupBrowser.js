@@ -44,9 +44,9 @@ class PopupBrowser extends Component {
         const url = webviewState.url;
         if (this._lastURL !== url) {
             this._lastURL = url;
+            this.processTokensFromQuery(url);
             const fragment = url.match(/(#.+)?$/)[1] || "";
             this.processTokensFromFragment(fragment);
-            this.processTokensFromQuery(url);
         }
     }
 
