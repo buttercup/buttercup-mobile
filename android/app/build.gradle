@@ -123,8 +123,8 @@ android {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 34
-        versionName "1.14.0"
+        versionCode 37
+        versionName "1.15.0"
         multiDexEnabled true // This is for method limit
         ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"

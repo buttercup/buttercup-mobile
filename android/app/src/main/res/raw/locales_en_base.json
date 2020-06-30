@@ -28,7 +28,7 @@
     "entry": {
         "add": "Add",
         "cancel": "Cancel",
-        "hide-hidden": "Hide Hidden",
+        "hide-hidden": "Hide Sensitive Information",
         "new-entry": "New Entry",
         "create": "Create",
         "title": "Title",
@@ -41,7 +41,7 @@
         "saved-entry": "Saving entry",
         "saved-entry-description": "Successfully saved changes to the entry",
         "properties": "Properties",
-        "view-hidden": "View hidden",
+        "view-hidden": "View Sensitive Information",
         "edit": "Edit",
         "delete": "Delete",
         "new": "New Entry",
@@ -86,6 +86,9 @@
             "google-drive": {
                 "authentication-failed": "Google Drive authentication failed"
             },
+            "my-buttercup": {
+                "authentication-failed": "My Buttercup authentication failed"
+            },
             "connection-failed": "Connection failed"
         },
         "sign-out": "Sign Out",
@@ -94,6 +97,14 @@
                 "authentication": {
                     "title": "Dropbox authentication",
                     "description": "Successfully authenticated Dropbox account"
+                }
+            }
+        },
+        "my-buttercup": {
+            "success": {
+                "authentication": {
+                    "title": "My Buttercup authentication",
+                    "description": "Successfully authenticated My Buttercup account"
                 }
             }
         }
@@ -116,7 +127,7 @@
         "cannot-lock-not-unlocked": "Cannot lock vault that is not unlocked",
         "errors": {
             "failed-creating-new-vault": "Failed creating new vault: Missing filename and/or password",
-            "failed-finding-source": "Quelle für den Tresor mit ID {{id}} konnte nicht gefunden werden",
+            "failed-finding-source": "Failed finding source for vault with ID: {{id}}",
             "failed-adding": "Failed adding vault",
             "unlock-failed-unknown-authentication": "Unlock failed: Unknown authentication result: {{action}}",
             "unlocking-failed": "Unlocking failed",
@@ -193,6 +204,7 @@
     "search": {
         "self": "Search",
         "start-typing": "Start typing to search...",
+        "no-results": "No entries found",
         "cancel": "Cancel"
     },
     "back": "Back",
