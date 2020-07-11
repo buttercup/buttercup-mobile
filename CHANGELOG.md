@@ -1,5 +1,11 @@
 # Buttercup Mobile Changelog
 
+## v1.15.0
+_2020-06-30_
+
+ * [My Buttercup](https://my.buttercup.pw) integration
+ * Buttercup core v4 support
+
 ## v1.14.0
 _2020-02-16_
 
