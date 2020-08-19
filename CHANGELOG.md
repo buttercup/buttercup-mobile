@@ -1,5 +1,11 @@
 # Buttercup Mobile Changelog
 
+## v1.15.1
+_2020-08-19_
+
+ * **Bugfix**:
+   * ([buttercup-core#287](https://github.com/buttercup/buttercup-core/issues/287)) Vaults grow to enormous size
+
 ## v1.15.0
 _2020-06-30_
 
