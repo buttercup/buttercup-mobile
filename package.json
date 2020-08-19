@@ -1,6 +1,6 @@
 {
   "name": "Buttercup",
-  "version": "1.15.0",
+  "version": "1.15.1",
   "private": true,
   "scripts": {
     "build:android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
@@ -38,7 +38,7 @@
     "bluebird": "^3.7.2",
     "browserify-zlib": "^0.1.4",
     "buffer": "^3.6.2",
-    "buttercup": "^4.5.0",
+    "buttercup": "^4.13.1",
     "console-browserify": "^1.2.0",
     "constants-browserify": "0.0.1",
     "debounce": "^1.2.0",

@@ -806,7 +806,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				INFOPLIST_FILE = Buttercup/Info.plist;
@@ -816,7 +816,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
 				);
-				MARKETING_VERSION = 1.15.0;
+				MARKETING_VERSION = 1.15.1;
 				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile;
 				PRODUCT_NAME = Buttercup;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -831,7 +831,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -840,7 +840,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libs",
 				);
-				MARKETING_VERSION = 1.15.0;
+				MARKETING_VERSION = 1.15.1;
 				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile;
 				PRODUCT_NAME = Buttercup;
 				VERSIONING_SYSTEM = "apple-generic";
