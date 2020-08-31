@@ -9,9 +9,10 @@ function getEntries(state) {
 }
 
 export function getGroup(state, id, _groups = null) {
-    const groups = _groups || getGroups(state);
+    const allGroups = _groups || getGroups(state);
     const allEntries = getEntries(state);
     if (id === "0") {
+        const groups = allGroups.filter(group => group.parentID === id) || [];
         return {
             id: "0",
             title: "[archive]",
@@ -19,24 +20,26 @@ export function getGroup(state, id, _groups = null) {
             entries: []
         };
     }
-    const targetGroup = groups.find(group => group.id === id);
+    const targetGroup = allGroups.find(group => group.id === id);
     if (targetGroup) {
         const entries = allEntries.filter(entry => entry.parentID === targetGroup.id);
+        const groups = allGroups.filter(group => group.parentID === targetGroup.id) || [];
         return {
             id,
             title: targetGroup.title,
-            groups: targetGroup.groups ? sortGroups(targetGroup.groups) : [],
+            groups: sortGroups(groups),
             entries: sortEntries(entries)
         };
     }
-    for (let i = 0, groupCount = groups.length; i < groupCount; i += 1) {
-        const foundGroup = getGroup(state, id, groups[i].groups || []);
+    for (let i = 0, groupCount = allGroups.length; i < groupCount; i += 1) {
+        const foundGroup = getGroup(state, id, allGroups[i].groups || []);
         if (foundGroup) {
             const entries = allEntries.filter(entry => entry.parentID === foundGroup.id);
+            const groups = allGroups.filter(group => group.parentID === foundGroup.id) || [];
             return {
                 id,
                 title: foundGroup.title,
-                groups: foundGroup.groups ? sortGroups(foundGroup.groups) : [],
+                groups: sortGroups(groups),
                 entries: sortEntries(entries)
             };
         }
