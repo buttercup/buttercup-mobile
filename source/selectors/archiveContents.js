@@ -8,6 +8,8 @@ function getEntries(state) {
     return state[STATE_KEY].entries;
 }
 
+// Get the id, title, entries and subgroups of a group for the specified group id.
+// If the given id is "0" the base level of the archive is returned. In this case the list of entries is always empty.
 export function getGroup(state, id, _groups = null) {
     const allGroups = _groups || getGroups(state);
     const allEntries = getEntries(state);
