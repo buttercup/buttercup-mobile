@@ -31,19 +31,6 @@ export function getGroup(state, id, _groups = null) {
             entries: sortEntries(entries)
         };
     }
-    for (let i = 0, groupCount = allGroups.length; i < groupCount; i += 1) {
-        const foundGroup = getGroup(state, id, allGroups[i].groups || []);
-        if (foundGroup) {
-            const entries = allEntries.filter(entry => entry.parentID === foundGroup.id);
-            const groups = allGroups.filter(group => group.parentID === foundGroup.id) || [];
-            return {
-                id,
-                title: foundGroup.title,
-                groups: sortGroups(groups),
-                entries: sortEntries(entries)
-            };
-        }
-    }
     return null;
 }
 
