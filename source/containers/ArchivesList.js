@@ -31,6 +31,7 @@ import {
 } from "../shared/touchUnlock";
 import { getIsContextAutoFill } from "../selectors/autofill";
 import { navigate, VAULT_CONTENTS_SCREEN, SEARCH_SCREEN } from "../shared/nav.js";
+import { doAsyncWork } from "../global/async.js";
 
 const openArchive = sourceID => (dispatch, getState) => {
     const state = getState();
@@ -100,27 +101,32 @@ const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatc
     const isContextAutoFill = getIsContextAutoFill(getState());
     dispatch(showUnlockPasswordPrompt(false));
     dispatch(setBusyState(i18n.t("busy-state.checking-connection")));
-    return getConnectedStatus().then(connected => {
-        dispatch(setBusyState(i18n.t("busy-state.unlocking")));
-        if (!connected && isContextAutoFill) {
-            // It is assumed the user is online when attempting to autofill
-            // @TODO: Test and handle offline cases (perhaps with offline login??)
-            // Dev Note: 'Alert' does not work in the iOS AutoFill Extension.
-            throw new Error("Failed unlocking: Device not online");
-        } else if (!connected && !useOffline) {
-            return dispatch(performOfflineProcedure(sourceID, password, true)).then(usedOffline => {
-                if (!usedOffline) {
-                    throw new Error("Failed unlocking: Device not online");
-                }
+    return doAsyncWork()
+        .then(() => getConnectedStatus())
+        .then(connected => {
+            dispatch(setBusyState(i18n.t("busy-state.unlocking")));
+            if (!connected && isContextAutoFill) {
+                // It is assumed the user is online when attempting to autofill
+                // @TODO: Test and handle offline cases (perhaps with offline login??)
+                // Dev Note: 'Alert' does not work in the iOS AutoFill Extension.
+                throw new Error("Failed unlocking: Device not online");
+            } else if (!connected && !useOffline) {
+                return dispatch(performOfflineProcedure(sourceID, password, true)).then(
+                    usedOffline => {
+                        if (!usedOffline) {
+                            throw new Error("Failed unlocking: Device not online");
+                        }
+                    }
+                );
+            }
+            console.log("BEFORE UNLOCK");
+            return unlockSource(sourceID, password, useOffline).then(() => {
+                // success!
+                dispatch(setBusyState(null));
+                // open source
+                dispatch(openArchive(sourceID));
             });
-        }
-        return unlockSource(sourceID, password, useOffline).then(() => {
-            // success!
-            dispatch(setBusyState(null));
-            // open source
-            dispatch(openArchive(sourceID));
         });
-    });
 };
 
 const unlockAllTouchArchives = () => dispatch => {

@@ -1,7 +1,8 @@
-import gzip from "gzip-js";
+import { gzip, ungzip } from "pako";
 import { createClient } from "webdav";
+import * as base64 from "base64-js";
 import { getSharedAppEnv } from "../library/buttercupCore.js";
-import { getPatchedCrypto } from "./crypto.js";
+import { getPatchedCrypto, getUUID } from "./crypto.js";
 
 let __hasInitialised = false,
     __derivationRoundsOverride = null;
@@ -11,17 +12,24 @@ let __hasInitialised = false,
  * @param {String} text The text to compress
  * @returns {String} Compressed text
  */
-function compress(text) {
-    const compressed = gzip.zip(text, {
+function compressV1(text) {
+    return gzip(text, {
         level: 9,
-        timestamp: parseInt(Date.now() / 1000, 10)
+        to: "string"
     });
-    const compressedLength = compressed.length;
-    let outputText = "";
-    for (let i = 0; i < compressedLength; i += 1) {
-        outputText += String.fromCharCode(compressed[i]);
-    }
-    return outputText;
+}
+
+function compressV2(text) {
+    return Promise.resolve().then(() => {
+        const output = gzip(text, {
+            level: 9
+        });
+        return bytesToBase64(output);
+    });
+}
+
+function decodeBase64(b64: string, raw: boolean = false): string | Uint8Array {
+    return raw ? base64.toByteArray(b64) : new TextDecoder().decode(base64.toByteArray(b64));
 }
 
 /**
@@ -29,24 +37,28 @@ function compress(text) {
  * @param {String} text The compressed text
  * @returns {String} Decompressed text
  */
-function decompress(text) {
-    var compressedData = [],
-        textLen = text.length;
-    for (var i = 0; i < textLen; i += 1) {
-        compressedData.push(text.charCodeAt(i));
-    }
-    const decompressedData = gzip.unzip(compressedData);
-    const decompressedLength = decompressedData.length;
-    let outputText = "";
-    for (let j = 0; j < decompressedLength; j += 1) {
-        outputText += String.fromCharCode(decompressedData[j]);
-    }
-    return outputText;
+function decompressV1(text) {
+    return ungzip(text, { to: "string" });
+}
+
+function decompressV2(text) {
+    return Promise.resolve().then(() => {
+        const bytes = decodeBase64(text, true);
+        return ungzip(bytes, { to: "string" });
+    });
 }
 
 function decryptData(data, password) {
     const session = getPatchedCrypto();
     return session.decrypt(data, password);
+}
+
+function encodeBytesToBase64(bytes: Uint8Array): string {
+    return base64.fromByteArray(bytes);
+}
+
+function encodeTextToBase64(text: string): string {
+    return encodeBytesToBase64(new TextEncoder().encode(text));
 }
 
 function encryptData(data, password) {
@@ -64,15 +76,22 @@ export function initButtercupCore() {
     const appEnv = getSharedAppEnv();
     // Apply methods
     appEnv.setProperties({
-        "compression/v1/compressText": compress,
-        "compression/v1/decompressText": decompress,
+        "compression/v1/compressText": compressV1,
+        "compression/v1/decompressText": decompressV1,
+        "compression/v2/compressText": compressV2,
+        "compression/v2/decompressText": decompressV2,
         "crypto/v1/decryptBuffer": decryptData,
         "crypto/v1/encryptBuffer": encryptData,
         "crypto/v1/decryptText": decryptData,
         "crypto/v1/encryptText": encryptData,
         "crypto/v1/setDerivationRounds": setDerivationRounds,
+        "encoding/v1/base64ToBytes": input => decodeBase64(input, true),
+        "encoding/v1/base64ToText": decodeBase64,
+        "encoding/v1/bytesToBase64": encodeBytesToBase64,
+        "encoding/v1/textToBase64": encodeTextToBase64,
         "env/v1/isClosedEnv": () => true,
-        "net/webdav/v1/newClient": createClient
+        "net/webdav/v1/newClient": createClient,
+        "rng/v1/uuid": getUUID
     });
 }
 
