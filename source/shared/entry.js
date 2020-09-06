@@ -169,9 +169,11 @@ export function saveNewEntry() {
     const newEntry = source.vault.findGroupByID(parentGroupID).createEntry(title);
     newEntry.setProperty("username", username).setProperty("password", password);
     dispatch(setBusyState(i18n.t("busy-state.saving")));
-    return saveCurrentArchive(source).then(() => {
-        updateCurrentArchive();
-        dispatch(setBusyState(null));
-        navigateBack();
-    });
+    return doAsyncWork()
+        .then(() => saveCurrentArchive(source))
+        .then(() => {
+            updateCurrentArchive();
+            dispatch(setBusyState(null));
+            navigateBack();
+        });
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import PropTypes from "prop-types";
 import { Cell, CellGroup, CellInput } from "react-native-cell-components";
-import { FIELD_VALUE_TYPE_OTP } from "../library/buttercupCore.js";
+import { EntryPropertyValueType } from "../library/buttercupCore.js";
 import { withNamespaces } from "react-i18next";
 import Spinner from "./Spinner.js";
 import ToolbarIcon from "./ToolbarIcon.js";
@@ -175,7 +175,7 @@ class EntryPage extends Component {
                             this.props.onAddProperty({
                                 initialKey: getOTPTitleFromURL(this.props.pendingOTPURL),
                                 initialValue: this.props.pendingOTPURL,
-                                initialValueType: FIELD_VALUE_TYPE_OTP
+                                initialValueType: EntryPropertyValueType.OTP
                             });
                         }}
                         tintColor="#fc8c03"

@@ -2,19 +2,48 @@ import { NativeModules, Platform } from "react-native";
 import { Buffer } from "buffer";
 import VError from "verror";
 import { createSession } from "iocane/web";
-import { v4 as uuid } from "uuid";
+import { decodeBase64String, encodeBase64String } from "../library/buttercupCore.js";
 import { addToStack, getStackCount, getStackItem } from "../library/cache.js";
 import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 
 const { CryptoBridge: Crypto } = NativeModules;
 
 const BRIDGE_ERROR_REXP = /^Error:/i;
+const CACHE_UUID_MAX = 500;
+const CACHE_UUID_MIN = 75;
 const IV_LENGTH = 16; // Bytes
 
 function bufferToHex(buff) {
     return Array.prototype.map
         .call(new Uint8Array(buff), x => ("00" + x.toString(16)).slice(-2))
         .join("");
+}
+
+export function buildCache() {
+    return Promise.all([cacheUUIDs()]);
+}
+
+function cacheUUIDs() {
+    const uuidCount = getStackCount("uuid");
+    if (uuidCount > CACHE_UUID_MIN) {
+        return Promise.resolve();
+    }
+    console.log("Will fetch more UUIDs...");
+    const refill = () => {
+        return fetchUUIDs().then(uuids => {
+            console.log(`Received ${uuids.length} UUIDs...`);
+            addToStack("uuid", ...uuids);
+            const uuidCount = getStackCount("uuid");
+            if (uuidCount < CACHE_UUID_MAX) {
+                return refill();
+            }
+        });
+    };
+    return refill();
+}
+
+function fetchUUIDs() {
+    return Crypto.generateUUIDs(CACHE_UUID_MIN).then(res => res.split(","));
 }
 
 function generateSalt(length) {
@@ -35,8 +64,12 @@ export function getPatchedCrypto() {
         .overridePBKDF2(pbkdf2);
 }
 
-function getUUID() {
-    return uuid();
+export function getUUID() {
+    const uuid = getStackItem("uuid");
+    if (!uuid) {
+        throw new Error("No pre-generated UUIDs available");
+    }
+    return uuid;
 }
 
 function internalDecrypt(encryptedComponents, keyDerivationInfo) {
@@ -55,12 +88,12 @@ function internalDecrypt(encryptedComponents, keyDerivationInfo) {
             }
             return content;
         })
-        .then(decryptedBase64 => new Buffer(decryptedBase64, "base64").toString("utf8"));
+        .then(decryptedBase64 => decodeBase64String(decryptedBase64));
 }
 
 function internalEncrypt(text, keyDerivationInfo, generatedIV) {
     return Crypto.encryptText(
-        new Buffer(text, "utf8").toString("base64"),
+        encodeBase64String(text),
         bufferToHex(keyDerivationInfo.key),
         keyDerivationInfo.salt,
         generatedIV.toString("hex"),

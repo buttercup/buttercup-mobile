@@ -1,9 +1,6 @@
 import {
-    FIELD_VALUE_TYPE_NOTE,
-    FIELD_VALUE_TYPE_OTP,
-    FIELD_VALUE_TYPE_PASSWORD,
-    FIELD_VALUE_TYPE_TEXT,
     Credentials,
+    EntryPropertyValueType,
     TextDatasource,
     Vault,
     VaultManager,
@@ -15,10 +12,10 @@ import SecureStorageInterface from "../compat/SecureStorageInterface.js";
 import { doAsyncWork } from "../global/async.js";
 
 export const FIELD_TYPE_OPTIONS = [
-    { type: FIELD_VALUE_TYPE_TEXT, title: "Text (default)" },
-    { type: FIELD_VALUE_TYPE_NOTE, title: "Note" },
-    { type: FIELD_VALUE_TYPE_PASSWORD, title: "Password" },
-    { type: FIELD_VALUE_TYPE_OTP, title: "OTP" }
+    { type: EntryPropertyValueType.Text, title: "Text (default)" },
+    { type: EntryPropertyValueType.Note, title: "Note" },
+    { type: EntryPropertyValueType.Password, title: "Password" },
+    { type: EntryPropertyValueType.OTP, title: "OTP" }
 ];
 
 let __sharedManager = null;
