@@ -9,8 +9,9 @@ import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 const { CryptoBridge: Crypto } = NativeModules;
 
 const BRIDGE_ERROR_REXP = /^Error:/i;
-const CACHE_UUID_MAX = 500;
-const CACHE_UUID_MIN = 75;
+const CACHE_UUID_MAX = 5000;
+const CACHE_UUID_MIN = 2500;
+const CACHE_UUID_REFILL = 150;
 const IV_LENGTH = 16; // Bytes
 
 function bufferToHex(buff) {
@@ -28,9 +29,9 @@ function cacheUUIDs() {
     if (uuidCount > CACHE_UUID_MIN) {
         return Promise.resolve();
     }
-    console.log("Will fetch more UUIDs...");
-    const refill = () => {
-        return fetchUUIDs().then(uuids => {
+    console.log("Fetching more UUIDs...");
+    const refill = () =>
+        fetchUUIDs().then(uuids => {
             console.log(`Received ${uuids.length} UUIDs...`);
             addToStack("uuid", ...uuids);
             const uuidCount = getStackCount("uuid");
@@ -38,12 +39,11 @@ function cacheUUIDs() {
                 return refill();
             }
         });
-    };
     return refill();
 }
 
 function fetchUUIDs() {
-    return Crypto.generateUUIDs(CACHE_UUID_MIN).then(res => res.split(","));
+    return Crypto.generateUUIDs(CACHE_UUID_REFILL).then(res => res.split(","));
 }
 
 function generateSalt(length) {

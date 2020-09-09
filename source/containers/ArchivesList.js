@@ -53,6 +53,8 @@ const openArchive = sourceID => (dispatch, getState) => {
     } else {
         navigate(VAULT_CONTENTS_SCREEN, { groupID: "0", title: targetSource.name });
     }
+    // In the background
+    doAsyncWork();
 };
 
 const performOfflineProcedure = (sourceID, password, isOffline = false) => (dispatch, getState) => {
@@ -119,7 +121,6 @@ const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatc
                     }
                 );
             }
-            console.log("BEFORE UNLOCK");
             return unlockSource(sourceID, password, useOffline).then(() => {
                 // success!
                 dispatch(setBusyState(null));

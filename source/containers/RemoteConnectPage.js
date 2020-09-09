@@ -31,45 +31,40 @@ import { handleError } from "../global/exceptions.js";
 import { getDomain } from "../library/helpers.js";
 import { navigate, navigateToRoot, REMOTE_EXPLORER_SCREEN } from "../shared/nav.js";
 import i18n from "../shared/i18n";
+import { doAsyncWork } from "../global/async.js";
 
-function handleConnectionCreation(dispatch, getState, config = {}) {
-    const state = getState();
+async function handleConnectionCreation(dispatch, getState, config = {}) {
+    let state = getState();
     const remoteConnInfo = getRemoteConnectionInfo(state);
     const vaultType = getArchiveType(state);
     const dropboxToken = getDropboxToken(state);
     const googleDriveToken = getGoogleDriveToken(state);
+    console.log("CONNECT!!!!");
+    // Prep async work
+    await doAsyncWork();
     if (vaultType === "mybuttercup") {
         // Skip remote explorer
         const { myButtercupPassword } = config;
-        return connectMyButtercupVault(myButtercupPassword)
-            .then(() => {
-                navigateToRoot();
-            })
-            .catch(function __handleError(err) {
-                dispatch(disconnect());
-                handleError(i18n.t("remote.errors.connection-failed"), err);
-            });
+        await connectMyButtercupVault(myButtercupPassword);
+        navigateToRoot();
+        return;
     }
-    return createRemoteConnection({ ...remoteConnInfo, dropboxToken, googleDriveToken })
-        .then(function __onConnected() {
-            const state = getState();
-            let title = i18n.t("remote.self");
-            const url = getRemoteURL(state);
-            if (url) {
-                const domain = getDomain(url);
-                title = domain;
-            } else if (vaultType === "dropbox") {
-                title = "Dropbox";
-            } else if (vaultType === "googledrive") {
-                title = "Google Drive";
-            }
-            dispatch(onConnected());
-            navigate(REMOTE_EXPLORER_SCREEN, { title });
-        })
-        .catch(function __handleError(err) {
-            dispatch(disconnect());
-            handleError(i18n.t("remote.errors.connection-failed"), err);
-        });
+    await createRemoteConnection({ ...remoteConnInfo, dropboxToken, googleDriveToken });
+    // Refresh state
+    state = getState();
+    // Prepare explorer for next screen
+    let title = i18n.t("remote.self");
+    const url = getRemoteURL(state);
+    if (url) {
+        const domain = getDomain(url);
+        title = domain;
+    } else if (vaultType === "dropbox") {
+        title = "Dropbox";
+    } else if (vaultType === "googledrive") {
+        title = "Google Drive";
+    }
+    dispatch(onConnected());
+    navigate(REMOTE_EXPLORER_SCREEN, { title });
 }
 
 export default connect(
@@ -83,8 +78,13 @@ export default connect(
         ...getRemoteCredentials(state)
     }),
     {
-        initiateConnection: config => (dispatch, getState) =>
-            handleConnectionCreation(dispatch, getState, config),
+        initiateConnection: config => (dispatch, getState) => {
+            console.log("CONN?");
+            return handleConnectionCreation(dispatch, getState, config).catch(err => {
+                dispatch(disconnect());
+                handleError(i18n.t("remote.errors.connection-failed"), err);
+            });
+        },
         onChangePassword,
         onChangeURL,
         onChangeUsername,

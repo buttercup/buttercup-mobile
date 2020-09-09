@@ -42,7 +42,6 @@ export function connectVault(masterPassword) {
  * @returns {Promise.<{ accessToken: String, refreshToken: String }>}
  */
 export function getTokens(authCode) {
-    console.log("GET TOKENS FOR CODE", authCode);
     return MyButtercupClient.exchangeAuthCodeForTokens(
         authCode,
         MYBUTTERCUP_CLIENT_ID,

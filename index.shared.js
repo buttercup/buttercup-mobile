@@ -1,5 +1,6 @@
 import "react-native-gesture-handler";
 import "./shim.js";
+import "./source/library/polyfill/textEncoder.js";
 import React, { Component, Fragment } from "react";
 import { AppRegistry, View, YellowBox, StatusBar } from "react-native";
 import { I18nextProvider } from "react-i18next";
@@ -14,6 +15,7 @@ import { setNotificationFunction } from "./source/global/notify.js";
 import { registerAuthWatchers } from "./source/library/auth.js";
 import { setTopLevelNavigator } from "./source/shared/nav.js";
 import i18n from "./source/shared/i18n";
+import { doAsyncWork } from "./source/global/async.js";
 
 // Ignore some warnings
 // @TODO: remove this once we are fully upgraded
@@ -39,6 +41,8 @@ export default class ButtercupShared extends Component {
         });
         // Watch for auth failures and handle refreshing of tokens
         registerAuthWatchers();
+        // Prep some caches
+        doAsyncWork();
     }
 
     render() {
