@@ -103,6 +103,7 @@ const performSourceUnlock = (sourceID, password, useOffline = false) => (dispatc
     const isContextAutoFill = getIsContextAutoFill(getState());
     dispatch(showUnlockPasswordPrompt(false));
     dispatch(setBusyState(i18n.t("busy-state.checking-connection")));
+    console.log(`Unlock source: ${sourceID} (useOffline: ${useOffline})`);
     return doAsyncWork()
         .then(() => getConnectedStatus())
         .then(connected => {

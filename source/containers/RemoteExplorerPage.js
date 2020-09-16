@@ -14,6 +14,7 @@ import {
 } from "../selectors/RemoteExplorerPage.js";
 import { getRemoteConnectionInfo } from "../selectors/RemoteConnectPage.js";
 import { getToken as getDropboxToken } from "../selectors/dropbox.js";
+import { addBCUPExtension, joinPathAndFilename } from "../library/format.js";
 import {
     getAuthToken as getGoogleDriveToken,
     getRefreshToken as getGoogleDriveRefreshToken
@@ -54,6 +55,7 @@ function addToArchiveManager(state) {
         remotePassword,
         remoteURL
     } = { ...getNewArchiveDetails(state), ...getRemoteConnectionInfo(state) };
+    const willCreate = willCreateNewArchive(state);
     const dropboxToken = getDropboxToken(state);
     const googleDriveToken = getGoogleDriveToken(state);
     const googleDriveRefreshToken = getGoogleDriveRefreshToken(state);
@@ -62,7 +64,7 @@ function addToArchiveManager(state) {
         {
             username: remoteUsername,
             password: remotePassword,
-            url: remoteURL,
+            endpoint: remoteURL,
             path: archivePath,
             dropboxToken,
             googleDriveToken,
@@ -70,7 +72,7 @@ function addToArchiveManager(state) {
         },
         archivePassword
     );
-    return addArchiveToArchiveManager(archiveName, sourceCredentials, archiveType);
+    return addArchiveToArchiveManager(archiveName, sourceCredentials, archiveType, willCreate);
 }
 
 function handleNewArchiveName(name, dispatch, getState) {
@@ -92,16 +94,15 @@ function handleNewFile(filename, dispatch, getState) {
     dispatch(setNewFilename(filename));
     dispatch(setCreateNew(true));
     dispatch(showNewMasterPasswordPrompt());
+    // Filename setup
+    const currentPath = getCurrentPath(getState());
+    const filePath = joinPathAndFilename(currentPath, addBCUPExtension(filename));
+    dispatch(selectArchive(filePath));
 }
 
 function handleNewMasterPassword(password, dispatch, getState) {
     dispatch(setNewMasterPassword(password));
-    const state = getState();
-    if (willCreateNewArchive(state)) {
-        createNewArchive(state, dispatch);
-    } else {
-        dispatch(showNewNamePrompt());
-    }
+    dispatch(showNewNamePrompt());
 }
 
 function handlePathSelection(nextIdentifier, nextItem, isDir, resetScroll, dispatch, getState) {

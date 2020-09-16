@@ -39,7 +39,6 @@ async function handleConnectionCreation(dispatch, getState, config = {}) {
     const vaultType = getArchiveType(state);
     const dropboxToken = getDropboxToken(state);
     const googleDriveToken = getGoogleDriveToken(state);
-    console.log("CONNECT!!!!");
     // Prep async work
     await doAsyncWork();
     if (vaultType === "mybuttercup") {
@@ -79,7 +78,6 @@ export default connect(
     }),
     {
         initiateConnection: config => (dispatch, getState) => {
-            console.log("CONN?");
             return handleConnectionCreation(dispatch, getState, config).catch(err => {
                 dispatch(disconnect());
                 handleError(i18n.t("remote.errors.connection-failed"), err);

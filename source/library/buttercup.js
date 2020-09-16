@@ -27,14 +27,15 @@ let __sharedManager = null;
  * @param {String} type Vault type
  * @returns {Promise}
  */
-export function addArchiveToArchiveManager(name, credentials, type) {
+export async function addArchiveToArchiveManager(name, credentials, type, initialise = false) {
     const manager = getSharedArchiveManager();
-    return doAsyncWork()
-        .then(() => credentials.toSecureString())
-        .then(credStr => {
-            const source = new VaultSource(name, type, credStr);
-            return manager.addSource(source);
-        });
+    await doAsyncWork();
+    const credStr = await credentials.toSecureString();
+    const source = new VaultSource(name, type, credStr);
+    await manager.addSource(source);
+    await source.unlock(credentials, {
+        initialiseRemote: initialise
+    });
 }
 
 export function createEmptyArchive() {
@@ -71,7 +72,7 @@ export function createRemoteCredentials(vaultType, options, masterPassword) {
                 {
                     datasource: {
                         type: "webdav",
-                        endpoint: options.url,
+                        endpoint: options.endpoint,
                         path: options.path,
                         username: options.username,
                         password: options.password
