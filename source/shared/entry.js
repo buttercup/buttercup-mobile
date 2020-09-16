@@ -22,7 +22,7 @@ import { handleError } from "../global/exceptions.js";
 import { doAsyncWork } from "../global/async.js";
 import { updateCurrentArchive } from "./archiveContents.js";
 import { saveCurrentArchive } from "../shared/archive.js";
-import { getNameForSource } from "./entries";
+import { getNameForSource } from "./archive.js";
 import { navigateBack } from "./nav.js";
 import { simpleCloneObject } from "../library/helpers.js";
 import i18n from "../shared/i18n";

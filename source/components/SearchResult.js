@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Cell } from "react-native-cell-components";
 import PropTypes from "prop-types";
-import { getNameForSource } from "../shared/entries";
+import { getNameForSource } from "../shared/archive";
 import { getEntry, getEntryPath } from "../shared/entry";
 
 const ENTRY_ICON = require("../../resources/images/entry-256.png");

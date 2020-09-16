@@ -2,6 +2,7 @@ import { getSharedArchiveManager } from "../library/buttercup.js";
 import { setArchives } from "../actions/archives.js";
 import { updateTouchEnabledSources } from "../shared/touchUnlock.js";
 import { VaultSource } from "../library/buttercupCore.js";
+// import { updateSearch } from "./search.js";
 
 export function linkArchiveManagerToStore(store) {
     const { dispatch } = store;
@@ -19,5 +20,6 @@ export function linkArchiveManagerToStore(store) {
         }));
         dispatch(setArchives(sources));
         updateTouchEnabledSources();
+        // updateSearch(manager.unlockedSources.map(source => source.vault));
     });
 }

@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
 import { withNamespaces } from "react-i18next";
-import { searchAllArchives, searchCurrentArchive } from "../shared/entries.js";
+import { searchUsingTerm, updateSearch } from "../shared/search.js";
+import { getSharedArchiveManager } from "../library/buttercup.js";
 import i18n from "../shared/i18n";
 import SearchResult from "./SearchResult";
 import EmptyView from "./EmptyView.js";
@@ -22,6 +23,7 @@ class SearchArchives extends PureComponent {
     };
 
     static propTypes = {
+        currentSourceID: PropTypes.string,
         searchContext: PropTypes.oneOf(["root", "archive"]),
         initialEntries: PropTypes.arrayOf(PropTypes.object).isRequired,
         onEntryPress: PropTypes.func.isRequired
@@ -35,20 +37,37 @@ class SearchArchives extends PureComponent {
         selectedItemIndex: -1
     };
 
+    vaultUpdate = null;
+
     changeInput = debounce(function(text) {
-        const searchWithTerm =
-            this.props.searchContext === "root" ? searchAllArchives : searchCurrentArchive;
+        // const searchWithTerm =
+        //     this.props.searchContext === "root" ? searchAllArchives : searchCurrentArchive;
+        if (!this.vaultUpdate) {
+            const vm = getSharedArchiveManager();
+            const vaults =
+                this.props.searchContext === "root"
+                    ? vm.unlockedSources.map(source => source.vault)
+                    : [vm.getSourceForID(this.props.currentSourceID).vault];
+            this.vaultUpdate = updateSearch(vaults);
+        }
         this.setState(
             {
                 searchTerm: text,
                 selectedItemIndex: -1
             },
             () =>
-                searchWithTerm(this.state.searchTerm).then(entries => {
-                    this.setState({
-                        entries: this.state.searchTerm ? entries : []
-                    });
-                })
+                this.vaultUpdate
+                    .then(() =>
+                        this.state.searchTerm ? searchUsingTerm(this.state.searchTerm) : []
+                    )
+                    .then(entries => {
+                        this.setState({ entries });
+                    })
+            // searchWithTerm(this.state.searchTerm).then(entries => {
+            //     this.setState({
+            //         entries: this.state.searchTerm ? entries : []
+            //     });
+            // })
         );
     }, 250);
 
