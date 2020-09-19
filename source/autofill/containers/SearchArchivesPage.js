@@ -3,6 +3,7 @@ import SearchArchivesPage from "../../components/SearchArchivesPage";
 import { getEntry } from "../../shared/entry";
 import { completeAutoFillWithEntry } from "../../shared/autofill";
 import { getAutoFillURLs } from "../../selectors/autofill";
+import { setBusyState } from "../../actions/app.js";
 
 export default connect(
     (state, ownProps) => ({
@@ -16,6 +17,9 @@ export default connect(
                 const entry = getEntry(sourceID, entryID);
                 completeAutoFillWithEntry(sourceID, entry);
             });
+        },
+        onStatusChange: (msg = null) => dispatch => {
+            dispatch(setBusyState(msg));
         }
     }
 )(SearchArchivesPage);

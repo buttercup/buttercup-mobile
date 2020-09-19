@@ -11,6 +11,7 @@ import i18n from "../shared/i18n";
 import SearchResult from "./SearchResult";
 import EmptyView from "./EmptyView.js";
 import { handleError } from "../global/exceptions.js";
+import { doAsyncWork } from "../global/async.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -27,7 +28,8 @@ class SearchArchives extends PureComponent {
         autofillURLs: PropTypes.arrayOf(PropTypes.string),
         currentSourceID: PropTypes.string,
         searchContext: PropTypes.oneOf(["root", "archive"]),
-        onEntryPress: PropTypes.func.isRequired
+        onEntryPress: PropTypes.func.isRequired,
+        onStatusChange: PropTypes.func.isRequired
     };
 
     focusSubscription = null;
@@ -50,6 +52,7 @@ class SearchArchives extends PureComponent {
             },
             () =>
                 this.vaultUpdate
+                    .then(() => doAsyncWork())
                     .then(() =>
                         this.state.searchTerm ? searchUsingTerm(this.state.searchTerm) : []
                     )
@@ -145,12 +148,20 @@ class SearchArchives extends PureComponent {
 
     updateVaults() {
         if (!this.vaultUpdate) {
+            this.props.onStatusChange("Preparing search");
             const vm = getSharedArchiveManager();
             const vaults =
                 this.props.searchContext === "root"
                     ? vm.unlockedSources.map(source => source.vault)
                     : [vm.getSourceForID(this.props.currentSourceID).vault];
-            this.vaultUpdate = updateSearch(vaults);
+            this.vaultUpdate = updateSearch(vaults)
+                .then(() => {
+                    this.props.onStatusChange(null);
+                })
+                .catch(err => {
+                    handleError("Search failed during preparation", err);
+                    this.props.onStatusChange(null);
+                });
         }
         return this.vaultUpdate;
     }

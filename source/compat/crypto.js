@@ -9,9 +9,9 @@ import { ERROR_CODE_DECRYPT_ERROR } from "../global/symbols.js";
 const { CryptoBridge: Crypto } = NativeModules;
 
 const BRIDGE_ERROR_REXP = /^Error:/i;
-const CACHE_UUID_MAX = 5000;
-const CACHE_UUID_MIN = 2500;
-const CACHE_UUID_REFILL = 150;
+const CACHE_UUID_MAX = 10000;
+const CACHE_UUID_MIN = 5000;
+const CACHE_UUID_REFILL = 200;
 const IV_LENGTH = 16; // Bytes
 
 function bufferToHex(buff) {
