@@ -1,5 +1,4 @@
 import { NativeModules, Platform } from "react-native";
-import { EntryFinder } from "../library/buttercupCore";
 import { getEntryPathString } from "./entry";
 
 const { AutoFillBridge } = NativeModules;
@@ -48,12 +47,11 @@ export function addSourceToAutoFill(sourceID, archive) {
     return new Promise((resolve, reject) => {
         if (autoFillAvailable) {
             // We need to flatten all the Archive Entries, then send them to the native module
-            const finder = new EntryFinder([archive]);
-            let entries = {}; // Entries will be keyed by ID
+            const entries = {}; // Entries will be keyed by ID
+            const allEntries = archive.findEntriesByProperty("password", /.*/);
 
             // Create the Map to be sent to the AutoFill store, keyed by credential ID
-            for (let entrySearchInfo of finder._items) {
-                const entry = entrySearchInfo.entry;
+            for (const entry of allEntries) {
                 if (!entry.isInTrash()) {
                     entries[entry.id] = {
                         username: entry.getProperty("username"),

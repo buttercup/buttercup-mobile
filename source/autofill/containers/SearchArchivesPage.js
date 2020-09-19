@@ -2,22 +2,13 @@ import { connect } from "react-redux";
 import SearchArchivesPage from "../../components/SearchArchivesPage";
 import { getEntry } from "../../shared/entry";
 import { completeAutoFillWithEntry } from "../../shared/autofill";
-import { searchAllArchivesForURLs, searchCurrentArchiveForURLs } from "../../shared/entries";
 import { getAutoFillURLs } from "../../selectors/autofill";
-
-const getInitialEntries = state => {
-    const autoFillURLs = getAutoFillURLs(state);
-    if (autoFillURLs.length) {
-        // AutoFill UI Started with a list of URLs to prioritize potential credentials with
-        return searchAllArchivesForURLs(autoFillURLs);
-    }
-    return [];
-};
 
 export default connect(
     (state, ownProps) => ({
-        searchContext: "root",
-        initialEntries: getInitialEntries(state)
+        autofillURLs: getAutoFillURLs(state),
+        currentSourceID: null,
+        searchContext: "root"
     }),
     {
         onEntryPress: (entryID, sourceID) => dispatch => {

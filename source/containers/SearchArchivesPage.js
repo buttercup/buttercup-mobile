@@ -7,8 +7,7 @@ import { getSelectedSourceID } from "../selectors/archiveContents.js";
 export default connect(
     (state, ownProps) => ({
         currentSourceID: getSelectedSourceID(state),
-        searchContext: "root",
-        initialEntries: []
+        searchContext: "root"
     }),
     {
         onEntryPress: (entryID, sourceID) => dispatch => {

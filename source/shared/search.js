@@ -39,19 +39,6 @@ function search(key, method) {
 
 export async function searchUsingTerm(term) {
     return search(term, "searchByTerm");
-    // const sources = {};
-    // const vaultManager = getSharedArchiveManager();
-    // return getSearch()
-    //     .then(search => search.searchByTerm(term))
-    //     .then(results => results.map(result => {
-    //         const source = sources[result.vaultID] || (sources[result.vaultID] = getSourceForVaultID(result.vaultID, vaultManager));
-    //         const entry = source.vault.findEntryByID(result.id);
-    //         return {
-    //             sourceID: source.id,
-    //             groupID: entry.getGroup().id,
-    //             entry
-    //         };
-    //     }));
 }
 
 export async function searchUsingURL(url) {

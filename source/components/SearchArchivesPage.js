@@ -5,11 +5,12 @@ import PropTypes from "prop-types";
 import { CellInput, CellGroup, Cell } from "react-native-cell-components";
 import debounce from "debounce";
 import { withNamespaces } from "react-i18next";
-import { searchUsingTerm, updateSearch } from "../shared/search.js";
+import { searchUsingTerm, searchUsingURL, updateSearch } from "../shared/search.js";
 import { getSharedArchiveManager } from "../library/buttercup.js";
 import i18n from "../shared/i18n";
 import SearchResult from "./SearchResult";
 import EmptyView from "./EmptyView.js";
+import { handleError } from "../global/exceptions.js";
 
 const styles = StyleSheet.create({
     container: {
@@ -23,15 +24,16 @@ class SearchArchives extends PureComponent {
     };
 
     static propTypes = {
+        autofillURLs: PropTypes.arrayOf(PropTypes.string),
         currentSourceID: PropTypes.string,
         searchContext: PropTypes.oneOf(["root", "archive"]),
-        initialEntries: PropTypes.arrayOf(PropTypes.object).isRequired,
         onEntryPress: PropTypes.func.isRequired
     };
 
     focusSubscription = null;
 
     state = {
+        autofillURLs: null,
         entries: [],
         searchTerm: "",
         selectedItemIndex: -1
@@ -40,16 +42,7 @@ class SearchArchives extends PureComponent {
     vaultUpdate = null;
 
     changeInput = debounce(function(text) {
-        // const searchWithTerm =
-        //     this.props.searchContext === "root" ? searchAllArchives : searchCurrentArchive;
-        if (!this.vaultUpdate) {
-            const vm = getSharedArchiveManager();
-            const vaults =
-                this.props.searchContext === "root"
-                    ? vm.unlockedSources.map(source => source.vault)
-                    : [vm.getSourceForID(this.props.currentSourceID).vault];
-            this.vaultUpdate = updateSearch(vaults);
-        }
+        this.updateVaults();
         this.setState(
             {
                 searchTerm: text,
@@ -63,18 +56,35 @@ class SearchArchives extends PureComponent {
                     .then(entries => {
                         this.setState({ entries });
                     })
-            // searchWithTerm(this.state.searchTerm).then(entries => {
-            //     this.setState({
-            //         entries: this.state.searchTerm ? entries : []
-            //     });
-            // })
         );
     }, 250);
+
+    checkAutofillURLs() {
+        if (Array.isArray(this.props.autofillURLs) && this.state.autofillURLs === null) {
+            this.setState({ autofillURLs: [...this.props.autofillURLs] }, () => {
+                this.updateVaults()
+                    .then(() =>
+                        this.state.autofillURLs[0] ? searchUsingURL(this.state.autofillURLs[0]) : []
+                    )
+                    .then(entries => {
+                        this.setState({ entries });
+                    })
+                    .catch(err => {
+                        handleError("Failed preparing search", err);
+                    });
+            });
+        }
+    }
+
+    componentDidUpdate() {
+        this.checkAutofillURLs();
+    }
 
     componentDidMount() {
         this.focusSubscription = this.props.navigation.addListener("didFocus", payload => {
             this.focus();
         });
+        this.checkAutofillURLs();
     }
 
     componentWillUnmount() {
@@ -90,20 +100,9 @@ class SearchArchives extends PureComponent {
     renderSearchResults() {
         return (
             <Choose>
-                <When
-                    condition={
-                        this.state.entries.length > 0 || this.props.initialEntries.length > 0
-                    }
-                >
+                <When condition={this.state.entries.length > 0}>
                     <CellGroup>
-                        <For
-                            each="result"
-                            of={
-                                this.state.entries.length
-                                    ? this.state.entries
-                                    : this.props.initialEntries
-                            }
-                        >
+                        <For each="result" of={this.state.entries}>
                             <SearchResult
                                 key={result.entry.id}
                                 sourceID={result.sourceID}
@@ -142,6 +141,18 @@ class SearchArchives extends PureComponent {
                 </ScrollView>
             </View>
         );
+    }
+
+    updateVaults() {
+        if (!this.vaultUpdate) {
+            const vm = getSharedArchiveManager();
+            const vaults =
+                this.props.searchContext === "root"
+                    ? vm.unlockedSources.map(source => source.vault)
+                    : [vm.getSourceForID(this.props.currentSourceID).vault];
+            this.vaultUpdate = updateSearch(vaults);
+        }
+        return this.vaultUpdate;
     }
 }
 
