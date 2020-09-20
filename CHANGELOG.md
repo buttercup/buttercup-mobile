@@ -1,5 +1,14 @@
 # Buttercup Mobile Changelog
 
+## v1.16.0
+_2020-09-19_
+
+ * Buttercup core v5 integration
+   * Format B support
+ * **Bugfix**:
+   * ([#247](https://github.com/buttercup/buttercup-mobile/issues/247)) Search returns no results
+   * Autofill would crash with large vaults (auto unlocking all)
+
 ## v1.15.1
 _2020-08-19_
 
