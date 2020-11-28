@@ -120,6 +120,8 @@
 		C26F52BE1F5736CE000EB570 /* BCHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCHelpers.h; sourceTree = "<group>"; };
 		C26F52BF1F5736CE000EB570 /* BCHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHelpers.m; sourceTree = "<group>"; };
 		C26F52DD1F5739B6000EB570 /* BCHelpersTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHelpersTests.m; sourceTree = "<group>"; };
+		C2D9656A2572BCBC006CB04E /* Buttercup-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Buttercup-Bridging-Header.h"; sourceTree = "<group>"; };
+		C2D9656B2572BCBC006CB04E /* BCAutoFillExtension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BCAutoFillExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		C2F3488920FB5463000EC30D /* Crypto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Crypto.h; sourceTree = "<group>"; };
 		C2F3488A20FB5463000EC30D /* Crypto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Crypto.m; sourceTree = "<group>"; };
 		C2F3488C20FB7EEA000EC30D /* CryptoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CryptoTests.m; sourceTree = "<group>"; };
@@ -200,6 +202,8 @@
 				9E4418DB21E0215500CA5E79 /* AutoFillBridge.m */,
 				9E44190921E0426C00CA5E79 /* AutoFillHelpers.h */,
 				9E44190A21E042A000CA5E79 /* AutoFillHelpers.m */,
+				C2D9656A2572BCBC006CB04E /* Buttercup-Bridging-Header.h */,
+				C2D9656B2572BCBC006CB04E /* BCAutoFillExtension-Bridging-Header.h */,
 			);
 			name = Buttercup;
 			sourceTree = "<group>";
@@ -389,6 +393,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 9D8F4J769D;
+						LastSwiftMigration = 1200;
 						SystemCapabilities = {
 							com.apple.AutoFillCredentialProvider = {
 								enabled = 1;
@@ -398,6 +403,7 @@
 					9E1360C721DC420E00EE48B0 = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = 9D8F4J769D;
+						LastSwiftMigration = 1200;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -829,7 +835,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 115A5BB90E18C8A456AA6EA1 /* Pods-Buttercup-ButtercupTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -848,7 +853,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AD458CB3E088FC4AD72262DF /* Pods-Buttercup-ButtercupTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
@@ -864,9 +868,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0F134F7A3D87D46A7B12F74D /* Pods-Buttercup.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 48;
@@ -882,6 +886,9 @@
 				MARKETING_VERSION = 1.16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile;
 				PRODUCT_NAME = Buttercup;
+				SWIFT_OBJC_BRIDGING_HEADER = "Buttercup-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -890,9 +897,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A7B6E0EDDD3EF8E9CEB01D4A /* Pods-Buttercup.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Buttercup/Buttercup.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 48;
@@ -907,6 +914,8 @@
 				MARKETING_VERSION = 1.16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile;
 				PRODUCT_NAME = Buttercup;
+				SWIFT_OBJC_BRIDGING_HEADER = "Buttercup-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1024,6 +1033,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1052,6 +1062,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile.bcautofillextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "BCAutoFillExtension-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1064,6 +1077,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
@@ -1092,6 +1106,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = pw.buttercup.mobile.bcautofillextension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "BCAutoFillExtension-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
