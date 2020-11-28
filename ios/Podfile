@@ -7,6 +7,7 @@ def shared_pods
 end
 
 target 'Buttercup' do
+  config = use_native_modules!
   shared_pods
 
   target 'ButtercupTests' do
@@ -14,7 +15,6 @@ target 'Buttercup' do
   end
 
   use_react_native!(:path => config["reactNativePath"])
-  use_native_modules!
 
   # Enables Flipper.
   #
@@ -23,20 +23,15 @@ target 'Buttercup' do
   use_flipper!
   post_install do |installer|
     flipper_post_install(installer)
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
+      end
+    end
   end
 end
 
 target 'BCAutoFillExtension' do
   use_native_modules!
-
   shared_pods
-end
-
-
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
-    end
-  end
 end
