@@ -45,8 +45,10 @@
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.5.0",
+    "react-native-secure-storage": "^0.1.2",
     "react-native-svg": "^12.1.1",
     "react-native-toast-message": "^1.4.9",
+    "react-native-touch-id": "^4.4.1",
     "react-native-uuid": "^2.0.1",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.4"

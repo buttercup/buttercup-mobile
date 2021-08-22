@@ -356,7 +356,11 @@ PODS:
   - RNScreens (3.5.0):
     - React-Core
     - React-RCTImage
+  - RNSecureStorage (0.1.2):
+    - React
   - RNSVG (12.1.1):
+    - React
+  - TouchID (4.4.1):
     - React
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -417,7 +421,9 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSecureStorage (from `../node_modules/react-native-secure-storage`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - TouchID (from `../node_modules/react-native-touch-id`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -502,8 +508,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSecureStorage:
+    :path: "../node_modules/react-native-secure-storage"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  TouchID:
+    :path: "../node_modules/react-native-touch-id"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -552,7 +562,9 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
   RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
+  RNSecureStorage: 24d433f7673a0daade43689de805933a70641731
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
