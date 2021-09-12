@@ -6,7 +6,7 @@ import { CURRENT_SOURCE } from "../../state/vault";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
-import { disableBiometicsForSource, enableBiometricsForSource } from "../../services/biometrics";
+import { authenticateBiometrics, disableBiometicsForSource, enableBiometricsForSource } from "../../services/biometrics";
 import { verifySourcePassword } from "../../services/buttercup";
 import { TextPrompt } from "../prompts/TextPrompt";
 
@@ -83,13 +83,26 @@ export function VaultSettingsScreen({ navigation }) {
                 notifyError("Failed enabling biometrics", err.message);
             });
     }, [currentSourceState.get()]);
+    const handleBiometricsAuthentication = useCallback(() => {
+        authenticateBiometrics()
+            .then(succeeded => {
+                if (!succeeded) {
+                    throw new Error("Biometrics not available");
+                }
+                setVerifyingBiometricsPassword(true);
+            })
+            .catch(err => {
+                console.error(err);
+                notifyError("Failed validating biometrics", err.message);
+            });
+    }, []);
     const handleBiometricsStateChange = useCallback((isChecked: boolean) => {
         if (isChecked) {
-            setVerifyingBiometricsPassword(true);
+            handleBiometricsAuthentication();
         } else {
             handleDisablingBiometrics();
         }
-    }, [handleDisablingBiometrics, handleEnablingBiometrics]);
+    }, [handleDisablingBiometrics]);
     // **
     // ** Render
     // **

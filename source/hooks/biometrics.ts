@@ -23,13 +23,14 @@ export function useBiometricsAvailable(): boolean {
     return available;
 }
 
-export function useBiometricsEnabledForSource(sourceID: VaultSourceID): boolean {
+export function useBiometricsEnabledForSource(sourceID?: VaultSourceID): boolean {
     const [enabled, setEnabled] = useState(false);
     const ee = useMemo(getBiometricEvents, []);
     const handleBiometricsEvent = useCallback(event => {
         setEnabled(event.state === "enabled");
     }, []);
     useEffect(() => {
+        if (!sourceID) return;
         let mounted = true;
         ee.on(`biometrics-changed:${sourceID}`, handleBiometricsEvent);
         biometicsEnabledForSource(sourceID)

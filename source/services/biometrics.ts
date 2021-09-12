@@ -2,6 +2,7 @@ import EventEmitter from "eventemitter3";
 import TouchID from "react-native-touch-id";
 import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
 import { VaultSourceID } from "buttercup";
+import { BIOMETRICS_ERROR_NOT_ENROLLED } from "../symbols";
 
 interface KeychainCredentials {
     [sourceID: string]: string;
@@ -17,6 +18,21 @@ const SECURE_STORAGE_CONFIG = {
     accessGroup: "group.pw.buttercup.mobile" // So that the Keychain is available in the AutoFill Extension
 };
 const TOUCH_UNLOCK_CRED_KEY = "@@touchunlock";
+
+export async function authenticateBiometrics(): Promise<boolean> {
+    try {
+        await TouchID.authenticate("To unlock the selected vault", {
+            passcodeFallback: false,
+            unifiedErrors: true
+        });
+        return true;
+    } catch (err) {
+        if (err.code === BIOMETRICS_ERROR_NOT_ENROLLED) {
+            return false;
+        }
+        throw err;
+    }
+}
 
 export async function biometricsAvailable(): Promise<boolean> {
     try {
@@ -49,6 +65,11 @@ async function getBiometricCredentials(): Promise<KeychainCredentials> {
     return typeof keychainCreds === "string" && keychainCreds.length > 0
         ? JSON.parse(keychainCreds)
         : {};
+}
+
+export async function getBiometricCredentialsForSource(sourceID: VaultSourceID): Promise<string> {
+    const creds = await getBiometricCredentials();
+    return creds[sourceID] || null;
 }
 
 export function getBiometricEvents(): EventEmitter {

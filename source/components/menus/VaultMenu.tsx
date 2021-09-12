@@ -1,14 +1,16 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { Button, Card, Layout, Text, ViewPager } from "@ui-kitten/components";
 import Dots from "react-native-dots-pagination";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { useVaults } from "../../hooks/buttercup";
+import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
 import { notifyError } from "../../library/notifications";
 import { getVault, unlockSourceByID } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { storeCredentialsForVault } from "../../services/intermediateCredentials";
+import { authenticateBiometrics, getBiometricCredentialsForSource } from "../../services/biometrics";
 import { VaultDetails } from "../../types";
 
 const TUMBLEWEED_IMAGE = require("../../../resources/images/tumbleweed-512.png");
@@ -71,24 +73,16 @@ export function VaultMenu(props: VaultMenuProps) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const vaults: Array<VaultDetails> = useVaults();
     const [unlockVaultTarget, setUnlockVaultTarget] = useState<VaultSourceID>(null);
+    const biometricsEnabled = useBiometricsAvailable();
+    const vaultTargetHasBiometrics = useBiometricsEnabledForSource(vaults.length > 0 ? vaults[selectedIndex].id : null);
     const handlePageSelect = useCallback(index => {
         setSelectedIndex(index);
     }, []);
-    const handleVaultPress = useCallback(
-        (vault: VaultDetails) => {
-            if (vault.state === VaultSourceStatus.Unlocked) {
-                onVaultOpen(vault.id);
-            } else if (vault.state === VaultSourceStatus.Locked) {
-                setUnlockVaultTarget(vault.id);
-            }
-        },
-        [onVaultOpen]
-    );
     const handleAddVaultPress = useCallback(() => {
         navigation.navigate("AddVault");
     }, [navigation]);
-    const handleUnlockPromptComplete = useCallback((password: string) => {
-        const sourceID = unlockVaultTarget;
+    const handleUnlockPromptComplete = useCallback((password: string, vaultTargetOverride: VaultSourceID = null) => {
+        const sourceID = vaultTargetOverride || unlockVaultTarget;
         setUnlockVaultTarget(null);
         setBusyState("Unlocking vault");
         unlockSourceByID(sourceID, password)
@@ -108,6 +102,33 @@ export function VaultMenu(props: VaultMenuProps) {
                 setUnlockVaultTarget(sourceID);
             });
     }, [onVaultOpen, unlockVaultTarget]);
+    const handleVaultPress = useCallback(
+        (vault: VaultDetails) => {
+            if (vault.state === VaultSourceStatus.Unlocked) {
+                onVaultOpen(vault.id);
+                return;
+            }
+            if (!biometricsEnabled || !vaultTargetHasBiometrics) {
+                setUnlockVaultTarget(vault.id);
+                return;
+            }
+            authenticateBiometrics()
+                .then(succeeded => {
+                    if (!succeeded) {
+                        setUnlockVaultTarget(vault.id);
+                        return;
+                    }
+                    return getBiometricCredentialsForSource(vault.id);
+                })
+                .then(password => {
+                    handleUnlockPromptComplete(password, vault.id);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        },
+        [biometricsEnabled, handleUnlockPromptComplete, onVaultOpen, vaultTargetHasBiometrics]
+    );
     return (
         <SafeAreaView style={{ flex: 1 }}>
             {vaults.length > 0 && (
