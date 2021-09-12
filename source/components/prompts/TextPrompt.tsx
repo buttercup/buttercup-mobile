@@ -77,16 +77,15 @@ function ModalContent(props: TextPromptProps) {
             >
                 {submitText}
             </Button>
-            <Button
+            {cancelable && (<Button
                 appearance="ghost"
-                disabled={cancelable}
                 onPress={onCancel}
                 size="small"
                 status="basic"
                 style={styles.cancelButton}
             >
                 {cancelText}
-            </Button>
+            </Button>)}
         </View>
     ), [cancelable, cancelText, handleSubmission, onCancel, onSubmit, prompt, submitText, value]);
     return (

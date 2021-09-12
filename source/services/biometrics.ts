@@ -1,11 +1,13 @@
+import EventEmitter from "eventemitter3";
 import TouchID from "react-native-touch-id";
 import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
 import { VaultSourceID } from "buttercup";
-// import { notifyError, notifySuccess } from "../library/notifications";
 
 interface KeychainCredentials {
     [sourceID: string]: string;
 }
+
+let __ee: EventEmitter = null;
 
 const SECURE_STORAGE_CONFIG = {
     accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
@@ -16,7 +18,7 @@ const SECURE_STORAGE_CONFIG = {
 };
 const TOUCH_UNLOCK_CRED_KEY = "@@touchunlock";
 
-export async function biometricsAvailable(): Promise<Boolean> {
+export async function biometricsAvailable(): Promise<boolean> {
     try {
         const supportCode = await TouchID.isSupported();
         return supportCode === "FaceID" || supportCode === "TouchID" || supportCode === true;
@@ -25,7 +27,7 @@ export async function biometricsAvailable(): Promise<Boolean> {
     }
 }
 
-export async function biometicsEnabledForSource(sourceID: VaultSourceID): Promise<Boolean> {
+export async function biometicsEnabledForSource(sourceID: VaultSourceID): Promise<boolean> {
     const keychainCreds = await getBiometricCredentials();
     return keychainCreds.hasOwnProperty(sourceID);
 }
@@ -34,12 +36,12 @@ export async function disableBiometicsForSource(sourceID: VaultSourceID): Promis
     const creds = await getBiometricCredentials();
     delete creds[sourceID];
     await setBiometricCredentials(creds);
-    // @todo notify
+    getBiometricEvents().emit(`biometrics-changed:${sourceID}`, { state: "disabled" });
 }
 
 export async function enableBiometricsForSource(sourceID: VaultSourceID, password: string): Promise<void> {
     await setSourcePassword(sourceID, password);
-    // @todo notify
+    getBiometricEvents().emit(`biometrics-changed:${sourceID}`, { state: "enabled" });
 }
 
 async function getBiometricCredentials(): Promise<KeychainCredentials> {
@@ -49,8 +51,15 @@ async function getBiometricCredentials(): Promise<KeychainCredentials> {
         : {};
 }
 
+export function getBiometricEvents(): EventEmitter {
+    if (!__ee) {
+        __ee = new EventEmitter();
+    }
+    return __ee;
+}
+
 async function setBiometricCredentials(credentials: KeychainCredentials) {
-    SecureStorage.setItem(TOUCH_UNLOCK_CRED_KEY, JSON.stringify(credentials), SECURE_STORAGE_CONFIG);
+    await SecureStorage.setItem(TOUCH_UNLOCK_CRED_KEY, JSON.stringify(credentials), SECURE_STORAGE_CONFIG);
 }
 
 async function setSourcePassword(sourceID: VaultSourceID, password: string): Promise<void> {

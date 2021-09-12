@@ -13,6 +13,7 @@ import {
 import { VaultContentsScreen } from "../screens/VaultContentsScreen";
 import { WalletScreen } from "../screens/WalletScreen";
 import { CodesScreen } from "../screens/CodesScreen";
+import { VaultSettingsScreen } from "../screens/VaultSettingsScreen";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -26,12 +27,6 @@ const WalletIcon = props => <Icon {...props} name="credit-card-outline" />;
 const SearchScreen = () => (
     <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text category="h1">SEARCH</Text>
-    </Layout>
-);
-
-const SettingsScreen = () => (
-    <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text category="h1">SETTINGS</Text>
     </Layout>
 );
 
@@ -54,7 +49,7 @@ const TabNavigator = () => (
         <Screen name="Groups" component={VaultContentsScreen} />
         <Screen name="Wallet" component={WalletScreen} />
         <Screen name="Codes" component={CodesScreen} />
-        <Screen name="Settings" component={SettingsScreen} />
+        <Screen name="Settings" component={VaultSettingsScreen} />
     </Navigator>
 );
 

@@ -142,6 +142,8 @@ export function VaultMenu(props: VaultMenuProps) {
                 </Layout>
             )}
             <TextPrompt
+                cancelable
+                onCancel={() => setUnlockVaultTarget(null)}
                 onSubmit={handleUnlockPromptComplete}
                 password
                 prompt="Vault password"

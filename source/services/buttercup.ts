@@ -118,3 +118,9 @@ export async function unlockSourceByID(sourceID: VaultSourceID, password: string
     }
     await source.unlock(Credentials.fromPassword(password));
 }
+
+export async function verifySourcePassword(sourceID: VaultSourceID, password: string): Promise<boolean> {
+    const vaultMgr =  getVaultManager();
+    const source = vaultMgr.getSourceForID(sourceID);
+    return source.testMasterPassword(password);
+}
