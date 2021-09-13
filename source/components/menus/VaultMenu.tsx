@@ -118,10 +118,9 @@ export function VaultMenu(props: VaultMenuProps) {
                         setUnlockVaultTarget(vault.id);
                         return;
                     }
-                    return getBiometricCredentialsForSource(vault.id);
-                })
-                .then(password => {
-                    handleUnlockPromptComplete(password, vault.id);
+                    return getBiometricCredentialsForSource(vault.id).then(password => {
+                        handleUnlockPromptComplete(password, vault.id);
+                    });
                 })
                 .catch(err => {
                     console.error(err);
