@@ -46,6 +46,7 @@
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.5.0",
     "react-native-secure-storage": "^0.1.2",
+    "react-native-shared-group-preferences": "^1.1.23",
     "react-native-svg": "^12.1.1",
     "react-native-toast-message": "^1.4.9",
     "react-native-touch-id": "^4.4.1",

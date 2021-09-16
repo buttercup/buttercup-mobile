@@ -73,7 +73,7 @@ export function getEntryFacade(sourceID: VaultSourceID, entryID: EntryID): Entry
 }
 
 export function getVault(sourceID: VaultSourceID): Vault {
-    return getVaultManager().getSourceForID(sourceID).vault;
+    return getVaultSource(sourceID).vault;
 }
 
 export function getVaultManager(): VaultManager {
@@ -86,6 +86,10 @@ export function getVaultManager(): VaultManager {
         });
     }
     return __mgr;
+}
+
+export function getVaultSource(sourceID: VaultSourceID): VaultSource {
+    return getVaultManager().getSourceForID(sourceID);
 }
 
 export async function initialise() {

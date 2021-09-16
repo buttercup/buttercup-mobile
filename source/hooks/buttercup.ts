@@ -41,10 +41,11 @@ export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string 
     return contents;
 }
 
-export function useVaults(): Array<VaultDetails> {
-    const vaultManager = useMemo(getVaultManager, []);
+export function useVaults(vaultsOveride?: Array<VaultDetails>): Array<VaultDetails> {
     const [vaults, setVaults] = useState<Array<VaultDetails>>([]);
     const updateCallback = useCallback(() => {
+        if (Array.isArray(vaultsOveride)) return;
+        const vaultManager = getVaultManager();
         setVaults(vaultManager.sources.map(source => ({
             id: source.id,
             name: source.name,
@@ -52,13 +53,18 @@ export function useVaults(): Array<VaultDetails> {
             order: source.order,
             type: source.type
         })));
-    }, [vaultManager]);
+    }, [vaultsOveride]);
     useEffect(() => {
+        if (Array.isArray(vaultsOveride)) {
+            setVaults(vaultsOveride);
+            return;
+        }
+        const vaultManager = getVaultManager();
         vaultManager.on("sourcesUpdated", updateCallback);
         updateCallback();
         return () => {
             vaultManager.off("sourcesUpdated", updateCallback);
         };
-    }, [vaultManager]);
+    }, [vaultsOveride]);
     return vaults;
 }

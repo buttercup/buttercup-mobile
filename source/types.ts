@@ -1,4 +1,4 @@
-import { VaultSourceID, VaultSourceStatus } from "buttercup";
+import { EntryID, VaultSourceID, VaultSourceStatus } from "buttercup";
 
 export { FSItem } from "@buttercup/file-interface";
 
@@ -8,6 +8,20 @@ export interface DatasourceConfig {
     path?: string;
     type: string;
     username?: string;
+}
+
+export interface IntermediateEntry {
+    id: EntryID;
+    title: string;
+    username: string;
+    password: string;
+    urls: Array<string>;
+}
+
+export interface IntermediateVault {
+    id: VaultSourceID;
+    name: string;
+    type: string;
 }
 
 export interface VaultContentsItem {

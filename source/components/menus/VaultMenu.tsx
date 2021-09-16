@@ -7,7 +7,7 @@ import { TextPrompt } from "../prompts/TextPrompt";
 import { useVaults } from "../../hooks/buttercup";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
 import { notifyError } from "../../library/notifications";
-import { getVault, unlockSourceByID } from "../../services/buttercup";
+import { getVaultSource, unlockSourceByID } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { storeCredentialsForVault } from "../../services/intermediateCredentials";
 import { authenticateBiometrics, getBiometricCredentialsForSource } from "../../services/biometrics";
@@ -16,8 +16,10 @@ import { VaultDetails } from "../../types";
 const TUMBLEWEED_IMAGE = require("../../../resources/images/tumbleweed-512.png");
 
 export interface VaultMenuProps {
+    handleVaultUnlock?: (sourceID: VaultSourceID, password: string) => Promise<void>;
     navigation: any;
     onVaultOpen?: (sourceID: VaultSourceID) => void;
+    vaultsOverride?: Array<VaultDetails>;
 }
 
 const styles = StyleSheet.create({
@@ -25,7 +27,6 @@ const styles = StyleSheet.create({
         marginTop: 26
     },
     card: {
-        // flex: 1,
         margin: 16
     },
     noVaultContainer: {
@@ -50,6 +51,15 @@ const styles = StyleSheet.create({
     }
 });
 
+async function handleStandardVaultUnlock(sourceID: VaultSourceID, password: string): Promise<void> {
+    setBusyState("Unlocking vault");
+    await unlockSourceByID(sourceID, password);
+    setBusyState("Updating auto-fill");
+    const source = getVaultSource(sourceID);
+    await storeCredentialsForVault(source, password);
+    setBusyState(null);
+}
+
 function VaultCardFooter(props) {
     const { vault } = props;
     return (
@@ -69,9 +79,14 @@ function VaultCardHeader(props) {
 }
 
 export function VaultMenu(props: VaultMenuProps) {
-    const { navigation, onVaultOpen = null } = props;
+    const {
+        handleVaultUnlock = handleStandardVaultUnlock,
+        navigation,
+        onVaultOpen = null,
+        vaultsOverride
+    } = props;
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const vaults: Array<VaultDetails> = useVaults();
+    const vaults: Array<VaultDetails> = useVaults(vaultsOverride);
     const [unlockVaultTarget, setUnlockVaultTarget] = useState<VaultSourceID>(null);
     const biometricsEnabled = useBiometricsAvailable();
     const vaultTargetHasBiometrics = useBiometricsEnabledForSource(vaults.length > 0 ? vaults[selectedIndex].id : null);
@@ -84,15 +99,8 @@ export function VaultMenu(props: VaultMenuProps) {
     const handleUnlockPromptComplete = useCallback((password: string, vaultTargetOverride: VaultSourceID = null) => {
         const sourceID = vaultTargetOverride || unlockVaultTarget;
         setUnlockVaultTarget(null);
-        setBusyState("Unlocking vault");
-        unlockSourceByID(sourceID, password)
+        handleVaultUnlock(sourceID, password)
             .then(() => {
-                setBusyState("Updating auto-fill");
-                const vault = getVault(sourceID);
-                return storeCredentialsForVault(sourceID, vault, password);
-            })
-            .then(() => {
-                setBusyState(null);
                 onVaultOpen(sourceID);
             })
             .catch(err => {
