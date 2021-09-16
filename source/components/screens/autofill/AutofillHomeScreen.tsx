@@ -2,23 +2,23 @@ import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import {
     Avatar,
-    Button,
     Divider,
     Icon,
     Layout,
-    MenuItem,
-    OverflowMenu,
     TopNavigation,
+    TopNavigationAction,
     Text
 } from "@ui-kitten/components";
 import { VaultSourceID } from "buttercup";
 import { VaultMenu } from "../../menus/VaultMenu";
 import { getCredentialsForVault, getStoredVaults } from "../../../services/intermediateCredentials";
+import { AutoFillBridge } from "../../../services/autofillBridge";
 import { CURRENT_SOURCE } from "../../../state/vault";
 import { LOGIN_ENTRIES } from "../../../state/autofill";
 import { VaultDetails } from "../../../types";
 
 const BCUP_ICON = require("../../../../resources/images/bcup-256.png");
+const CancelIcon = props => <Icon {...props} name="close-square-outline" />;
 
 const styles = StyleSheet.create({
     header: {
@@ -38,7 +38,6 @@ export function AutofillHomeScreen({ navigation }) {
     const handleVaultOpen = useCallback(
         (sourceID: VaultSourceID) => {
             CURRENT_SOURCE.set(sourceID);
-            // getCredentialsForVault(sourceID, "test");
             navigation.navigate("Items");
         },
         [navigation]
@@ -48,8 +47,10 @@ export function AutofillHomeScreen({ navigation }) {
         LOGIN_ENTRIES.set(credentials);
         CURRENT_SOURCE.set(sourceID);
         navigation.navigate("Items");
-        // console.log("UNLOCK", sourceID, password);
     }, [navigation]);
+    const cancelAutoFill = useCallback(() => {
+        AutoFillBridge.cancelAutoFill();
+    }, []);
     useEffect(() => {
         let mounted = true;
         getStoredVaults().then(storedVaults => {
@@ -60,6 +61,7 @@ export function AutofillHomeScreen({ navigation }) {
             mounted = false;
         };
     }, []);
+    const CancelAction = () => <TopNavigationAction icon={CancelIcon} onPress={cancelAutoFill} />;
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation
@@ -77,6 +79,7 @@ export function AutofillHomeScreen({ navigation }) {
                     </Layout>
                 )}
                 alignment="center"
+                accessoryRight={CancelAction}
             />
             <Divider />
             <Layout style={{ flex: 1 }}>
