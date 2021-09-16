@@ -63,8 +63,18 @@ RCT_EXPORT_METHOD(getAutoFillEnabledSources: (RCTPromiseResolveBlock)resolve rej
     [autoFillEntries enumerateKeysAndObjectsUsingBlock:^(NSString* sourceID, NSDictionary* childEntries, BOOL* outerStop) {
         [autoFillSources addObject:sourceID];
     }];
-    
+
     resolve(autoFillSources);
+}
+
+/**
+ * Retrieve a list of entries for a source
+ */
+RCT_EXPORT_METHOD(getEntriesForSourceID:(NSString *)sourceID resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSDictionary *entriesLookup = [AutoFillHelpers getAutoFillEntries];
+    NSDictionary *entries = [entriesLookup objectForKey:sourceID];
+    resolve(entries);
 }
 
 /**

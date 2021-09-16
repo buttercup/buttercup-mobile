@@ -15,6 +15,7 @@ export interface IntermediateEntry {
     title: string;
     username: string;
     password: string;
+    entryPath: string;
     urls: Array<string>;
 }
 
@@ -22,7 +23,10 @@ export interface IntermediateVault {
     id: VaultSourceID;
     name: string;
     type: string;
+    authToken?: string;
 }
+
+export type StoredAutofillEntries = Record<EntryID, IntermediateEntry>;
 
 export interface VaultContentsItem {
     id: string;

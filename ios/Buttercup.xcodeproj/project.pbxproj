@@ -32,6 +32,8 @@
 		C2DF575026F25A2A005AA279 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D367026BC7A7600BD5D76 /* BCHelpers.m */; };
 		C2DF575426F25A2D005AA279 /* BCDerivation.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D366C26BC7A7600BD5D76 /* BCDerivation.m */; };
 		C2DF575826F25A31005AA279 /* BCCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D366F26BC7A7600BD5D76 /* BCCrypto.m */; };
+		C2DF575C26F3AFFF005AA279 /* AutoFillBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C2DF539526EFC80C005AA279 /* AutoFillBridge.m */; };
+		C2DF576026F3B00A005AA279 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C2DF539B26EFC8D5005AA279 /* AutoFillHelpers.m */; };
 		C6BE03D2F10DE2EDCA2D6DA9 /* libPods-BCAutoFillExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C84623DF5F1249F4748F822 /* libPods-BCAutoFillExtension.a */; };
 		E458CEFA27676D46704B1125 /* libPods-Buttercup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41DF32BA4EC54C9B7F878B6E /* libPods-Buttercup.a */; };
 /* End PBXBuildFile section */
@@ -600,10 +602,12 @@
 			files = (
 				C28D367426BC7A7600BD5D76 /* BCDerivation.m in Sources */,
 				C28D367A26BC7A7600BD5D76 /* CryptoBridge.m in Sources */,
+				C2DF575C26F3AFFF005AA279 /* AutoFillBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				C28D367826BC7A7600BD5D76 /* BCHelpers.m in Sources */,
 				C28D367626BC7A7600BD5D76 /* BCCrypto.m in Sources */,
+				C2DF576026F3B00A005AA279 /* AutoFillHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
