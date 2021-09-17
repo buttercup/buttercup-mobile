@@ -6,7 +6,6 @@ import { IntermediateEntry, IntermediateVault, StoredAutofillEntries, VaultDetai
 
 const AUTOFILLABLE_ENTRY_TYPES = [EntryType.Login, EntryType.Website];
 const INTERMEDIATE_ENCRYPTION_ROUNDS = 10000;
-// const STORAGE_PREFIX_ENTRIES = "intermediate:autofill:entries:";
 const STORAGE_PREFIX_SOURCES = "intermediate:autofill:sources";
 
 export async function getCredentialsForVault(sourceID: VaultSourceID, password: string): Promise<Array<IntermediateEntry>> {

@@ -9,7 +9,7 @@ import {
     TopNavigationAction,
     Text
 } from "@ui-kitten/components";
-import { VaultSourceID } from "buttercup";
+import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { VaultMenu } from "../../menus/VaultMenu";
 import { getCredentialsForVault, getStoredVaults } from "../../../services/intermediateCredentials";
 import { AutoFillBridge } from "../../../services/autofillBridge";
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
 
 export function AutofillHomeScreen({ navigation }) {
     const [vaults, setVaults] = useState<Array<VaultDetails>>([]);
+    const [unlockedVaults, setUnlockedVaults] = useState<Array<VaultSourceID>>([]);
     const handleVaultOpen = useCallback(
         (sourceID: VaultSourceID) => {
             CURRENT_SOURCE.set(sourceID);
@@ -44,10 +45,14 @@ export function AutofillHomeScreen({ navigation }) {
     );
     const handleVaultUnlock = useCallback(async (sourceID: VaultSourceID, password: string) => {
         const credentials = await getCredentialsForVault(sourceID, password);
-        LOGIN_ENTRIES.set(credentials);
+        LOGIN_ENTRIES.set({
+            ...LOGIN_ENTRIES.get(),
+            [sourceID]: credentials
+        });
         CURRENT_SOURCE.set(sourceID);
+        setUnlockedVaults([...unlockedVaults, sourceID]);
         navigation.navigate("Items");
-    }, [navigation]);
+    }, [navigation, unlockedVaults]);
     const cancelAutoFill = useCallback(() => {
         AutoFillBridge.cancelAutoFill();
     }, []);
@@ -55,12 +60,15 @@ export function AutofillHomeScreen({ navigation }) {
         let mounted = true;
         getStoredVaults().then(storedVaults => {
             if (!mounted) return;
-            setVaults(storedVaults);
+            setVaults(storedVaults.map(vault => ({
+                ...vault,
+                state: unlockedVaults.includes(vault.id) ? VaultSourceStatus.Unlocked : VaultSourceStatus.Locked
+            })));
         });
         return () => {
             mounted = false;
         };
-    }, []);
+    }, [unlockedVaults]);
     const CancelAction = () => <TopNavigationAction icon={CancelIcon} onPress={cancelAutoFill} />;
     return (
         <SafeAreaView style={{ flex: 1 }}>

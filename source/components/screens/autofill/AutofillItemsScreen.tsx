@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { Icon, Layout, List, ListItem, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { AutoFillBridge } from "../../../services/autofillBridge";
+import { CURRENT_SOURCE } from "../../../state/vault";
 import { LOGIN_ENTRIES } from "../../../state/autofill";
 import { IntermediateEntry } from "../../../types";
 
@@ -63,8 +64,9 @@ function renderItemIcon(props, icon) {
 }
 
 export function AutofillItemsScreen({ navigation }) {
+    const currentSourceState = useHookState(CURRENT_SOURCE);
     const loginItemsState = useHookState(LOGIN_ENTRIES);
-    const loginItems = loginItemsState.get() as Array<IntermediateEntry>;
+    const loginItems = loginItemsState.get()[currentSourceState.get()] as Array<IntermediateEntry>;
     const preparedContents = useMemo(() => prepareListContents(loginItems), [loginItems]);
     const renderWrapper = useMemo(() =>
         renderItem,
