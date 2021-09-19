@@ -7,6 +7,7 @@ import {
     Modal,
     Text
 } from "@ui-kitten/components";
+import { useKeyboardSize } from "../../hooks/keyboard";
 
 interface TextPromptProps {
     cancelable?: boolean;
@@ -59,6 +60,7 @@ function ModalContent(props: TextPromptProps) {
         submitText = "Submit"
     } = props;
     const [value, setValue] = useState("");
+    const keyboardSize = useKeyboardSize();
     const handleSubmission = useCallback(() => {
         onSubmit(value);
         setValue("");
@@ -93,7 +95,12 @@ function ModalContent(props: TextPromptProps) {
             disabled
             footer={renderFooter}
             header={renderHeader}
-            style={styles.card}
+            style={[
+                styles.card,
+                {
+                    marginBottom: keyboardSize
+                }
+            ]}
         >
             <Input
                 autoCapitalize="none"
