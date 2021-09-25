@@ -6,10 +6,11 @@ import { withStyles } from "@ui-kitten/components";
 import { HomeScreen } from "../screens/HomeScreen";
 import { AboutScreen } from "../screens/AboutScreen";
 import { AddVaultScreen } from "../screens/AddVaultScreen";
-import { VaultNavigator } from "./VaultNavigator";
 import { VaultContentsScreen } from "../screens/VaultContentsScreen";
 import { EntryDetailsScreen } from "../screens/EntryDetailsScreen";
 import { EditEntryScreen } from "../screens/EditEntryScreen";
+import { CoverScreen } from "../screens/CoverScreen";
+import { VaultNavigator } from "./VaultNavigator";
 import { rootNavigationRef } from "../../state/navigation";
 
 const { Navigator, Screen } = createStackNavigator();
@@ -24,6 +25,8 @@ const HomeNavigator = () => (
         <Screen name="VaultContents" component={VaultContentsScreen} />
         <Screen name="EntryDetails" component={EntryDetailsScreen} />
         <Screen name="EditEntry" component={EditEntryScreen} />
+        {/* */}
+        <Screen name="Cover" component={CoverScreen} />
     </Navigator>
 );
 

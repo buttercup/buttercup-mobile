@@ -52,6 +52,7 @@
     "react-native-touch-id": "^4.4.1",
     "react-native-uuid": "^2.0.1",
     "stream-browserify": "^3.0.0",
+    "use-debounce": "^7.0.0",
     "util": "^0.12.4"
   },
   "devDependencies": {

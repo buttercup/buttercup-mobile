@@ -21,7 +21,6 @@ async function initialise() {
 }
 
 export function StandardApp() {
-    // console.log("AppProps", props);
     const isDarkMode = useColorScheme() === "dark";
     const [initialised, setInitialised] = useState(false);
     useEffect(() => {

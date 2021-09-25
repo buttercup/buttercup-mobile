@@ -1,12 +1,15 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Icon, Layout, List, ListItem, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { useVaultContents } from "../../hooks/buttercup";
 import { CURRENT_SOURCE } from "../../state/vault";
-import { rootNavigationRef } from "../../state/navigation";
+import { navigate } from "../../state/navigation";
 import { VaultContentsItem } from "../../types";
 
+interface RenderInfo {
+    item: VaultContentsItemDisplay;
+}
 interface VaultContentsItemDisplay {
     title: string;
     subtitle: string | null;
@@ -42,8 +45,8 @@ function prepareListContents(items: Array<VaultContentsItem>): Array<VaultConten
     }));
 }
 
-function renderItem(info) {
-    const { item } = info as { item: VaultContentsItemDisplay };
+function renderItem(info: RenderInfo) {
+    const { item } = info;
     return (
         <ListItem
             title={item.title}
@@ -51,7 +54,7 @@ function renderItem(info) {
             accessoryLeft={props => renderItemIcon(props, item.icon)}
             onPress={() => {
                 if (item.sourceItem.type === "group") {
-                    rootNavigationRef.current.navigate(
+                    navigate(
                         "VaultContents",
                         {
                             groupID: item.sourceItem.id
@@ -59,7 +62,7 @@ function renderItem(info) {
                     );
                 } else {
                     // Entry
-                    rootNavigationRef.current.navigate(
+                    navigate(
                         "EntryDetails",
                         {
                             entryID: item.sourceItem.id
@@ -67,7 +70,6 @@ function renderItem(info) {
                     );
                 }
             }}
-            // accessoryRight={renderItemAccessory}
         />
     );
 }
@@ -83,8 +85,8 @@ export function VaultContentsScreen({ navigation, route }) {
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const contents = useVaultContents(currentSourceState.get(), groupID);
     const preparedContents = useMemo(() => prepareListContents(contents), [contents]);
-    const renderWrapper = useMemo(() =>
-        renderItem,
+    const renderWrapper = useCallback(
+        (info: RenderInfo) => renderItem(info),
         []
     );
     const navigateBack = () => {
