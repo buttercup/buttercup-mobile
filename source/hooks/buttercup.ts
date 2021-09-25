@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Entry, EntryFacade, EntryID, Group, Vault, VaultSourceID, createEntryFacade } from "buttercup";
-import { getVault, getVaultManager } from "../services/buttercup";
+import { Entry, EntryFacade, EntryID, Group, Vault, VaultSourceID, createEntryFacade, GroupID } from "buttercup";
+import { getVault, getVaultManager, getVaultSource } from "../services/buttercup";
 import { VaultContentsItem, VaultDetails } from "../types";
 
 function extractItems(vault: Vault, targetGroupID: string = null): Array<VaultContentsItem> {
@@ -35,9 +35,25 @@ export function useEntryFacade(sourceID: VaultSourceID, entryID: EntryID): Entry
     return facade;
 }
 
-export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string = null): Array<VaultContentsItem> {
+export function useGroupTitle(sourceID: VaultSourceID, groupID: GroupID): string | null {
     const vault = useMemo(() => getVault(sourceID), [sourceID]);
-    const contents = useMemo(() => extractItems(vault, targetGroupID), [targetGroupID, vault]);
+    const group = useMemo(() => vault.findGroupByID(groupID), [vault]);
+    return group && group.getTitle() || null;
+}
+
+export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string = null): Array<VaultContentsItem> {
+    const source = useMemo(() => getVaultSource(sourceID), [sourceID]);
+    const [contents, setContents] = useState<Array<VaultContentsItem>>([]);
+    const updateContents = useCallback(() => {
+        setContents(extractItems(source.vault, targetGroupID));
+    }, [source, targetGroupID]);
+    useEffect(() => {
+        updateContents();
+        source.on("updated", updateContents);
+        return () => {
+            source.off("updated", updateContents);
+        };
+    }, [source, updateContents]);
     return contents;
 }
 

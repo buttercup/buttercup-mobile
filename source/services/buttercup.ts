@@ -3,6 +3,7 @@ import {
     Credentials,
     EntryFacade,
     EntryID,
+    GroupID,
     Vault,
     VaultManager,
     VaultSource,
@@ -64,6 +65,22 @@ async function attachVaultManagerWatchers() {
         });
         // await updateSearchCaches(vaultManager.unlockedSources);
     });
+}
+
+export async function createNewGroup(sourceID: VaultSourceID, groupName: string, parentGroupID: GroupID = null): Promise<GroupID> {
+    const source = getVaultManager().getSourceForID(sourceID);
+    let newGroupID: GroupID;
+    if (parentGroupID) {
+        const parentGroup = source.vault.findGroupByID(parentGroupID);
+        if (!parentGroup) {
+            throw new Error(`No group found for ID: ${parentGroup}`);
+        }
+        newGroupID = parentGroup.createGroup(groupName).id;
+    } else {
+        newGroupID = source.vault.createGroup(groupName).id;
+    }
+    await source.save();
+    return newGroupID;
 }
 
 export function getEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {

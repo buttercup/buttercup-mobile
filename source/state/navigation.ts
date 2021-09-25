@@ -1,6 +1,6 @@
 import { NavigationContainerRef } from "@react-navigation/native";
 
-let __rootNavigationElement: NavigationContainerRef = null;
+let __rootNavigationElement: any = null;
 
 export function navigate(target: string, props?: { [key: string]: any }) {
     if (__rootNavigationElement) {
@@ -14,6 +14,6 @@ export function navigateBack() {
     }
 }
 
-export function rootNavigationRef(newNode: NavigationContainerRef) {
+export function rootNavigationRef(newNode: any) {
     __rootNavigationElement = newNode;
 }

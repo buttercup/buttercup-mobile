@@ -54,6 +54,7 @@ function MenuButton(props) {
             appearance="ghost"
             accessoryLeft={MenuIcon}
             onPress={() => setVisible(true)}
+            status="basic"
         />
     );
 
