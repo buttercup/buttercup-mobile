@@ -13,7 +13,7 @@ import { storeCredentialsForVault } from "../../services/intermediateCredentials
 import { authenticateBiometrics, getBiometricCredentialsForSource } from "../../services/biometrics";
 import { VaultDetails } from "../../types";
 
-const TUMBLEWEED_IMAGE = require("../../../resources/images/tumbleweed-512.png");
+const BCUP_BENCH_IMG = require("../../../resources/images/bcup-bench.png");
 
 export interface VaultMenuProps {
     handleVaultUnlock?: (sourceID: VaultSourceID, password: string) => Promise<void>;
@@ -161,7 +161,7 @@ export function VaultMenu(props: VaultMenuProps) {
                 <Layout style={styles.noVaultContainer}>
                     <Image
                         resizeMode="contain"
-                        source={TUMBLEWEED_IMAGE}
+                        source={BCUP_BENCH_IMG}
                         style={styles.tumbleweed}
                     />
                     <Text category="h4" style={styles.noVaultHeading}>No Vaults</Text>
