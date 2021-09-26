@@ -15,9 +15,7 @@ export function AboutScreen({ navigation }) {
     const navigateBack = () => {
         navigation.goBack();
     };
-
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={navigateBack} />;
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation title="About" alignment="center" accessoryLeft={BackAction} />

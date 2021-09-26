@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { FIELD_VALUE_TYPES, EntryID, EntryPropertyType, EntryPropertyValueType, createEntryFacade, createFieldDescriptor, setEntryFacadePropertyValueType } from "buttercup";
+import { FIELD_VALUE_TYPES, EntryID, EntryPropertyType, EntryPropertyValueType, EntryType, createEntryFacade, createFieldDescriptor, setEntryFacadePropertyValueType } from "buttercup";
 import {
     Button,
     Divider,
@@ -146,7 +146,7 @@ function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
 }
 
 export function EditEntryScreen({ navigation, route }) {
-    const { entryID = null, groupID } = route?.params ?? {};
+    const { entryID = null, entryType, groupID } = route?.params ?? {};
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const [entryFacade, setEntryFacade] = useState(null);
     const [changed, setChanged] = useState(false);
@@ -257,11 +257,13 @@ export function EditEntryScreen({ navigation, route }) {
     useEffect(() => {
         if (entryFacade) return;
         if (!entryID) {
-            setEntryFacade(createEntryFacade());
+            setEntryFacade(createEntryFacade(null, {
+                type: entryType || EntryType.Login
+            }));
         } else {
             setEntryFacade(getEntryFacade(currentSourceState.get(), entryID));
         }
-    }, [currentSourceState.get(), entryID]);
+    }, [currentSourceState.get(), entryID, entryType]);
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={handleNavigateBack} />;
     const SaveAction = () => <TopNavigationAction disabled={!changed} icon={SaveIcon} onPress={handleSave} />;
     return (

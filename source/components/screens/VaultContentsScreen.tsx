@@ -2,14 +2,16 @@ import React, { useCallback, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Button, Icon, Layout, List, ListItem, MenuItem, OverflowMenu, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
-import { GroupID } from "buttercup";
+import { EntryType, ENTRY_TYPES, GroupID } from "buttercup";
 import { useGroupTitle, useVaultContents } from "../../hooks/buttercup";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { createNewGroup, deleteGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
+import { getIconForEntryType } from "../../library/buttercup";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
+import { ItemsPrompt, PromptItem } from "../prompts/ItemsPrompt";
 import { VaultContentsItem } from "../../types";
 
 interface RenderInfo {
@@ -92,7 +94,7 @@ function renderItemIcon(props, icon) {
 }
 
 function MenuButton(props) {
-    const { groupID, navigation, onGroupCreate, onGroupDelete } = props;
+    const { onEntryCreate, onGroupCreate, onGroupDelete } = props;
     const [visible, setVisible] = useState(false);
     const onItemSelect = selected => {
         const item = MENU_ITEMS[selected.row];
@@ -100,7 +102,7 @@ function MenuButton(props) {
         if (item.slug === "add-group") {
             onGroupCreate();
         } else if (item.slug === "add-entry") {
-            navigation.push("EditEntry", { entryID: null, groupID });
+            onEntryCreate();
         } else if (item.slug === "delete-group") {
             onGroupDelete();
         }
@@ -142,6 +144,11 @@ function MenuIcon(props) {
 
 export function VaultContentsScreen({ navigation, route }) {
     const { groupID = null } = route?.params ?? {};
+    const entryTypes: Array<PromptItem> = useMemo(() => Object.keys(ENTRY_TYPES).map(typeKey => ({
+        title: ENTRY_TYPES[typeKey].title,
+        slug: ENTRY_TYPES[typeKey].slug,
+        icon: getIconForEntryType(ENTRY_TYPES[typeKey].slug as EntryType)
+    })), []);
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const screenTitle = useGroupTitle(currentSourceState.get(), groupID) || "Contents";
     const deleteTitle = useGroupTitle(currentSourceState.get(), groupID) || "Unknown Group";
@@ -149,6 +156,7 @@ export function VaultContentsScreen({ navigation, route }) {
     const preparedContents = useMemo(() => prepareListContents(contents), [contents]);
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const [promptDeleteGroupID, setPromptDeleteGroupID] = useState<GroupID>(null);
+    const [promptNewEntryType, setPromptNewEntryType] = useState(false);
     const renderWrapper = useCallback(
         (info: RenderInfo) => renderItem(info, groupID, navigation),
         []
@@ -189,6 +197,10 @@ export function VaultContentsScreen({ navigation, route }) {
             setBusyState(null);
         }
     }, [currentSourceState, deleteTitle, groupID, navigation]);
+    const handleNewEntryCreate = useCallback((type: EntryType) => {
+        setPromptNewEntryType(false);
+        navigation.push("EditEntry", { entryID: null, entryType: type, groupID });
+    }, [groupID, navigation]);
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -204,8 +216,7 @@ export function VaultContentsScreen({ navigation, route }) {
                         accessoryRight={props => (
                             <MenuButton
                                 {...props}
-                                groupID={groupID}
-                                navigation={navigation}
+                                onEntryCreate={() => setPromptNewEntryType(true)}
                                 onGroupCreate={() => setPromptGroupCreate(true)}
                                 onGroupDelete={() => setPromptDeleteGroupID(groupID)}
                             />
@@ -237,6 +248,12 @@ export function VaultContentsScreen({ navigation, route }) {
                 prompt={`Remove group '${deleteTitle}'?`}
                 title="Delete Group"
                 visible={!!promptDeleteGroupID}
+            />
+            <ItemsPrompt
+                items={entryTypes}
+                onCancel={() => setPromptNewEntryType(false)}
+                onSelect={(item: PromptItem) => handleNewEntryCreate(item.slug as EntryType)}
+                visible={promptNewEntryType}
             />
         </>
     );

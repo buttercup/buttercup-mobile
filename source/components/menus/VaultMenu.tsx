@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { Button, Card, Layout, Text, ViewPager } from "@ui-kitten/components";

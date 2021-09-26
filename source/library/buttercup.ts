@@ -1,3 +1,4 @@
+import { EntryType } from "buttercup";
 import { deepFreeze } from "./freeze";
 
 interface VaultType {
@@ -35,3 +36,20 @@ const INT_VAULT_TYPES: { [type: string]: VaultType } = {
 };
 
 export const VAULT_TYPES = deepFreeze(INT_VAULT_TYPES);
+
+export function getIconForEntryType(type: EntryType): string {
+    switch (type) {
+        case EntryType.CreditCard:
+            return "credit-card-outline";
+        case EntryType.Login:
+            return "person-done-outline";
+        case EntryType.Website:
+            return "at-outline";
+        case EntryType.Note:
+            return "edit-2-outline";
+        case EntryType.SSHKey:
+            return "external-link-outline";
+        default:
+            return "file-outline";
+    }
+}
