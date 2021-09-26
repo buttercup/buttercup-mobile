@@ -10,7 +10,8 @@ import {
     VaultSourceID,
     VaultSourceStatus,
     consumeEntryFacade,
-    createEntryFacade
+    createEntryFacade,
+    createEntryFromFacade
 } from "buttercup";
 import { initAppEnv } from "./appEnv";
 import { setBusyState } from "../services/busyState";
@@ -129,6 +130,18 @@ export async function saveExistingEntryChanges(sourceID: VaultSourceID, entryID:
     }
     consumeEntryFacade(entry, facade);
     await source.save();
+}
+
+export async function saveNewEntry(sourceID: VaultSourceID, groupID: GroupID, facade: EntryFacade): Promise<EntryID> {
+    const vaultMgr =  getVaultManager();
+    const source = vaultMgr.getSourceForID(sourceID);
+    const group = source.vault.findGroupByID(groupID);
+    if (!group) {
+        throw new Error(`No group found for ID: ${groupID}`);
+    }
+    const entry = createEntryFromFacade(group, facade);
+    await source.save();
+    return entry.id;
 }
 
 export async function unlockSourceByID(sourceID: VaultSourceID, password: string): Promise<void> {

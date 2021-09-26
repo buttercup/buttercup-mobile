@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { FIELD_VALUE_TYPES, EntryID, EntryPropertyType, EntryPropertyValueType, createFieldDescriptor, setEntryFacadePropertyValueType } from "buttercup";
+import { FIELD_VALUE_TYPES, EntryID, EntryPropertyType, EntryPropertyValueType, createEntryFacade, createFieldDescriptor, setEntryFacadePropertyValueType } from "buttercup";
 import {
     Button,
     Divider,
@@ -22,7 +22,7 @@ import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { CURRENT_SOURCE } from "../../state/vault";
-import { getEntryFacade, saveExistingEntryChanges } from "../../services/buttercup";
+import { getEntryFacade, saveExistingEntryChanges, saveNewEntry } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
@@ -146,7 +146,7 @@ function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
 }
 
 export function EditEntryScreen({ navigation, route }) {
-    const { entryID = null } = route?.params ?? {};
+    const { entryID = null, groupID } = route?.params ?? {};
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const [entryFacade, setEntryFacade] = useState(null);
     const [changed, setChanged] = useState(false);
@@ -239,7 +239,10 @@ export function EditEntryScreen({ navigation, route }) {
     }, [changeTypeFieldID, entryFacade]);
     const handleSave = useCallback(() => {
         setBusyState("Saving changes");
-        saveExistingEntryChanges(currentSourceState.get(), entryID, entryFacade)
+        const saveWork = entryID
+            ? saveExistingEntryChanges(currentSourceState.get(), entryID, entryFacade)
+            : saveNewEntry(currentSourceState.get(), groupID, entryFacade);
+        saveWork
             .then(() => {
                 setBusyState(null);
                 notifySuccess("Saved entry", "Successfully saved changes");
@@ -250,10 +253,14 @@ export function EditEntryScreen({ navigation, route }) {
                 setBusyState(null);
                 notifyError("Failed saving entry", err.message);
             });
-    }, [currentSourceState.get(), entryFacade, navigation]);
+    }, [currentSourceState.get(), entryFacade, groupID, navigation]);
     useEffect(() => {
-        if (!entryID || entryFacade) return;
-        setEntryFacade(getEntryFacade(currentSourceState.get(), entryID));
+        if (entryFacade) return;
+        if (!entryID) {
+            setEntryFacade(createEntryFacade());
+        } else {
+            setEntryFacade(getEntryFacade(currentSourceState.get(), entryID));
+        }
     }, [currentSourceState.get(), entryID]);
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={handleNavigateBack} />;
     const SaveAction = () => <TopNavigationAction disabled={!changed} icon={SaveIcon} onPress={handleSave} />;

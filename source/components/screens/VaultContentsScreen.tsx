@@ -54,7 +54,7 @@ function prepareListContents(items: Array<VaultContentsItem>): Array<VaultConten
     }));
 }
 
-function renderItem(info: RenderInfo, navigation: any) {
+function renderItem(info: RenderInfo, groupID: GroupID, navigation: any) {
     const { item } = info;
     return (
         <ListItem
@@ -74,7 +74,8 @@ function renderItem(info: RenderInfo, navigation: any) {
                     navigation.push(
                         "EntryDetails",
                         {
-                            entryID: item.sourceItem.id
+                            entryID: item.sourceItem.id,
+                            groupID
                         }
                     );
                 }
@@ -90,13 +91,15 @@ function renderItemIcon(props, icon) {
 }
 
 function MenuButton(props) {
-    const { navigation, onGroupCreate } = props;
+    const { groupID, navigation, onGroupCreate } = props;
     const [visible, setVisible] = useState(false);
     const onItemSelect = selected => {
         const item = MENU_ITEMS[selected.row];
         setVisible(false);
-        if (item.slug = "add-group") {
+        if (item.slug === "add-group") {
             onGroupCreate();
+        } else if (item.slug === "add-entry") {
+            navigation.push("EditEntry", { entryID: null, groupID });
         }
     };
 
@@ -142,7 +145,7 @@ export function VaultContentsScreen({ navigation, route }) {
     const preparedContents = useMemo(() => prepareListContents(contents), [contents]);
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const renderWrapper = useCallback(
-        (info: RenderInfo) => renderItem(info, navigation),
+        (info: RenderInfo) => renderItem(info, groupID, navigation),
         []
     );
     const handleGroupCreate = useCallback(async (groupName: string) => {
@@ -182,6 +185,8 @@ export function VaultContentsScreen({ navigation, route }) {
                         accessoryRight={props => (
                             <MenuButton
                                 {...props}
+                                groupID={groupID}
+                                navigation={navigation}
                                 onGroupCreate={() => setPromptGroupCreate(true)}
                             />
                         )}

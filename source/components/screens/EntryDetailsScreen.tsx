@@ -79,14 +79,15 @@ const styles = StyleSheet.create({
 });
 
 function MenuButton(props) {
-    const { entryID, navigation } = props;
+    const { entryID, groupID, navigation } = props;
     const [visible, setVisible] = useState(false);
     const onItemSelect = selected => {
         const item = MENU_ITEMS[selected.row];
         setVisible(false);
         if (item.slug === "edit") {
             navigation.navigate("EditEntry", {
-                entryID
+                entryID,
+                groupID
             });
         }
     };
@@ -124,7 +125,7 @@ function MenuIcon(props) {
 }
 
 export function EntryDetailsScreen({ navigation, route }) {
-    const { entryID = null } = route?.params ?? {};
+    const { entryID = null, groupID } = route?.params ?? {};
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const entryFacade = useEntryFacade(currentSourceState.get(), entryID);
     const title = useMemo(() => {
@@ -163,7 +164,7 @@ export function EntryDetailsScreen({ navigation, route }) {
                 title={title}
                 alignment="center"
                 accessoryLeft={BackAction}
-                accessoryRight={props => <MenuButton {...props} entryID={entryID} navigation={navigation} />}
+                accessoryRight={props => <MenuButton {...props} entryID={entryID} groupID={groupID} navigation={navigation} />}
             />
             <Divider />
             <Layout style={styles.bodyLayout}>
