@@ -84,6 +84,16 @@ export async function createNewGroup(sourceID: VaultSourceID, groupName: string,
     return newGroupID;
 }
 
+export async function deleteGroup(sourceID: VaultSourceID, groupID: GroupID): Promise<void> {
+    const source = getVaultManager().getSourceForID(sourceID);
+    const group = source.vault.findGroupByID(groupID);
+    if (!groupID) {
+        throw new Error(`No group found for ID: ${groupID}`);
+    }
+    group.delete();
+    await source.save();
+}
+
 export function getEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {
     const { vault } = getVaultManager().getSourceForID(sourceID);
     const entry = vault.findEntryByID(entryID);

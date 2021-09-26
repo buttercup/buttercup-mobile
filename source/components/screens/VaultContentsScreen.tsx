@@ -5,10 +5,11 @@ import { useState as useHookState } from "@hookstate/core";
 import { GroupID } from "buttercup";
 import { useGroupTitle, useVaultContents } from "../../hooks/buttercup";
 import { CURRENT_SOURCE } from "../../state/vault";
-import { createNewGroup } from "../../services/buttercup";
+import { createNewGroup, deleteGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { TextPrompt } from "../prompts/TextPrompt";
+import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { VaultContentsItem } from "../../types";
 
 interface RenderInfo {
@@ -91,7 +92,7 @@ function renderItemIcon(props, icon) {
 }
 
 function MenuButton(props) {
-    const { groupID, navigation, onGroupCreate } = props;
+    const { groupID, navigation, onGroupCreate, onGroupDelete } = props;
     const [visible, setVisible] = useState(false);
     const onItemSelect = selected => {
         const item = MENU_ITEMS[selected.row];
@@ -100,6 +101,8 @@ function MenuButton(props) {
             onGroupCreate();
         } else if (item.slug === "add-entry") {
             navigation.push("EditEntry", { entryID: null, groupID });
+        } else if (item.slug === "delete-group") {
+            onGroupDelete();
         }
     };
 
@@ -141,9 +144,11 @@ export function VaultContentsScreen({ navigation, route }) {
     const { groupID = null } = route?.params ?? {};
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const screenTitle = useGroupTitle(currentSourceState.get(), groupID) || "Contents";
+    const deleteTitle = useGroupTitle(currentSourceState.get(), groupID) || "Unknown Group";
     const contents = useVaultContents(currentSourceState.get(), groupID);
     const preparedContents = useMemo(() => prepareListContents(contents), [contents]);
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
+    const [promptDeleteGroupID, setPromptDeleteGroupID] = useState<GroupID>(null);
     const renderWrapper = useCallback(
         (info: RenderInfo) => renderItem(info, groupID, navigation),
         []
@@ -170,6 +175,20 @@ export function VaultContentsScreen({ navigation, route }) {
             );
         }
     }, [currentSourceState, groupID]);
+    const handleGroupDelete = useCallback(async () => {
+        setBusyState("Deleting group");
+        setPromptDeleteGroupID(null);
+        try {
+            await deleteGroup(currentSourceState.get(), groupID);
+            notifySuccess("Group deleted", `Group was successfully deleted: ${deleteTitle}`);
+            navigation.goBack();
+        } catch (err) {
+            console.error(err);
+            notifyError("Failed deleting group", err.message);
+        } finally {
+            setBusyState(null);
+        }
+    }, [currentSourceState, deleteTitle, groupID, navigation]);
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -188,6 +207,7 @@ export function VaultContentsScreen({ navigation, route }) {
                                 groupID={groupID}
                                 navigation={navigation}
                                 onGroupCreate={() => setPromptGroupCreate(true)}
+                                onGroupDelete={() => setPromptDeleteGroupID(groupID)}
                             />
                         )}
                     />
@@ -208,6 +228,15 @@ export function VaultContentsScreen({ navigation, route }) {
                 prompt="New group title"
                 submitText="Create"
                 visible={promptGroupCreate}
+            />
+            <ConfirmPrompt
+                cancelable
+                confirmText="Delete"
+                onCancel={() => setPromptDeleteGroupID(null)}
+                onConfirm={handleGroupDelete}
+                prompt={`Remove group '${deleteTitle}'?`}
+                title="Delete Group"
+                visible={!!promptDeleteGroupID}
             />
         </>
     );
