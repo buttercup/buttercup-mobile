@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -10,10 +10,18 @@ import {
     TopNavigation,
     TopNavigationAction
 } from "@ui-kitten/components";
+import { GroupID } from "buttercup";
+import { useState as useHookState } from "@hookstate/core";
+import { CURRENT_SOURCE } from "../../state/vault";
+import { createNewGroup } from "../../services/buttercup";
+import { setBusyState } from "../../services/busyState";
+import { notifyError, notifySuccess } from "../../library/notifications";
 import { VaultContentsScreen } from "../screens/VaultContentsScreen";
 import { WalletScreen } from "../screens/WalletScreen";
 import { CodesScreen } from "../screens/CodesScreen";
 import { VaultSettingsScreen } from "../screens/VaultSettingsScreen";
+import { TextPrompt } from "../prompts/TextPrompt";
+import { VaultContentsMenu } from "../menus/VaultContentsMenu";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -54,14 +62,57 @@ const TabNavigator = () => (
 );
 
 export function VaultNavigator({ navigation }) {
+    const [promptGroupCreate, setPromptGroupCreate] = useState(false);
+    const currentSourceState = useHookState(CURRENT_SOURCE);
+    const handleGroupCreate = useCallback(async (groupName: string) => {
+        setBusyState("Creating group");
+        setPromptGroupCreate(false);
+        let newGroupID: GroupID;
+        try {
+            newGroupID = await createNewGroup(currentSourceState.get(), groupName);
+            notifySuccess("Group created", `Group was successfully created: ${groupName}`);
+        } catch (err) {
+            console.error(err);
+            notifyError("Failed creating group", err.message);
+        } finally {
+            setBusyState(null);
+        }
+        if (newGroupID) {
+            navigation.push(
+                "VaultContents",
+                {
+                    groupID: newGroupID
+                }
+            );
+        }
+    }, [currentSourceState]);
     const navigateBack = () => {
         navigation.goBack();
     };
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={navigateBack} />;
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title="Vault" alignment="center" accessoryLeft={BackAction} />
-            <TabNavigator />
-        </SafeAreaView>
+        <>
+            <SafeAreaView style={{ flex: 1 }}>
+                <TopNavigation
+                    title="Vault"
+                    alignment="center"
+                    accessoryLeft={BackAction}
+                    accessoryRight={() => (
+                        <VaultContentsMenu
+                            onGroupCreate={() => setPromptGroupCreate(true)}
+                        />
+                    )}
+                />
+                <TabNavigator />
+            </SafeAreaView>
+            <TextPrompt
+                cancelable
+                onCancel={() => setPromptGroupCreate(false)}
+                onSubmit={handleGroupCreate}
+                prompt="New group title"
+                submitText="Create"
+                visible={promptGroupCreate}
+            />
+        </>
     );
 }

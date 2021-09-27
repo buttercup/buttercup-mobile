@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { Button, Icon, Layout, List, ListItem, MenuItem, OverflowMenu, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
+import { Icon, Layout, List, ListItem, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { EntryType, ENTRY_TYPES, GroupID } from "buttercup";
 import { useGroupTitle, useVaultContents } from "../../hooks/buttercup";
@@ -9,6 +9,7 @@ import { createNewGroup, deleteGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { getIconForEntryType } from "../../library/buttercup";
+import { VaultContentsMenu } from "../menus/VaultContentsMenu";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { ItemsPrompt, PromptItem } from "../prompts/ItemsPrompt";
@@ -23,12 +24,6 @@ interface VaultContentsItemDisplay {
     icon: string;
     sourceItem: VaultContentsItem;
 }
-
-const MENU_ITEMS = [
-    { text: "Add Group", slug: "add-group", icon: "folder-outline" },
-    { text: "Add Entry", slug: "add-entry", icon: "file-outline" },
-    { text: "Delete Current Group", slug: "delete-group", icon: "folder-remove-outline" }
-];
 
 const BackIcon = props => <Icon {...props} name="corner-left-up-outline" />;
 
@@ -91,55 +86,6 @@ function renderItemIcon(props, icon) {
     return (
         <Icon {...props} name={icon} />
     );
-}
-
-function MenuButton(props) {
-    const { onEntryCreate, onGroupCreate, onGroupDelete } = props;
-    const [visible, setVisible] = useState(false);
-    const onItemSelect = selected => {
-        const item = MENU_ITEMS[selected.row];
-        setVisible(false);
-        if (item.slug === "add-group") {
-            onGroupCreate();
-        } else if (item.slug === "add-entry") {
-            onEntryCreate();
-        } else if (item.slug === "delete-group") {
-            onGroupDelete();
-        }
-    };
-
-    const renderToggleButton = () => (
-        <Button
-            {...props}
-            appearance="ghost"
-            accessoryLeft={MenuIcon}
-            onPress={() => setVisible(true)}
-            status="basic"
-        />
-    );
-
-    return (
-        <Layout style={styles.menuContent} level="1">
-            <OverflowMenu
-                anchor={renderToggleButton}
-                visible={visible}
-                onSelect={onItemSelect}
-                onBackdropPress={() => setVisible(false)}
-            >
-                {MENU_ITEMS.map(item => (
-                    <MenuItem
-                        key={item.slug}
-                        title={item.text}
-                        accessoryLeft={props => <Icon {...props} name={item.icon} />}
-                    />
-                ))}
-            </OverflowMenu>
-        </Layout>
-    );
-}
-
-function MenuIcon(props) {
-    return <Icon {...props} name="menu-outline" />;
 }
 
 export function VaultContentsScreen({ navigation, route }) {
@@ -213,9 +159,8 @@ export function VaultContentsScreen({ navigation, route }) {
                         title={screenTitle}
                         alignment="center"
                         accessoryLeft={BackAction}
-                        accessoryRight={props => (
-                            <MenuButton
-                                {...props}
+                        accessoryRight={() => (
+                            <VaultContentsMenu
                                 onEntryCreate={() => setPromptNewEntryType(true)}
                                 onGroupCreate={() => setPromptGroupCreate(true)}
                                 onGroupDelete={() => setPromptDeleteGroupID(groupID)}
