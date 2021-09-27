@@ -1,14 +1,36 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Dimensions, SafeAreaView, StyleSheet, View } from "react-native";
-import { Divider, Layout, List, TopNavigation, Text } from "@ui-kitten/components";
+import { Layout, List, Text } from "@ui-kitten/components";
 import { CardView } from "react-native-credit-card-input";
+import { useState as useHookState } from "@hookstate/core";
+import validateCard from "card-validator";
+import { Entry } from "buttercup";
+import { CURRENT_SOURCE } from "../../state/vault";
+import { useVaultWalletEntries } from "../../hooks/buttercup";
+
+interface CardInfo {
+    card: {
+        gaps?: Array<number>;
+        niceType?: string;
+        type: string | null;
+    };
+    isPotentiallyValid: boolean;
+    isValid: boolean;
+}
+
+interface ItemInfo {
+    item: Entry;
+}
 
 const CARD_SCALE_WIDTH_BASE = 300;
 
 const styles = StyleSheet.create({
-    listContainer: {
-    //   maxHeight: 320,
+    cardTitle: {
+        borderBottomColor: "#bbb",
+        borderBottomWidth: 1,
+        width: "100%"
     },
+    listContainer: {},
     contentContainer: {
       paddingHorizontal: 8,
       paddingVertical: 4,
@@ -16,30 +38,53 @@ const styles = StyleSheet.create({
     item: {
       marginVertical: 4,
     },
+    outerContainer: {
+        marginTop: 10,
+        marginBottom: 10
+    }
 });
 
-const data = new Array(8).fill({
-    title: 'Item',
-});
+function formatCardDate(date: string): string {
+    if (/^\d{2}\//.test(date)) return date;
+    if (date.length === 4) {
+        return `${date.substring(0, 2)}/${date.substring(2)}`;
+    } else if (date.length === 6) {
+        return `${date.substring(0, 2)}/${date.substring(4)}`;
+    }
+    return "";
+}
 
-function renderItem(info, screenWidth: number) {
+function renderItem(info: ItemInfo, cardInfo: CardInfo, screenWidth: number) {
+    const {
+        cvv = "",
+        expiry,
+        password,
+        title,
+        username,
+    } = info.item.getProperties();
     return (
-        <View style={{ flex: 1, marginLeft: "auto", marginRight: "auto", marginTop: 10, marginBottom: 10 }}>
-            <CardView
-                name="Jane Doe"
-                number="1234 5678 0000 0101"
-                expiry="01/23"
-                brand="visa"
-                scale={(screenWidth - 45) / CARD_SCALE_WIDTH_BASE}
-            />
+        <View style={styles.outerContainer}>
+            <Text category="s1" style={styles.cardTitle}>{title}</Text>
+            <View style={{ flex: 1, marginLeft: "auto", marginRight: "auto" }}>
+                <CardView
+                    cvc={cvv}
+                    name={username}
+                    number={password}
+                    expiry={formatCardDate(expiry)}
+                    brand={cardInfo.card?.type ?? "placeholder"}
+                    scale={(screenWidth - 45) / CARD_SCALE_WIDTH_BASE}
+                />
+            </View>
         </View>
     );
 }
 
 export function WalletScreen() {
+    const currentSourceState = useHookState(CURRENT_SOURCE);
+    const entries = useVaultWalletEntries(currentSourceState.get());
     const screenWidth = useMemo(() => Dimensions.get("window").width, []);
     const renderWrapper = useMemo(() =>
-        info => renderItem(info, screenWidth),
+        (info: ItemInfo) => renderItem(info, validateCard.number(info.item.getProperty("password")), screenWidth),
         [screenWidth]
     );
     return (
@@ -48,7 +93,7 @@ export function WalletScreen() {
                 <List
                     style={styles.listContainer}
                     contentContainerStyle={styles.contentContainer}
-                    data={data}
+                    data={entries}
                     renderItem={renderWrapper}
                 />
             </Layout>

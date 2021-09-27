@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Entry, EntryFacade, EntryID, Group, Vault, VaultSourceID, createEntryFacade, GroupID } from "buttercup";
+import { Entry, EntryFacade, EntryID, Group, Vault, VaultSourceID, createEntryFacade, GroupID, EntryType } from "buttercup";
 import { getVault, getVaultManager, getVaultSource } from "../services/buttercup";
 import { VaultContentsItem, VaultDetails } from "../types";
 
@@ -26,6 +26,22 @@ function extractItems(vault: Vault, targetGroupID: string = null): Array<VaultCo
             type: "entry" as const
         }))
     ];
+}
+
+export function useEntries(sourceID: VaultSourceID): Array<Entry> {
+    const source = useMemo(() => getVaultSource(sourceID), [sourceID]);
+    const [entries, setEntries] = useState<Array<Entry>>([]);
+    const updateContents = useCallback(() => {
+        setEntries(source.vault.getAllEntries());
+    }, [source]);
+    useEffect(() => {
+        updateContents();
+        source.on("updated", updateContents);
+        return () => {
+            source.off("updated", updateContents);
+        };
+    }, [source, updateContents]);
+    return entries;
 }
 
 export function useEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {
@@ -55,6 +71,14 @@ export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string 
         };
     }, [source, updateContents]);
     return contents;
+}
+
+export function useVaultWalletEntries(sourceID: VaultSourceID): Array<Entry> {
+    const entries = useEntries(sourceID);
+    const walletEntries = useMemo(() => entries.filter(entry =>
+        [EntryType.CreditCard].includes(entry.getType())
+    ), [entries]);
+    return walletEntries;
 }
 
 export function useVaults(vaultsOveride?: Array<VaultDetails>): Array<VaultDetails> {
