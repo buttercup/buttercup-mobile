@@ -135,6 +135,11 @@ export async function removeVaultSource(sourceID: VaultSourceID) {
     await getVaultManager().removeSource(sourceID);
 }
 
+export async function renameVaultSource(sourceID: VaultSourceID, name: string) {
+    const source = getVaultManager().getSourceForID(sourceID);
+    source.rename(name);
+}
+
 export async function saveExistingEntryChanges(sourceID: VaultSourceID, entryID: EntryID, facade: EntryFacade): Promise<void> {
     const vaultMgr =  getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);

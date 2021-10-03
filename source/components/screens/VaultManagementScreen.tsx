@@ -13,8 +13,9 @@ import {
 import { VaultSourceID } from "buttercup";
 import { ItemsPrompt, PromptItem } from "../prompts/ItemsPrompt";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
+import { TextPrompt } from "../prompts/TextPrompt";
 import { useVaults } from "../../hooks/buttercup";
-import { removeVaultSource } from "../../services/buttercup";
+import { removeVaultSource, renameVaultSource } from "../../services/buttercup";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { VaultDetails } from "../../types";
 
@@ -29,6 +30,11 @@ interface VaultItemDisplay {
 }
 
 const VAULT_OPTIONS = [
+    {
+        title: "Rename",
+        slug: "rename",
+        icon: "text-outline"
+    },
     {
         title: "Remove",
         slug: "remove",
@@ -80,6 +86,8 @@ export function VaultManagementScreen({ navigation }) {
     const [selectedVaultID, setSelectedVaultID] = useState<VaultSourceID>(null);
     const [removeVaultID, setRemoveVaultID] = useState<VaultSourceID>(null);
     const removeVaultTitle = useMemo(() => removeVaultID ? vaults.find(v => v.id === removeVaultID).name : "", [removeVaultID]);
+    const [renameVaultID, setRenameVaultID] = useState<VaultSourceID>(null);
+    const renameVaultTitle = useMemo(() => renameVaultID ? vaults.find(v => v.id === renameVaultID).name : "", [renameVaultID]);
     const navigateBack = useCallback(() => {
         navigation.goBack();
     }, [navigation]);
@@ -89,6 +97,8 @@ export function VaultManagementScreen({ navigation }) {
     const handleVaultOptionSelect = useCallback((item: PromptItem) => {
         if (item.slug === "remove") {
             setRemoveVaultID(selectedVaultID);
+        } else if (item.slug === "rename") {
+            setRenameVaultID(selectedVaultID);
         }
         setSelectedVaultID(null);
     }, [selectedVaultID]);
@@ -103,6 +113,20 @@ export function VaultManagementScreen({ navigation }) {
             setRemoveVaultID(null);
         }
     }, [removeVaultID, removeVaultTitle]);
+    const handleVaultRename = useCallback(async (newName: string) => {
+        try {
+            if (!newName.trim()) {
+                throw new Error("Vault name cannot be empty");
+            }
+            renameVaultSource(renameVaultID, newName);
+            notifySuccess("Vault renamed", `Successfully renamed: ${newName}`);
+        } catch (err) {
+            console.error(err);
+            notifyError("Failed renaming vault", err.message);
+        } finally {
+            setRenameVaultID(null);
+        }
+    }, [renameVaultID]);
     const renderWrapper = useCallback(
         (info: RenderInfo) => renderItem(info, handleVaultPress, navigation),
         [handleVaultPress, navigation]
@@ -133,6 +157,14 @@ export function VaultManagementScreen({ navigation }) {
                 prompt={`Remove vault '${removeVaultTitle}'?`}
                 title="Remove Vault"
                 visible={!!removeVaultID}
+            />
+            <TextPrompt
+                cancelable
+                onCancel={() => setRenameVaultID(null)}
+                onSubmit={handleVaultRename}
+                prompt={`Rename vault '${renameVaultTitle}'`}
+                submitText="Rename"
+                visible={!!renameVaultID}
             />
         </>
     );
