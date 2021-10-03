@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { withStyles } from "@ui-kitten/components";
 import { HomeScreen } from "../screens/HomeScreen";
+import { VaultManagementScreen } from "../screens/VaultManagementScreen";
 import { AboutScreen } from "../screens/AboutScreen";
 import { AddVaultScreen } from "../screens/AddVaultScreen";
 import { VaultContentsScreen } from "../screens/VaultContentsScreen";
@@ -21,6 +22,7 @@ const HomeNavigator = () => (
         <Screen name="About" component={AboutScreen} />
         <Screen name="Vault" component={VaultNavigator} />
         <Screen name="AddVault" component={AddVaultScreen} />
+        <Screen name="ManageVaults" component={VaultManagementScreen} />
         {/* */}
         <Screen name="VaultContents" component={VaultContentsScreen} />
         <Screen name="EntryDetails" component={EntryDetailsScreen} />

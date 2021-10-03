@@ -131,6 +131,10 @@ function onVaultSourceUpdated(source: VaultSource) {
     // notifyWindowsOfSourceUpdate(source.id);
 }
 
+export async function removeVaultSource(sourceID: VaultSourceID) {
+    await getVaultManager().removeSource(sourceID);
+}
+
 export async function saveExistingEntryChanges(sourceID: VaultSourceID, entryID: EntryID, facade: EntryFacade): Promise<void> {
     const vaultMgr =  getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);

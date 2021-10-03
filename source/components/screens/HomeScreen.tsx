@@ -45,6 +45,8 @@ function MenuButton(props) {
             navigation.navigate("About");
         } else if (item.slug === "add") {
             navigation.navigate("AddVault");
+        } else if (item.slug === "manage") {
+            navigation.navigate("ManageVaults");
         }
     };
 
