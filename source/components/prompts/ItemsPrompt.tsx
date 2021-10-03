@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
 import {
     Icon,
     IndexPath,
@@ -38,6 +37,11 @@ const themedStyles = StyleService.create({
         width: CLOSE_BUTTON_SIZE,
         height: CLOSE_BUTTON_SIZE,
         flex: 1
+    },
+    menu: {
+        backgroundColor: "background-basic-color-1",
+        height: "100%",
+        marginRight: CLOSE_BUTTON_SIZE + 4
     },
     modalContainer: {
         borderTopLeftRadius: 12,
@@ -85,24 +89,21 @@ function ModalContent(props: ItemsPromptProps) {
                 name="close-circle-outline"
                 onPress={onCancel}
             />
-            <ScrollView style={{ height: "100%", marginRight: CLOSE_BUTTON_SIZE + 4 }}>
-                <Menu
-                    onSelect={index => setSelectedIndex(index)}
-                    scrollEnabled={false}
-                    selectedIndex={selectedIndex}
-                    style={{ height: "100%" }}
-                >
-                    {items.map(item => (
-                        <MenuItem
-                            disabled={false}
-                            accessoryLeft={genItemIcon(item.icon)}
-                            key={item.slug}
-                            onPress={() => onSelect(item)}
-                            title={item.title}
-                        />
-                    ))}
-                </Menu>
-            </ScrollView>
+            <Menu
+                onSelect={index => setSelectedIndex(index)}
+                selectedIndex={selectedIndex}
+                style={styles.menu}
+            >
+                {items.map(item => (
+                    <MenuItem
+                        disabled={false}
+                        accessoryLeft={genItemIcon(item.icon)}
+                        key={item.slug}
+                        onPress={() => onSelect(item)}
+                        title={item.title}
+                    />
+                ))}
+            </Menu>
         </Layout>
     );
 }
