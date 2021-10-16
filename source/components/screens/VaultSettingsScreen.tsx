@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { Card, Icon, Layout, Text, Toggle } from "@ui-kitten/components";
+import { Card, Layout, Text, Toggle } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { CURRENT_SOURCE } from "../../state/vault";
+import { useTabFocusState } from "../../hooks/vaultTab";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
@@ -42,6 +43,7 @@ function VaultSettingHeader({ subtitle = null, title }) {
 }
 
 export function VaultSettingsScreen({ navigation }) {
+    useTabFocusState("settings");
     const currentSourceState = useHookState(CURRENT_SOURCE);
     // **
     // ** Biometrics

@@ -6,6 +6,7 @@ import { useState as useHookState } from "@hookstate/core";
 import validateCard from "card-validator";
 import { Entry } from "buttercup";
 import { CURRENT_SOURCE } from "../../state/vault";
+import { useTabFocusState } from "../../hooks/vaultTab";
 import { useVaultWalletEntries } from "../../hooks/buttercup";
 
 interface CardInfo {
@@ -80,6 +81,7 @@ function renderItem(info: ItemInfo, cardInfo: CardInfo, screenWidth: number) {
 }
 
 export function WalletScreen() {
+    useTabFocusState("wallet");
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const entries = useVaultWalletEntries(currentSourceState.get());
     const screenWidth = useMemo(() => Dimensions.get("window").width, []);

@@ -4,6 +4,7 @@ import { Icon, Layout, List, ListItem, TopNavigation, TopNavigationAction } from
 import { useState as useHookState } from "@hookstate/core";
 import { EntryType, ENTRY_TYPES, GroupID } from "buttercup";
 import { useGroupTitle, useVaultContents } from "../../hooks/buttercup";
+import { useTabFocusState } from "../../hooks/vaultTab";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { createNewGroup, deleteGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
@@ -89,6 +90,7 @@ function renderItemIcon(props, icon) {
 }
 
 export function VaultContentsScreen({ navigation, route }) {
+    useTabFocusState("contents");
     const { groupID = null } = route?.params ?? {};
     const entryTypes: Array<PromptItem> = useMemo(() => Object.keys(ENTRY_TYPES).map(typeKey => ({
         title: ENTRY_TYPES[typeKey].title,

@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import { Dimensions, Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { Card, Divider, Layout, List, Spinner, Text } from "@ui-kitten/components";
 import AnimatedProgressWheel from "react-native-progress-wheel";
+import { useTabFocusState } from "../../hooks/vaultTab";
 
 const CARD_SCALE_WIDTH_BASE = 300;
 
@@ -85,6 +86,7 @@ function renderItem(info) {
 }
 
 export function CodesScreen() {
+    useTabFocusState("codes");
     const renderWrapper = useMemo(() =>
         renderItem,
         []

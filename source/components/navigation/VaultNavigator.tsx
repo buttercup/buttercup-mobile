@@ -12,6 +12,7 @@ import {
 } from "@ui-kitten/components";
 import { GroupID } from "buttercup";
 import { useState as useHookState } from "@hookstate/core";
+import { useFocusedTab } from "../../hooks/vaultTab";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { createNewGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
@@ -38,30 +39,35 @@ const SearchScreen = () => (
     </Layout>
 );
 
-const BottomTabBar = ({ navigation, state }) => (
-    <BottomNavigation
-        selectedIndex={state.index}
-        onSelect={index => navigation.navigate(state.routeNames[index])}
-    >
-        <BottomNavigationTab title="SEARCH" icon={SearchIcon} />
-        <BottomNavigationTab title="GROUPS" icon={FolderIcon} />
-        <BottomNavigationTab title="WALLET" icon={WalletIcon} />
-        <BottomNavigationTab title="CODES" icon={CodesIcon} />
-        <BottomNavigationTab title="SETTINGS" icon={SettingsIcon} />
-    </BottomNavigation>
-);
+function BottomTabBar({ navigation, state }) {
+    return (
+        <BottomNavigation
+            selectedIndex={state.index}
+            onSelect={index => navigation.navigate(state.routeNames[index])}
+        >
+            <BottomNavigationTab title="SEARCH" icon={SearchIcon} />
+            <BottomNavigationTab title="GROUPS" icon={FolderIcon} />
+            <BottomNavigationTab title="WALLET" icon={WalletIcon} />
+            <BottomNavigationTab title="CODES" icon={CodesIcon} />
+            <BottomNavigationTab title="SETTINGS" icon={SettingsIcon} />
+        </BottomNavigation>
+    );
+}
 
-const TabNavigator = () => (
-    <Navigator tabBar={props => <BottomTabBar {...props} />}>
-        <Screen name="Search" component={SearchScreen} />
-        <Screen name="Groups" component={VaultContentsScreen} />
-        <Screen name="Wallet" component={WalletScreen} />
-        <Screen name="Codes" component={CodesScreen} />
-        <Screen name="Settings" component={VaultSettingsScreen} />
-    </Navigator>
-);
+function TabNavigator() {
+    return (
+        <Navigator tabBar={props => <BottomTabBar {...props} />}>
+            <Screen name="Search" component={SearchScreen} />
+            <Screen name="Groups" component={VaultContentsScreen} />
+            <Screen name="Wallet" component={WalletScreen} />
+            <Screen name="Codes" component={CodesScreen} />
+            <Screen name="Settings" component={VaultSettingsScreen} />
+        </Navigator>
+    );
+}
 
 export function VaultNavigator({ navigation }) {
+    const focusedTab = useFocusedTab();
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const handleGroupCreate = useCallback(async (groupName: string) => {
@@ -98,9 +104,13 @@ export function VaultNavigator({ navigation }) {
                     alignment="center"
                     accessoryLeft={BackAction}
                     accessoryRight={() => (
-                        <VaultContentsMenu
-                            onGroupCreate={() => setPromptGroupCreate(true)}
-                        />
+                        <>
+                            {focusedTab === "contents" && (
+                                <VaultContentsMenu
+                                    onGroupCreate={() => setPromptGroupCreate(true)}
+                                />
+                            )}
+                        </>
                     )}
                 />
                 <TabNavigator />
