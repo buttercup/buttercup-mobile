@@ -1,19 +1,7 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Dimensions, Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { Card, Divider, Layout, List, Spinner, Text } from "@ui-kitten/components";
-import AnimatedProgressWheel from "react-native-progress-wheel";
 import { useTabFocusState } from "../../hooks/vaultTab";
-
-const CARD_SCALE_WIDTH_BASE = 300;
-
-const { MONO_FONT } = Platform.select({
-    ios: {
-        MONO_FONT: "Courier New"
-    },
-    android: {
-        MONO_FONT: "monospace"
-    }
-});
 
 const styles = StyleSheet.create({
     listContainer: {
@@ -66,7 +54,7 @@ function renderItem(info) {
     const percent = (info.item.time / info.item.timeMax) * 100;
     return (
         <View style={{ flex: 1, marginTop: 5, marginBottom: 5 }}>
-            <Card
+            {/* <Card
                 style={styles.card}
                 footer={props => renderHeader(props, info)}
             >
@@ -80,13 +68,13 @@ function renderItem(info) {
                         backgroundColor={'grey'}
                     />
                 </View>
-            </Card>
+            </Card> */}
         </View>
     );
 }
 
-export function CodesScreen() {
-    useTabFocusState("codes", "Codes");
+export function SearchScreen() {
+    useTabFocusState("search", "Search");
     const renderWrapper = useMemo(() =>
         renderItem,
         []

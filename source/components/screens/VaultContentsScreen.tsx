@@ -90,7 +90,7 @@ function renderItemIcon(props, icon) {
 }
 
 export function VaultContentsScreen({ navigation, route }) {
-    useTabFocusState("contents");
+    useTabFocusState("contents", "Vault Contents");
     const { groupID = null } = route?.params ?? {};
     const entryTypes: Array<PromptItem> = useMemo(() => Object.keys(ENTRY_TYPES).map(typeKey => ({
         title: ENTRY_TYPES[typeKey].title,

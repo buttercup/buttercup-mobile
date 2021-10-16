@@ -17,6 +17,7 @@ import { CURRENT_SOURCE } from "../../state/vault";
 import { createNewGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
+import { SearchScreen } from "../screens/SearchScreen";
 import { VaultContentsScreen } from "../screens/VaultContentsScreen";
 import { WalletScreen } from "../screens/WalletScreen";
 import { CodesScreen } from "../screens/CodesScreen";
@@ -32,12 +33,6 @@ const FolderIcon = props => <Icon {...props} name="folder-outline" />;
 const SearchIcon = props => <Icon {...props} name="search-outline" />;
 const SettingsIcon = props => <Icon {...props} name="settings-outline" />;
 const WalletIcon = props => <Icon {...props} name="credit-card-outline" />;
-
-const SearchScreen = () => (
-    <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text category="h1">SEARCH</Text>
-    </Layout>
-);
 
 function BottomTabBar({ navigation, state }) {
     return (
@@ -67,7 +62,7 @@ function TabNavigator() {
 }
 
 export function VaultNavigator({ navigation }) {
-    const focusedTab = useFocusedTab();
+    const [focusedTab, focusedTabTitle] = useFocusedTab();
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const handleGroupCreate = useCallback(async (groupName: string) => {
@@ -100,7 +95,7 @@ export function VaultNavigator({ navigation }) {
         <>
             <SafeAreaView style={{ flex: 1 }}>
                 <TopNavigation
-                    title="Vault"
+                    title={focusedTabTitle}
                     alignment="center"
                     accessoryLeft={BackAction}
                     accessoryRight={() => (

@@ -81,7 +81,7 @@ function renderItem(info: ItemInfo, cardInfo: CardInfo, screenWidth: number) {
 }
 
 export function WalletScreen() {
-    useTabFocusState("wallet");
+    useTabFocusState("wallet", "Wallet");
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const entries = useVaultWalletEntries(currentSourceState.get());
     const screenWidth = useMemo(() => Dimensions.get("window").width, []);

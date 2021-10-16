@@ -43,7 +43,7 @@ function VaultSettingHeader({ subtitle = null, title }) {
 }
 
 export function VaultSettingsScreen({ navigation }) {
-    useTabFocusState("settings");
+    useTabFocusState("settings", "Vault Settings");
     const currentSourceState = useHookState(CURRENT_SOURCE);
     // **
     // ** Biometrics
