@@ -16,6 +16,7 @@ import {
 import { initAppEnv } from "./appEnv";
 import { setBusyState } from "../services/busyState";
 import { getAsyncStorage } from "../services/storage";
+import { updateSearchCaches } from "../services/search";
 import { notifyError } from "../library/notifications";
 import { DatasourceConfig, VaultChooserItem, VaultDetails } from "../types";
 
@@ -64,7 +65,7 @@ async function attachVaultManagerWatchers() {
                 __watchedVaultSources.push(source.id);
             }
         });
-        // await updateSearchCaches(vaultManager.unlockedSources);
+        await updateSearchCaches(vaultManager.unlockedSources);
     });
 }
 
