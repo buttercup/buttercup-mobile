@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { Icon, Layout, List, ListItem, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
+import { SafeAreaView } from "react-native";
+import { Icon, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { EntryType, ENTRY_TYPES, GroupID } from "buttercup";
 import { useGroupTitle, useVaultContents } from "../../hooks/buttercup";
@@ -14,80 +14,9 @@ import { VaultContentsMenu } from "../menus/VaultContentsMenu";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { ItemsPrompt, PromptItem } from "../prompts/ItemsPrompt";
-import { VaultContentsItem } from "../../types";
-
-interface RenderInfo {
-    item: VaultContentsItemDisplay;
-}
-interface VaultContentsItemDisplay {
-    title: string;
-    subtitle: string | null;
-    icon: string;
-    sourceItem: VaultContentsItem;
-}
+import { VaultContentsList } from "./vault-contents/VaultContentsList";
 
 const BackIcon = props => <Icon {...props} name="corner-left-up-outline" />;
-
-const styles = StyleSheet.create({
-    card: {
-        flex: 1,
-        padding: 0
-    },
-    contentContainer: {
-      paddingHorizontal: 8,
-      paddingVertical: 4,
-    },
-    item: {
-      marginVertical: 4,
-    },
-    listContainer: {},
-    menuContent: {}
-});
-
-function prepareListContents(items: Array<VaultContentsItem>): Array<VaultContentsItemDisplay> {
-    return items.map(item => ({
-        title: item.title,
-        subtitle: "Nothing here yet",
-        icon: item.type === "group" ? "folder-outline" : "file-outline",
-        sourceItem: item
-    }));
-}
-
-function renderItem(info: RenderInfo, groupID: GroupID, navigation: any) {
-    const { item } = info;
-    return (
-        <ListItem
-            title={item.title}
-            description={item.subtitle}
-            accessoryLeft={props => renderItemIcon(props, item.icon)}
-            onPress={() => {
-                if (item.sourceItem.type === "group") {
-                    navigation.push(
-                        "VaultContents",
-                        {
-                            groupID: item.sourceItem.id
-                        }
-                    );
-                } else {
-                    // Entry
-                    navigation.push(
-                        "EntryDetails",
-                        {
-                            entryID: item.sourceItem.id,
-                            groupID
-                        }
-                    );
-                }
-            }}
-        />
-    );
-}
-
-function renderItemIcon(props, icon) {
-    return (
-        <Icon {...props} name={icon} />
-    );
-}
 
 export function VaultContentsScreen({ navigation, route }) {
     useTabFocusState("contents", "Vault Contents");
@@ -101,14 +30,9 @@ export function VaultContentsScreen({ navigation, route }) {
     const screenTitle = useGroupTitle(currentSourceState.get(), groupID) || "Contents";
     const deleteTitle = useGroupTitle(currentSourceState.get(), groupID) || "Unknown Group";
     const contents = useVaultContents(currentSourceState.get(), groupID);
-    const preparedContents = useMemo(() => prepareListContents(contents), [contents]);
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const [promptDeleteGroupID, setPromptDeleteGroupID] = useState<GroupID>(null);
     const [promptNewEntryType, setPromptNewEntryType] = useState(false);
-    const renderWrapper = useCallback(
-        (info: RenderInfo) => renderItem(info, groupID, navigation),
-        []
-    );
     const handleGroupCreate = useCallback(async (groupName: string) => {
         setBusyState("Creating group");
         setPromptGroupCreate(false);
@@ -171,11 +95,10 @@ export function VaultContentsScreen({ navigation, route }) {
                     />
                 )}
                 <Layout style={{ flex: 1 }}>
-                    <List
-                        style={styles.listContainer}
-                        contentContainerStyle={styles.contentContainer}
-                        data={preparedContents}
-                        renderItem={renderWrapper}
+                    <VaultContentsList
+                        contents={contents}
+                        groupID={groupID}
+                        navigation={navigation}
                     />
                 </Layout>
             </SafeAreaView>
