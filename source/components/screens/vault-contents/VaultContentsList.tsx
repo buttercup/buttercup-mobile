@@ -64,6 +64,14 @@ function renderItem(info: RenderInfo, navigation: any, groupID?: GroupID) {
                             }
                         );
                     }
+                } else if (item.sourceItem.groupID && item.sourceItem.type === "entry") {
+                    navigation.push(
+                        "EntryDetails",
+                        {
+                            entryID: item.sourceItem.id,
+                            groupID: item.sourceItem.groupID
+                        }
+                    );
                 }
             }}
         />

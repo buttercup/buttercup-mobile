@@ -1,8 +1,12 @@
 import {
-    SearchResult as CoreSearchResult,
+    SearchResult,
     VaultEntrySearch,
     VaultSource,
     VaultSourceID
+} from "buttercup";
+
+export type {
+    SearchResult
 } from "buttercup";
 
 interface SearchCache {
@@ -12,7 +16,7 @@ interface SearchCache {
 let __primarySearch: VaultEntrySearch = null;
 const __searchCache: SearchCache = {};
 
-export async function searchAllVaults(term: string): Promise<Array<CoreSearchResult>> {
+export async function searchAllVaults(term: string): Promise<Array<SearchResult>> {
     if (!__primarySearch) return [];
     return __primarySearch.searchByTerm(term);
 }
@@ -20,7 +24,7 @@ export async function searchAllVaults(term: string): Promise<Array<CoreSearchRes
 export async function searchSingleVault(
     sourceID: VaultSourceID,
     term: string
-): Promise<Array<CoreSearchResult>> {
+): Promise<Array<SearchResult>> {
     const search = __searchCache[sourceID];
     if (!search) return [];
     return search.searchByTerm(term);

@@ -4,8 +4,11 @@ import { Icon, Input, Layout } from "@ui-kitten/components";
 
 export interface SearchBarProps {
     debounceDelay?: number;
+    onTermChange?: (term: string) => void;
     onTermUpdate: (term: string) => void;
 }
+
+const NOOP = () => {};
 
 const styles = StyleSheet.create({
     input: {
@@ -30,16 +33,17 @@ const SearchIcon = props => (
 );
 
 export function SearchBar(props: SearchBarProps) {
-    const { debounceDelay = 400, onTermUpdate } = props;
+    const { debounceDelay = 450, onTermChange = NOOP, onTermUpdate } = props;
     const [term, setTerm] = useState("");
     useEffect(() => {
+        onTermChange(term);
         const updateTimeout = setTimeout(() => {
             onTermUpdate(term);
         }, debounceDelay);
         return () => {
             clearTimeout(updateTimeout);
         };
-    }, [debounceDelay, term]);
+    }, [debounceDelay, onTermChange, onTermUpdate, term]);
     return (
         <Layout style={styles.layout}>
             <Input
