@@ -286,8 +286,8 @@ export function EditEntryScreen({ navigation, route }) {
                         field.propertyType === EntryPropertyType.Attribute)
                         ? null
                         : (
-                            <Layout>
-                                <Layout key={field.id} style={styles.fieldLayout}>
+                            <Layout key={field.id}>
+                                <Layout style={styles.fieldLayout}>
                                     <Layout style={styles.inputContainerLayout}>
                                         <Text category="s1" style={styles.inputLabel}>{field.property}</Text>
                                         <Input
