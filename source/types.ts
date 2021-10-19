@@ -1,4 +1,4 @@
-import { EntryID, GroupID, VaultSourceID, VaultSourceStatus } from "buttercup";
+import { EntryID, EntryType, GroupID, PropertyKeyValueObject, VaultSourceID, VaultSourceStatus } from "buttercup";
 
 export { FSItem } from "@buttercup/file-interface";
 
@@ -33,6 +33,8 @@ export interface VaultContentsItem {
     title: string;
     type: "entry" | "group";
     groupID?: GroupID;
+    entryType?: EntryType;
+    entryProperties?: PropertyKeyValueObject;
 }
 
 export interface VaultDetails {

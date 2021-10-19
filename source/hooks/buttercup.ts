@@ -15,15 +15,17 @@ function extractItems(vault: Vault, targetGroupID: string = null): Array<VaultCo
         groups = vault.getGroups();
     }
     return [
-        ...groups.map(group => ({
+        ...groups.map((group: Group): VaultContentsItem => ({
             id: group.id,
             title: group.getTitle(),
             type: "group" as const
         })),
-        ...entries.map(entry => ({
+        ...entries.map((entry: Entry): VaultContentsItem => ({
             id: entry.id,
             title: entry.getProperty("title") as string,
-            type: "entry" as const
+            type: "entry" as const,
+            entryType: entry.getType(),
+            entryProperties: entry.getProperties()
         }))
     ];
 }

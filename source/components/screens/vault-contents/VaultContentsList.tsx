@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { Icon, Layout, List, ListItem, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { Icon, List, ListItem } from "@ui-kitten/components";
+import { EntryType } from "buttercup";
 import { VaultContentsItem } from "../../../types";
 import { GroupID } from "buttercup";
 
@@ -29,10 +30,29 @@ const styles = StyleSheet.create({
     listContainer: {}
 });
 
+function prepareEntrySubtitle(item: VaultContentsItem): string {
+    switch (item.entryType) {
+        case EntryType.Login:
+            return item.entryProperties?.username ?? null;
+        case EntryType.Website: {
+            const items = [];
+            item.entryProperties?.username && items.push(item.entryProperties.username);
+            item.entryProperties?.url && items.push(item.entryProperties.url);
+            return items.join(" @ ") || null;
+        }
+        case EntryType.CreditCard:
+            return item.entryProperties?.username ?? null;
+        case EntryType.SSHKey:
+        case EntryType.Note:
+        default:
+            return null;
+    }
+}
+
 function prepareListContents(items: Array<VaultContentsItem>): Array<VaultContentsItemDisplay> {
     return items.map(item => ({
         title: item.title,
-        subtitle: "Nothing here yet",
+        subtitle: item.type === "group" ? null : prepareEntrySubtitle(item),
         icon: item.type === "group" ? "folder-outline" : "file-outline",
         sourceItem: item
     }));
@@ -46,30 +66,28 @@ function renderItem(info: RenderInfo, navigation: any, groupID?: GroupID) {
             description={item.subtitle}
             accessoryLeft={props => renderItemIcon(props, item.icon)}
             onPress={() => {
-                if (groupID) {
-                    if (item.sourceItem.type === "group") {
-                        navigation.push(
-                            "VaultContents",
-                            {
-                                groupID: item.sourceItem.id
-                            }
-                        );
-                    } else {
-                        // Entry
-                        navigation.push(
-                            "EntryDetails",
-                            {
-                                entryID: item.sourceItem.id,
-                                groupID
-                            }
-                        );
-                    }
-                } else if (item.sourceItem.groupID && item.sourceItem.type === "entry") {
+                if (!groupID && item.sourceItem.groupID && item.sourceItem.type === "entry") {
                     navigation.push(
                         "EntryDetails",
                         {
                             entryID: item.sourceItem.id,
                             groupID: item.sourceItem.groupID
+                        }
+                    );
+                } else if (item.sourceItem.type === "group") {
+                    navigation.push(
+                        "VaultContents",
+                        {
+                            groupID: item.sourceItem.id
+                        }
+                    );
+                } else if (groupID && item.sourceItem.type === "entry") {
+                    // Entry
+                    navigation.push(
+                        "EntryDetails",
+                        {
+                            entryID: item.sourceItem.id,
+                            groupID
                         }
                     );
                 }
