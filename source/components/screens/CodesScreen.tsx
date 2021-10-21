@@ -1,19 +1,11 @@
-import React, { useCallback, useMemo } from "react";
-import { Dimensions, Platform, SafeAreaView, StyleSheet, View } from "react-native";
-import { Card, Divider, Layout, List, Spinner, Text } from "@ui-kitten/components";
+import React, { useContext, useMemo } from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Card, Layout, List, Text } from "@ui-kitten/components";
 import AnimatedProgressWheel from "react-native-progress-wheel";
+import { CodeDigits } from "./codes/CodeDigits";
 import { useTabFocusState } from "../../hooks/vaultTab";
-
-const CARD_SCALE_WIDTH_BASE = 300;
-
-const { MONO_FONT } = Platform.select({
-    ios: {
-        MONO_FONT: "Courier New"
-    },
-    android: {
-        MONO_FONT: "monospace"
-    }
-});
+import { OTPContext } from "../../contexts/otp";
+import { OTPCode } from "../../types";
 
 const styles = StyleSheet.create({
     listContainer: {
@@ -38,20 +30,12 @@ const styles = StyleSheet.create({
     }
 });
 
-const renderHeader = (props, info) => (
+const renderHeader = (props, info: { item: OTPCode }) => (
     <View {...props}>
-        <Text category='s1'>{info.item.title}</Text>
-        <Text category='s2'>{info.item.subtitle}</Text>
+        <Text category='s1'>{info.item.entryTitle}</Text>
+        <Text category='s2'>{info.item.otpTitle}</Text>
     </View>
 );
-
-const data = new Array(8).fill({
-    title: "Some Code",
-    subtitle: "Perry's website login",
-    code: "873 230",
-    time: 3,
-    timeMax: 30
-});
 
 function codeColour(percent: number): string {
     if (percent < 20) {
@@ -62,8 +46,8 @@ function codeColour(percent: number): string {
     return "#79de79";
 }
 
-function renderItem(info) {
-    const percent = (info.item.time / info.item.timeMax) * 100;
+function renderItem(info: { item: OTPCode }) {
+    const percent = (info.item.timeLeft / info.item.period) * 100;
     return (
         <View style={{ flex: 1, marginTop: 5, marginBottom: 5 }}>
             <Card
@@ -71,7 +55,7 @@ function renderItem(info) {
                 footer={props => renderHeader(props, info)}
             >
                 <View style={styles.cardContentMain}>
-                    <Text category="h1" style={{ fontFamily: MONO_FONT }}>{info.item.code}</Text>
+                    <CodeDigits code={info.item.currentCode} />
                     <AnimatedProgressWheel
                         size={40}
                         width={5}
@@ -87,6 +71,9 @@ function renderItem(info) {
 
 export function CodesScreen() {
     useTabFocusState("codes", "Codes");
+    const {
+        otpCodes
+    } = useContext(OTPContext);
     const renderWrapper = useMemo(() =>
         renderItem,
         []
@@ -97,7 +84,7 @@ export function CodesScreen() {
                 <List
                     style={styles.listContainer}
                     contentContainerStyle={styles.contentContainer}
-                    data={data}
+                    data={otpCodes}
                     renderItem={renderWrapper}
                 />
             </Layout>

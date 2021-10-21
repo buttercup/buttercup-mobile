@@ -1,8 +1,10 @@
 import path from "path-browserify";
 import {
     Credentials,
+    Entry,
     EntryFacade,
     EntryID,
+    EntryPropertyValueType,
     GroupID,
     Vault,
     VaultManager,
@@ -14,11 +16,12 @@ import {
     createEntryFromFacade
 } from "buttercup";
 import { initAppEnv } from "./appEnv";
-import { setBusyState } from "../services/busyState";
-import { getAsyncStorage } from "../services/storage";
-import { updateSearchCaches } from "../services/search";
+import { setBusyState } from "./busyState";
+import { getAsyncStorage } from "./storage";
+import { updateSearchCaches } from "./search";
+import { setCodesForSource } from "./otp";
 import { notifyError } from "../library/notifications";
-import { DatasourceConfig, VaultChooserItem, VaultDetails } from "../types";
+import { DatasourceConfig, OTP, VaultChooserItem, VaultDetails } from "../types";
 
 const __watchedVaultSources: Array<VaultSourceID> = [];
 let __mgr: VaultManager = null;
@@ -59,9 +62,10 @@ async function attachVaultManagerWatchers() {
         notifyError("Auto update failed", `Update failed for source: ${source.name}`);
     });
     vaultManager.on("sourcesUpdated", async () => {
-        vaultManager.unlockedSources.forEach((source) => {
+        vaultManager.sources.forEach((source) => {
             if (!__watchedVaultSources.includes(source.id)) {
                 source.on("updated", () => onVaultSourceUpdated(source));
+                source.on("unlocked", () => onVaultSourceUpdated(source));
                 __watchedVaultSources.push(source.id);
             }
         });
@@ -93,6 +97,23 @@ export async function deleteGroup(sourceID: VaultSourceID, groupID: GroupID): Pr
     }
     group.delete();
     await source.save();
+}
+
+function extractVaultOTPItems(source: VaultSource): Array<OTP> {
+    return source.vault.getAllEntries().reduce((output: Array<OTP>, entry: Entry) => {
+        const properties = entry.getProperties();
+        for (const key in properties) {
+            if (entry.getPropertyValueType(key) !== EntryPropertyValueType.OTP) continue;
+            output.push({
+                sourceID: source.id,
+                entryID: entry.id,
+                entryProperty: key,
+                entryTitle: properties.title,
+                otpURL: properties[key]
+            });
+        }
+        return output;
+    }, []);
 }
 
 export function getEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {
@@ -130,6 +151,12 @@ export async function initialise() {
 function onVaultSourceUpdated(source: VaultSource) {
     // clearFacadeCache(source.id);
     // notifyWindowsOfSourceUpdate(source.id);
+    if (source.status === VaultSourceStatus.Unlocked) {
+        const otpItems = extractVaultOTPItems(source);
+        setCodesForSource(source.id, otpItems);
+    } else if (source.status === VaultSourceStatus.Locked) {
+
+    }
 }
 
 export async function removeVaultSource(sourceID: VaultSourceID) {

@@ -1,6 +1,12 @@
 import { EntryID, EntryType, GroupID, PropertyKeyValueObject, VaultSourceID, VaultSourceStatus } from "buttercup";
+import {
+    ReactChild,
+    ReactChildren
+} from "react";
 
 export { FSItem } from "@buttercup/file-interface";
+
+export type ChildElements = ReactChild | ReactChildren | Array<ReactChild> | Array<ReactChildren>;
 
 export interface DatasourceConfig {
     endpoint?: string;
@@ -24,6 +30,23 @@ export interface IntermediateVault {
     name: string;
     type: string;
     authToken?: string;
+}
+
+export interface OTPCode extends OTP {
+    id: string;
+    currentCode: string;
+    otpTitle: string;
+    period: number;
+    timeLeft: number;
+    valid: boolean;
+}
+
+export interface OTP {
+    sourceID: VaultSourceID;
+    entryID: EntryID;
+    entryProperty: string;
+    entryTitle: string;
+    otpURL: string;
 }
 
 export type StoredAutofillEntries = Record<EntryID, IntermediateEntry>;
