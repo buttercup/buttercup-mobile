@@ -1,16 +1,16 @@
-import React, { useContext, useMemo } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import Clipboard from "@react-native-community/clipboard";
 import { Card, Layout, List, Text } from "@ui-kitten/components";
 import AnimatedProgressWheel from "react-native-progress-wheel";
 import { CodeDigits } from "./codes/CodeDigits";
+import { notifySuccess } from "../../library/notifications";
 import { useTabFocusState } from "../../hooks/vaultTab";
 import { OTPContext } from "../../contexts/otp";
 import { OTPCode } from "../../types";
 
 const styles = StyleSheet.create({
-    listContainer: {
-    //   maxHeight: 320,
-    },
+    listContainer: {},
     contentContainer: {
       paddingHorizontal: 8,
       paddingVertical: 4,
@@ -46,13 +46,14 @@ function codeColour(percent: number): string {
     return "#79de79";
 }
 
-function renderItem(info: { item: OTPCode }) {
+function renderItem(info: { item: OTPCode }, onCodePress: (item: OTPCode) => void) {
     const percent = (info.item.timeLeft / info.item.period) * 100;
     return (
         <View style={{ flex: 1, marginTop: 5, marginBottom: 5 }}>
             <Card
-                style={styles.card}
                 footer={props => renderHeader(props, info)}
+                onPress={() => onCodePress(info.item)}
+                style={styles.card}
             >
                 <View style={styles.cardContentMain}>
                     <CodeDigits code={info.item.currentCode} />
@@ -74,8 +75,12 @@ export function CodesScreen() {
     const {
         otpCodes
     } = useContext(OTPContext);
+    const handleItemPress = useCallback((code: OTPCode) => {
+        Clipboard.setString(code.currentCode);
+        notifySuccess("Code Copied", `'${code.otpTitle}' code was copied`);
+    }, []);
     const renderWrapper = useMemo(() =>
-        renderItem,
+        info => renderItem(info, handleItemPress),
         []
     );
     return (

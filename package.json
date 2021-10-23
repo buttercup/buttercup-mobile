@@ -16,6 +16,7 @@
     "@eva-design/eva": "^2.1.0",
     "@hookstate/core": "^3.0.8",
     "@react-native-async-storage/async-storage": "^1.15.5",
+    "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
