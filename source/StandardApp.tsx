@@ -8,26 +8,23 @@ import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import "./polyfill/textEncoding";
 import { initialise as initialiseButtercup } from "./services/buttercup";
+import { initialise as initialiseLinking } from "./services/linking";
 import { ApplicationProvider, IconRegistry, Layout, Spinner } from "@ui-kitten/components";
 import { AppNavigator } from "./components/navigation/HomeNavigator";
 import { BusyStatus } from "./components/notifications/BusyStatus";
 import { Toaster } from "./components/notifications/Toaster";
-import { useInitialURL } from "./hooks/linking";
 
 async function initialise() {
     LogBox.ignoreLogs([
         "VirtualizedLists should never be nested"
     ]);
     await initialiseButtercup();
+    await initialiseLinking();
 }
 
 export function StandardApp() {
     const isDarkMode = useColorScheme() === "dark";
     const [initialised, setInitialised] = useState(false);
-    const {
-        url,
-        processing: urlProcessing
-    } = useInitialURL();
     useEffect(() => {
         let mounted = true;
         initialise()
@@ -43,9 +40,6 @@ export function StandardApp() {
             mounted = false;
         };
     }, []);
-    useEffect(() => {
-        console.log("URL", url, urlProcessing);
-    }, [url, urlProcessing]);
     return (
         <ApplicationProvider {...eva} theme={isDarkMode ? eva.dark : eva.light}>
             <IconRegistry icons={EvaIconsPack} />
