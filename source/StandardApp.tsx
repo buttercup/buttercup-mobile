@@ -12,6 +12,7 @@ import { ApplicationProvider, IconRegistry, Layout, Spinner } from "@ui-kitten/c
 import { AppNavigator } from "./components/navigation/HomeNavigator";
 import { BusyStatus } from "./components/notifications/BusyStatus";
 import { Toaster } from "./components/notifications/Toaster";
+import { useInitialURL } from "./hooks/linking";
 
 async function initialise() {
     LogBox.ignoreLogs([
@@ -23,6 +24,10 @@ async function initialise() {
 export function StandardApp() {
     const isDarkMode = useColorScheme() === "dark";
     const [initialised, setInitialised] = useState(false);
+    const {
+        url,
+        processing: urlProcessing
+    } = useInitialURL();
     useEffect(() => {
         let mounted = true;
         initialise()
@@ -38,6 +43,9 @@ export function StandardApp() {
             mounted = false;
         };
     }, []);
+    useEffect(() => {
+        console.log("URL", url, urlProcessing);
+    }, [url, urlProcessing]);
     return (
         <ApplicationProvider {...eva} theme={isDarkMode ? eva.dark : eva.light}>
             <IconRegistry icons={EvaIconsPack} />
