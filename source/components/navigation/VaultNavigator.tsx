@@ -11,8 +11,6 @@ import {
 import { GroupID } from "buttercup";
 import { useState as useHookState } from "@hookstate/core";
 import { useFocusedTab } from "../../hooks/vaultTab";
-import { useSourceOTPItems } from "../../hooks/otp";
-import { OTPProvider } from "../../contexts/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { createNewGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
@@ -65,7 +63,6 @@ export function VaultNavigator({ navigation }) {
     const [focusedTab, focusedTabTitle] = useFocusedTab();
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const currentSourceState = useHookState(CURRENT_SOURCE);
-    const sourceOTPItems = useSourceOTPItems(currentSourceState.get());
     const handleGroupCreate = useCallback(async (groupName: string) => {
         setBusyState("Creating group");
         setPromptGroupCreate(false);
@@ -109,11 +106,7 @@ export function VaultNavigator({ navigation }) {
                         </>
                     )}
                 />
-                <OTPProvider
-                    otpItems={sourceOTPItems}
-                >
-                    <TabNavigator />
-                </OTPProvider>
+                <TabNavigator />
             </SafeAreaView>
             <TextPrompt
                 cancelable

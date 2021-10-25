@@ -3,6 +3,8 @@ import { SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { withStyles } from "@ui-kitten/components";
+import { useState as useHookState } from "@hookstate/core";
+import { OTPProvider } from "../../contexts/otp";
 import { HomeScreen } from "../screens/HomeScreen";
 import { VaultManagementScreen } from "../screens/VaultManagementScreen";
 import { AboutScreen } from "../screens/AboutScreen";
@@ -12,6 +14,8 @@ import { EntryDetailsScreen } from "../screens/EntryDetailsScreen";
 import { EditEntryScreen } from "../screens/EditEntryScreen";
 import { CoverScreen } from "../screens/CoverScreen";
 import { VaultNavigator } from "./VaultNavigator";
+import { useSourceOTPItems } from "../../hooks/otp";
+import { CURRENT_SOURCE } from "../../state/vault";
 import { rootNavigationRef } from "../../state/navigation";
 
 const { Navigator, Screen } = createStackNavigator();
@@ -42,10 +46,16 @@ const _ThemedSafeAreaView = ({ eva }) => (
 );
 const ThemedSafeAreaView = withStyles(_ThemedSafeAreaView);
 
-export const AppNavigator = ({ eva }) => (
-    <NavigationContainer ref={rootNavigationRef}>
-        <ThemedSafeAreaView eva={eva} />
-        <HomeNavigator />
-        <ThemedSafeAreaView eva={eva} />
-    </NavigationContainer>
-);
+export function AppNavigator({ eva }) {
+    const currentSourceState = useHookState(CURRENT_SOURCE);
+    const sourceOTPItems = useSourceOTPItems(currentSourceState.get());
+    return (
+        <NavigationContainer ref={rootNavigationRef}>
+            <ThemedSafeAreaView eva={eva} />
+                <OTPProvider otpItems={sourceOTPItems}>
+                    <HomeNavigator />
+                </OTPProvider>
+            <ThemedSafeAreaView eva={eva} />
+        </NavigationContainer>
+    );
+}

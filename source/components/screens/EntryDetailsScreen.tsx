@@ -1,5 +1,5 @@
 import React, { Fragment, useMemo, useState } from "react";
-import { Platform, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { EntryPropertyType, EntryPropertyValueType } from "buttercup";
 import {
     Button,
@@ -13,34 +13,16 @@ import {
     TopNavigationAction
 } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
+import { EntryFieldValue, VisibleField } from "./vault-contents/EntryFieldValue";
 import { useEntryFacade } from "../../hooks/buttercup";
+import { useEntryOTPCodes } from "../../hooks/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { humanReadableEntryType } from "../../library/entry";
-
-interface FieldValueProps {
-    info: VisibleField;
-}
-
-interface VisibleField {
-    key: string;
-    removeable: boolean;
-    title: string;
-    value: string;
-    valueType: EntryPropertyValueType;
-}
 
 const MENU_ITEMS = [
     { text: "Edit Entry", slug: "edit", icon: "edit-outline" },
     { text: "Delete Entry", slug: "delete", icon: "trash-2-outline", disabled: true }
 ];
-const { MONO_FONT } = Platform.select({
-    ios: {
-        MONO_FONT: "Courier New"
-    },
-    android: {
-        MONO_FONT: "monospace"
-    }
-});
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
 
@@ -55,26 +37,10 @@ const styles = StyleSheet.create({
         marginTop: 15,
         width: "100%"
     },
-    fieldValueLayout: {
-        marginRight: 0,
-        marginLeft: "auto"
-    },
-    fieldValueLayoutNote: {
-        padding: 4,
-        width: "100%"
-    },
     menuContent: {},
-    passwordValue: {
-        fontFamily: MONO_FONT,
-        fontSize: 16,
-        fontWeight: "600"
-    },
     scrollView: {
         paddingHorizontal: 14,
         paddingVertical: 7
-    },
-    textValue: {
-        fontSize: 16
     }
 });
 
@@ -125,7 +91,7 @@ function MenuIcon(props) {
 }
 
 export function EntryDetailsScreen({ navigation, route }) {
-    const { entryID = null, groupID } = route?.params ?? {};
+    const { entryID, groupID } = route?.params ?? {};
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const entryFacade = useEntryFacade(currentSourceState.get(), entryID);
     const title = useMemo(() => {
@@ -137,6 +103,7 @@ export function EntryDetailsScreen({ navigation, route }) {
         if (!entryFacade) return "";
         return entryFacade.type ? humanReadableEntryType(entryFacade.type) : "Unknown entry type";
     }, [entryFacade]);
+    const entryOTPs = useEntryOTPCodes(entryID);
     const visibleFields: Array<VisibleField> = useMemo(() => {
         if (!entryFacade) return [];
         return entryFacade.fields.reduce<Array<VisibleField>>((output, field) => {
@@ -146,6 +113,7 @@ export function EntryDetailsScreen({ navigation, route }) {
                 ...output,
                 {
                     key: field.id,
+                    property: field.property,
                     removeable: field.removeable,
                     title: field.title || field.property,
                     value: field.value,
@@ -178,7 +146,10 @@ export function EntryDetailsScreen({ navigation, route }) {
                                     {field.valueType !== EntryPropertyValueType.Note && (
                                         <Text category="h6">{field.title}</Text>
                                     )}
-                                    <FieldValue info={field} />
+                                    <EntryFieldValue
+                                        info={field}
+                                        otp={entryOTPs[field.property] || null}
+                                    />
                                 </Layout>
                                 {index < (visibleFields.length - 1) && (
                                     <Divider key={`d${field.key}`} />
@@ -189,43 +160,5 @@ export function EntryDetailsScreen({ navigation, route }) {
                 </ScrollView>
             </Layout>
         </SafeAreaView>
-    );
-}
-
-function FieldValue(props: FieldValueProps) {
-    const { info } = props;
-    if (info.valueType === EntryPropertyValueType.Note) {
-        return (
-            <Layout level="2" style={styles.fieldValueLayoutNote}>
-                <Text
-                    numberOfLines={0}
-                    style={styles.textValue}
-                >
-                    {info.value}
-                </Text>
-            </Layout>
-        );
-    }
-    return (
-        <Layout style={styles.fieldValueLayout}>
-            {info.valueType === EntryPropertyValueType.Password && (
-                <Text
-                    numberOfLines={1}
-                    style={styles.passwordValue}
-                >
-                    {info.value}
-                </Text>
-            )}
-            {info.valueType === EntryPropertyValueType.Text && (
-                <Text
-                    category="p1"
-                    dataDetectorType="all"
-                    numberOfLines={1}
-                    style={styles.textValue}
-                >
-                    {info.value}
-                </Text>
-            )}
-        </Layout>
     );
 }

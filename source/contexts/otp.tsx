@@ -18,8 +18,6 @@ export function OTPProvider(props: OTPProviderProps) {
     const [otpCodes, setOTPCodes] = useState<Array<OTPCode>>([]);
     useEffect(() => {
         setOTPCodes(props.otpItems.map(item => updateCode(item)));
-    }, [props.otpItems]);
-    useEffect(() => {
         const interval = setInterval(() => {
             setOTPCodes(props.otpItems.map(item => updateCode(item)));
         }, 1000);
