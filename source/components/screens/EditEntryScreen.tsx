@@ -8,7 +8,6 @@ import {
     IndexPath,
     Input,
     Layout,
-    Menu,
     MenuItem,
     OverflowMenu,
     Select,
@@ -20,10 +19,13 @@ import {
 import { useState as useHookState } from "@hookstate/core";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { TextPrompt } from "../prompts/TextPrompt";
+import { ItemsPrompt, PromptItem } from "../prompts/ItemsPrompt";
 import { notifyError, notifySuccess } from "../../library/notifications";
+import { usePendingOTPs } from "../../hooks/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { getEntryFacade, saveExistingEntryChanges, saveNewEntry } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
+import { PendingOTP } from "../../services/otp";
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
 const DeleteIcon = props => <Icon {...props} name="trash-2-outline" />;
@@ -54,6 +56,9 @@ const { MONO_FONT } = Platform.select({
 });
 
 const styles = StyleSheet.create({
+    additionalButton: {
+        marginTop: 8
+    },
     bodyLayout: {
         flex: 1
     },
@@ -90,9 +95,7 @@ const styles = StyleSheet.create({
         width: 36
     },
     passwordInput: {
-        fontFamily: MONO_FONT,
-        // fontSize: 16,
-        // fontWeight: "600"
+        fontFamily: MONO_FONT
     },
     scrollView: {
         paddingHorizontal: 14,
@@ -159,6 +162,16 @@ export function EditEntryScreen({ navigation, route }) {
     const [confirmDeleteFieldID, setConfirmDeleteFieldID] = useState<string>(null);
     const [promptingNewField, setPromptingNewField] = useState(false);
     const [changeTypeFieldID, setChangeTypeFieldID] = useState<string>(null);
+    const {
+        pendingOTPs,
+        removePendingOTP
+    } = usePendingOTPs();
+    const [promptingPendingOTP, setPromptingPendingOTP] = useState(false);
+    const pendingOTPItems: Array<PromptItem> = useMemo(() => pendingOTPs.map((pendingOTP: PendingOTP) => ({
+        title: pendingOTP.title,
+        slug: pendingOTP.uri,
+        icon: "keypad-outline"
+    })), [pendingOTPs]);
     const handleFieldValueChange = useCallback((fieldID: string, newValue: string) => {
         setChanged(true);
         setEntryFacade({
@@ -188,7 +201,7 @@ export function EditEntryScreen({ navigation, route }) {
             handleCancelEditConfirm();
         }
     }, [changed, handleCancelEditConfirm]);
-    const handleNewFieldAdd = useCallback((name: string) => {
+    const handleNewFieldAdd = useCallback((name: string, value: string = "", valueType: EntryPropertyValueType = EntryPropertyValueType.Text) => {
         const matchingField = entryFacade.fields.find(field => field.property === name && field.propertyType === EntryPropertyType.Property);
         if (matchingField) {
             notifyError("Field already exists", `A field with the name '${name}' already exists. Please choose another name.`);
@@ -197,8 +210,9 @@ export function EditEntryScreen({ navigation, route }) {
         setPromptingNewField(false);
         const newField = createFieldDescriptor(null, name, EntryPropertyType.Property, name, {
             removeable: true,
-            valueType: EntryPropertyValueType.Text
+            valueType
         });
+        newField.value = value;
         setEntryFacade({
             ...entryFacade,
             fields: [
@@ -254,6 +268,14 @@ export function EditEntryScreen({ navigation, route }) {
                 notifyError("Failed saving entry", err.message);
             });
     }, [currentSourceState.get(), entryFacade, groupID, navigation]);
+    const handleAddOTP = useCallback((item: PromptItem) => {
+        handleNewFieldAdd(
+            item.title,
+            item.slug, // URI
+            EntryPropertyValueType.OTP
+        );
+        removePendingOTP(item.slug);
+    }, [handleNewFieldAdd]);
     useEffect(() => {
         if (entryFacade) return;
         if (!entryID) {
@@ -353,6 +375,23 @@ export function EditEntryScreen({ navigation, route }) {
                     >
                         Add Field
                     </Button>
+                    {pendingOTPs.length > 0 && (
+                        <>
+                            <Button
+                                onPress={() => setPromptingPendingOTP(true)}
+                                status="basic"
+                                style={styles.additionalButton}
+                            >
+                                Add detected OTP
+                            </Button>
+                            <ItemsPrompt
+                                items={pendingOTPItems}
+                                onCancel={() => setPromptingPendingOTP(false)}
+                                onSelect={(item: PromptItem) => handleAddOTP(item)}
+                                visible={promptingPendingOTP}
+                            />
+                        </>
+                    )}
                 </ScrollView>
             </Layout>
             <ConfirmPrompt

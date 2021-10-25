@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { EntryID, VaultSourceID } from "buttercup";
 import { OTPContext } from "../contexts/otp";
-import { getCodes, getEmitter } from "../services/otp";
+import { PendingOTP, getCodes, getEmitter, getPendingOTPs, removePendingOTP } from "../services/otp";
 import { OTP, OTPCode } from "../types";
 
 export function useEntryOTPCodes(entryID: EntryID): { [key: string]: OTPCode } {
@@ -20,6 +20,25 @@ export function useEntryOTPCodes(entryID: EntryID): { [key: string]: OTPCode } {
         [otpCodes]
     );
     return entryCodes;
+}
+
+export function usePendingOTPs() {
+    const [pendingOTPs, setPendingOTPs] = useState<Array<PendingOTP>>([]);
+    const emitter = useMemo(getEmitter, []);
+    useEffect(() => {
+        const cb = () => {
+            setPendingOTPs(getPendingOTPs());
+        };
+        emitter.on("pending", cb);
+        cb();
+        return () => {
+            emitter.off("pending", cb);
+        };
+    }, [emitter]);
+    return {
+        pendingOTPs,
+        removePendingOTP
+    };
 }
 
 export function useSourceOTPItems(sourceID?: VaultSourceID): Array<OTP> {

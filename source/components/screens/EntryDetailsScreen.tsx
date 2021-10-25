@@ -1,6 +1,6 @@
-import React, { Fragment, useMemo, useState } from "react";
+import React, { Fragment, useCallback, useMemo, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { EntryPropertyType, EntryPropertyValueType } from "buttercup";
+import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID } from "buttercup";
 import {
     Button,
     Divider,
@@ -44,12 +44,19 @@ const styles = StyleSheet.create({
     }
 });
 
-function MenuButton(props) {
-    const { entryID, groupID, navigation } = props;
-    const [visible, setVisible] = useState(false);
+interface MenuButtonProps {
+    entryID: EntryID;
+    groupID: GroupID;
+    navigation: any;
+    onVisibleChange: (visible: boolean) => void;
+    visible: boolean;
+}
+
+function MenuButton(props: MenuButtonProps) {
+    const { entryID, groupID, navigation, onVisibleChange, visible } = props;
     const onItemSelect = selected => {
         const item = MENU_ITEMS[selected.row];
-        setVisible(false);
+        onVisibleChange(false);
         if (item.slug === "edit") {
             navigation.navigate("EditEntry", {
                 entryID,
@@ -62,7 +69,8 @@ function MenuButton(props) {
             {...props}
             appearance="ghost"
             accessoryLeft={MenuIcon}
-            onPress={() => setVisible(true)}
+            onPress={() => onVisibleChange(true)}
+            status="basic"
         />
     );
     return (
@@ -71,7 +79,7 @@ function MenuButton(props) {
                 anchor={renderToggleButton}
                 visible={visible}
                 onSelect={onItemSelect}
-                onBackdropPress={() => setVisible(false)}
+                onBackdropPress={() => onVisibleChange(false)}
             >
                 {MENU_ITEMS.map(item => (
                     <MenuItem
@@ -94,6 +102,7 @@ export function EntryDetailsScreen({ navigation, route }) {
     const { entryID, groupID } = route?.params ?? {};
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const entryFacade = useEntryFacade(currentSourceState.get(), entryID);
+    const [entryMenuVisible, setEntryMenuVisible] = useState(false);
     const title = useMemo(() => {
         if (!entryFacade) return "";
         const titleField = entryFacade.fields.find(field => field.property === "title" && field.propertyType === EntryPropertyType.Property);
@@ -126,13 +135,21 @@ export function EntryDetailsScreen({ navigation, route }) {
         navigation.goBack();
     };
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={navigateBack} />;
+    const EntryMenu = useCallback(props => <MenuButton
+        {...props}
+        entryID={entryID}
+        groupID={groupID}
+        navigation={navigation}
+        onVisibleChange={setEntryMenuVisible}
+        visible={entryMenuVisible}
+    />, [entryID, groupID, entryMenuVisible]);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation
                 title={title}
                 alignment="center"
                 accessoryLeft={BackAction}
-                accessoryRight={props => <MenuButton {...props} entryID={entryID} groupID={groupID} navigation={navigation} />}
+                accessoryRight={EntryMenu}
             />
             <Divider />
             <Layout style={styles.bodyLayout}>

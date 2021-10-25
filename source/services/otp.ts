@@ -4,7 +4,7 @@ import { HOTP, URI as OTPURI } from "otpauth";
 import { notifyError} from "../library/notifications";
 import { OTP } from "../types";
 
-interface PendingOTP {
+export interface PendingOTP {
     title: string;
     uri: string;
 }
@@ -12,10 +12,6 @@ interface PendingOTP {
 const __emitter = new EventEmitter();
 let __pendingOTPs: Array<PendingOTP> = [],
     __otpCodes: Array<OTP> = [];
-
-export function removePendingOTP(uri: string) {
-    __pendingOTPs = __pendingOTPs.filter(item => item.uri !== uri);
-}
 
 export function getCodes(): Array<OTP> {
     return __otpCodes;
@@ -34,6 +30,11 @@ export function removeCodesForSource(
 ) {
     __otpCodes = __otpCodes.filter(item => item.sourceID !== sourceID);
     __emitter.emit("updated");
+}
+
+export function removePendingOTP(uri: string) {
+    __pendingOTPs = __pendingOTPs.filter(item => item.uri !== uri);
+    __emitter.emit("pending");
 }
 
 export function setCodesForSource(
@@ -55,6 +56,7 @@ export function storePendingOTPURI(uri: string): boolean {
             title: otp.label,
             uri
         });
+        __emitter.emit("pending");
     } catch (err) {
         notifyError("OTP Failure", err.message);
         return false;
