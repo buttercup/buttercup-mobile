@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Icon, List, ListItem } from "@ui-kitten/components";
-import { EntryType } from "buttercup";
+import { EntryType, EntryURLType, GroupID, PropertyKeyValueObject, getEntryURLs } from "buttercup";
+import { SiteIcon } from "../../media/SiteIcon";
+import { extractDomain } from "../../../library/url";
 import { VaultContentsItem } from "../../../types";
-import { GroupID } from "buttercup";
 
 interface RenderInfo {
     item: VaultContentsItemDisplay;
@@ -30,6 +31,14 @@ const styles = StyleSheet.create({
     listContainer: {}
 });
 
+function getEntryDomain(entryProperties: PropertyKeyValueObject): string | null {
+    const [url] = [
+      ...getEntryURLs(entryProperties, EntryURLType.Icon),
+      ...getEntryURLs(entryProperties, EntryURLType.Any)
+    ];
+    return url ? extractDomain(url) : null;
+}
+
 function prepareEntrySubtitle(item: VaultContentsItem): string {
     switch (item.entryType) {
         case EntryType.Login:
@@ -53,7 +62,7 @@ function prepareListContents(items: Array<VaultContentsItem>): Array<VaultConten
     return items.map(item => ({
         title: item.title,
         subtitle: item.type === "group" ? null : prepareEntrySubtitle(item),
-        icon: item.type === "group" ? "folder-outline" : "file-outline",
+        icon: item.type === "group" ? "folder-outline" : null,
         sourceItem: item
     }));
 }
@@ -64,7 +73,19 @@ function renderItem(info: RenderInfo, navigation: any, groupID?: GroupID) {
         <ListItem
             title={item.title}
             description={item.subtitle}
-            accessoryLeft={props => renderItemIcon(props, item.icon)}
+            accessoryLeft={
+                item.icon
+                    ? (
+                        <Icon name={item.icon} />
+                    )
+                    : (
+                        <SiteIcon
+                            domain={getEntryDomain(item.sourceItem.entryProperties ?? {})}
+                            size={28}
+                            type={item.sourceItem.entryType || EntryType.Login}
+                        />
+                    )
+            }
             onPress={() => {
                 if (!groupID && item.sourceItem.groupID && item.sourceItem.type === "entry") {
                     navigation.push(
@@ -93,12 +114,6 @@ function renderItem(info: RenderInfo, navigation: any, groupID?: GroupID) {
                 }
             }}
         />
-    );
-}
-
-function renderItemIcon(props, icon) {
-    return (
-        <Icon {...props} name={icon} />
     );
 }
 

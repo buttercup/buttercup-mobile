@@ -9,6 +9,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import "./polyfill/textEncoding";
 import { initialise as initialiseButtercup } from "./services/buttercup";
 import { initialise as initialiseLinking } from "./services/linking";
+import { initialise as initialiseIconCache } from "./services/iconCache";
 import { ApplicationProvider, IconRegistry, Layout, Spinner } from "@ui-kitten/components";
 import { AppNavigator } from "./components/navigation/HomeNavigator";
 import { BusyStatus } from "./components/notifications/BusyStatus";
@@ -20,6 +21,7 @@ async function initialise() {
     ]);
     await initialiseButtercup();
     await initialiseLinking();
+    initialiseIconCache();
 }
 
 export function StandardApp() {
