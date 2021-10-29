@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
     card: {
         margin: 16
     },
+    headerContainer: {
+        padding: 6
+    },
     noVaultContainer: {
         flex: 1,
         flexDirection: "column",
@@ -45,9 +48,18 @@ const styles = StyleSheet.create({
         textAlign: "center",
         width: "100%"
     },
-    tumbleweed: {
+    placeholderImage: {
         width: "33%",
         height: 160
+    },
+    vaultName: {
+        marginBottom: 4
+    },
+    vaultProperty: {
+        // flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start"
     }
 });
 
@@ -72,8 +84,9 @@ function VaultCardFooter(props) {
 function VaultCardHeader(props) {
     const { vault } = props;
     return (
-        <View>
-            <Text category="h4">{vault.name}</Text>
+        <View style={styles.headerContainer}>
+            <Text style={styles.vaultName} category="h6">{vault.name}</Text>
+            <Text category="s2">WebDAV vault</Text>
         </View>
     );
 }
@@ -147,9 +160,47 @@ export function VaultMenu(props: VaultMenuProps) {
                                     footer={props => <VaultCardFooter {...props} vault={vault} />}
                                     header={props => <VaultCardHeader {...props} vault={vault} />}
                                     onPress={() => handleVaultPress(vault)}
+                                    status={vault.state === VaultSourceStatus.Unlocked ? "success" : "danger"}
                                     style={styles.card}
                                 >
-                                    <Text>Some Vault</Text>
+                                    {[
+                                        { key: "Groups", value: 12 },
+                                        { key: "Entries", value: 87 },
+                                        { key: "Attachments", value: 6 },
+                                        { key: "Vault Size", value: "14.6 KiB" },
+                                        { key: "Offline Cache", value: "Yes" },
+                                        { key: "Last Unlock", value: "Success" },
+                                        { key: "Last Attempt", value: "12th Oct, 7:14 PM" }
+                                    ].map(({ key, value }, index) => (
+                                        <Layout level={index % 2 ? "2" : "1"} style={styles.vaultProperty}>
+                                            <Text category="label">{key}</Text>
+                                            <Text category="c1">{value}</Text>
+                                        </Layout>
+                                    ))}
+                                    {/* <Layout level="1" style={styles.vaultProperty}>
+                                        <Text category="label">Groups</Text>
+                                        <Text category="c1">12</Text>
+                                    </Layout>
+                                    <Layout level="2" style={styles.vaultProperty}>
+                                        <Text category="label">Entries</Text>
+                                        <Text category="c1">76</Text>
+                                    </Layout>
+                                    <Layout level="1" style={styles.vaultProperty}>
+                                        <Text category="label">Attachments</Text>
+                                        <Text category="c1">4</Text>
+                                    </Layout>
+                                    <Layout level="2" style={styles.vaultProperty}>
+                                        <Text category="label">Offline Cache</Text>
+                                        <Text category="c1">Yes</Text>
+                                    </Layout>
+                                    <Layout level="1" style={styles.vaultProperty}>
+                                        <Text category="label">Last Unlock</Text>
+                                        <Text category="c1">Success</Text>
+                                    </Layout>
+                                    <Layout level="2" style={styles.vaultProperty}>
+                                        <Text category="label">Last Attempt</Text>
+                                        <Text category="c1">12th Oct, 7:14 PM</Text>
+                                    </Layout> */}
                                 </Card>
                             </Layout>
                         ))}
@@ -162,7 +213,7 @@ export function VaultMenu(props: VaultMenuProps) {
                     <Image
                         resizeMode="contain"
                         source={BCUP_BENCH_IMG}
-                        style={styles.tumbleweed}
+                        style={styles.placeholderImage}
                     />
                     <Text category="h4" style={styles.noVaultHeading}>No Vaults</Text>
                     <Text category="p1" style={styles.noVaultText}>There aren't any vaults here yet. Why not add one?</Text>
