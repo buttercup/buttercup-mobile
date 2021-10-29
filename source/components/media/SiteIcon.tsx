@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { DEFAULT_ENTRY_TYPE, EntryType } from "buttercup";
 
@@ -24,6 +24,12 @@ const ICON_TYPES = {
   [EntryType.CreditCard]: ICON_CREDITCARD
 };
 
+const styles = StyleSheet.create({
+    imageContainer: {
+        overflow: "hidden"
+    }
+});
+
 export function SiteIcon(props: SiteIconProps) {
     const {
         domain,
@@ -31,13 +37,12 @@ export function SiteIcon(props: SiteIconProps) {
         type = DEFAULT_ENTRY_TYPE
     } = props;
     return (
-        <View>
+        <View style={styles.imageContainer}>
             {domain && (
                 <CachedImage
                     loadingSource={ICON_TYPES[type]}
                     source={`${ICON_LOOKUP}${encodeURIComponent(domain)}`}
                     style={{ height: size, width: size }}
-                    // thumbnailSource="https://via.placeholder.com/350x150"
                 />
             )}
             {!domain && (
