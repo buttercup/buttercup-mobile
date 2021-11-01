@@ -172,35 +172,11 @@ export function VaultMenu(props: VaultMenuProps) {
                                         { key: "Last Unlock", value: "Success" },
                                         { key: "Last Attempt", value: "12th Oct, 7:14 PM" }
                                     ].map(({ key, value }, index) => (
-                                        <Layout level={index % 2 ? "2" : "1"} style={styles.vaultProperty}>
+                                        <Layout level={index % 2 ? "2" : "1"} style={styles.vaultProperty} key={key}>
                                             <Text category="label">{key}</Text>
                                             <Text category="c1">{value}</Text>
                                         </Layout>
                                     ))}
-                                    {/* <Layout level="1" style={styles.vaultProperty}>
-                                        <Text category="label">Groups</Text>
-                                        <Text category="c1">12</Text>
-                                    </Layout>
-                                    <Layout level="2" style={styles.vaultProperty}>
-                                        <Text category="label">Entries</Text>
-                                        <Text category="c1">76</Text>
-                                    </Layout>
-                                    <Layout level="1" style={styles.vaultProperty}>
-                                        <Text category="label">Attachments</Text>
-                                        <Text category="c1">4</Text>
-                                    </Layout>
-                                    <Layout level="2" style={styles.vaultProperty}>
-                                        <Text category="label">Offline Cache</Text>
-                                        <Text category="c1">Yes</Text>
-                                    </Layout>
-                                    <Layout level="1" style={styles.vaultProperty}>
-                                        <Text category="label">Last Unlock</Text>
-                                        <Text category="c1">Success</Text>
-                                    </Layout>
-                                    <Layout level="2" style={styles.vaultProperty}>
-                                        <Text category="label">Last Attempt</Text>
-                                        <Text category="c1">12th Oct, 7:14 PM</Text>
-                                    </Layout> */}
                                 </Card>
                             </Layout>
                         ))}
