@@ -12,6 +12,7 @@ export interface DatasourceConfig {
     endpoint?: string;
     password?: string;
     path?: string;
+    token?: string;
     type: string;
     username?: string;
 }
