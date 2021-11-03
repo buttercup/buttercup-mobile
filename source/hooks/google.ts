@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getEmitter } from "../services/dropbox";
+import { getEmitter } from "../services/google";
+import { GoogleOAuthToken } from "../types";
 
-export function useDropboxToken(): string | null {
-    const [token, setToken] = useState<string>(null);
+export function useGoogleToken(): GoogleOAuthToken | null {
+    const [token, setToken] = useState<GoogleOAuthToken>(null);
     const emitter = useMemo(getEmitter, []);
-    const onToken = useCallback((payload: { token: string }) => {
+    const onToken = useCallback((payload: { token: GoogleOAuthToken }) => {
         if (payload?.token) setToken(payload.token);
     }, []);
     useEffect(() => {

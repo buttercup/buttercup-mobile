@@ -2,17 +2,24 @@ import { Linking } from "react-native";
 import { URL, URLSearchParams } from "react-native-url-polyfill";
 import joinURL from "url-join";
 import { getEmitter as getDropboxEmitter } from "./dropbox";
+import { processCodeExchange as processGoogleDriveCodeExchange } from "./google";
 import { notifyError, notifySuccess } from "../library/notifications";
 import { storePendingOTPURI } from "./otp";
 
 const URI_PROTO_BUTTERCUP = "buttercup://";
 const URI_PROTO_OTPAUTH = "otpauth://";
 
-// Example Buttercup redirect:
+// Example Dropbox redirect:
 //  buttercup://auth/dropbox/#token_type=bearer&
 //      access_token=onP0etlMO--snip--&
 //      uid=2--snip--&
 //      account_id=dbid%3AAAD--snip--
+
+// Example Google redirect:
+//  https://buttercup.pw/auth/google/?code=4/0AX4X--snip--&
+//      scope=email%20profile%20https://www.googleapis.com/auth/drive.file%20openid%20--snip--
+//      authuser=0&
+//      prompt=consent
 
 function extractHashProperties(url: URL): { [key: string]: string } {
     const hashProps = (url.hash || "").replace(/^#/, "").split("&");
@@ -23,6 +30,15 @@ function extractHashProperties(url: URL): { [key: string]: string } {
             [key]: value
         };
     }, {});
+}
+
+function extractQueryProperties(url: URL): { [key: string]: string } {
+    const params: URLSearchParams = url.searchParams;
+    const output = {};
+    for (const [name, value] of params) {
+        output[name] = value;
+    }
+    return output;
 }
 
 function handleURLChange(url: string) {
@@ -62,6 +78,13 @@ function processButtercupURL(url: URL) {
                 access_token: accessToken
             } = extractHashProperties(url);
             getDropboxEmitter().emit("token", { token: accessToken });
+            break;
+        }
+        case "/auth/google": {
+            const {
+                code: authCode
+            } = extractQueryProperties(url);
+            processGoogleDriveCodeExchange(authCode);
             break;
         }
         default:

@@ -14,6 +14,7 @@
   "dependencies": {
     "@buttercup/dropbox-client": "^0.6.0",
     "@buttercup/file-interface": "^0.3.3",
+    "@buttercup/google-oauth2-client": "^0.3.0",
     "@eva-design/eva": "^2.1.0",
     "@georstat/react-native-image-cache": "^1.2.8",
     "@hookstate/core": "^3.0.8",
@@ -42,6 +43,7 @@
     "pretty-bytes": "^5.6.0",
     "react": "17.0.1",
     "react-native": "0.64.2",
+    "react-native-config": "^1.4.5",
     "react-native-credit-card-input": "^0.4.1",
     "react-native-dots-pagination": "^0.2.0",
     "react-native-file-access": "^1.7.1",

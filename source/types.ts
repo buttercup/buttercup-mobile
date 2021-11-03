@@ -10,11 +10,20 @@ export type ChildElements = ReactChild | ReactChildren | Array<ReactChild> | Arr
 
 export interface DatasourceConfig {
     endpoint?: string;
+    fileID?: string;
     password?: string;
     path?: string;
+    refreshToken?: string;
     token?: string;
     type: string;
     username?: string;
+}
+
+export interface GoogleOAuthToken {
+    accessToken: string;
+    expiryDate: number;
+    refreshToken: string;
+    tokenType: string;
 }
 
 export interface IntermediateEntry {
