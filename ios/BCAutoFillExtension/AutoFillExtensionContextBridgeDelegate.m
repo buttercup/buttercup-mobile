@@ -1,6 +1,6 @@
 //
-//  AutoFillBridgeDelegate.m
-//  BCAutoFillExtension
+//  AutoFillBridgeDelegate.h
+//  Buttercup
 //
 //  Created by Jacob Morris on 6/1/19.
 //
@@ -43,7 +43,7 @@
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
-    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+    return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 }
 
 - (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge

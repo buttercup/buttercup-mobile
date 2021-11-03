@@ -10,8 +10,16 @@ module.exports = {
         getTransformOptions: async () => ({
             transform: {
                 experimentalImportSupport: false,
-                inlineRequires: false
+                inlineRequires: true
             }
         })
+    },
+    resolver: {
+        extraNodeModules: {
+            crypto: require.resolve("crypto-browserify"),
+            path: require.resolve("path-browserify"),
+            stream: require.resolve("stream-browserify")
+        },
+        sourceExts: ["jsx", "js", "ts", "tsx"]
     }
 };

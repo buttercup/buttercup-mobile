@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('bcpkix-jdk15on-1.56.0.0.jar'))

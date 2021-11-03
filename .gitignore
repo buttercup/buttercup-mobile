@@ -44,12 +44,8 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
-android/app/libs
 *.keystore
-
-# VSCode
-.history
-.vscode
+!debug.keystore
 
 # fastlane
 #
@@ -64,3 +60,13 @@ android/app/libs
 
 # Bundle artifact
 *.jsbundle
+
+# VSCode
+.history
+.vscode
+
+# CocoaPods
+/ios/Pods/
+
+# General
+.env

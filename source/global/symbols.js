@@ -1,1 +1,0 @@
-export const ERROR_CODE_DECRYPT_ERROR = "DECRYPT_ERROR";

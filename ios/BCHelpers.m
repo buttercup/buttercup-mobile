@@ -16,6 +16,10 @@
 
 @implementation BCHelpers
 
++ (NSString*)base64FromData:(NSData*)data {
+    return [data base64EncodedStringWithOptions:0];
+}
+
 + (char *)characterArrayFromHexString:(NSString *)hexString {
     char * myBuffer = (char *)malloc((int)[hexString length] / 2 + 1);
     bzero(myBuffer, [hexString length] / 2 + 1);
@@ -38,6 +42,10 @@
         sentinel |= [reference characterAtIndex:i] ^ [challenger characterAtIndex:i];
     }
     return sentinel == 0;
+}
+
++ (NSData *)dataFromBase64:(NSString *)b64 {
+    return [[NSData alloc]initWithBase64EncodedString:b64 options:0];
 }
 
 + (NSData *)dataFromHexString:(NSString *)string {
@@ -70,18 +78,6 @@
         [hexString appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
     }
     return [NSString stringWithString:hexString];
-}
-
-+ (NSError *)newErrorObject {
-    // Create the error.
-    NSString *domain = @"pw.buttercup.mobile.Crypto";
-    int errorCode = 4;
-    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-    [userInfo setObject:@"Crypto Error" forKey:NSLocalizedDescriptionKey];
-
-    // Populate the error reference.
-    NSError* error = [[NSError alloc] initWithDomain:domain code:errorCode userInfo:userInfo];
-    return error;
 }
 
 @end
