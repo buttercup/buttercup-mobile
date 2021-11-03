@@ -90,7 +90,10 @@ async function attachVaultManagerWatchers() {
         vaultManager.sources.forEach((source) => {
             if (!__watchedVaultSources.includes(source.id)) {
                 source.on("updated", () => onVaultSourceUpdated(source));
-                source.on("unlocked", () => onVaultSourceUpdated(source));
+                source.on("unlocked", () => {
+                    onVaultSourceUpdated(source);
+                    onVaultSourceUnlocked(source);
+                });
                 __watchedVaultSources.push(source.id);
             }
         });
@@ -179,6 +182,18 @@ export async function initialise() {
     initAppEnv();
     await attachVaultManagerWatchers();
     await getVaultManager().rehydrate();
+}
+
+function onVaultSourceUnlocked(source: VaultSource) {
+    // Reorder sources
+    const vaultMgr = getVaultManager();
+    vaultMgr
+        .reorderSource(source.id, 0)
+        .then(() => vaultMgr.dehydrate())
+        .catch(err => {
+            console.error(err);
+            notifyError("Failed reordering vaults", err.message);
+        });
 }
 
 function onVaultSourceUpdated(source: VaultSource) {

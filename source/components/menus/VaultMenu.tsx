@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Image, SafeAreaView, StyleSheet, View } from "react-native";
 import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { Button, Card, Layout, Text, ViewPager } from "@ui-kitten/components";
@@ -11,6 +11,7 @@ import { getVaultSource, unlockSourceByID } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { storeCredentialsForVault } from "../../services/intermediateCredentials";
 import { authenticateBiometrics, getBiometricCredentialsForSource } from "../../services/biometrics";
+import { VAULT_TYPES } from "../../library/buttercup";
 import { VaultDetails } from "../../types";
 
 const BCUP_BENCH_IMG = require("../../../resources/images/bcup-bench.png");
@@ -30,7 +31,22 @@ const styles = StyleSheet.create({
         margin: 16
     },
     headerContainer: {
-        padding: 6
+        padding: 6,
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "stretch"
+    },
+    headerContent: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start"
+    },
+    headerImage: {
+        flexGrow: 0,
+        flexShrink: 0,
+        height: "100%",
+        width: 42,
+        marginRight: 10
     },
     noVaultContainer: {
         flex: 1,
@@ -52,9 +68,7 @@ const styles = StyleSheet.create({
         width: "33%",
         height: 160
     },
-    vaultName: {
-        marginBottom: 4
-    },
+    vaultName: {},
     vaultProperty: {
         // flex: 1,
         flexDirection: "row",
@@ -83,10 +97,17 @@ function VaultCardFooter(props) {
 
 function VaultCardHeader(props) {
     const { vault } = props;
+    const {
+        title: vaultTypeName,
+        icon: vaultTypeIcon
+    } = VAULT_TYPES[vault.type];
     return (
         <View style={styles.headerContainer}>
-            <Text style={styles.vaultName} category="h6">{vault.name}</Text>
-            <Text category="s2">WebDAV vault</Text>
+            <Image source={vaultTypeIcon} style={styles.headerImage} />
+            <View style={styles.headerContent}>
+                <Text style={styles.vaultName} category="h6">{vault.name}</Text>
+                <Text category="s2">{`${vaultTypeName} vault`}</Text>
+            </View>
         </View>
     );
 }
@@ -102,7 +123,7 @@ export function VaultMenu(props: VaultMenuProps) {
     const vaults: Array<VaultDetails> = useVaults(vaultsOverride);
     const [unlockVaultTarget, setUnlockVaultTarget] = useState<VaultSourceID>(null);
     const biometricsEnabled = useBiometricsAvailable();
-    const vaultTargetHasBiometrics = useBiometricsEnabledForSource(vaults.length > 0 ? vaults[selectedIndex].id : null);
+    const vaultTargetHasBiometrics = useBiometricsEnabledForSource(vaults.length > 0 && vaults[selectedIndex] ? vaults[selectedIndex].id : null);
     const handlePageSelect = useCallback(index => {
         setSelectedIndex(index);
     }, []);
@@ -114,6 +135,7 @@ export function VaultMenu(props: VaultMenuProps) {
         setUnlockVaultTarget(null);
         handleVaultUnlock(sourceID, password)
             .then(() => {
+                setSelectedIndex(0);
                 onVaultOpen(sourceID);
             })
             .catch(err => {
