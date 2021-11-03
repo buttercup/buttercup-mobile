@@ -97,7 +97,7 @@ export function AddVaultConfirmation(props: AddVaultConfirmationProps) {
                         disabled={disabled}
                         label="Vault Password"
                         onChangeText={setPassword}
-                        placeholder="Account password"
+                        placeholder="Enter password..."
                         secureTextEntry
                         style={styles.input}
                         value={password}

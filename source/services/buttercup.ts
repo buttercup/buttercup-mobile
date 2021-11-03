@@ -26,7 +26,32 @@ import { DatasourceConfig, OTP, VaultChooserItem, VaultDetails } from "../types"
 const __watchedVaultSources: Array<VaultSourceID> = [];
 let __mgr: VaultManager = null;
 
+async function addDropboxVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+    const isNew = !vaultPath.identifier;
+    const { name: filename } = vaultPath;
+    const filePath = vaultPath.parent
+        ? path.join(vaultPath.parent.identifier, filename)
+        : path.join("/", filename);
+    const sourceCredentials = Credentials.fromDatasource({
+        ...config,
+        path: filePath
+    }, password);
+    const sourceCredentialsRaw = await sourceCredentials.toSecureString();
+    const vaultMgr = getVaultManager();
+    const source = new VaultSource(filenameToVaultName(filename), config.type, sourceCredentialsRaw);
+    await vaultMgr.addSource(source);
+    setBusyState("Unlocking Vault");
+    await source.unlock(
+        Credentials.fromPassword(password),
+        {
+            initialiseRemote: isNew
+        }
+    );
+    return source.id;
+}
+
 export async function addVault(type: string, config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+    if (type === "dropbox") return addDropboxVault(config, vaultPath, password);
     if (type === "webdav") return addWebDAVVault(config, vaultPath, password);
     throw new Error(`Unknown vault type: ${type}`);
 }
@@ -43,7 +68,7 @@ async function addWebDAVVault(config: DatasourceConfig, vaultPath: VaultChooserI
     }, password);
     const sourceCredentialsRaw = await sourceCredentials.toSecureString();
     const vaultMgr = getVaultManager();
-    const source = new VaultSource(filename, config.type, sourceCredentialsRaw);
+    const source = new VaultSource(filenameToVaultName(filename), config.type, sourceCredentialsRaw);
     await vaultMgr.addSource(source);
     setBusyState("Unlocking Vault");
     await source.unlock(
@@ -114,6 +139,14 @@ function extractVaultOTPItems(source: VaultSource): Array<OTP> {
         }
         return output;
     }, []);
+}
+
+function filenameToVaultName(filename: string): string {
+    let output = filename;
+    if (/\//.test(output)) {
+        output = output.split("/").pop();
+    }
+    return output.replace(/\.bcup$/i, "") || filename;
 }
 
 export function getEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {

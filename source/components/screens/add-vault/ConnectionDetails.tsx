@@ -10,7 +10,7 @@ import {
 import { useDropboxToken } from "../../../hooks/dropbox";
 import { useGoogleToken } from "../../../hooks/google";
 import { setBusyState } from "../../../services/busyState";
-import { disableCurrentInterface, prepareWebDAVInterface } from "../../../services/fileBrowser";
+import { disableCurrentInterface, prepareDropboxInterface, prepareWebDAVInterface } from "../../../services/fileBrowser";
 import { generateAuthorisationURL as generateDropboxAuthorisationURL } from "../../../services/dropbox";
 import { generateAuthorisationURL as generateGoogleDriveAuthorisationURL } from "../../../services/google";
 import { webdavConnectionValid } from "../../../library/webdav";
@@ -76,12 +76,14 @@ function DropboxConnection(props: ConnectionDetailsProps) {
     const dropboxToken = useDropboxToken();
     const dropboxAuthURL: string = useMemo(generateDropboxAuthorisationURL, []);
     const handleAuthorisation = useCallback(() => {
+        disableCurrentInterface();
         Linking.openURL(dropboxAuthURL);
         setStatus(DropboxState.Connecting);
     }, [dropboxAuthURL]);
     useEffect(() => {
         if (dropboxToken) {
             setStatus(DropboxState.Connected);
+            prepareDropboxInterface(dropboxToken);
             onCanContinue(true, {
                 token: dropboxToken,
                 type: vaultType
@@ -121,6 +123,7 @@ function GoogleDriveConnection(props: ConnectionDetailsProps) {
     const googleDriveToken = useGoogleToken();
     const googleAuthURL: string = useMemo(generateGoogleDriveAuthorisationURL, []);
     const handleAuthorisation = useCallback(() => {
+        disableCurrentInterface();
         Linking.openURL(googleAuthURL);
         setStatus(GoogleState.Connecting);
     }, [googleAuthURL]);
@@ -174,12 +177,6 @@ function WebDAVConnection(props: ConnectionDetailsProps) {
         disableCurrentInterface();
         webdavConnectionValid(url, username, password).then(([isValid, errMsg]) => {
             setBusyState(null);
-            onCanContinue(isValid, {
-                endpoint: url,
-                username,
-                password,
-                type: vaultType
-            });
             if (isValid) {
                 notifySuccess("Connection succeeded", "WebDAV connection test succeeded");
                 prepareWebDAVInterface(url, username, password);
@@ -187,6 +184,12 @@ function WebDAVConnection(props: ConnectionDetailsProps) {
                 notifyError("Connection failed", "WebDAV connection test failed");
                 setConnecting(false);
             }
+            onCanContinue(isValid, {
+                endpoint: url,
+                username,
+                password,
+                type: vaultType
+            });
         });
     }, [url, username, password, vaultType]);
     useEffect(() => {
