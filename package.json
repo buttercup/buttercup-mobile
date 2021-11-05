@@ -15,6 +15,7 @@
     "@buttercup/dropbox-client": "^0.6.0",
     "@buttercup/file-interface": "^0.3.3",
     "@buttercup/google-oauth2-client": "^0.3.0",
+    "@buttercup/googledrive-client": "^1.2.0",
     "@eva-design/eva": "^2.1.0",
     "@georstat/react-native-image-cache": "^1.2.8",
     "@hookstate/core": "^3.0.8",

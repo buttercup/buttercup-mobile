@@ -6,6 +6,7 @@ import {
     EntryID,
     EntryPropertyValueType,
     GroupID,
+    TextDatasource,
     Vault,
     VaultManager,
     VaultSource,
@@ -20,6 +21,7 @@ import { setBusyState } from "./busyState";
 import { getAsyncStorage } from "./storage";
 import { updateSearchCaches } from "./search";
 import { setCodesForSource } from "./otp";
+import { writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
 import { DatasourceConfig, OTP, VaultChooserItem, VaultDetails } from "../types";
 
@@ -50,8 +52,33 @@ async function addDropboxVault(config: DatasourceConfig, vaultPath: VaultChooser
     return source.id;
 }
 
+async function addGoogleDriveVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+    const isNew = !vaultPath?.identifier;
+    const { name: filename } = vaultPath;
+    const fileID = isNew
+        ? await writeNewEmptyVault(config.token, vaultPath.parent?.identifier ?? null, filename, password)
+        : vaultPath.identifier;
+    const sourceCredentials = Credentials.fromDatasource({
+        ...config,
+        fileID
+    }, password);
+    const sourceCredentialsRaw = await sourceCredentials.toSecureString();
+    const vaultMgr = getVaultManager();
+    const source = new VaultSource(filenameToVaultName(filename), config.type, sourceCredentialsRaw);
+    await vaultMgr.addSource(source);
+    setBusyState("Unlocking Vault");
+    await source.unlock(
+        Credentials.fromPassword(password),
+        {
+            initialiseRemote: isNew
+        }
+    );
+    return source.id;
+}
+
 export async function addVault(type: string, config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
     if (type === "dropbox") return addDropboxVault(config, vaultPath, password);
+    if (type === "googledrive") return addGoogleDriveVault(config, vaultPath, password);
     if (type === "webdav") return addWebDAVVault(config, vaultPath, password);
     throw new Error(`Unknown vault type: ${type}`);
 }
@@ -150,6 +177,13 @@ function filenameToVaultName(filename: string): string {
         output = output.split("/").pop();
     }
     return output.replace(/\.bcup$/i, "") || filename;
+}
+
+export async function getEmptyVault(password: string): Promise<string> {
+    const creds = Credentials.fromPassword(password);
+    const vault = Vault.createWithDefaults();
+    const tds = new TextDatasource(Credentials.fromPassword(password));
+    return tds.save(vault.format.getHistory(), creds);
 }
 
 export function getEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {

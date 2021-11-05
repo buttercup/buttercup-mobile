@@ -1,7 +1,9 @@
 import Config from "react-native-config";
 import { OAuth2Client } from "@buttercup/google-oauth2-client";
+import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
 import EventEmitter from "eventemitter3";
 import { notifyError } from "../library/notifications";
+import { getEmptyVault } from "./buttercup";
 import { GoogleOAuthToken } from "../types";
 
 const CLIENT_WEB = Config.GOOGLE_CLIENT_ID;
@@ -56,4 +58,21 @@ export function processCodeExchange(code: string) {
             console.error(err);
             notifyError("Google Authentication failed", err.message);
         });
+}
+
+export async function writeNewEmptyVault(
+    accessToken: string,
+    parentIdentifier: string | null,
+    filename: string,
+    password: string
+): Promise<string> {
+    const emptyVault = await getEmptyVault(password);
+    const client = createGoogleDriveClient(accessToken);
+    const fileID = await client.putFileContents({
+        contents: emptyVault,
+        id: null,
+        name: filename,
+        parent: parentIdentifier
+    });
+    return fileID;
 }

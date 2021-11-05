@@ -10,7 +10,7 @@ import {
 import { useDropboxToken } from "../../../hooks/dropbox";
 import { useGoogleToken } from "../../../hooks/google";
 import { setBusyState } from "../../../services/busyState";
-import { disableCurrentInterface, prepareDropboxInterface, prepareWebDAVInterface } from "../../../services/fileBrowser";
+import { disableCurrentInterface, prepareDropboxInterface, prepareGoogleDriveInterface, prepareWebDAVInterface } from "../../../services/fileBrowser";
 import { generateAuthorisationURL as generateDropboxAuthorisationURL } from "../../../services/dropbox";
 import { generateAuthorisationURL as generateGoogleDriveAuthorisationURL } from "../../../services/google";
 import { webdavConnectionValid } from "../../../library/webdav";
@@ -130,6 +130,7 @@ function GoogleDriveConnection(props: ConnectionDetailsProps) {
     useEffect(() => {
         if (googleDriveToken) {
             setStatus(GoogleState.Connected);
+            prepareGoogleDriveInterface(googleDriveToken.accessToken);
             onCanContinue(true, {
                 token: googleDriveToken.accessToken,
                 refreshToken: googleDriveToken.refreshToken,
