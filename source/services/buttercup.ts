@@ -21,7 +21,7 @@ import { setBusyState } from "./busyState";
 import { getAsyncStorage } from "./storage";
 import { updateSearchCaches } from "./search";
 import { setCodesForSource } from "./otp";
-import { writeNewEmptyVault } from "./google";
+import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
 import { DatasourceConfig, OTP, VaultChooserItem, VaultDetails } from "../types";
 
@@ -216,6 +216,7 @@ export async function initialise() {
     initAppEnv();
     await attachVaultManagerWatchers();
     await getVaultManager().rehydrate();
+    registerGoogleAuthWatchers();
 }
 
 function onVaultSourceUnlocked(source: VaultSource) {

@@ -1,4 +1,5 @@
 import Config from "react-native-config";
+import { DatasourceAuthManager, GoogleDriveDatasource } from "buttercup";
 import { OAuth2Client } from "@buttercup/google-oauth2-client";
 import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
 import EventEmitter from "eventemitter3";
@@ -58,6 +59,17 @@ export function processCodeExchange(code: string) {
             console.error(err);
             notifyError("Google Authentication failed", err.message);
         });
+}
+
+export function registerAuthWatchers() {
+    DatasourceAuthManager.getSharedManager().registerHandler("googledrive", async (datasource: GoogleDriveDatasource) => {
+        const { refreshToken: currentRefreshToken } = datasource;
+        const client = getClient();
+        const { tokens } = await client.refreshAccessToken(currentRefreshToken);
+        const accessToken = tokens.access_token;
+        const refreshToken = tokens.refresh_token || currentRefreshToken;
+        datasource.updateTokens(accessToken, refreshToken);
+    });
 }
 
 export async function writeNewEmptyVault(
