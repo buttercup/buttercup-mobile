@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Entry, EntryFacade, EntryID, Group, Vault, VaultSourceID, createEntryFacade, GroupID, EntryType } from "buttercup";
 import { useBiometricsEnabledForSource } from "./biometrics";
 import { getVault, getVaultManager, getVaultSource, sourceHasOfflineCopy } from "../services/buttercup";
+import { getEmitter as getStatisticsEmitter, getSourceItemsCount } from "../services/statistics";
 import { VaultContentsItem, VaultDetails } from "../types";
 
 interface VaultStatistics {
@@ -86,22 +87,32 @@ export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string 
 export function useVaultStatistics(sourceID: VaultSourceID): VaultStatistics {
     const sourceUsesBiometrics = useBiometricsEnabledForSource(sourceID);
     const [offlineAvailable, setOfflineAvailable] = useState<boolean>(false);
+    const [numEntries, setNumEntries] = useState<number>(0);
+    const [numGroups, setNumGroups] = useState<number>(0);
+    const statisticsEmitter = useMemo(getStatisticsEmitter, []);
     const updateCallback = useCallback(async () => {
-        const hasOffline = await sourceHasOfflineCopy(sourceID);
+        const [hasOffline, itemsCount] = await Promise.all([
+            sourceHasOfflineCopy(sourceID),
+            getSourceItemsCount(sourceID)
+        ]);
         setOfflineAvailable(hasOffline);
+        setNumEntries(itemsCount.entries);
+        setNumGroups(itemsCount.groups);
     }, [sourceID]);
     useEffect(() => {
         const vaultManager = getVaultManager();
         vaultManager.on("sourcesUpdated", updateCallback);
+        statisticsEmitter.on(`updated:${sourceID}`, updateCallback);
         updateCallback();
         return () => {
             vaultManager.off("sourcesUpdated", updateCallback);
+            statisticsEmitter.off(`updated:${sourceID}`, updateCallback);
         };
-    }, [updateCallback, sourceID]);
+    }, [sourceID, statisticsEmitter, updateCallback]);
     return {
         authMethod: sourceUsesBiometrics ? "biometrics" : "password",
-        numEntries: 0,
-        numGroups: 0,
+        numEntries,
+        numGroups,
         offlineAvailable
     };
 }

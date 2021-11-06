@@ -21,6 +21,7 @@ import { setBusyState } from "./busyState";
 import { getAsyncStorage } from "./storage";
 import { updateSearchCaches } from "./search";
 import { setCodesForSource } from "./otp";
+import { updateSourceItemsCount } from "./statistics";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
 import { DatasourceConfig, OTP, VaultChooserItem, VaultDetails } from "../types";
@@ -220,6 +221,10 @@ export async function initialise() {
 }
 
 function onVaultSourceUnlocked(source: VaultSource) {
+    // Count stats
+    const numEntries = source.vault.getAllEntries().length;
+    const numGroups = source.vault.getAllGroups().length;
+    updateSourceItemsCount(source.id, numEntries, numGroups);
     // Reorder sources
     const vaultMgr = getVaultManager();
     vaultMgr
