@@ -5,21 +5,30 @@
  * @format
  */
 
-module.exports = {
-    transformer: {
-        getTransformOptions: async () => ({
-            transform: {
-                experimentalImportSupport: false,
-                inlineRequires: true
-            }
-        })
-    },
-    resolver: {
-        extraNodeModules: {
-            crypto: require.resolve("crypto-browserify"),
-            path: require.resolve("path-browserify"),
-            stream: require.resolve("stream-browserify")
+ const { getDefaultConfig } = require("metro-config");
+
+module.exports = (async () => {
+    const {
+        resolver: { assetExts }
+    } = await getDefaultConfig();
+    return {
+        transformer: {
+            babelTransformerPath: require.resolve("react-native-svg-transformer"),
+            getTransformOptions: async () => ({
+                transform: {
+                    experimentalImportSupport: false,
+                    inlineRequires: true
+                }
+            })
         },
-        sourceExts: ["jsx", "js", "ts", "tsx"]
-    }
-};
+        resolver: {
+            assetExts: assetExts.filter(ext => ext !== "svg"),
+            extraNodeModules: {
+                crypto: require.resolve("crypto-browserify"),
+                path: require.resolve("path-browserify"),
+                stream: require.resolve("stream-browserify")
+            },
+            sourceExts: ["jsx", "js", "ts", "tsx", "svg"]
+        }
+    };
+})();

@@ -5,6 +5,10 @@ import { VaultSourceStatus } from "buttercup";
 import { VAULT_TYPES } from "../../../library/buttercup";
 import { VaultDetails } from "../../../types";
 
+import FingerprintIcon from "../../../../resources/images/icons/fingerprint.svg";
+import PasswordIcon from "../../../../resources/images/icons/password.svg";
+import WifiOffIcon from "../../../../resources/images/icons/wifi-off.svg";
+
 interface VaultMenuItemProps {
     onActivate: () => void;
     vault: VaultDetails;
@@ -19,7 +23,7 @@ const themedStyles = StyleService.create({
     card: {
         width: "86%",
         maxWidth: 340,
-        shadowColor: "color-basic-700", //BRAND_COLOUR, //"color-success-hover-border",
+        shadowColor: "color-basic-700",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -117,45 +121,44 @@ export function VaultMenuItem(props: VaultMenuItemProps) {
     return (
         <View style={styles.container}>
             <TouchableOpacity activeOpacity={0.7} onPress={handleTouchActivation} style={styles.card}>
-                {/* <View style={styles.card}> */}
-                    <View style={styles.tallContainer}>
-                        <Avatar
-                            size="giant"
-                            source={vaultTypeIcon}
-                            style={styles.avatar}
-                        />
-                        <Text category="h5">{vault.name}</Text>
-                        <Text category="s2">{vaultTypeName}</Text>
-                        <View style={styles.statusContainer}>
-                            {vault.state === VaultSourceStatus.Unlocked && (
-                                <>
-                                    <Icon name="unlock" fill={unlockedColour} style={styles.statusIcon} />
-                                    <Text category="c2">Unlocked</Text>
-                                </>
-                            )}
-                            {vault.state === VaultSourceStatus.Locked && (
-                                <>
-                                    <Icon name="lock" fill={lockedColour} style={styles.statusIcon} />
-                                    <Text category="c2">Locked</Text>
-                                </>
-                            )}
-                        </View>
+                <View style={styles.tallContainer}>
+                    <Avatar
+                        size="giant"
+                        source={vaultTypeIcon}
+                        style={styles.avatar}
+                    />
+                    <Text category="h5">{vault.name}</Text>
+                    <Text category="s2">{vaultTypeName}</Text>
+                    <View style={styles.statusContainer}>
+                        {vault.state === VaultSourceStatus.Unlocked && (
+                            <>
+                                <Icon name="unlock" fill={unlockedColour} style={styles.statusIcon} />
+                                <Text category="c2">Unlocked</Text>
+                            </>
+                        )}
+                        {vault.state === VaultSourceStatus.Locked && (
+                            <>
+                                <Icon name="lock" fill={lockedColour} style={styles.statusIcon} />
+                                <Text category="c2">Locked</Text>
+                            </>
+                        )}
                     </View>
-                    <View style={styles.smallContainers}>
-                        <View style={[styles.smallContainer, styles.smallContainerAbove]}>
-                            <Text category="h6" style={styles.smallHeading}>18</Text>
-                            <Text category="c1" style={styles.smallSubtitle}>Entries</Text>
-                        </View>
-                        <View style={[styles.smallContainer, styles.smallContainerAbove]}>
-                            <Text category="h6" style={styles.smallHeading}>8</Text>
-                            <Text category="c1" style={styles.smallSubtitle}>Groups</Text>
-                        </View>
-                        <View style={styles.smallContainer}>
-                            <Text category="h6" style={styles.smallHeading}>2</Text>
-                            <Text category="c1" style={styles.smallSubtitle}>Attachments</Text>
-                        </View>
+                </View>
+                <View style={styles.smallContainers}>
+                    <View style={[styles.smallContainer, styles.smallContainerAbove]}>
+                        <Text category="h6" style={styles.smallHeading}>18</Text>
+                        <Text category="c1" style={styles.smallSubtitle}>Entries</Text>
                     </View>
-                {/* </View> */}
+                    <View style={[styles.smallContainer, styles.smallContainerAbove]}>
+                        <Text category="h6" style={styles.smallHeading}>8</Text>
+                        <Text category="c1" style={styles.smallSubtitle}>Groups</Text>
+                    </View>
+                    <View style={styles.smallContainer}>
+                        <FingerprintIcon fill="#fff" width={20} height={20} />
+                        <PasswordIcon fill="#fff" width={20} height={20} />
+                        <WifiOffIcon fill="#fff" width={20} height={20} />
+                    </View>
+                </View>
             </TouchableOpacity>
         </View>
     );
