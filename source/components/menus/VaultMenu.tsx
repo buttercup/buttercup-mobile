@@ -43,9 +43,20 @@ const styles = StyleSheet.create({
         textAlign: "center",
         width: "100%"
     },
+    outerContainer: {
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "stretch"
+    },
     placeholderImage: {
         width: "33%",
         height: 160
+    },
+    vaultContainer: {
+        height: "100%",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        paddingBottom: 8
     }
 });
 
@@ -118,18 +129,16 @@ export function VaultMenu(props: VaultMenuProps) {
         [biometricsEnabled, handleUnlockPromptComplete, onVaultOpen, vaultTargetHasBiometrics]
     );
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.outerContainer}>
             {vaults.length > 0 && (
-                <>
+                <Layout level="2" style={styles.vaultContainer}>
                     <ViewPager selectedIndex={selectedIndex} onSelect={handlePageSelect}>
                         {vaults.map(vault => (
-                            <Layout key={vault.id} level="2">
-                                <VaultMenuItem onActivate={() => handleVaultPress(vault)} vault={vault} />
-                            </Layout>
+                            <VaultMenuItem key={vault.id} onActivate={() => handleVaultPress(vault)} vault={vault} />
                         ))}
                     </ViewPager>
                     <Dots length={vaults.length} active={selectedIndex} />
-                </>
+                </Layout>
             )}
             {vaults.length === 0 && (
                 <Layout style={styles.noVaultContainer}>
