@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import {
-    Button,
     Icon,
     Input,
     Layout,

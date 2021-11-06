@@ -34,17 +34,12 @@ interface VaultChooserProps {
 const AddVaultIcon = props => <Icon {...props} name="file-add-outline" />;
 
 const styles = StyleSheet.create({
-    listContainer: {
-    //   maxHeight: 320,
-    },
+    listContainer: {},
     card: {
         flex: 1,
         padding: 0
     },
-    contentContainer: {
-    //   paddingHorizontal: 8,
-    //   paddingVertical: 4,
-    },
+    contentContainer: {},
     item: {
       marginVertical: 4,
     },

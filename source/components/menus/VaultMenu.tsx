@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Image, SafeAreaView, StyleSheet, View } from "react-native";
+import React, { useCallback, useState } from "react";
+import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { VaultSourceID, VaultSourceStatus } from "buttercup";
-import { Button, Card, Layout, Text, ViewPager } from "@ui-kitten/components";
+import { Button, Layout, Text, ViewPager } from "@ui-kitten/components";
 import Dots from "react-native-dots-pagination";
 import { TextPrompt } from "../prompts/TextPrompt";
+import { VaultMenuItem } from "./vault-menu/VaultMenuItem";
 import { useVaults } from "../../hooks/buttercup";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
 import { notifyError } from "../../library/notifications";
@@ -11,7 +12,6 @@ import { getVaultSource, unlockSourceByID } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { storeCredentialsForVault } from "../../services/intermediateCredentials";
 import { authenticateBiometrics, getBiometricCredentialsForSource } from "../../services/biometrics";
-import { VAULT_TYPES } from "../../library/buttercup";
 import { VaultDetails } from "../../types";
 
 const BCUP_BENCH_IMG = require("../../../resources/images/bcup-bench.png");
@@ -26,27 +26,6 @@ export interface VaultMenuProps {
 const styles = StyleSheet.create({
     addButton: {
         marginTop: 26
-    },
-    card: {
-        margin: 16
-    },
-    headerContainer: {
-        padding: 6,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "stretch"
-    },
-    headerContent: {
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "flex-start"
-    },
-    headerImage: {
-        flexGrow: 0,
-        flexShrink: 0,
-        height: "100%",
-        width: 42,
-        marginRight: 10
     },
     noVaultContainer: {
         flex: 1,
@@ -67,13 +46,6 @@ const styles = StyleSheet.create({
     placeholderImage: {
         width: "33%",
         height: 160
-    },
-    vaultName: {},
-    vaultProperty: {
-        // flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "flex-start"
     }
 });
 
@@ -84,32 +56,6 @@ async function handleStandardVaultUnlock(sourceID: VaultSourceID, password: stri
     const source = getVaultSource(sourceID);
     await storeCredentialsForVault(source, password);
     setBusyState(null);
-}
-
-function VaultCardFooter(props) {
-    const { vault } = props;
-    return (
-        <View>
-            <Text category="s2">{vault.state.toUpperCase()}</Text>
-        </View>
-    );
-}
-
-function VaultCardHeader(props) {
-    const { vault } = props;
-    const {
-        title: vaultTypeName,
-        icon: vaultTypeIcon
-    } = VAULT_TYPES[vault.type];
-    return (
-        <View style={styles.headerContainer}>
-            <Image source={vaultTypeIcon} style={styles.headerImage} />
-            <View style={styles.headerContent}>
-                <Text style={styles.vaultName} category="h6">{vault.name}</Text>
-                <Text category="s2">{`${vaultTypeName} vault`}</Text>
-            </View>
-        </View>
-    );
 }
 
 export function VaultMenu(props: VaultMenuProps) {
@@ -178,28 +124,7 @@ export function VaultMenu(props: VaultMenuProps) {
                     <ViewPager selectedIndex={selectedIndex} onSelect={handlePageSelect}>
                         {vaults.map(vault => (
                             <Layout key={vault.id} level="2">
-                                <Card
-                                    footer={props => <VaultCardFooter {...props} vault={vault} />}
-                                    header={props => <VaultCardHeader {...props} vault={vault} />}
-                                    onPress={() => handleVaultPress(vault)}
-                                    status={vault.state === VaultSourceStatus.Unlocked ? "success" : "danger"}
-                                    style={styles.card}
-                                >
-                                    {[
-                                        { key: "Groups", value: 12 },
-                                        { key: "Entries", value: 87 },
-                                        { key: "Attachments", value: 6 },
-                                        { key: "Vault Size", value: "14.6 KiB" },
-                                        { key: "Offline Cache", value: "Yes" },
-                                        { key: "Last Unlock", value: "Success" },
-                                        { key: "Last Attempt", value: "12th Oct, 7:14 PM" }
-                                    ].map(({ key, value }, index) => (
-                                        <Layout level={index % 2 ? "2" : "1"} style={styles.vaultProperty} key={key}>
-                                            <Text category="label">{key}</Text>
-                                            <Text category="c1">{value}</Text>
-                                        </Layout>
-                                    ))}
-                                </Card>
+                                <VaultMenuItem onActivate={() => handleVaultPress(vault)} vault={vault} />
                             </Layout>
                         ))}
                     </ViewPager>
