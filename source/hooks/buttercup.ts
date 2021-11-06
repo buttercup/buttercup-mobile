@@ -1,7 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Entry, EntryFacade, EntryID, Group, Vault, VaultSourceID, createEntryFacade, GroupID, EntryType } from "buttercup";
-import { getVault, getVaultManager, getVaultSource } from "../services/buttercup";
+import { useBiometricsEnabledForSource } from "./biometrics";
+import { getVault, getVaultManager, getVaultSource, sourceHasOfflineCopy } from "../services/buttercup";
 import { VaultContentsItem, VaultDetails } from "../types";
+
+interface VaultStatistics {
+    authMethod: "password" | "biometrics";
+    numEntries: number;
+    numGroups: number;
+    offlineAvailable: boolean;
+}
 
 function extractItems(vault: Vault, targetGroupID: string = null): Array<VaultContentsItem> {
     let groups: Array<Group> = [],
@@ -73,6 +81,29 @@ export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string 
         };
     }, [source, updateContents]);
     return contents;
+}
+
+export function useVaultStatistics(sourceID: VaultSourceID): VaultStatistics {
+    const sourceUsesBiometrics = useBiometricsEnabledForSource(sourceID);
+    const [offlineAvailable, setOfflineAvailable] = useState<boolean>(false);
+    const updateCallback = useCallback(async () => {
+        const hasOffline = await sourceHasOfflineCopy(sourceID);
+        setOfflineAvailable(hasOffline);
+    }, [sourceID]);
+    useEffect(() => {
+        const vaultManager = getVaultManager();
+        vaultManager.on("sourcesUpdated", updateCallback);
+        updateCallback();
+        return () => {
+            vaultManager.off("sourcesUpdated", updateCallback);
+        };
+    }, [updateCallback, sourceID]);
+    return {
+        authMethod: sourceUsesBiometrics ? "biometrics" : "password",
+        numEntries: 0,
+        numGroups: 0,
+        offlineAvailable
+    };
 }
 
 export function useVaultWalletEntries(sourceID: VaultSourceID): Array<Entry> {

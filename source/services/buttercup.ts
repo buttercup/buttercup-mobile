@@ -274,6 +274,11 @@ export async function saveNewEntry(sourceID: VaultSourceID, groupID: GroupID, fa
     return entry.id;
 }
 
+export async function sourceHasOfflineCopy(sourceID: VaultSourceID): Promise<boolean> {
+    const vaultMgr = getVaultManager();
+    return vaultMgr.getSourceForID(sourceID).checkOfflineCopy();
+}
+
 export async function unlockSourceByID(sourceID: VaultSourceID, password: string): Promise<void> {
     const vaultMgr =  getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);

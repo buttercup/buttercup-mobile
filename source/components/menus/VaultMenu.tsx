@@ -134,7 +134,11 @@ export function VaultMenu(props: VaultMenuProps) {
                 <Layout level="2" style={styles.vaultContainer}>
                     <ViewPager selectedIndex={selectedIndex} onSelect={handlePageSelect}>
                         {vaults.map(vault => (
-                            <VaultMenuItem key={vault.id} onActivate={() => handleVaultPress(vault)} vault={vault} />
+                            <VaultMenuItem
+                                key={vault.id}
+                                onActivate={() => handleVaultPress(vault)}
+                                vault={vault}
+                            />
                         ))}
                     </ViewPager>
                     <Dots length={vaults.length} active={selectedIndex} />

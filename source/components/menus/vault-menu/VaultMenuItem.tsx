@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { Avatar, Icon, Text, StyleService, useStyleSheet } from "@ui-kitten/components";
 import { VaultSourceStatus } from "buttercup";
+import { useVaultStatistics } from "../../../hooks/buttercup";
 import { VAULT_TYPES } from "../../../library/buttercup";
 import { VaultDetails } from "../../../types";
 
@@ -91,10 +92,10 @@ const themedStyles = StyleService.create({
         marginRight: 8
     },
     statusIconLocked: {
-        color: "color-danger-active"
+        color: "color-danger-default"
     },
     statusIconUnlocked: {
-        color: "color-success-active"
+        color: "color-success-default"
     },
     tallContainer: {
         padding: 8,
@@ -103,11 +104,32 @@ const themedStyles = StyleService.create({
         alignItems: "center",
         flexGrow: 3,
         flexShrink: 0
+    },
+    vaultFlag: {
+        margin: 3
+    },
+    vaultFlagBlue: {
+        color: "color-primary-default"
+    },
+    vaultFlagGreen: {
+        color: "color-success-default"
+    },
+    vaultFlagYellow: {
+        color: "color-warning-default"
+    },
+    vaultFlagsContainer: {
+        flexDirection: "row"
     }
 });
 
 export function VaultMenuItem(props: VaultMenuItemProps) {
     const { onActivate, vault } = props;
+    const {
+        authMethod,
+        numEntries,
+        numGroups,
+        offlineAvailable
+    } = useVaultStatistics(vault.id);
     const {
         title: vaultTypeName,
         icon: vaultTypeIcon
@@ -115,6 +137,9 @@ export function VaultMenuItem(props: VaultMenuItemProps) {
     const styles = useStyleSheet(themedStyles);
     const unlockedColour = (styles.statusIconUnlocked as any).color;
     const lockedColour = (styles.statusIconLocked as any).color;
+    const vaultFlagBlueColour = (styles.vaultFlagBlue as any).color;
+    const vaultFlagGreenColour = (styles.vaultFlagGreen as any).color;
+    const vaultFlagYellowColour = (styles.vaultFlagYellow as any).color;
     const handleTouchActivation = useCallback(() => {
         onActivate();
     }, [onActivate]);
@@ -146,17 +171,23 @@ export function VaultMenuItem(props: VaultMenuItemProps) {
                 </View>
                 <View style={styles.smallContainers}>
                     <View style={[styles.smallContainer, styles.smallContainerAbove]}>
-                        <Text category="h6" style={styles.smallHeading}>18</Text>
+                        <Text category="h6" style={styles.smallHeading}>{numEntries}</Text>
                         <Text category="c1" style={styles.smallSubtitle}>Entries</Text>
                     </View>
                     <View style={[styles.smallContainer, styles.smallContainerAbove]}>
-                        <Text category="h6" style={styles.smallHeading}>8</Text>
+                        <Text category="h6" style={styles.smallHeading}>{numGroups}</Text>
                         <Text category="c1" style={styles.smallSubtitle}>Groups</Text>
                     </View>
-                    <View style={styles.smallContainer}>
-                        <FingerprintIcon fill="#fff" width={20} height={20} />
-                        <PasswordIcon fill="#fff" width={20} height={20} />
-                        <WifiOffIcon fill="#fff" width={20} height={20} />
+                    <View style={[styles.smallContainer, styles.vaultFlagsContainer]}>
+                        {authMethod === "biometrics" && (
+                            <FingerprintIcon fill={vaultFlagGreenColour} width={20} height={20} style={styles.vaultFlag} />
+                        )}
+                        {authMethod === "password" && (
+                            <PasswordIcon fill={vaultFlagYellowColour} width={20} height={20} style={styles.vaultFlag} />
+                        )}
+                        {offlineAvailable && (
+                            <WifiOffIcon fill={vaultFlagBlueColour} width={20} height={20} style={styles.vaultFlag} />
+                        )}
                     </View>
                 </View>
             </TouchableOpacity>
