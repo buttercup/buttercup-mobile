@@ -26,7 +26,7 @@ import { VaultContentsMenu } from "../menus/VaultContentsMenu";
 const { Navigator, Screen } = createBottomTabNavigator();
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
-const CodesIcon = props => <Icon {...props} name="checkmark-circle-outline" />;
+const CodesIcon = props => <Icon {...props} name="keypad-outline" />;
 const FolderIcon = props => <Icon {...props} name="folder-outline" />;
 const SearchIcon = props => <Icon {...props} name="search-outline" />;
 const SettingsIcon = props => <Icon {...props} name="settings-outline" />;
@@ -38,8 +38,8 @@ function BottomTabBar({ navigation, state }) {
             selectedIndex={state.index}
             onSelect={index => navigation.navigate(state.routeNames[index])}
         >
-            <BottomNavigationTab title="SEARCH" icon={SearchIcon} />
             <BottomNavigationTab title="GROUPS" icon={FolderIcon} />
+            <BottomNavigationTab title="SEARCH" icon={SearchIcon} />
             <BottomNavigationTab title="WALLET" icon={WalletIcon} />
             <BottomNavigationTab title="CODES" icon={CodesIcon} />
             <BottomNavigationTab title="SETTINGS" icon={SettingsIcon} />
@@ -50,8 +50,8 @@ function BottomTabBar({ navigation, state }) {
 function TabNavigator() {
     return (
         <Navigator tabBar={props => <BottomTabBar {...props} />}>
-            <Screen name="Search" component={SearchScreen} />
             <Screen name="Groups" component={VaultContentsScreen} />
+            <Screen name="Search" component={SearchScreen} />
             <Screen name="Wallet" component={WalletScreen} />
             <Screen name="Codes" component={CodesScreen} />
             <Screen name="Settings" component={VaultSettingsScreen} />

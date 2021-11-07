@@ -5,6 +5,7 @@ import { CardView } from "react-native-credit-card-input";
 import { useState as useHookState } from "@hookstate/core";
 import validateCard from "card-validator";
 import { Entry } from "buttercup";
+import { EmptyState } from "../EmptyState";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { useTabFocusState } from "../../hooks/vaultTab";
 import { useVaultWalletEntries } from "../../hooks/buttercup";
@@ -38,6 +39,9 @@ const styles = StyleSheet.create({
     },
     item: {
       marginVertical: 4,
+    },
+    noCardsLayout: {
+        height: "100%"
     },
     outerContainer: {
         marginTop: 10,
@@ -92,12 +96,23 @@ export function WalletScreen() {
     return (
         <SafeAreaView style={{ flex: 1, flexDirection: "row" }}>
             <Layout style={{ flex: 1, alignItems: "stretch" }}>
-                <List
-                    style={styles.listContainer}
-                    contentContainerStyle={styles.contentContainer}
-                    data={entries}
-                    renderItem={renderWrapper}
-                />
+                {entries.length > 0 && (
+                    <List
+                        style={styles.listContainer}
+                        contentContainerStyle={styles.contentContainer}
+                        data={entries}
+                        renderItem={renderWrapper}
+                    />
+                )}
+                {entries.length === 0 && (
+                    <Layout level="2" style={styles.noCardsLayout}>
+                        <EmptyState
+                            title="No Cards"
+                            description="No cards were found in this vault."
+                            icon="credit-card-outline"
+                        />
+                    </Layout>
+                )}
             </Layout>
         </SafeAreaView>
     );
