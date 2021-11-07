@@ -48,6 +48,7 @@ export function SearchBar(props: SearchBarProps) {
         <Layout style={styles.layout}>
             <Input
                 accessoryRight={SearchIcon}
+                autoFocus
                 onChangeText={value => setTerm(value)}
                 placeholder="Search"
                 style={styles.input}
