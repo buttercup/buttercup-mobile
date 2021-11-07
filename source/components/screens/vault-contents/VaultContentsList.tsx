@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { Icon, List, ListItem } from "@ui-kitten/components";
-import { EntryType, EntryURLType, GroupID, PropertyKeyValueObject, getEntryURLs } from "buttercup";
+import { EntryType, GroupID } from "buttercup";
 import { SiteIcon } from "../../media/SiteIcon";
-import { extractDomain } from "../../../library/url";
+import { getEntryDomain } from "../../../library/entry";
 import { VaultContentsItem } from "../../../types";
 
 interface RenderInfo {
@@ -30,14 +30,6 @@ const styles = StyleSheet.create({
     },
     listContainer: {}
 });
-
-function getEntryDomain(entryProperties: PropertyKeyValueObject): string | null {
-    const [url] = [
-      ...getEntryURLs(entryProperties, EntryURLType.Icon),
-      ...getEntryURLs(entryProperties, EntryURLType.Any)
-    ];
-    return url ? extractDomain(url) : null;
-}
 
 function prepareEntrySubtitle(item: VaultContentsItem): string {
     switch (item.entryType) {

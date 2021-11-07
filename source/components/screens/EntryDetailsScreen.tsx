@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useMemo, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID } from "buttercup";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID, fieldsToProperties } from "buttercup";
 import {
     Button,
     Divider,
@@ -14,10 +14,11 @@ import {
 } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { EntryFieldValue, VisibleField } from "./vault-contents/EntryFieldValue";
+import { SiteIcon } from "../media/SiteIcon";
 import { useEntryFacade } from "../../hooks/buttercup";
 import { useEntryOTPCodes } from "../../hooks/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
-import { humanReadableEntryType } from "../../library/entry";
+import { getEntryDomain, humanReadableEntryType } from "../../library/entry";
 
 const MENU_ITEMS = [
     { text: "Edit Entry", slug: "edit", icon: "edit-outline" },
@@ -41,6 +42,21 @@ const styles = StyleSheet.create({
     scrollView: {
         paddingHorizontal: 14,
         paddingVertical: 7
+    },
+    titleContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "stretch"
+    },
+    titleTextContainer: {
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        flexShrink: 2
+    },
+    titleText: {
+        flex: 1,
+        overflow: "hidden"
     }
 });
 
@@ -131,6 +147,8 @@ export function EntryDetailsScreen({ navigation, route }) {
             ];
         }, []);
     }, [entryFacade]);
+    const keyValueProperties = useMemo(() => fieldsToProperties(entryFacade.fields), [entryFacade]);
+    const entryDomain = useMemo(() => getEntryDomain(keyValueProperties) || null, [keyValueProperties]);
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -154,8 +172,15 @@ export function EntryDetailsScreen({ navigation, route }) {
             <Divider />
             <Layout style={styles.bodyLayout}>
                 <ScrollView style={styles.scrollView}>
-                    <Text category="h2">{title}</Text>
-                    <Text appearance="hint">{subtitle}</Text>
+                    <View style={styles.titleContainer}>
+                        <View style={styles.titleTextContainer}>
+                            <Text category="h4" numberOfLines={1} style={styles.titleText}>{title}</Text>
+                            <Text appearance="hint" numberOfLines={1}>{subtitle}</Text>
+                        </View>
+                        <View>
+                            <SiteIcon domain={entryDomain} size={48} type={entryFacade.type} />
+                        </View>
+                    </View>
                     <Layout style={styles.fieldsLayout}>
                         {visibleFields.map((field, index) => (
                             <Fragment key={field.key}>
