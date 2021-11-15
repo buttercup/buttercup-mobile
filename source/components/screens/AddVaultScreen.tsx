@@ -20,6 +20,11 @@ import { VAULT_TYPES } from "../../library/buttercup";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { DatasourceConfig, VaultChooserItem } from "../../types";
 
+interface TemporaryDatasourceConfig {
+    type: null | string;
+    [key: string]: any;
+}
+
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
 
 const styles = StyleSheet.create({
@@ -83,7 +88,7 @@ export function AddVaultScreen({ navigation }) {
     const [connectionDetailsValid, setConnectionDetailsValid] = useState<boolean>(false);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [allComplete, setAllComplete] = useState<boolean>(false);
-    const [datasourceConfig, setDatasourceConfig] = useState<DatasourceConfig>({
+    const [datasourceConfig, setDatasourceConfig] = useState<DatasourceConfig | TemporaryDatasourceConfig>({
         type: null
     });
     const [vaultPassword, setVaultPassword] = useState<string>("");
@@ -108,7 +113,7 @@ export function AddVaultScreen({ navigation }) {
         setSubmitting(true);
         setAllComplete(true);
         setBusyState("Adding Vault");
-        addVault(vaultType, datasourceConfig, chosenVaultPath, vaultPassword)
+        addVault(vaultType, datasourceConfig as DatasourceConfig, chosenVaultPath, vaultPassword)
             .then(() => {
                 setBusyState(null);
                 const vaultTypeName = VAULT_TYPES[vaultType].title;

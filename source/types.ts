@@ -1,4 +1,15 @@
-import { EntryID, EntryType, GroupID, PropertyKeyValueObject, VaultSourceID, VaultSourceStatus } from "buttercup";
+import {
+    DatasourceConfiguration,
+    DatasourceConfigurationDropbox,
+    DatasourceConfigurationGoogleDrive,
+    DatasourceConfigurationWebDAV,
+    EntryID,
+    EntryType,
+    GroupID,
+    PropertyKeyValueObject,
+    VaultSourceID,
+    VaultSourceStatus
+} from "buttercup";
 import {
     ReactChild,
     ReactChildren
@@ -8,16 +19,11 @@ export { FSItem } from "@buttercup/file-interface";
 
 export type ChildElements = ReactChild | ReactChildren | Array<ReactChild> | Array<ReactChildren>;
 
-export interface DatasourceConfig {
-    endpoint?: string;
-    fileID?: string;
-    password?: string;
-    path?: string;
-    refreshToken?: string;
-    token?: string;
-    type: string;
-    username?: string;
+export interface DatasourceConfigurationMobileLocalFile extends DatasourceConfiguration {
+    filename: string;
 }
+
+export type DatasourceConfig = DatasourceConfigurationDropbox | DatasourceConfigurationGoogleDrive | DatasourceConfigurationWebDAV | DatasourceConfigurationMobileLocalFile;
 
 export interface GoogleOAuthToken {
     accessToken: string;
