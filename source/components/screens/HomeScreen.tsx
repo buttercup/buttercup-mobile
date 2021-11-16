@@ -13,6 +13,7 @@ import {
 } from "@ui-kitten/components";
 import { VaultSourceID } from "buttercup";
 import { VaultMenu } from "../menus/VaultMenu";
+import { ErrorBoundary } from "../ErrorBoundary";
 import { CURRENT_SOURCE } from "../../state/vault";
 
 const BCUP_ICON = require("../../../resources/images/bcup-256.png");
@@ -113,7 +114,9 @@ export function HomeScreen({ navigation }) {
             />
             <Divider />
             <Layout style={{ flex: 1 }}>
-                <VaultMenu navigation={navigation} onVaultOpen={handleVaultOpen} />
+                <ErrorBoundary>
+                    <VaultMenu navigation={navigation} onVaultOpen={handleVaultOpen} />
+                </ErrorBoundary>
             </Layout>
         </SafeAreaView>
     );
