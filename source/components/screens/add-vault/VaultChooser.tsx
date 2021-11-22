@@ -32,6 +32,7 @@ interface VaultChooserProps {
 }
 
 const AddVaultIcon = props => <Icon {...props} name="file-add-outline" />;
+const AddFolderIcon = props => <Icon {...props} name="folder-add-outline" />;
 
 const styles = StyleSheet.create({
     listContainer: {},
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     item: {
       marginVertical: 4,
     },
-    newVaultButton: {
+    pathActionButton: {
         marginTop: 6
     }
 });
@@ -77,6 +78,7 @@ export function VaultChooser(props: VaultChooserProps) {
     const [selectedPath, setSelectedPath] = useState<VaultChooserItem>(null);
     const [parentPaths, setParentPaths] = useState<Array<VaultChooserItem>>([]);
     const [promptNewFile, setPromptNewFile] = useState(false);
+    const [promptNewFolder, setPromptNewFolder] = useState(false);
     const themeStyles = useStyleSheet(themedStyles);
     const handleItemSelect = useCallback((info: VaultChooserListItem) => {
         if (!info.item.path || info.item.path.type === "directory") {
@@ -102,10 +104,13 @@ export function VaultChooser(props: VaultChooserProps) {
     const handleNewVaultPromptShow = useCallback(() => {
         setPromptNewFile(true);
         onSelectVault(null);
-        setItems(items.filter(
-            item => item.path.type === "directory" || (item.path.type === "file" && item.path.identifier !== null)
-        ));
+        // setItems(items.filter(
+        //     item => item.path === null || item.path?.type === "directory" || (item.path?.type === "file" && item.path?.identifier !== null)
+        // ));
     }, [items, onSelectVault]);
+    const handleNewFolderPromptShow = useCallback(() => {
+        setPromptNewFolder(true);
+    }, []);
     const handleNewVaultPromptSubmission = useCallback((filename: string) => {
         setPromptNewFile(false);
         let newVaultFilename = filename;
@@ -134,6 +139,18 @@ export function VaultChooser(props: VaultChooserProps) {
         setSelectedPath(result);
         onSelectVault(result);
     }, [items, parentPaths]);
+    const handleNewFolderPromptSubmission = useCallback(async (folderName: string) => {
+        setPromptNewFolder(false);
+        const parent = parentPaths.length > 0 ? parentPaths[parentPaths.length - 1] : null;
+        try {
+            await fsInterface.putDirectory(parent, { identifier: null, name: folderName });
+            // Force refresh
+            setParentPaths([...parentPaths]);
+        } catch (err) {
+            console.error(err);
+            notifyError("Folder creation failure", err.message);
+        }
+    }, [fsInterface, parentPaths]);
     const renderItem = useCallback((info: VaultChooserListItem) => {
         const { item } = info;
         const isSelected = selectedPath && item.path && item.path.identifier === selectedPath.identifier;
@@ -189,9 +206,16 @@ export function VaultChooser(props: VaultChooserProps) {
                 <Button
                     accessoryLeft={AddVaultIcon}
                     onPress={handleNewVaultPromptShow}
-                    style={styles.newVaultButton}
+                    style={styles.pathActionButton}
                 >
                     New Vault
+                </Button>
+                <Button
+                    accessoryLeft={AddFolderIcon}
+                    onPress={handleNewFolderPromptShow}
+                    style={styles.pathActionButton}
+                >
+                    New Directory
                 </Button>
                 <TextPrompt
                     cancelable
@@ -201,6 +225,14 @@ export function VaultChooser(props: VaultChooserProps) {
                     prompt="New vault filename"
                     submitText="Set New Vault"
                     visible={promptNewFile}
+                />
+                <TextPrompt
+                    cancelable
+                    onCancel={() => setPromptNewFolder(false)}
+                    onSubmit={handleNewFolderPromptSubmission}
+                    prompt="New folder name"
+                    submitText="Create Folder"
+                    visible={promptNewFolder}
                 />
             </SafeAreaView>
         </>

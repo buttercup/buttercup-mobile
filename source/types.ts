@@ -15,8 +15,6 @@ import {
     ReactChildren
 } from "react";
 
-export { FSItem } from "@buttercup/file-interface";
-
 export type ChildElements = ReactChild | ReactChildren | Array<ReactChild> | Array<ReactChildren>;
 
 export interface DatasourceConfigurationMobileLocalFile extends DatasourceConfiguration {
@@ -91,6 +89,6 @@ export interface VaultChooserItem extends VaultChooserPath {
 }
 
 export interface VaultChooserPath {
-    identifier: string;
+    identifier: string | number;
     name: string;
 }

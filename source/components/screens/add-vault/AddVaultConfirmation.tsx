@@ -55,7 +55,7 @@ function renderItem(props: ConfirmationItem) {
 
 export function AddVaultConfirmation(props: AddVaultConfirmationProps) {
     const { disabled = false, onUpdate, type, vaultPath } = props;
-    const name = vaultPath.name || vaultPath.identifier;
+    const name = (vaultPath.name || vaultPath.identifier) as string;
     const isNew = !vaultPath.identifier;
     const typeName = useMemo(() => VAULT_TYPES[type].title, [type]);
     const [password, setPassword] = useState<string>("");
