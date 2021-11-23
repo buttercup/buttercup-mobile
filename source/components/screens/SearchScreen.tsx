@@ -65,6 +65,7 @@ export function SearchScreen({ navigation }) {
                 <VaultContentsList
                     contents={results}
                     navigation={navigation}
+                    type="search"
                 />
             </Layout>
         </SafeAreaView>

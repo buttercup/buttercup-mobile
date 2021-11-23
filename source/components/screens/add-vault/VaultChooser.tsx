@@ -104,9 +104,6 @@ export function VaultChooser(props: VaultChooserProps) {
     const handleNewVaultPromptShow = useCallback(() => {
         setPromptNewFile(true);
         onSelectVault(null);
-        // setItems(items.filter(
-        //     item => item.path === null || item.path?.type === "directory" || (item.path?.type === "file" && item.path?.identifier !== null)
-        // ));
     }, [items, onSelectVault]);
     const handleNewFolderPromptShow = useCallback(() => {
         setPromptNewFolder(true);
@@ -141,16 +138,18 @@ export function VaultChooser(props: VaultChooserProps) {
     }, [items, parentPaths]);
     const handleNewFolderPromptSubmission = useCallback(async (folderName: string) => {
         setPromptNewFolder(false);
-        const parent = parentPaths.length > 0 ? parentPaths[parentPaths.length - 1] : null;
         try {
-            await fsInterface.putDirectory(parent, { identifier: null, name: folderName });
+            setBusyState("Creating directory");
+            await fsInterface.putDirectory(currentPath, { identifier: null, name: folderName });
+            setBusyState(null);
             // Force refresh
             setParentPaths([...parentPaths]);
         } catch (err) {
+            setBusyState(null);
             console.error(err);
             notifyError("Folder creation failure", err.message);
         }
-    }, [fsInterface, parentPaths]);
+    }, [fsInterface, currentPath]);
     const renderItem = useCallback((info: VaultChooserListItem) => {
         const { item } = info;
         const isSelected = selectedPath && item.path && item.path.identifier === selectedPath.identifier;

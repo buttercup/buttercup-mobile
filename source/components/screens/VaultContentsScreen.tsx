@@ -99,6 +99,7 @@ export function VaultContentsScreen({ navigation, route }) {
                         contents={contents}
                         groupID={groupID}
                         navigation={navigation}
+                        type="group"
                     />
                 </Layout>
             </SafeAreaView>

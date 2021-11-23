@@ -1,8 +1,9 @@
 import React, { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
-import { Icon, List, ListItem } from "@ui-kitten/components";
+import { Icon, Layout, List, ListItem } from "@ui-kitten/components";
 import { EntryType, GroupID } from "buttercup";
 import { SiteIcon } from "../../media/SiteIcon";
+import { EmptyState } from "../../EmptyState";
 import { getEntryDomain } from "../../../library/entry";
 import { VaultContentsItem } from "../../../types";
 
@@ -28,7 +29,10 @@ const styles = StyleSheet.create({
     item: {
       marginVertical: 4,
     },
-    listContainer: {}
+    listContainer: {},
+    noEntriesLayout: {
+        height: "100%"
+    }
 });
 
 function prepareEntrySubtitle(item: VaultContentsItem): string {
@@ -113,20 +117,50 @@ export interface VaultContentsListProps {
     contents: Array<VaultContentsItem>;
     groupID?: GroupID;
     navigation: any;
+    type: "search" | "group";
 }
 
 export function VaultContentsList(props: VaultContentsListProps) {
+    const { type } = props;
     const preparedContents = useMemo(() => prepareListContents(props.contents), [props.contents]);
+    const {
+        title: emptyStateTitle,
+        description: emptyStateDescription
+    } = useMemo(() => {
+        if (type === "search") {
+            return {
+                title: "No Results",
+                description: "No entries found for current search."
+            };
+        }
+        return {
+            title: "No Items",
+            description: "This group is empty."
+        };
+    }, [type]);
     const renderWrapper = useCallback(
         (info: RenderInfo) => renderItem(info, props.navigation, props.groupID),
         [props.groupID, props.navigation]
     );
     return (
-        <List
-            style={styles.listContainer}
-            contentContainerStyle={styles.contentContainer}
-            data={preparedContents}
-            renderItem={renderWrapper}
-        />
+        <>
+            {preparedContents.length > 0 && (
+                <List
+                    style={styles.listContainer}
+                    contentContainerStyle={styles.contentContainer}
+                    data={preparedContents}
+                    renderItem={renderWrapper}
+                />
+            )}
+            {preparedContents.length === 0 && (
+                <Layout level="2" style={styles.noEntriesLayout}>
+                    <EmptyState
+                        title={emptyStateTitle}
+                        description={emptyStateDescription}
+                        icon="square-outline"
+                    />
+                </Layout>
+            )}
+        </>
     );
 }
