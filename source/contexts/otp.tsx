@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { HOTP, URI as OTPURI } from "otpauth";
+import { HOTP, TOTP, URI as OTPURI } from "otpauth";
 import { ChildElements } from "../types";
 import { OTP, OTPCode } from "../types";
 
@@ -36,14 +36,20 @@ export function OTPProvider(props: OTPProviderProps) {
 }
 
 function updateCode(item: OTP): OTPCode {
-    const otp = OTPURI.parse(item.otpURL);
+    let otp: TOTP | HOTP,
+        errorMsg: string = "Error";
+    try {
+        otp = OTPURI.parse(item.otpURL);
+    } catch (err) {
+        errorMsg = `Error: ${err.message}`;
+    }
     const id = `${item.sourceID}:${item.entryID}:${item.entryProperty}`;
-    if (otp instanceof HOTP) {
+    if (!otp || otp instanceof HOTP) {
         return {
             ...item,
             id,
             currentCode: "ERROR",
-            otpTitle: otp.label,
+            otpTitle: otp?.label ?? errorMsg,
             period: 30,
             timeLeft: 0,
             valid: false

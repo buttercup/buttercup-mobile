@@ -28,10 +28,10 @@ const INT_VAULT_TYPES: { [type: string]: VaultType } = {
         icon: ICON_GOOGLEDRIVE,
         enabled: true
     },
-    local: {
+    mobilelocalfile: {
         title: "Local",
         icon: ICON_LOCAL,
-        enabled: false
+        enabled: true
     }
 };
 

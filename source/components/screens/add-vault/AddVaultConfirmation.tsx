@@ -9,13 +9,13 @@ import {
     Text
 } from "@ui-kitten/components";
 import { VAULT_TYPES } from "../../../library/buttercup";
-import { VaultChooserPath } from "../../../types";
+import { VaultChooserItem } from "../../../types";
 
 interface AddVaultConfirmationProps {
     disabled?: boolean;
-    onUpdate: (password: string) => void;
+    onUpdatePassword: (password: string) => void;
     type: string;
-    vaultPath: VaultChooserPath;
+    vaultPath: VaultChooserItem;
 }
 
 interface ConfirmationData {
@@ -54,14 +54,14 @@ function renderItem(props: ConfirmationItem) {
 }
 
 export function AddVaultConfirmation(props: AddVaultConfirmationProps) {
-    const { disabled = false, onUpdate, type, vaultPath } = props;
-    const name = vaultPath.name || vaultPath.identifier;
+    const { disabled = false, onUpdatePassword, type, vaultPath } = props;
+    const name = (vaultPath.name || vaultPath.identifier) as string;
     const isNew = !vaultPath.identifier;
     const typeName = useMemo(() => VAULT_TYPES[type].title, [type]);
     const [password, setPassword] = useState<string>("");
     useEffect(() => {
-        onUpdate(password);
-    }, [onUpdate, password]);
+        onUpdatePassword(password);
+    }, [onUpdatePassword, password]);
     const data: Array<ConfirmationData> = useMemo(() => [
         {
             property: "Vault Name",

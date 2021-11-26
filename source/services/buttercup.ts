@@ -24,6 +24,7 @@ import { setCodesForSource } from "./otp";
 import { updateSourceItemsCount } from "./statistics";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
+import "../library/datasource/MobileLocalFileDatasource";
 import { DatasourceConfig, OTP, VaultChooserItem, VaultDetails } from "../types";
 
 const __watchedVaultSources: Array<VaultSourceID> = [];
@@ -57,7 +58,7 @@ async function addGoogleDriveVault(config: DatasourceConfig, vaultPath: VaultCho
     const isNew = !vaultPath?.identifier;
     const { name: filename } = vaultPath;
     const fileID = isNew
-        ? await writeNewEmptyVault(config.token, vaultPath.parent?.identifier ?? null, filename, password)
+        ? await writeNewEmptyVault(config.token, (vaultPath.parent?.identifier as string) ?? null, filename, password)
         : vaultPath.identifier;
     const sourceCredentials = Credentials.fromDatasource({
         ...config,
@@ -77,26 +78,51 @@ async function addGoogleDriveVault(config: DatasourceConfig, vaultPath: VaultCho
     return source.id;
 }
 
+async function addMobileLocalFileVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+    const isNew = !vaultPath.identifier;
+    const filename = vaultPath.name;
+    const filePath = isNew
+        ? path.join(vaultPath.parent.identifier, vaultPath.name)
+        : vaultPath.identifier;
+    const sourceCredentials = Credentials.fromDatasource({
+        ...config,
+        filename: filePath
+    }, password);
+    const sourceCredentialsRaw = await sourceCredentials.toSecureString();
+    const vaultMgr = getVaultManager();
+    const source = new VaultSource(filenameToVaultName(filename as string), config.type, sourceCredentialsRaw);
+    await vaultMgr.addSource(source);
+    setBusyState("Unlocking Vault");
+    await source.unlock(
+        Credentials.fromPassword(password),
+        {
+            initialiseRemote: isNew
+        }
+    );
+    return source.id;
+}
+
 export async function addVault(type: string, config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
     if (type === "dropbox") return addDropboxVault(config, vaultPath, password);
     if (type === "googledrive") return addGoogleDriveVault(config, vaultPath, password);
     if (type === "webdav") return addWebDAVVault(config, vaultPath, password);
+    if (type === "mobilelocalfile") return addMobileLocalFileVault(config, vaultPath, password);
     throw new Error(`Unknown vault type: ${type}`);
 }
 
 async function addWebDAVVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
     const isNew = !vaultPath.identifier;
-    const filename = vaultPath.identifier || vaultPath.name;
-    const filePath = vaultPath.parent
+    const filename = vaultPath.name;
+    const filePath = isNew
         ? path.join(vaultPath.parent.identifier, filename)
-        : path.join("/", filename);
+        : vaultPath.identifier;
     const sourceCredentials = Credentials.fromDatasource({
         ...config,
         path: filePath
     }, password);
     const sourceCredentialsRaw = await sourceCredentials.toSecureString();
     const vaultMgr = getVaultManager();
-    const source = new VaultSource(filenameToVaultName(filename), config.type, sourceCredentialsRaw);
+    const source = new VaultSource(filenameToVaultName(filename as string), config.type, sourceCredentialsRaw);
     await vaultMgr.addSource(source);
     setBusyState("Unlocking Vault");
     await source.unlock(

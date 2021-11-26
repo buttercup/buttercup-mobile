@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Linking, StyleSheet } from "react-native";
+import { Linking, StyleSheet, View } from "react-native";
 import {
     Button,
+    Card,
     Icon,
     Input,
     Layout,
@@ -10,7 +11,7 @@ import {
 import { useDropboxToken } from "../../../hooks/dropbox";
 import { useGoogleToken } from "../../../hooks/google";
 import { setBusyState } from "../../../services/busyState";
-import { disableCurrentInterface, prepareDropboxInterface, prepareGoogleDriveInterface, prepareWebDAVInterface } from "../../../services/fileBrowser";
+import { disableCurrentInterface, prepareDropboxInterface, prepareGoogleDriveInterface, prepareLocalFileInterface, prepareWebDAVInterface } from "../../../services/fileBrowser";
 import { generateAuthorisationURL as generateDropboxAuthorisationURL } from "../../../services/dropbox";
 import { generateAuthorisationURL as generateGoogleDriveAuthorisationURL } from "../../../services/google";
 import { webdavConnectionValid } from "../../../library/webdav";
@@ -43,12 +44,18 @@ const styles = StyleSheet.create({
     inputLayout: {
         marginBottom: 16
     },
+    noActionLayout: {
+        width: "100%"
+    },
     status: {
         width: "100%",
         marginBottom: 16,
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start"
+    },
+    textBottomMargin: {
+        marginBottom: 4
     }
 });
 
@@ -66,6 +73,10 @@ export function ConnectionDetails(props: ConnectionDetailsProps) {
         return (
             <GoogleDriveConnection {...props} />
         )
+    } else if (vaultType === "mobilelocalfile") {
+        return (
+            <MobileLocalFileConnection {...props} />
+        );
     }
     return null;
 }
@@ -161,6 +172,36 @@ function GoogleDriveConnection(props: ConnectionDetailsProps) {
             >
                 Connect Google Drive Account
             </Button>
+        </>
+    );
+}
+
+function MobileLocalFileConnection(props: ConnectionDetailsProps) {
+    const { onCanContinue, vaultType } = props;
+    useEffect(() => {
+        prepareLocalFileInterface();
+        onCanContinue(true, {
+            type: vaultType
+        });
+    }, []);
+    return (
+        <>
+            <Layout style={styles.noActionLayout}>
+                <Card
+                    header={props => (
+                        <View {...props}>
+                            <Text category="h6">Disclaimer</Text>
+                            <Text category="c1">Beta Feature</Text>
+                        </View>
+                    )}
+                    status="danger"
+                >
+                    <Text style={styles.textBottomMargin}>This feature is in beta It should not be considered stable.</Text>
+                    <Text>You store your vaults and data using this datasource entirely at your own risk.</Text>
+                </Card>
+                {/* <Text category="h6">Nothing to see here</Text>
+                <Text category="p1">There are no actions to perform here. Please continue on to the next step.</Text> */}
+            </Layout>
         </>
     );
 }

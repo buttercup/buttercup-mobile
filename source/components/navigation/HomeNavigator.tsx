@@ -14,6 +14,7 @@ import { EntryDetailsScreen } from "../screens/EntryDetailsScreen";
 import { EditEntryScreen } from "../screens/EditEntryScreen";
 import { CoverScreen } from "../screens/CoverScreen";
 import { VaultNavigator } from "./VaultNavigator";
+import { ErrorBoundary } from "../ErrorBoundary";
 import { useSourceOTPItems } from "../../hooks/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { rootNavigationRef } from "../../state/navigation";
@@ -52,9 +53,11 @@ export function AppNavigator({ eva }) {
     return (
         <NavigationContainer ref={rootNavigationRef}>
             <ThemedSafeAreaView eva={eva} />
-                <OTPProvider otpItems={sourceOTPItems}>
-                    <HomeNavigator />
-                </OTPProvider>
+                <ErrorBoundary>
+                    <OTPProvider otpItems={sourceOTPItems}>
+                        <HomeNavigator />
+                    </OTPProvider>
+                </ErrorBoundary>
             <ThemedSafeAreaView eva={eva} />
         </NavigationContainer>
     );

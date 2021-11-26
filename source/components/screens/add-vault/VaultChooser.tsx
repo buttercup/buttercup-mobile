@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
     Button,
     Icon,
     List,
     ListItem,
     StyleService,
+    Text,
     useStyleSheet
 } from "@ui-kitten/components";
 import prettyBytes from "pretty-bytes";
@@ -32,6 +33,7 @@ interface VaultChooserProps {
 }
 
 const AddVaultIcon = props => <Icon {...props} name="file-add-outline" />;
+const AddFolderIcon = props => <Icon {...props} name="folder-add-outline" />;
 
 const styles = StyleSheet.create({
     listContainer: {},
@@ -43,12 +45,24 @@ const styles = StyleSheet.create({
     item: {
       marginVertical: 4,
     },
-    newVaultButton: {
+    pathActionButton: {
         marginTop: 6
     }
 });
 
 const themedStyles = StyleService.create({
+    noItemsText: {
+        color: "color-basic-500",
+        fontStyle: "italic"
+    },
+    noItemsView: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20
+    },
     selectedItem: {
         backgroundColor: "color-primary-default"
     }
@@ -73,10 +87,11 @@ export function VaultChooser(props: VaultChooserProps) {
     const { onSelectVault } = props;
     const fsInterface = useMemo(getCurrentInterface, []);
     const [items, setItems] = useState<Array<FSItem>>([]);
-    const [currentPath, setCurrentPath] = useState<VaultChooserItem>(null);
+    const [currentPath, setCurrentPath] = useState<VaultChooserItem>(fsInterface.getRootPathIdentifier());
     const [selectedPath, setSelectedPath] = useState<VaultChooserItem>(null);
     const [parentPaths, setParentPaths] = useState<Array<VaultChooserItem>>([]);
     const [promptNewFile, setPromptNewFile] = useState(false);
+    const [promptNewFolder, setPromptNewFolder] = useState(false);
     const themeStyles = useStyleSheet(themedStyles);
     const handleItemSelect = useCallback((info: VaultChooserListItem) => {
         if (!info.item.path || info.item.path.type === "directory") {
@@ -102,10 +117,10 @@ export function VaultChooser(props: VaultChooserProps) {
     const handleNewVaultPromptShow = useCallback(() => {
         setPromptNewFile(true);
         onSelectVault(null);
-        setItems(items.filter(
-            item => item.path.type === "directory" || (item.path.type === "file" && item.path.identifier !== null)
-        ));
     }, [items, onSelectVault]);
+    const handleNewFolderPromptShow = useCallback(() => {
+        setPromptNewFolder(true);
+    }, []);
     const handleNewVaultPromptSubmission = useCallback((filename: string) => {
         setPromptNewFile(false);
         let newVaultFilename = filename;
@@ -125,15 +140,28 @@ export function VaultChooser(props: VaultChooserProps) {
                 isNew: true
             }
         ]);
-        const parent = parentPaths.length > 0 ? parentPaths[parentPaths.length - 1] : null;
         const result = {
             name: newVaultFilename,
             identifier: null,
-            parent
+            parent: currentPath
         };
         setSelectedPath(result);
         onSelectVault(result);
-    }, [items, parentPaths]);
+    }, [items, currentPath]);
+    const handleNewFolderPromptSubmission = useCallback(async (folderName: string) => {
+        setPromptNewFolder(false);
+        try {
+            setBusyState("Creating directory");
+            await fsInterface.putDirectory(currentPath, { identifier: null, name: folderName });
+            setBusyState(null);
+            // Force refresh
+            setParentPaths([...parentPaths]);
+        } catch (err) {
+            setBusyState(null);
+            console.error(err);
+            notifyError("Folder creation failure", err.message);
+        }
+    }, [fsInterface, currentPath]);
     const renderItem = useCallback((info: VaultChooserListItem) => {
         const { item } = info;
         const isSelected = selectedPath && item.path && item.path.identifier === selectedPath.identifier;
@@ -160,7 +188,7 @@ export function VaultChooser(props: VaultChooserProps) {
                     path: result,
                     isNew: false
                 }));
-                if (parentPaths.length > 0) {
+                if (parentPaths.length > 0 && !fsInterface.pathIdentifierIsRoot(currentPath)) {
                     newItems.unshift({
                         title: "..",
                         subtitle: "Parent Directory",
@@ -172,26 +200,47 @@ export function VaultChooser(props: VaultChooserProps) {
                 setItems(newItems);
             })
             .catch((err: Error) => {
+                setBusyState(null);
                 console.warn(err);
                 notifyError("Error fetching contents", err.message);
             });
-    }, [currentPath, parentPaths]);
+    }, [currentPath, fsInterface, parentPaths]);
     return (
         <>
             <SafeAreaView style={{ flex: 1 }}>
-                <List
+                {items.length === 0 && currentPath === null && (
+                    <View style={themeStyles.noItemsView}>
+                        <Text style={themeStyles.noItemsText}>No files here</Text>
+                    </View>
+                ) || (
+                    <List
+                        style={styles.listContainer}
+                        contentContainerStyle={styles.contentContainer}
+                        data={items}
+                        renderItem={renderItem}
+                        scrollEnabled={false}
+                    />
+                )}
+                {/* <List
                     style={styles.listContainer}
                     contentContainerStyle={styles.contentContainer}
                     data={items}
                     renderItem={renderItem}
                     scrollEnabled={false}
-                />
+                /> */}
                 <Button
                     accessoryLeft={AddVaultIcon}
                     onPress={handleNewVaultPromptShow}
-                    style={styles.newVaultButton}
+                    style={styles.pathActionButton}
                 >
                     New Vault
+                </Button>
+                <Button
+                    accessoryLeft={AddFolderIcon}
+                    onPress={handleNewFolderPromptShow}
+                    style={styles.pathActionButton}
+                >
+                    New Directory
                 </Button>
                 <TextPrompt
                     cancelable
@@ -201,6 +250,14 @@ export function VaultChooser(props: VaultChooserProps) {
                     prompt="New vault filename"
                     submitText="Set New Vault"
                     visible={promptNewFile}
+                />
+                <TextPrompt
+                    cancelable
+                    onCancel={() => setPromptNewFolder(false)}
+                    onSubmit={handleNewFolderPromptSubmission}
+                    prompt="New folder name"
+                    submitText="Create Folder"
+                    visible={promptNewFolder}
                 />
             </SafeAreaView>
         </>

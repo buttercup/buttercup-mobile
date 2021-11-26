@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import Clipboard from "@react-native-community/clipboard";
 import { Card, Layout, List, Text } from "@ui-kitten/components";
 import { EmptyState } from "../EmptyState";
+import { ErrorBoundary } from "../ErrorBoundary";
 import { CodeDigits } from "./codes/CodeDigits";
 import { CodeWheel } from "./codes/CodeWheel";
 import { notifySuccess } from "../../library/notifications";
@@ -74,23 +75,25 @@ export function CodesScreen() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <Layout style={{ flex: 1 }}>
-                {otpCodes.length > 0 && (
-                    <List
-                        style={styles.listContainer}
-                        contentContainerStyle={styles.contentContainer}
-                        data={otpCodes}
-                        renderItem={renderWrapper}
-                    />
-                )}
-                {otpCodes.length === 0 && (
-                    <Layout level="2" style={styles.noCodesLayout}>
-                        <EmptyState
-                            title="No OTP Codes"
-                            description="No codes were found in this vault."
-                            icon="keypad-outline"
+                <ErrorBoundary>
+                    {otpCodes.length > 0 && (
+                        <List
+                            style={styles.listContainer}
+                            contentContainerStyle={styles.contentContainer}
+                            data={otpCodes}
+                            renderItem={renderWrapper}
                         />
-                    </Layout>
-                )}
+                    )}
+                    {otpCodes.length === 0 && (
+                        <Layout level="2" style={styles.noCodesLayout}>
+                            <EmptyState
+                                title="No OTP Codes"
+                                description="No codes were found in this vault."
+                                icon="keypad-outline"
+                            />
+                        </Layout>
+                    )}
+                </ErrorBoundary>
             </Layout>
         </SafeAreaView>
     );
