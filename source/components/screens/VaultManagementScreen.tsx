@@ -6,7 +6,6 @@ import {
     Layout,
     List,
     ListItem,
-    Text,
     TopNavigation,
     TopNavigationAction
 } from "@ui-kitten/components";
@@ -14,6 +13,7 @@ import { VaultSourceID } from "buttercup";
 import { ItemsPrompt, PromptItem } from "../prompts/ItemsPrompt";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { TextPrompt } from "../prompts/TextPrompt";
+import { EmptyState } from "../EmptyState";
 import { useVaults } from "../../hooks/buttercup";
 import { removeVaultSource, renameVaultSource } from "../../services/buttercup";
 import { notifyError, notifySuccess } from "../../library/notifications";
@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
     contentContainer: {
         paddingHorizontal: 8,
         paddingVertical: 4,
+    },
+    noVaultsLayout: {
+        height: "100%"
     }
 });
 
@@ -137,11 +140,20 @@ export function VaultManagementScreen({ navigation }) {
             <SafeAreaView style={{ flex: 1 }}>
                 <TopNavigation title="Vaults" alignment="center" accessoryLeft={BackAction} />
                 <Divider />
-                <List
-                    contentContainerStyle={styles.contentContainer}
-                    data={preparedContents}
-                    renderItem={renderWrapper}
-                />
+                {preparedContents.length > 0 && (
+                    <List
+                        contentContainerStyle={styles.contentContainer}
+                        data={preparedContents}
+                        renderItem={renderWrapper}
+                    />
+                ) || (
+                    <Layout level="2" style={styles.noVaultsLayout}>
+                        <EmptyState
+                            title="No Vaults"
+                            description="No vaults have been added yet."
+                        />
+                    </Layout>
+                )}
             </SafeAreaView>
             <ItemsPrompt
                 items={VAULT_OPTIONS}

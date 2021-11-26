@@ -1,4 +1,4 @@
-import { FileIdentifier, FileItem, FileSystemInterface, PathIdentifier, registerInterface } from "@buttercup/file-interface";
+import { FileIdentifier, FileItem, FileSystemInterface, PathIdentifier } from "@buttercup/file-interface";
 import { DocumentDirectoryPath, mkdir, readDir, readFile, unlink, writeFile } from "react-native-fs";
 import path from "path-browserify";
 
@@ -15,17 +15,15 @@ export class LocalFileSystemInterface extends FileSystemInterface {
     }
 
     async getDirectoryContents(pathIdentifier?: PathIdentifier): Promise<Array<FileItem>> {
-        const consumerPath = (pathIdentifier?.identifier ?? "/") as string;
-        const dirPath = this._getActualPath(consumerPath);
-        const dirName = path.basename(dirPath);
+        const dirPath = (pathIdentifier?.identifier ?? "/") as string;
         const results = await readDir(dirPath);
         return results.map(res => ({
-            identifier: dirPath,
-            name: dirName,
+            identifier: res.path,
+            name: res.name,
             type: res.isFile() ? "file" : "directory",
             size: parseInt(res.size, 10),
-            created: res.ctime.toUTCString(),
-            modified: res.mtime.toUTCString(),
+            created: res.ctime?.toUTCString() ?? null,
+            modified: res.mtime?.toUTCString() ?? null,
             parent: pathIdentifier
         }));
     }
@@ -35,8 +33,19 @@ export class LocalFileSystemInterface extends FileSystemInterface {
         return readFile(filename as string);
     }
 
+    getRootPathIdentifier(): PathIdentifier {
+        return {
+            identifier: this.rootDir,
+            name: path.basename(this.rootDir)
+        };
+    }
+
     getSupportedFeatures() {
         return [...super.getSupportedFeatures(), "created", "modified"];
+    }
+
+    pathIdentifierIsRoot(pathIdentifer?: PathIdentifier): boolean {
+        return pathIdentifer?.identifier === this.rootDir;
     }
 
     async putDirectory(
@@ -69,10 +78,4 @@ export class LocalFileSystemInterface extends FileSystemInterface {
             name: fileIdentifier.name
         };
     }
-
-    protected _getActualPath(consumerPath: string) {
-        return path.resolve(this.rootDir, consumerPath);
-    }
 }
-
-registerInterface("local", LocalFileSystemInterface);

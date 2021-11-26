@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
     Button,
     Icon,
     List,
     ListItem,
     StyleService,
+    Text,
     useStyleSheet
 } from "@ui-kitten/components";
 import prettyBytes from "pretty-bytes";
@@ -50,6 +51,18 @@ const styles = StyleSheet.create({
 });
 
 const themedStyles = StyleService.create({
+    noItemsText: {
+        color: "color-basic-500",
+        fontStyle: "italic"
+    },
+    noItemsView: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20
+    },
     selectedItem: {
         backgroundColor: "color-primary-default"
     }
@@ -74,7 +87,7 @@ export function VaultChooser(props: VaultChooserProps) {
     const { onSelectVault } = props;
     const fsInterface = useMemo(getCurrentInterface, []);
     const [items, setItems] = useState<Array<FSItem>>([]);
-    const [currentPath, setCurrentPath] = useState<VaultChooserItem>(null);
+    const [currentPath, setCurrentPath] = useState<VaultChooserItem>(fsInterface.getRootPathIdentifier());
     const [selectedPath, setSelectedPath] = useState<VaultChooserItem>(null);
     const [parentPaths, setParentPaths] = useState<Array<VaultChooserItem>>([]);
     const [promptNewFile, setPromptNewFile] = useState(false);
@@ -127,15 +140,14 @@ export function VaultChooser(props: VaultChooserProps) {
                 isNew: true
             }
         ]);
-        const parent = parentPaths.length > 0 ? parentPaths[parentPaths.length - 1] : null;
         const result = {
             name: newVaultFilename,
             identifier: null,
-            parent
+            parent: currentPath
         };
         setSelectedPath(result);
         onSelectVault(result);
-    }, [items, parentPaths]);
+    }, [items, currentPath]);
     const handleNewFolderPromptSubmission = useCallback(async (folderName: string) => {
         setPromptNewFolder(false);
         try {
@@ -176,7 +188,7 @@ export function VaultChooser(props: VaultChooserProps) {
                     path: result,
                     isNew: false
                 }));
-                if (parentPaths.length > 0) {
+                if (parentPaths.length > 0 && !fsInterface.pathIdentifierIsRoot(currentPath)) {
                     newItems.unshift({
                         title: "..",
                         subtitle: "Parent Directory",
@@ -188,20 +200,34 @@ export function VaultChooser(props: VaultChooserProps) {
                 setItems(newItems);
             })
             .catch((err: Error) => {
+                setBusyState(null);
                 console.warn(err);
                 notifyError("Error fetching contents", err.message);
             });
-    }, [currentPath, parentPaths]);
+    }, [currentPath, fsInterface, parentPaths]);
     return (
         <>
             <SafeAreaView style={{ flex: 1 }}>
-                <List
+                {items.length === 0 && currentPath === null && (
+                    <View style={themeStyles.noItemsView}>
+                        <Text style={themeStyles.noItemsText}>No files here</Text>
+                    </View>
+                ) || (
+                    <List
+                        style={styles.listContainer}
+                        contentContainerStyle={styles.contentContainer}
+                        data={items}
+                        renderItem={renderItem}
+                        scrollEnabled={false}
+                    />
+                )}
+                {/* <List
                     style={styles.listContainer}
                     contentContainerStyle={styles.contentContainer}
                     data={items}
                     renderItem={renderItem}
                     scrollEnabled={false}
-                />
+                /> */}
                 <Button
                     accessoryLeft={AddVaultIcon}
                     onPress={handleNewVaultPromptShow}

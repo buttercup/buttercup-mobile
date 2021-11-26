@@ -106,7 +106,7 @@ export function AddVaultScreen({ navigation }) {
             ...dsConfig
         });
     }, [datasourceConfig]);
-    const handleConfirmationUpdate = useCallback((password: string) => {
+    const handleConfirmationPasswordUpdate = useCallback((password: string) => {
         setVaultPassword(password);
     }, []);
     const handleSubmit = useCallback(() => {
@@ -194,7 +194,7 @@ export function AddVaultScreen({ navigation }) {
                         <Layout style={styles.confirmationLayout}>
                             <AddVaultConfirmation
                                 disabled={submitting}
-                                onUpdate={handleConfirmationUpdate}
+                                onUpdatePassword={handleConfirmationPasswordUpdate}
                                 type={vaultType}
                                 vaultPath={chosenVaultPath}
                             />

@@ -21,7 +21,10 @@ export interface DatasourceConfigurationMobileLocalFile extends DatasourceConfig
     filename: string;
 }
 
-export type DatasourceConfig = DatasourceConfigurationDropbox | DatasourceConfigurationGoogleDrive | DatasourceConfigurationWebDAV | DatasourceConfigurationMobileLocalFile;
+export type DatasourceConfig = DatasourceConfigurationDropbox | DatasourceConfigurationGoogleDrive | DatasourceConfigurationWebDAV | DatasourceConfigurationMobileLocalFile | {
+    type: string;
+    [key: string]: any;
+};
 
 export interface GoogleOAuthToken {
     accessToken: string;

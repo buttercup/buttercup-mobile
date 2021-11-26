@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@buttercup/dropbox-client": "^0.7.0",
-    "@buttercup/file-interface": "^1.1.0",
+    "@buttercup/file-interface": "^2.0.0",
     "@buttercup/google-oauth2-client": "^0.3.0",
     "@buttercup/googledrive-client": "^1.3.0",
     "@eva-design/eva": "^2.1.0",
