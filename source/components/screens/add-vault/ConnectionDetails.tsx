@@ -199,8 +199,6 @@ function MobileLocalFileConnection(props: ConnectionDetailsProps) {
                     <Text style={styles.textBottomMargin}>This feature is in beta It should not be considered stable.</Text>
                     <Text>You store your vaults and data using this datasource entirely at your own risk.</Text>
                 </Card>
-                {/* <Text category="h6">Nothing to see here</Text>
-                <Text category="p1">There are no actions to perform here. Please continue on to the next step.</Text> */}
             </Layout>
         </>
     );
