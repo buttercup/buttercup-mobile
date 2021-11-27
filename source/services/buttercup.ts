@@ -246,6 +246,12 @@ export async function initialise() {
     registerGoogleAuthWatchers();
 }
 
+export async function lockAllVaults() {
+    await Promise.all(getVaultManager().unlockedSources.map(async source => {
+        await source.lock();
+    }));
+}
+
 function onVaultSourceUnlocked(source: VaultSource) {
     // Count stats
     const numEntries = source.vault.getAllEntries().length;
@@ -320,7 +326,7 @@ export async function unlockSourceByID(sourceID: VaultSourceID, password: string
 }
 
 export async function verifySourcePassword(sourceID: VaultSourceID, password: string): Promise<boolean> {
-    const vaultMgr =  getVaultManager();
+    const vaultMgr = getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);
     return source.testMasterPassword(password);
 }

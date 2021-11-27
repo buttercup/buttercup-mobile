@@ -15,11 +15,15 @@ import { VaultSourceID } from "buttercup";
 import { VaultMenu } from "../menus/VaultMenu";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { CURRENT_SOURCE } from "../../state/vault";
+import { notifyError, notifySuccess } from "../../library/notifications";
+import { setBusyState } from "../../services/busyState";
+import { lockAllVaults } from "../../services/buttercup";
 
 const BCUP_ICON = require("../../../resources/images/bcup-256.png");
 const MENU_ITEMS = [
     { text: "Add Vault", slug: "add", icon: "plus-outline" },
     { text: "Manage Vaults", slug: "manage", icon: "menu-arrow-outline" },
+    { text: "Lock All Vaults", slug: "lock-all", icon: "lock-outline" },
     { text: "About", slug: "about", icon: "info-outline" }
 ];
 
@@ -36,6 +40,13 @@ const styles = StyleSheet.create({
     menuContent: {}
 });
 
+async function handleAllVaultLocking() {
+    setBusyState("Locking vaults");
+    await lockAllVaults();
+    setBusyState(null);
+    notifySuccess("Vaults locked", "All vaults have been locked");
+}
+
 function MenuButton(props) {
     const { navigation } = props;
     const [visible, setVisible] = useState(false);
@@ -48,6 +59,12 @@ function MenuButton(props) {
             navigation.navigate("AddVault");
         } else if (item.slug === "manage") {
             navigation.navigate("ManageVaults");
+        } else if (item.slug === "lock-all") {
+            handleAllVaultLocking().catch(err => {
+                setBusyState(null);
+                console.error(err);
+                notifyError("Locking Failure", err.message);
+            });
         }
     };
 

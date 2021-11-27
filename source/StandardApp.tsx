@@ -59,8 +59,10 @@ export function StandardApp() {
                     <Spinner size="giant" />
                 </Layout>
             )}
-            <BusyStatus />
-            <Toaster />
+            <>
+                <BusyStatus />
+                <Toaster />
+            </>
         </ApplicationProvider>
     );
 }
