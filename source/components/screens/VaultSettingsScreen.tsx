@@ -1,17 +1,30 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { Card, Layout, Text, Toggle } from "@ui-kitten/components";
+import { Card, IndexPath, Layout, Select, SelectItem, Text, Toggle } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
+import ms from "ms";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { useTabFocusState } from "../../hooks/vaultTab";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
+import { useVaultConfiguration } from "../../hooks/config";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
 import { authenticateBiometrics, disableBiometicsForSource, enableBiometricsForSource } from "../../services/biometrics";
 import { verifySourcePassword } from "../../services/buttercup";
+import { updateVaultConfig, VaultConfiguration } from "../../services/config";
 import { TextPrompt } from "../prompts/TextPrompt";
+import { VAULT_AUTOLOCK_OPTIONS } from "../../symbols";
 
 const styles = StyleSheet.create({
+    longLayout: {
+        flex: 1,
+        flexDirection: "column",
+        alignItems: "stretch",
+        justifyContent: "flex-start"
+    },
+    longLayoutText: {
+        marginBottom: 8
+    },
     settingCard: {
         marginHorizontal: 10,
         marginTop: 6,
@@ -45,6 +58,29 @@ function VaultSettingHeader({ subtitle = null, title }) {
 export function VaultSettingsScreen({ navigation }) {
     useTabFocusState("settings", "Vault Settings");
     const currentSourceState = useHookState(CURRENT_SOURCE);
+    const vaultConfig = useVaultConfiguration(currentSourceState.get());
+    // **
+    // ** Config items
+    // **
+    const handleUpdateConfig = useCallback(async (config: VaultConfiguration) => {
+        try {
+            await updateVaultConfig(currentSourceState.get(), {
+                ...config
+            });
+        } catch (err) {
+            console.error(err);
+            notifyError("Failed updating configuration", err.message);
+        }
+    }, [currentSourceState.get()]);
+    const vaultAutoLockCurrentIndex = useMemo(
+        () => {
+            const index = VAULT_AUTOLOCK_OPTIONS.findIndex(
+                item => (item.delay && ms(item.delay) === vaultConfig.autoLockTime) || (!item.enabled && !vaultConfig.autoLockEnabled)
+            );
+            return index === -1 ? 0 : index;
+        },
+        [vaultConfig]
+    );
     // **
     // ** Biometrics
     // **
@@ -133,6 +169,41 @@ export function VaultSettingsScreen({ navigation }) {
                             >
                                 {biometricsAvailable ? biometricsEnabled ? "Enabled" : "Disabled" : "Unavailable"}
                             </Toggle>
+                        </Layout>
+                    </Card>
+                    <Card
+                        header={props => (
+                            <VaultSettingHeader
+                                {...props}
+                                title="Auto Lock"
+                                subtitle="Automatic vault locking after delay"
+                            />
+                        )}
+                        style={styles.settingCard}
+                    >
+                        <Layout style={styles.longLayout}>
+                            <Text style={styles.longLayoutText}>
+                                Set current vault automatic lock time.
+                            </Text>
+                            <Select
+                                label="Vault auto lock time"
+                                selectedIndex={new IndexPath(vaultAutoLockCurrentIndex)}
+                                onSelect={(index: IndexPath) => handleUpdateConfig({
+                                    ...vaultConfig,
+                                    autoLockEnabled: VAULT_AUTOLOCK_OPTIONS[index.row].enabled,
+                                    autoLockTime: VAULT_AUTOLOCK_OPTIONS[index.row].enabled
+                                        ? ms(VAULT_AUTOLOCK_OPTIONS[index.row].delay)
+                                        : null
+                                })}
+                                value={VAULT_AUTOLOCK_OPTIONS[vaultAutoLockCurrentIndex].title}
+                            >
+                                {VAULT_AUTOLOCK_OPTIONS.map(option => (
+                                    <SelectItem
+                                        key={option.title}
+                                        title={option.title}
+                                    />
+                                ))}
+                            </Select>
                         </Layout>
                     </Card>
                 </ScrollView>

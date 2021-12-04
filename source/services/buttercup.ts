@@ -206,6 +206,10 @@ function filenameToVaultName(filename: string): string {
     return output.replace(/\.bcup$/i, "") || filename;
 }
 
+export function getAllSourceIDs(): Array<VaultSourceID> {
+    return getVaultManager().sources.map(source => source.id);
+}
+
 export async function getEmptyVault(password: string): Promise<string> {
     const creds = Credentials.fromPassword(password);
     const vault = Vault.createWithDefaults();
@@ -268,6 +272,13 @@ function onVaultSourceUnlocked(source: VaultSource) {
         });
 }
 
+export function onVaultSourcesUpdated(callback: () => void): () => void {
+    getVaultManager().on("sourcesUpdated", callback);
+    return () => {
+        getVaultManager().off("sourcesUpdated", callback);
+    };
+}
+
 function onVaultSourceUpdated(source: VaultSource) {
     // clearFacadeCache(source.id);
     // notifyWindowsOfSourceUpdate(source.id);
@@ -313,7 +324,7 @@ export async function saveNewEntry(sourceID: VaultSourceID, groupID: GroupID, fa
 
 export async function sourceHasOfflineCopy(sourceID: VaultSourceID): Promise<boolean> {
     const vaultMgr = getVaultManager();
-    return vaultMgr.getSourceForID(sourceID).checkOfflineCopy();
+    return vaultMgr.getSourceForID(sourceID)?.checkOfflineCopy() ?? false;
 }
 
 export async function unlockSourceByID(sourceID: VaultSourceID, password: string): Promise<void> {
