@@ -25,6 +25,7 @@ import { updateSourceItemsCount } from "./statistics";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
 import "../library/datasource/MobileLocalFileDatasource";
+import { LocalFileSystemInterface } from "../library/datasource/LocalFileInterface";
 import { DatasourceConfig, OTP, VaultChooserItem, VaultDetails } from "../types";
 
 const __watchedVaultSources: Array<VaultSourceID> = [];
@@ -81,9 +82,13 @@ async function addGoogleDriveVault(config: DatasourceConfig, vaultPath: VaultCho
 async function addMobileLocalFileVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
     const isNew = !vaultPath.identifier;
     const filename = vaultPath.name;
-    const filePath = isNew
+    let filePath = isNew
         ? path.join(vaultPath.parent.identifier, vaultPath.name)
         : vaultPath.identifier;
+    // Strip base (documents dir) from file path (as it may change)
+    const rootDir = LocalFileSystemInterface.getRootDirectory();
+    filePath = path.relative(rootDir, filePath);
+    // Prepare source credentials for ingesting
     const sourceCredentials = Credentials.fromDatasource({
         ...config,
         filename: filePath

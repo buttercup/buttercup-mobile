@@ -5,9 +5,13 @@ import path from "path-browserify";
 export class LocalFileSystemInterface extends FileSystemInterface {
     rootDir: string;
 
+    static getRootDirectory(): string {
+        return DocumentDirectoryPath;
+    }
+
     constructor(config) {
         super(config);
-        this.rootDir = DocumentDirectoryPath;
+        this.rootDir = LocalFileSystemInterface.getRootDirectory();
     }
 
     async deleteFile(fileIdentifier: FileIdentifier): Promise<void> {
