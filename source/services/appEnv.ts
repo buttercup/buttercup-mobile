@@ -16,6 +16,7 @@ import uuid from "react-native-uuid";
 import hexToArrayBuffer from "hex-to-array-buffer";
 import arrayBufferToHex from "array-buffer-to-hex";
 import { CryptoBridge } from "./cryptoBridge";
+import { CRYPTO_DERIVATION_ROUNDS } from "../symbols";
 
 interface TextDecoderClass {
     new ();
@@ -30,9 +31,10 @@ interface TextEncoderClass {
 declare var TextDecoder: TextDecoderClass;
 declare var TextEncoder: TextEncoderClass;
 
+const NOOP = () => {};
+
 let __hasInitialised = false,
-    __derivationRoundsOverride = null,
-    __adapter: IocaneAdapter = null;
+    __derivationRoundsOverride = CRYPTO_DERIVATION_ROUNDS;
 
 function compressV1(text: string): string {
     return gzip(text, {
@@ -79,7 +81,7 @@ export async function decryptCBC(
     throw new Error("Binary mode not supported yet");
 }
 
-export function decryptData(data: Buffer | string, password: string): Promise<Buffer | string> {
+function decryptData(data: Buffer | string, password: string): Promise<Buffer | string> {
     const adapter = getAdapter();
     return adapter.decrypt(data, password);
 }
@@ -141,11 +143,8 @@ async function encryptCBC(
     throw new Error("Binary mode not supported yet");
 }
 
-export function encryptData(data: Buffer | string, password: string): Promise<Buffer | string> {
+function encryptData(data: Buffer | string, password: string): Promise<Buffer | string> {
     const adapter = getAdapter();
-    if (__derivationRoundsOverride > 0) {
-        adapter.setDerivationRounds(__derivationRoundsOverride);
-    }
     return adapter.encrypt(data, password);
 }
 
@@ -162,12 +161,13 @@ function generateUUID(): string {
     return uuid.v4() as string;
 }
 
-function getAdapter(): IocaneAdapter {
-    if (!__adapter) {
-        __adapter = createAdapter();
-        patchCrypto(__adapter);
+export function getAdapter(): IocaneAdapter {
+    const adapter = createAdapter();
+    patchCrypto(adapter);
+    if (__derivationRoundsOverride !== null) {
+        adapter.setDerivationRounds(__derivationRoundsOverride);
     }
-    return __adapter;
+    return adapter;
 }
 
 export function initAppEnv() {
@@ -185,7 +185,7 @@ export function initAppEnv() {
         "crypto/v2/encryptBuffer": encryptData, // @todo
         "crypto/v1/decryptText": decryptData,
         "crypto/v1/encryptText": encryptData,
-        "crypto/v1/setDerivationRounds": setDerivationRounds,
+        "crypto/v1/setDerivationRounds": NOOP,
         "encoding/v1/base64ToBytes": (input: string) => decodeBase64(input, true),
         "encoding/v1/base64ToText": decodeBase64,
         "encoding/v1/bytesToBase64": encodeBytesToBase64,
@@ -204,8 +204,4 @@ function patchCrypto(adapter: IocaneAdapter) {
         generateIV,
         generateSalt
     });
-}
-
-export function setDerivationRounds(rounds = null) {
-    __derivationRoundsOverride = rounds;
 }

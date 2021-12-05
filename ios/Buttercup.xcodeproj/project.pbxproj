@@ -21,6 +21,7 @@
 		C28D367926BC7A7600BD5D76 /* BCHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D367026BC7A7600BD5D76 /* BCHelpers.m */; };
 		C28D367A26BC7A7600BD5D76 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D367326BC7A7600BD5D76 /* CryptoBridge.m */; };
 		C28D367B26BC7A7600BD5D76 /* CryptoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D367326BC7A7600BD5D76 /* CryptoBridge.m */; };
+		C2A50C08275BFC160080C5E2 /* BCDerivationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2A50C07275BFC160080C5E2 /* BCDerivationTests.m */; };
 		C2DF536F26EFC234005AA279 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2DF536E26EFC234005AA279 /* AuthenticationServices.framework */; };
 		C2DF537326EFC234005AA279 /* CredentialProviderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C2DF537226EFC234005AA279 /* CredentialProviderViewController.m */; };
 		C2DF537626EFC234005AA279 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2DF537426EFC234005AA279 /* MainInterface.storyboard */; };
@@ -101,6 +102,7 @@
 		C28D367126BC7A7600BD5D76 /* BCDerivation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCDerivation.h; sourceTree = "<group>"; };
 		C28D367226BC7A7600BD5D76 /* CryptoBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CryptoBridge.h; sourceTree = "<group>"; };
 		C28D367326BC7A7600BD5D76 /* CryptoBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CryptoBridge.m; sourceTree = "<group>"; };
+		C2A50C07275BFC160080C5E2 /* BCDerivationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCDerivationTests.m; sourceTree = "<group>"; };
 		C2DF536D26EFC234005AA279 /* BCAutoFillExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BCAutoFillExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2DF536E26EFC234005AA279 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		C2DF537126EFC234005AA279 /* CredentialProviderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CredentialProviderViewController.h; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				00E356F21AD99517003FC87E /* ButtercupTests.m */,
+				C2A50C07275BFC160080C5E2 /* BCDerivationTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
 			path = ButtercupTests;
@@ -599,6 +602,7 @@
 				C28D367926BC7A7600BD5D76 /* BCHelpers.m in Sources */,
 				C28D367526BC7A7600BD5D76 /* BCDerivation.m in Sources */,
 				C28D367B26BC7A7600BD5D76 /* CryptoBridge.m in Sources */,
+				C2A50C08275BFC160080C5E2 /* BCDerivationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

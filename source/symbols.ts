@@ -2,6 +2,8 @@ export const BIOMETRICS_ERROR_NOT_ENROLLED = "NOT_ENROLLED";
 
 export const BRAND_COLOUR = "#00B7AC";
 
+export const CRYPTO_DERIVATION_ROUNDS = 125000;
+
 export const GROUP = "group.pw.buttercup.mobile";
 
 export const VAULT_AUTOLOCK_OPTIONS = [

@@ -6,6 +6,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "BCDerivation.h"
 
 @interface BCDerivationTests : XCTestCase
 
@@ -21,15 +22,16 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testDerivesSameKey {
+  NSString *derivedKey1 = [BCDerivation deriveKeyFromPassword:@"test" andSalt:@"abc123def456" forRounds:10000 withBits:512];
+  NSString *derivedKey2 = [BCDerivation deriveKeyFromPassword:@"test" andSalt:@"abc123def456" forRounds:10000 withBits:512];
+  XCTAssertTrue([derivedKey1 isEqualToString:derivedKey2]);
 }
 
-- (void)testPerformanceExample {
+- (void)testDerivationPerformance {
     // This is an example of a performance test case.
     [self measureBlock:^{
-        // Put the code you want to measure the time of here.
+      [BCDerivation deriveKeyFromPassword:@"test" andSalt:@"abc123def456" forRounds:50000 withBits:512];
     }];
 }
 

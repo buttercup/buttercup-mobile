@@ -1,5 +1,5 @@
 import { EntryType, EntryURLType, VaultSource, VaultSourceID, getEntryURLs, VaultSourceStatus, getEntryPath, EntryID } from "buttercup";
-import { decryptData, encryptData, setDerivationRounds } from "./appEnv";
+import { getAdapter } from "./appEnv";
 import { getSharedStorage } from "./storage";
 import { AutoFillBridge } from "./autofillBridge";
 import { IntermediateEntry, IntermediateVault, StoredAutofillEntries, VaultDetails } from "../types";
@@ -14,7 +14,8 @@ export async function getCredentialsForVault(sourceID: VaultSourceID, password: 
     if (!vault) {
         throw new Error(`No autofill vault found: ${sourceID}`);
     }
-    const decryptedAuth = await decryptData(vault.authToken, password) as string;
+    const iocaneAdapter = getAdapter();
+    const decryptedAuth = await iocaneAdapter.decrypt(vault.authToken, password) as string;
     if (decryptedAuth !== vault.id) {
         throw new Error(`Failed authenticating encrypted autofill vault`);
     }
@@ -63,8 +64,9 @@ export async function storeCredentialsForVault(source: VaultSource, password: st
     }, {});
     await AutoFillBridge.updateEntriesForSourceID(source.id, autofillEntries);
     // Prepare encryption test
-    setDerivationRounds(INTERMEDIATE_ENCRYPTION_ROUNDS);
-    const authToken = await encryptData(source.id, password) as string;
+    const iocaneAdapter = getAdapter();
+    iocaneAdapter.setDerivationRounds(INTERMEDIATE_ENCRYPTION_ROUNDS);
+    const authToken = await iocaneAdapter.encrypt(source.id, password) as string;
     // Store vault
     const storage = getSharedStorage();
     let sources: Array<IntermediateVault> = await storage.getItem(STORAGE_PREFIX_SOURCES);
