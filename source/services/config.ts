@@ -7,7 +7,7 @@ import { cloneObject } from "../library/clone";
 
 export interface VaultConfiguration {
     autoLockEnabled: boolean;
-    autoLockTime: number;
+    autoLockTime: number; // milliseconds
 }
 
 const STORAGE_PREFIX_VAULT_CONFIG = "config:source:";
@@ -86,5 +86,7 @@ export async function updateVaultConfig(sourceID: VaultSourceID, config: VaultCo
     const updatedConfig = __vaultConfigurations[sourceID] = mergeConfigurations(getInitialConfig(), config);
     const storageKey = `${STORAGE_PREFIX_VAULT_CONFIG}${sourceID}`;
     await storage.setValue(storageKey, JSON.stringify(updatedConfig));
-    getEmitter().emit(`update:${sourceID}`, updatedConfig);
+    const emitter = getEmitter();
+    emitter.emit("update", sourceID);
+    emitter.emit(`update:${sourceID}`, updatedConfig);
 }

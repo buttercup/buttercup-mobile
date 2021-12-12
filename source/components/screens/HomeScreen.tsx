@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import {
     Avatar,
@@ -11,6 +11,7 @@ import {
     TopNavigation,
     Text
 } from "@ui-kitten/components";
+import { useNavigationState } from "@react-navigation/native";
 import { VaultSourceID } from "buttercup";
 import { VaultMenu } from "../menus/VaultMenu";
 import { ErrorBoundary } from "../ErrorBoundary";
@@ -110,6 +111,15 @@ export function HomeScreen({ navigation }) {
         },
         [navigation]
     );
+    const [currentNavIndex, setCurrentNavIndex] = useState<number>(0);
+    const currentNav = useNavigationState(state => state.index);
+    useEffect(() => {
+        if (currentNavIndex > 0 && currentNav === 0) {
+            // Navigated back to root
+            CURRENT_SOURCE.set(null);
+        }
+        setCurrentNavIndex(currentNav);
+    }, [currentNav, currentNavIndex]);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation

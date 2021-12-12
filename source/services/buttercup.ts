@@ -229,7 +229,11 @@ export function getEntryFacade(sourceID: VaultSourceID, entryID: EntryID): Entry
 }
 
 export function getVault(sourceID: VaultSourceID): Vault {
-    return getVaultSource(sourceID).vault;
+    const source = getVaultSource(sourceID);
+    if (source?.status !== VaultSourceStatus.Unlocked) {
+        throw new Error("Cannot get vault: Source not unlocked");
+    }
+    return source.vault;
 }
 
 export function getVaultManager(): VaultManager {
@@ -259,6 +263,14 @@ export async function lockAllVaults() {
     await Promise.all(getVaultManager().unlockedSources.map(async source => {
         await source.lock();
     }));
+}
+
+export async function lockVault(sourceID: VaultSourceID): Promise<void> {
+    const vaultMgr = getVaultManager();
+    const source = vaultMgr.getSourceForID(sourceID);
+    if (source.status === VaultSourceStatus.Unlocked) {
+        await source.lock();
+    }
 }
 
 function onVaultSourceUnlocked(source: VaultSource) {

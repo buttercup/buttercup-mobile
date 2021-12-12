@@ -147,7 +147,7 @@ export function EntryDetailsScreen({ navigation, route }) {
             ];
         }, []);
     }, [entryFacade]);
-    const keyValueProperties = useMemo(() => fieldsToProperties(entryFacade.fields), [entryFacade]);
+    const keyValueProperties = useMemo(() => fieldsToProperties(entryFacade?.fields ?? []), [entryFacade]);
     const entryDomain = useMemo(() => getEntryDomain(keyValueProperties) || null, [keyValueProperties]);
     const navigateBack = () => {
         navigation.goBack();
@@ -178,7 +178,7 @@ export function EntryDetailsScreen({ navigation, route }) {
                             <Text appearance="hint" numberOfLines={1}>{subtitle}</Text>
                         </View>
                         <View>
-                            <SiteIcon domain={entryDomain} size={48} type={entryFacade.type} />
+                            <SiteIcon domain={entryDomain} size={48} type={entryFacade?.type} />
                         </View>
                     </View>
                     <Layout style={styles.fieldsLayout}>

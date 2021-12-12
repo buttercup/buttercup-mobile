@@ -46,6 +46,7 @@ export function useEntries(sourceID: VaultSourceID): Array<Entry> {
         setEntries(source.vault.getAllEntries());
     }, [source]);
     useEffect(() => {
+        if (!source) return;
         updateContents();
         source.on("updated", updateContents);
         return () => {
@@ -56,25 +57,26 @@ export function useEntries(sourceID: VaultSourceID): Array<Entry> {
 }
 
 export function useEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {
-    const vault = useMemo(() => getVault(sourceID), [sourceID]);
-    const entry = useMemo(() => vault.findEntryByID(entryID), [vault]);
-    const facade = useMemo(() => entry ? createEntryFacade(entry) : null, [entry]);
-    return facade;
+    const vault = useMemo(() => sourceID ? getVault(sourceID) : null, [sourceID]);
+    const entry = useMemo(() => vault?.findEntryByID(entryID) ?? null, [vault]);
+    return useMemo(() => entry ? createEntryFacade(entry) : null, [entry]);
 }
 
 export function useGroupTitle(sourceID: VaultSourceID, groupID: GroupID): string | null {
-    const vault = useMemo(() => getVault(sourceID), [sourceID]);
-    const group = useMemo(() => vault.findGroupByID(groupID), [vault]);
-    return group && group.getTitle() || null;
+    const vault = useMemo(() => sourceID ? getVault(sourceID) : null, [sourceID]);
+    const group = useMemo(() => vault?.findGroupByID(groupID) ?? null, [vault]);
+    return group?.getTitle() ?? null;
 }
 
 export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string = null): Array<VaultContentsItem> {
     const source = useMemo(() => getVaultSource(sourceID), [sourceID]);
     const [contents, setContents] = useState<Array<VaultContentsItem>>([]);
     const updateContents = useCallback(() => {
+        if (!source?.vault) return;
         setContents(extractItems(source.vault, targetGroupID));
     }, [source, targetGroupID]);
     useEffect(() => {
+        if (!source) return;
         updateContents();
         source.on("updated", updateContents);
         return () => {

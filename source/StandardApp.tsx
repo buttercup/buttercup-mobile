@@ -11,6 +11,8 @@ import { initialise as initialiseButtercup } from "./services/buttercup";
 import { initialise as initialiseLinking } from "./services/linking";
 import { initialise as initialiseIconCache } from "./services/iconCache";
 import { initialise as initialiseConfig } from "./services/config";
+import { initialise as initialiseActivity } from "./services/activity";
+import { initialise as initialiseAutoLock } from "./services/autoLock";
 import { ApplicationProvider, IconRegistry, Layout, Spinner } from "@ui-kitten/components";
 import { AppNavigator } from "./components/navigation/HomeNavigator";
 import { BusyStatus } from "./components/notifications/BusyStatus";
@@ -24,6 +26,8 @@ async function initialise() {
     await initialiseLinking();
     await initialiseConfig();
     initialiseIconCache();
+    initialiseActivity();
+    initialiseAutoLock();
 }
 
 export function StandardApp() {
