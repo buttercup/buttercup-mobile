@@ -14,7 +14,7 @@ import { initialise as initialiseConfig } from "./services/config";
 import { initialise as initialiseActivity } from "./services/activity";
 import { initialise as initialiseAutoLock } from "./services/autoLock";
 import { ApplicationProvider, IconRegistry, Layout, Spinner } from "@ui-kitten/components";
-import { AppNavigator } from "./components/navigation/HomeNavigator";
+import { AppNavigator } from "./components/navigation/RootNavigator";
 import { BusyStatus } from "./components/notifications/BusyStatus";
 import { Toaster } from "./components/notifications/Toaster";
 

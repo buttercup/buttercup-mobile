@@ -21,7 +21,7 @@ import { rootNavigationRef } from "../../state/navigation";
 
 const { Navigator, Screen } = createStackNavigator();
 
-const HomeNavigator = () => (
+const RootNavigator = () => (
     <Navigator headerMode="none">
         <Screen name="Home" component={HomeScreen} />
         <Screen name="About" component={AboutScreen} />
@@ -55,7 +55,7 @@ export function AppNavigator({ eva }) {
             <ThemedSafeAreaView eva={eva} />
                 <ErrorBoundary>
                     <OTPProvider otpItems={sourceOTPItems}>
-                        <HomeNavigator />
+                        <RootNavigator />
                     </OTPProvider>
                 </ErrorBoundary>
             <ThemedSafeAreaView eva={eva} />
