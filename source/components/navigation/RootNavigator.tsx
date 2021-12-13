@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { withStyles } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { OTPProvider } from "../../contexts/otp";
-import { HomeScreen } from "../screens/HomeScreen";
+import { HomeNavigator } from "./HomeNavigator";
 import { VaultManagementScreen } from "../screens/VaultManagementScreen";
 import { AboutScreen } from "../screens/AboutScreen";
 import { AddVaultScreen } from "../screens/AddVaultScreen";
@@ -23,7 +23,7 @@ const { Navigator, Screen } = createStackNavigator();
 
 const RootNavigator = () => (
     <Navigator headerMode="none">
-        <Screen name="Home" component={HomeScreen} />
+        <Screen name="Home" component={HomeNavigator} />
         <Screen name="About" component={AboutScreen} />
         <Screen name="Vault" component={VaultNavigator} />
         <Screen name="AddVault" component={AddVaultScreen} />

@@ -59,7 +59,7 @@ function renderItem(info: { item: OTPCode }, onCodePress: (item: OTPCode) => voi
     );
 }
 
-export function CodesScreen() {
+export function VaultCodesScreen() {
     useTabFocusState("codes", "Codes");
     const {
         otpCodes

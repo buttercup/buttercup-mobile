@@ -18,7 +18,7 @@ import { notifyError, notifySuccess } from "../../library/notifications";
 import { SearchScreen } from "../screens/SearchScreen";
 import { VaultContentsScreen } from "../screens/VaultContentsScreen";
 import { WalletScreen } from "../screens/WalletScreen";
-import { CodesScreen } from "../screens/CodesScreen";
+import { VaultCodesScreen } from "../screens/VaultCodesScreen";
 import { VaultSettingsScreen } from "../screens/VaultSettingsScreen";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { VaultContentsMenu } from "../menus/VaultContentsMenu";
@@ -53,7 +53,7 @@ function TabNavigator() {
             <Screen name="Groups" component={VaultContentsScreen} />
             <Screen name="Search" component={SearchScreen} />
             <Screen name="Wallet" component={WalletScreen} />
-            <Screen name="Codes" component={CodesScreen} />
+            <Screen name="Codes" component={VaultCodesScreen} />
             <Screen name="Settings" component={VaultSettingsScreen} />
         </Navigator>
     );
