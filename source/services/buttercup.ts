@@ -20,7 +20,7 @@ import { initAppEnv } from "./appEnv";
 import { setBusyState } from "./busyState";
 import { getAsyncStorage } from "./storage";
 import { updateSearchCaches } from "./search";
-import { setCodesForSource } from "./otp";
+import { setCodesForSource } from "./otpVault";
 import { updateSourceItemsCount } from "./statistics";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";

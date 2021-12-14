@@ -4,7 +4,7 @@ import joinURL from "url-join";
 import { getEmitter as getDropboxEmitter } from "./dropbox";
 import { processCodeExchange as processGoogleDriveCodeExchange } from "./google";
 import { notifyError, notifySuccess } from "../library/notifications";
-import { storePendingOTPURI } from "./otp";
+import { addPendingOTP } from "./otpAll";
 
 const URI_PROTO_BUTTERCUP = "buttercup://";
 const URI_PROTO_OTPAUTH = "otpauth://";
@@ -41,13 +41,13 @@ function extractQueryProperties(url: URL): { [key: string]: string } {
     return output;
 }
 
-function handleURLChange(url: string) {
+async function handleURLChange(url: string) {
     if (!url) return;
     const lowerURL = url.toLowerCase();
     if (lowerURL.indexOf(URI_PROTO_BUTTERCUP) === 0) {
         processButtercupURL(new URL(url));
     } else if (lowerURL.indexOf(URI_PROTO_OTPAUTH) === 0) {
-        const stored = storePendingOTPURI(url);
+        const stored = await addPendingOTP(url);
         if (stored) {
             notifySuccess("OTP Payload Received", "Edit an entry to save it.");
         }
@@ -59,10 +59,10 @@ function handleURLChange(url: string) {
 export async function initialise() {
     const initialURL = await Linking.getInitialURL();
     if (initialURL) {
-        handleURLChange(initialURL);
+        await handleURLChange(initialURL);
     }
-    const urlChangeHandler = ({ url }: { url: string }) => {
-        handleURLChange(url);
+    const urlChangeHandler = async ({ url }: { url: string }) => {
+        await handleURLChange(url);
     };
     Linking.addEventListener("url", urlChangeHandler);
 }

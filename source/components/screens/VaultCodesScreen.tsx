@@ -62,7 +62,7 @@ function renderItem(info: { item: OTPCode }, onCodePress: (item: OTPCode) => voi
 export function VaultCodesScreen() {
     useTabFocusState("codes", "Codes");
     const {
-        otpCodes
+        currentSourceOTPCodes
     } = useContext(OTPContext);
     const handleItemPress = useCallback((code: OTPCode) => {
         Clipboard.setString(code.currentCode);
@@ -76,15 +76,15 @@ export function VaultCodesScreen() {
         <SafeAreaView style={{ flex: 1 }}>
             <Layout style={{ flex: 1 }}>
                 <ErrorBoundary>
-                    {otpCodes.length > 0 && (
+                    {currentSourceOTPCodes.length > 0 && (
                         <List
                             style={styles.listContainer}
                             contentContainerStyle={styles.contentContainer}
-                            data={otpCodes}
+                            data={currentSourceOTPCodes}
                             renderItem={renderWrapper}
                         />
                     )}
-                    {otpCodes.length === 0 && (
+                    {currentSourceOTPCodes.length === 0 && (
                         <Layout level="2" style={styles.noCodesLayout}>
                             <EmptyState
                                 title="No OTP Codes"

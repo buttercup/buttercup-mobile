@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { Text } from "@ui-kitten/components";
 
 interface CodeDigitsProps {
@@ -15,14 +15,31 @@ const { MONO_FONT } = Platform.select({
     }
 });
 
+const styles = StyleSheet.create({
+    codeView: {
+        flex: 1,
+        flexDirection: "row"
+    },
+    text: {
+        fontFamily: MONO_FONT
+    },
+    textLast: {
+        marginLeft: 12
+    }
+});
+
 export function CodeDigits(props: CodeDigitsProps) {
-    let code = props.code;
+    let code = props.code,
+        split: number = 100;
     if (code.length === 6) {
-        code = `${code.substring(0, 3)} ${code.substring(3)}`;
+        split = 3;
     } else if (code.length === 8) {
-        code = `${code.substring(0, 4)} ${code.substring(4)}`;
+        split = 4;
     }
     return (
-        <Text category="h1" style={{ fontFamily: MONO_FONT }}>{code}</Text>
-    )
+        <View style={styles.codeView}>
+            <Text category="h1" style={styles.text}>{code.substring(0, split)}</Text>
+            <Text category="h1" style={[styles.text, styles.textLast]}>{code.substring(split)}</Text>
+        </View>
+    );
 }

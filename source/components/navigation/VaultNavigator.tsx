@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
     BottomNavigation,
     BottomNavigationTab,
+    Divider,
     Icon,
     TopNavigation,
     TopNavigationAction
@@ -106,6 +107,7 @@ export function VaultNavigator({ navigation }) {
                         </>
                     )}
                 />
+                <Divider />
                 <TabNavigator />
             </SafeAreaView>
             <TextPrompt

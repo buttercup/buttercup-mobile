@@ -4,6 +4,7 @@ import {
     StatusBar,
     useColorScheme
 } from "react-native";
+import { ApplicationProvider, IconRegistry, Layout, Spinner } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import "./polyfill/textEncoding";
@@ -13,7 +14,7 @@ import { initialise as initialiseIconCache } from "./services/iconCache";
 import { initialise as initialiseConfig } from "./services/config";
 import { initialise as initialiseActivity } from "./services/activity";
 import { initialise as initialiseAutoLock } from "./services/autoLock";
-import { ApplicationProvider, IconRegistry, Layout, Spinner } from "@ui-kitten/components";
+import { initialise as initialiseOTPs } from "./services/otpAll";
 import { AppNavigator } from "./components/navigation/RootNavigator";
 import { BusyStatus } from "./components/notifications/BusyStatus";
 import { Toaster } from "./components/notifications/Toaster";
@@ -25,6 +26,7 @@ async function initialise() {
     await initialiseButtercup();
     await initialiseLinking();
     await initialiseConfig();
+    await initialiseOTPs();
     initialiseIconCache();
     initialiseActivity();
     initialiseAutoLock();

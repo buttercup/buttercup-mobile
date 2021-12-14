@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@buttercup/channel-queue": "^1.0.1",
     "@buttercup/dropbox-client": "^0.7.0",
     "@buttercup/file-interface": "^2.0.0",
     "@buttercup/google-oauth2-client": "^0.3.0",

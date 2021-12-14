@@ -25,7 +25,7 @@ import { usePendingOTPs } from "../../hooks/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { getEntryFacade, saveExistingEntryChanges, saveNewEntry } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
-import { PendingOTP } from "../../services/otp";
+import { OTP } from "../../types";
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
 const DeleteIcon = props => <Icon {...props} name="trash-2-outline" />;
@@ -167,9 +167,9 @@ export function EditEntryScreen({ navigation, route }) {
         removePendingOTP
     } = usePendingOTPs();
     const [promptingPendingOTP, setPromptingPendingOTP] = useState(false);
-    const pendingOTPItems: Array<PromptItem> = useMemo(() => pendingOTPs.map((pendingOTP: PendingOTP) => ({
-        title: pendingOTP.title,
-        slug: pendingOTP.uri,
+    const pendingOTPItems: Array<PromptItem> = useMemo(() => pendingOTPs.map((pendingOTP: OTP) => ({
+        title: pendingOTP.otpTitle,
+        slug: pendingOTP.otpURL,
         icon: "keypad-outline"
     })), [pendingOTPs]);
     const handleFieldValueChange = useCallback((fieldID: string, newValue: string) => {

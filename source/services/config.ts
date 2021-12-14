@@ -8,6 +8,7 @@ import { cloneObject } from "../library/clone";
 export interface VaultConfiguration {
     autoLockEnabled: boolean;
     autoLockTime: number; // milliseconds
+    otpAlwaysAvailable: boolean;
 }
 
 const STORAGE_PREFIX_VAULT_CONFIG = "config:source:";
@@ -25,7 +26,8 @@ export function getEmitter(): EventEmitter {
 function getInitialConfig(): VaultConfiguration {
     return {
         autoLockEnabled: true,
-        autoLockTime: ms("15m")
+        autoLockTime: ms("15m"),
+        otpAlwaysAvailable: false
     };
 }
 

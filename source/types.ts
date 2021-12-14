@@ -52,6 +52,7 @@ export interface IntermediateVault {
 export interface OTPCode extends OTP {
     id: string;
     currentCode: string;
+    otpIssuer: string;
     otpTitle: string;
     period: number;
     timeLeft: number;
@@ -63,6 +64,7 @@ export interface OTP {
     entryID: EntryID;
     entryProperty: string;
     entryTitle: string;
+    otpTitle?: string;
     otpURL: string;
 }
 

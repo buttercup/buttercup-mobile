@@ -15,7 +15,7 @@ import { EditEntryScreen } from "../screens/EditEntryScreen";
 import { CoverScreen } from "../screens/CoverScreen";
 import { VaultNavigator } from "./VaultNavigator";
 import { ErrorBoundary } from "../ErrorBoundary";
-import { useSourceOTPItems } from "../../hooks/otp";
+import { useAllOTPItems, useSourceOTPItems } from "../../hooks/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { rootNavigationRef } from "../../state/navigation";
 
@@ -50,11 +50,12 @@ const ThemedSafeAreaView = withStyles(_ThemedSafeAreaView);
 export function AppNavigator({ eva }) {
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const sourceOTPItems = useSourceOTPItems(currentSourceState.get());
+    const allOTPs = useAllOTPItems();
     return (
         <NavigationContainer ref={rootNavigationRef}>
             <ThemedSafeAreaView eva={eva} />
                 <ErrorBoundary>
-                    <OTPProvider otpItems={sourceOTPItems}>
+                    <OTPProvider allOTPItems={allOTPs} currentSourceOTPItems={sourceOTPItems}>
                         <RootNavigator />
                     </OTPProvider>
                 </ErrorBoundary>

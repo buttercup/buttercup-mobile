@@ -1,14 +1,31 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { EntryID, VaultSourceID } from "buttercup";
 import { OTPContext } from "../contexts/otp";
-import { PendingOTP, getCodes, getEmitter, getPendingOTPs, removePendingOTP } from "../services/otp";
+import { getEmitter as getAllEmitter, getOTPs as getAllOTPs, getPendingOTPs, removePendingOTP } from "../services/otpAll";
+import { getEmitter, getOTPs } from "../services/otpVault";
 import { OTP, OTPCode } from "../types";
+
+export function useAllOTPItems(): Array<OTP> {
+    const [codes, setCodes] = useState<Array<OTP>>([]);
+    const emitter = useMemo(getAllEmitter, []);
+    useEffect(() => {
+        const cb = () => {
+            setCodes(getAllOTPs());
+        };
+        emitter.on("stored", cb);
+        cb();
+        return () => {
+            emitter.off("stored", cb);
+        };
+    }, [emitter]);
+    return codes;
+}
 
 export function useEntryOTPCodes(entryID: EntryID): { [key: string]: OTPCode } {
     const {
-        otpCodes
+        currentSourceOTPCodes
     } = useContext(OTPContext);
-    const entryCodes: { [key: string]: OTPCode } = useMemo(() => otpCodes.reduce(
+    const entryCodes: { [key: string]: OTPCode } = useMemo(() => currentSourceOTPCodes.reduce(
         (output, otpCode: OTPCode) => otpCode.entryID === entryID
             ? ({
                 ...output,
@@ -17,14 +34,17 @@ export function useEntryOTPCodes(entryID: EntryID): { [key: string]: OTPCode } {
             : output,
             {}
         ),
-        [otpCodes]
+        [currentSourceOTPCodes]
     );
     return entryCodes;
 }
 
-export function usePendingOTPs() {
-    const [pendingOTPs, setPendingOTPs] = useState<Array<PendingOTP>>([]);
-    const emitter = useMemo(getEmitter, []);
+export function usePendingOTPs(): {
+    pendingOTPs: Array<OTP>;
+    removePendingOTP: (uri: string) => Promise<void>;
+} {
+    const [pendingOTPs, setPendingOTPs] = useState<Array<OTP>>([]);
+    const emitter = useMemo(getAllEmitter, []);
     useEffect(() => {
         const cb = () => {
             setPendingOTPs(getPendingOTPs());
@@ -50,7 +70,7 @@ export function useSourceOTPItems(sourceID?: VaultSourceID): Array<OTP> {
             return;
         }
         const cb = () => {
-            const sourceCodes = getCodes().filter(code => code.sourceID === sourceID);
+            const sourceCodes = getOTPs().filter(code => code.sourceID === sourceID);
             setCodes(sourceCodes);
         };
         emitter.on("updated", cb);

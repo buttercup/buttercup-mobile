@@ -33,13 +33,22 @@ const styles = StyleSheet.create({
     },
     noCodesLayout: {
         height: "100%"
+    },
+    noIssuerText: {
+        fontStyle: "italic"
     }
 });
 
 const renderHeader = (props, info: { item: OTPCode }) => (
     <View {...props}>
-        <Text category='s1'>{info.item.entryTitle}</Text>
-        <Text category='s2'>{info.item.otpTitle}</Text>
+        {(info.item.entryTitle || info.item.otpIssuer) && (
+            <>
+                <Text category='s1'>{info.item.entryTitle || info.item.otpIssuer}</Text>
+                <Text category='s2'>{info.item.otpTitle}</Text>
+            </>
+        ) || (
+            <Text category='s1'>{info.item.otpTitle}</Text>
+        )}
     </View>
 );
 
@@ -62,10 +71,9 @@ function renderItem(info: { item: OTPCode }, onCodePress: (item: OTPCode) => voi
 
 export function AllCodesScreen({ navigation }) {
     useTabFocusState("codes", "Codes");
-    const otpCodes = [];
-    // const {
-    //     otpCodes
-    // } = useContext(OTPContext);
+    const {
+        allOTPCodes
+    } = useContext(OTPContext);
     const handleItemPress = useCallback((code: OTPCode) => {
         Clipboard.setString(code.currentCode);
         notifySuccess("Code Copied", `'${code.otpTitle}' code was copied`);
@@ -79,15 +87,15 @@ export function AllCodesScreen({ navigation }) {
             <HomeTopBar navigation={navigation} />
             <Layout style={{ flex: 1 }}>
                 <ErrorBoundary>
-                    {otpCodes.length > 0 && (
+                    {allOTPCodes.length > 0 && (
                         <List
                             style={styles.listContainer}
                             contentContainerStyle={styles.contentContainer}
-                            data={otpCodes}
+                            data={allOTPCodes}
                             renderItem={renderWrapper}
                         />
                     )}
-                    {otpCodes.length === 0 && (
+                    {allOTPCodes.length === 0 && (
                         <Layout level="2" style={styles.noCodesLayout}>
                             <EmptyState
                                 title="No OTP Codes"
