@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { Divider, Icon, StyleService, Text, useStyleSheet } from "@ui-kitten/components";
 import { CodeDigits } from "./CodeDigits";
 import { CodeWheel } from "./CodeWheel";
@@ -11,6 +11,7 @@ export interface OTPCodeProps {
     onPress?: (item: OTPCode) => void;
 }
 
+const AVATAR_SIZE = 44;
 const NOOP = () => {};
 
 const themedStyles = StyleService.create({
@@ -40,14 +41,19 @@ const themedStyles = StyleService.create({
     },
     iconDefault: {
         flex: 0,
-        width: 44,
-        height: 44,
+        width: AVATAR_SIZE,
+        height: AVATAR_SIZE,
         borderRadius: 999,
         marginRight: 12,
+        overflow: "hidden",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "color-basic-700"
+    },
+    image: {
+        width: AVATAR_SIZE,
+        height: AVATAR_SIZE
     },
     subtitle: {
         color: "color-basic-300",
@@ -88,7 +94,11 @@ export function Code(props: OTPCodeProps) {
         <View style={styles.view}>
             <TouchableOpacity onPress={handlePress} style={styles.viewInner}>
                 <View style={styles.iconDefault}>
-                    <Icon name="person-done" fill={iconColour} style={styles.icon} />
+                    {code.image && (
+                        <Image source={{ uri: code.image }} style={styles.image} />
+                    ) || (
+                        <Icon name="person-done" fill={iconColour} style={styles.icon} />
+                    )}
                 </View>
                 <View style={styles.contentView}>
                     {(code.entryTitle || code.otpIssuer) && (

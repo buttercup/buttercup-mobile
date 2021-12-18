@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { HOTP, TOTP, URI as OTPURI } from "otpauth";
+import queryString from "query-string";
 import { ChildElements } from "../types";
 import { OTP, OTPCode } from "../types";
 
@@ -43,9 +44,12 @@ export function OTPProvider(props: OTPProviderProps) {
 
 function updateCode(item: OTP): OTPCode {
     let otp: TOTP | HOTP,
+        search: string,
         errorMsg: string = "Error";
     try {
         otp = OTPURI.parse(item.otpURL);
+        const searchInd = item.otpURL.indexOf("?");
+        search = searchInd >= 0 ? item.otpURL.substring(searchInd) : "";
     } catch (err) {
         errorMsg = `Error: ${err.message}`;
     }
@@ -62,10 +66,16 @@ function updateCode(item: OTP): OTPCode {
             valid: false
         };
     }
+    const {
+        image = null
+    } = queryString.parse(search) as {
+        image: string;
+    };
     return {
         ...item,
         id,
         currentCode: otp.generate(),
+        image,
         otpIssuer: otp.issuer || "",
         otpTitle: otp.label,
         period: otp.period,
