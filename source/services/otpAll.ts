@@ -65,7 +65,6 @@ export async function initialise() {
             ...unattachedOTPs,
             ...vaultOTPs
         ];
-        console.log("OTPS1", __otps);
         sortOTPs();
     });
     __emitter.emit("stored");

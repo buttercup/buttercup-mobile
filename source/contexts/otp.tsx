@@ -29,7 +29,7 @@ export function OTPProvider(props: OTPProviderProps) {
         return () => {
             clearInterval(interval);
         };
-    }, [props.currentSourceOTPItems]);
+    }, [props.allOTPItems, props.currentSourceOTPItems]);
     const context: IOTPContext = useMemo(() => ({
         allOTPCodes,
         currentSourceOTPCodes

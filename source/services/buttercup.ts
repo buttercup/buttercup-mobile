@@ -21,6 +21,8 @@ import { setBusyState } from "./busyState";
 import { getAsyncStorage } from "./storage";
 import { updateSearchCaches } from "./search";
 import { setCodesForSource } from "./otpVault";
+import { removeSourceOTPs, setSourceOTPs } from "./otpAll";
+import { getVaultConfig } from "./config";
 import { updateSourceItemsCount } from "./statistics";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
@@ -297,13 +299,30 @@ export function onVaultSourcesUpdated(callback: () => void): () => void {
 }
 
 function onVaultSourceUpdated(source: VaultSource) {
-    // clearFacadeCache(source.id);
-    // notifyWindowsOfSourceUpdate(source.id);
     if (source.status === VaultSourceStatus.Unlocked) {
         const otpItems = extractVaultOTPItems(source);
         setCodesForSource(source.id, otpItems);
+        processEasyAccessOTPsForSource(source.id).catch(err => {
+            console.error(err);
+            notifyError("Failed processing OTPs", err.message);
+        });
     } else if (source.status === VaultSourceStatus.Locked) {
 
+    }
+}
+
+export async function processEasyAccessOTPsForSource(
+    sourceID: VaultSourceID,
+    overrideEnabled: boolean = null
+): Promise<void> {
+    const { otpAlwaysAvailable } = getVaultConfig(sourceID);
+    const active = typeof overrideEnabled === "boolean" ? overrideEnabled : otpAlwaysAvailable;
+    if (active) {
+        const source = getVaultManager().getSourceForID(sourceID);
+        const otpItems = extractVaultOTPItems(source);
+        await setSourceOTPs(sourceID, otpItems);
+    } else {
+        await removeSourceOTPs(sourceID);
     }
 }
 

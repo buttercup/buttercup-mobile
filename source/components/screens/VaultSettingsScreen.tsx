@@ -4,15 +4,15 @@ import { Card, IndexPath, Layout, Select, SelectItem, Text, Toggle } from "@ui-k
 import { useState as useHookState } from "@hookstate/core";
 import ms from "ms";
 import { CURRENT_SOURCE } from "../../state/vault";
+import { TextPrompt } from "../prompts/TextPrompt";
 import { useTabFocusState } from "../../hooks/vaultTab";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
 import { useVaultConfiguration } from "../../hooks/config";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
 import { authenticateBiometrics, disableBiometicsForSource, enableBiometricsForSource } from "../../services/biometrics";
-import { verifySourcePassword } from "../../services/buttercup";
+import { processEasyAccessOTPsForSource, verifySourcePassword } from "../../services/buttercup";
 import { updateVaultConfig, VaultConfiguration } from "../../services/config";
-import { TextPrompt } from "../prompts/TextPrompt";
 import { VAULT_AUTOLOCK_OPTIONS } from "../../symbols";
 
 const styles = StyleSheet.create({
@@ -141,6 +141,27 @@ export function VaultSettingsScreen({ navigation }) {
             handleDisablingBiometrics();
         }
     }, [handleDisablingBiometrics]);
+    const handleEasyOTPsActivation = useCallback(async (activated: boolean) => {
+        try {
+            await processEasyAccessOTPsForSource(currentSourceState.get(), activated);
+        } catch (err) {
+            console.error(err);
+            notifyError("Failed apply OTP setting", err.message);
+        }
+    }, [currentSourceState.get()]);
+    const handleEasyOTPsChange = useCallback((isChecked: boolean) => {
+        handleEasyOTPsActivation(isChecked)
+            .then(() => {
+                handleUpdateConfig({
+                    ...vaultConfig,
+                    otpAlwaysAvailable: isChecked
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                notifyError("Failed modifying OTP setting", err.message);
+            });
+    }, [handleEasyOTPsActivation, vaultConfig]);
     // **
     // ** Render
     // **
@@ -204,6 +225,28 @@ export function VaultSettingsScreen({ navigation }) {
                                     />
                                 ))}
                             </Select>
+                        </Layout>
+                    </Card>
+                    <Card
+                        header={props => (
+                            <VaultSettingHeader
+                                {...props}
+                                title="Easy OTP Codes"
+                                subtitle="Show OTPs from this vault on the home screen"
+                            />
+                        )}
+                        style={styles.settingCard}
+                    >
+                        <Layout style={styles.switchLayout}>
+                            <Text style={styles.switchLayoutText}>
+                                Show all available OTP codes from this vault on the home screen.
+                            </Text>
+                            <Toggle
+                                checked={vaultConfig.otpAlwaysAvailable}
+                                onChange={handleEasyOTPsChange}
+                            >
+                                {vaultConfig.otpAlwaysAvailable ? "Enabled" : "Disabled"}
+                            </Toggle>
                         </Layout>
                     </Card>
                 </ScrollView>
