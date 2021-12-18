@@ -102,9 +102,9 @@ export function Code(props: OTPCodeProps) {
                         </View>
                     )}
                     <View style={styles.digitsView}>
-                        <CodeDigits code={code.currentCode} />
-                        <View style={styles.codeSpacer} />
                         <CodeWheel period={code.period} timeLeft={code.timeLeft} />
+                        <View style={styles.codeSpacer} />
+                        <CodeDigits code={code.currentCode} />
                     </View>
                 </View>
                 {!last && (

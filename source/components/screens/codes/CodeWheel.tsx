@@ -1,5 +1,6 @@
 import React from "react";
 import AnimatedProgressWheel from "react-native-progress-wheel";
+import { View } from "react-native";
 
 interface CodeWheelProps {
     period: number;
@@ -18,12 +19,14 @@ function codeColour(percent: number): string {
 export function CodeWheel(props: CodeWheelProps) {
     const percent = (props.timeLeft / props.period) * 100;
     return (
-        <AnimatedProgressWheel
-            size={26}
-            width={3}
-            color={codeColour(percent)}
-            progress={percent}
-            backgroundColor={"grey"}
-        />
+        <View>
+            <AnimatedProgressWheel
+                size={26}
+                width={3}
+                color={codeColour(percent)}
+                progress={percent}
+                backgroundColor={"grey"}
+            />
+        </View>
     );
 }
