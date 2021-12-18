@@ -17,11 +17,12 @@ const { MONO_FONT } = Platform.select({
 
 const styles = StyleSheet.create({
     codeView: {
-        flex: 1,
+        display: "flex",
         flexDirection: "row"
     },
     text: {
-        fontFamily: MONO_FONT
+        fontFamily: MONO_FONT,
+        fontSize: 36
     },
     textLast: {
         marginLeft: 12

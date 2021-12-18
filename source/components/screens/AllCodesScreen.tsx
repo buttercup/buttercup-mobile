@@ -1,12 +1,11 @@
 import React, { useCallback, useContext, useMemo } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import Clipboard from "@react-native-community/clipboard";
-import { Card, Layout, List, Text } from "@ui-kitten/components";
+import { Layout, List } from "@ui-kitten/components";
 import { HomeTopBar } from "../menus/HomeTopBar";
 import { EmptyState } from "../EmptyState";
 import { ErrorBoundary } from "../ErrorBoundary";
-import { CodeDigits } from "./codes/CodeDigits";
-import { CodeWheel } from "./codes/CodeWheel";
+import { Code } from "./codes/Code";
 import { notifySuccess } from "../../library/notifications";
 import { useTabFocusState } from "../../hooks/vaultTab";
 import { OTPContext } from "../../contexts/otp";
@@ -39,33 +38,9 @@ const styles = StyleSheet.create({
     }
 });
 
-const renderHeader = (props, info: { item: OTPCode }) => (
-    <View {...props}>
-        {(info.item.entryTitle || info.item.otpIssuer) && (
-            <>
-                <Text category='s1'>{info.item.entryTitle || info.item.otpIssuer}</Text>
-                <Text category='s2'>{info.item.otpTitle}</Text>
-            </>
-        ) || (
-            <Text category='s1'>{info.item.otpTitle}</Text>
-        )}
-    </View>
-);
-
-function renderItem(info: { item: OTPCode }, onCodePress: (item: OTPCode) => void) {
+function renderItem(info: { item: OTPCode }, onCodePress: (item: OTPCode) => void, isLast: boolean) {
     return (
-        <View style={{ flex: 1, marginTop: 5, marginBottom: 5 }}>
-            <Card
-                footer={props => renderHeader(props, info)}
-                onPress={() => onCodePress(info.item)}
-                style={styles.card}
-            >
-                <View style={styles.cardContentMain}>
-                    <CodeDigits code={info.item.currentCode} />
-                    <CodeWheel period={info.item.period} timeLeft={info.item.timeLeft} />
-                </View>
-            </Card>
-        </View>
+        <Code code={info.item} last={isLast} onPress={onCodePress} />
     );
 }
 
@@ -78,9 +53,10 @@ export function AllCodesScreen({ navigation }) {
         Clipboard.setString(code.currentCode);
         notifySuccess("Code Copied", `'${code.otpTitle}' code was copied`);
     }, []);
+    const otpCount = useMemo(() => allOTPCodes.length, [allOTPCodes]);
     const renderWrapper = useMemo(() =>
-        info => renderItem(info, handleItemPress),
-        []
+        info => renderItem(info, handleItemPress, info.index === (otpCount - 1)),
+        [otpCount]
     );
     return (
         <SafeAreaView style={{ flex: 1 }}>

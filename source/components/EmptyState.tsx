@@ -47,7 +47,7 @@ export function EmptyState(props: EmptyStateProps) {
     const styles = useStyleSheet(themedStyles);
     const iconColour = (styles.icon as any).color;
     const handleActionPress = useCallback(() => {
-
+        // @todo Setup action
     }, [onActionPress]);
     return (
         <View style={styles.container}>

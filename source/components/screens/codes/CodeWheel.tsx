@@ -19,8 +19,8 @@ export function CodeWheel(props: CodeWheelProps) {
     const percent = (props.timeLeft / props.period) * 100;
     return (
         <AnimatedProgressWheel
-            size={40}
-            width={5}
+            size={26}
+            width={3}
             color={codeColour(percent)}
             progress={percent}
             backgroundColor={"grey"}
