@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
     },
     fieldEditMenuContent: {},
     fieldLayout: {
-        alignItems: "center",
         flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
         marginTop: 8,
         marginBottom: 14
     },
@@ -83,16 +83,22 @@ const styles = StyleSheet.create({
         marginRight: 0,
         marginLeft: "auto"
     },
+    input: {
+        flex: 1
+    },
     inputContainerLayout: {
-        flexGrow: 3,
-        flexShrink: 2
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignContent: "stretch"
     },
     inputLabel: {
         marginBottom: 3
     },
     modifyButton: {
         marginLeft: 6,
-        width: 36
+        width: 36,
+        height: 20
     },
     passwordInput: {
         fontFamily: MONO_FONT
@@ -310,18 +316,19 @@ export function EditEntryScreen({ navigation, route }) {
                         : (
                             <Layout key={field.id}>
                                 <Layout style={styles.fieldLayout}>
+                                    <Text category="s1" style={styles.inputLabel}>{field.property}</Text>
                                     <Layout style={styles.inputContainerLayout}>
-                                        <Text category="s1" style={styles.inputLabel}>{field.property}</Text>
                                         <Input
                                             autoCapitalize="none"
                                             autoCompleteType="off"
                                             autoCorrect={false}
                                             onChangeText={(value: string) => handleFieldValueChange(field.id, value)}
-                                            style={field.valueType === EntryPropertyValueType.Password ? styles.passwordInput : {}}
+                                            style={{
+                                                ...(field.valueType === EntryPropertyValueType.Password ? styles.passwordInput : {}),
+                                                ...styles.input
+                                            }}
                                             value={field.value}
                                         />
-                                    </Layout>
-                                    <Layout>
                                         <FieldEditMenuButton
                                             entryID={entryID}
                                             items={[
@@ -332,6 +339,13 @@ export function EditEntryScreen({ navigation, route }) {
                                                     icon: "swap-outline",
                                                     onSelect: () => setChangeTypeFieldID(field.id)
                                                 },
+                                                {
+                                                    disabled: !field.removeable,
+                                                    text: "Delete field",
+                                                    slug: "delete-field",
+                                                    icon: "trash-2-outline",
+                                                    onSelect: () => setConfirmDeleteFieldID(field.id)
+                                                },
                                                 field.removeable && {
                                                     text: "Generate password",
                                                     slug: "generate-password",
@@ -339,15 +353,6 @@ export function EditEntryScreen({ navigation, route }) {
                                                 }
                                             ]}
                                             navigation={navigation}
-                                        />
-                                    </Layout>
-                                    <Layout>
-                                        <Button
-                                            accessoryLeft={DeleteIcon}
-                                            disabled={!field.removeable}
-                                            onPress={() => setConfirmDeleteFieldID(field.id)}
-                                            status="danger"
-                                            style={styles.deleteButton}
                                         />
                                     </Layout>
                                 </Layout>
