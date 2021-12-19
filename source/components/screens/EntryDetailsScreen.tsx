@@ -174,7 +174,7 @@ export function EntryDetailsScreen({ navigation, route }) {
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.titleContainer}>
                         <View style={styles.titleTextContainer}>
-                            <Text category="h4" numberOfLines={1} style={styles.titleText}>{title}</Text>
+                            <Text category="h5" numberOfLines={1} style={styles.titleText}>{title}</Text>
                             <Text appearance="hint" numberOfLines={1}>{subtitle}</Text>
                         </View>
                         <View>
