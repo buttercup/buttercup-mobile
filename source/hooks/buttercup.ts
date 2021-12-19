@@ -57,9 +57,23 @@ export function useEntries(sourceID: VaultSourceID): Array<Entry> {
 }
 
 export function useEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {
-    const vault = useMemo(() => sourceID ? getVault(sourceID) : null, [sourceID]);
-    const entry = useMemo(() => vault?.findEntryByID(entryID) ?? null, [vault]);
-    return useMemo(() => entry ? createEntryFacade(entry) : null, [entry]);
+    const source = useMemo(() => getVaultSource(sourceID), [sourceID]);
+    const [entryFacade, setEntryFacade] = useState<EntryFacade>(null);
+    const updateFacade = useCallback((vault: Vault) => {
+        const entry = vault.findEntryByID(entryID);
+        if (entry) {
+            setEntryFacade(createEntryFacade(entry));
+        }
+    }, [entryID]);
+    useEffect(() => {
+        const cb = () => updateFacade(source.vault);
+        if (source.vault) cb();
+        source.on("updated", cb);
+        return () => {
+            source.off("updated", cb);
+        };
+    }, [updateFacade, source]);
+    return entryFacade;
 }
 
 export function useGroupTitle(sourceID: VaultSourceID, groupID: GroupID): string | null {
