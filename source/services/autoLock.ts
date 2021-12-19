@@ -34,7 +34,7 @@ function updateVaultConfigurations() {
 
 function updateListenerForSource(sourceID: VaultSourceID) {
     const config = getVaultConfig(sourceID);
-    if (config.autoLockEnabled) {
+    if (config?.autoLockEnabled) {
         __listeners[sourceID] = async (inactivity: number) => {
             if (inactivity >= config.autoLockTime) {
                 if (CURRENT_SOURCE.get() === sourceID) {
@@ -45,5 +45,7 @@ function updateListenerForSource(sourceID: VaultSourceID) {
                 await lockVault(sourceID);
             }
         };
+    } else {
+        delete __listeners[sourceID];
     }
 }
