@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useMemo, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID, fieldsToProperties } from "buttercup";
+import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID, fieldsToProperties, VaultSourceID } from "buttercup";
 import {
     Button,
     Divider,
@@ -14,15 +14,19 @@ import {
 } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { EntryFieldValue, VisibleField } from "./vault-contents/EntryFieldValue";
+import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { SiteIcon } from "../media/SiteIcon";
 import { useEntryFacade } from "../../hooks/buttercup";
 import { useEntryOTPCodes } from "../../hooks/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
+import { setBusyState } from "../../services/busyState";
+import { deleteEntry } from "../../services/buttercup";
 import { getEntryDomain, humanReadableEntryType } from "../../library/entry";
+import { notifyError, notifySuccess } from "../../library/notifications";
 
 const MENU_ITEMS = [
     { text: "Edit Entry", slug: "edit", icon: "edit-outline" },
-    { text: "Delete Entry", slug: "delete", icon: "trash-2-outline", disabled: true }
+    { text: "Delete Entry", slug: "delete", icon: "trash-2-outline" }
 ];
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
@@ -64,13 +68,14 @@ interface MenuButtonProps {
     entryID: EntryID;
     groupID: GroupID;
     navigation: any;
+    onDeleteEntry: () => void;
     onVisibleChange: (visible: boolean) => void;
     visible: boolean;
 }
 
 function MenuButton(props: MenuButtonProps) {
-    const { entryID, groupID, navigation, onVisibleChange, visible } = props;
-    const onItemSelect = selected => {
+    const { entryID, groupID, navigation, onDeleteEntry, onVisibleChange, visible } = props;
+    const onItemSelect = useCallback(selected => {
         const item = MENU_ITEMS[selected.row];
         onVisibleChange(false);
         if (item.slug === "edit") {
@@ -78,8 +83,10 @@ function MenuButton(props: MenuButtonProps) {
                 entryID,
                 groupID
             });
+        } else if (item.slug === "delete") {
+            onDeleteEntry();
         }
-    };
+    }, [navigation, onVisibleChange]);
     const renderToggleButton = () => (
         <Button
             {...props}
@@ -99,7 +106,6 @@ function MenuButton(props: MenuButtonProps) {
             >
                 {MENU_ITEMS.map(item => (
                     <MenuItem
-                        disabled={!!item.disabled}
                         key={item.slug}
                         title={item.text}
                         accessoryLeft={props => <Icon {...props} name={item.icon} />}
@@ -119,6 +125,7 @@ export function EntryDetailsScreen({ navigation, route }) {
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const entryFacade = useEntryFacade(currentSourceState.get(), entryID);
     const [entryMenuVisible, setEntryMenuVisible] = useState(false);
+    const [showDeletePrompt, setShowDeletePrompt] = useState(false);
     const title = useMemo(() => {
         if (!entryFacade) return "";
         const titleField = entryFacade.fields.find(field => field.property === "title" && field.propertyType === EntryPropertyType.Property);
@@ -149,6 +156,20 @@ export function EntryDetailsScreen({ navigation, route }) {
     }, [entryFacade]);
     const keyValueProperties = useMemo(() => fieldsToProperties(entryFacade?.fields ?? []), [entryFacade]);
     const entryDomain = useMemo(() => getEntryDomain(keyValueProperties) || null, [keyValueProperties]);
+    const handleEntryDeletion = useCallback(async () => {
+        setBusyState("Deleting Entry");
+        setShowDeletePrompt(false);
+        try {
+            await deleteEntry(currentSourceState.get(), entryID);
+            setBusyState(null);
+            navigation.goBack();
+            notifySuccess("Entry deleted", "Successfully deleted entry");
+        } catch (err) {
+            setBusyState(null);
+            console.error(err);
+            notifyError("Failed deleting entry", err.message);
+        }
+    }, [entryID, currentSourceState.get()]);
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -158,6 +179,7 @@ export function EntryDetailsScreen({ navigation, route }) {
         entryID={entryID}
         groupID={groupID}
         navigation={navigation}
+        onDeleteEntry={() => setShowDeletePrompt(true)}
         onVisibleChange={setEntryMenuVisible}
         visible={entryMenuVisible}
     />, [entryID, groupID, entryMenuVisible]);
@@ -201,6 +223,15 @@ export function EntryDetailsScreen({ navigation, route }) {
                     </Layout>
                 </ScrollView>
             </Layout>
+            <ConfirmPrompt
+                cancelable
+                confirmText="Delete Entry"
+                onCancel={() => setShowDeletePrompt(false)}
+                onConfirm={handleEntryDeletion}
+                prompt="Are you sure to want to delete this entry?"
+                title="Delete Entry"
+                visible={showDeletePrompt}
+            />
         </SafeAreaView>
     );
 }
