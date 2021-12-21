@@ -58,7 +58,9 @@ function prepareListContents(items: Array<VaultContentsItem>): Array<VaultConten
     return items.map(item => ({
         title: item.title,
         subtitle: item.type === "group" ? null : prepareEntrySubtitle(item),
-        icon: item.type === "group" ? "folder-outline" : null,
+        icon: item.type === "group"
+            ? item.isTrash ? "trash-2-outline" : "folder-outline"
+            : null,
         sourceItem: item
     }));
 }
