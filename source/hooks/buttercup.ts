@@ -27,16 +27,28 @@ function extractItems(vault: Vault, targetGroupID: string = null): Array<VaultCo
         ...groups.map((group: Group): VaultContentsItem => ({
             id: group.id,
             title: group.getTitle(),
-            type: "group" as const
+            type: "group" as const,
+            isTrash: group.isTrash()
         })),
         ...entries.map((entry: Entry): VaultContentsItem => ({
             id: entry.id,
             title: entry.getProperty("title") as string,
             type: "entry" as const,
             entryType: entry.getType(),
-            entryProperties: entry.getProperties()
+            entryProperties: entry.getProperties(),
+            isTrash: false
         }))
     ];
+}
+
+function sortItems(items: Array<VaultContentsItem>): Array<VaultContentsItem> {
+    return items.sort((a, b) => {
+        if (a.isTrash) return 1;
+        if (b.isTrash) return -1;
+        if (a.title > b.title) return 1;
+        if (b.title > a.title) return -1;
+        return 0;
+    });
 }
 
 export function useEntries(sourceID: VaultSourceID): Array<Entry> {
@@ -87,7 +99,7 @@ export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string 
     const [contents, setContents] = useState<Array<VaultContentsItem>>([]);
     const updateContents = useCallback(() => {
         if (!source?.vault) return;
-        setContents(extractItems(source.vault, targetGroupID));
+        setContents(sortItems(extractItems(source.vault, targetGroupID)));
     }, [source, targetGroupID]);
     useEffect(() => {
         if (!source) return;

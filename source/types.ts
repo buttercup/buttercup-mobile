@@ -76,6 +76,7 @@ export interface VaultContentsItem {
     title: string;
     type: "entry" | "group";
     groupID?: GroupID;
+    isTrash: boolean;
     entryType?: EntryType;
     entryProperties?: PropertyKeyValueObject;
 }
