@@ -369,7 +369,10 @@ export async function unlockSourceByID(sourceID: VaultSourceID, password: string
     if (source.status !== VaultSourceStatus.Locked) {
         throw new Error(`Cannot unlock vault: Vault in invalid state: ${source.status}`);
     }
-    await source.unlock(Credentials.fromPassword(password));
+    await source.unlock(Credentials.fromPassword(password), {
+        loadOfflineCopy: false,
+        storeOfflineCopy: true
+    });
 }
 
 export async function verifySourcePassword(sourceID: VaultSourceID, password: string): Promise<boolean> {

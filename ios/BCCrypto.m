@@ -16,13 +16,14 @@ int const IV_BYTE_LEN = 16;
     // HMAC verification
     NSString *hmacTarget = [NSString stringWithFormat:@"%@%@%@", encryptedText, ivHex, salt];
     const char *cKey = [BCHelpers characterArrayFromHexString:hmacHexKey];
+    int ckeyLen = hmacHexKey.length / 2;
     const char *cData = [hmacTarget cStringUsingEncoding:NSASCIIStringEncoding];
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
-    CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+    CCHmac(kCCHmacAlgSHA256, cKey, ckeyLen, cData, strlen(cData), cHMAC);
     NSData *hmacData = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
     NSString *reproducedHmac = [BCHelpers hexStringFromData:hmacData];
     if (![BCHelpers constantTimeCompare:reproducedHmac toChallenger:hmacHex]) {
-        return @"Error=Authentication failed - possible tampering";
+        return @"Error=Authentication failed - incorrect password?";
     }
     // Crypto prep
     CCCryptorStatus ccStatus = kCCSuccess;
@@ -51,7 +52,7 @@ int const IV_BYTE_LEN = 16;
     if (key.length != 64) {
         return @"Error=Invalid key length";
     } else if (hmacHexKey.length != 64) {
-        return @"Error=Invalid authentication information or possible tampering";
+        return @"Error=Invalid authentication information";
     }
     // Data prep
     NSData *ivData = [BCHelpers dataFromHexString:iv];
@@ -82,9 +83,10 @@ int const IV_BYTE_LEN = 16;
     NSString *ivHex = [BCHelpers hexStringFromData:ivData];
     NSString *hmacTarget = [NSString stringWithFormat:@"%@%@%@", encryptedContent, ivHex, salt];
     const char *cKey = [BCHelpers characterArrayFromHexString:hmacHexKey];
+    int ckeyLen = hmacHexKey.length / 2;
     const char *cData = [hmacTarget cStringUsingEncoding:NSASCIIStringEncoding];
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
-    CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+    CCHmac(kCCHmacAlgSHA256, cKey, ckeyLen, cData, strlen(cData), cHMAC);
     NSData *hmacData = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
     NSString *hmacHex = [BCHelpers hexStringFromData:hmacData];
     // Join
