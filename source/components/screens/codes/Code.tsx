@@ -97,7 +97,11 @@ export function Code(props: OTPCodeProps) {
                     {code.image && (
                         <Image source={{ uri: code.image }} style={styles.image} />
                     ) || (
-                        <Icon name="person-done" fill={iconColour} style={styles.icon} />
+                        <Icon
+                            name={code.sourceID ? "person-done" : "person-add"}
+                            fill={iconColour}
+                            style={styles.icon}
+                        />
                     )}
                 </View>
                 <View style={styles.contentView}>

@@ -70,6 +70,14 @@ export async function initialise() {
     __emitter.emit("stored");
 }
 
+export async function removeMissingSources(availableSourceIDs: Array<VaultSourceID>): Promise<void> {
+    __otps = __otps.filter(otp => {
+        if (!otp.sourceID) return true;
+        return availableSourceIDs.includes(otp.sourceID);
+    });
+    await storeOTPs();
+}
+
 export async function removePendingOTP(uri: string): Promise<void> {
     const ind = __otps.findIndex(otp => !otp.sourceID && otp.otpURL === uri);
     if (ind >= 0) {
