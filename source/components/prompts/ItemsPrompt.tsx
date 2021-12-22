@@ -9,6 +9,7 @@ import {
     StyleService,
     useStyleSheet
 } from "@ui-kitten/components";
+import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 
 export interface PromptItem {
     title: string;
@@ -68,7 +69,9 @@ export function ItemsPrompt(props: ItemsPromptProps) {
             onBackdropPress={onCancel}
             visible={visible}
         >
-            <ModalContent {...props} />
+            <SafeAreaProvider>
+                <ModalContent {...props} />
+            </SafeAreaProvider>
         </Modal>
     );
 }
@@ -81,6 +84,7 @@ function ModalContent(props: ItemsPromptProps) {
     } = props;
     const styles = useStyleSheet(themedStyles);
     const [selectedIndex, setSelectedIndex] = useState(new IndexPath(-1));
+    const insets = useSafeAreaInsets();
     return (
         <Layout style={styles.modalContainer}>
             <Icon
@@ -92,7 +96,12 @@ function ModalContent(props: ItemsPromptProps) {
             <Menu
                 onSelect={index => setSelectedIndex(index)}
                 selectedIndex={selectedIndex}
-                style={styles.menu}
+                style={[
+                    styles.menu,
+                    {
+                        paddingBottom: insets.bottom
+                    }
+                ]}
             >
                 {items.map(item => (
                     <MenuItem
