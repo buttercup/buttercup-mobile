@@ -125,7 +125,6 @@ function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
     const renderToggleButton = () => (
         <Button
             {...props}
-            appearance="outline"
             accessoryLeft={ModifyIcon}
             onPress={() => setVisible(true)}
             status="control"

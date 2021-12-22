@@ -22,17 +22,17 @@ const themedStyles = StyleService.create({
         alignItems: "center"
     },
     description: {
-        color: "color-basic-500",
+        color: "color-basic-transparent-600",
         marginTop: 6
     },
     icon: {
-        color: "color-basic-600",
+        color: "color-basic-transparent-600",
         width: 40,
         height: 40,
         marginBottom: 16
     },
     title: {
-        color: "color-basic-500"
+        color: "color-basic-transparent-600"
     }
 });
 

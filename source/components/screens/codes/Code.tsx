@@ -32,10 +32,10 @@ const themedStyles = StyleService.create({
         alignItems: "center"
     },
     divider: {
-        backgroundColor: "color-basic-800"
+        backgroundColor: "border-basic-color-5"
     },
     icon: {
-        color: "color-basic-600",
+        color: "color-basic-transparent-active",
         width: 25,
         height: 25
     },
@@ -49,21 +49,17 @@ const themedStyles = StyleService.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "color-basic-700"
+        backgroundColor: "background-basic-color-4"
     },
     image: {
         width: AVATAR_SIZE,
         height: AVATAR_SIZE
     },
     subtitle: {
-        color: "color-basic-300",
         marginBottom: 4
     },
-    title: {
-        color: "color-basic-300"
-    },
+    title: {},
     titleOnly: {
-        color: "color-basic-300",
         marginBottom: 4
     },
     view: {

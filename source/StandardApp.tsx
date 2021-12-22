@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
     LogBox,
-    StatusBar,
-    useColorScheme
+    StatusBar
 } from "react-native";
 import { ApplicationProvider, IconRegistry, Layout, Spinner } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
@@ -18,6 +17,7 @@ import { initialise as initialiseOTPs } from "./services/otpAll";
 import { AppNavigator } from "./components/navigation/RootNavigator";
 import { BusyStatus } from "./components/notifications/BusyStatus";
 import { Toaster } from "./components/notifications/Toaster";
+import { useAppearance } from "./hooks/appearance";
 
 async function initialise() {
     LogBox.ignoreLogs([
@@ -33,7 +33,7 @@ async function initialise() {
 }
 
 export function StandardApp() {
-    const isDarkMode = useColorScheme() === "dark";
+    const isDarkMode = useAppearance() === "dark";
     const [initialised, setInitialised] = useState(false);
     useEffect(() => {
         let mounted = true;

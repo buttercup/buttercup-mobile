@@ -24,7 +24,7 @@ const themedStyles = StyleService.create({
     card: {
         width: "86%",
         maxWidth: 340,
-        shadowColor: "color-basic-700",
+        shadowColor: "border-primary-color-4",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -46,7 +46,6 @@ const themedStyles = StyleService.create({
     },
     container: {
         width: "100%",
-        // flex: 1,
         flexDirection: "row",
         justifyContent: "center",
         paddingVertical: 28
@@ -55,8 +54,7 @@ const themedStyles = StyleService.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        // padding: 8,
-        backgroundColor: "color-basic-700",
+        backgroundColor: "background-basic-color-2",
         borderLeftWidth: 1,
         borderLeftStyle: "solid",
         borderLeftColor: INNER_BORDER_COLOUR,
@@ -72,14 +70,13 @@ const themedStyles = StyleService.create({
         justifyContent: "flex-start",
         alignItems: "stretch",
         flexGrow: 1,
-        flexShrink: 1
+        flexShrink: 1,
+        overflow: "hidden",
+        borderTopRightRadius: 4,
+        borderBottomRightRadius: 4
     },
-    smallHeading: {
-        color: "color-basic-600"
-    },
-    smallSubtitle: {
-        color: "color-basic-500"
-    },
+    smallHeading: {},
+    smallSubtitle: {},
     statusContainer: {
         marginTop: 32,
         flexDirection: "row",
