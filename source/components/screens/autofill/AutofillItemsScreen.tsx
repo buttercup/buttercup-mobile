@@ -18,9 +18,7 @@ const BackIcon = props => <Icon {...props} name="corner-left-up-outline" />;
 const CancelIcon = props => <Icon {...props} name="close-square-outline" />;
 
 const styles = StyleSheet.create({
-    listContainer: {
-    //   maxHeight: 320,
-    },
+    listContainer: {},
     contentContainer: {
       paddingHorizontal: 8,
       paddingVertical: 4,
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
 function prepareListContents(items: Array<IntermediateEntry>): Array<VaultContentsItemDisplay> {
     return items.map(item => ({
         title: item.title,
-        subtitle: "Nothing here yet",
+        subtitle: item.username,
         icon: "file-outline",
         sourceItem: item
     }));
