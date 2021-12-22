@@ -306,6 +306,7 @@
 				C09F2DB9C0962A70A11A0DFC /* [CP] Embed Pods Frameworks */,
 				5404C8716257220233A916A9 /* [CP] Copy Pods Resources */,
 				C2DF537F26EFC234005AA279 /* Embed App Extensions */,
+				C2B80BF827737E5800301C40 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -509,6 +510,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C2B80BF827737E5800301C40 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\nAPP_MARKETING_VERSION=$(cat \"$SRCROOT/Buttercup.xcodeproj/project.pbxproj\" | grep -e \"^\\\\s*MARKETING_VERSION\\\\s*=\" | head -n 1 | cut -d '=' -f 2 | sed 's/;//g' | sed 's/ //g')\nAPP_BUILD_VERSION=$(cat \"$SRCROOT/Buttercup.xcodeproj/project.pbxproj\" | grep -e \"^\\\\s*CURRENT_PROJECT_VERSION\\\\s*=\" | head -n 1 | cut -d '=' -f 2 | sed 's/;//g' | sed 's/ //g')\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $APP_MARKETING_VERSION\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $APP_BUILD_VERSION\" \"$SRCROOT/BCAutoFillExtension/Info.plist\"\n";
 		};
 		E748B6CA38AEC5CCB8728598 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
