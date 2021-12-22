@@ -35,16 +35,19 @@ const WalletIcon = props => <Icon {...props} name="credit-card-outline" />;
 
 function BottomTabBar({ navigation, state }) {
     return (
-        <BottomNavigation
-            selectedIndex={state.index}
-            onSelect={index => navigation.navigate(state.routeNames[index])}
-        >
-            <BottomNavigationTab title="GROUPS" icon={FolderIcon} />
-            <BottomNavigationTab title="SEARCH" icon={SearchIcon} />
-            <BottomNavigationTab title="WALLET" icon={WalletIcon} />
-            <BottomNavigationTab title="CODES" icon={CodesIcon} />
-            <BottomNavigationTab title="SETTINGS" icon={SettingsIcon} />
-        </BottomNavigation>
+        <>
+            <Divider />
+            <BottomNavigation
+                selectedIndex={state.index}
+                onSelect={index => navigation.navigate(state.routeNames[index])}
+            >
+                <BottomNavigationTab title="GROUPS" icon={FolderIcon} />
+                <BottomNavigationTab title="SEARCH" icon={SearchIcon} />
+                <BottomNavigationTab title="WALLET" icon={WalletIcon} />
+                <BottomNavigationTab title="CODES" icon={CodesIcon} />
+                <BottomNavigationTab title="SETTINGS" icon={SettingsIcon} />
+            </BottomNavigation>
+        </>
     );
 }
 

@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
     BottomNavigation,
     BottomNavigationTab,
+    Divider,
     Icon
 } from "@ui-kitten/components";
 import { AllCodesScreen } from "../screens/AllCodesScreen";
@@ -16,13 +17,16 @@ const HomeIcon = props => <Icon {...props} name="home-outline" />;
 
 function BottomTabBar({ navigation, state }) {
     return (
-        <BottomNavigation
-            selectedIndex={state.index}
-            onSelect={index => navigation.navigate(state.routeNames[index])}
-        >
-            <BottomNavigationTab title="HOME" icon={HomeIcon} />
-            <BottomNavigationTab title="CODES" icon={CodesIcon} />
-        </BottomNavigation>
+        <>
+            <Divider />
+            <BottomNavigation
+                selectedIndex={state.index}
+                onSelect={index => navigation.navigate(state.routeNames[index])}
+            >
+                <BottomNavigationTab title="HOME" icon={HomeIcon} />
+                <BottomNavigationTab title="CODES" icon={CodesIcon} />
+            </BottomNavigation>
+        </>
     );
 }
 
