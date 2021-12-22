@@ -40,8 +40,15 @@ export function SiteIcon(props: SiteIconProps) {
         <View style={styles.imageContainer}>
             {domain && (
                 <CachedImage
-                    loadingImageStyle={{ height: size, width: size }}
-                    loadingSource={ICON_TYPES[type]}
+                    loadingImageComponent={() => (
+                        <Image
+                            style={{
+                                height: size,
+                                width: size
+                            }}
+                            source={ICON_TYPES[type]}
+                        />
+                    )}
                     source={`${ICON_LOOKUP}${encodeURIComponent(domain)}`}
                     style={{ height: size, width: size }}
                 />

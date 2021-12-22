@@ -1,4 +1,5 @@
 import {
+    EntryID,
     SearchResult,
     VaultEntrySearch,
     VaultSource,
@@ -27,7 +28,13 @@ export async function searchSingleVault(
 ): Promise<Array<SearchResult>> {
     const search = __searchCache[sourceID];
     if (!search) return [];
-    return search.searchByTerm(term);
+    const results =  search.searchByTerm(term);
+    const seenIDs = new Set<EntryID>([]);
+    return results.filter(result => {
+        if (seenIDs.has(result.id)) return false;
+        seenIDs.add(result.id);
+        return true;
+    });
 }
 
 export async function updateSearchCaches(unlockedSources: Array<VaultSource>) {
