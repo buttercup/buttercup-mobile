@@ -1,6 +1,7 @@
-import React from "react";
-import { Image, SafeAreaView, StyleSheet } from "react-native";
+import React, { useCallback } from "react";
+import { AppStateStatus, Image, SafeAreaView, StyleSheet } from "react-native";
 import { Layout } from "@ui-kitten/components";
+import { useAppStateDebouncedCallback } from "../../hooks/app";
 
 const BCUP_LOGO = require("../../../resources/images/bcup-256.png");
 
@@ -18,7 +19,13 @@ const styles = StyleSheet.create({
     }
 });
 
-export function CoverScreen() {
+export function CoverScreen({ navigation }) {
+    const handleAppState = useCallback((appState: AppStateStatus) => {
+        if (appState === "active") {
+            navigation.goBack();
+        }
+    }, [navigation]);
+    useAppStateDebouncedCallback(handleAppState);
     return (
         <SafeAreaView>
             <Layout style={styles.container}>

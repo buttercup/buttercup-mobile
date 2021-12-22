@@ -12,19 +12,12 @@ interface AppProps {
 
 export function App(props: AppProps = {}) {
     const isAutofill: boolean = useMemo(() => props.isContextAutoFill === 1, [props]);
-    const [covering, setCovering] = useState(false);
     const handleCoverScreen = useCallback((appState: AppStateStatus) => {
         if (isAutofill) return;
-        if (appState === "active") {
-            if (!covering) return;
-            setCovering(false);
-            navigateBack();
-        } else if (appState === "inactive" || appState === "background") {
-            if (covering) return;
-            setCovering(true);
+        if (appState === "inactive" || appState === "background") {
             navigate("Cover");
         }
-    }, [covering, isAutofill]);
+    }, [isAutofill]);
     useAppStateDebouncedCallback(handleCoverScreen);
     if (isAutofill) {
         return (
