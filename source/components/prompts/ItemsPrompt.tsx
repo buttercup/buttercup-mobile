@@ -44,6 +44,14 @@ const themedStyles = StyleService.create({
         height: "100%",
         marginRight: CLOSE_BUTTON_SIZE + 4
     },
+    modal: {
+        position: "absolute",
+        width: "100%",
+        height: "100%"
+    },
+    modalBackdrop: {
+        backgroundColor: "rgba(0, 0, 0, 0.6)"
+    },
     modalContainer: {
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,
@@ -62,10 +70,11 @@ export function ItemsPrompt(props: ItemsPromptProps) {
         onCancel,
         visible
     } = props;
+    const styles = useStyleSheet(themedStyles);
     return (
         <Modal
-            backdropStyle={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
-            style={{ position: "absolute", width: "100%", height: "100%" }}
+            backdropStyle={styles.modalBackdrop}
+            style={styles.modal}
             onBackdropPress={onCancel}
             visible={visible}
         >
