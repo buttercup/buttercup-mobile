@@ -37,7 +37,7 @@ async function addDropboxVault(config: DatasourceConfig, vaultPath: VaultChooser
     const isNew = !vaultPath.identifier;
     const { name: filename } = vaultPath;
     const filePath = vaultPath.parent
-        ? path.join(vaultPath.parent.identifier, filename)
+        ? path.join(vaultPath.parent?.identifier ?? "/", filename)
         : path.join("/", filename);
     const sourceCredentials = Credentials.fromDatasource({
         ...config,
@@ -85,7 +85,7 @@ async function addMobileLocalFileVault(config: DatasourceConfig, vaultPath: Vaul
     const isNew = !vaultPath.identifier;
     const filename = vaultPath.name;
     let filePath = isNew
-        ? path.join(vaultPath.parent.identifier, vaultPath.name)
+        ? path.join(vaultPath.parent?.identifier ?? "/", vaultPath.name)
         : vaultPath.identifier;
     // Strip base (documents dir) from file path (as it may change)
     const rootDir = LocalFileSystemInterface.getRootDirectory();
@@ -121,7 +121,7 @@ async function addWebDAVVault(config: DatasourceConfig, vaultPath: VaultChooserI
     const isNew = !vaultPath.identifier;
     const filename = vaultPath.name;
     const filePath = isNew
-        ? path.join(vaultPath.parent.identifier, filename)
+        ? path.join(vaultPath.parent?.identifier ?? "/", filename)
         : vaultPath.identifier;
     const sourceCredentials = Credentials.fromDatasource({
         ...config,
