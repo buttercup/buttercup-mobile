@@ -306,7 +306,6 @@
 				C09F2DB9C0962A70A11A0DFC /* [CP] Embed Pods Frameworks */,
 				5404C8716257220233A916A9 /* [CP] Copy Pods Resources */,
 				C2DF537F26EFC234005AA279 /* Embed App Extensions */,
-				C2B80BF827737E5800301C40 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -322,6 +321,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C2DF537C26EFC234005AA279 /* Build configuration list for PBXNativeTarget "BCAutoFillExtension" */;
 			buildPhases = (
+				C2D07B802774B63400FFFDF2 /* ShellScript */,
 				E748B6CA38AEC5CCB8728598 /* [CP] Check Pods Manifest.lock */,
 				C2DF536926EFC234005AA279 /* Sources */,
 				C2DF536A26EFC234005AA279 /* Frameworks */,
@@ -511,8 +511,9 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C2B80BF827737E5800301C40 /* ShellScript */ = {
+		C2D07B802774B63400FFFDF2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -739,7 +740,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Buttercup.entitlements;
-				CURRENT_PROJECT_VERSION = 101;
+				CURRENT_PROJECT_VERSION = 105;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Buttercup/Info.plist;
@@ -768,7 +769,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Buttercup.entitlements;
-				CURRENT_PROJECT_VERSION = 101;
+				CURRENT_PROJECT_VERSION = 105;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				INFOPLIST_FILE = Buttercup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
