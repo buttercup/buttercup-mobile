@@ -1,5 +1,5 @@
-import React, { Fragment, useCallback, useMemo, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import React, { useCallback, useMemo, useState } from "react";
+import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID, fieldsToProperties, VaultSourceID } from "buttercup";
 import {
     Button,
@@ -13,6 +13,7 @@ import {
     TopNavigationAction
 } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
+import Clipboard from "@react-native-community/clipboard";
 import { EntryFieldValue, VisibleField } from "./vault-contents/EntryFieldValue";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { SiteIcon } from "../media/SiteIcon";
@@ -170,6 +171,10 @@ export function EntryDetailsScreen({ navigation, route }) {
             notifyError("Failed deleting entry", err.message);
         }
     }, [entryID, currentSourceState.get()]);
+    const handleFieldPress = useCallback((field: VisibleField) => {
+        Clipboard.setString(field.value);
+        notifySuccess("Field Copied", `Copied '${field.property}' value`);
+    }, []);
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -205,7 +210,7 @@ export function EntryDetailsScreen({ navigation, route }) {
                     </View>
                     <Layout style={styles.fieldsLayout}>
                         {visibleFields.map((field, index) => (
-                            <Fragment key={field.key}>
+                            <TouchableOpacity activeOpacity={0.3} onPress={() => handleFieldPress(field)} key={field.key}>
                                 <Layout key={field.key} style={styles.fieldLayout}>
                                     {field.valueType !== EntryPropertyValueType.Note && (
                                         <Text category="h6">{field.title}</Text>
@@ -218,7 +223,7 @@ export function EntryDetailsScreen({ navigation, route }) {
                                 {index < (visibleFields.length - 1) && (
                                     <Divider key={`d${field.key}`} />
                                 )}
-                            </Fragment>
+                            </TouchableOpacity>
                         ))}
                     </Layout>
                 </ScrollView>

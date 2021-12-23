@@ -88,7 +88,7 @@ export function Code(props: OTPCodeProps) {
     }, [code, onPress]);
     return (
         <View style={styles.view}>
-            <TouchableOpacity onPress={handlePress} style={styles.viewInner}>
+            <TouchableOpacity activeOpacity={0.3} onPress={handlePress} style={styles.viewInner}>
                 <View style={styles.iconDefault}>
                     {code.image && (
                         <Image source={{ uri: code.image }} style={styles.image} />
