@@ -45,6 +45,8 @@ function sortItems(items: Array<VaultContentsItem>): Array<VaultContentsItem> {
     return items.sort((a, b) => {
         if (a.isTrash) return 1;
         if (b.isTrash) return -1;
+        if (a.type === "group" && b.type === "entry") return -1;
+        if (b.type === "group" && a.type === "entry") return 1;
         if (a.title > b.title) return 1;
         if (b.title > a.title) return -1;
         return 0;
