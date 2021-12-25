@@ -87,12 +87,11 @@ function decryptData(data: Buffer | string, password: string): Promise<Buffer | 
 }
 
 export async function deriveKey(password: string, salt: string): Promise<DerivedKeyInfo> {
-    const adapter = getAdapter();
     const bits = (PASSWORD_KEY_SIZE + HMAC_KEY_SIZE) * 8;
     const derivedKeyHex = await CryptoBridge.deriveKeyFromPassword(
         password,
         salt,
-        adapter.derivationRounds,
+        this.derivationRounds,
         bits
     );
     const dkhLength = derivedKeyHex.length;
@@ -101,7 +100,7 @@ export async function deriveKey(password: string, salt: string): Promise<Derived
     return {
         salt,
         key: keyBuffer,
-        rounds: adapter.derivationRounds,
+        rounds: this.derivationRounds,
         hmac: hmacBuffer
     };
 }
@@ -199,7 +198,7 @@ export function initAppEnv() {
 function patchCrypto(adapter: IocaneAdapter) {
     Object.assign(adapter, {
         decryptCBC,
-        deriveKey,
+        deriveKey: deriveKey.bind(adapter),
         encryptCBC,
         generateIV,
         generateSalt
