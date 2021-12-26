@@ -1,5 +1,5 @@
 # Buttercup Mobile
-The mobile application for the Buttercup Credentials Manager.
+> Mobile vault application for Buttercup Password Manager
 
 [![Buttercup](https://cdn.rawgit.com/buttercup-pw/buttercup-assets/6582a033/badge/buttercup-slim.svg)](https://buttercup.pw) [![Build Status](https://travis-ci.org/buttercup/buttercup-mobile.svg?branch=master)](https://travis-ci.org/buttercup/buttercup-mobile) [![Backers on Open Collective](https://opencollective.com/buttercup/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/buttercup/sponsors/badge.svg)](#sponsors) [![Chat securely on Keybase](https://img.shields.io/badge/keybase-bcup-blueviolet)](https://keybase.io/team/bcup)
 
@@ -10,7 +10,7 @@ The mobile application for the Buttercup Credentials Manager.
 ## About
 This repository holds the source for the Buttercup mobile application, which is available for the following platforms:
 
- * iOS **10+**
+ * iOS **12+**
  * Android **8.0+**
 
 The mobile application allows for full integration with Buttercup archives stored on a variety of platforms. Like the other applications, this mobile application makes use of **AES 256bit encryption** with over **200k PBKDF2 password derivation iterations**.

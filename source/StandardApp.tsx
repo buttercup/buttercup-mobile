@@ -21,6 +21,7 @@ import { useAppearance } from "./hooks/appearance";
 
 async function initialise() {
     LogBox.ignoreLogs([
+        "EventEmitter.removeListener",
         "VirtualizedLists should never be nested"
     ]);
     await initialiseButtercup();

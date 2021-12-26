@@ -321,8 +321,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C2DF537C26EFC234005AA279 /* Build configuration list for PBXNativeTarget "BCAutoFillExtension" */;
 			buildPhases = (
-				C2D07B802774B63400FFFDF2 /* ShellScript */,
 				E748B6CA38AEC5CCB8728598 /* [CP] Check Pods Manifest.lock */,
+				C2D07B802774B63400FFFDF2 /* ShellScript */,
 				C2DF536926EFC234005AA279 /* Sources */,
 				C2DF536A26EFC234005AA279 /* Frameworks */,
 				C2DF536B26EFC234005AA279 /* Resources */,
@@ -744,6 +744,7 @@
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Buttercup/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -772,6 +773,7 @@
 				CURRENT_PROJECT_VERSION = 108;
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				INFOPLIST_FILE = Buttercup/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

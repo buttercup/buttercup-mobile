@@ -1,7 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '10.0'
+platform :ios, '12.0'
 
 target 'Buttercup' do
   config = use_native_modules!
@@ -36,32 +36,34 @@ target 'BCAutoFillExtension' do
     use_flipper!()
 end
 
+# post_install do |installer|
+#     react_native_post_install(installer)
+#     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+# end
+
 post_install do |installer|
-    [
-        'boost-for-react-native',
-        'Flipper-DoubleConversion',
-        'Flipper-Glog',
-        'Flipper-PeerTalk',
-        'RNReactNativeSharedGroupPreferences',
-        'RNSecureStorage',
-        'TouchID',
-        'YogaKit'
-    ].each do |podName|
-        t = installer.pods_project.targets.find { |t| t.name == podName }
-        t.build_configurations.each do |config|
-            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
-            # config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
-        end
-    end
+    # [
+    #     'boost-for-react-native',
+    #     'Flipper-DoubleConversion',
+    #     'Flipper-Glog',
+    #     'Flipper-PeerTalk',
+    #     'RNReactNativeSharedGroupPreferences',
+    #     'RNSecureStorage',
+    #     'TouchID',
+    #     'YogaKit'
+    # ].each do |podName|
+    #     t = installer.pods_project.targets.find { |t| t.name == podName }
+    #     t.build_configurations.each do |config|
+    #         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+    #         # config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
+    #     end
+    # end
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
             # config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
             config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
         end
     end
-    # t = installer.pods_project.targets.find { |t| t.name == 'RNSecureStorage' }
-    # t.build_configurations.each do |bc|
-    #   bc.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
-    # end
     react_native_post_install(installer)
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
 end
