@@ -25,7 +25,8 @@ export async function getCredentialsForVault(sourceID: VaultSourceID, password: 
 
 async function getStoredIntermediateVaults(): Promise<Array<IntermediateVault>> {
     const storage = getSharedStorage();
-    return storage.getItem(STORAGE_PREFIX_SOURCES);
+    const vaults = await storage.getItem(STORAGE_PREFIX_SOURCES);
+    return Array.isArray(vaults) ? vaults : [];
 }
 
 export async function getStoredVaults(): Promise<Array<VaultDetails>> {
