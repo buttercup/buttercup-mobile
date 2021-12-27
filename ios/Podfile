@@ -36,31 +36,9 @@ target 'BCAutoFillExtension' do
     use_flipper!()
 end
 
-# post_install do |installer|
-#     react_native_post_install(installer)
-#     __apply_Xcode_12_5_M1_post_install_workaround(installer)
-# end
-
 post_install do |installer|
-    # [
-    #     'boost-for-react-native',
-    #     'Flipper-DoubleConversion',
-    #     'Flipper-Glog',
-    #     'Flipper-PeerTalk',
-    #     'RNReactNativeSharedGroupPreferences',
-    #     'RNSecureStorage',
-    #     'TouchID',
-    #     'YogaKit'
-    # ].each do |podName|
-    #     t = installer.pods_project.targets.find { |t| t.name == podName }
-    #     t.build_configurations.each do |config|
-    #         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-    #         # config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
-    #     end
-    # end
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
-            # config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
             config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
         end
     end
