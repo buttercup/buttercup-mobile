@@ -172,9 +172,16 @@ export function EntryDetailsScreen({ navigation, route }) {
         }
     }, [entryID, currentSourceState.get()]);
     const handleFieldPress = useCallback((field: VisibleField) => {
-        Clipboard.setString(field.value);
+        if (field.valueType === EntryPropertyValueType.OTP) {
+            // Copy code instead of raw value
+            const otpCode = entryOTPs[field.property]?.currentCode ?? "";
+            Clipboard.setString(otpCode);
+        } else {
+            // Copy raw value
+            Clipboard.setString(field.value);
+        }
         notifySuccess("Field Copied", `Copied '${field.property}' value`);
-    }, []);
+    }, [entryOTPs]);
     const navigateBack = () => {
         navigation.goBack();
     };
