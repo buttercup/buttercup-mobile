@@ -38,7 +38,7 @@ This project uses **React Native** to build _native_ iOS and Android application
 As Buttercup makes use of strong cryptography, certain encryption/decryption tasks are performed using pure native code (Objective-C/Java). Only the bare minimum required for increased performance is handled on the native side, with the rest being solely JavaScript.
 
 ## Installation
-Ensure that you're using **NodeJS 8** or newer on OSX. Android projects can be built and tested on Linux and Windows, but these platforms are _not officially supported_.
+Ensure that you're using **NodeJS 14** or newer on OSX. Android projects can be built and tested on Linux and Windows, but these platforms are _not officially supported_.
 
 Before getting started, ensure you follow the [official React Native Getting Started guide](https://facebook.github.io/react-native/docs/getting-started.html) for your desired platform (iOS/Android). It is also recommended to have the react-native-cli installed:
 
@@ -93,54 +93,17 @@ To build a signed APK:
 
 If you encounter a publishing error when generating a signed APK, follow [these instructions](https://stackoverflow.com/questions/52632950/react-native-0-57-1-android-duplicate-resources#answer-55245362).
 
-### Crypto Library Development
-
-Buttercup Mobile's crypto functionality is written in Rust and lives under `./crypto` directory. The binaries are already built and placed inside the relevant directories and you don't usually need to change those. However, if you want to work on the Rust library, the following are required:
-
-1. Install Rust & Cargo using [`rustup` toolchain](https://rustup.rs/)
-2. Install [`cargo lipo`](https://github.com/TimNN/cargo-lipo) to build iOS binaries
-3. Add iOS and Android targets to your `rustup` toolchain:
-
-```sh
-# iOS
-rustup target add aarch64-apple-ios
-rustup target add armv7-apple-ios
-rustup target add i386-apple-ios
-rustup target add x86_64-apple-ios
-
-# Android
-rustup target add aarch64-linux-android
-rustup target add armv7-linux-androideabi
-rustup target add i686-linux-android
-```
-
-4. Get Android NDK. We recommend installing it via Android Studio or `sdkmanager`:
-
-```sh
-sdkmanager --verbose ndk-bundle
-```
-
-5. Create the standalone NDKs.
-
-```sh
-cd crypto && ./create-ndk-standalone.sh
-```
-
-6. Finally build the binaries:
-
-```sh
-./build.sh
-```
-
 ## Contributing
-We love contributions - anything from new features and bug fixes to suggestions and questions. Please follow our [contribution guide](CONTRIBUTING.md).
+
+We love contributions - anything from new features and bug fixes to suggestions and questions. Please follow our [contribution guide](https://github.com/buttercup/dossier/blob/master/CONTRIBUTING.md).
 
 ### Development
+
 Please keep in-line with the code style of each file, regardless of what tests are run (linting etc.). When creating new files their format is expected to closely resemble that of other existing source files.
 
 ### Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
+This project exists thanks to all the people who contribute. [[Contribute]](https://github.com/buttercup/dossier/blob/master/CONTRIBUTING.md).
 <a href="graphs/contributors"><img src="https://opencollective.com/buttercup/contributors.svg?width=890" /></a>
 
 #### Backers
