@@ -276,9 +276,9 @@ PODS:
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
     - React-Core
-  - react-native-file-access (1.7.1):
+  - react-native-file-access (2.1.0):
     - React-Core
-  - react-native-safe-area-context (3.2.0):
+  - react-native-safe-area-context (3.3.2):
     - React-Core
   - React-perflogger (0.66.4)
   - React-RCTActionSheet (0.66.4):
@@ -353,7 +353,7 @@ PODS:
     - React
   - RNFS (2.18.0):
     - React
-  - RNGestureHandler (1.10.3):
+  - RNGestureHandler (2.1.0):
     - React-Core
   - RNReactNativeSharedGroupPreferences (1.1.23):
     - React
@@ -385,7 +385,7 @@ PODS:
     - React-RCTText
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.5.0):
+  - RNScreens (3.10.1):
     - React-Core
     - React-RCTImage
   - RNSecureStorage (0.1.2):
@@ -606,8 +606,8 @@ SPEC CHECKSUMS:
   React-jsinspector: d0374f7509d407d2264168b6d0fad0b54e300b85
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
-  react-native-file-access: 964c4f208cb6541c40817d3508bcd523fd65e44a
-  react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
+  react-native-file-access: aca1712f9446b8f01cf9eb266251edd8cc40baaa
+  react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
   React-RCTAnimation: 743e88b55ac62511ae5c2e22803d4f503f2a3a13
@@ -624,16 +624,16 @@ SPEC CHECKSUMS:
   RNCClipboard: 5e299c6df8e0c98f3d7416b86ae563d3a9f768a3
   RNCMaskedView: f127cd9652acfa31b91dcff613e07ba18b774db6
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
-  RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
+  RNGestureHandler: e5c7cab5f214503dcefd6b2b0cefb050e1f51c4a
   RNReactNativeSharedGroupPreferences: bd6c52319a9f76bde33103cc3bc4f16ecc650653
   RNReanimated: da3860204e5660c0dd66739936732197d359d753
-  RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
+  RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
   RNSecureStorage: 24d433f7673a0daade43689de805933a70641731
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 7ac697b955d0c84ecdca21b8791f802cecb33728
+PODFILE CHECKSUM: 91b0668553d6f101e1fe28299426af7580af9242
 
 COCOAPODS: 1.11.2
