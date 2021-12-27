@@ -1,5 +1,31 @@
 # Buttercup Mobile Changelog
 
+## v2.0.2
+_2021-12-27_
+
+ * **Bugfix**:
+   * Autofill not launching
+ * React-Native upgrade (0.66)
+ * Password (sensitive field) masking
+
+## v2.0.1
+_2021-12-25_
+
+ * **Bugfix**:
+   * **Major encryption/decryption bug** on iOS: Causes fault with generating/verifying vault authentication information (HMAC)
+ * Group sorting
+
+## v2.0.0
+_2021-12-22_
+
+ * Buttercup core v6
+ * Completely new project
+ * OTP easy access screen
+ * Improved performance / stability
+ * Local vaults
+ * Entry icons
+ * Entry type support
+
 ## v1.16.0
 _2020-09-19_
 
