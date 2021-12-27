@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "re
 import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID, fieldsToProperties, VaultSourceID } from "buttercup";
 import {
     Button,
+    ButtonGroup,
     Divider,
     Icon,
     Layout,
@@ -38,6 +39,12 @@ const styles = StyleSheet.create({
     },
     fieldLayout: {
         marginVertical: 8
+    },
+    fieldsActionsGroup: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 16
     },
     fieldsLayout: {
         marginTop: 15,
@@ -127,6 +134,7 @@ export function EntryDetailsScreen({ navigation, route }) {
     const entryFacade = useEntryFacade(currentSourceState.get(), entryID);
     const [entryMenuVisible, setEntryMenuVisible] = useState(false);
     const [showDeletePrompt, setShowDeletePrompt] = useState(false);
+    const [showSensitiveProperties, setShowSensitiveProperties] = useState(false);
     const title = useMemo(() => {
         if (!entryFacade) return "";
         const titleField = entryFacade.fields.find(field => field.property === "title" && field.propertyType === EntryPropertyType.Property);
@@ -225,6 +233,7 @@ export function EntryDetailsScreen({ navigation, route }) {
                                     <EntryFieldValue
                                         info={field}
                                         otp={entryOTPs[field.property] || null}
+                                        showPassword={showSensitiveProperties}
                                     />
                                 </Layout>
                                 {index < (visibleFields.length - 1) && (
@@ -233,6 +242,13 @@ export function EntryDetailsScreen({ navigation, route }) {
                             </TouchableOpacity>
                         ))}
                     </Layout>
+                    <ButtonGroup style={styles.fieldsActionsGroup}>
+                        <Button
+                            onPress={() => setShowSensitiveProperties(!showSensitiveProperties)}
+                        >
+                            {showSensitiveProperties ? "Hide Sensitive Values" : "Show Sensitive Values"}
+                        </Button>
+                    </ButtonGroup>
                 </ScrollView>
             </Layout>
             <ConfirmPrompt

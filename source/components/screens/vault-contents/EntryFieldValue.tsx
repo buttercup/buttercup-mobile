@@ -1,8 +1,11 @@
 import React from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, View } from "react-native";
 import {
+    Icon,
     Layout,
-    Text
+    StyleService,
+    Text,
+    useStyleSheet
 } from "@ui-kitten/components";
 import { EntryPropertyValueType } from "buttercup";
 import { CodeDigits } from "../codes/CodeDigits";
@@ -12,6 +15,7 @@ import { OTPCode } from "../../../types";
 export interface FieldValueProps {
     info: VisibleField;
     otp?: OTPCode;
+    showPassword?: boolean;
 }
 
 export interface VisibleField {
@@ -32,7 +36,7 @@ const { MONO_FONT } = Platform.select({
     }
 });
 
-const styles = StyleSheet.create({
+const themedStyles = StyleService.create({
     fieldValueLayout: {
         marginRight: 0,
         marginLeft: "auto"
@@ -52,10 +56,27 @@ const styles = StyleSheet.create({
         height: 1,
         width: 22
     },
+    passwordHiddenView: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    passwordIcon: {
+        color: "color-danger-400",
+        width: 16,
+        height: 16,
+        marginRight: 6
+    },
     passwordValue: {
         fontFamily: MONO_FONT,
         fontSize: 16,
         fontWeight: "600"
+    },
+    passwordValueHiddenView: {
+        width: 140,
+        height: 18,
+        backgroundColor: "color-basic-transparent-200",
+        borderRadius: 2
     },
     textValue: {
         fontSize: 16
@@ -63,7 +84,8 @@ const styles = StyleSheet.create({
 });
 
 export function EntryFieldValue(props: FieldValueProps) {
-    const { info, otp } = props;
+    const { info, otp, showPassword = false } = props;
+    const styles = useStyleSheet(themedStyles);
     if (info.valueType === EntryPropertyValueType.Note) {
         return (
             <Layout level="2" style={styles.fieldValueLayoutNote}>
@@ -96,12 +118,21 @@ export function EntryFieldValue(props: FieldValueProps) {
                 </>
             )}
             {info.valueType === EntryPropertyValueType.Password && (
-                <Text
-                    numberOfLines={1}
-                    style={styles.passwordValue}
-                >
-                    {info.value}
-                </Text>
+                <>
+                    {showPassword && (
+                        <Text
+                            numberOfLines={1}
+                            style={styles.passwordValue}
+                        >
+                            {info.value}
+                        </Text>
+                    ) || (
+                        <View style={styles.passwordHiddenView}>
+                            <Icon name="lock-outline" fill={(styles.passwordIcon as any).color} style={styles.passwordIcon} />
+                            <View style={styles.passwordValueHiddenView} />
+                        </View>
+                    )}
+                </>
             )}
             {info.valueType === EntryPropertyValueType.Text && (
                 <Text
