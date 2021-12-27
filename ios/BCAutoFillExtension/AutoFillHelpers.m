@@ -16,7 +16,7 @@
 
 @implementation AutoFillHelpers
 
-NSString *authenticationPrompt = @"";
+NSString *authenticationPrompt = @"Auth";
 NSString *key = @"pw.buttercup.mobile.autofillstore";
 NSString *service = @"pw.buttercup.mobile.autofillstore";
 NSString *accessGroup = @"group.pw.buttercup.mobile";
@@ -31,6 +31,9 @@ NSString *accessGroup = @"group.pw.buttercup.mobile";
 
 + (NSDictionary *) buildKeychainQuery
 {
+    LAContext *context = [[LAContext alloc] init];
+    context.touchIDAuthenticationAllowableReuseDuration = 5;
+    context.localizedReason = NSLocalizedString(@"Authenticate to access auto-fill credentials", nil);
     return @{
              (__bridge NSString *)kSecClass: (__bridge id)(kSecClassGenericPassword),
              (__bridge NSString *)kSecAttrService: service,
@@ -38,6 +41,7 @@ NSString *accessGroup = @"group.pw.buttercup.mobile";
              (__bridge NSString *)kSecReturnAttributes: (__bridge id)kCFBooleanTrue,
              (__bridge NSString *)kSecReturnData: (__bridge id)kCFBooleanTrue,
              (__bridge NSString *)kSecUseOperationPrompt: authenticationPrompt,
+             (__bridge id)kSecUseAuthenticationContext: context
              };
 }
 

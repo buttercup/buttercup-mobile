@@ -16,7 +16,6 @@
 #import "AutoFillExtensionContextBridgeDelegate.h"
 #import <React/RCTRootView.h>
 
-// id<RCTBridgeDelegate> autoFillBridgeDelegate;
 AutoFillExtensionContextBridgeDelegate *autoFillBridgeDelegate;
 RCTBridge *bridge;
 RCTRootView *rootView;
@@ -83,7 +82,7 @@ RCTRootView *rootView;
         [identifiers addObject:[serviceIdentifier identifier]];
     }
 
-    NSDictionary *initialProps = [NSDictionary dictionaryWithObject: identifiers forKey: @"serviceIdentifiers"];
+    NSDictionary *initialProps = [NSDictionary dictionaryWithObject: identifiers forKey:@"serviceIdentifiers"];
     [self loadReactNativeUI: initialProps];
 }
 
@@ -91,15 +90,15 @@ RCTRootView *rootView;
  * Attempt to match an identity tapped in the QuickBar to a Buttercup Entry
  */
  - (void)provideCredentialWithoutUserInteractionForIdentity:(ASPasswordCredentialIdentity *)credentialIdentity
- {
-     ASPasswordCredential *matchingCredential = [AutoFillHelpers getAutoFillPasswordCredential:credentialIdentity];
-     if (matchingCredential != nil) {
-         [self.extensionContext completeRequestWithSelectedCredential:matchingCredential completionHandler:nil];
-     } else {
-         // Failed to find matching Buttercup entry.. send the user to the UI to choose a credential manually
-         [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:ASExtensionErrorDomain code:ASExtensionErrorCodeUserInteractionRequired userInfo:nil]];
-     }
- }
+{
+    ASPasswordCredential *matchingCredential = [AutoFillHelpers getAutoFillPasswordCredential:credentialIdentity];
+    if (matchingCredential != nil) {
+        [self.extensionContext completeRequestWithSelectedCredential:matchingCredential completionHandler:nil];
+    } else {
+        // Failed to find matching Buttercup entry.. send the user to the UI to choose a credential manually
+        [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:ASExtensionErrorDomain code:ASExtensionErrorCodeUserInteractionRequired userInfo:nil]];
+    }
+}
 
 
 /*
@@ -107,11 +106,11 @@ RCTRootView *rootView;
  * This shouldn't happen unless the Keychain is seriously out of sync.
  * Show the React Native UI and pass it the failing credential indentity
  */
- - (void)prepareInterfaceToProvideCredentialForIdentity:(ASPasswordCredentialIdentity *)credentialIdentity
- {
-     // Pass the serviceIdentifiers to the React Native app via the initialProperties initializer
-     NSDictionary *initialProps = [NSDictionary dictionaryWithObject:[credentialIdentity recordIdentifier] forKey: @"credentialIdentity"];
-     [self loadReactNativeUI: initialProps];
- }
+- (void)prepareInterfaceToProvideCredentialForIdentity:(ASPasswordCredentialIdentity *)credentialIdentity
+{
+    // Pass the serviceIdentifiers to the React Native app via the initialProperties initializer
+    NSDictionary *initialProps = [NSDictionary dictionaryWithObject:[credentialIdentity recordIdentifier] forKey: @"credentialIdentity"];
+    [self loadReactNativeUI: initialProps];
+}
 
 @end

@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { AppStateStatus } from "react-native";
 import { StandardApp } from "./StandardApp";
 import { AutofillApp } from "./AutofillApp";
 import { useAppStateDebouncedCallback } from "./hooks/app";
-import { navigate, navigateBack } from "./state/navigation";
+import { navigate } from "./state/navigation";
 
 interface AppProps {
     isContextAutoFill?: number;
