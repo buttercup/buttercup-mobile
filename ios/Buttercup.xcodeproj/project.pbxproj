@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2E9B84A0C4BA037FADD1F370 /* libPods-Buttercup-ButtercupTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F17B9112F8F30FD7666CF90A /* libPods-Buttercup-ButtercupTests.a */; };
+		72335B4541822CC69698906C /* libPods-Buttercup-BCAutoFillExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 324C3EAD2B271882718728D3 /* libPods-Buttercup-BCAutoFillExtension.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C28D367426BC7A7600BD5D76 /* BCDerivation.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D366C26BC7A7600BD5D76 /* BCDerivation.m */; };
 		C28D367526BC7A7600BD5D76 /* BCDerivation.m in Sources */ = {isa = PBXBuildFile; fileRef = C28D366C26BC7A7600BD5D76 /* BCDerivation.m */; };
@@ -37,7 +38,6 @@
 		C2DF576026F3B00A005AA279 /* AutoFillHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = C2DF539B26EFC8D5005AA279 /* AutoFillHelpers.m */; };
 		C2DF576526F71F52005AA279 /* SoloLogo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DF576426F71F52005AA279 /* SoloLogo.xcassets */; };
 		C2DF576626F71F52005AA279 /* SoloLogo.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2DF576426F71F52005AA279 /* SoloLogo.xcassets */; };
-		C6BE03D2F10DE2EDCA2D6DA9 /* libPods-BCAutoFillExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C84623DF5F1249F4748F822 /* libPods-BCAutoFillExtension.a */; };
 		E458CEFA27676D46704B1125 /* libPods-Buttercup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41DF32BA4EC54C9B7F878B6E /* libPods-Buttercup.a */; };
 /* End PBXBuildFile section */
 
@@ -84,8 +84,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Buttercup/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Buttercup/main.m; sourceTree = "<group>"; };
 		14C829FC4058F3D959506F39 /* Pods-Buttercup-ButtercupTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup-ButtercupTests.debug.xcconfig"; path = "Target Support Files/Pods-Buttercup-ButtercupTests/Pods-Buttercup-ButtercupTests.debug.xcconfig"; sourceTree = "<group>"; };
+		324C3EAD2B271882718728D3 /* libPods-Buttercup-BCAutoFillExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Buttercup-BCAutoFillExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		41DF32BA4EC54C9B7F878B6E /* libPods-Buttercup.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Buttercup.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C84623DF5F1249F4748F822 /* libPods-BCAutoFillExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BCAutoFillExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7248F26A59C98531E9888D73 /* Pods-BCAutoFillExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BCAutoFillExtension.release.xcconfig"; path = "Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Buttercup/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83CC4511296D4FF71434BCDB /* Pods-Buttercup-ButtercupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buttercup-ButtercupTests.release.xcconfig"; path = "Target Support Files/Pods-Buttercup-ButtercupTests/Pods-Buttercup-ButtercupTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2DF536F26EFC234005AA279 /* AuthenticationServices.framework in Frameworks */,
-				C6BE03D2F10DE2EDCA2D6DA9 /* libPods-BCAutoFillExtension.a in Frameworks */,
+				72335B4541822CC69698906C /* libPods-Buttercup-BCAutoFillExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,7 +213,7 @@
 				41DF32BA4EC54C9B7F878B6E /* libPods-Buttercup.a */,
 				F17B9112F8F30FD7666CF90A /* libPods-Buttercup-ButtercupTests.a */,
 				C2DF536E26EFC234005AA279 /* AuthenticationServices.framework */,
-				6C84623DF5F1249F4748F822 /* libPods-BCAutoFillExtension.a */,
+				324C3EAD2B271882718728D3 /* libPods-Buttercup-BCAutoFillExtension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -326,6 +326,7 @@
 				C2DF536926EFC234005AA279 /* Sources */,
 				C2DF536A26EFC234005AA279 /* Frameworks */,
 				C2DF536B26EFC234005AA279 /* Resources */,
+				C2945CB8277A15C500D7E9D0 /* ShellScript */,
 				EAA463573F261B064A345343 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -511,6 +512,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buttercup/Pods-Buttercup-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C2945CB8277A15C500D7E9D0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
 		C2D07B802774B63400FFFDF2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -544,7 +562,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BCAutoFillExtension-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Buttercup-BCAutoFillExtension-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -557,15 +575,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buttercup-BCAutoFillExtension/Pods-Buttercup-BCAutoFillExtension-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Buttercup-BCAutoFillExtension/Pods-Buttercup-BCAutoFillExtension-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BCAutoFillExtension/Pods-BCAutoFillExtension-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Buttercup-BCAutoFillExtension/Pods-Buttercup-BCAutoFillExtension-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FB7939AA863D2981255000D4 /* [CP] Check Pods Manifest.lock */ = {
@@ -918,7 +936,7 @@
 		};
 		C2DF537D26EFC234005AA279 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 07807AA08C75CD9D90D5525D /* Pods-BCAutoFillExtension.debug.xcconfig */;
+			baseConfigurationReference = AB6C32C95521AF347F8C2EAF /* Pods-Buttercup-BCAutoFillExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -933,7 +951,7 @@
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = BCAutoFillExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -955,7 +973,7 @@
 		};
 		C2DF537E26EFC234005AA279 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7248F26A59C98531E9888D73 /* Pods-BCAutoFillExtension.release.xcconfig */;
+			baseConfigurationReference = C1AAD22F89E6B18EEC3408B5 /* Pods-Buttercup-BCAutoFillExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -971,7 +989,7 @@
 				DEVELOPMENT_TEAM = 9D8F4J769D;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = BCAutoFillExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
