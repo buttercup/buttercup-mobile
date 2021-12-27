@@ -5,7 +5,7 @@
 
 [![Get it from iTunes](https://buttercup.pw/static/img/appstore.svg)](https://itunes.apple.com/us/app/buttercup-password-manager/id1294001514) [![Get it on Google Play](https://buttercup.pw/static/img/googleplay.svg)](https://play.google.com/store/apps/details?id=com.buttercup&hl=en&utm_campaign=github&pcampaignid=badge-2017-10-31)
 
-![Main screen](https://github.com/buttercup/buttercup-mobile/raw/master/bcup-1.png) ![Groups screen](https://github.com/buttercup/buttercup-mobile/raw/master/bcup-2.png)
+![Vault screen](https://github.com/buttercup/buttercup-mobile/raw/master/bcup-1.png) ![Entry screen](https://github.com/buttercup/buttercup-mobile/raw/master/bcup-2.png)
 
 ## About
 This repository holds the source for the Buttercup mobile application, which is available for the following platforms:
