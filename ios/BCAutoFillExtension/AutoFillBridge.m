@@ -25,7 +25,7 @@ RCT_EXPORT_MODULE()
 }
 
 - (instancetype)initWithExtensionContext:(ASCredentialProviderExtensionContext *)extensionContext
-API_AVAILABLE(ios(12.0)){
+{
     self = [super init];
     if (self)
     {
@@ -42,7 +42,8 @@ API_AVAILABLE(ios(12.0)){
 
 RCT_EXPORT_METHOD(getAutoFillSystemStatus: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    // We can actual check if the user has/has not enabled Autofill in system settings, to maintain compat with Android we just return true
+    // We can actually check if the user has/has not enabled Autofill in system settings,
+    // but to maintain compat with Android we just return true
     resolve(@YES);
 }
 

@@ -1,4 +1,4 @@
-import { EntryType, EntryURLType, VaultSource, VaultSourceID, getEntryURLs, VaultSourceStatus, getEntryPath, EntryID } from "buttercup";
+import { EntryType, EntryURLType, VaultSource, VaultSourceID, getEntryURLs, VaultSourceStatus } from "buttercup";
 import { getAdapter } from "./appEnv";
 import { getSharedStorage } from "./storage";
 import { AutoFillBridge } from "./autofillBridge";
@@ -76,6 +76,7 @@ export async function storeCredentialsForVault(source: VaultSource, password: st
     }
     const existingSourceInd = sources.findIndex(src => src.id === source.id);
     if (existingSourceInd >= 0) {
+        // Replace existing source if it exists
         sources.splice(existingSourceInd, 1);
     }
     sources.unshift({

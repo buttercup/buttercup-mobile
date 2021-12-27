@@ -59,11 +59,9 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-//  return [RCTLinkingManager application:application openURL:url options:options];
   if ([[url absoluteString] hasPrefix:@"otpauth://"] || [[url absoluteString] hasPrefix:@"buttercup://"]) {
       return [RCTLinkingManager application:application openURL:url options:options];
   }
-//  return [RNGoogleSignin application:application openURL:url options:options];
   return NO;
 }
 

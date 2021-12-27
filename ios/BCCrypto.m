@@ -16,7 +16,7 @@ int const IV_BYTE_LEN = 16;
     // HMAC verification
     NSString *hmacTarget = [NSString stringWithFormat:@"%@%@%@", encryptedText, ivHex, salt];
     const char *cKey = [BCHelpers characterArrayFromHexString:hmacHexKey];
-    int ckeyLen = hmacHexKey.length / 2;
+    unsigned long ckeyLen = hmacHexKey.length / 2;
     const char *cData = [hmacTarget cStringUsingEncoding:NSASCIIStringEncoding];
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
     CCHmac(kCCHmacAlgSHA256, cKey, ckeyLen, cData, strlen(cData), cHMAC);
@@ -83,7 +83,7 @@ int const IV_BYTE_LEN = 16;
     NSString *ivHex = [BCHelpers hexStringFromData:ivData];
     NSString *hmacTarget = [NSString stringWithFormat:@"%@%@%@", encryptedContent, ivHex, salt];
     const char *cKey = [BCHelpers characterArrayFromHexString:hmacHexKey];
-    int ckeyLen = hmacHexKey.length / 2;
+    unsigned long ckeyLen = hmacHexKey.length / 2;
     const char *cData = [hmacTarget cStringUsingEncoding:NSASCIIStringEncoding];
     unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
     CCHmac(kCCHmacAlgSHA256, cKey, ckeyLen, cData, strlen(cData), cHMAC);

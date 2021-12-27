@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
     "format": "prettier --write \"{{source,test}/**/*.{js,ts,jsx,tsx},*.{js,ts,jsx,tsx}}\"",
     "ios": "react-native run-ios --simulator=\"iPhone Xs\"",
     "start": "react-native start",
