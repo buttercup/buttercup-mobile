@@ -13,6 +13,8 @@ This repository holds the source for the Buttercup mobile application, which is 
  * iOS **12+**
  * Android **8.0+**
 
+_Currently only phones are supported, not tablets._
+
 The mobile application allows for full integration with Buttercup archives stored on a variety of platforms. Like the other applications, this mobile application makes use of **AES 256bit encryption** with over **200k PBKDF2 password derivation iterations**.
 
 The Buttercup for Mobile application boasts the following features:
