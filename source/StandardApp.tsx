@@ -19,7 +19,11 @@ import { BusyStatus } from "./components/notifications/BusyStatus";
 import { Toaster } from "./components/notifications/Toaster";
 import { useAppearance } from "./hooks/appearance";
 
+let __initialised: boolean = false;
+
 async function initialise() {
+    if (__initialised) return;
+    __initialised = true;
     LogBox.ignoreLogs([
         "EventEmitter.removeListener",
         "RCTBridge required dispatch_sync",

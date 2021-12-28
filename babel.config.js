@@ -5,7 +5,9 @@ module.exports = {
             "module-resolver",
             {
                 alias: {
-                    buttercup: "buttercup/web"
+                    buttercup: process.env.NODE_ENV === "test"
+                        ? "buttercup"
+                        : "buttercup/web"
                 }
             }
         ]
