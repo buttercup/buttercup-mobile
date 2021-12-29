@@ -1,11 +1,10 @@
-package com.buttercup;
+package pw.buttercup.mobile;
 
 import org.spongycastle.util.encoders.Base64;
 
 import java.util.Random;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -76,9 +75,15 @@ public class BCCrypto {
         }
     }
 
-    public static String generateIV() {
-        // Use salt to generate the hex
-        return generateSalt(IV_BYTE_LEN * 2);
+    public static String generateIV() throws Exception {
+        int targetLength = IV_BYTE_LEN * 2;
+        String randomText = generateRandomString(targetLength);
+        String hex = String.format("%040x", new BigInteger(1, randomText.getBytes(StandardCharsets.UTF_8)));
+        String iv = hex.substring(0, targetLength).toLowerCase();
+        if (iv.length() != targetLength) {
+            throw new Exception("IV length mismatch");
+        }
+        return iv;
     }
 
     public static String generateRandomString(int length) {
@@ -95,19 +100,6 @@ public class BCCrypto {
         String randomText = generateRandomString(length * 2);
         String hex = String.format("%040x", new BigInteger(1, randomText.getBytes(StandardCharsets.UTF_8)));
         return hex.substring(0, length).toLowerCase();
-    }
-
-    public static String generateUUID() {
-        UUID newID = UUID.randomUUID();
-        return newID.toString();
-    }
-
-    public static String[] generateUUIDs(int count) {
-        String[] uuids = new String[count];
-        for (int i = 0; i < count; i += 1) {
-            uuids[i] = generateUUID();
-        }
-        return uuids;
     }
 
 }
