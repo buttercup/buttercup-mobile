@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { AppStateStatus } from "react-native";
+import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { StandardApp } from "./StandardApp";
 import { AutofillApp } from "./AutofillApp";
 import { useAppStateDebouncedCallback } from "./hooks/app";
@@ -10,7 +11,7 @@ interface AppProps {
     serviceIdentifiers?: Array<string>;
 }
 
-export function App(props: AppProps = {}) {
+function _App(props: AppProps = {}) {
     const isAutofill: boolean = useMemo(() => props.isContextAutoFill === 1, [props]);
     const handleCoverScreen = useCallback((appState: AppStateStatus) => {
         if (isAutofill) return;
@@ -28,3 +29,5 @@ export function App(props: AppProps = {}) {
     }
     return <StandardApp />;
 }
+
+export const App = gestureHandlerRootHOC(_App);

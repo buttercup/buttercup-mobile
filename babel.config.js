@@ -7,7 +7,8 @@ module.exports = {
                 alias: {
                     buttercup: "buttercup/web"
                 }
-            }
+            },
+            "react-native-reanimated/plugin" // keep last
         ]
     ]
 };
