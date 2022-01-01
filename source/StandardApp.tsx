@@ -21,6 +21,7 @@ import { useAppearance } from "./hooks/appearance";
 
 async function initialise() {
     LogBox.ignoreLogs([
+        "new NativeEventEmitter",
         "EventEmitter.removeListener",
         "RCTBridge required dispatch_sync",
         "VirtualizedLists should never be nested"
