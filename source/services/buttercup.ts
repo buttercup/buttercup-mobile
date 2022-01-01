@@ -24,6 +24,7 @@ import { setCodesForSource } from "./otpVault";
 import { removeMissingSources, removeSourceOTPs, setSourceOTPs } from "./otpAll";
 import { getVaultConfig } from "./config";
 import { updateSourceItemsCount } from "./statistics";
+import { storeCredentialsForVault } from "./intermediateCredentials";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
 import "../library/datasource/MobileLocalFileDatasource";
@@ -110,11 +111,24 @@ async function addMobileLocalFileVault(config: DatasourceConfig, vaultPath: Vaul
 }
 
 export async function addVault(type: string, config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
-    if (type === "dropbox") return addDropboxVault(config, vaultPath, password);
-    if (type === "googledrive") return addGoogleDriveVault(config, vaultPath, password);
-    if (type === "webdav") return addWebDAVVault(config, vaultPath, password);
-    if (type === "mobilelocalfile") return addMobileLocalFileVault(config, vaultPath, password);
-    throw new Error(`Unknown vault type: ${type}`);
+    let sourceID: VaultSourceID;
+    if (type === "dropbox") {
+        sourceID = await addDropboxVault(config, vaultPath, password);
+    } else if (type === "googledrive") {
+        sourceID = await addGoogleDriveVault(config, vaultPath, password);
+    } else if (type === "webdav") {
+        sourceID = await addWebDAVVault(config, vaultPath, password);
+    } else if (type === "mobilelocalfile") {
+        sourceID = await addMobileLocalFileVault(config, vaultPath, password);
+    } else {
+        throw new Error(`Unknown vault type: ${type}`);
+    }
+    const source = getVaultManager().getSourceForID(sourceID);
+    if (!source) {
+        throw new Error(`Failed retrieving vault for newly added source: ${sourceID}`);
+    }
+    await storeCredentialsForVault(source, password);
+    return sourceID;
 }
 
 async function addWebDAVVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { Button, Layout, Text, ViewPager } from "@ui-kitten/components";
@@ -134,11 +134,12 @@ export function VaultMenu(props: VaultMenuProps) {
                 <Layout level="2" style={styles.vaultContainer}>
                     <ViewPager selectedIndex={selectedIndex} onSelect={handlePageSelect}>
                         {vaults.map(vault => (
-                            <VaultMenuItem
-                                key={vault.id}
-                                onActivate={() => handleVaultPress(vault)}
-                                vault={vault}
-                            />
+                            <Fragment key={vault.id}>
+                                <VaultMenuItem
+                                    onActivate={() => handleVaultPress(vault)}
+                                    vault={vault}
+                                />
+                            </Fragment>
                         ))}
                     </ViewPager>
                     <Dots length={vaults.length} active={selectedIndex} />
