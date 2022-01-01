@@ -11,6 +11,9 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+// Buttercup
+import pw.buttercup.mobile.autofill.AutoFillPackage;
+
 // Reanimated
 import com.facebook.react.bridge.JSIModulePackage;
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
@@ -28,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
             @SuppressWarnings("UnnecessaryLocalVariable")
             List<ReactPackage> packages = new PackageList(this).getPackages();
             packages.add(new CryptoPackage());
+            packages.add(new AutoFillPackage());
             return packages;
         }
 

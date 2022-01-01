@@ -161,6 +161,8 @@ android {
                     abiFilters nativeArchitectures.split(',')
                 }
             }
+            // Fix for RN Debug on Android 8 - https://stackoverflow.com/questions/45940861/android-8-cleartext-http-traffic-not-permitted/50834600#50834600
+            manifestPlaceholders = [usesCleartextTraffic:"true"]
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -168,7 +170,13 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            manifestPlaceholders = [usesCleartextTraffic:"false"]
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     // applicationVariants are e.g. debug, release
