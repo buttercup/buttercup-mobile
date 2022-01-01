@@ -19,60 +19,54 @@ public class BCCrypto {
     private static final int IV_BYTE_LEN = 16;
     private static final String RANDOM_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789!@#$%^&*(){}[]<>,.?~|-=_+";
 
-    public static String decryptText(String encryptedText, String keyHex, String ivHex, String saltHex, String hmacKeyHex, String hmacHex) {
-        byte[] encryptedData = Base64.decode(encryptedText);
+    public static String decryptText(String encryptedText, String keyHex, String ivHex, String saltHex, String hmacKeyHex, String hmacHex) throws Exception {
+        byte[] encryptedData = Base64.decode(encryptedText); // In base64
         byte[] keyData = BCHelpers.hexStringToByteArray(keyHex);
         byte[] ivData = BCHelpers.hexStringToByteArray(ivHex);
         byte[] hmacKeyData = BCHelpers.hexStringToByteArray(hmacKeyHex);
         IvParameterSpec iv = new IvParameterSpec(ivData);
         SecretKeySpec skeySpec = new SecretKeySpec(keyData, "AES");
-        try {
-            // HMAC verification
-            Mac sha256HMAC = Mac.getInstance("HmacSHA256");
-            SecretKeySpec hmacSecretKey = new SecretKeySpec(hmacKeyData, "HmacSHA256");
-            sha256HMAC.init(hmacSecretKey);
-            String hmacTarget = encryptedText + ivHex + saltHex;
-            byte[] hmacData = sha256HMAC.doFinal(hmacTarget.getBytes(StandardCharsets.UTF_8));
-            String newHmacHex = BCHelpers.byteArrayToHexString(hmacData);
-            if (!newHmacHex.equals(hmacHex)) {
-                throw new Exception("Authentication failed - possible tampering");
-            }
-            // AES decryption
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-            byte[] decrypted = cipher.doFinal(encryptedData);
-            return new String(decrypted, "UTF8");
-        } catch (Exception ex) {
-            return "Error:" + ex.getMessage();
+        // HMAC verification
+        Mac sha256HMAC = Mac.getInstance("HmacSHA256");
+        SecretKeySpec hmacSecretKey = new SecretKeySpec(hmacKeyData, "HmacSHA256");
+        sha256HMAC.init(hmacSecretKey);
+        String hmacTarget = encryptedText + ivHex + saltHex;
+        byte[] hmacData = sha256HMAC.doFinal(hmacTarget.getBytes(StandardCharsets.UTF_8));
+        String newHmacHex = BCHelpers.byteArrayToHexString(hmacData);
+        if (!newHmacHex.equals(hmacHex)) {
+            throw new Exception("Authentication failed - possible tampering");
         }
+        // AES decryption
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+        byte[] decrypted = cipher.doFinal(encryptedData);
+        // return new String(decrypted, "UTF8");
+        byte[] encodedDecryptedText = Base64.encode(decrypted); // Out base64
+        return new String(encodedDecryptedText);
     }
 
-    public static String encryptText(String text, String keyHex, String saltHex, String hmacHexKey) {
-        String ivHex = generateIV();
+    public static String encryptText(String b64Text, String keyHex, String saltHex, String ivHex, String hmacHexKey) throws Exception {
+        String text = BCHelpers.base64ToString(b64Text); // In base64
         byte[] ivData = BCHelpers.hexStringToByteArray(ivHex);
         byte[] keyData = BCHelpers.hexStringToByteArray(keyHex);
         byte[] hmacKeyData = BCHelpers.hexStringToByteArray(hmacHexKey);
         IvParameterSpec iv = new IvParameterSpec(ivData);
         SecretKeySpec skeySpec = new SecretKeySpec(keyData, "AES");
-        try {
-            // AES encryption
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-            byte[] encrypted = cipher.doFinal(text.getBytes());
-            byte[] encodedEncryptedText = Base64.encode(encrypted);
-            String encryptedText = new String(encodedEncryptedText);
-            // HMAC
-            Mac sha256HMAC = Mac.getInstance("HmacSHA256");
-            SecretKeySpec hmacSecretKey = new SecretKeySpec(hmacKeyData, "HmacSHA256");
-            sha256HMAC.init(hmacSecretKey);
-            String hmacTarget = encryptedText + ivHex + saltHex;
-            byte[] hmacData = sha256HMAC.doFinal(hmacTarget.getBytes(StandardCharsets.UTF_8));
-            String hmacHex = BCHelpers.byteArrayToHexString(hmacData);
-            // Output
-            return encryptedText + "|" + hmacHex + "|" + ivHex + "|" + saltHex;
-        } catch (Exception ex) {
-            return "Error:" + ex.getMessage();
-        }
+        // AES encryption
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+        byte[] encrypted = cipher.doFinal(text.getBytes());
+        byte[] encodedEncryptedText = Base64.encode(encrypted); // Out base64
+        String encryptedText = new String(encodedEncryptedText);
+        // HMAC
+        Mac sha256HMAC = Mac.getInstance("HmacSHA256");
+        SecretKeySpec hmacSecretKey = new SecretKeySpec(hmacKeyData, "HmacSHA256");
+        sha256HMAC.init(hmacSecretKey);
+        String hmacTarget = encryptedText + ivHex + saltHex;
+        byte[] hmacData = sha256HMAC.doFinal(hmacTarget.getBytes(StandardCharsets.UTF_8));
+        String hmacHex = BCHelpers.byteArrayToHexString(hmacData);
+        // Output
+        return encryptedText + "|" + hmacHex + "|" + ivHex + "|" + saltHex;
     }
 
     public static String generateIV() throws Exception {

@@ -7,7 +7,6 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
-import java.net.URLDecoder;
 import java.lang.String;
 import java.util.Map;
 import java.util.HashMap;
@@ -31,7 +30,13 @@ public class CryptoBridge extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void decryptText(String encryptedText, String keyHex, String ivHex, String saltHex, String hmacHexKey, String hmacHex, Promise promise) {
-        String decryptedText = BCCrypto.decryptText(encryptedText, keyHex, ivHex, saltHex, hmacHexKey, hmacHex);
+        String decryptedText;
+        try {
+            decryptedText = BCCrypto.decryptText(encryptedText, keyHex, ivHex, saltHex, hmacHexKey, hmacHex);
+        } catch (Exception ex) {
+            promise.reject("Failed decrypting data: " + ex.getMessage(), ex);
+            return;
+        }
         promise.resolve(decryptedText);
     }
 
@@ -46,17 +51,14 @@ public class CryptoBridge extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void encryptText(String encodedText, String keyHex, String saltHex, String hmacHexKey, Promise promise) {
-        String text;
+    public void encryptText(String encodedText, String keyHex, String saltHex, String ivHex, String hmacKeyHex, Promise promise) {
+        String encryptedText;
         try {
-            // We decode the text from Base64 and URI-encoding due to limitations with the bridge
-            // sending weird text that resulted from GZIP'ing:
-            text = URLDecoder.decode(BCHelpers.base64ToString(encodedText), "UTF-8");
+            encryptedText = BCCrypto.encryptText(encodedText, keyHex, saltHex, ivHex, hmacKeyHex);
         } catch (Exception ex) {
             promise.reject("Failed encrypting data: " + ex.getMessage(), ex);
             return;
         }
-        String encryptedText = BCCrypto.encryptText(text, keyHex, saltHex, hmacHexKey);
         promise.resolve(encryptedText);
     }
 
