@@ -20,7 +20,6 @@ function _App(props: AppProps = {}) {
         }
     }, [isAutofill]);
     useAppStateDebouncedCallback(handleCoverScreen);
-    console.log('isAutofill', isAutofill, props);
     if (isAutofill) {
         return (
             <AutofillApp
