@@ -120,7 +120,7 @@ public class AutoFillBridge extends ReactContextBaseJavaModule {
 
             if (mAutofillManager != null) {
                 Intent intent = new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE);
-                intent.setData(Uri.parse("package:com.buttercup"));
+                intent.setData(Uri.parse("package:pw.buttercup.mobile"));
                 requestPermissionsPromise = promise;
                 currentActivity.startActivityForResult(intent, AUTOFILL_REQ_CODE);
             } else {

@@ -45,6 +45,10 @@ function intermediateVaultToDetails(vault: IntermediateVault, index: number): Va
 }
 
 export async function storeCredentialsForVault(source: VaultSource, password: string): Promise<void> {
+    if (!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+        // No need to do any of this stuff if the user's device doesn't support Autofill (e.g. old version of Android).
+        return;
+    }
     const { vault } = source;
     // Get all entries that are either Logins or Websites
     const entries = vault.getAllEntries().filter(entry => AUTOFILLABLE_ENTRY_TYPES.includes(entry.getType()));
@@ -63,6 +67,15 @@ export async function storeCredentialsForVault(source: VaultSource, password: st
             }
         };
     }, {});
+
+    // Prompt the user to set Buttercup as AutoFill provider in system settings
+    // This is likely NOT the correct place to trigger this - it should be in response to some UI
+    // that explicitly advises what autofill is and why they should enable it etc.
+    const isAutofillProviderSet = await AutoFillBridge.getAutoFillSystemStatus();
+    if (!isAutofillProviderSet) {
+        await AutoFillBridge.openAutoFillSystemSettings();
+    }
+
     await AutoFillBridge.updateEntriesForSourceID(source.id, autofillEntries);
     // Prepare encryption test
     const iocaneAdapter = getAdapter();

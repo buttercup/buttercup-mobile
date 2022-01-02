@@ -12,7 +12,7 @@ interface AppProps {
 }
 
 function _App(props: AppProps = {}) {
-    const isAutofill: boolean = useMemo(() => props.isContextAutoFill === 1, [props]);
+    const isAutofill: boolean = useMemo(() => [1, true].indexOf(props.isContextAutoFill) > -1, [props]);
     const handleCoverScreen = useCallback((appState: AppStateStatus) => {
         if (isAutofill) return;
         if (appState === "inactive" || appState === "background") {
