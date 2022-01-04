@@ -16,7 +16,7 @@ import javax.crypto.Mac;
 
 public class BCCrypto {
 
-    private static final int IV_BYTE_LEN = 16;
+    public static final int IV_BYTE_LEN = 16;
     private static final String RANDOM_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789!@#$%^&*(){}[]<>,.?~|-=_+";
 
     public static String decryptText(String encryptedText, String keyHex, String ivHex, String saltHex, String hmacKeyHex, String hmacHex) throws Exception {

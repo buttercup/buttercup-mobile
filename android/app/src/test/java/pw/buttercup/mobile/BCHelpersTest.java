@@ -30,4 +30,5 @@ class BCHelpersTest {
         String source = "This is some text";
         assertEquals("VGhpcyBpcyBzb21lIHRleHQ=", BCHelpers.stringToBase64(source));
     }
+
 }
