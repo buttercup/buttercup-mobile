@@ -152,6 +152,30 @@ public class AutoFillBridge extends ReactContextBaseJavaModule {
     }
 
     /**
+     * Retrieve a list of entries for a source ID
+     * @param sourceID
+     * @param promise
+     */
+    @ReactMethod
+    public void getEntriesForSourceID(String sourceID, Promise promise) {
+        try {
+            ReadableMap autoFillEntries = autoFillHelper.getAutoFillEntries();
+
+            if (!autoFillEntries.hasKey(sourceID)) {
+                WritableMap emptyEntries = Arguments.createMap();
+                promise.resolve(emptyEntries);
+                return;
+            }
+
+            WritableMap sourceEntries = Arguments.createMap();
+            sourceEntries.merge(autoFillEntries.getMap(sourceID));
+            promise.resolve(sourceEntries);
+        } catch (Exception ex) {
+            promise.reject(ex);
+        }
+    }
+
+    /**
      * Merge Buttercup Credential Entries from a single Archive to the intermediate entry store
      *
      * The AutoFill Service will use the intermediate store to reverse map a matching domain back to a
