@@ -6,6 +6,7 @@ import { getAllSourceIDs, onVaultSourcesUpdated } from "./buttercup";
 import { cloneObject } from "../library/clone";
 
 export interface VaultConfiguration {
+    autofill: boolean;
     autoLockEnabled: boolean;
     autoLockTime: number; // milliseconds
     otpAlwaysAvailable: boolean;
@@ -25,6 +26,7 @@ export function getEmitter(): EventEmitter {
 
 function getInitialConfig(): VaultConfiguration {
     return {
+        autofill: false,
         autoLockEnabled: true,
         autoLockTime: ms("15m"),
         otpAlwaysAvailable: false

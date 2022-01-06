@@ -1,12 +1,17 @@
 import { EntryType, EntryURLType, VaultSource, VaultSourceID, getEntryURLs, VaultSourceStatus } from "buttercup";
 import { getAdapter } from "./appEnv";
+import { getVaultSource } from "./buttercup";
 import { getSharedStorage } from "./storage";
+import { getVaultConfig } from "./config";
 import { AutoFillBridge } from "./autofillBridge";
 import { IntermediateEntry, IntermediateVault, StoredAutofillEntries, VaultDetails } from "../types";
+import { notifyError } from "../library/notifications";
 
 const AUTOFILLABLE_ENTRY_TYPES = [EntryType.Login, EntryType.Website];
 const INTERMEDIATE_ENCRYPTION_ROUNDS = 10000;
 const STORAGE_PREFIX_SOURCES = "intermediate:autofill:sources";
+
+let __sourcePasswords: Record<VaultSourceID, string> = {};
 
 export async function getCredentialsForVault(sourceID: VaultSourceID, password: string): Promise<Array<IntermediateEntry>> {
     const vaults = await getStoredIntermediateVaults();
@@ -44,11 +49,35 @@ function intermediateVaultToDetails(vault: IntermediateVault, index: number): Va
     };
 }
 
-export async function storeCredentialsForVault(source: VaultSource, password: string): Promise<void> {
+export async function removeCredentialsForVault(sourceID: VaultSourceID): Promise<void> {
+    if (!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
+        return;
+    }
+    await AutoFillBridge.removeEntriesForSourceID(sourceID);
+}
+
+export function setSourcePassword(sourceID: VaultSourceID, password: string) {
+    __sourcePasswords[sourceID] = password;
+}
+
+export async function storeAutofillCredentials(sourceID: VaultSourceID): Promise<void> {
+    const vaultConfig = getVaultConfig(sourceID);
+    if (vaultConfig.autofill) {
+        const source = getVaultSource(sourceID);
+        await storeCredentialsForVault(source);
+    }
+}
+
+async function storeCredentialsForVault(source: VaultSource): Promise<void> {
     if (!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL) {
         // No need to do any of this stuff if the user's device doesn't support Autofill (e.g. old version of Android).
         return;
     }
+    if (!__sourcePasswords[source.id]) {
+        notifyError("Autofill store failure", "Not initialised correctly for this vault");
+        return;
+    }
+
     const { vault } = source;
     // Get all entries that are either Logins or Websites
     const entries = vault.getAllEntries().filter(entry => AUTOFILLABLE_ENTRY_TYPES.includes(entry.getType()));
@@ -67,20 +96,12 @@ export async function storeCredentialsForVault(source: VaultSource, password: st
             }
         };
     }, {});
-
-    // Prompt the user to set Buttercup as AutoFill provider in system settings
-    // This is likely NOT the correct place to trigger this - it should be in response to some UI
-    // that explicitly advises what autofill is and why they should enable it etc.
-    const isAutofillProviderSet = await AutoFillBridge.getAutoFillSystemStatus();
-    if (!isAutofillProviderSet) {
-        await AutoFillBridge.openAutoFillSystemSettings();
-    }
-
+    // Write to native
     await AutoFillBridge.updateEntriesForSourceID(source.id, autofillEntries);
     // Prepare encryption test
     const iocaneAdapter = getAdapter();
     iocaneAdapter.setDerivationRounds(INTERMEDIATE_ENCRYPTION_ROUNDS);
-    const authToken = await iocaneAdapter.encrypt(source.id, password) as string;
+    const authToken = await iocaneAdapter.encrypt(source.id, __sourcePasswords[source.id]) as string;
     // Store vault
     const storage = getSharedStorage();
     let sources: Array<IntermediateVault> = await storage.getItem(STORAGE_PREFIX_SOURCES);

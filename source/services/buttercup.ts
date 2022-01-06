@@ -24,7 +24,7 @@ import { setCodesForSource } from "./otpVault";
 import { removeMissingSources, removeSourceOTPs, setSourceOTPs } from "./otpAll";
 import { getVaultConfig } from "./config";
 import { updateSourceItemsCount } from "./statistics";
-import { storeCredentialsForVault } from "./intermediateCredentials";
+import { setSourcePassword as setSourceAutofillPassword, storeAutofillCredentials } from "./intermediateCredentials";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
 import "../library/datasource/MobileLocalFileDatasource";
@@ -127,7 +127,8 @@ export async function addVault(type: string, config: DatasourceConfig, vaultPath
     if (!source) {
         throw new Error(`Failed retrieving vault for newly added source: ${sourceID}`);
     }
-    await storeCredentialsForVault(source, password);
+    setSourceAutofillPassword(sourceID, password);
+    await storeAutofillCredentials(sourceID);
     return sourceID;
 }
 
@@ -200,6 +201,7 @@ export async function deleteEntry(sourceID: VaultSourceID, entryID: EntryID): Pr
     }
     entry.delete();
     await source.save();
+    await storeAutofillCredentials(sourceID);
 }
 
 export async function deleteGroup(sourceID: VaultSourceID, groupID: GroupID): Promise<void> {
@@ -210,6 +212,7 @@ export async function deleteGroup(sourceID: VaultSourceID, groupID: GroupID): Pr
     }
     group.delete();
     await source.save();
+    await storeAutofillCredentials(sourceID);
 }
 
 function extractVaultOTPItems(source: VaultSource): Array<OTP> {
@@ -286,7 +289,12 @@ export async function initialise() {
 }
 
 export async function lockAllVaults() {
-    await Promise.all(getVaultManager().unlockedSources.map(async source => {
+    const unlockedSources = getVaultManager().unlockedSources;
+    const sourceIDs = unlockedSources.map(source => source.id);
+    for (const sourceID of sourceIDs) {
+        setSourceAutofillPassword(sourceID, null);
+    }
+    await Promise.all(unlockedSources.map(async source => {
         await source.lock();
     }));
 }
@@ -297,6 +305,7 @@ export async function lockVault(sourceID: VaultSourceID): Promise<void> {
     if (source.status === VaultSourceStatus.Unlocked) {
         await source.lock();
     }
+    setSourceAutofillPassword(sourceID, null);
 }
 
 function onVaultSourceUnlocked(source: VaultSource) {
@@ -372,6 +381,7 @@ export async function saveExistingEntryChanges(sourceID: VaultSourceID, entryID:
     }
     consumeEntryFacade(entry, facade);
     await source.save();
+    await storeAutofillCredentials(sourceID);
 }
 
 export async function saveNewEntry(sourceID: VaultSourceID, groupID: GroupID, facade: EntryFacade): Promise<EntryID> {
@@ -383,6 +393,7 @@ export async function saveNewEntry(sourceID: VaultSourceID, groupID: GroupID, fa
     }
     const entry = createEntryFromFacade(group, facade);
     await source.save();
+    await storeAutofillCredentials(sourceID);
     return entry.id;
 }
 

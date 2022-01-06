@@ -8,9 +8,9 @@ import { VaultMenuItem } from "./vault-menu/VaultMenuItem";
 import { useVaults } from "../../hooks/buttercup";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
 import { notifyError } from "../../library/notifications";
-import { getVaultSource, unlockSourceByID } from "../../services/buttercup";
+import { unlockSourceByID } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
-import { storeCredentialsForVault } from "../../services/intermediateCredentials";
+import { setSourcePassword as setSourceAutofillPassword, storeAutofillCredentials } from "../../services/intermediateCredentials";
 import { authenticateBiometrics, getBiometricCredentialsForSource } from "../../services/biometrics";
 import { VaultDetails } from "../../types";
 
@@ -64,8 +64,8 @@ async function handleStandardVaultUnlock(sourceID: VaultSourceID, password: stri
     setBusyState("Unlocking vault");
     await unlockSourceByID(sourceID, password);
     setBusyState("Updating auto-fill");
-    const source = getVaultSource(sourceID);
-    await storeCredentialsForVault(source, password);
+    await setSourceAutofillPassword(sourceID, password);
+    await storeAutofillCredentials(sourceID);
     setBusyState(null);
 }
 

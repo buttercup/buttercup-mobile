@@ -10,9 +10,11 @@ import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hoo
 import { useVaultConfiguration } from "../../hooks/config";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
+import { AutoFillBridge } from "../../services/autofillBridge";
 import { authenticateBiometrics, disableBiometicsForSource, enableBiometricsForSource } from "../../services/biometrics";
 import { processEasyAccessOTPsForSource, verifySourcePassword } from "../../services/buttercup";
 import { updateVaultConfig, VaultConfiguration } from "../../services/config";
+import { removeCredentialsForVault, storeAutofillCredentials } from "../../services/intermediateCredentials";
 import { VAULT_AUTOLOCK_OPTIONS } from "../../symbols";
 
 const styles = StyleSheet.create({
@@ -72,7 +74,7 @@ export function VaultSettingsScreen({ navigation }) {
             notifyError("Failed updating configuration", err.message);
         }
     }, [currentSourceState.get()]);
-    const vaultAutoLockCurrentIndex = useMemo(
+    const vaultAutoLockCurrentIndex = useMemo<number>(
         () => {
             const index = VAULT_AUTOLOCK_OPTIONS.findIndex(
                 item => (item.delay && ms(item.delay) === vaultConfig.autoLockTime) || (!item.enabled && !vaultConfig.autoLockEnabled)
@@ -141,6 +143,9 @@ export function VaultSettingsScreen({ navigation }) {
             handleDisablingBiometrics();
         }
     }, [handleDisablingBiometrics]);
+    // **
+    // ** Easy OTPs
+    // **
     const handleEasyOTPsActivation = useCallback(async (activated: boolean) => {
         try {
             await processEasyAccessOTPsForSource(currentSourceState.get(), activated);
@@ -163,12 +168,65 @@ export function VaultSettingsScreen({ navigation }) {
             });
     }, [handleEasyOTPsActivation, vaultConfig]);
     // **
+    // ** Autofill
+    // **
+    const handleAutofillActivation = useCallback(async (activated: boolean) => {
+        if (activated) {
+            // Prompt the user to set Buttercup as AutoFill provider in system settings
+            // This is likely NOT the correct place to trigger this - it should be in response to some UI
+            // that explicitly advises what autofill is and why they should enable it etc.
+            const isAutofillProviderSet = await AutoFillBridge.getAutoFillSystemStatus();
+            if (!isAutofillProviderSet) {
+                await AutoFillBridge.openAutoFillSystemSettings();
+            }
+            await storeAutofillCredentials(currentSourceState.get());
+        } else {
+            await removeCredentialsForVault(currentSourceState.get());
+        }
+    }, [currentSourceState.get()]);
+    const handleAutofillEnableChange = useCallback((isChecked: boolean) => {
+        handleAutofillActivation(isChecked)
+            .then(() => {
+                handleUpdateConfig({
+                    ...vaultConfig,
+                    autofill: isChecked
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                notifyError("Failed modifying autofill setting", err.message);
+            });
+    }, [handleAutofillActivation, vaultConfig]);
+    // **
     // ** Render
     // **
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <Layout style={{ flex: 1 }} level="2">
                 <ScrollView>
+                    <Card
+                        header={props => (
+                            <VaultSettingHeader
+                                {...props}
+                                title="Password Auto-fill"
+                                subtitle="Automatically fill login forms/prompts"
+                            />
+                        )}
+                        style={styles.settingCard}
+                    >
+                        <Layout style={styles.switchLayout}>
+                            <Text style={styles.switchLayoutText}>
+                                Enable automatic login form filling using this vault.
+                            </Text>
+                            <Toggle
+                                checked={!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL ? false : vaultConfig.autofill}
+                                disabled={!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL}
+                                onChange={handleAutofillEnableChange}
+                            >
+                                {vaultConfig.autofill ? "Enabled" : "Disabled"}
+                            </Toggle>
+                        </Layout>
+                    </Card>
                     <Card
                         header={props => (
                             <VaultSettingHeader
