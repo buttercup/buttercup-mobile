@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Buttercup</string>
+    <string name="autofill_use_title">Use %1$s</string>
+    <string name="autofill_continue_title">Continue with Buttercup</string>
 </resources>
