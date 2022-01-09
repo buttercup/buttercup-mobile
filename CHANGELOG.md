@@ -1,7 +1,18 @@
 # Buttercup Mobile Changelog
 
+## v2.1.0
+_2022-01-09_
+
+**Android only**
+
+ * Android implementation
+ * Auto-fill optional setting
+ * New auto-fill storage
+
 ## v2.0.2
 _2021-12-27_
+
+**iOS only**
 
  * **Bugfix**:
    * Autofill not launching
@@ -11,12 +22,16 @@ _2021-12-27_
 ## v2.0.1
 _2021-12-25_
 
+**iOS only**
+
  * **Bugfix**:
    * **Major encryption/decryption bug** on iOS: Causes fault with generating/verifying vault authentication information (HMAC)
  * Group sorting
 
 ## v2.0.0
 _2021-12-22_
+
+**iOS only**
 
  * Buttercup core v6
  * Completely new project

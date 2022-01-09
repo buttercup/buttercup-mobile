@@ -4,8 +4,6 @@ export const BRAND_COLOUR = "#00B7AC";
 
 export const CRYPTO_DERIVATION_ROUNDS = 125000;
 
-export const GROUP = "group.pw.buttercup.mobile";
-
 export const VAULT_AUTOLOCK_OPTIONS = [
     { title: "Disabled", enabled: false, delay: null },
     { title: "1 minute", enabled: true, delay: "1m" },

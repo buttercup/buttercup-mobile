@@ -134,8 +134,8 @@ android {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 124
-        versionName "2.0.2"
+        versionCode 126
+        versionName "2.1.0"
     }
     splits {
         abi {
