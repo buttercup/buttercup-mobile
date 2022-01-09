@@ -170,7 +170,7 @@ export function VaultSettingsScreen({ navigation }) {
     // **
     // ** Autofill
     // **
-    const handleAutofillActivation = useCallback(async (activated: boolean) => {
+    const handleAutofillActivation = useCallback(async (activated: boolean): Promise<void> => {
         if (activated) {
             if (Platform.OS === "android") {
                 const grantedStatus = await PermissionsAndroid.requestMultiple([
@@ -191,7 +191,7 @@ export function VaultSettingsScreen({ navigation }) {
             if (!isAutofillProviderSet) {
                 await AutoFillBridge.openAutoFillSystemSettings();
             }
-            await storeAutofillCredentials(currentSourceState.get());
+            await storeAutofillCredentials(currentSourceState.get(), true);
         } else {
             await removeCredentialsForVault(currentSourceState.get());
         }
