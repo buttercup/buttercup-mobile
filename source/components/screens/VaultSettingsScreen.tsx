@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { PermissionsAndroid, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Card, IndexPath, Layout, Select, SelectItem, Text, Toggle } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import ms from "ms";
@@ -172,6 +172,18 @@ export function VaultSettingsScreen({ navigation }) {
     // **
     const handleAutofillActivation = useCallback(async (activated: boolean) => {
         if (activated) {
+            if (Platform.OS === "android") {
+                const grantedStatus = await PermissionsAndroid.requestMultiple([
+                    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+                ]);
+                const writeGranted = grantedStatus["android.permission.WRITE_EXTERNAL_STORAGE"] === PermissionsAndroid.RESULTS.GRANTED;
+                const readGranted = grantedStatus["android.permission.READ_EXTERNAL_STORAGE"] === PermissionsAndroid.RESULTS.GRANTED;
+                if (!writeGranted || !readGranted) {
+                    notifyError("Permissions not granted", "Extra permissions required before Auto-fill can be enabled");
+                    return;
+                }
+            }
             // Prompt the user to set Buttercup as AutoFill provider in system settings
             // This is likely NOT the correct place to trigger this - it should be in response to some UI
             // that explicitly advises what autofill is and why they should enable it etc.

@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="pw.buttercup.mobile">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.buttercup">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
@@ -13,6 +13,7 @@
         android:allowBackup="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="${usesCleartextTraffic}"
+        android:requestLegacyExternalStorage="true"
     >
         <activity android:name=".MainActivity" android:label="@string/app_name"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
