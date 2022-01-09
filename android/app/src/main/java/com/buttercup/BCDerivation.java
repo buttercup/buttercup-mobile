@@ -1,4 +1,4 @@
-package pw.buttercup.mobile;
+package com.buttercup;
 
 import java.nio.charset.StandardCharsets;
 import org.spongycastle.crypto.PBEParametersGenerator;

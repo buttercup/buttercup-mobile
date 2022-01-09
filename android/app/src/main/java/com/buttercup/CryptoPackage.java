@@ -1,4 +1,4 @@
-package pw.buttercup.mobile;
+package com.buttercup;
 
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.uimanager.ViewManager;

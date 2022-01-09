@@ -1,4 +1,4 @@
-package pw.buttercup.mobile.autofill;
+package com.buttercup.autofill;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
@@ -27,9 +27,9 @@ import com.facebook.react.bridge.WritableMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import pw.buttercup.mobile.MainActivity;
-import pw.buttercup.mobile.MainApplication;
-import pw.buttercup.mobile.R;
+import com.buttercup.MainActivity;
+import com.buttercup.MainApplication;
+import com.buttercup.R;
 
 import static android.view.View.GONE;
 

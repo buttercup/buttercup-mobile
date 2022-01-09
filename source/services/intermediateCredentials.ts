@@ -1,7 +1,8 @@
+import { Platform } from "react-native";
 import { EntryType, EntryURLType, VaultSource, VaultSourceID, getEntryURLs, VaultSourceStatus } from "buttercup";
+import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
 import { getAdapter } from "./appEnv";
 import { getVaultSource } from "./buttercup";
-import { getSharedStorage } from "./storage";
 import { getVaultConfig } from "./config";
 import { AutoFillBridge } from "./autofillBridge";
 import { IntermediateEntry, IntermediateVault, StoredAutofillEntries, VaultDetails } from "../types";
@@ -9,7 +10,18 @@ import { notifyError } from "../library/notifications";
 
 const AUTOFILLABLE_ENTRY_TYPES = [EntryType.Login, EntryType.Website];
 const INTERMEDIATE_ENCRYPTION_ROUNDS = 10000;
-const STORAGE_PREFIX_SOURCES = "intermediate:autofill:sources";
+const STORAGE_SERVICE = Platform.select({
+    ios: "pw.buttercup.mobile",
+    android: "com.buttercup"
+});
+const SECURE_STORAGE_CONFIG = {
+    accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
+    authenticationPrompt: "Authenticate to access auto-fill vaults",
+    service: STORAGE_SERVICE,
+    authenticateType: AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
+    accessGroup: "group.pw.buttercup.mobile" // So that the Keychain is available in the AutoFill Extension
+};
+const SOURCE_STORAGE_KEY = "@@autofillSources";
 
 let __sourcePasswords: Record<VaultSourceID, string> = {};
 
@@ -29,9 +41,9 @@ export async function getCredentialsForVault(sourceID: VaultSourceID, password: 
 }
 
 async function getStoredIntermediateVaults(): Promise<Array<IntermediateVault>> {
-    const storage = getSharedStorage();
-    const vaults = await storage.getItem(STORAGE_PREFIX_SOURCES);
-    return Array.isArray(vaults) ? vaults : [];
+    const sourcesRaw: string = await SecureStorage.getItem(SOURCE_STORAGE_KEY, SECURE_STORAGE_CONFIG);
+    const sources: Array<IntermediateVault> = sourcesRaw ? JSON.parse(sourcesRaw) : [];
+    return sources;
 }
 
 export async function getStoredVaults(): Promise<Array<VaultDetails>> {
@@ -60,9 +72,9 @@ export function setSourcePassword(sourceID: VaultSourceID, password: string) {
     __sourcePasswords[sourceID] = password;
 }
 
-export async function storeAutofillCredentials(sourceID: VaultSourceID): Promise<void> {
+export async function storeAutofillCredentials(sourceID: VaultSourceID, override: boolean = false): Promise<void> {
     const vaultConfig = getVaultConfig(sourceID);
-    if (vaultConfig.autofill) {
+    if (vaultConfig.autofill || override) {
         const source = getVaultSource(sourceID);
         await storeCredentialsForVault(source);
     }
@@ -103,11 +115,8 @@ async function storeCredentialsForVault(source: VaultSource): Promise<void> {
     iocaneAdapter.setDerivationRounds(INTERMEDIATE_ENCRYPTION_ROUNDS);
     const authToken = await iocaneAdapter.encrypt(source.id, __sourcePasswords[source.id]) as string;
     // Store vault
-    const storage = getSharedStorage();
-    let sources: Array<IntermediateVault> = await storage.getItem(STORAGE_PREFIX_SOURCES);
-    if (!sources) {
-        sources = [];
-    }
+    const sourcesRaw: string = await SecureStorage.getItem(SOURCE_STORAGE_KEY, SECURE_STORAGE_CONFIG);
+    const sources: Array<IntermediateVault> = sourcesRaw ? JSON.parse(sourcesRaw) : [];
     const existingSourceInd = sources.findIndex(src => src.id === source.id);
     if (existingSourceInd >= 0) {
         // Replace existing source if it exists
@@ -119,5 +128,5 @@ async function storeCredentialsForVault(source: VaultSource): Promise<void> {
         type: source.type,
         authToken
     });
-    await storage.setItem(STORAGE_PREFIX_SOURCES, sources);
+    await SecureStorage.setItem(SOURCE_STORAGE_KEY, JSON.stringify(sources), SECURE_STORAGE_CONFIG);
 }

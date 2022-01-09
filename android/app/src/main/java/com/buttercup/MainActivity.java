@@ -1,4 +1,4 @@
-package pw.buttercup.mobile;
+package com.buttercup;
 
 import com.facebook.react.ReactActivity;
 import com.rnfs.RNFSPackage;

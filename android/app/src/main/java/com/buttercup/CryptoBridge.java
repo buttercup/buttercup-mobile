@@ -1,4 +1,4 @@
-package pw.buttercup.mobile;
+package com.buttercup;
 
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactMethod;

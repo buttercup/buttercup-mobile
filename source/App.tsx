@@ -3,6 +3,7 @@ import { AppStateStatus } from "react-native";
 import { gestureHandlerRootHOC } from "react-native-gesture-handler";
 import { StandardApp } from "./StandardApp";
 import { AutofillApp } from "./AutofillApp";
+import { AutofillProvider } from "./contexts/autofill";
 import { useAppStateDebouncedCallback } from "./hooks/app";
 import { navigate } from "./state/navigation";
 
@@ -20,14 +21,17 @@ function _App(props: AppProps = {}) {
         }
     }, [isAutofill]);
     useAppStateDebouncedCallback(handleCoverScreen);
-    if (isAutofill) {
-        return (
-            <AutofillApp
-                urls={props.serviceIdentifiers || []}
-            />
-        );
-    }
-    return <StandardApp />;
+    return (
+        <AutofillProvider isAutofill={isAutofill}>
+            {isAutofill && (
+                <AutofillApp
+                    urls={props.serviceIdentifiers || []}
+                />
+            ) || (
+                <StandardApp />
+            )}
+        </AutofillProvider>
+    );
 }
 
 export const App = gestureHandlerRootHOC(_App);

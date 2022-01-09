@@ -131,10 +131,10 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "pw.buttercup.mobile"
+        applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 111
+        versionCode 124
         versionName "2.0.2"
     }
     splits {

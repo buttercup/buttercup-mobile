@@ -1,4 +1,4 @@
-package pw.buttercup.mobile.autofill;
+package com.buttercup.autofill;
 
 /**
  * Helper class for saving and retrieving AutoFill entries from Secure Storage

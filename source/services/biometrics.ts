@@ -1,5 +1,6 @@
 import EventEmitter from "eventemitter3";
 import TouchID from "react-native-touch-id";
+import { Platform } from "react-native";
 import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
 import { VaultSourceID } from "buttercup";
 import { BIOMETRICS_ERROR_NOT_ENROLLED } from "../symbols";
@@ -10,10 +11,14 @@ interface KeychainCredentials {
 
 let __ee: EventEmitter = null;
 
+const STORAGE_SERVICE = Platform.select({
+    ios: "pw.buttercup.mobile",
+    android: "com.buttercup"
+});
 const SECURE_STORAGE_CONFIG = {
     accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
-    authenticationPrompt: "",
-    service: "pw.buttercup.mobile",
+    authenticationPrompt: "Authenticate to unlock vaults using biometrics",
+    service: STORAGE_SERVICE,
     authenticateType: AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
     accessGroup: "group.pw.buttercup.mobile" // So that the Keychain is available in the AutoFill Extension
 };

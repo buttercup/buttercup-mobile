@@ -1,4 +1,4 @@
-package pw.buttercup.mobile.autofill;
+package com.buttercup.autofill;
 
 /**
  * Helper Class for passing Buttercup Entry credentials around

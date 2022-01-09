@@ -1,4 +1,4 @@
-package pw.buttercup.mobile.autofill;
+package com.buttercup.autofill;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import java.security.Security;
 import java.util.Arrays;
 import java.util.List;
 
-import pw.buttercup.mobile.BuildConfig;
-import pw.buttercup.mobile.CryptoPackage;
+import com.buttercup.BuildConfig;
+import com.buttercup.CryptoPackage;
 
 public class AutoFillActivity extends ReactActivity {
     private static final String TAG = "AutoFillActivity";

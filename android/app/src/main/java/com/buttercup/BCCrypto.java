@@ -1,4 +1,4 @@
-package pw.buttercup.mobile;
+package com.buttercup;
 
 import org.spongycastle.util.encoders.Base64;
 
