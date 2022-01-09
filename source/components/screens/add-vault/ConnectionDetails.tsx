@@ -3,6 +3,7 @@ import { Linking, StyleSheet, View } from "react-native";
 import {
     Button,
     Card,
+    CheckBox,
     Icon,
     Input,
     Layout,
@@ -38,6 +39,9 @@ enum GoogleState {
 const VALID_URL = /^https?:\/\/[a-z0-9-]+(\.[a-z0-9-]+)+/i;
 
 const styles = StyleSheet.create({
+    checkbox: {
+        margin: 2
+    },
     input: {
         width: "100%"
     },
@@ -46,6 +50,13 @@ const styles = StyleSheet.create({
     },
     noActionLayout: {
         width: "100%"
+    },
+    options: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: 12,
+        marginBottom: 26
     },
     status: {
         width: "100%",
@@ -131,8 +142,9 @@ function DropboxConnection(props: ConnectionDetailsProps) {
 function GoogleDriveConnection(props: ConnectionDetailsProps) {
     const { onCanContinue, vaultType } = props;
     const [status, setStatus] = useState<GoogleState>(GoogleState.Idle);
+    const [fullPermissions, setFullPermissions] = useState<boolean>(false);
     const googleDriveToken = useGoogleToken();
-    const googleAuthURL: string = useMemo(generateGoogleDriveAuthorisationURL, []);
+    const googleAuthURL: string = useMemo(() => generateGoogleDriveAuthorisationURL(fullPermissions), [fullPermissions]);
     const handleAuthorisation = useCallback(() => {
         disableCurrentInterface();
         Linking.openURL(googleAuthURL);
@@ -162,6 +174,15 @@ function GoogleDriveConnection(props: ConnectionDetailsProps) {
                 {status === GoogleState.Connected && (
                     <Text category="s1" status="success">Connected</Text>
                 )}
+            </Layout>
+            <Layout style={styles.options}>
+                <CheckBox
+                    style={styles.checkbox}
+                    checked={fullPermissions}
+                    onChange={nextChecked => setFullPermissions(nextChecked)}
+                >
+                    Grant full permissions
+                </CheckBox>
             </Layout>
             <Button
                 accessoryRight={(

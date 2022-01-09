@@ -4,6 +4,16 @@ export const BRAND_COLOUR = "#00B7AC";
 
 export const CRYPTO_DERIVATION_ROUNDS = 125000;
 
+const GOOGLE_DRIVE_BASE_SCOPES = ["email", "profile"];
+export const GOOGLE_DRIVE_SCOPES_STANDARD = [
+    ...GOOGLE_DRIVE_BASE_SCOPES,
+    "https://www.googleapis.com/auth/drive.file" // Per-file access
+];
+export const GOOGLE_DRIVE_SCOPES_PERMISSIVE = [
+    ...GOOGLE_DRIVE_BASE_SCOPES,
+    "https://www.googleapis.com/auth/drive"
+];
+
 export const VAULT_AUTOLOCK_OPTIONS = [
     { title: "Disabled", enabled: false, delay: null },
     { title: "1 minute", enabled: true, delay: "1m" },

@@ -5,6 +5,10 @@ import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-
 import EventEmitter from "eventemitter3";
 import { notifyError } from "../library/notifications";
 import { getEmptyVault } from "./buttercup";
+import {
+    GOOGLE_DRIVE_SCOPES_PERMISSIVE,
+    GOOGLE_DRIVE_SCOPES_STANDARD
+} from "../symbols";
 import { GoogleOAuthToken } from "../types";
 
 const CLIENT_WEB = Config.GOOGLE_CLIENT_ID;
@@ -30,11 +34,12 @@ async function exchangeCodeForTokens(code: string): Promise<GoogleOAuthToken> {
     };
 }
 
-export function generateAuthorisationURL(): string {
+export function generateAuthorisationURL(openPermissions: boolean): string {
     const client = getClient();
+    const scopes = openPermissions ? GOOGLE_DRIVE_SCOPES_PERMISSIVE : GOOGLE_DRIVE_SCOPES_STANDARD;
     return client.generateAuthUrl({
         access_type: "offline",
-        scope: "profile email https://www.googleapis.com/auth/drive.file",
+        scope: [...scopes],
         prompt: "consent select_account"
     });
 }
