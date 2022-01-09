@@ -1,5 +1,5 @@
 import { gzip, ungzip } from "pako";
-import { createClient } from "webdav";
+import { createClient } from "webdav/web";
 import * as base64 from "base64-js";
 import { getSharedAppEnv } from "buttercup";
 import {
