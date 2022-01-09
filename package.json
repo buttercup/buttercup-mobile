@@ -61,7 +61,6 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
     "react-native-secure-storage": "^0.1.2",
-    "react-native-shared-group-preferences": "^1.1.23",
     "react-native-svg": "^12.1.1",
     "react-native-toast-message": "^2.1.1",
     "react-native-touch-id": "^4.4.1",
@@ -94,7 +93,9 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupFiles": ["./node_modules/react-native-gesture-handler/jestSetup.js"],
+    "setupFiles": [
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
