@@ -1,4 +1,4 @@
-package pw.buttercup.mobile.autofill;
+package com.buttercup.autofill;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

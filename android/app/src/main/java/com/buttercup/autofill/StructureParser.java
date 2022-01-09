@@ -1,4 +1,4 @@
-package pw.buttercup.mobile.autofill;
+package com.buttercup.autofill;
 
 import android.app.assist.AssistStructure;
 import android.os.Build;

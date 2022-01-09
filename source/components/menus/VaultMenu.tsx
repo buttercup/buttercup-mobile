@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useContext, useState } from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { Button, Layout, Text, ViewPager } from "@ui-kitten/components";
@@ -7,6 +7,7 @@ import { TextPrompt } from "../prompts/TextPrompt";
 import { VaultMenuItem } from "./vault-menu/VaultMenuItem";
 import { useVaults } from "../../hooks/buttercup";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
+import { AutofillContext } from "../../contexts/autofill";
 import { notifyError } from "../../library/notifications";
 import { unlockSourceByID } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
@@ -76,6 +77,9 @@ export function VaultMenu(props: VaultMenuProps) {
         onVaultOpen = null,
         vaultsOverride
     } = props;
+    const {
+        isAutofill
+    } = useContext(AutofillContext);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const vaults: Array<VaultDetails> = useVaults(vaultsOverride);
     const [unlockVaultTarget, setUnlockVaultTarget] = useState<VaultSourceID>(null);
@@ -153,8 +157,15 @@ export function VaultMenu(props: VaultMenuProps) {
                         style={styles.placeholderImage}
                     />
                     <Text category="h4" style={styles.noVaultHeading}>No Vaults</Text>
-                    <Text category="p1" style={styles.noVaultText}>There aren't any vaults here yet. Why not add one?</Text>
-                    <Button onPress={handleAddVaultPress} style={styles.addButton}>Add Vault</Button>
+                    <Text category="p1" style={styles.noVaultText}>
+                        {isAutofill
+                            ? "There aren't any vaults here. Enable auto-fill on a vault to access it here."
+                            : "There aren't any vaults here yet. Why not add one?"
+                        }
+                    </Text>
+                    {!isAutofill && (
+                        <Button onPress={handleAddVaultPress} style={styles.addButton}>Add Vault</Button>
+                    )}
                 </Layout>
             )}
             <TextPrompt

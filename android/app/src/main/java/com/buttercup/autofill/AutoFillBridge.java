@@ -1,4 +1,4 @@
-package pw.buttercup.mobile.autofill;
+package com.buttercup.autofill;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -31,7 +31,7 @@ import com.facebook.react.bridge.WritableMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import pw.buttercup.mobile.R;
+import com.buttercup.R;
 
 import static android.view.autofill.AutofillManager.EXTRA_ASSIST_STRUCTURE;
 
@@ -120,7 +120,7 @@ public class AutoFillBridge extends ReactContextBaseJavaModule {
 
             if (mAutofillManager != null) {
                 Intent intent = new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE);
-                intent.setData(Uri.parse("package:pw.buttercup.mobile"));
+                intent.setData(Uri.parse("package:com.buttercup"));
                 requestPermissionsPromise = promise;
                 currentActivity.startActivityForResult(intent, AUTOFILL_REQ_CODE);
             } else {

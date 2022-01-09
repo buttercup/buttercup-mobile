@@ -1,4 +1,4 @@
-package pw.buttercup.mobile;
+package com.buttercup;
 
 import android.app.Application;
 import android.content.Context;
@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 // Buttercup
-import pw.buttercup.mobile.autofill.AutoFillPackage;
+import com.buttercup.autofill.AutoFillPackage;
 
 // Reanimated
 import com.facebook.react.bridge.JSIModulePackage;
@@ -74,7 +74,7 @@ public class MainApplication extends Application implements ReactApplication {
                  * We use reflection here to pick up the class that initializes Flipper,
                  * since Flipper library is not available in release mode
                  */
-                Class<?> aClass = Class.forName("pw.buttercup.mobile.ReactNativeFlipper");
+                Class<?> aClass = Class.forName("com.buttercup.ReactNativeFlipper");
                 aClass
                         .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
                         .invoke(null, context, reactInstanceManager);
