@@ -3,11 +3,11 @@
 ## v2.1.0
 _2022-01-09_
 
-**Android only**
-
  * Android implementation
  * Auto-fill optional setting
  * New auto-fill storage
+ * _iOS only_:
+   * Webdav _web_ build
 
 ## v2.0.2
 _2021-12-27_
