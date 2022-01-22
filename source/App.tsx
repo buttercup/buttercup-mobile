@@ -22,11 +22,9 @@ function _App(props: AppProps = {}) {
     }, [isAutofill]);
     useAppStateDebouncedCallback(handleCoverScreen);
     return (
-        <AutofillProvider isAutofill={isAutofill}>
+        <AutofillProvider autofillURLs={props.serviceIdentifiers || []} isAutofill={isAutofill}>
             {isAutofill && (
-                <AutofillApp
-                    urls={props.serviceIdentifiers || []}
-                />
+                <AutofillApp />
             ) || (
                 <StandardApp />
             )}
