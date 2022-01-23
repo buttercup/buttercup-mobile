@@ -55,6 +55,12 @@ jobs:
               uses: maxim-lobanov/setup-xcode@v1
               with:
                 xcode-version: "${{ matrix.xcode }}"
+            - name: Link to 13.7 Simulators
+              run: |
+                echo "Creating Runtimes folder if needed..."
+                sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
+                echo "Creating symlink of the iOS 13.7 runtime..."
+                sudo ln -s /Applications/Xcode_11.7.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 13.7.simruntime
             - name: "Cache Xcode dependencies"
               uses: actions/cache@v2
               with:
