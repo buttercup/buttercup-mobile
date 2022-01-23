@@ -1,9 +1,11 @@
+import { Linking } from "react-native";
 import Config from "react-native-config";
-import { DatasourceAuthManager, GoogleDriveDatasource } from "buttercup";
-import { OAuth2Client } from "@buttercup/google-oauth2-client";
+import { DatasourceAuthManager, GoogleDriveDatasource, VaultSourceID } from "buttercup";
+import { ERR_REFRESH_FAILED, GoogleToken, OAuth2Client } from "@buttercup/google-oauth2-client";
 import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
+import { Layerr } from "layerr";
 import EventEmitter from "eventemitter3";
-import { notifyError } from "../library/notifications";
+import { notifyError, notifySuccess } from "../library/notifications";
 import { getEmptyVault } from "./buttercup";
 import {
     GOOGLE_DRIVE_SCOPES_PERMISSIVE,
@@ -14,6 +16,7 @@ import { GoogleOAuthToken } from "../types";
 const CLIENT_WEB = Config.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = Config.GOOGLE_CLIENT_SECRET;
 
+const __updatedTokens: Record<VaultSourceID, GoogleOAuthToken> = {};
 let __emitter: EventEmitter;
 
 async function exchangeCodeForTokens(code: string): Promise<GoogleOAuthToken> {
@@ -21,16 +24,12 @@ async function exchangeCodeForTokens(code: string): Promise<GoogleOAuthToken> {
     const {
         tokens: {
             access_token: accessToken,
-            expiry_date: expiryDate,
-            refresh_token: refreshToken,
-            token_type: tokenType
+            refresh_token: refreshToken
         }
     } = await client.exchangeAuthCodeForToken(code);
     return {
         accessToken,
-        expiryDate,
-        refreshToken,
-        tokenType
+        refreshToken
     };
 }
 
@@ -59,6 +58,12 @@ export function processCodeExchange(code: string) {
     exchangeCodeForTokens(code)
         .then((token: GoogleOAuthToken) => {
             getEmitter().emit("token", { token });
+            for (const sourceID in __updatedTokens) {
+                if (__updatedTokens[sourceID] === null) {
+                    notifySuccess("Google Drive Re-authorised", "Please unlock vault again");
+                    __updatedTokens[sourceID] = token;
+                }
+            }
         })
         .catch(err => {
             console.error(err);
@@ -68,12 +73,30 @@ export function processCodeExchange(code: string) {
 
 export function registerAuthWatchers() {
     DatasourceAuthManager.getSharedManager().registerHandler("googledrive", async (datasource: GoogleDriveDatasource) => {
-        const { refreshToken: currentRefreshToken } = datasource;
+        const { refreshToken: currentRefreshToken, sourceID } = datasource as GoogleDriveDatasource;
         const client = getClient();
-        const { tokens } = await client.refreshAccessToken(currentRefreshToken);
-        const accessToken = tokens.access_token;
-        const refreshToken = tokens.refresh_token || currentRefreshToken;
-        datasource.updateTokens(accessToken, refreshToken);
+        let tokens: GoogleToken;
+        if (__updatedTokens[sourceID]) {
+            datasource.updateTokens(__updatedTokens[sourceID].accessToken, __updatedTokens[sourceID].refreshToken);
+            delete __updatedTokens[sourceID];
+            return;
+        } else {
+            try {
+                const result = await client.refreshAccessToken(currentRefreshToken);
+                tokens = result.tokens;
+            } catch (err) {
+                const { code, status } = Layerr.info(err);
+                if (code === ERR_REFRESH_FAILED && status === 400) {
+                    // Start re-authentication procedure
+                    __updatedTokens[sourceID] = null;
+                    const authURL = generateAuthorisationURL(false);
+                    Linking.openURL(authURL);
+                    return;
+                }
+                throw err;
+            }
+        }
+        datasource.updateTokens(tokens.access_token, tokens.refresh_token);
     });
 }
 

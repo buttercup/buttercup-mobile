@@ -28,9 +28,7 @@ export type DatasourceConfig = DatasourceConfigurationDropbox | DatasourceConfig
 
 export interface GoogleOAuthToken {
     accessToken: string;
-    expiryDate: number;
     refreshToken: string;
-    tokenType: string;
 }
 
 export interface IntermediateEntry {
