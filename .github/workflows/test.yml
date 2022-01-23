@@ -16,6 +16,11 @@ jobs:
               uses: actions/setup-node@v2
               with:
                 node-version: "16"
+            - name: "Cache NodeJS dependencies"
+              uses: actions/cache@v2
+              with:
+                path: node-modules
+                key: ${{ runner.os }}-node_modules
             - name: "Install NodeJS dependencies"
               run: npm install
             - name: Validate Gradle wrapper
@@ -30,7 +35,7 @@ jobs:
                     - xcode: "13.2"
                       ios: "15.2"
                     - xcode: "13.2"
-                      ios: "12.4"
+                      ios: "13.7"
         name: "iOS / Objective-C tests: Xcode ${{ matrix.xcode }}, iOS ${{ matrix.ios }}"
         steps:
             - name: Checkout the repository
@@ -39,12 +44,22 @@ jobs:
               uses: actions/setup-node@v2
               with:
                 node-version: "16"
+            - name: "Cache NodeJS dependencies"
+              uses: actions/cache@v2
+              with:
+                path: node-modules
+                key: ${{ runner.os }}-node_modules
             - name: "Install NodeJS dependencies"
               run: npm install
             - name: Setup Xcode
               uses: maxim-lobanov/setup-xcode@v1
               with:
                 xcode-version: "${{ matrix.xcode }}"
+            - name: "Cache Xcode dependencies"
+              uses: actions/cache@v2
+              with:
+                path: node-modules
+                key: ${{ runner.os }}-${{ matrix.xcode }}-pods
             - name: Install Xcode Dependencies
               run: pod install
               working-directory: ./ios
