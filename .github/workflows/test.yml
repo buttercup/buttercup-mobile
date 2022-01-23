@@ -16,7 +16,7 @@ jobs:
               uses: actions/setup-node@v2
               with:
                 node-version: "16"
-            - name: "Install Node dependencies"
+            - name: "Install NodeJS dependencies"
               run: npm install
             - name: Validate Gradle wrapper
               uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
@@ -35,11 +35,17 @@ jobs:
         steps:
             - name: Checkout the repository
               uses: actions/checkout@v2
+            - name: "Install NodeJS"
+              uses: actions/setup-node@v2
+              with:
+                node-version: "16"
+            - name: "Install NodeJS dependencies"
+              run: npm install
             - name: Setup Xcode
               uses: maxim-lobanov/setup-xcode@v1
               with:
                 xcode-version: "${{ matrix.xcode }}"
-            - name: Install Dependencies
+            - name: Install Xcode Dependencies
               run: pod install
               working-directory: ./ios
               shell: bash
