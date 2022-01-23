@@ -4,6 +4,7 @@ on: push
 jobs:
     java_tests:
         runs-on: ubuntu-latest
+        name: "Android / Java tests"
         steps:
             - name: Checkout the repository
               uses: actions/checkout@v2
@@ -21,3 +22,24 @@ jobs:
               uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
             - name: Test with Gradle
               run: cd android && ./gradlew :app:cleanTestDebugUnitTest :app:testDebugUnitTest
+    objc_tests:
+        runs-on: macos-latest
+        strategy:
+            matrix:
+                include:
+                    - xcode: "13.2"
+                      ios: "15.2"
+                    - xcode: "13.2"
+                      ios: "14.3"
+                    - xcode: "13.2"
+                      ios: "12.4"
+        name: "iOS / Objective-C tests: Xcode ${{ matrix.xcode }}, iOS ${{ matrix.ios }}"
+        steps:
+            - name: Checkout the repository
+              uses: actions/checkout@v2
+            - name: Setup Xcode
+              uses: maxim-lobanov/setup-xcode@v1
+              with:
+                xcode-version: "${{ matrix.xcode }}"
+            - name: Run tests
+              run: xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=iPhone 13,OS=${{ matrix.ios }}'
