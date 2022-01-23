@@ -19,7 +19,7 @@ jobs:
             - name: "Cache NodeJS dependencies"
               uses: actions/cache@v2
               with:
-                path: node-modules
+                path: node_modules
                 key: ${{ runner.os }}-node_modules
             - name: "Install NodeJS dependencies"
               run: npm install
@@ -47,7 +47,7 @@ jobs:
             - name: "Cache NodeJS dependencies"
               uses: actions/cache@v2
               with:
-                path: node-modules
+                path: node_modules
                 key: ${{ runner.os }}-node_modules
             - name: "Install NodeJS dependencies"
               run: npm install
@@ -58,7 +58,7 @@ jobs:
             - name: "Cache Xcode dependencies"
               uses: actions/cache@v2
               with:
-                path: node-modules
+                path: ios/Pods
                 key: ${{ runner.os }}-${{ matrix.xcode }}-pods
             - name: Install Xcode Dependencies
               run: pod install
