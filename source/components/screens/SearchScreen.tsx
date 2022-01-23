@@ -39,7 +39,8 @@ export function SearchScreen({ navigation }) {
                     title: res.properties.title,
                     type: "entry",
                     groupID: res.groupID,
-                    entryProperties: res.properties
+                    entryProperties: res.properties,
+                    isTrash: false
                 })));
                 setCurrentSearchTerm(searchTerm);
                 setSearching(false);

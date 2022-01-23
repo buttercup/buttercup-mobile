@@ -1,10 +1,13 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { Icon, Layout, List, ListItem, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
+import { Icon, Layout, List, ListItem, Spinner, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
+import { SearchBar } from "../search/SearchBar";
+import { AutofillContext } from "../../../contexts/autofill";
 import { AutoFillBridge } from "../../../services/autofillBridge";
 import { CURRENT_SOURCE } from "../../../state/vault";
 import { LOGIN_ENTRIES } from "../../../state/autofill";
+import { extractDomain } from "../../../library/url";
 import { IntermediateEntry } from "../../../types";
 
 interface VaultContentsItemDisplay {
@@ -18,7 +21,10 @@ const BackIcon = props => <Icon {...props} name="corner-left-up-outline" />;
 const CancelIcon = props => <Icon {...props} name="close-square-outline" />;
 
 const styles = StyleSheet.create({
-    listContainer: {},
+    card: {
+        flex: 1,
+        padding: 0
+    },
     contentContainer: {
       paddingHorizontal: 8,
       paddingVertical: 4,
@@ -26,19 +32,45 @@ const styles = StyleSheet.create({
     item: {
       marginVertical: 4,
     },
-    card: {
-        flex: 1,
-        padding: 0
+    listContainer: {},
+    spinnerContainer: {
+        flexGrow: 0,
+        flexShrink: 1,
+        flexDirection: "row",
+        justifyContent: "center",
+        paddingVertical: 18
     }
 });
 
-function prepareListContents(items: Array<IntermediateEntry>): Array<VaultContentsItemDisplay> {
-    return items.map(item => ({
+function domainMatchEntries(entries: Array<VaultContentsItemDisplay>, domains: Array<string>): Array<VaultContentsItemDisplay> {
+    return entries.filter(entry =>
+        entry.sourceItem.urls.some(url => {
+            const urlDomain = extractDomain(url);
+            return domains.some(
+                domain => domainsMatch(urlDomain, domain)
+            );
+        })
+    );
+}
+
+function domainsMatch(domain1: string, domain2: string): boolean {
+    return domain1 === domain2 || domain1.endsWith(domain2) || domain2.endsWith(domain1);
+}
+
+function prepareListContents(
+    items: Array<IntermediateEntry>,
+    domains: Array<string>,
+    searchTerm: string
+): Array<VaultContentsItemDisplay> {
+    const results = items.map(item => ({
         title: item.title,
         subtitle: item.username,
         icon: "file-outline",
         sourceItem: item
     }));
+    return searchTerm.length > 0
+        ? termMatchEntries(results, searchTerm)
+        : domainMatchEntries(results, domains);
 }
 
 function renderItem(info) {
@@ -55,17 +87,28 @@ function renderItem(info) {
     );
 }
 
-function renderItemIcon(props, icon) {
+function renderItemIcon(props, icon: string) {
     return (
         <Icon {...props} name={icon} />
     );
+}
+
+function termMatchEntries(items: Array<VaultContentsItemDisplay>, term: string): Array<VaultContentsItemDisplay> {
+    const preparedTerm = term.toLowerCase();
+    return items.filter(item => `${item.title} ${item.subtitle}`.toLowerCase().indexOf(preparedTerm) >= 0);
 }
 
 export function AutofillItemsScreen({ navigation }) {
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const loginItemsState = useHookState(LOGIN_ENTRIES);
     const loginItems = loginItemsState.get()[currentSourceState.get()] as Array<IntermediateEntry>;
-    const preparedContents = useMemo(() => prepareListContents(loginItems), [loginItems]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [nextTerm, setNextTerm] = useState("");
+    const {
+        autofillURLs
+    } = useContext(AutofillContext);
+    const autofillDomains = useMemo(() => autofillURLs.map(url => extractDomain(url)), [autofillURLs]);
+    const preparedContents = useMemo(() => prepareListContents(loginItems, autofillDomains, searchTerm), [autofillDomains, loginItems, searchTerm]);
     const renderWrapper = useMemo(() =>
         renderItem,
         []
@@ -81,6 +124,12 @@ export function AutofillItemsScreen({ navigation }) {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation title="Logins" alignment="center" accessoryLeft={BackAction} accessoryRight={CancelAction} />
+            <SearchBar onTermChange={setNextTerm} onTermUpdate={setSearchTerm} />
+            {(searchTerm !== nextTerm) && (
+                <Layout level="2" style={styles.spinnerContainer}>
+                    <Spinner status="info" size="giant" />
+                </Layout>
+            )}
             <Layout style={{ flex: 1 }}>
                 <List
                     style={styles.listContainer}

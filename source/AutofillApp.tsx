@@ -12,11 +12,7 @@ import { BusyStatus } from "./components/notifications/BusyStatus";
 import { Toaster } from "./components/notifications/Toaster";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
-interface AutoFillAppProps {
-    urls: Array<string>;
-}
-
-export function AutofillApp(props: AutoFillAppProps) {
+export function AutofillApp() {
     const isDarkMode = useColorScheme() === "dark";
     return (
         <ApplicationProvider {...eva} theme={isDarkMode ? eva.dark : eva.light}>
