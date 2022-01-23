@@ -1,5 +1,13 @@
 # Buttercup Mobile Changelog
 
+## v2.2.0
+_2022-01-23_
+
+ * Autofill upgrade
+   * Entry search
+   * Automatic URL filtering (current site)
+ * Google Drive re-authorisation for expired refresh tokens
+
 ## v2.1.0
 _2022-01-09_
 
