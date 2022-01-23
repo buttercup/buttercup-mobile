@@ -41,5 +41,7 @@ jobs:
               uses: maxim-lobanov/setup-xcode@v1
               with:
                 xcode-version: "${{ matrix.xcode }}"
+              working-directory: ./ios
             - name: Run tests
               run: xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=iPhone 13,OS=${{ matrix.ios }}'
+              working-directory: ./ios
