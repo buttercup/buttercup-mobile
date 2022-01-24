@@ -34,8 +34,10 @@ jobs:
                 include:
                     - xcode: "13.2"
                       ios: "15.2"
+                      sim: "iPhone 13"
                     - xcode: "13.2"
                       ios: "13.7"
+                      sim: "iPhone 11"
         name: "iOS / Objective-C tests: Xcode ${{ matrix.xcode }}, iOS ${{ matrix.ios }}"
         steps:
             - name: Checkout the repository
@@ -71,5 +73,5 @@ jobs:
               working-directory: ./ios
               shell: bash
             - name: Run tests
-              run: xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=iPhone 13,OS=${{ matrix.ios }}'
+              run: xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=${{ matrix.sim }},OS=${{ matrix.ios }}'
               working-directory: ./ios
