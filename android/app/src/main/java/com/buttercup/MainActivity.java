@@ -4,11 +4,17 @@ import com.facebook.react.ReactActivity;
 import com.rnfs.RNFSPackage;
 import org.spongycastle.jce.provider.BouncyCastleProvider;
 import java.security.Security;
+import android.os.Bundle;
 
 public class MainActivity extends ReactActivity {
 
     static {
         Security.insertProviderAt(new BouncyCastleProvider(), 1);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(null);
     }
 
     /**

@@ -1,5 +1,13 @@
 # Buttercup Mobile Changelog
 
+## v2.2.1
+_2022-01-26_
+
+**Android only**
+
+ * **Bugfix**:
+   * Android stability issue (non-deterministic) when restoring app state
+
 ## v2.2.0
 _2022-01-23_
 
