@@ -75,5 +75,7 @@ jobs:
               working-directory: ./ios
               shell: bash
             - name: Run tests
-              run: xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=${{ matrix.sim }},OS=${{ matrix.ios }}' | xcpretty
+              run: |
+                set -o pipefail
+                xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=${{ matrix.sim }},OS=${{ matrix.ios }}' | xcpretty
               working-directory: ./ios
