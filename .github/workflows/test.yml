@@ -33,8 +33,8 @@ jobs:
             matrix:
                 include:
                     - xcode: "13.1"
-                      ios: "14.5"
-                      sim: "iPhone 11"
+                      ios: "15.0"
+                    #   sim: "iPhone 11"
                     # - xcode: "13.2"
                     #   ios: "13.7"
                     #   sim: "iPhone 11"
@@ -59,12 +59,12 @@ jobs:
                 xcode-version: "${{ matrix.xcode }}"
             - name: Install XCPretty
               run: gem install xcpretty
-            - name: Link to 14.5 Simulators
-              run: |
-                echo "Creating Runtimes folder if needed..."
-                sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
-                echo "Creating symlink of the iOS 14.5 runtime..."
-                sudo ln -s /Applications/Xcode_11.7.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 14.5.simruntime
+            # - name: Link to 14.5 Simulators
+            #   run: |
+            #     echo "Creating Runtimes folder if needed..."
+            #     sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
+            #     echo "Creating symlink of the iOS 14.5 runtime..."
+            #     sudo ln -s /Applications/Xcode_11.7.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 14.5.simruntime
             # - name: Link to 13.7 Simulators
             #   run: |
             #     echo "Creating Runtimes folder if needed..."
@@ -83,5 +83,5 @@ jobs:
             - name: Run tests
               run: |
                 set -o pipefail
-                xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=${{ matrix.sim }},OS=${{ matrix.ios }}' | xcpretty
+                xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,OS=${{ matrix.ios }}' | xcpretty
               working-directory: ./ios
