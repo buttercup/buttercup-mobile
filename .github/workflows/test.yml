@@ -34,7 +34,7 @@ jobs:
                 include:
                     - xcode: "13.1"
                       ios: "15.0"
-                    #   sim: "iPhone 11"
+                      sim: "iPhone 11"
                     # - xcode: "13.2"
                     #   ios: "13.7"
                     #   sim: "iPhone 11"
@@ -83,5 +83,5 @@ jobs:
             - name: Run tests
               run: |
                 set -o pipefail
-                xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,OS=${{ matrix.ios }}' | xcpretty
+                xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=${{ matrix.sim }},OS=${{ matrix.ios }}' | xcpretty
               working-directory: ./ios
