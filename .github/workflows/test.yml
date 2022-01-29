@@ -57,8 +57,8 @@ jobs:
               uses: maxim-lobanov/setup-xcode@v1
               with:
                 xcode-version: "${{ matrix.xcode }}"
-            - name: Install XCPretty
-              run: gem install xcpretty
+            # - name: Install XCPretty
+            #   run: gem install xcpretty
             # - name: Link to 14.5 Simulators
             #   run: |
             #     echo "Creating Runtimes folder if needed..."
@@ -81,7 +81,14 @@ jobs:
               working-directory: ./ios
               shell: bash
             - name: Run tests
-              run: |
-                set -o pipefail
-                xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=${{ matrix.sim }},OS=${{ matrix.ios }}' | xcpretty
-              working-directory: ./ios
+              uses: sersoft-gmbh/xcodebuild-action@v1
+              with:
+                workspace: ios/Buttercup.xcworkspace
+                scheme: Buttercup
+                destination: "platform=iOS Simulator,name=${{ matrix.sim }},OS=${{ matrix.ios }}"
+                action: test
+            # - name: Run tests
+            #   run: |
+            #     set -o pipefail
+            #     xcodebuild test -workspace Buttercup.xcworkspace -scheme Buttercup -destination  'platform=iOS Simulator,name=${{ matrix.sim }},OS=${{ matrix.ios }}' | xcpretty
+            #   working-directory: ./ios
