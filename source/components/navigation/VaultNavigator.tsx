@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -16,6 +16,8 @@ import { CURRENT_SOURCE } from "../../state/vault";
 import { createNewGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
+import { VaultContext } from "../../contexts/vault";
+import { ReadOnlyBar } from "./ReadOnlyBar";
 import { SearchScreen } from "../screens/SearchScreen";
 import { VaultContentsScreen } from "../screens/VaultContentsScreen";
 import { WalletScreen } from "../screens/WalletScreen";
@@ -64,6 +66,7 @@ function TabNavigator() {
 }
 
 export function VaultNavigator({ navigation }) {
+    const { readOnly } = useContext(VaultContext);
     const [focusedTab, focusedTabTitle] = useFocusedTab();
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const currentSourceState = useHookState(CURRENT_SOURCE);
@@ -105,11 +108,15 @@ export function VaultNavigator({ navigation }) {
                             {focusedTab === "contents" && (
                                 <VaultContentsMenu
                                     onGroupCreate={() => setPromptGroupCreate(true)}
+                                    readOnly={readOnly}
                                 />
                             )}
                         </>
                     )}
                 />
+                {readOnly && (
+                    <ReadOnlyBar />
+                )}
                 <Divider />
                 <TabNavigator />
             </SafeAreaView>

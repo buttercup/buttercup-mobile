@@ -11,6 +11,10 @@ const themedStyles = StyleService.create({
         borderLeftColor: "color-success-focus-border",
         backgroundColor: "color-success-default"
     },
+    containerWarning: {
+        borderLeftColor: "color-warning-active-border",
+        backgroundColor: "color-warning-default"
+    },
     contentContainer: {
         paddingHorizontal: 15
     },
@@ -47,6 +51,19 @@ export function Toaster() {
                 contentContainerStyle={styles.contentContainer}
                 text1NumberOfLines={1}
                 text2NumberOfLines={1}
+                text1Style={styles.text1}
+                text2Style={styles.text2}
+                text1={props.text1}
+                text2={props.text2}
+            />
+        ),
+        warning: (props) => (
+            <BaseToast
+                {...props}
+                style={styles.containerWarning}
+                contentContainerStyle={styles.contentContainer}
+                text1NumberOfLines={1}
+                text2NumberOfLines={2}
                 text1Style={styles.text1}
                 text2Style={styles.text2}
                 text1={props.text1}

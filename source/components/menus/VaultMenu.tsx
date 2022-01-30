@@ -4,16 +4,18 @@ import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { Button, Layout, Text, ViewPager } from "@ui-kitten/components";
 import Dots from "react-native-dots-pagination";
 import { TextPrompt } from "../prompts/TextPrompt";
+import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { VaultMenuItem } from "./vault-menu/VaultMenuItem";
 import { useVaults } from "../../hooks/buttercup";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
 import { AutofillContext } from "../../contexts/autofill";
-import { notifyError } from "../../library/notifications";
+import { notifyError, notifyWarning } from "../../library/notifications";
 import { unlockSourceByID } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { setSourcePassword as setSourceAutofillPassword, storeAutofillCredentials } from "../../services/intermediateCredentials";
 import { authenticateBiometrics, getBiometricCredentialsForSource } from "../../services/biometrics";
 import { VaultDetails } from "../../types";
+import { Layerr } from "layerr";
 
 const BCUP_BENCH_IMG = require("../../../resources/images/bcup-bench.png");
 
@@ -61,12 +63,25 @@ const styles = StyleSheet.create({
     }
 });
 
-async function handleStandardVaultUnlock(sourceID: VaultSourceID, password: string): Promise<void> {
+function errorPermitsOfflineUse(err: Error) {
+    const {
+        authFailure,
+        status
+    } = Layerr.info(err) || {};
+    if (authFailure === true || status === 401 || status === 403) {
+        return false;
+    }
+    return status === 0 || status >= 400;
+}
+
+async function handleStandardVaultUnlock(sourceID: VaultSourceID, password: string, offlineMode: boolean = false): Promise<void> {
     setBusyState("Unlocking vault");
-    await unlockSourceByID(sourceID, password);
-    setBusyState("Updating auto-fill");
-    await setSourceAutofillPassword(sourceID, password);
-    await storeAutofillCredentials(sourceID);
+    await unlockSourceByID(sourceID, password, offlineMode);
+    if (!offlineMode) {
+        setBusyState("Updating auto-fill");
+        setSourceAutofillPassword(sourceID, password);
+        await storeAutofillCredentials(sourceID);
+    }
     setBusyState(null);
 }
 
@@ -83,6 +98,7 @@ export function VaultMenu(props: VaultMenuProps) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const vaults: Array<VaultDetails> = useVaults(vaultsOverride);
     const [unlockVaultTarget, setUnlockVaultTarget] = useState<VaultSourceID>(null);
+    const [offlineVaultTarget, setOfflineVaultTarget] = useState<{ sourceID: VaultSourceID; password: string; }>(null);
     const biometricsEnabled = useBiometricsAvailable();
     const vaultTargetHasBiometrics = useBiometricsEnabledForSource(vaults.length > 0 && vaults[selectedIndex] ? vaults[selectedIndex].id : null);
     const handlePageSelect = useCallback(index => {
@@ -100,12 +116,30 @@ export function VaultMenu(props: VaultMenuProps) {
                 onVaultOpen(sourceID);
             })
             .catch(err => {
-                console.error(err);
                 notifyError("Failed unlocking vault", err.message);
                 setBusyState(null);
+                if (errorPermitsOfflineUse(err)) {
+                    setOfflineVaultTarget({ sourceID, password });
+                    return;
+                }
+                console.error(err);
                 setUnlockVaultTarget(sourceID);
             });
     }, [onVaultOpen, unlockVaultTarget]);
+    const handleVaultUnlockOfflinePromptComplete = useCallback(() => {
+        const { sourceID, password } = offlineVaultTarget;
+        setOfflineVaultTarget(null);
+        handleVaultUnlock(sourceID, password, true)
+            .then(() => {
+                onVaultOpen(sourceID);
+                notifyWarning("Read-Only", "Vault was unlocked in read-only mode");
+            })
+            .catch(err => {
+                console.error(err);
+                notifyError("Failed unlocking vault", err.message);
+                setBusyState(null);
+            });
+    }, [offlineVaultTarget]);
     const handleVaultPress = useCallback(
         (vault: VaultDetails) => {
             if (vault.state === VaultSourceStatus.Unlocked) {
@@ -176,6 +210,15 @@ export function VaultMenu(props: VaultMenuProps) {
                 prompt="Vault password"
                 submitText="Unlock"
                 visible={!!unlockVaultTarget}
+            />
+            <ConfirmPrompt
+                cancelable
+                confirmText="Unlock Read-Only"
+                onCancel={() => setOfflineVaultTarget(null)}
+                onConfirm={handleVaultUnlockOfflinePromptComplete}
+                prompt="Unlock in offline, read-only mode?"
+                title="Vault Unavailable"
+                visible={!!offlineVaultTarget}
             />
         </SafeAreaView>
     );

@@ -1,8 +1,9 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { Fragment, useCallback, useContext, useMemo, useState } from "react";
 import { SafeAreaView } from "react-native";
-import { Icon, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
+import { Divider, Icon, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { useState as useHookState } from "@hookstate/core";
 import { EntryType, ENTRY_TYPES, GroupID } from "buttercup";
+import { VaultContext } from "../../contexts/vault";
 import { useGroupTitle, useVaultContents } from "../../hooks/buttercup";
 import { useTabFocusState } from "../../hooks/vaultTab";
 import { CURRENT_SOURCE } from "../../state/vault";
@@ -10,6 +11,7 @@ import { createNewGroup, deleteGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { getIconForEntryType } from "../../library/buttercup";
+import { ReadOnlyBar } from "../navigation/ReadOnlyBar";
 import { VaultContentsMenu } from "../menus/VaultContentsMenu";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
@@ -21,6 +23,7 @@ const BackIcon = props => <Icon {...props} name="corner-left-up-outline" />;
 export function VaultContentsScreen({ navigation, route }) {
     useTabFocusState("contents", "Vault Contents");
     const { groupID = null } = route?.params ?? {};
+    const { readOnly } = useContext(VaultContext);
     const entryTypes: Array<PromptItem> = useMemo(() => Object.keys(ENTRY_TYPES).map(typeKey => ({
         title: ENTRY_TYPES[typeKey].title,
         slug: ENTRY_TYPES[typeKey].slug,
@@ -81,18 +84,25 @@ export function VaultContentsScreen({ navigation, route }) {
         <>
             <SafeAreaView style={{ flex: 1 }}>
                 {groupID && (
-                    <TopNavigation
-                        title={screenTitle}
-                        alignment="center"
-                        accessoryLeft={BackAction}
-                        accessoryRight={() => (
-                            <VaultContentsMenu
-                                onEntryCreate={() => setPromptNewEntryType(true)}
-                                onGroupCreate={() => setPromptGroupCreate(true)}
-                                onGroupDelete={() => setPromptDeleteGroupID(groupID)}
-                            />
+                    <Fragment>
+                        <TopNavigation
+                            title={screenTitle}
+                            alignment="center"
+                            accessoryLeft={BackAction}
+                            accessoryRight={() => (
+                                <VaultContentsMenu
+                                    onEntryCreate={() => setPromptNewEntryType(true)}
+                                    onGroupCreate={() => setPromptGroupCreate(true)}
+                                    onGroupDelete={() => setPromptDeleteGroupID(groupID)}
+                                    readOnly={readOnly}
+                                />
+                            )}
+                        />
+                        {readOnly && (
+                            <ReadOnlyBar />
                         )}
-                    />
+                        <Divider />
+                    </Fragment>
                 )}
                 <Layout style={{ flex: 1 }}>
                     <VaultContentsList
