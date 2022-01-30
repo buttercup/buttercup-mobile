@@ -6,15 +6,16 @@ interface VaultsContentsMenuProps {
     onEntryCreate?: () => void;
     onGroupCreate: () => void;
     onGroupDelete?: () => void;
+    readOnly: boolean;
 }
 
 const BASE_ITEMS = [
-    { text: "Add Group", slug: "add-group", icon: "folder-outline" },
+    { text: "Add Group", slug: "add-group", icon: "folder-outline", write: true },
 ];
 const MENU_ITEMS = [
     ...BASE_ITEMS,
-    { text: "Add Entry", slug: "add-entry", icon: "file-outline" },
-    { text: "Delete Current Group", slug: "delete-group", icon: "folder-remove-outline" }
+    { text: "Add Entry", slug: "add-entry", icon: "file-outline", write: true },
+    { text: "Delete Current Group", slug: "delete-group", icon: "folder-remove-outline", write: true }
 ];
 
 const styles = StyleSheet.create({
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
 });
 
 function MenuButton(props: VaultsContentsMenuProps) {
-    const { onEntryCreate = null, onGroupCreate, onGroupDelete = null } = props;
+    const { onEntryCreate = null, onGroupCreate, onGroupDelete = null, readOnly } = props;
     const [visible, setVisible] = useState(false);
     const menuItems = useMemo(() => onEntryCreate && onGroupDelete ? MENU_ITEMS : BASE_ITEMS, [onEntryCreate]);
     const onItemSelect = useCallback(selected => {
@@ -57,6 +58,7 @@ function MenuButton(props: VaultsContentsMenuProps) {
                         key={item.slug}
                         title={item.text}
                         accessoryLeft={props => <Icon {...props} name={item.icon} />}
+                        disabled={item.write && readOnly}
                     />
                 ))}
             </OverflowMenu>

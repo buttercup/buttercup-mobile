@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID, fieldsToProperties, VaultSourceID } from "buttercup";
 import {
@@ -18,8 +18,10 @@ import Clipboard from "@react-native-community/clipboard";
 import { EntryFieldValue, VisibleField } from "./vault-contents/EntryFieldValue";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { SiteIcon } from "../media/SiteIcon";
+import { ReadOnlyBar } from "../navigation/ReadOnlyBar";
 import { useEntryFacade } from "../../hooks/buttercup";
 import { useEntryOTPCodes } from "../../hooks/otp";
+import { VaultContext } from "../../contexts/vault";
 import { CURRENT_SOURCE } from "../../state/vault";
 import { setBusyState } from "../../services/busyState";
 import { deleteEntry } from "../../services/buttercup";
@@ -27,8 +29,8 @@ import { getEntryDomain, humanReadableEntryType } from "../../library/entry";
 import { notifyError, notifySuccess } from "../../library/notifications";
 
 const MENU_ITEMS = [
-    { text: "Edit Entry", slug: "edit", icon: "edit-outline" },
-    { text: "Delete Entry", slug: "delete", icon: "trash-2-outline" }
+    { text: "Edit Entry", slug: "edit", icon: "edit-outline", write: true },
+    { text: "Delete Entry", slug: "delete", icon: "trash-2-outline", write: true }
 ];
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
@@ -78,11 +80,12 @@ interface MenuButtonProps {
     navigation: any;
     onDeleteEntry: () => void;
     onVisibleChange: (visible: boolean) => void;
+    readOnly: boolean;
     visible: boolean;
 }
 
 function MenuButton(props: MenuButtonProps) {
-    const { entryID, groupID, navigation, onDeleteEntry, onVisibleChange, visible } = props;
+    const { entryID, groupID, navigation, onDeleteEntry, onVisibleChange, readOnly, visible } = props;
     const onItemSelect = useCallback(selected => {
         const item = MENU_ITEMS[selected.row];
         onVisibleChange(false);
@@ -117,6 +120,7 @@ function MenuButton(props: MenuButtonProps) {
                         key={item.slug}
                         title={item.text}
                         accessoryLeft={props => <Icon {...props} name={item.icon} />}
+                        disabled={item.write && readOnly}
                     />
                 ))}
             </OverflowMenu>
@@ -130,6 +134,7 @@ function MenuIcon(props) {
 
 export function EntryDetailsScreen({ navigation, route }) {
     const { entryID, groupID } = route?.params ?? {};
+    const { readOnly } = useContext(VaultContext);
     const currentSourceState = useHookState(CURRENT_SOURCE);
     const entryFacade = useEntryFacade(currentSourceState.get(), entryID);
     const [entryMenuVisible, setEntryMenuVisible] = useState(false);
@@ -201,6 +206,7 @@ export function EntryDetailsScreen({ navigation, route }) {
         navigation={navigation}
         onDeleteEntry={() => setShowDeletePrompt(true)}
         onVisibleChange={setEntryMenuVisible}
+        readOnly={readOnly}
         visible={entryMenuVisible}
     />, [entryID, groupID, entryMenuVisible]);
     return (
@@ -211,6 +217,9 @@ export function EntryDetailsScreen({ navigation, route }) {
                 accessoryLeft={BackAction}
                 accessoryRight={EntryMenu}
             />
+            {readOnly && (
+                <ReadOnlyBar />
+            )}
             <Divider />
             <Layout style={styles.bodyLayout}>
                 <ScrollView style={styles.scrollView}>

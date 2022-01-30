@@ -50,6 +50,10 @@ const themedStyles = StyleService.create({
         justifyContent: "center",
         paddingVertical: 28
     },
+    readOnlyMessage: {
+        color: "color-warning-default",
+        marginTop: 6
+    },
     smallContainer: {
         flexDirection: "column",
         justifyContent: "center",
@@ -79,7 +83,7 @@ const themedStyles = StyleService.create({
     smallSubtitle: {},
     statusContainer: {
         marginTop: 32,
-        flexDirection: "row",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center"
     },
@@ -93,6 +97,11 @@ const themedStyles = StyleService.create({
     },
     statusIconUnlocked: {
         color: "color-success-default"
+    },
+    statusLine: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center"
     },
     tallContainer: {
         padding: 8,
@@ -153,16 +162,19 @@ export function VaultMenuItem(props: VaultMenuItemProps) {
                     <Text category="s2">{vaultTypeName}</Text>
                     <View style={styles.statusContainer}>
                         {vault.state === VaultSourceStatus.Unlocked && (
-                            <>
+                            <View style={styles.statusLine}>
                                 <Icon name="unlock" fill={unlockedColour} style={styles.statusIcon} />
-                                <Text category="c2">Unlocked</Text>
-                            </>
+                                <Text category="s1">Unlocked</Text>
+                            </View>
                         )}
                         {vault.state === VaultSourceStatus.Locked && (
-                            <>
+                            <View style={styles.statusLine}>
                                 <Icon name="lock" fill={lockedColour} style={styles.statusIcon} />
                                 <Text category="c2">Locked</Text>
-                            </>
+                            </View>
+                        )}
+                        {vault.readOnly && (
+                            <Text category="s2" style={styles.readOnlyMessage}>Read-Only</Text>
                         )}
                     </View>
                 </View>

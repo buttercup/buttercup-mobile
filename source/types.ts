@@ -84,6 +84,7 @@ export interface VaultDetails {
     name: string;
     state: VaultSourceStatus;
     order: number;
+    readOnly?: boolean;
     type: string;
 }
 

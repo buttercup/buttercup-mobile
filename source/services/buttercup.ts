@@ -402,14 +402,14 @@ export async function sourceHasOfflineCopy(sourceID: VaultSourceID): Promise<boo
     return vaultMgr.getSourceForID(sourceID)?.checkOfflineCopy() ?? false;
 }
 
-export async function unlockSourceByID(sourceID: VaultSourceID, password: string): Promise<void> {
+export async function unlockSourceByID(sourceID: VaultSourceID, password: string, offlineMode: boolean = false): Promise<void> {
     const vaultMgr =  getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);
     if (source.status !== VaultSourceStatus.Locked) {
         throw new Error(`Cannot unlock vault: Vault in invalid state: ${source.status}`);
     }
     await source.unlock(Credentials.fromPassword(password), {
-        loadOfflineCopy: false,
+        loadOfflineCopy: offlineMode,
         storeOfflineCopy: true
     });
 }

@@ -22,3 +22,13 @@ export function notifySuccess(title: string, message: string) {
         topOffset: TOP_OFFSET
     });
 }
+
+export function notifyWarning(title: string, message: string) {
+    Toast.show({
+        type: "warning",
+        position: "top",
+        text1: title,
+        text2: message,
+        topOffset: TOP_OFFSET
+    });
+}

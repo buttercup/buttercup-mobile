@@ -165,6 +165,7 @@ export function useVaults(vaultsOveride?: Array<VaultDetails>): Array<VaultDetai
             name: source.name,
             state: source.status,
             order: source.order,
+            readOnly: !!source?.vault?.format.readOnly,
             type: source.type
         })));
     }, [vaultsOveride]);
