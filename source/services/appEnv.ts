@@ -1,5 +1,5 @@
 import { gzip, ungzip } from "pako";
-import { createClient } from "webdav/web";
+import { WebDAVClient, WebDAVClientOptions, createClient } from "webdav/web";
 import * as base64 from "base64-js";
 import { getSharedAppEnv } from "buttercup";
 import {
@@ -169,6 +169,16 @@ export function getAdapter(): IocaneAdapter {
     return adapter;
 }
 
+function createPreparedWebDAVClient(remoteURL: string, options: WebDAVClientOptions): WebDAVClient {
+    return createClient(remoteURL, {
+        ...options,
+        headers: {
+            ...(options?.headers ?? {}),
+            "Cache-Control": "no-store, no-cache"
+        }
+    });
+}
+
 export function initAppEnv() {
     if (__hasInitialised) return;
     __hasInitialised = true;
@@ -190,7 +200,7 @@ export function initAppEnv() {
         "encoding/v1/bytesToBase64": encodeBytesToBase64,
         "encoding/v1/textToBase64": encodeTextToBase64,
         "env/v1/isClosedEnv": () => true,
-        "net/webdav/v1/newClient": createClient,
+        "net/webdav/v1/newClient": createPreparedWebDAVClient,
         "rng/v1/uuid": generateUUID
     });
 }
