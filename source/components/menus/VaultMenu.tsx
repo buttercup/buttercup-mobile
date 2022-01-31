@@ -71,7 +71,10 @@ function errorPermitsOfflineUse(err: Error) {
     if (authFailure === true || status === 401 || status === 403) {
         return false;
     }
-    return status === 0 || status >= 400;
+    if (typeof status === "number") {
+        return status === 0 || status >= 400;
+    }
+    return true;
 }
 
 async function handleStandardVaultUnlock(sourceID: VaultSourceID, password: string, offlineMode: boolean = false): Promise<void> {
