@@ -1,5 +1,10 @@
 # Buttercup Mobile Changelog
 
+## v2.3.0
+_2022-01-30_
+
+ * Read-only mode for offline vaults or failed requests
+
 ## v2.2.1
 _2022-01-26_
 
