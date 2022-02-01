@@ -4,6 +4,8 @@
 _2022-01-30_
 
  * Read-only mode for offline vaults or failed requests
+ * **Bugfixes**:
+   * ([#229](https://github.com/buttercup/buttercup-mobile/issues/229)) WebDAV request caching preventing changes from showing
 
 ## v2.2.1
 _2022-01-26_
