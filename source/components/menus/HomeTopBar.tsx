@@ -14,6 +14,7 @@ import {
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
 import { lockAllVaults } from "../../services/buttercup";
+import { CURRENT_SOURCE } from "../../state/vault"
 
 interface HomeTopBarProps {
     leftMenu?: "vaults" | null;
@@ -61,11 +62,15 @@ function MenuButton(props) {
         } else if (item.slug === "manage") {
             navigation.navigate("ManageVaults");
         } else if (item.slug === "lock-all") {
-            handleAllVaultLocking().catch(err => {
-                setBusyState(null);
-                console.error(err);
-                notifyError("Locking Failure", err.message);
-            });
+            handleAllVaultLocking()
+                .then(() => {
+                    CURRENT_SOURCE.set(null);
+                })
+                .catch(err => {
+                    setBusyState(null);
+                    console.error(err);
+                    notifyError("Locking Failure", err.message);
+                });
         }
     };
 
