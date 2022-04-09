@@ -13,6 +13,7 @@ import { VaultContentsScreen } from "../screens/VaultContentsScreen";
 import { EntryDetailsScreen } from "../screens/EntryDetailsScreen";
 import { EditEntryScreen } from "../screens/EditEntryScreen";
 import { CoverScreen } from "../screens/CoverScreen";
+import { PasswordGeneratorScreen } from "../screens/PasswordGeneratorScreen";
 import { VaultNavigator } from "./VaultNavigator";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { useAllOTPItems, useSourceOTPItems } from "../../hooks/otp";
@@ -21,7 +22,7 @@ import { rootNavigationRef } from "../../state/navigation";
 
 const { Navigator, Screen } = createStackNavigator();
 
-const RootNavigator = () => (
+const StandardNavigator = () => (
     <Navigator headerMode="none">
         <Screen name="Home" component={HomeNavigator} />
         <Screen name="About" component={AboutScreen} />
@@ -34,6 +35,19 @@ const RootNavigator = () => (
         <Screen name="EditEntry" component={EditEntryScreen} />
         {/* */}
         <Screen name="Cover" component={CoverScreen} />
+    </Navigator>
+);
+
+const ModalNavigator = () => (
+    <Navigator headerMode="none">
+        <Screen name="PasswordGenerator" component={PasswordGeneratorScreen} />
+    </Navigator>
+);
+
+const RootNavigator = () => (
+    <Navigator headerMode="none" mode="modal">
+        <Screen name="Main" component={StandardNavigator} />
+        <Screen name="Modal" component={ModalNavigator} />
     </Navigator>
 );
 
