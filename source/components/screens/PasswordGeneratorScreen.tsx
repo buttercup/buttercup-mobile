@@ -1,5 +1,5 @@
 import { randomBytes } from "react-native-randombytes";
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import Clipboard from "@react-native-community/clipboard";
 import Slider from "@react-native-community/slider";
@@ -17,6 +17,7 @@ import {
     TopNavigation,
     TopNavigationAction
 } from "@ui-kitten/components";
+import { notifySuccess } from "../../library/notifications";
 
 const MAX_RANDOM_INT = 4294967295;
 const { MONO_FONT } = Platform.select({
@@ -139,19 +140,24 @@ export function PasswordGeneratorScreen({ navigation }) {
         const randPass = await generateRandomPassword(checkedOptions, passwordLength);
         setCurrentPassword(randPass);
     }, [selectedModeIndex, checkedOptions, passwordLength]);
+    const navigateBack = () => {
+        navigation.goBack();
+    };
     const handleGeneratePasswordPress = useCallback(() => {
         generatePassword().catch(err => {
             console.error(err);
         });
     }, [generatePassword]);
+    const handleCopyPasswordPress = useCallback(() => {
+        Clipboard.setString(currentPassword);
+        notifySuccess("Password Copied", `The generated password was copied`);
+        navigateBack();
+    }, [currentPassword, navigateBack]);
     useEffect(() => {
         generatePassword().catch(err => {
             console.error(err);
         });
     }, [generatePassword]);
-    const navigateBack = () => {
-        navigation.goBack();
-    };
     const BackAction = () => <TopNavigationAction icon={CloseIcon} onPress={navigateBack} />;
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -218,7 +224,7 @@ export function PasswordGeneratorScreen({ navigation }) {
                         </Card>
                         <Layout level="2" style={styles.controlGroup}>
                             <Button status="warning" size="large" style={styles.controlButton} onPress={handleGeneratePasswordPress}>Generate</Button>
-                            <Button size="large" style={styles.controlButton}>Copy</Button>
+                            <Button size="large" style={styles.controlButton} onPress={handleCopyPasswordPress}>Copy</Button>
                         </Layout>
                     </View>
                 </ScrollView>
