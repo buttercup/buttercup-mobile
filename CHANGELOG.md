@@ -1,5 +1,10 @@
 # Buttercup Mobile Changelog
 
+## v2.4.0
+_2022-04-09_
+
+ * Password generator
+
 ## v2.3.0
 _2022-01-30_
 
