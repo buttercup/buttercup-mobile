@@ -25,6 +25,8 @@ The Buttercup for Mobile application boasts the following features:
  * Add/Edit/Delete entries
  * Unlock vaults even when offline (read-only)
  * Autofilling of login forms in Safari (iOS only)
+ * Password generator
+ * Biometric access
 
 You can read about the changes and releases of the application in the [changelog](CHANGELOG.md).
 
