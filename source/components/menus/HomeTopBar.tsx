@@ -26,6 +26,7 @@ const MENU_ITEMS = [
     { text: "Add Vault", slug: "add", icon: "plus-outline" },
     { text: "Manage Vaults", slug: "manage", icon: "menu-arrow-outline" },
     { text: "Lock All Vaults", slug: "lock-all", icon: "lock-outline" },
+    { text: "Password Generator", slug: "generator", icon: "hash-outline" },
     { text: "About", slug: "about", icon: "info-outline" }
 ];
 
@@ -71,6 +72,8 @@ function MenuButton(props) {
                     console.error(err);
                     notifyError("Locking Failure", err.message);
                 });
+        } else if (item.slug === "generator") {
+            navigation.navigate("Modal", { screen: "PasswordGenerator" });
         }
     };
 

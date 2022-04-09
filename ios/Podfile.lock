@@ -278,7 +278,11 @@ PODS:
     - React-Core
   - react-native-file-access (2.1.0):
     - React-Core
+  - react-native-randombytes (3.6.1):
+    - React-Core
   - react-native-safe-area-context (3.3.2):
+    - React-Core
+  - react-native-slider (4.2.1):
     - React-Core
   - React-perflogger (0.66.4)
   - React-RCTActionSheet (0.66.4):
@@ -439,7 +443,9 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-file-access (from `../node_modules/react-native-file-access`)
+  - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -520,8 +526,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-file-access:
     :path: "../node_modules/react-native-file-access"
+  react-native-randombytes:
+    :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-slider:
+    :path: "../node_modules/@react-native-community/slider"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -602,7 +612,9 @@ SPEC CHECKSUMS:
   React-logger: 933f80c97c633ee8965d609876848148e3fef438
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-file-access: 09314d97519613ad90caabe776e37f6a972debec
+  react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-slider: 241935e3ea8e47599c317f512f96ee8de607d4cb
   React-perflogger: 93075d8931c32cd1fce8a98c15d2d5ccc4d891bd
   React-RCTActionSheet: 7d3041e6761b4f3044a37079ddcb156575fb6d89
   React-RCTAnimation: 743e88b55ac62511ae5c2e22803d4f503f2a3a13
