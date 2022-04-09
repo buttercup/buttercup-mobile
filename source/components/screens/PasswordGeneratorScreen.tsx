@@ -46,8 +46,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-start",
         alignItems: "flex-start"
-        // marginVertical: 12,
-        // marginHorizontal: 12
     },
     controlButton: {
         marginLeft: 3
@@ -82,8 +80,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         paddingVertical: 12,
-        paddingHorizontal: 24,
-        // paddingBottom: 32,
+        paddingHorizontal: 24
     },
     sectionTitle: {
         marginTop: 12,
