@@ -1,6 +1,7 @@
 import { randomBytes } from "react-native-randombytes";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { useState as useHookState } from "@hookstate/core";
 import Clipboard from "@react-native-community/clipboard";
 import Slider from "@react-native-community/slider";
 import {
@@ -18,6 +19,7 @@ import {
     TopNavigationAction
 } from "@ui-kitten/components";
 import { notifySuccess } from "../../library/notifications";
+import { GeneratorMode, GENERATOR_MODE, LAST_PASSWORD } from "../../state/generator";
 
 const MAX_RANDOM_INT = 4294967295;
 const { MONO_FONT } = Platform.select({
@@ -117,6 +119,8 @@ async function generateRandomPassword(selectedOptions: Array<string>, length: nu
 }
 
 export function PasswordGeneratorScreen({ navigation }) {
+    const generatorModeState = useHookState(GENERATOR_MODE);
+    const lastPasswordState = useHookState(LAST_PASSWORD);
     const [currentPassword, setCurrentPassword] = useState("th4e_-bqE@?`[dJp5K:c3yn]d;");
     const [selectedModeIndex, setSelectedModeIndex] = useState(0);
     const initialCheckedOptions = useMemo(() => OPTIONS.reduce(
@@ -141,6 +145,7 @@ export function PasswordGeneratorScreen({ navigation }) {
         setCurrentPassword(randPass);
     }, [selectedModeIndex, checkedOptions, passwordLength]);
     const navigateBack = () => {
+        generatorModeState.set(GeneratorMode.Standalone);
         navigation.goBack();
     };
     const handleGeneratePasswordPress = useCallback(() => {
@@ -151,6 +156,10 @@ export function PasswordGeneratorScreen({ navigation }) {
     const handleCopyPasswordPress = useCallback(() => {
         Clipboard.setString(currentPassword);
         notifySuccess("Password Copied", `The generated password was copied`);
+        navigateBack();
+    }, [currentPassword, lastPasswordState, navigateBack]);
+    const handleSubmitPasswordPress = useCallback(() => {
+        lastPasswordState.set(currentPassword);
         navigateBack();
     }, [currentPassword, navigateBack]);
     useEffect(() => {
@@ -224,7 +233,12 @@ export function PasswordGeneratorScreen({ navigation }) {
                         </Card>
                         <Layout level="2" style={styles.controlGroup}>
                             <Button status="warning" size="large" style={styles.controlButton} onPress={handleGeneratePasswordPress}>Generate</Button>
-                            <Button size="large" style={styles.controlButton} onPress={handleCopyPasswordPress}>Copy</Button>
+                            {generatorModeState.get() === GeneratorMode.Standalone && (
+                                <Button size="large" style={styles.controlButton} onPress={handleCopyPasswordPress}>Copy</Button>
+                            )}
+                            {generatorModeState.get() === GeneratorMode.EntryProperty && (
+                                <Button size="large" style={styles.controlButton} onPress={handleSubmitPasswordPress}>Use</Button>
+                            )}
                         </Layout>
                     </View>
                 </ScrollView>

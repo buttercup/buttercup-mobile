@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { FIELD_VALUE_TYPES, EntryID, EntryPropertyType, EntryPropertyValueType, EntryType, createEntryFacade, createFieldDescriptor, setEntryFacadePropertyValueType } from "buttercup";
+import { FIELD_VALUE_TYPES, EntryID, EntryPropertyType, EntryPropertyValueType, EntryType, createEntryFacade, createFieldDescriptor, setEntryFacadePropertyValueType, EntryFacadeField } from "buttercup";
 import {
     Button,
     Divider,
@@ -23,6 +23,7 @@ import { ItemsPrompt, PromptItem } from "../prompts/ItemsPrompt";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { usePendingOTPs } from "../../hooks/otp";
 import { CURRENT_SOURCE } from "../../state/vault";
+import { GeneratorMode, GENERATOR_MODE, LAST_PASSWORD } from "../../state/generator";
 import { getEntryFacade, saveExistingEntryChanges, saveNewEntry } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { OTP } from "../../types";
@@ -112,10 +113,15 @@ const styles = StyleSheet.create({
 function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
     const { entryID, items: rawItems, navigation } = props;
     const items = useMemo(() => rawItems.filter(item => !!item), [rawItems]);
+    const generatorModeState = useHookState(GENERATOR_MODE);
     const [visible, setVisible] = useState(false);
     const onItemSelect = selected => {
         const item = items[selected.row];
         setVisible(false);
+        if (item.slug === "generate-password") {
+            generatorModeState.set(GeneratorMode.EntryProperty);
+            navigation.navigate("Modal", { screen: "PasswordGenerator" });
+        }
         // if (item.slug === "edit") {
         //     navigation.navigate("EditEntry", {
         //         entryID
@@ -156,6 +162,7 @@ function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
 export function EditEntryScreen({ navigation, route }) {
     const { entryID = null, entryType, groupID } = route?.params ?? {};
     const currentSourceState = useHookState(CURRENT_SOURCE);
+    const lastPasswordState = useHookState(LAST_PASSWORD);
     const [entryFacade, setEntryFacade] = useState(null);
     const [changed, setChanged] = useState(false);
     const title = useMemo(() => {
@@ -167,6 +174,7 @@ export function EditEntryScreen({ navigation, route }) {
     const [confirmDeleteFieldID, setConfirmDeleteFieldID] = useState<string>(null);
     const [promptingNewField, setPromptingNewField] = useState(false);
     const [changeTypeFieldID, setChangeTypeFieldID] = useState<string>(null);
+    const [generatePasswordFieldID, setGeneratePasswordFieldID] = useState<string>(null);
     const {
         pendingOTPs,
         removePendingOTP
@@ -291,6 +299,14 @@ export function EditEntryScreen({ navigation, route }) {
             setEntryFacade(getEntryFacade(currentSourceState.get(), entryID));
         }
     }, [currentSourceState.get(), entryID, entryType]);
+    useEffect(() => {
+        const pass = lastPasswordState.get();
+        if (generatePasswordFieldID && pass) {
+            handleFieldValueChange(generatePasswordFieldID, pass);
+            lastPasswordState.set("");
+            setGeneratePasswordFieldID(null);
+        }
+    }, [lastPasswordState.get(), generatePasswordFieldID, handleFieldValueChange]);
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={handleNavigateBack} />;
     const SaveAction = () => <TopNavigationAction disabled={!changed} icon={SaveIcon} onPress={handleSave} />;
     return (
@@ -308,7 +324,7 @@ export function EditEntryScreen({ navigation, route }) {
                         value={title}
                     />
                     <Divider />
-                    {entryFacade && entryFacade.fields.map((field, index) =>
+                    {entryFacade && entryFacade.fields.map((field: EntryFacadeField, index) =>
                         ((field.property === "title" && field.propertyType === EntryPropertyType.Property) ||
                         field.propertyType === EntryPropertyType.Attribute)
                         ? null
@@ -345,10 +361,14 @@ export function EditEntryScreen({ navigation, route }) {
                                                     icon: "trash-2-outline",
                                                     onSelect: () => setConfirmDeleteFieldID(field.id)
                                                 },
-                                                field.removeable && {
+                                                field.valueType === EntryPropertyValueType.Password && {
                                                     text: "Generate password",
                                                     slug: "generate-password",
-                                                    icon: "lock-outline"
+                                                    icon: "lock-outline",
+                                                    onSelect: () => {
+                                                        lastPasswordState.set("");
+                                                        setGeneratePasswordFieldID(field.id);
+                                                    }
                                                 }
                                             ]}
                                             navigation={navigation}
