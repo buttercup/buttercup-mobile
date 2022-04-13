@@ -1,5 +1,11 @@
 # Buttercup Mobile Changelog
 
+## v2.4.1
+_2022-04-13_
+
+ * **Bugfix**:
+   * ([#312](https://github.com/buttercup/buttercup-mobile/issues/312)) Dropbox vault unlock fails with "Request Failed: 0 undefined"
+
 ## v2.4.0
 _2022-04-09_
 
