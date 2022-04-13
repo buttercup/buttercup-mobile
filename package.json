@@ -1,6 +1,6 @@
 {
   "name": "@buttercup/mobile",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -34,7 +34,7 @@
     "array-buffer-to-hex": "^1.0.0",
     "assert": "^2.0.0",
     "buffer": "^4.9.2",
-    "buttercup": "^6.9.1",
+    "buttercup": "^6.13.0",
     "card-validator": "^8.1.1",
     "console-browserify": "^1.2.0",
     "crypto-browserify": "^3.12.0",
