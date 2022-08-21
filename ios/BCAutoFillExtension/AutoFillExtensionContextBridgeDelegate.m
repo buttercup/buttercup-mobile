@@ -46,7 +46,7 @@
 #if DEBUG
     // Works on device, hard-coded:
     // return [NSURL URLWithString:@"http://192.168.1.144:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=pw.buttercup.mobile"];
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
