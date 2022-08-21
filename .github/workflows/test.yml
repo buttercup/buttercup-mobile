@@ -14,9 +14,9 @@ jobs:
             - name: "Install NodeJS"
               uses: actions/setup-node@v2
               with:
-                node-version: "16"
+                node-version: "18"
             - name: "Install Node dependencies"
-              run: npm install
+              run: npm install --force
             - name: Validate Gradle wrapper
               uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
             - name: Test with Gradle
