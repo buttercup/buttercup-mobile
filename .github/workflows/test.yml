@@ -17,7 +17,7 @@ jobs:
                 node-version: "18"
             - name: "Install Node dependencies"
               run: npm install --force
-            - name: Validate Gradle wrapper
-              uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+            # - name: Validate Gradle wrapper
+            #   uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
             - name: Test with Gradle
               run: cd android && ./gradlew :app:cleanTestDebugUnitTest :app:testDebugUnitTest
