@@ -295,6 +295,8 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
 
+    implementation project(':react-native-secure-storage')
+
     if (enableHermes) {
         //noinspection GradleDynamicVersion
         implementation("com.facebook.react:hermes-engine:+") { // From node_modules
