@@ -1,28 +1,16 @@
 import EventEmitter from "eventemitter3";
 import TouchID from "react-native-touch-id";
-import { Platform } from "react-native";
-import SecureStorage, { ACCESSIBLE, AUTHENTICATION_TYPE } from "react-native-secure-storage";
 import { VaultSourceID } from "buttercup";
+import { getSecureStorage } from "./storage";
 import { BIOMETRICS_ERROR_NOT_ENROLLED } from "../symbols";
 
 interface KeychainCredentials {
     [sourceID: string]: string;
 }
 
-let __ee: EventEmitter = null;
-
-const STORAGE_SERVICE = Platform.select({
-    ios: "pw.buttercup.mobile",
-    android: "com.buttercup"
-});
-const SECURE_STORAGE_CONFIG = {
-    accessible: ACCESSIBLE.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
-    authenticationPrompt: "Authenticate to unlock vaults using biometrics",
-    service: STORAGE_SERVICE,
-    authenticateType: AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
-    accessGroup: "group.pw.buttercup.mobile" // So that the Keychain is available in the AutoFill Extension
-};
 const TOUCH_UNLOCK_CRED_KEY = "@@touchunlock";
+
+let __ee: EventEmitter = null;
 
 export async function authenticateBiometrics(): Promise<boolean> {
     try {
@@ -66,9 +54,9 @@ export async function enableBiometricsForSource(sourceID: VaultSourceID, passwor
 }
 
 async function getBiometricCredentials(): Promise<KeychainCredentials> {
-    const keychainCreds = await SecureStorage.getItem(TOUCH_UNLOCK_CRED_KEY, SECURE_STORAGE_CONFIG);
-    return typeof keychainCreds === "string" && keychainCreds.length > 0
-        ? JSON.parse(keychainCreds)
+    const keychainCreds = await getSecureStorage().getItem(TOUCH_UNLOCK_CRED_KEY) as KeychainCredentials;
+    return typeof keychainCreds === "object" && keychainCreds !== null
+        ? keychainCreds
         : {};
 }
 
@@ -85,7 +73,7 @@ export function getBiometricEvents(): EventEmitter {
 }
 
 async function setBiometricCredentials(credentials: KeychainCredentials) {
-    await SecureStorage.setItem(TOUCH_UNLOCK_CRED_KEY, JSON.stringify(credentials), SECURE_STORAGE_CONFIG);
+    await getSecureStorage().setItem(TOUCH_UNLOCK_CRED_KEY, credentials);
 }
 
 async function setSourcePassword(sourceID: VaultSourceID, password: string): Promise<void> {

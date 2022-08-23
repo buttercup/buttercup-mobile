@@ -8,5 +8,9 @@
 	<array>
 		<string>group.pw.buttercup.mobile</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)pw.buttercup.mobile</string>
+	</array>
 </dict>
 </plist>

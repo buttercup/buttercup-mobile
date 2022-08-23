@@ -6,9 +6,6 @@ include ':core-1.56.0.0', ':prov-1.56.0.0', ':bcpkix-jdk15on-1.56.0.0'
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
 
-include ':react-native-secure-storage'
-project(':react-native-secure-storage').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-secure-storage/android')
-
 include ':app'
 includeBuild('../node_modules/react-native-gradle-plugin')
 
