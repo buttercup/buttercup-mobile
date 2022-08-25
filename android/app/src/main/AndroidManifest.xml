@@ -51,6 +51,7 @@
             android:name=".autofill.BCAutoFillService"
             android:label="Buttercup Autofill Service"
             android:permission="android.permission.BIND_AUTOFILL_SERVICE"
+            android:exported="true"
         >
             <intent-filter>
                 <action android:name="android.service.autofill.AutofillService" />
