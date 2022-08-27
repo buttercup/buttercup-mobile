@@ -27,9 +27,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import li.yunqi.rnsecurestorage.PrefsStorage;
-import li.yunqi.rnsecurestorage.cipherstorage.CipherStorage;
-import li.yunqi.rnsecurestorage.cipherstorage.CipherStorageKeystoreAESCBC;
+import com.buttercup.securestorage.PrefsStorage;
+import com.buttercup.securestorage.cipherstorage.CipherStorage;
+import com.buttercup.securestorage.cipherstorage.CipherStorageKeystoreAESCBC;
 
 public class AutoFillHelpers {
     private static final String TAG = "AutoFillHelpers";

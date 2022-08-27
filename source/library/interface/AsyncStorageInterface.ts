@@ -14,12 +14,12 @@ export class AsyncStorageInterface extends StorageInterface {
     }
 
     getAllKeys(): Promise<Array<string>> {
-        return new Promise((resolve, reject) => {
+        return new Promise<Array<string>>((resolve, reject) => {
             this.storage.getAllKeys((err, keys) => {
                 if (err) {
                     return reject(err);
                 }
-                return resolve(keys);
+                return resolve([...keys]);
             });
         });
     }
