@@ -1,5 +1,11 @@
 # Buttercup Mobile Changelog
 
+## v2.5.0
+_2022-08-28_
+
+ * Updated Buttercup core - Format B improvements/stability
+ * Updated/removed deprecated dependencies
+
 ## v2.4.1
 _2022-04-13_
 
