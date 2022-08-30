@@ -1,5 +1,12 @@
 # Buttercup Mobile Changelog
 
+## v2.5.1
+_2022-08-30_
+
+ * **Bugfix**:
+   * ([#304](https://github.com/buttercup/buttercup-mobile/issues/304)) Google Drive re-authorisation loop
+   * Wallet screen crashes app (removed)
+
 ## v2.5.0
 _2022-08-28_
 
