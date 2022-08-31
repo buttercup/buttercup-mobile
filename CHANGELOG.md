@@ -1,5 +1,12 @@
 # Buttercup Mobile Changelog
 
+## v2.5.2
+_2022-08-31_
+
+ * **Bugfix**
+   * ([#316](https://github.com/buttercup/buttercup-mobile/issues/316)) Cannot save changes with Dropbox vaults
+   * ([#321](https://github.com/buttercup/buttercup-mobile/issues/321)) Cannot unlock Dropbox vaults
+
 ## v2.5.1
 _2022-08-30_
 
