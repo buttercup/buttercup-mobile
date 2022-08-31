@@ -1,5 +1,6 @@
 import { gzip, ungzip } from "pako";
 import { WebDAVClient, WebDAVClientOptions, createClient } from "webdav/web";
+import { DropboxClient } from "@buttercup/dropbox-client";
 import * as base64 from "base64-js";
 import { getSharedAppEnv } from "buttercup";
 import {
@@ -15,6 +16,7 @@ import {
 import uuid from "react-native-uuid";
 import hexToArrayBuffer from "hex-to-array-buffer";
 import arrayBufferToHex from "array-buffer-to-hex";
+import { DROPBOX_CLIENT_CONFIG } from "./dropbox";
 import { CryptoBridge } from "./cryptoBridge";
 import { CRYPTO_DERIVATION_ROUNDS } from "../symbols";
 
@@ -200,6 +202,7 @@ export function initAppEnv() {
         "encoding/v1/bytesToBase64": encodeBytesToBase64,
         "encoding/v1/textToBase64": encodeTextToBase64,
         "env/v1/isClosedEnv": () => true,
+        "net/dropbox/v1/newClient": (token: string) => new DropboxClient(token, { ...DROPBOX_CLIENT_CONFIG }),
         "net/webdav/v1/newClient": createPreparedWebDAVClient,
         "rng/v1/uuid": generateUUID
     });

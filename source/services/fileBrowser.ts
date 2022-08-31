@@ -1,8 +1,9 @@
 import { AuthType, createClient as createWebDAVClient } from "webdav";
-import { createClient as createDropboxClient } from "@buttercup/dropbox-client";
+import { DropboxClient } from "@buttercup/dropbox-client";
 import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
 import { DropboxInterface, FileSystemInterface, GoogleDriveInterface, WebDAVInterface } from "@buttercup/file-interface";
 import { LocalFileSystemInterface } from "../library/datasource/LocalFileInterface";
+import { DROPBOX_CLIENT_CONFIG } from "./dropbox";
 
 let __interface: FileSystemInterface = null;
 
@@ -15,7 +16,7 @@ export function getCurrentInterface(): FileSystemInterface {
 }
 
 export async function prepareDropboxInterface(token: string): Promise<void> {
-    const dropboxClient = createDropboxClient(token);
+    const dropboxClient = new DropboxClient(token, { ...DROPBOX_CLIENT_CONFIG });
     __interface = new DropboxInterface({
         dropboxClient
     });
