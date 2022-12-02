@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import {
     Button,
     Card,
+    Icon,
     Input,
     Modal,
     Text
@@ -60,6 +61,13 @@ function ModalContent(props: TextPromptProps) {
         submitText = "Submit"
     } = props;
     const [value, setValue] = useState("");
+
+    const [visiblePw, setVisiblePw] = useState(false);
+
+    const toggleVisiblePw = () => {
+        setVisiblePw(!visiblePw);
+    };
+
     const keyboardSize = useKeyboardSize();
     const handleSubmission = useCallback(() => {
         onSubmit(value);
@@ -90,6 +98,15 @@ function ModalContent(props: TextPromptProps) {
             </Button>)}
         </View>
     ), [cancelable, cancelText, handleSubmission, onCancel, onSubmit, prompt, submitText, value]);
+
+    const visiblePwIcon = (props) => (
+        <TouchableWithoutFeedback onPress={toggleVisiblePw}>
+            <Icon {...props} name={visiblePw ? 'eye-off' : 'eye'}/>
+        </TouchableWithoutFeedback>
+    );
+
+    const secureTextEntry = password && visiblePw;
+
     return (
         <Card
             disabled
@@ -103,13 +120,14 @@ function ModalContent(props: TextPromptProps) {
             ]}
         >
             <Input
+                accessoryRight={password ? visiblePwIcon : null }
                 autoCapitalize="none"
                 autoCompleteType="off"
                 autoCorrect={false}
                 autoFocus
                 onChangeText={setValue}
                 placeholder={placeholder}
-                secureTextEntry={password}
+                secureTextEntry={secureTextEntry}
                 style={styles.input}
                 value={value}
             />
