@@ -62,7 +62,7 @@ Once all dependencies are installed and your target development environments are
 Providing Xcode is setup correctly, running the following will launch the application in an iPhone emulator:
 
 ```shell
-npm run start:ios
+npm run ios
 ```
 
 ### Android development
@@ -75,7 +75,7 @@ adb devices
 To run the application in the virtual device, run the following:
 
 ```shell
-npm run start:android
+npm run android
 ```
 
 #### Running on an Android device

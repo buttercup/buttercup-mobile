@@ -94,3 +94,13 @@ export async function updateVaultConfig(sourceID: VaultSourceID, config: VaultCo
     emitter.emit("update", sourceID);
     emitter.emit(`update:${sourceID}`, updatedConfig);
 }
+
+export async function clearConfig() {
+    const storage = getAsyncStorage();
+
+    const allKeys = await storage.getAllKeys();
+
+    for (const key of allKeys) {
+        await storage.removeKey(key);
+    }
+}
