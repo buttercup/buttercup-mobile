@@ -124,7 +124,12 @@ function MenuButton(props) {
                 visible={showResetSettingsPrompt}
                 onCancel={() => setShowResetSettingsPrompt(false)}
                 onConfirm={() => {
-                    handleClearSettings().then(() => setShowResetSettingsPrompt(false));
+                    handleClearSettings()
+                        .then(() => setShowResetSettingsPrompt(false))
+                        .catch(err => {
+                            console.error(err);
+                            notifyError("Reset Failure", err.message);
+                        });
                 }}
             />
         </Layout>
