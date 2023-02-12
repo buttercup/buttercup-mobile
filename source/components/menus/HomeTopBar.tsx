@@ -9,13 +9,14 @@ import {
     MenuItem,
     OverflowMenu,
     TopNavigation,
-    Text
+    Text,
+    IndexPath
 } from "@ui-kitten/components";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
-import { lockAllVaults } from "../../services/buttercup";
-import { CURRENT_SOURCE } from "../../state/vault"
-
+import { lockAllVaults, reset } from "../../services/buttercup";
+import { CURRENT_SOURCE } from "../../state/vault";
+import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 interface HomeTopBarProps {
     leftMenu?: "vaults" | null;
     navigation: any;
@@ -27,6 +28,7 @@ const MENU_ITEMS = [
     { text: "Manage Vaults", slug: "manage", icon: "menu-arrow-outline" },
     { text: "Lock All Vaults", slug: "lock-all", icon: "lock-outline" },
     { text: "Password Generator", slug: "generator", icon: "hash-outline" },
+    { text: "Reset Settings", slug: "reset", icon: "close-outline" },
     { text: "About", slug: "about", icon: "info-outline" }
 ];
 
@@ -40,7 +42,8 @@ const styles = StyleSheet.create({
     logo: {
         marginHorizontal: 4
     },
-    menuContent: {}
+    menuContent: {},
+    menu: { maxHeight: 500 }
 });
 
 async function handleAllVaultLocking() {
@@ -50,10 +53,18 @@ async function handleAllVaultLocking() {
     notifySuccess("Vaults locked", "All vaults have been locked");
 }
 
+async function handleClearSettings() {
+    setBusyState("Resetting app");
+    await reset();
+    setBusyState(null);
+    notifySuccess("App is reset.", "");
+}
+
 function MenuButton(props) {
     const { navigation } = props;
     const [visible, setVisible] = useState(false);
-    const onItemSelect = selected => {
+    const [showResetSettingsPrompt, setShowResetSettingsPrompt] = useState(false);
+    const onItemSelect = (selected: IndexPath) => {
         const item = MENU_ITEMS[selected.row];
         setVisible(false);
         if (item.slug === "about") {
@@ -74,6 +85,8 @@ function MenuButton(props) {
                 });
         } else if (item.slug === "generator") {
             navigation.navigate("Modal", { screen: "PasswordGenerator" });
+        } else if (item.slug === "reset") {
+            setShowResetSettingsPrompt(true);
         }
     };
 
@@ -94,6 +107,7 @@ function MenuButton(props) {
                 visible={visible}
                 onSelect={onItemSelect}
                 onBackdropPress={() => setVisible(false)}
+                style={styles.menu}
             >
                 {MENU_ITEMS.map(item => (
                     <MenuItem
@@ -103,6 +117,21 @@ function MenuButton(props) {
                     />
                 ))}
             </OverflowMenu>
+            <ConfirmPrompt
+                cancelable
+                prompt="This will remove all vaults and local settings. Are you sure you want to continue?"
+                title="Reset settings"
+                visible={showResetSettingsPrompt}
+                onCancel={() => setShowResetSettingsPrompt(false)}
+                onConfirm={() => {
+                    handleClearSettings()
+                        .then(() => setShowResetSettingsPrompt(false))
+                        .catch(err => {
+                            console.error(err);
+                            notifyError("Reset Failure", err.message);
+                        });
+                }}
+            />
         </Layout>
     );
 }

@@ -18,11 +18,11 @@ import {
 } from "buttercup";
 import { initAppEnv } from "./appEnv";
 import { setBusyState } from "./busyState";
-import { getAsyncStorage } from "./storage";
+import { getAsyncStorage, getSecureStorage } from "./storage";
 import { updateSearchCaches } from "./search";
 import { setCodesForSource } from "./otpVault";
 import { removeMissingSources, removeSourceOTPs, setSourceOTPs } from "./otpAll";
-import { getVaultConfig } from "./config";
+import { getVaultConfig, clearConfig } from "./config";
 import { updateSourceItemsCount } from "./statistics";
 import { setSourcePassword as setSourceAutofillPassword, storeAutofillCredentials } from "./intermediateCredentials";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
@@ -286,6 +286,19 @@ export async function initialise() {
     await attachVaultManagerWatchers();
     await getVaultManager().rehydrate();
     registerGoogleAuthWatchers();
+}
+
+export async function reset() {
+    const vaultManager = getVaultManager();
+    const sources = vaultManager.sources;
+    sources.forEach(async s => {
+        await vaultManager.removeSource(s.id);
+    });
+
+    await clearConfig();
+
+    const secureStorage = getSecureStorage();
+    await secureStorage.clearStorage();
 }
 
 export async function lockAllVaults() {
