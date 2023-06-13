@@ -93,7 +93,7 @@ public class BCAutoFillService extends AutofillService {
                     this,
                     1001,
                     authIntent,
-                    PendingIntent.FLAG_CANCEL_CURRENT
+                    PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.IMMUTABLE
             ).getIntentSender();
 
             // Finally build the Login with Buttercup dataset and add it to the list
