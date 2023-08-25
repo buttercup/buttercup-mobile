@@ -3,7 +3,7 @@
 /** @define {boolean} */
 var ENCODEINTO_BUILD = false;
 
-(function(window) {
+(function (window) {
     "use strict";
     var fromCharCode = String.fromCharCode;
     var Object_prototype_toString = {}.toString;
@@ -14,7 +14,7 @@ var ENCODEINTO_BUILD = false;
     var nativeArrayBuffer = NativeUint8Array ? ArrayBuffer : patchedU8Array;
     var arrayBuffer_isView =
         nativeArrayBuffer.isView ||
-        function(x) {
+        function (x) {
             return x && "length" in x;
         };
     var arrayBufferString = Object_prototype_toString.call(nativeArrayBuffer.prototype);
@@ -29,7 +29,7 @@ var ENCODEINTO_BUILD = false;
     var globalTextEncoderInstance;
 
     function TextDecoder() {}
-    TextDecoder["prototype"]["decode"] = function(inputArrayOrBuffer) {
+    TextDecoder["prototype"]["decode"] = function (inputArrayOrBuffer) {
         var inputAs8 = inputArrayOrBuffer,
             asObjectString;
         if (!arrayBuffer_isView(inputAs8)) {
@@ -237,7 +237,7 @@ var ENCODEINTO_BUILD = false;
             );
     }
     function TextEncoder() {}
-    TextEncoderPrototype["encode"] = function(inputString) {
+    TextEncoderPrototype["encode"] = function (inputString) {
         // 0xc0 => 0b11000000; 0xff => 0b11111111; 0xc0-0xff => 0b11xxxxxx
         // 0x80 => 0b10000000; 0xbf => 0b10111111; 0x80-0xbf => 0b10xxxxxx
         var encodedString = inputString === void 0 ? "" : "" + inputString,
@@ -366,7 +366,7 @@ var ENCODEINTO_BUILD = false;
         !(globalTextEncoderPrototype = GlobalTextEncoder["prototype"])["encodeInto"]
     ) {
         globalTextEncoderInstance = new GlobalTextEncoder();
-        globalTextEncoderPrototype["encodeInto"] = function(string, u8arr) {
+        globalTextEncoderPrototype["encodeInto"] = function (string, u8arr) {
             // Unfortunately, there's no way I can think of to quickly extract the number of bits written and the number of bytes read and such
             var strLen = string.length | 0,
                 u8Len = u8arr.length | 0;

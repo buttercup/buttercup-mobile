@@ -13,11 +13,11 @@ import { OTPCode } from "../../types";
 const styles = StyleSheet.create({
     listContainer: {},
     contentContainer: {
-      paddingHorizontal: 8,
-      paddingVertical: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 4
     },
     item: {
-      marginVertical: 4,
+        marginVertical: 4
     },
     card: {
         flex: 1,
@@ -36,29 +36,29 @@ const styles = StyleSheet.create({
 
 const renderHeader = (props, info: { item: OTPCode }) => (
     <View {...props}>
-        <Text category='s1'>{info.item.entryTitle}</Text>
-        <Text category='s2'>{info.item.otpTitle}</Text>
+        <Text category="s1">{info.item.entryTitle}</Text>
+        <Text category="s2">{info.item.otpTitle}</Text>
     </View>
 );
 
-function renderItem(info: { item: OTPCode }, onCodePress: (item: OTPCode) => void, isLast: boolean) {
-    return (
-        <Code code={info.item} last={isLast} onPress={onCodePress} />
-    );
+function renderItem(
+    info: { item: OTPCode },
+    onCodePress: (item: OTPCode) => void,
+    isLast: boolean
+) {
+    return <Code code={info.item} last={isLast} onPress={onCodePress} />;
 }
 
 export function VaultCodesScreen() {
     useTabFocusState("codes", "Codes");
-    const {
-        currentSourceOTPCodes
-    } = useContext(OTPContext);
+    const { currentSourceOTPCodes } = useContext(OTPContext);
     const handleItemPress = useCallback((code: OTPCode) => {
         Clipboard.setString(code.currentCode);
         notifySuccess("Code Copied", `'${code.otpTitle}' code was copied`);
     }, []);
     const otpCount = useMemo(() => currentSourceOTPCodes.length, [currentSourceOTPCodes]);
-    const renderWrapper = useMemo(() =>
-        info => renderItem(info, handleItemPress, info.index === (otpCount - 1)),
+    const renderWrapper = useMemo(
+        () => info => renderItem(info, handleItemPress, info.index === otpCount - 1),
         [otpCount]
     );
     return (

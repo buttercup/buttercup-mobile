@@ -37,7 +37,7 @@ function TabNavigator() {
     );
 }
 
-export function HomeNavigator({ navigation }) {
+export function HomeNavigator() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TabNavigator />

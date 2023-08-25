@@ -1,6 +1,13 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import { EntryID, EntryPropertyType, EntryPropertyValueType, GroupID, fieldsToProperties, VaultSourceID } from "buttercup";
+import {
+    EntryID,
+    EntryPropertyType,
+    EntryPropertyValueType,
+    GroupID,
+    fieldsToProperties,
+    VaultSourceID
+} from "buttercup";
 import {
     Button,
     ButtonGroup,
@@ -85,19 +92,23 @@ interface MenuButtonProps {
 }
 
 function MenuButton(props: MenuButtonProps) {
-    const { entryID, groupID, navigation, onDeleteEntry, onVisibleChange, readOnly, visible } = props;
-    const onItemSelect = useCallback(selected => {
-        const item = MENU_ITEMS[selected.row];
-        onVisibleChange(false);
-        if (item.slug === "edit") {
-            navigation.navigate("EditEntry", {
-                entryID,
-                groupID
-            });
-        } else if (item.slug === "delete") {
-            onDeleteEntry();
-        }
-    }, [navigation, onVisibleChange]);
+    const { entryID, groupID, navigation, onDeleteEntry, onVisibleChange, readOnly, visible } =
+        props;
+    const onItemSelect = useCallback(
+        selected => {
+            const item = MENU_ITEMS[selected.row];
+            onVisibleChange(false);
+            if (item.slug === "edit") {
+                navigation.navigate("EditEntry", {
+                    entryID,
+                    groupID
+                });
+            } else if (item.slug === "delete") {
+                onDeleteEntry();
+            }
+        },
+        [navigation, onVisibleChange]
+    );
     const renderToggleButton = () => (
         <Button
             {...props}
@@ -142,8 +153,10 @@ export function EntryDetailsScreen({ navigation, route }) {
     const [showSensitiveProperties, setShowSensitiveProperties] = useState(false);
     const title = useMemo(() => {
         if (!entryFacade) return "";
-        const titleField = entryFacade.fields.find(field => field.property === "title" && field.propertyType === EntryPropertyType.Property);
-        return titleField && titleField.value || "";
+        const titleField = entryFacade.fields.find(
+            field => field.property === "title" && field.propertyType === EntryPropertyType.Property
+        );
+        return (titleField && titleField.value) || "";
     }, [entryFacade]);
     const subtitle = useMemo(() => {
         if (!entryFacade) return "";
@@ -168,8 +181,14 @@ export function EntryDetailsScreen({ navigation, route }) {
             ];
         }, []);
     }, [entryFacade]);
-    const keyValueProperties = useMemo(() => fieldsToProperties(entryFacade?.fields ?? []), [entryFacade]);
-    const entryDomain = useMemo(() => getEntryDomain(keyValueProperties) || null, [keyValueProperties]);
+    const keyValueProperties = useMemo(
+        () => fieldsToProperties(entryFacade?.fields ?? []),
+        [entryFacade]
+    );
+    const entryDomain = useMemo(
+        () => getEntryDomain(keyValueProperties) || null,
+        [keyValueProperties]
+    );
     const handleEntryDeletion = useCallback(async () => {
         setBusyState("Deleting Entry");
         setShowDeletePrompt(false);
@@ -184,31 +203,39 @@ export function EntryDetailsScreen({ navigation, route }) {
             notifyError("Failed deleting entry", err.message);
         }
     }, [entryID, currentSource]);
-    const handleFieldPress = useCallback((field: VisibleField) => {
-        if (field.valueType === EntryPropertyValueType.OTP) {
-            // Copy code instead of raw value
-            const otpCode = entryOTPs[field.property]?.currentCode ?? "";
-            Clipboard.setString(otpCode);
-        } else {
-            // Copy raw value
-            Clipboard.setString(field.value);
-        }
-        notifySuccess("Field Copied", `Copied '${field.property}' value`);
-    }, [entryOTPs]);
+    const handleFieldPress = useCallback(
+        (field: VisibleField) => {
+            if (field.valueType === EntryPropertyValueType.OTP) {
+                // Copy code instead of raw value
+                const otpCode = entryOTPs[field.property]?.currentCode ?? "";
+                Clipboard.setString(otpCode);
+            } else {
+                // Copy raw value
+                Clipboard.setString(field.value);
+            }
+            notifySuccess("Field Copied", `Copied '${field.property}' value`);
+        },
+        [entryOTPs]
+    );
     const navigateBack = () => {
         navigation.goBack();
     };
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={navigateBack} />;
-    const EntryMenu = useCallback(props => <MenuButton
-        {...props}
-        entryID={entryID}
-        groupID={groupID}
-        navigation={navigation}
-        onDeleteEntry={() => setShowDeletePrompt(true)}
-        onVisibleChange={setEntryMenuVisible}
-        readOnly={readOnly}
-        visible={entryMenuVisible}
-    />, [entryID, groupID, entryMenuVisible]);
+    const EntryMenu = useCallback(
+        props => (
+            <MenuButton
+                {...props}
+                entryID={entryID}
+                groupID={groupID}
+                navigation={navigation}
+                onDeleteEntry={() => setShowDeletePrompt(true)}
+                onVisibleChange={setEntryMenuVisible}
+                readOnly={readOnly}
+                visible={entryMenuVisible}
+            />
+        ),
+        [entryID, groupID, entryMenuVisible]
+    );
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation
@@ -217,16 +244,18 @@ export function EntryDetailsScreen({ navigation, route }) {
                 accessoryLeft={BackAction}
                 accessoryRight={EntryMenu}
             />
-            {readOnly && (
-                <ReadOnlyBar />
-            )}
+            {readOnly && <ReadOnlyBar />}
             <Divider />
             <Layout style={styles.bodyLayout}>
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.titleContainer}>
                         <View style={styles.titleTextContainer}>
-                            <Text category="h5" numberOfLines={1} style={styles.titleText}>{title}</Text>
-                            <Text appearance="hint" numberOfLines={1}>{subtitle}</Text>
+                            <Text category="h5" numberOfLines={1} style={styles.titleText}>
+                                {title}
+                            </Text>
+                            <Text appearance="hint" numberOfLines={1}>
+                                {subtitle}
+                            </Text>
                         </View>
                         <View>
                             <SiteIcon domain={entryDomain} size={48} type={entryFacade?.type} />
@@ -234,7 +263,11 @@ export function EntryDetailsScreen({ navigation, route }) {
                     </View>
                     <Layout style={styles.fieldsLayout}>
                         {visibleFields.map((field, index) => (
-                            <TouchableOpacity activeOpacity={0.3} onPress={() => handleFieldPress(field)} key={field.key}>
+                            <TouchableOpacity
+                                activeOpacity={0.3}
+                                onPress={() => handleFieldPress(field)}
+                                key={field.key}
+                            >
                                 <Layout key={field.key} style={styles.fieldLayout}>
                                     {field.valueType !== EntryPropertyValueType.Note && (
                                         <Text category="h6">{field.title}</Text>
@@ -245,7 +278,7 @@ export function EntryDetailsScreen({ navigation, route }) {
                                         showPassword={showSensitiveProperties}
                                     />
                                 </Layout>
-                                {index < (visibleFields.length - 1) && (
+                                {index < visibleFields.length - 1 && (
                                     <Divider key={`d${field.key}`} />
                                 )}
                             </TouchableOpacity>
@@ -255,7 +288,9 @@ export function EntryDetailsScreen({ navigation, route }) {
                         <Button
                             onPress={() => setShowSensitiveProperties(!showSensitiveProperties)}
                         >
-                            {showSensitiveProperties ? "Hide Sensitive Values" : "Show Sensitive Values"}
+                            {showSensitiveProperties
+                                ? "Hide Sensitive Values"
+                                : "Show Sensitive Values"}
                         </Button>
                     </ButtonGroup>
                 </ScrollView>

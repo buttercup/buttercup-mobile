@@ -9,7 +9,9 @@ const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
 
 // const config = {};
 const defaultConfig = getDefaultConfig(__dirname);
-const { resolver: { assetExts } } = defaultConfig;
+const {
+    resolver: { assetExts }
+} = defaultConfig;
 
 module.exports = mergeConfig(defaultConfig, {
     transformer: {

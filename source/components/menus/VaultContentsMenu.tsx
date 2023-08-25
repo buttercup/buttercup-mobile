@@ -9,13 +9,16 @@ interface VaultsContentsMenuProps {
     readOnly: boolean;
 }
 
-const BASE_ITEMS = [
-    { text: "Add Group", slug: "add-group", icon: "folder-outline", write: true },
-];
+const BASE_ITEMS = [{ text: "Add Group", slug: "add-group", icon: "folder-outline", write: true }];
 const MENU_ITEMS = [
     ...BASE_ITEMS,
     { text: "Add Entry", slug: "add-entry", icon: "file-outline", write: true },
-    { text: "Delete Current Group", slug: "delete-group", icon: "folder-remove-outline", write: true }
+    {
+        text: "Delete Current Group",
+        slug: "delete-group",
+        icon: "folder-remove-outline",
+        write: true
+    }
 ];
 
 const styles = StyleSheet.create({
@@ -25,18 +28,24 @@ const styles = StyleSheet.create({
 function MenuButton(props: VaultsContentsMenuProps) {
     const { onEntryCreate = null, onGroupCreate, onGroupDelete = null, readOnly } = props;
     const [visible, setVisible] = useState(false);
-    const menuItems = useMemo(() => onEntryCreate && onGroupDelete ? MENU_ITEMS : BASE_ITEMS, [onEntryCreate]);
-    const onItemSelect = useCallback(selected => {
-        const item = menuItems[selected.row];
-        setVisible(false);
-        if (item.slug === "add-group") {
-            onGroupCreate();
-        } else if (item.slug === "add-entry") {
-            onEntryCreate();
-        } else if (item.slug === "delete-group") {
-            onGroupDelete();
-        }
-    }, [menuItems, onEntryCreate, onGroupCreate, onGroupDelete]);
+    const menuItems = useMemo(
+        () => (onEntryCreate && onGroupDelete ? MENU_ITEMS : BASE_ITEMS),
+        [onEntryCreate]
+    );
+    const onItemSelect = useCallback(
+        selected => {
+            const item = menuItems[selected.row];
+            setVisible(false);
+            if (item.slug === "add-group") {
+                onGroupCreate();
+            } else if (item.slug === "add-entry") {
+                onEntryCreate();
+            } else if (item.slug === "delete-group") {
+                onGroupDelete();
+            }
+        },
+        [menuItems, onEntryCreate, onGroupCreate, onGroupDelete]
+    );
     const renderToggleButton = () => (
         <Button
             appearance="ghost"
@@ -71,7 +80,5 @@ function MenuIcon(props) {
 }
 
 export function VaultContentsMenu(props: VaultsContentsMenuProps) {
-    return (
-        <MenuButton {...props} />
-    );
+    return <MenuButton {...props} />;
 }

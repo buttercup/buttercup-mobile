@@ -15,18 +15,13 @@ interface AutofillProviderProps {
 export const AutofillContext = React.createContext<IAutofillContext>({} as IAutofillContext);
 
 export function AutofillProvider(props: AutofillProviderProps) {
-    const {
-        autofillURLs = [],
-        isAutofill
-    } = props;
-    const context: IAutofillContext = useMemo(() => ({
-        autofillURLs,
-        isAutofill
-    }), [
-        autofillURLs,
-        isAutofill
-    ]);
-    return (
-        <AutofillContext.Provider value={context}>{props.children}</AutofillContext.Provider>
+    const { autofillURLs = [], isAutofill } = props;
+    const context: IAutofillContext = useMemo(
+        () => ({
+            autofillURLs,
+            isAutofill
+        }),
+        [autofillURLs, isAutofill]
     );
+    return <AutofillContext.Provider value={context}>{props.children}</AutofillContext.Provider>;
 }

@@ -20,11 +20,14 @@ const styles = StyleSheet.create({
 });
 
 export function CoverScreen({ navigation }) {
-    const handleAppState = useCallback((appState: AppStateStatus) => {
-        if (appState === "active") {
-            navigation.goBack();
-        }
-    }, [navigation]);
+    const handleAppState = useCallback(
+        (appState: AppStateStatus) => {
+            if (appState === "active") {
+                navigation.goBack();
+            }
+        },
+        [navigation]
+    );
     useAppStateDebouncedCallback(handleAppState);
     return (
         <SafeAreaView>

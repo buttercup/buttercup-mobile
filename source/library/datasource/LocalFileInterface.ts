@@ -1,5 +1,17 @@
-import { FileIdentifier, FileItem, FileSystemInterface, PathIdentifier } from "@buttercup/file-interface";
-import { DocumentDirectoryPath, mkdir, readDir, readFile, unlink, writeFile } from "react-native-fs";
+import {
+    FileIdentifier,
+    FileItem,
+    FileSystemInterface,
+    PathIdentifier
+} from "@buttercup/file-interface";
+import {
+    DocumentDirectoryPath,
+    mkdir,
+    readDir,
+    readFile,
+    unlink,
+    writeFile
+} from "react-native-fs";
 import path from "path-browserify";
 
 export class LocalFileSystemInterface extends FileSystemInterface {

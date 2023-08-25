@@ -66,28 +66,28 @@ export function VaultNavigator({ navigation }) {
     const [focusedTab, focusedTabTitle] = useFocusedTab();
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const [currentSource] = useSingleState(VAULT, "currentSource");
-    const handleGroupCreate = useCallback(async (groupName: string) => {
-        setBusyState("Creating group");
-        setPromptGroupCreate(false);
-        let newGroupID: GroupID;
-        try {
-            newGroupID = await createNewGroup(currentSource, groupName);
-            notifySuccess("Group created", `Group was successfully created: ${groupName}`);
-        } catch (err) {
-            console.error(err);
-            notifyError("Failed creating group", err.message);
-        } finally {
-            setBusyState(null);
-        }
-        if (newGroupID) {
-            navigation.push(
-                "VaultContents",
-                {
+    const handleGroupCreate = useCallback(
+        async (groupName: string) => {
+            setBusyState("Creating group");
+            setPromptGroupCreate(false);
+            let newGroupID: GroupID;
+            try {
+                newGroupID = await createNewGroup(currentSource, groupName);
+                notifySuccess("Group created", `Group was successfully created: ${groupName}`);
+            } catch (err) {
+                console.error(err);
+                notifyError("Failed creating group", err.message);
+            } finally {
+                setBusyState(null);
+            }
+            if (newGroupID) {
+                navigation.push("VaultContents", {
                     groupID: newGroupID
-                }
-            );
-        }
-    }, [currentSource]);
+                });
+            }
+        },
+        [currentSource, navigation]
+    );
     const navigateBack = () => {
         navigation.goBack();
     };

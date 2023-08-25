@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
-import {
-    Button,
-    Card,
-    CheckBox,
-    Icon,
-    Input,
-    Layout,
-    Text
-} from "@ui-kitten/components";
+import { Button, Card, CheckBox, Icon, Input, Layout, Text } from "@ui-kitten/components";
 import { useDropboxToken } from "../../../hooks/dropbox";
 import { useGoogleToken } from "../../../hooks/google";
 import { setBusyState } from "../../../services/busyState";
-import { disableCurrentInterface, prepareDropboxInterface, prepareGoogleDriveInterface, prepareLocalFileInterface, prepareWebDAVInterface } from "../../../services/fileBrowser";
+import {
+    disableCurrentInterface,
+    prepareDropboxInterface,
+    prepareGoogleDriveInterface,
+    prepareLocalFileInterface,
+    prepareWebDAVInterface
+} from "../../../services/fileBrowser";
 import { generateAuthorisationURL as generateDropboxAuthorisationURL } from "../../../services/dropbox";
 import { generateAuthorisationURL as generateGoogleDriveAuthorisationURL } from "../../../services/google";
 import { webdavConnectionValid } from "../../../library/webdav";
@@ -73,21 +71,13 @@ const styles = StyleSheet.create({
 export function ConnectionDetails(props: ConnectionDetailsProps) {
     const { vaultType } = props;
     if (vaultType === "webdav") {
-        return (
-            <WebDAVConnection {...props} />
-        );
+        return <WebDAVConnection {...props} />;
     } else if (vaultType === "dropbox") {
-        return (
-            <DropboxConnection {...props} />
-        );
+        return <DropboxConnection {...props} />;
     } else if (vaultType === "googledrive") {
-        return (
-            <GoogleDriveConnection {...props} />
-        )
+        return <GoogleDriveConnection {...props} />;
     } else if (vaultType === "mobilelocalfile") {
-        return (
-            <MobileLocalFileConnection {...props} />
-        );
+        return <MobileLocalFileConnection {...props} />;
     }
     return null;
 }
@@ -117,19 +107,23 @@ function DropboxConnection(props: ConnectionDetailsProps) {
             <Layout style={styles.status}>
                 <Text category="h6">Status:</Text>
                 {status === DropboxState.Idle && (
-                    <Text category="s1" status="danger">Not Connected</Text>
+                    <Text category="s1" status="danger">
+                        Not Connected
+                    </Text>
                 )}
                 {status === DropboxState.Connecting && (
-                    <Text category="s1" status="warning">Connecting</Text>
+                    <Text category="s1" status="warning">
+                        Connecting
+                    </Text>
                 )}
                 {status === DropboxState.Connected && (
-                    <Text category="s1" status="success">Connected</Text>
+                    <Text category="s1" status="success">
+                        Connected
+                    </Text>
                 )}
             </Layout>
             <Button
-                accessoryRight={(
-                    <Icon name="flash" />
-                )}
+                accessoryRight={<Icon name="flash" />}
                 disabled={status !== DropboxState.Idle}
                 onPress={handleAuthorisation}
             >
@@ -144,7 +138,10 @@ function GoogleDriveConnection(props: ConnectionDetailsProps) {
     const [status, setStatus] = useState<GoogleState>(GoogleState.Idle);
     const [fullPermissions, setFullPermissions] = useState<boolean>(false);
     const googleDriveToken = useGoogleToken();
-    const googleAuthURL: string = useMemo(() => generateGoogleDriveAuthorisationURL(fullPermissions), [fullPermissions]);
+    const googleAuthURL: string = useMemo(
+        () => generateGoogleDriveAuthorisationURL(fullPermissions),
+        [fullPermissions]
+    );
     const handleAuthorisation = useCallback(() => {
         disableCurrentInterface();
         Linking.openURL(googleAuthURL);
@@ -166,13 +163,19 @@ function GoogleDriveConnection(props: ConnectionDetailsProps) {
             <Layout style={styles.status}>
                 <Text category="h6">Status:</Text>
                 {status === GoogleState.Idle && (
-                    <Text category="s1" status="danger">Not Connected</Text>
+                    <Text category="s1" status="danger">
+                        Not Connected
+                    </Text>
                 )}
                 {status === GoogleState.Connecting && (
-                    <Text category="s1" status="warning">Connecting</Text>
+                    <Text category="s1" status="warning">
+                        Connecting
+                    </Text>
                 )}
                 {status === GoogleState.Connected && (
-                    <Text category="s1" status="success">Connected</Text>
+                    <Text category="s1" status="success">
+                        Connected
+                    </Text>
                 )}
             </Layout>
             <Layout style={styles.options}>
@@ -185,9 +188,7 @@ function GoogleDriveConnection(props: ConnectionDetailsProps) {
                 </CheckBox>
             </Layout>
             <Button
-                accessoryRight={(
-                    <Icon name="flash" />
-                )}
+                accessoryRight={<Icon name="flash" />}
                 disabled={status !== GoogleState.Idle}
                 onPress={handleAuthorisation}
             >
@@ -217,8 +218,13 @@ function MobileLocalFileConnection(props: ConnectionDetailsProps) {
                     )}
                     status="danger"
                 >
-                    <Text style={styles.textBottomMargin}>This feature is in beta It should not be considered stable.</Text>
-                    <Text>You store your vaults and data using this datasource entirely at your own risk.</Text>
+                    <Text style={styles.textBottomMargin}>
+                        This feature is in beta It should not be considered stable.
+                    </Text>
+                    <Text>
+                        You store your vaults and data using this datasource entirely at your own
+                        risk.
+                    </Text>
                 </Card>
             </Layout>
         </>
@@ -297,10 +303,7 @@ function WebDAVConnection(props: ConnectionDetailsProps) {
                     value={password}
                 />
             </Layout>
-            <Button
-                disabled={!urlValid || connecting}
-                onPress={handleConnectionTest}
-            >
+            <Button disabled={!urlValid || connecting} onPress={handleConnectionTest}>
                 Connect
             </Button>
         </>

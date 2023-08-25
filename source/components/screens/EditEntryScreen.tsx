@@ -159,7 +159,7 @@ function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
                     <MenuItem
                         disabled={!!item.disabled}
                         key={item.slug}
-                        onPress={() => item.onSelect ? item.onSelect() : null}
+                        onPress={() => (item.onSelect ? item.onSelect() : null)}
                         title={item.text}
                         accessoryLeft={props => <Icon {...props} name={item.icon} />}
                     />
@@ -177,42 +177,54 @@ export function EditEntryScreen({ navigation, route }) {
     const [changed, setChanged] = useState(false);
     const title = useMemo(() => {
         if (!entryFacade) return "";
-        const titleField = entryFacade.fields.find(field => field.property === "title" && field.propertyType === EntryPropertyType.Property);
-        return titleField && titleField.value || "";
+        const titleField = entryFacade.fields.find(
+            field => field.property === "title" && field.propertyType === EntryPropertyType.Property
+        );
+        return (titleField && titleField.value) || "";
     }, [entryFacade]);
     const [showConfirmCancel, setShowConfirmCancel] = useState(false);
     const [confirmDeleteFieldID, setConfirmDeleteFieldID] = useState<string>(null);
     const [promptingNewField, setPromptingNewField] = useState(false);
     const [changeTypeFieldID, setChangeTypeFieldID] = useState<string>(null);
     const [generatePasswordFieldID, setGeneratePasswordFieldID] = useState<string>(null);
-    const {
-        pendingOTPs,
-        removePendingOTP
-    } = usePendingOTPs();
+    const { pendingOTPs, removePendingOTP } = usePendingOTPs();
     const [promptingPendingOTP, setPromptingPendingOTP] = useState(false);
-    const pendingOTPItems: Array<PromptItem> = useMemo(() => pendingOTPs.map((pendingOTP: OTP) => ({
-        title: pendingOTP.otpTitle,
-        slug: pendingOTP.otpURL,
-        icon: "keypad-outline"
-    })), [pendingOTPs]);
-    const handleFieldValueChange = useCallback((fieldID: string, newValue: string) => {
-        setChanged(true);
-        setEntryFacade({
-            ...entryFacade,
-            fields: entryFacade.fields.map(field =>
-                field.id === fieldID
-                    ? {
-                        ...field,
-                        value: newValue
-                    }
-                    : field
-            )
-        });
-    }, [entryFacade]);
-    const handleTitleChange = useCallback((newTitle: string) => {
-        const titleField = entryFacade.fields.find(field => field.property === "title" && field.propertyType === EntryPropertyType.Property);
-        handleFieldValueChange(titleField.id, newTitle);
-    }, [entryFacade, handleFieldValueChange]);
+    const pendingOTPItems: Array<PromptItem> = useMemo(
+        () =>
+            pendingOTPs.map((pendingOTP: OTP) => ({
+                title: pendingOTP.otpTitle,
+                slug: pendingOTP.otpURL,
+                icon: "keypad-outline"
+            })),
+        [pendingOTPs]
+    );
+    const handleFieldValueChange = useCallback(
+        (fieldID: string, newValue: string) => {
+            setChanged(true);
+            setEntryFacade({
+                ...entryFacade,
+                fields: entryFacade.fields.map(field =>
+                    field.id === fieldID
+                        ? {
+                              ...field,
+                              value: newValue
+                          }
+                        : field
+                )
+            });
+        },
+        [entryFacade]
+    );
+    const handleTitleChange = useCallback(
+        (newTitle: string) => {
+            const titleField = entryFacade.fields.find(
+                field =>
+                    field.property === "title" && field.propertyType === EntryPropertyType.Property
+            );
+            handleFieldValueChange(titleField.id, newTitle);
+        },
+        [entryFacade, handleFieldValueChange]
+    );
     const handleCancelEditConfirm = useCallback(() => {
         setShowConfirmCancel(false);
         navigation.goBack();
@@ -224,56 +236,70 @@ export function EditEntryScreen({ navigation, route }) {
             handleCancelEditConfirm();
         }
     }, [changed, handleCancelEditConfirm]);
-    const handleNewFieldAdd = useCallback((name: string, value: string = "", valueType: EntryPropertyValueType = EntryPropertyValueType.Text) => {
-        const matchingField = entryFacade.fields.find(field => field.property === name && field.propertyType === EntryPropertyType.Property);
-        if (matchingField) {
-            notifyError("Field already exists", `A field with the name '${name}' already exists. Please choose another name.`);
-            return;
-        }
-        setPromptingNewField(false);
-        const newField = createFieldDescriptor(null, name, EntryPropertyType.Property, name, {
-            removeable: true,
-            valueType
-        });
-        newField.value = value;
-        setEntryFacade({
-            ...entryFacade,
-            fields: [
-                ...entryFacade.fields,
-                newField
-            ]
-        });
-        setChanged(true);
-    }, [entryFacade]);
+    const handleNewFieldAdd = useCallback(
+        (
+            name: string,
+            value: string = "",
+            valueType: EntryPropertyValueType = EntryPropertyValueType.Text
+        ) => {
+            const matchingField = entryFacade.fields.find(
+                field =>
+                    field.property === name && field.propertyType === EntryPropertyType.Property
+            );
+            if (matchingField) {
+                notifyError(
+                    "Field already exists",
+                    `A field with the name '${name}' already exists. Please choose another name.`
+                );
+                return;
+            }
+            setPromptingNewField(false);
+            const newField = createFieldDescriptor(null, name, EntryPropertyType.Property, name, {
+                removeable: true,
+                valueType
+            });
+            newField.value = value;
+            setEntryFacade({
+                ...entryFacade,
+                fields: [...entryFacade.fields, newField]
+            });
+            setChanged(true);
+        },
+        [entryFacade]
+    );
     const handleFieldRemove = useCallback(() => {
         const targetID = confirmDeleteFieldID;
         setConfirmDeleteFieldID(null);
         const newFacade = {
             ...entryFacade,
-            fields: [
-                ...entryFacade.fields
-            ]
+            fields: [...entryFacade.fields]
         };
         const fieldIndex = newFacade.fields.findIndex(field => field.id === targetID);
         newFacade.fields.splice(fieldIndex, 1);
         setEntryFacade(newFacade);
         setChanged(true);
     }, [confirmDeleteFieldID, entryFacade]);
-    const handleFieldTypeSelect = useCallback((typeIndex: IndexPath) => {
-        const typeKey = Object.keys(FIELD_VALUE_TYPES)[typeIndex.row];
-        const newFacade = {
-            ...entryFacade,
-            fields: entryFacade.fields.map(field => field.id === changeTypeFieldID
-                ? { ...field }
-                : field
-            )
-        };
-        const targetField = entryFacade.fields.find(field => field.id === changeTypeFieldID);
-        setEntryFacadePropertyValueType(newFacade, targetField.property, typeKey as EntryPropertyValueType);
-        setEntryFacade(newFacade);
-        setChanged(true);
-        setChangeTypeFieldID(null);
-    }, [changeTypeFieldID, entryFacade]);
+    const handleFieldTypeSelect = useCallback(
+        (typeIndex: IndexPath) => {
+            const typeKey = Object.keys(FIELD_VALUE_TYPES)[typeIndex.row];
+            const newFacade = {
+                ...entryFacade,
+                fields: entryFacade.fields.map(field =>
+                    field.id === changeTypeFieldID ? { ...field } : field
+                )
+            };
+            const targetField = entryFacade.fields.find(field => field.id === changeTypeFieldID);
+            setEntryFacadePropertyValueType(
+                newFacade,
+                targetField.property,
+                typeKey as EntryPropertyValueType
+            );
+            setEntryFacade(newFacade);
+            setChanged(true);
+            setChangeTypeFieldID(null);
+        },
+        [changeTypeFieldID, entryFacade]
+    );
     const handleSave = useCallback(() => {
         setBusyState("Saving changes");
         const saveWork = entryID
@@ -291,20 +317,25 @@ export function EditEntryScreen({ navigation, route }) {
                 notifyError("Failed saving entry", err.message);
             });
     }, [currentSource, entryFacade, groupID, navigation]);
-    const handleAddOTP = useCallback((item: PromptItem) => {
-        handleNewFieldAdd(
-            item.title,
-            item.slug, // URI
-            EntryPropertyValueType.OTP
-        );
-        removePendingOTP(item.slug);
-    }, [handleNewFieldAdd]);
+    const handleAddOTP = useCallback(
+        (item: PromptItem) => {
+            handleNewFieldAdd(
+                item.title,
+                item.slug, // URI
+                EntryPropertyValueType.OTP
+            );
+            removePendingOTP(item.slug);
+        },
+        [handleNewFieldAdd]
+    );
     useEffect(() => {
         if (entryFacade) return;
         if (!entryID) {
-            setEntryFacade(createEntryFacade(null, {
-                type: entryType || EntryType.Login
-            }));
+            setEntryFacade(
+                createEntryFacade(null, {
+                    type: entryType || EntryType.Login
+                })
+            );
         } else {
             setEntryFacade(getEntryFacade(currentSource, entryID));
         }
@@ -317,10 +348,17 @@ export function EditEntryScreen({ navigation, route }) {
         }
     }, [lastPassword, generatePasswordFieldID, handleFieldValueChange]);
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={handleNavigateBack} />;
-    const SaveAction = () => <TopNavigationAction disabled={!changed} icon={SaveIcon} onPress={handleSave} />;
+    const SaveAction = () => (
+        <TopNavigationAction disabled={!changed} icon={SaveIcon} onPress={handleSave} />
+    );
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title={title} alignment="center" accessoryLeft={BackAction} accessoryRight={SaveAction} />
+            <TopNavigation
+                title={title}
+                alignment="center"
+                accessoryLeft={BackAction}
+                accessoryRight={SaveAction}
+            />
             <Divider />
             <Layout style={styles.bodyLayout}>
                 <ScrollView style={styles.scrollView}>
@@ -333,79 +371,99 @@ export function EditEntryScreen({ navigation, route }) {
                         value={title}
                     />
                     <Divider />
-                    {entryFacade && entryFacade.fields.map((field: EntryFacadeField, index) =>
-                        ((field.property === "title" && field.propertyType === EntryPropertyType.Property) ||
-                        field.propertyType === EntryPropertyType.Attribute)
-                        ? null
-                        : (
-                            <Layout key={field.id}>
-                                <Layout style={styles.fieldLayout}>
-                                    <Text category="s1" style={styles.inputLabel}>{field.property}</Text>
-                                    <Layout style={styles.inputContainerLayout}>
-                                        <Input
-                                            autoCapitalize="none"
-                                            autoComplete="off"
-                                            autoCorrect={false}
-                                            onChangeText={(value: string) => handleFieldValueChange(field.id, value)}
-                                            style={{
-                                                ...(field.valueType === EntryPropertyValueType.Password ? styles.passwordInput : {}),
-                                                ...styles.input
-                                            }}
-                                            value={field.value}
-                                        />
-                                        <FieldEditMenuButton
-                                            entryID={entryID}
-                                            items={[
-                                                {
-                                                    disabled: !field.removeable,
-                                                    text: `Change type (${field.valueType})`,
-                                                    slug: "change-type",
-                                                    icon: "swap-outline",
-                                                    onSelect: () => setChangeTypeFieldID(field.id)
-                                                },
-                                                {
-                                                    disabled: !field.removeable,
-                                                    text: "Delete field",
-                                                    slug: "delete-field",
-                                                    icon: "trash-2-outline",
-                                                    onSelect: () => setConfirmDeleteFieldID(field.id)
-                                                },
-                                                field.valueType === EntryPropertyValueType.Password && {
-                                                    text: "Generate password",
-                                                    slug: "generate-password",
-                                                    icon: "lock-outline",
-                                                    onSelect: () => {
-                                                        setLastPassword("");
-                                                        setGeneratePasswordFieldID(field.id);
-                                                    }
+                    {entryFacade &&
+                        entryFacade.fields.map((field: EntryFacadeField, index) =>
+                            (field.property === "title" &&
+                                field.propertyType === EntryPropertyType.Property) ||
+                            field.propertyType === EntryPropertyType.Attribute ? null : (
+                                <Layout key={field.id}>
+                                    <Layout style={styles.fieldLayout}>
+                                        <Text category="s1" style={styles.inputLabel}>
+                                            {field.property}
+                                        </Text>
+                                        <Layout style={styles.inputContainerLayout}>
+                                            <Input
+                                                autoCapitalize="none"
+                                                autoComplete="off"
+                                                autoCorrect={false}
+                                                onChangeText={(value: string) =>
+                                                    handleFieldValueChange(field.id, value)
                                                 }
-                                            ]}
-                                            navigation={navigation}
-                                        />
+                                                style={{
+                                                    ...(field.valueType ===
+                                                    EntryPropertyValueType.Password
+                                                        ? styles.passwordInput
+                                                        : {}),
+                                                    ...styles.input
+                                                }}
+                                                value={field.value}
+                                            />
+                                            <FieldEditMenuButton
+                                                entryID={entryID}
+                                                items={[
+                                                    {
+                                                        disabled: !field.removeable,
+                                                        text: `Change type (${field.valueType})`,
+                                                        slug: "change-type",
+                                                        icon: "swap-outline",
+                                                        onSelect: () =>
+                                                            setChangeTypeFieldID(field.id)
+                                                    },
+                                                    {
+                                                        disabled: !field.removeable,
+                                                        text: "Delete field",
+                                                        slug: "delete-field",
+                                                        icon: "trash-2-outline",
+                                                        onSelect: () =>
+                                                            setConfirmDeleteFieldID(field.id)
+                                                    },
+                                                    field.valueType ===
+                                                        EntryPropertyValueType.Password && {
+                                                        text: "Generate password",
+                                                        slug: "generate-password",
+                                                        icon: "lock-outline",
+                                                        onSelect: () => {
+                                                            setLastPassword("");
+                                                            setGeneratePasswordFieldID(field.id);
+                                                        }
+                                                    }
+                                                ]}
+                                                navigation={navigation}
+                                            />
+                                        </Layout>
                                     </Layout>
+                                    {changeTypeFieldID === field.id && (
+                                        <Select
+                                            label={`Change value type: ${field.property}`}
+                                            selectedIndex={
+                                                new IndexPath(
+                                                    Object.keys(FIELD_VALUE_TYPES).indexOf(
+                                                        field.valueType
+                                                    )
+                                                )
+                                            }
+                                            onSelect={index =>
+                                                handleFieldTypeSelect(index as IndexPath)
+                                            }
+                                            value={
+                                                field?.valueType
+                                                    ? FIELD_VALUE_TYPES[field.valueType].title
+                                                    : "Unknown type"
+                                            }
+                                        >
+                                            {Object.keys(FIELD_VALUE_TYPES).map(type => (
+                                                <SelectItem
+                                                    key={FIELD_VALUE_TYPES[type].slug}
+                                                    title={FIELD_VALUE_TYPES[type].title}
+                                                />
+                                            ))}
+                                        </Select>
+                                    )}
                                 </Layout>
-                                {changeTypeFieldID === field.id && (
-                                    <Select
-                                        label={`Change value type: ${field.property}`}
-                                        selectedIndex={new IndexPath(
-                                            Object.keys(FIELD_VALUE_TYPES).indexOf(field.valueType)
-                                        )}
-                                        onSelect={index => handleFieldTypeSelect(index as IndexPath)}
-                                        value={field?.valueType ? FIELD_VALUE_TYPES[field.valueType].title : "Unknown type"}
-                                    >
-                                        {Object.keys(FIELD_VALUE_TYPES).map(type => (
-                                            <SelectItem key={FIELD_VALUE_TYPES[type].slug} title={FIELD_VALUE_TYPES[type].title} />
-                                        ))}
-                                    </Select>
-                                )}
-                            </Layout>
-                        ))
-                    }
+                            )
+                        )}
                     <Divider />
-                    <Button
-                        onPress={() => setPromptingNewField(true)}
-                        status="primary"
-                    >
+                    <Button onPress={() => setPromptingNewField(true)} status="primary">
                         Add Field
                     </Button>
                     {pendingOTPs.length > 0 && (

@@ -12,8 +12,14 @@ import { AutofillContext } from "../../contexts/autofill";
 import { notifyError, notifyWarning } from "../../library/notifications";
 import { unlockSourceByID } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
-import { setSourcePassword as setSourceAutofillPassword, storeAutofillCredentials } from "../../services/intermediateCredentials";
-import { authenticateBiometrics, getBiometricCredentialsForSource } from "../../services/biometrics";
+import {
+    setSourcePassword as setSourceAutofillPassword,
+    storeAutofillCredentials
+} from "../../services/intermediateCredentials";
+import {
+    authenticateBiometrics,
+    getBiometricCredentialsForSource
+} from "../../services/biometrics";
 import { VaultDetails } from "../../types";
 import { Layerr } from "layerr";
 
@@ -64,10 +70,7 @@ const styles = StyleSheet.create({
 });
 
 function errorPermitsOfflineUse(err: Error) {
-    const {
-        authFailure,
-        status
-    } = Layerr.info(err) || {};
+    const { authFailure, status } = Layerr.info(err) || {};
     if (authFailure === true || status === 401 || status === 403) {
         return false;
     }
@@ -77,7 +80,11 @@ function errorPermitsOfflineUse(err: Error) {
     return true;
 }
 
-async function handleStandardVaultUnlock(sourceID: VaultSourceID, password: string, offlineMode: boolean = false): Promise<void> {
+async function handleStandardVaultUnlock(
+    sourceID: VaultSourceID,
+    password: string,
+    offlineMode: boolean = false
+): Promise<void> {
     setBusyState("Unlocking vault");
     await unlockSourceByID(sourceID, password, offlineMode);
     if (!offlineMode) {
@@ -95,40 +102,46 @@ export function VaultMenu(props: VaultMenuProps) {
         onVaultOpen = null,
         vaultsOverride
     } = props;
-    const {
-        isAutofill
-    } = useContext(AutofillContext);
+    const { isAutofill } = useContext(AutofillContext);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const vaults: Array<VaultDetails> = useVaults(vaultsOverride);
     const [unlockVaultTarget, setUnlockVaultTarget] = useState<VaultSourceID>(null);
-    const [offlineVaultTarget, setOfflineVaultTarget] = useState<{ sourceID: VaultSourceID; password: string; }>(null);
+    const [offlineVaultTarget, setOfflineVaultTarget] = useState<{
+        sourceID: VaultSourceID;
+        password: string;
+    }>(null);
     const biometricsEnabled = useBiometricsAvailable();
-    const vaultTargetHasBiometrics = useBiometricsEnabledForSource(vaults.length > 0 && vaults[selectedIndex] ? vaults[selectedIndex].id : null);
+    const vaultTargetHasBiometrics = useBiometricsEnabledForSource(
+        vaults.length > 0 && vaults[selectedIndex] ? vaults[selectedIndex].id : null
+    );
     const handlePageSelect = useCallback(index => {
         setSelectedIndex(index);
     }, []);
     const handleAddVaultPress = useCallback(() => {
         navigation.navigate("AddVault");
     }, [navigation]);
-    const handleUnlockPromptComplete = useCallback((password: string, vaultTargetOverride: VaultSourceID = null) => {
-        const sourceID = vaultTargetOverride || unlockVaultTarget;
-        setUnlockVaultTarget(null);
-        handleVaultUnlock(sourceID, password)
-            .then(() => {
-                setSelectedIndex(0);
-                onVaultOpen(sourceID);
-            })
-            .catch(err => {
-                notifyError("Failed unlocking vault", err.message);
-                setBusyState(null);
-                if (errorPermitsOfflineUse(err)) {
-                    setOfflineVaultTarget({ sourceID, password });
-                    return;
-                }
-                console.error(err);
-                setUnlockVaultTarget(sourceID);
-            });
-    }, [onVaultOpen, unlockVaultTarget]);
+    const handleUnlockPromptComplete = useCallback(
+        (password: string, vaultTargetOverride: VaultSourceID = null) => {
+            const sourceID = vaultTargetOverride || unlockVaultTarget;
+            setUnlockVaultTarget(null);
+            handleVaultUnlock(sourceID, password)
+                .then(() => {
+                    setSelectedIndex(0);
+                    onVaultOpen(sourceID);
+                })
+                .catch(err => {
+                    notifyError("Failed unlocking vault", err.message);
+                    setBusyState(null);
+                    if (errorPermitsOfflineUse(err)) {
+                        setOfflineVaultTarget({ sourceID, password });
+                        return;
+                    }
+                    console.error(err);
+                    setUnlockVaultTarget(sourceID);
+                });
+        },
+        [onVaultOpen, unlockVaultTarget]
+    );
     const handleVaultUnlockOfflinePromptComplete = useCallback(() => {
         const { sourceID, password } = offlineVaultTarget;
         setOfflineVaultTarget(null);
@@ -193,15 +206,18 @@ export function VaultMenu(props: VaultMenuProps) {
                         source={BCUP_BENCH_IMG}
                         style={styles.placeholderImage}
                     />
-                    <Text category="h4" style={styles.noVaultHeading}>No Vaults</Text>
+                    <Text category="h4" style={styles.noVaultHeading}>
+                        No Vaults
+                    </Text>
                     <Text category="p1" style={styles.noVaultText}>
                         {isAutofill
                             ? "There aren't any vaults here. Enable auto-fill on a vault to access it here."
-                            : "There aren't any vaults here yet. Why not add one?"
-                        }
+                            : "There aren't any vaults here yet. Why not add one?"}
                     </Text>
                     {!isAutofill && (
-                        <Button onPress={handleAddVaultPress} style={styles.addButton}>Add Vault</Button>
+                        <Button onPress={handleAddVaultPress} style={styles.addButton}>
+                            Add Vault
+                        </Button>
                     )}
                 </Layout>
             )}

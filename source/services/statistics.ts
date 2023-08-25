@@ -16,14 +16,18 @@ export function getEmitter(): EventEmitter {
     return __emitter;
 }
 
-export async function getSourceItemsCount(sourceID: VaultSourceID): Promise<{ entries: number, groups: number }> {
+export async function getSourceItemsCount(
+    sourceID: VaultSourceID
+): Promise<{ entries: number; groups: number }> {
     const storage = getStorage();
     const key = `${STORAGE_PREFIX_SOURCE_STATISTICS}${sourceID}`;
     const res = await storage.getValue(key);
-    return res ? JSON.parse(res) : {
-        entries: 0,
-        groups: 0
-    };
+    return res
+        ? JSON.parse(res)
+        : {
+              entries: 0,
+              groups: 0
+          };
 }
 
 function getStorage(): AsyncStorageInterface {
@@ -36,7 +40,8 @@ function getStorage(): AsyncStorageInterface {
 export function updateSourceItemsCount(sourceID: VaultSourceID, entries: number, groups: number) {
     const storage = getStorage();
     const key = `${STORAGE_PREFIX_SOURCE_STATISTICS}${sourceID}`;
-    storage.setValue(key, JSON.stringify({ entries, groups }))
+    storage
+        .setValue(key, JSON.stringify({ entries, groups }))
         .then(() => {
             getEmitter().emit(`updated:${sourceID}`);
         })

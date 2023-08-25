@@ -14,11 +14,11 @@ import { OTPCode } from "../../types";
 const styles = StyleSheet.create({
     listContainer: {},
     contentContainer: {
-      paddingHorizontal: 8,
-      paddingVertical: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 4
     },
     item: {
-      marginVertical: 4,
+        marginVertical: 4
     },
     card: {
         flex: 1,
@@ -38,24 +38,24 @@ const styles = StyleSheet.create({
     }
 });
 
-function renderItem(info: { item: OTPCode }, onCodePress: (item: OTPCode) => void, isLast: boolean) {
-    return (
-        <Code code={info.item} last={isLast} onPress={onCodePress} />
-    );
+function renderItem(
+    info: { item: OTPCode },
+    onCodePress: (item: OTPCode) => void,
+    isLast: boolean
+) {
+    return <Code code={info.item} last={isLast} onPress={onCodePress} />;
 }
 
 export function AllCodesScreen({ navigation }) {
     useTabFocusState("codes", "Codes");
-    const {
-        allOTPCodes
-    } = useContext(OTPContext);
+    const { allOTPCodes } = useContext(OTPContext);
     const handleItemPress = useCallback((code: OTPCode) => {
         Clipboard.setString(code.currentCode);
         notifySuccess("Code Copied", `'${code.otpTitle}' code was copied`);
     }, []);
     const otpCount = useMemo(() => allOTPCodes.length, [allOTPCodes]);
-    const renderWrapper = useMemo(() =>
-        info => renderItem(info, handleItemPress, info.index === (otpCount - 1)),
+    const renderWrapper = useMemo(
+        () => info => renderItem(info, handleItemPress, info.index === otpCount - 1),
         [otpCount]
     );
     return (

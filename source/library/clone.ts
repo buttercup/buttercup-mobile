@@ -3,10 +3,12 @@ interface BasicObject {
 }
 
 function cloneArray(arr: Array<any>): Array<any> {
-    return arr.map(
-        item => Array.isArray(item)
+    return arr.map(item =>
+        Array.isArray(item)
             ? cloneArray(item)
-            : (item && typeof item === "object") ? cloneObject(item) : item
+            : item && typeof item === "object"
+            ? cloneObject(item)
+            : item
     );
 }
 

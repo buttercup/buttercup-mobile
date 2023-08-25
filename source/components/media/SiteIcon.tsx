@@ -17,11 +17,11 @@ const ICON_CREDITCARD = require("../../../resources/images/icons/credit-card.png
 
 const ICON_LOOKUP = "https://icon.buttercup.pw/icon/";
 const ICON_TYPES = {
-  [EntryType.Login]: ICON_LOGIN,
-  [EntryType.Website]: ICON_WEBSITE,
-  [EntryType.SSHKey]: ICON_SSH,
-  [EntryType.Note]: ICON_NOTE,
-  [EntryType.CreditCard]: ICON_CREDITCARD
+    [EntryType.Login]: ICON_LOGIN,
+    [EntryType.Website]: ICON_WEBSITE,
+    [EntryType.SSHKey]: ICON_SSH,
+    [EntryType.Note]: ICON_NOTE,
+    [EntryType.CreditCard]: ICON_CREDITCARD
 };
 
 const styles = StyleSheet.create({
@@ -31,11 +31,7 @@ const styles = StyleSheet.create({
 });
 
 export function SiteIcon(props: SiteIconProps) {
-    const {
-        domain,
-        size,
-        type = DEFAULT_ENTRY_TYPE
-    } = props;
+    const { domain, size, type = DEFAULT_ENTRY_TYPE } = props;
     return (
         <View style={styles.imageContainer}>
             {domain && (

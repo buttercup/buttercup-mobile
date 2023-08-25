@@ -43,16 +43,19 @@ export function AutofillHomeScreen({ navigation }) {
         },
         [navigation]
     );
-    const handleVaultUnlock = useCallback(async (sourceID: VaultSourceID, password: string) => {
-        const credentials = await getCredentialsForVault(sourceID, password);
-        AUTOFILL.entries = {
-            ...AUTOFILL.entries,
-            [sourceID]: credentials
-        };
-        VAULT.currentSource = sourceID;
-        setUnlockedVaults([...unlockedVaults, sourceID]);
-        navigation.navigate("Items");
-    }, [navigation, unlockedVaults]);
+    const handleVaultUnlock = useCallback(
+        async (sourceID: VaultSourceID, password: string) => {
+            const credentials = await getCredentialsForVault(sourceID, password);
+            AUTOFILL.entries = {
+                ...AUTOFILL.entries,
+                [sourceID]: credentials
+            };
+            VAULT.currentSource = sourceID;
+            setUnlockedVaults([...unlockedVaults, sourceID]);
+            navigation.navigate("Items");
+        },
+        [navigation, unlockedVaults]
+    );
     const cancelAutoFill = useCallback(() => {
         AutoFillBridge.cancelAutoFill();
     }, []);
@@ -60,10 +63,14 @@ export function AutofillHomeScreen({ navigation }) {
         let mounted = true;
         getStoredVaults().then(storedVaults => {
             if (!mounted) return;
-            setVaults(storedVaults.map(vault => ({
-                ...vault,
-                state: unlockedVaults.includes(vault.id) ? VaultSourceStatus.Unlocked : VaultSourceStatus.Locked
-            })));
+            setVaults(
+                storedVaults.map(vault => ({
+                    ...vault,
+                    state: unlockedVaults.includes(vault.id)
+                        ? VaultSourceStatus.Unlocked
+                        : VaultSourceStatus.Locked
+                }))
+            );
         });
         return () => {
             mounted = false;
@@ -75,12 +82,7 @@ export function AutofillHomeScreen({ navigation }) {
             <TopNavigation
                 title={props => (
                     <Layout style={styles.header}>
-                        <Avatar
-                            shape="square"
-                            size="tiny"
-                            source={BCUP_ICON}
-                            style={styles.logo}
-                        />
+                        <Avatar shape="square" size="tiny" source={BCUP_ICON} style={styles.logo} />
                         <Text {...props} category="h5">
                             Buttercup
                         </Text>

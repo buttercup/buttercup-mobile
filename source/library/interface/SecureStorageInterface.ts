@@ -32,10 +32,7 @@ export class SecureStorageInterface {
 
     async setItem(key: string, value: StorableValue): Promise<void> {
         try {
-            await EncryptedStorage.setItem(
-                key,
-                JSON.stringify(value)
-            );
+            await EncryptedStorage.setItem(key, JSON.stringify(value));
         } catch (err) {
             notifyError("Failed writing storage", err.message);
         }

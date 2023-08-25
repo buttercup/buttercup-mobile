@@ -1,9 +1,21 @@
-import { EntryType, EntryURLType, VaultSource, VaultSourceID, getEntryURLs, VaultSourceStatus } from "buttercup";
+import {
+    EntryType,
+    EntryURLType,
+    VaultSource,
+    VaultSourceID,
+    getEntryURLs,
+    VaultSourceStatus
+} from "buttercup";
 import { getAdapter } from "./appEnv";
 import { getVaultSource } from "./buttercup";
 import { getVaultConfig } from "./config";
 import { AutoFillBridge } from "./autofillBridge";
-import { IntermediateEntry, IntermediateVault, StoredAutofillEntries, VaultDetails } from "../types";
+import {
+    IntermediateEntry,
+    IntermediateVault,
+    StoredAutofillEntries,
+    VaultDetails
+} from "../types";
 import { notifyError } from "../library/notifications";
 import { getSecureStorage } from "./storage";
 
@@ -13,14 +25,17 @@ const SOURCE_STORAGE_KEY = "@@autofillSources";
 
 let __sourcePasswords: Record<VaultSourceID, string> = {};
 
-export async function getCredentialsForVault(sourceID: VaultSourceID, password: string): Promise<Array<IntermediateEntry>> {
+export async function getCredentialsForVault(
+    sourceID: VaultSourceID,
+    password: string
+): Promise<Array<IntermediateEntry>> {
     const vaults = await getStoredIntermediateVaults();
     const vault = vaults.find(v => v.id === sourceID);
     if (!vault) {
         throw new Error(`No autofill vault found: ${sourceID}`);
     }
     const iocaneAdapter = getAdapter();
-    const decryptedAuth = await iocaneAdapter.decrypt(vault.authToken, password) as string;
+    const decryptedAuth = (await iocaneAdapter.decrypt(vault.authToken, password)) as string;
     if (decryptedAuth !== vault.id) {
         throw new Error(`Failed authenticating encrypted autofill vault`);
     }
@@ -29,7 +44,9 @@ export async function getCredentialsForVault(sourceID: VaultSourceID, password: 
 }
 
 async function getStoredIntermediateVaults(): Promise<Array<IntermediateVault>> {
-    const sources = await getSecureStorage().getItem(SOURCE_STORAGE_KEY) as Array<IntermediateVault>;
+    const sources = (await getSecureStorage().getItem(
+        SOURCE_STORAGE_KEY
+    )) as Array<IntermediateVault>;
     return Array.isArray(sources) ? sources : [];
 }
 
@@ -59,7 +76,10 @@ export function setSourcePassword(sourceID: VaultSourceID, password: string) {
     __sourcePasswords[sourceID] = password;
 }
 
-export async function storeAutofillCredentials(sourceID: VaultSourceID, override: boolean = false): Promise<void> {
+export async function storeAutofillCredentials(
+    sourceID: VaultSourceID,
+    override: boolean = false
+): Promise<void> {
     const vaultConfig = getVaultConfig(sourceID);
     if (vaultConfig.autofill || override) {
         const source = getVaultSource(sourceID);
@@ -79,7 +99,9 @@ async function storeCredentialsForVault(source: VaultSource): Promise<void> {
 
     const { vault } = source;
     // Get all entries that are either Logins or Websites
-    const entries = vault.getAllEntries().filter(entry => AUTOFILLABLE_ENTRY_TYPES.includes(entry.getType()));
+    const entries = vault
+        .getAllEntries()
+        .filter(entry => AUTOFILLABLE_ENTRY_TYPES.includes(entry.getType()));
     // Update autofill entries
     const autofillEntries: StoredAutofillEntries = entries.reduce((output, entry) => {
         const urls = getEntryURLs(entry.getProperties(), EntryURLType.General);
@@ -88,9 +110,9 @@ async function storeCredentialsForVault(source: VaultSource): Promise<void> {
             [entry.id]: {
                 id: entry.id,
                 entryPath: source.name,
-                title: entry.getProperty("title") as string || "(Untitled entry)",
-                username: entry.getProperty("username") as string || "",
-                password: entry.getProperty("password") as string || "",
+                title: (entry.getProperty("title") as string) || "(Untitled entry)",
+                username: (entry.getProperty("username") as string) || "",
+                password: (entry.getProperty("password") as string) || "",
                 urls
             }
         };
@@ -100,7 +122,10 @@ async function storeCredentialsForVault(source: VaultSource): Promise<void> {
     // Prepare encryption test
     const iocaneAdapter = getAdapter();
     iocaneAdapter.setDerivationRounds(INTERMEDIATE_ENCRYPTION_ROUNDS);
-    const authToken = await iocaneAdapter.encrypt(source.id, __sourcePasswords[source.id]) as string;
+    const authToken = (await iocaneAdapter.encrypt(
+        source.id,
+        __sourcePasswords[source.id]
+    )) as string;
     // Store vault
     const sources = await getStoredIntermediateVaults();
     const existingSourceInd = sources.findIndex(src => src.id === source.id);

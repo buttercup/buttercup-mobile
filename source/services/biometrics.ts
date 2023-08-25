@@ -48,16 +48,19 @@ export async function disableBiometicsForSource(sourceID: VaultSourceID): Promis
     getBiometricEvents().emit(`biometrics-changed:${sourceID}`, { state: "disabled" });
 }
 
-export async function enableBiometricsForSource(sourceID: VaultSourceID, password: string): Promise<void> {
+export async function enableBiometricsForSource(
+    sourceID: VaultSourceID,
+    password: string
+): Promise<void> {
     await setSourcePassword(sourceID, password);
     getBiometricEvents().emit(`biometrics-changed:${sourceID}`, { state: "enabled" });
 }
 
 async function getBiometricCredentials(): Promise<KeychainCredentials> {
-    const keychainCreds = await getSecureStorage().getItem(TOUCH_UNLOCK_CRED_KEY) as KeychainCredentials;
-    return typeof keychainCreds === "object" && keychainCreds !== null
-        ? keychainCreds
-        : {};
+    const keychainCreds = (await getSecureStorage().getItem(
+        TOUCH_UNLOCK_CRED_KEY
+    )) as KeychainCredentials;
+    return typeof keychainCreds === "object" && keychainCreds !== null ? keychainCreds : {};
 }
 
 export async function getBiometricCredentialsForSource(sourceID: VaultSourceID): Promise<string> {

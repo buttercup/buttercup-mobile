@@ -24,7 +24,10 @@ import { setCodesForSource } from "./otpVault";
 import { removeMissingSources, removeSourceOTPs, setSourceOTPs } from "./otpAll";
 import { getVaultConfig, clearConfig } from "./config";
 import { updateSourceItemsCount } from "./statistics";
-import { setSourcePassword as setSourceAutofillPassword, storeAutofillCredentials } from "./intermediateCredentials";
+import {
+    setSourcePassword as setSourceAutofillPassword,
+    storeAutofillCredentials
+} from "./intermediateCredentials";
 import { registerAuthWatchers as registerGoogleAuthWatchers, writeNewEmptyVault } from "./google";
 import { notifyError } from "../library/notifications";
 import "../library/datasource/MobileLocalFileDatasource";
@@ -34,55 +37,80 @@ import { DatasourceConfig, OTP, VaultChooserItem, VaultDetails } from "../types"
 const __watchedVaultSources: Array<VaultSourceID> = [];
 let __mgr: VaultManager = null;
 
-async function addDropboxVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+async function addDropboxVault(
+    config: DatasourceConfig,
+    vaultPath: VaultChooserItem,
+    password: string
+): Promise<VaultSourceID> {
     const isNew = !vaultPath.identifier;
     const { name: filename } = vaultPath;
     const filePath = vaultPath.parent
         ? path.join(vaultPath.parent?.identifier ?? "/", filename)
         : path.join("/", filename);
-    const sourceCredentials = Credentials.fromDatasource({
-        ...config,
-        path: filePath
-    }, password);
+    const sourceCredentials = Credentials.fromDatasource(
+        {
+            ...config,
+            path: filePath
+        },
+        password
+    );
     const sourceCredentialsRaw = await sourceCredentials.toSecureString();
     const vaultMgr = getVaultManager();
-    const source = new VaultSource(filenameToVaultName(filename), config.type, sourceCredentialsRaw);
+    const source = new VaultSource(
+        filenameToVaultName(filename),
+        config.type,
+        sourceCredentialsRaw
+    );
     await vaultMgr.addSource(source);
     setBusyState("Unlocking Vault");
-    await source.unlock(
-        Credentials.fromPassword(password),
-        {
-            initialiseRemote: isNew
-        }
-    );
+    await source.unlock(Credentials.fromPassword(password), {
+        initialiseRemote: isNew
+    });
     return source.id;
 }
 
-async function addGoogleDriveVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+async function addGoogleDriveVault(
+    config: DatasourceConfig,
+    vaultPath: VaultChooserItem,
+    password: string
+): Promise<VaultSourceID> {
     const isNew = !vaultPath?.identifier;
     const { name: filename } = vaultPath;
     const fileID = isNew
-        ? await writeNewEmptyVault(config.token, (vaultPath.parent?.identifier as string) ?? null, filename, password)
+        ? await writeNewEmptyVault(
+              config.token,
+              (vaultPath.parent?.identifier as string) ?? null,
+              filename,
+              password
+          )
         : vaultPath.identifier;
-    const sourceCredentials = Credentials.fromDatasource({
-        ...config,
-        fileID
-    }, password);
+    const sourceCredentials = Credentials.fromDatasource(
+        {
+            ...config,
+            fileID
+        },
+        password
+    );
     const sourceCredentialsRaw = await sourceCredentials.toSecureString();
     const vaultMgr = getVaultManager();
-    const source = new VaultSource(filenameToVaultName(filename), config.type, sourceCredentialsRaw);
+    const source = new VaultSource(
+        filenameToVaultName(filename),
+        config.type,
+        sourceCredentialsRaw
+    );
     await vaultMgr.addSource(source);
     setBusyState("Unlocking Vault");
-    await source.unlock(
-        Credentials.fromPassword(password),
-        {
-            initialiseRemote: isNew
-        }
-    );
+    await source.unlock(Credentials.fromPassword(password), {
+        initialiseRemote: isNew
+    });
     return source.id;
 }
 
-async function addMobileLocalFileVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+async function addMobileLocalFileVault(
+    config: DatasourceConfig,
+    vaultPath: VaultChooserItem,
+    password: string
+): Promise<VaultSourceID> {
     const isNew = !vaultPath.identifier;
     const filename = vaultPath.name;
     let filePath = isNew
@@ -92,25 +120,34 @@ async function addMobileLocalFileVault(config: DatasourceConfig, vaultPath: Vaul
     const rootDir = LocalFileSystemInterface.getRootDirectory();
     filePath = path.relative(rootDir, filePath);
     // Prepare source credentials for ingesting
-    const sourceCredentials = Credentials.fromDatasource({
-        ...config,
-        filename: filePath
-    }, password);
+    const sourceCredentials = Credentials.fromDatasource(
+        {
+            ...config,
+            filename: filePath
+        },
+        password
+    );
     const sourceCredentialsRaw = await sourceCredentials.toSecureString();
     const vaultMgr = getVaultManager();
-    const source = new VaultSource(filenameToVaultName(filename as string), config.type, sourceCredentialsRaw);
+    const source = new VaultSource(
+        filenameToVaultName(filename as string),
+        config.type,
+        sourceCredentialsRaw
+    );
     await vaultMgr.addSource(source);
     setBusyState("Unlocking Vault");
-    await source.unlock(
-        Credentials.fromPassword(password),
-        {
-            initialiseRemote: isNew
-        }
-    );
+    await source.unlock(Credentials.fromPassword(password), {
+        initialiseRemote: isNew
+    });
     return source.id;
 }
 
-export async function addVault(type: string, config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+export async function addVault(
+    type: string,
+    config: DatasourceConfig,
+    vaultPath: VaultChooserItem,
+    password: string
+): Promise<VaultSourceID> {
     let sourceID: VaultSourceID;
     if (type === "dropbox") {
         sourceID = await addDropboxVault(config, vaultPath, password);
@@ -132,38 +169,49 @@ export async function addVault(type: string, config: DatasourceConfig, vaultPath
     return sourceID;
 }
 
-async function addWebDAVVault(config: DatasourceConfig, vaultPath: VaultChooserItem, password: string): Promise<VaultSourceID> {
+async function addWebDAVVault(
+    config: DatasourceConfig,
+    vaultPath: VaultChooserItem,
+    password: string
+): Promise<VaultSourceID> {
     const isNew = !vaultPath.identifier;
     const filename = vaultPath.name;
     const filePath = isNew
         ? path.join(vaultPath.parent?.identifier ?? "/", filename)
         : vaultPath.identifier;
-    const sourceCredentials = Credentials.fromDatasource({
-        ...config,
-        path: filePath
-    }, password);
+    const sourceCredentials = Credentials.fromDatasource(
+        {
+            ...config,
+            path: filePath
+        },
+        password
+    );
     const sourceCredentialsRaw = await sourceCredentials.toSecureString();
     const vaultMgr = getVaultManager();
-    const source = new VaultSource(filenameToVaultName(filename as string), config.type, sourceCredentialsRaw);
+    const source = new VaultSource(
+        filenameToVaultName(filename as string),
+        config.type,
+        sourceCredentialsRaw
+    );
     await vaultMgr.addSource(source);
     setBusyState("Unlocking Vault");
-    await source.unlock(
-        Credentials.fromPassword(password),
-        {
-            initialiseRemote: isNew
-        }
-    );
+    await source.unlock(Credentials.fromPassword(password), {
+        initialiseRemote: isNew
+    });
     return source.id;
 }
 
 async function attachVaultManagerWatchers() {
     const vaultManager = getVaultManager();
-    vaultManager.on("autoUpdateFailed", ({ source, error }: { source: VaultDetails, error: Error }) => {
-        console.error(`Auto update failed for source: ${source.id}`, error);
-        notifyError("Auto update failed", `Update failed for source: ${source.name}`);
-    });
+    vaultManager.on(
+        "autoUpdateFailed",
+        ({ source, error }: { source: VaultDetails; error: Error }) => {
+            console.error(`Auto update failed for source: ${source.id}`, error);
+            notifyError("Auto update failed", `Update failed for source: ${source.name}`);
+        }
+    );
     vaultManager.on("sourcesUpdated", async () => {
-        vaultManager.sources.forEach((source) => {
+        vaultManager.sources.forEach(source => {
             if (!__watchedVaultSources.includes(source.id)) {
                 source.on("updated", () => onVaultSourceUpdated(source));
                 source.on("unlocked", () => {
@@ -177,7 +225,11 @@ async function attachVaultManagerWatchers() {
     });
 }
 
-export async function createNewGroup(sourceID: VaultSourceID, groupName: string, parentGroupID: GroupID = null): Promise<GroupID> {
+export async function createNewGroup(
+    sourceID: VaultSourceID,
+    groupName: string,
+    parentGroupID: GroupID = null
+): Promise<GroupID> {
     const source = getVaultManager().getSourceForID(sourceID);
     let newGroupID: GroupID;
     if (parentGroupID) {
@@ -307,9 +359,11 @@ export async function lockAllVaults() {
     for (const sourceID of sourceIDs) {
         setSourceAutofillPassword(sourceID, null);
     }
-    await Promise.all(unlockedSources.map(async source => {
-        await source.lock();
-    }));
+    await Promise.all(
+        unlockedSources.map(async source => {
+            await source.lock();
+        })
+    );
 }
 
 export async function lockVault(sourceID: VaultSourceID): Promise<void> {
@@ -349,15 +403,12 @@ function onVaultSourceUpdated(source: VaultSource) {
         const otpItems = extractVaultOTPItems(source);
         setCodesForSource(source.id, otpItems);
         processEasyAccessOTPsForSource(source.id)
-            .then(() => removeMissingSources(
-                getVaultManager().sources.map(source => source.id)
-            ))
+            .then(() => removeMissingSources(getVaultManager().sources.map(source => source.id)))
             .catch(err => {
                 console.error(err);
                 notifyError("Failed processing OTPs", err.message);
             });
     } else if (source.status === VaultSourceStatus.Locked) {
-
     }
 }
 
@@ -385,8 +436,12 @@ export async function renameVaultSource(sourceID: VaultSourceID, name: string) {
     source.rename(name);
 }
 
-export async function saveExistingEntryChanges(sourceID: VaultSourceID, entryID: EntryID, facade: EntryFacade): Promise<void> {
-    const vaultMgr =  getVaultManager();
+export async function saveExistingEntryChanges(
+    sourceID: VaultSourceID,
+    entryID: EntryID,
+    facade: EntryFacade
+): Promise<void> {
+    const vaultMgr = getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);
     const entry = source.vault.findEntryByID(entryID);
     if (!entry) {
@@ -397,8 +452,12 @@ export async function saveExistingEntryChanges(sourceID: VaultSourceID, entryID:
     await storeAutofillCredentials(sourceID);
 }
 
-export async function saveNewEntry(sourceID: VaultSourceID, groupID: GroupID, facade: EntryFacade): Promise<EntryID> {
-    const vaultMgr =  getVaultManager();
+export async function saveNewEntry(
+    sourceID: VaultSourceID,
+    groupID: GroupID,
+    facade: EntryFacade
+): Promise<EntryID> {
+    const vaultMgr = getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);
     const group = source.vault.findGroupByID(groupID);
     if (!group) {
@@ -415,8 +474,12 @@ export async function sourceHasOfflineCopy(sourceID: VaultSourceID): Promise<boo
     return vaultMgr.getSourceForID(sourceID)?.checkOfflineCopy() ?? false;
 }
 
-export async function unlockSourceByID(sourceID: VaultSourceID, password: string, offlineMode: boolean = false): Promise<void> {
-    const vaultMgr =  getVaultManager();
+export async function unlockSourceByID(
+    sourceID: VaultSourceID,
+    password: string,
+    offlineMode: boolean = false
+): Promise<void> {
+    const vaultMgr = getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);
     if (source.status !== VaultSourceStatus.Locked) {
         throw new Error(`Cannot unlock vault: Vault in invalid state: ${source.status}`);
@@ -427,7 +490,10 @@ export async function unlockSourceByID(sourceID: VaultSourceID, password: string
     });
 }
 
-export async function verifySourcePassword(sourceID: VaultSourceID, password: string): Promise<boolean> {
+export async function verifySourcePassword(
+    sourceID: VaultSourceID,
+    password: string
+): Promise<boolean> {
     const vaultMgr = getVaultManager();
     const source = vaultMgr.getSourceForID(sourceID);
     return source.testMasterPassword(password);

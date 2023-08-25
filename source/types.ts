@@ -10,10 +10,7 @@ import {
     VaultSourceID,
     VaultSourceStatus
 } from "buttercup";
-import {
-    ReactChild,
-    ReactChildren
-} from "react";
+import { ReactChild, ReactChildren } from "react";
 
 export type ChildElements = ReactChild | ReactChildren | Array<ReactChild> | Array<ReactChildren>;
 
@@ -21,10 +18,15 @@ export interface DatasourceConfigurationMobileLocalFile extends DatasourceConfig
     filename: string;
 }
 
-export type DatasourceConfig = DatasourceConfigurationDropbox | DatasourceConfigurationGoogleDrive | DatasourceConfigurationWebDAV | DatasourceConfigurationMobileLocalFile | {
-    type: string;
-    [key: string]: any;
-};
+export type DatasourceConfig =
+    | DatasourceConfigurationDropbox
+    | DatasourceConfigurationGoogleDrive
+    | DatasourceConfigurationWebDAV
+    | DatasourceConfigurationMobileLocalFile
+    | {
+          type: string;
+          [key: string]: any;
+      };
 
 export interface GoogleOAuthToken {
     accessToken: string;

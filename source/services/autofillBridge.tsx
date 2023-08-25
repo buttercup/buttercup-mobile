@@ -10,7 +10,10 @@ export interface AutofillBridgeInterface {
     completeAutoFill: (username: string, password: string, entryPath: string) => Promise<void>;
     getEntriesForSourceID: (sourceID: VaultSourceID) => Promise<StoredAutofillEntries>;
     removeEntriesForSourceID: (sourceID: VaultSourceID) => Promise<void>;
-    updateEntriesForSourceID: (sourceID: VaultSourceID, entries: Record<EntryID, IntermediateEntry>) => Promise<void>;
+    updateEntriesForSourceID: (
+        sourceID: VaultSourceID,
+        entries: Record<EntryID, IntermediateEntry>
+    ) => Promise<void>;
 }
 
 const { AutoFillBridge } = NativeModules as { AutoFillBridge: AutofillBridgeInterface };

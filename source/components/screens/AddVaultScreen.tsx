@@ -88,24 +88,32 @@ export function AddVaultScreen({ navigation }) {
     const [connectionDetailsValid, setConnectionDetailsValid] = useState<boolean>(false);
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [allComplete, setAllComplete] = useState<boolean>(false);
-    const [datasourceConfig, setDatasourceConfig] = useState<DatasourceConfig | TemporaryDatasourceConfig>({
+    const [datasourceConfig, setDatasourceConfig] = useState<
+        DatasourceConfig | TemporaryDatasourceConfig
+    >({
         type: null
     });
     const [vaultPassword, setVaultPassword] = useState<string>("");
-    const handleVaultTypeSelection = useCallback((type: string) => {
-        setVaultType(type);
-        setDatasourceConfig({
-            ...datasourceConfig,
-            type
-        });
-    }, [datasourceConfig]);
-    const handleConnectionDetailsUpdate = useCallback((isValid: boolean, dsConfig: DatasourceConfig) => {
-        setConnectionDetailsValid(isValid);
-        setDatasourceConfig({
-            ...datasourceConfig,
-            ...dsConfig
-        });
-    }, [datasourceConfig]);
+    const handleVaultTypeSelection = useCallback(
+        (type: string) => {
+            setVaultType(type);
+            setDatasourceConfig({
+                ...datasourceConfig,
+                type
+            });
+        },
+        [datasourceConfig]
+    );
+    const handleConnectionDetailsUpdate = useCallback(
+        (isValid: boolean, dsConfig: DatasourceConfig) => {
+            setConnectionDetailsValid(isValid);
+            setDatasourceConfig({
+                ...datasourceConfig,
+                ...dsConfig
+            });
+        },
+        [datasourceConfig]
+    );
     const handleConfirmationPasswordUpdate = useCallback((password: string) => {
         setVaultPassword(password);
     }, []);
@@ -117,7 +125,10 @@ export function AddVaultScreen({ navigation }) {
             .then(() => {
                 setBusyState(null);
                 const vaultTypeName = VAULT_TYPES[vaultType].title;
-                notifySuccess("Successfully added vault", `${vaultTypeName} vault was added and unlocked`);
+                notifySuccess(
+                    "Successfully added vault",
+                    `${vaultTypeName} vault was added and unlocked`
+                );
                 navigateBack();
             })
             .catch(err => {
@@ -132,7 +143,14 @@ export function AddVaultScreen({ navigation }) {
         <SafeAreaView style={{ flex: 1 }}>
             <TopNavigation title="Add Vault" alignment="center" accessoryLeft={BackAction} />
             <Divider />
-            <Layout style={{ flex: 1, flexDirection: "column", justifyContent: "flex-start", alignItems: "center" }}>
+            <Layout
+                style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                    alignItems: "center"
+                }}
+            >
                 <ProgressSteps
                     activeLabelColor={theme["color-info-default"]}
                     activeStepIconBorderColor={theme["color-primary-active"]}
@@ -150,7 +168,9 @@ export function AddVaultScreen({ navigation }) {
                         previousBtnTextStyle={styles.previousBtnTextStyle}
                     >
                         <Layout style={styles.vaultTypeLayout}>
-                            <Text style={styles.vaultTypeLayoutHeading} category="s1">Vault Type</Text>
+                            <Text style={styles.vaultTypeLayoutHeading} category="s1">
+                                Vault Type
+                            </Text>
                             <TypeChooser onSelectType={handleVaultTypeSelection} />
                         </Layout>
                     </ProgressStep>
@@ -163,7 +183,12 @@ export function AddVaultScreen({ navigation }) {
                         <Layout style={styles.connectionDetailsLayout}>
                             {vaultType && (
                                 <>
-                                    <Text style={styles.connectionDetailsLayoutHeading} category="s1">Connection</Text>
+                                    <Text
+                                        style={styles.connectionDetailsLayoutHeading}
+                                        category="s1"
+                                    >
+                                        Connection
+                                    </Text>
                                     <ConnectionDetails
                                         onCanContinue={handleConnectionDetailsUpdate}
                                         vaultType={vaultType}
@@ -179,9 +204,7 @@ export function AddVaultScreen({ navigation }) {
                         previousBtnTextStyle={styles.previousBtnTextStyle}
                     >
                         <Layout level="2" style={styles.vaultChooserLayout}>
-                            <VaultChooser
-                                onSelectVault={setChosenVaultPath}
-                            />
+                            <VaultChooser onSelectVault={setChosenVaultPath} />
                         </Layout>
                     </ProgressStep>
                     <ProgressStep

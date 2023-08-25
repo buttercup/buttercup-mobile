@@ -28,9 +28,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const SearchIcon = props => (
-    <Icon {...props} name="search-outline" />
-);
+const SearchIcon = props => <Icon {...props} name="search-outline" />;
 
 export function SearchBar(props: SearchBarProps) {
     const { debounceDelay = 450, onTermChange = NOOP, onTermUpdate } = props;

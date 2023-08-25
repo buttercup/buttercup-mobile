@@ -1,14 +1,6 @@
-import {
-    EntryID,
-    SearchResult,
-    VaultEntrySearch,
-    VaultSource,
-    VaultSourceID
-} from "buttercup";
+import { EntryID, SearchResult, VaultEntrySearch, VaultSource, VaultSourceID } from "buttercup";
 
-export type {
-    SearchResult
-} from "buttercup";
+export type { SearchResult } from "buttercup";
 
 interface SearchCache {
     [sourceID: string]: VaultEntrySearch;
@@ -28,7 +20,7 @@ export async function searchSingleVault(
 ): Promise<Array<SearchResult>> {
     const search = __searchCache[sourceID];
     if (!search) return [];
-    const results =  search.searchByTerm(term);
+    const results = search.searchByTerm(term);
     const seenIDs = new Set<EntryID>([]);
     return results.filter(result => {
         if (seenIDs.has(result.id)) return false;
@@ -39,7 +31,7 @@ export async function searchSingleVault(
 
 export async function updateSearchCaches(unlockedSources: Array<VaultSource>) {
     const missingVaults = Object.keys(__searchCache).filter(
-        (sourceID) => !unlockedSources.find((source) => source.id === sourceID)
+        sourceID => !unlockedSources.find(source => source.id === sourceID)
     );
     for (const missing of missingVaults) {
         delete __searchCache[missing];
@@ -47,10 +39,10 @@ export async function updateSearchCaches(unlockedSources: Array<VaultSource>) {
     for (const source of unlockedSources) {
         __searchCache[source.id] = __searchCache[source.id] || new VaultEntrySearch([source.vault]);
     }
-    __primarySearch = new VaultEntrySearch(unlockedSources.map((source) => source.vault));
+    __primarySearch = new VaultEntrySearch(unlockedSources.map(source => source.vault));
     await Promise.all([
         __primarySearch.prepare(),
-        ...Object.keys(__searchCache).map(async (sourceID) => {
+        ...Object.keys(__searchCache).map(async sourceID => {
             await __searchCache[sourceID].prepare();
         })
     ]);

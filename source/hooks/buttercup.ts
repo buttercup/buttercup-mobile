@@ -1,7 +1,22 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Entry, EntryFacade, EntryID, Group, Vault, VaultSourceID, createEntryFacade, GroupID, EntryType } from "buttercup";
+import {
+    Entry,
+    EntryFacade,
+    EntryID,
+    Group,
+    Vault,
+    VaultSourceID,
+    createEntryFacade,
+    GroupID,
+    EntryType
+} from "buttercup";
 import { useBiometricsEnabledForSource } from "./biometrics";
-import { getVault, getVaultManager, getVaultSource, sourceHasOfflineCopy } from "../services/buttercup";
+import {
+    getVault,
+    getVaultManager,
+    getVaultSource,
+    sourceHasOfflineCopy
+} from "../services/buttercup";
 import { getEmitter as getStatisticsEmitter, getSourceItemsCount } from "../services/statistics";
 import { VaultContentsItem, VaultDetails } from "../types";
 
@@ -24,20 +39,24 @@ function extractItems(vault: Vault, targetGroupID: string = null): Array<VaultCo
         groups = vault.getGroups();
     }
     return [
-        ...groups.map((group: Group): VaultContentsItem => ({
-            id: group.id,
-            title: group.getTitle(),
-            type: "group" as const,
-            isTrash: group.isTrash()
-        })),
-        ...entries.map((entry: Entry): VaultContentsItem => ({
-            id: entry.id,
-            title: entry.getProperty("title") as string,
-            type: "entry" as const,
-            entryType: entry.getType(),
-            entryProperties: entry.getProperties(),
-            isTrash: false
-        }))
+        ...groups.map(
+            (group: Group): VaultContentsItem => ({
+                id: group.id,
+                title: group.getTitle(),
+                type: "group" as const,
+                isTrash: group.isTrash()
+            })
+        ),
+        ...entries.map(
+            (entry: Entry): VaultContentsItem => ({
+                id: entry.id,
+                title: entry.getProperty("title") as string,
+                type: "entry" as const,
+                entryType: entry.getType(),
+                entryProperties: entry.getProperties(),
+                isTrash: false
+            })
+        )
     ];
 }
 
@@ -73,12 +92,15 @@ export function useEntries(sourceID: VaultSourceID): Array<Entry> {
 export function useEntryFacade(sourceID: VaultSourceID, entryID: EntryID): EntryFacade {
     const source = useMemo(() => getVaultSource(sourceID), [sourceID]);
     const [entryFacade, setEntryFacade] = useState<EntryFacade>(null);
-    const updateFacade = useCallback((vault: Vault) => {
-        const entry = vault.findEntryByID(entryID);
-        if (entry) {
-            setEntryFacade(createEntryFacade(entry));
-        }
-    }, [entryID]);
+    const updateFacade = useCallback(
+        (vault: Vault) => {
+            const entry = vault.findEntryByID(entryID);
+            if (entry) {
+                setEntryFacade(createEntryFacade(entry));
+            }
+        },
+        [entryID]
+    );
     useEffect(() => {
         const cb = () => updateFacade(source.vault);
         if (source.vault) cb();
@@ -91,12 +113,15 @@ export function useEntryFacade(sourceID: VaultSourceID, entryID: EntryID): Entry
 }
 
 export function useGroupTitle(sourceID: VaultSourceID, groupID: GroupID): string | null {
-    const vault = useMemo(() => sourceID ? getVault(sourceID) : null, [sourceID]);
+    const vault = useMemo(() => (sourceID ? getVault(sourceID) : null), [sourceID]);
     const group = useMemo(() => vault?.findGroupByID(groupID) ?? null, [vault]);
     return group?.getTitle() ?? null;
 }
 
-export function useVaultContents(sourceID: VaultSourceID, targetGroupID: string = null): Array<VaultContentsItem> {
+export function useVaultContents(
+    sourceID: VaultSourceID,
+    targetGroupID: string = null
+): Array<VaultContentsItem> {
     const source = useMemo(() => getVaultSource(sourceID), [sourceID]);
     const [contents, setContents] = useState<Array<VaultContentsItem>>([]);
     const updateContents = useCallback(() => {
@@ -149,9 +174,10 @@ export function useVaultStatistics(sourceID: VaultSourceID): VaultStatistics {
 
 export function useVaultWalletEntries(sourceID: VaultSourceID): Array<Entry> {
     const entries = useEntries(sourceID);
-    const walletEntries = useMemo(() => entries.filter(entry =>
-        [EntryType.CreditCard].includes(entry.getType())
-    ), [entries]);
+    const walletEntries = useMemo(
+        () => entries.filter(entry => [EntryType.CreditCard].includes(entry.getType())),
+        [entries]
+    );
     return walletEntries;
 }
 
@@ -160,14 +186,16 @@ export function useVaults(vaultsOveride?: Array<VaultDetails>): Array<VaultDetai
     const updateCallback = useCallback(() => {
         if (Array.isArray(vaultsOveride)) return;
         const vaultManager = getVaultManager();
-        setVaults(vaultManager.sources.map(source => ({
-            id: source.id,
-            name: source.name,
-            state: source.status,
-            order: source.order,
-            readOnly: !!source?.vault?.format.readOnly,
-            type: source.type
-        })));
+        setVaults(
+            vaultManager.sources.map(source => ({
+                id: source.id,
+                name: source.name,
+                state: source.status,
+                order: source.order,
+                readOnly: !!source?.vault?.format.readOnly,
+                type: source.type
+            }))
+        );
     }, [vaultsOveride]);
     useEffect(() => {
         if (Array.isArray(vaultsOveride)) {

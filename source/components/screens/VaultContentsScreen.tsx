@@ -24,11 +24,15 @@ export function VaultContentsScreen({ navigation, route }) {
     const { groupID = null } = route?.params ?? {};
     useTabFocusState(groupID ? `contents-${groupID}` : "contents", "Vault Contents");
     const { readOnly } = useContext(VaultContext);
-    const entryTypes: Array<PromptItem> = useMemo(() => Object.keys(ENTRY_TYPES).map(typeKey => ({
-        title: ENTRY_TYPES[typeKey].title,
-        slug: ENTRY_TYPES[typeKey].slug,
-        icon: getIconForEntryType(ENTRY_TYPES[typeKey].slug as EntryType)
-    })), []);
+    const entryTypes: Array<PromptItem> = useMemo(
+        () =>
+            Object.keys(ENTRY_TYPES).map(typeKey => ({
+                title: ENTRY_TYPES[typeKey].title,
+                slug: ENTRY_TYPES[typeKey].slug,
+                icon: getIconForEntryType(ENTRY_TYPES[typeKey].slug as EntryType)
+            })),
+        []
+    );
     const [currentSource] = useSingleState(VAULT, "currentSource");
     const screenTitle = useGroupTitle(currentSource, groupID) || "Contents";
     const deleteTitle = useGroupTitle(currentSource, groupID) || "Unknown Group";
@@ -36,28 +40,28 @@ export function VaultContentsScreen({ navigation, route }) {
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const [promptDeleteGroupID, setPromptDeleteGroupID] = useState<GroupID>(null);
     const [promptNewEntryType, setPromptNewEntryType] = useState(false);
-    const handleGroupCreate = useCallback(async (groupName: string) => {
-        setBusyState("Creating group");
-        setPromptGroupCreate(false);
-        let newGroupID: GroupID;
-        try {
-            newGroupID = await createNewGroup(currentSource, groupName, groupID);
-            notifySuccess("Group created", `Group was successfully created: ${groupName}`);
-        } catch (err) {
-            console.error(err);
-            notifyError("Failed creating group", err.message);
-        } finally {
-            setBusyState(null);
-        }
-        if (newGroupID) {
-            navigation.push(
-                "VaultContents",
-                {
+    const handleGroupCreate = useCallback(
+        async (groupName: string) => {
+            setBusyState("Creating group");
+            setPromptGroupCreate(false);
+            let newGroupID: GroupID;
+            try {
+                newGroupID = await createNewGroup(currentSource, groupName, groupID);
+                notifySuccess("Group created", `Group was successfully created: ${groupName}`);
+            } catch (err) {
+                console.error(err);
+                notifyError("Failed creating group", err.message);
+            } finally {
+                setBusyState(null);
+            }
+            if (newGroupID) {
+                navigation.push("VaultContents", {
                     groupID: newGroupID
-                }
-            );
-        }
-    }, [currentSource, groupID]);
+                });
+            }
+        },
+        [currentSource, groupID]
+    );
     const handleGroupDelete = useCallback(async () => {
         setBusyState("Deleting group");
         setPromptDeleteGroupID(null);
@@ -72,10 +76,13 @@ export function VaultContentsScreen({ navigation, route }) {
             setBusyState(null);
         }
     }, [currentSource, deleteTitle, groupID, navigation]);
-    const handleNewEntryCreate = useCallback((type: EntryType) => {
-        setPromptNewEntryType(false);
-        navigation.push("EditEntry", { entryID: null, entryType: type, groupID });
-    }, [groupID, navigation]);
+    const handleNewEntryCreate = useCallback(
+        (type: EntryType) => {
+            setPromptNewEntryType(false);
+            navigation.push("EditEntry", { entryID: null, entryType: type, groupID });
+        },
+        [groupID, navigation]
+    );
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -98,9 +105,7 @@ export function VaultContentsScreen({ navigation, route }) {
                                 />
                             )}
                         />
-                        {readOnly && (
-                            <ReadOnlyBar />
-                        )}
+                        {readOnly && <ReadOnlyBar />}
                         <Divider />
                     </Fragment>
                 )}

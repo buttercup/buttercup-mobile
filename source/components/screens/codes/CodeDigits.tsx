@@ -39,8 +39,12 @@ export function CodeDigits(props: CodeDigitsProps) {
     }
     return (
         <View style={styles.codeView}>
-            <Text category="h1" style={styles.text}>{code.substring(0, split)}</Text>
-            <Text category="h1" style={[styles.text, styles.textLast]}>{code.substring(split)}</Text>
+            <Text category="h1" style={styles.text}>
+                {code.substring(0, split)}
+            </Text>
+            <Text category="h1" style={[styles.text, styles.textLast]}>
+                {code.substring(split)}
+            </Text>
         </View>
     );
 }

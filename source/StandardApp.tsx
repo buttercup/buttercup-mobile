@@ -62,7 +62,8 @@ export function StandardApp() {
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center"
-                    }}>
+                    }}
+                >
                     <Spinner size="giant" />
                 </Layout>
             )}

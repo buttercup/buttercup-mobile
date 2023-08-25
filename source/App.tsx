@@ -34,11 +34,7 @@ function _App(props: AppProps = {}) {
     return (
         <VaultProvider sourceID={currentSource}>
             <AutofillProvider autofillURLs={props.serviceIdentifiers || []} isAutofill={isAutofill}>
-                {isAutofill && (
-                    <AutofillApp />
-                ) || (
-                    <StandardApp />
-                )}
+                {(isAutofill && <AutofillApp />) || <StandardApp />}
             </AutofillProvider>
         </VaultProvider>
     );

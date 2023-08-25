@@ -1,7 +1,11 @@
 import { VaultSourceID } from "buttercup";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { notifyError } from "../library/notifications";
-import { biometricsAvailable, biometicsEnabledForSource, getBiometricEvents } from "../services/biometrics";
+import {
+    biometricsAvailable,
+    biometicsEnabledForSource,
+    getBiometricEvents
+} from "../services/biometrics";
 
 export function useBiometricsAvailable(): boolean {
     const [available, setAvailable] = useState(false);

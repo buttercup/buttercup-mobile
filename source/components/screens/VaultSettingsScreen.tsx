@@ -1,5 +1,12 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { PermissionsAndroid, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import {
+    PermissionsAndroid,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    View
+} from "react-native";
 import { Card, IndexPath, Layout, Select, SelectItem, Text, Toggle } from "@ui-kitten/components";
 import { useSingleState } from "react-obstate";
 import ms from "ms";
@@ -11,10 +18,17 @@ import { useVaultConfiguration } from "../../hooks/config";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
 import { AutoFillBridge } from "../../services/autofillBridge";
-import { authenticateBiometrics, disableBiometicsForSource, enableBiometricsForSource } from "../../services/biometrics";
+import {
+    authenticateBiometrics,
+    disableBiometicsForSource,
+    enableBiometricsForSource
+} from "../../services/biometrics";
 import { processEasyAccessOTPsForSource, verifySourcePassword } from "../../services/buttercup";
 import { updateVaultConfig, VaultConfiguration } from "../../services/config";
-import { removeCredentialsForVault, storeAutofillCredentials } from "../../services/intermediateCredentials";
+import {
+    removeCredentialsForVault,
+    storeAutofillCredentials
+} from "../../services/intermediateCredentials";
 import { VAULT_AUTOLOCK_OPTIONS } from "../../symbols";
 
 const styles = StyleSheet.create({
@@ -50,9 +64,7 @@ function VaultSettingHeader({ subtitle = null, title }) {
     return (
         <View style={styles.settingHeaderView}>
             <Text category="h6">{title}</Text>
-            {subtitle && (
-                <Text category="s1">{subtitle}</Text>
-            )}
+            {subtitle && <Text category="s1">{subtitle}</Text>}
         </View>
     );
 }
@@ -64,25 +76,27 @@ export function VaultSettingsScreen({ navigation }) {
     // **
     // ** Config items
     // **
-    const handleUpdateConfig = useCallback(async (config: VaultConfiguration) => {
-        try {
-            await updateVaultConfig(currentSource, {
-                ...config
-            });
-        } catch (err) {
-            console.error(err);
-            notifyError("Failed updating configuration", err.message);
-        }
-    }, [currentSource]);
-    const vaultAutoLockCurrentIndex = useMemo<number>(
-        () => {
-            const index = VAULT_AUTOLOCK_OPTIONS.findIndex(
-                item => (item.delay && ms(item.delay) === vaultConfig.autoLockTime) || (!item.enabled && !vaultConfig.autoLockEnabled)
-            );
-            return index === -1 ? 0 : index;
+    const handleUpdateConfig = useCallback(
+        async (config: VaultConfiguration) => {
+            try {
+                await updateVaultConfig(currentSource, {
+                    ...config
+                });
+            } catch (err) {
+                console.error(err);
+                notifyError("Failed updating configuration", err.message);
+            }
         },
-        [vaultConfig]
+        [currentSource]
     );
+    const vaultAutoLockCurrentIndex = useMemo<number>(() => {
+        const index = VAULT_AUTOLOCK_OPTIONS.findIndex(
+            item =>
+                (item.delay && ms(item.delay) === vaultConfig.autoLockTime) ||
+                (!item.enabled && !vaultConfig.autoLockEnabled)
+        );
+        return index === -1 ? 0 : index;
+    }, [vaultConfig]);
     // **
     // ** Biometrics
     // **
@@ -94,7 +108,10 @@ export function VaultSettingsScreen({ navigation }) {
         disableBiometicsForSource(currentSource)
             .then(() => {
                 setBusyState(null);
-                notifySuccess("Biometrics disabled", "Successfully disabled biometrics for the current vault");
+                notifySuccess(
+                    "Biometrics disabled",
+                    "Successfully disabled biometrics for the current vault"
+                );
             })
             .catch(err => {
                 setBusyState(null);
@@ -102,27 +119,33 @@ export function VaultSettingsScreen({ navigation }) {
                 notifyError("Failed disabling biometrics", err.message);
             });
     }, [currentSource]);
-    const handleEnablingBiometrics = useCallback((vaultPassword: string) => {
-        setVerifyingBiometricsPassword(false);
-        setBusyState("Verifying vault password");
-        verifySourcePassword(currentSource, vaultPassword)
-            .then(passwordValid => {
-                if (!passwordValid) {
-                    throw new Error("Vault password invalid");
-                }
-                setBusyState("Saving biometrics state");
-                return enableBiometricsForSource(currentSource, vaultPassword)
-            })
-            .then(() => {
-                setBusyState(null);
-                notifySuccess("Biometrics enabled", "Successfully enabled biometrics for the current vault");
-            })
-            .catch(err => {
-                setBusyState(null);
-                console.error(err);
-                notifyError("Failed enabling biometrics", err.message);
-            });
-    }, [currentSource]);
+    const handleEnablingBiometrics = useCallback(
+        (vaultPassword: string) => {
+            setVerifyingBiometricsPassword(false);
+            setBusyState("Verifying vault password");
+            verifySourcePassword(currentSource, vaultPassword)
+                .then(passwordValid => {
+                    if (!passwordValid) {
+                        throw new Error("Vault password invalid");
+                    }
+                    setBusyState("Saving biometrics state");
+                    return enableBiometricsForSource(currentSource, vaultPassword);
+                })
+                .then(() => {
+                    setBusyState(null);
+                    notifySuccess(
+                        "Biometrics enabled",
+                        "Successfully enabled biometrics for the current vault"
+                    );
+                })
+                .catch(err => {
+                    setBusyState(null);
+                    console.error(err);
+                    notifyError("Failed enabling biometrics", err.message);
+                });
+        },
+        [currentSource]
+    );
     const handleBiometricsAuthentication = useCallback(() => {
         authenticateBiometrics()
             .then(succeeded => {
@@ -136,79 +159,101 @@ export function VaultSettingsScreen({ navigation }) {
                 notifyError("Failed validating biometrics", err.message);
             });
     }, []);
-    const handleBiometricsStateChange = useCallback((isChecked: boolean) => {
-        if (isChecked) {
-            handleBiometricsAuthentication();
-        } else {
-            handleDisablingBiometrics();
-        }
-    }, [handleDisablingBiometrics]);
+    const handleBiometricsStateChange = useCallback(
+        (isChecked: boolean) => {
+            if (isChecked) {
+                handleBiometricsAuthentication();
+            } else {
+                handleDisablingBiometrics();
+            }
+        },
+        [handleDisablingBiometrics]
+    );
     // **
     // ** Easy OTPs
     // **
-    const handleEasyOTPsActivation = useCallback(async (activated: boolean) => {
-        try {
-            await processEasyAccessOTPsForSource(currentSource, activated);
-        } catch (err) {
-            console.error(err);
-            notifyError("Failed apply OTP setting", err.message);
-        }
-    }, [currentSource]);
-    const handleEasyOTPsChange = useCallback((isChecked: boolean) => {
-        handleEasyOTPsActivation(isChecked)
-            .then(() => {
-                handleUpdateConfig({
-                    ...vaultConfig,
-                    otpAlwaysAvailable: isChecked
-                });
-            })
-            .catch(err => {
+    const handleEasyOTPsActivation = useCallback(
+        async (activated: boolean) => {
+            try {
+                await processEasyAccessOTPsForSource(currentSource, activated);
+            } catch (err) {
                 console.error(err);
-                notifyError("Failed modifying OTP setting", err.message);
-            });
-    }, [handleEasyOTPsActivation, vaultConfig]);
+                notifyError("Failed apply OTP setting", err.message);
+            }
+        },
+        [currentSource]
+    );
+    const handleEasyOTPsChange = useCallback(
+        (isChecked: boolean) => {
+            handleEasyOTPsActivation(isChecked)
+                .then(() => {
+                    handleUpdateConfig({
+                        ...vaultConfig,
+                        otpAlwaysAvailable: isChecked
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    notifyError("Failed modifying OTP setting", err.message);
+                });
+        },
+        [handleEasyOTPsActivation, vaultConfig]
+    );
     // **
     // ** Autofill
     // **
-    const handleAutofillActivation = useCallback(async (activated: boolean): Promise<void> => {
-        if (activated) {
-            if (Platform.OS === "android") {
-                const grantedStatus = await PermissionsAndroid.requestMultiple([
-                    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-                ]);
-                const writeGranted = grantedStatus["android.permission.WRITE_EXTERNAL_STORAGE"] === PermissionsAndroid.RESULTS.GRANTED;
-                const readGranted = grantedStatus["android.permission.READ_EXTERNAL_STORAGE"] === PermissionsAndroid.RESULTS.GRANTED;
-                if (!writeGranted || !readGranted) {
-                    notifyError("Permissions not granted", "Extra permissions required before Auto-fill can be enabled");
-                    return;
+    const handleAutofillActivation = useCallback(
+        async (activated: boolean): Promise<void> => {
+            if (activated) {
+                if (Platform.OS === "android") {
+                    const grantedStatus = await PermissionsAndroid.requestMultiple([
+                        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+                    ]);
+                    const writeGranted =
+                        grantedStatus["android.permission.WRITE_EXTERNAL_STORAGE"] ===
+                        PermissionsAndroid.RESULTS.GRANTED;
+                    const readGranted =
+                        grantedStatus["android.permission.READ_EXTERNAL_STORAGE"] ===
+                        PermissionsAndroid.RESULTS.GRANTED;
+                    if (!writeGranted || !readGranted) {
+                        notifyError(
+                            "Permissions not granted",
+                            "Extra permissions required before Auto-fill can be enabled"
+                        );
+                        return;
+                    }
                 }
+                // Prompt the user to set Buttercup as AutoFill provider in system settings
+                // This is likely NOT the correct place to trigger this - it should be in response to some UI
+                // that explicitly advises what autofill is and why they should enable it etc.
+                const isAutofillProviderSet = await AutoFillBridge.getAutoFillSystemStatus();
+                if (!isAutofillProviderSet) {
+                    await AutoFillBridge.openAutoFillSystemSettings();
+                }
+                await storeAutofillCredentials(currentSource, true);
+            } else {
+                await removeCredentialsForVault(currentSource);
             }
-            // Prompt the user to set Buttercup as AutoFill provider in system settings
-            // This is likely NOT the correct place to trigger this - it should be in response to some UI
-            // that explicitly advises what autofill is and why they should enable it etc.
-            const isAutofillProviderSet = await AutoFillBridge.getAutoFillSystemStatus();
-            if (!isAutofillProviderSet) {
-                await AutoFillBridge.openAutoFillSystemSettings();
-            }
-            await storeAutofillCredentials(currentSource, true);
-        } else {
-            await removeCredentialsForVault(currentSource);
-        }
-    }, [currentSource]);
-    const handleAutofillEnableChange = useCallback((isChecked: boolean) => {
-        handleAutofillActivation(isChecked)
-            .then(() => {
-                handleUpdateConfig({
-                    ...vaultConfig,
-                    autofill: isChecked
+        },
+        [currentSource]
+    );
+    const handleAutofillEnableChange = useCallback(
+        (isChecked: boolean) => {
+            handleAutofillActivation(isChecked)
+                .then(() => {
+                    handleUpdateConfig({
+                        ...vaultConfig,
+                        autofill: isChecked
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    notifyError("Failed modifying autofill setting", err.message);
                 });
-            })
-            .catch(err => {
-                console.error(err);
-                notifyError("Failed modifying autofill setting", err.message);
-            });
-    }, [handleAutofillActivation, vaultConfig]);
+        },
+        [handleAutofillActivation, vaultConfig]
+    );
     // **
     // ** Render
     // **
@@ -231,7 +276,11 @@ export function VaultSettingsScreen({ navigation }) {
                                 Enable automatic login form filling using this vault.
                             </Text>
                             <Toggle
-                                checked={!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL ? false : vaultConfig.autofill}
+                                checked={
+                                    !AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL
+                                        ? false
+                                        : vaultConfig.autofill
+                                }
                                 disabled={!AutoFillBridge.DEVICE_SUPPORTS_AUTOFILL}
                                 onChange={handleAutofillEnableChange}
                             >
@@ -258,7 +307,11 @@ export function VaultSettingsScreen({ navigation }) {
                                 disabled={!biometricsAvailable}
                                 onChange={handleBiometricsStateChange}
                             >
-                                {biometricsAvailable ? biometricsEnabled ? "Enabled" : "Disabled" : "Unavailable"}
+                                {biometricsAvailable
+                                    ? biometricsEnabled
+                                        ? "Enabled"
+                                        : "Disabled"
+                                    : "Unavailable"}
                             </Toggle>
                         </Layout>
                     </Card>
@@ -279,20 +332,19 @@ export function VaultSettingsScreen({ navigation }) {
                             <Select
                                 label="Vault auto lock time"
                                 selectedIndex={new IndexPath(vaultAutoLockCurrentIndex)}
-                                onSelect={(index: IndexPath) => handleUpdateConfig({
-                                    ...vaultConfig,
-                                    autoLockEnabled: VAULT_AUTOLOCK_OPTIONS[index.row].enabled,
-                                    autoLockTime: VAULT_AUTOLOCK_OPTIONS[index.row].enabled
-                                        ? ms(VAULT_AUTOLOCK_OPTIONS[index.row].delay)
-                                        : null
-                                })}
+                                onSelect={(index: IndexPath) =>
+                                    handleUpdateConfig({
+                                        ...vaultConfig,
+                                        autoLockEnabled: VAULT_AUTOLOCK_OPTIONS[index.row].enabled,
+                                        autoLockTime: VAULT_AUTOLOCK_OPTIONS[index.row].enabled
+                                            ? ms(VAULT_AUTOLOCK_OPTIONS[index.row].delay)
+                                            : null
+                                    })
+                                }
                                 value={VAULT_AUTOLOCK_OPTIONS[vaultAutoLockCurrentIndex].title}
                             >
                                 {VAULT_AUTOLOCK_OPTIONS.map(option => (
-                                    <SelectItem
-                                        key={option.title}
-                                        title={option.title}
-                                    />
+                                    <SelectItem key={option.title} title={option.title} />
                                 ))}
                             </Select>
                         </Layout>

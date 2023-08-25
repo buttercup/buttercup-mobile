@@ -11,7 +11,6 @@ import { VAULT } from "../../state/vault";
 export function HomeScreen({ navigation }) {
     const handleVaultOpen = useCallback(
         (sourceID: VaultSourceID) => {
-            // CURRENT_SOURCE.set(sourceID);
             VAULT.currentSource = sourceID;
             navigation.navigate("Vault");
         },

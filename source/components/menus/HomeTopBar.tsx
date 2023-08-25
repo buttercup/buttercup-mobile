@@ -141,10 +141,7 @@ function MenuIcon(props) {
 }
 
 export function HomeTopBar(props: HomeTopBarProps) {
-    const {
-        leftMenu = null,
-        navigation
-    } = props;
+    const { leftMenu = null, navigation } = props;
     return (
         <>
             <TopNavigation
@@ -158,9 +155,7 @@ export function HomeTopBar(props: HomeTopBarProps) {
                 )}
                 alignment="center"
                 accessoryLeft={props =>
-                    leftMenu === "vaults"
-                        ? <MenuButton {...props} navigation={navigation} />
-                        : null
+                    leftMenu === "vaults" ? <MenuButton {...props} navigation={navigation} /> : null
                 }
             />
             <Divider />

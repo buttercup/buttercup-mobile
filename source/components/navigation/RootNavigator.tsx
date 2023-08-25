@@ -45,7 +45,7 @@ const ModalNavigator = () => (
 );
 
 const RootNavigator = () => (
-    <Navigator screenOptions={{ headerShown: false }} mode="modal">
+    <Navigator screenOptions={{ headerShown: false, presentation: "modal" }}>
         <Screen name="Main" component={StandardNavigator} />
         <Screen name="Modal" component={ModalNavigator} />
     </Navigator>

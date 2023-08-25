@@ -34,14 +34,16 @@ export function SearchScreen({ navigation }) {
         setSearching(true);
         searchSingleVault(currentSource, searchTerm)
             .then((newResults: Array<SearchResult>) => {
-                setResults(newResults.map(res => ({
-                    id: res.id,
-                    title: res.properties.title,
-                    type: "entry",
-                    groupID: res.groupID,
-                    entryProperties: res.properties,
-                    isTrash: false
-                })));
+                setResults(
+                    newResults.map(res => ({
+                        id: res.id,
+                        title: res.properties.title,
+                        type: "entry",
+                        groupID: res.groupID,
+                        entryProperties: res.properties,
+                        isTrash: false
+                    }))
+                );
                 setCurrentSearchTerm(searchTerm);
                 setSearching(false);
             })
@@ -53,21 +55,14 @@ export function SearchScreen({ navigation }) {
     }, [searchTerm, currentSearchTerm, searching, currentSource]);
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <SearchBar
-                onTermChange={setNextTerm}
-                onTermUpdate={setSearchTerm}
-            />
-            {(currentSearchTerm !== nextTerm) && (
+            <SearchBar onTermChange={setNextTerm} onTermUpdate={setSearchTerm} />
+            {currentSearchTerm !== nextTerm && (
                 <Layout level="2" style={styles.spinnerContainer}>
                     <Spinner status="info" size="giant" />
                 </Layout>
             )}
             <Layout style={{ flex: 1 }}>
-                <VaultContentsList
-                    contents={results}
-                    navigation={navigation}
-                    type="search"
-                />
+                <VaultContentsList contents={results} navigation={navigation} type="search" />
             </Layout>
         </SafeAreaView>
     );

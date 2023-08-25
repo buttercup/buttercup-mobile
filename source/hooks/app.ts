@@ -4,11 +4,14 @@ import { useDebouncedCallback } from "use-debounce";
 
 export function useAppState(): AppStateStatus {
     const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
-    const handleStateChange = useCallback(nextAppState => {
-        if (nextAppState !== appState) {
-            setAppState(nextAppState);
-        }
-    }, [appState]);
+    const handleStateChange = useCallback(
+        nextAppState => {
+            if (nextAppState !== appState) {
+                setAppState(nextAppState);
+            }
+        },
+        [appState]
+    );
     useEffect(() => {
         AppState.addEventListener("change", handleStateChange);
         return () => {

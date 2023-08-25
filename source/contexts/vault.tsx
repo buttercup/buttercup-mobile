@@ -17,9 +17,7 @@ interface VaultProviderProps {
 export const VaultContext = React.createContext<IVaultContext>({} as IVaultContext);
 
 export function VaultProvider(props: VaultProviderProps) {
-    const {
-        sourceID
-    } = props;
+    const { sourceID } = props;
     const [readOnly, setReadOnly] = useState<boolean>(false);
     // Init
     useEffect(() => {
@@ -33,14 +31,12 @@ export function VaultProvider(props: VaultProviderProps) {
         };
     }, [sourceID]);
     // Build context
-    const context: IVaultContext = useMemo(() => ({
-        readOnly,
-        sourceID
-    }), [
-        readOnly,
-        sourceID
-    ]);
-    return (
-        <VaultContext.Provider value={context}>{props.children}</VaultContext.Provider>
+    const context: IVaultContext = useMemo(
+        () => ({
+            readOnly,
+            sourceID
+        }),
+        [readOnly, sourceID]
     );
+    return <VaultContext.Provider value={context}>{props.children}</VaultContext.Provider>;
 }

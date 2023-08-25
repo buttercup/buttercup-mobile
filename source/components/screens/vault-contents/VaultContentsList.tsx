@@ -23,11 +23,11 @@ const styles = StyleSheet.create({
         padding: 0
     },
     contentContainer: {
-      paddingHorizontal: 8,
-      paddingVertical: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 4
     },
     item: {
-      marginVertical: 4,
+        marginVertical: 4
     },
     listContainer: {},
     noEntriesLayout: {
@@ -58,9 +58,7 @@ function prepareListContents(items: Array<VaultContentsItem>): Array<VaultConten
     return items.map(item => ({
         title: item.title,
         subtitle: item.type === "group" ? null : prepareEntrySubtitle(item),
-        icon: item.type === "group"
-            ? item.isTrash ? "trash-2-outline" : "folder-outline"
-            : null,
+        icon: item.type === "group" ? (item.isTrash ? "trash-2-outline" : "folder-outline") : null,
         sourceItem: item
     }));
 }
@@ -72,43 +70,32 @@ function renderItem(info: RenderInfo, navigation: any, groupID?: GroupID) {
             title={item.title}
             description={item.subtitle}
             accessoryLeft={
-                item.icon
-                    ? (
-                        <Icon name={item.icon} />
-                    )
-                    : (
-                        <SiteIcon
-                            domain={getEntryDomain(item.sourceItem.entryProperties ?? {})}
-                            size={28}
-                            type={item.sourceItem.entryType || EntryType.Login}
-                        />
-                    )
+                item.icon ? (
+                    <Icon name={item.icon} />
+                ) : (
+                    <SiteIcon
+                        domain={getEntryDomain(item.sourceItem.entryProperties ?? {})}
+                        size={28}
+                        type={item.sourceItem.entryType || EntryType.Login}
+                    />
+                )
             }
             onPress={() => {
                 if (!groupID && item.sourceItem.groupID && item.sourceItem.type === "entry") {
-                    navigation.push(
-                        "EntryDetails",
-                        {
-                            entryID: item.sourceItem.id,
-                            groupID: item.sourceItem.groupID
-                        }
-                    );
+                    navigation.push("EntryDetails", {
+                        entryID: item.sourceItem.id,
+                        groupID: item.sourceItem.groupID
+                    });
                 } else if (item.sourceItem.type === "group") {
-                    navigation.push(
-                        "VaultContents",
-                        {
-                            groupID: item.sourceItem.id
-                        }
-                    );
+                    navigation.push("VaultContents", {
+                        groupID: item.sourceItem.id
+                    });
                 } else if (groupID && item.sourceItem.type === "entry") {
                     // Entry
-                    navigation.push(
-                        "EntryDetails",
-                        {
-                            entryID: item.sourceItem.id,
-                            groupID
-                        }
-                    );
+                    navigation.push("EntryDetails", {
+                        entryID: item.sourceItem.id,
+                        groupID
+                    });
                 }
             }}
         />
@@ -125,10 +112,7 @@ export interface VaultContentsListProps {
 export function VaultContentsList(props: VaultContentsListProps) {
     const { type } = props;
     const preparedContents = useMemo(() => prepareListContents(props.contents), [props.contents]);
-    const {
-        title: emptyStateTitle,
-        description: emptyStateDescription
-    } = useMemo(() => {
+    const { title: emptyStateTitle, description: emptyStateDescription } = useMemo(() => {
         if (type === "search") {
             return {
                 title: "No Results",
