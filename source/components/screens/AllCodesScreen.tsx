@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import Clipboard from "@react-native-community/clipboard";
+import Clipboard from "@react-native-clipboard/clipboard";
 import { Layout, List } from "@ui-kitten/components";
 import { HomeTopBar } from "../menus/HomeTopBar";
 import { EmptyState } from "../EmptyState";

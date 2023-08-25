@@ -30,11 +30,17 @@ target 'Buttercup' do
   # Flags change depending on the env values.
   flags = get_default_flags()
 
+  pod 'FBReactNativeSpec', :path => "../node_modules/react-native/React/FBReactNativeSpec"
+#   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
+#   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
+#   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
+#   pod 'RCTTypeSafety', :path => "../node_modules/react-native/Libraries/TypeSafety"
+
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
     :hermes_enabled => flags[:hermes_enabled],
-    :fabric_enabled => flags[:fabric_enabled],
+    :fabric_enabled => false,# flags[:fabric_enabled],
     # Enables Flipper.
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
@@ -52,11 +58,11 @@ target 'Buttercup' do
     inherit! :complete
     # Pods for testing
   end
-end
 
-post_install do |installer|
+  post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.4' # min_ios_version_supported
             config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'NO'
         end
     end
@@ -67,4 +73,5 @@ post_install do |installer|
       :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+  end
 end

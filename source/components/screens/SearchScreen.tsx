@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Layout, Spinner } from "@ui-kitten/components";
-import { useState as useHookState } from "@hookstate/core";
+import { useSingleState } from "react-obstate";
 import { VaultContentsList } from "./vault-contents/VaultContentsList";
 import { SearchBar } from "./search/SearchBar";
 import { useTabFocusState } from "../../hooks/vaultTab";
 import { SearchResult, searchSingleVault } from "../../services/search";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 import { notifyError } from "../../library/notifications";
 import { VaultContentsItem } from "../../types";
 
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 
 export function SearchScreen({ navigation }) {
     useTabFocusState("search", "Search");
-    const currentSourceState = useHookState(CURRENT_SOURCE);
+    const [currentSource] = useSingleState(VAULT, "currentSource");
     const [searchTerm, setSearchTerm] = useState("");
     const [nextTerm, setNextTerm] = useState("");
     const [searching, setSearching] = useState(false);
@@ -32,7 +32,7 @@ export function SearchScreen({ navigation }) {
         if (searching) return;
         if (currentSearchTerm === searchTerm) return;
         setSearching(true);
-        searchSingleVault(currentSourceState.get(), searchTerm)
+        searchSingleVault(currentSource, searchTerm)
             .then((newResults: Array<SearchResult>) => {
                 setResults(newResults.map(res => ({
                     id: res.id,
@@ -50,7 +50,7 @@ export function SearchScreen({ navigation }) {
                 setSearching(false);
                 notifyError("Search failed", err.message);
             });
-    }, [searchTerm, currentSearchTerm, searching, currentSourceState]);
+    }, [searchTerm, currentSearchTerm, searching, currentSource]);
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <SearchBar

@@ -15,7 +15,7 @@ import {
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { setBusyState } from "../../services/busyState";
 import { lockAllVaults, reset } from "../../services/buttercup";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 interface HomeTopBarProps {
     leftMenu?: "vaults" | null;
@@ -76,7 +76,7 @@ function MenuButton(props) {
         } else if (item.slug === "lock-all") {
             handleAllVaultLocking()
                 .then(() => {
-                    CURRENT_SOURCE.set(null);
+                    VAULT.currentSource = null;
                 })
                 .catch(err => {
                     setBusyState(null);
@@ -150,12 +150,7 @@ export function HomeTopBar(props: HomeTopBarProps) {
             <TopNavigation
                 title={props => (
                     <Layout style={styles.header}>
-                        <Avatar
-                            shape="square"
-                            size="tiny"
-                            source={BCUP_ICON}
-                            style={styles.logo}
-                        />
+                        <Avatar shape="square" size="tiny" source={BCUP_ICON} style={styles.logo} />
                         <Text {...props} category="h5">
                             Buttercup
                         </Text>

@@ -6,12 +6,13 @@ import { VaultSourceID } from "buttercup";
 import { VaultMenu } from "../menus/VaultMenu";
 import { HomeTopBar } from "../menus/HomeTopBar";
 import { ErrorBoundary } from "../ErrorBoundary";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 
 export function HomeScreen({ navigation }) {
     const handleVaultOpen = useCallback(
         (sourceID: VaultSourceID) => {
-            CURRENT_SOURCE.set(sourceID);
+            // CURRENT_SOURCE.set(sourceID);
+            VAULT.currentSource = sourceID;
             navigation.navigate("Vault");
         },
         [navigation]
@@ -21,7 +22,7 @@ export function HomeScreen({ navigation }) {
     useEffect(() => {
         if (currentNavIndex > 0 && currentNav === 0) {
             // Navigated back to root
-            CURRENT_SOURCE.set(null);
+            VAULT.currentSource = null;
         }
         setCurrentNavIndex(currentNav);
     }, [currentNav, currentNavIndex]);

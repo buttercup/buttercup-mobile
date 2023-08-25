@@ -13,8 +13,8 @@ import {
     TopNavigation,
     TopNavigationAction
 } from "@ui-kitten/components";
-import { useState as useHookState } from "@hookstate/core";
-import Clipboard from "@react-native-community/clipboard";
+import { useSingleState } from "react-obstate";
+import Clipboard from "@react-native-clipboard/clipboard";
 import { EntryFieldValue, VisibleField } from "./vault-contents/EntryFieldValue";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { SiteIcon } from "../media/SiteIcon";
@@ -22,7 +22,7 @@ import { ReadOnlyBar } from "../navigation/ReadOnlyBar";
 import { useEntryFacade } from "../../hooks/buttercup";
 import { useEntryOTPCodes } from "../../hooks/otp";
 import { VaultContext } from "../../contexts/vault";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 import { setBusyState } from "../../services/busyState";
 import { deleteEntry } from "../../services/buttercup";
 import { getEntryDomain, humanReadableEntryType } from "../../library/entry";
@@ -135,8 +135,8 @@ function MenuIcon(props) {
 export function EntryDetailsScreen({ navigation, route }) {
     const { entryID, groupID } = route?.params ?? {};
     const { readOnly } = useContext(VaultContext);
-    const currentSourceState = useHookState(CURRENT_SOURCE);
-    const entryFacade = useEntryFacade(currentSourceState.get(), entryID);
+    const [currentSource] = useSingleState(VAULT, "currentSource");
+    const entryFacade = useEntryFacade(currentSource, entryID);
     const [entryMenuVisible, setEntryMenuVisible] = useState(false);
     const [showDeletePrompt, setShowDeletePrompt] = useState(false);
     const [showSensitiveProperties, setShowSensitiveProperties] = useState(false);
@@ -174,7 +174,7 @@ export function EntryDetailsScreen({ navigation, route }) {
         setBusyState("Deleting Entry");
         setShowDeletePrompt(false);
         try {
-            await deleteEntry(currentSourceState.get(), entryID);
+            await deleteEntry(currentSource, entryID);
             setBusyState(null);
             navigation.goBack();
             notifySuccess("Entry deleted", "Successfully deleted entry");
@@ -183,7 +183,7 @@ export function EntryDetailsScreen({ navigation, route }) {
             console.error(err);
             notifyError("Failed deleting entry", err.message);
         }
-    }, [entryID, currentSourceState.get()]);
+    }, [entryID, currentSource]);
     const handleFieldPress = useCallback((field: VisibleField) => {
         if (field.valueType === EntryPropertyValueType.OTP) {
             // Copy code instead of raw value

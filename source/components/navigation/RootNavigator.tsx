@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { withStyles } from "@ui-kitten/components";
-import { useState as useHookState } from "@hookstate/core";
+import { useSingleState } from "react-obstate";
 import { OTPProvider } from "../../contexts/otp";
 import { HomeNavigator } from "./HomeNavigator";
 import { VaultManagementScreen } from "../screens/VaultManagementScreen";
@@ -17,13 +17,13 @@ import { PasswordGeneratorScreen } from "../screens/PasswordGeneratorScreen";
 import { VaultNavigator } from "./VaultNavigator";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { useAllOTPItems, useSourceOTPItems } from "../../hooks/otp";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 import { rootNavigationRef } from "../../state/navigation";
 
 const { Navigator, Screen } = createStackNavigator();
 
 const StandardNavigator = () => (
-    <Navigator headerMode="none">
+    <Navigator screenOptions={{ headerShown: false }}>
         <Screen name="Home" component={HomeNavigator} />
         <Screen name="About" component={AboutScreen} />
         <Screen name="Vault" component={VaultNavigator} />
@@ -39,13 +39,13 @@ const StandardNavigator = () => (
 );
 
 const ModalNavigator = () => (
-    <Navigator headerMode="none">
+    <Navigator screenOptions={{ headerShown: false }}>
         <Screen name="PasswordGenerator" component={PasswordGeneratorScreen} />
     </Navigator>
 );
 
 const RootNavigator = () => (
-    <Navigator headerMode="none" mode="modal">
+    <Navigator screenOptions={{ headerShown: false }} mode="modal">
         <Screen name="Main" component={StandardNavigator} />
         <Screen name="Modal" component={ModalNavigator} />
     </Navigator>
@@ -62,17 +62,17 @@ const _ThemedSafeAreaView = ({ eva }) => (
 const ThemedSafeAreaView = withStyles(_ThemedSafeAreaView);
 
 export function AppNavigator({ eva }) {
-    const currentSourceState = useHookState(CURRENT_SOURCE);
-    const sourceOTPItems = useSourceOTPItems(currentSourceState.get());
+    const [currentSource] = useSingleState(VAULT, "currentSource");
+    const sourceOTPItems = useSourceOTPItems(currentSource);
     const allOTPs = useAllOTPItems();
     return (
         <NavigationContainer ref={rootNavigationRef}>
             <ThemedSafeAreaView eva={eva} />
-                <ErrorBoundary>
-                    <OTPProvider allOTPItems={allOTPs} currentSourceOTPItems={sourceOTPItems}>
-                        <RootNavigator />
-                    </OTPProvider>
-                </ErrorBoundary>
+            <ErrorBoundary>
+                <OTPProvider allOTPItems={allOTPs} currentSourceOTPItems={sourceOTPItems}>
+                    <RootNavigator />
+                </OTPProvider>
+            </ErrorBoundary>
             <ThemedSafeAreaView eva={eva} />
         </NavigationContainer>
     );

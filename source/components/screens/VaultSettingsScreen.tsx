@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { PermissionsAndroid, Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Card, IndexPath, Layout, Select, SelectItem, Text, Toggle } from "@ui-kitten/components";
-import { useState as useHookState } from "@hookstate/core";
+import { useSingleState } from "react-obstate";
 import ms from "ms";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { useTabFocusState } from "../../hooks/vaultTab";
 import { useBiometricsAvailable, useBiometricsEnabledForSource } from "../../hooks/biometrics";
@@ -59,21 +59,21 @@ function VaultSettingHeader({ subtitle = null, title }) {
 
 export function VaultSettingsScreen({ navigation }) {
     useTabFocusState("settings", "Vault Settings");
-    const currentSourceState = useHookState(CURRENT_SOURCE);
-    const vaultConfig = useVaultConfiguration(currentSourceState.get());
+    const [currentSource] = useSingleState(VAULT, "currentSource");
+    const vaultConfig = useVaultConfiguration(currentSource);
     // **
     // ** Config items
     // **
     const handleUpdateConfig = useCallback(async (config: VaultConfiguration) => {
         try {
-            await updateVaultConfig(currentSourceState.get(), {
+            await updateVaultConfig(currentSource, {
                 ...config
             });
         } catch (err) {
             console.error(err);
             notifyError("Failed updating configuration", err.message);
         }
-    }, [currentSourceState.get()]);
+    }, [currentSource]);
     const vaultAutoLockCurrentIndex = useMemo<number>(
         () => {
             const index = VAULT_AUTOLOCK_OPTIONS.findIndex(
@@ -87,11 +87,11 @@ export function VaultSettingsScreen({ navigation }) {
     // ** Biometrics
     // **
     const biometricsAvailable = useBiometricsAvailable();
-    const biometricsEnabled = useBiometricsEnabledForSource(currentSourceState.get());
+    const biometricsEnabled = useBiometricsEnabledForSource(currentSource);
     const [verifyingBiometricsPassword, setVerifyingBiometricsPassword] = useState(false);
     const handleDisablingBiometrics = useCallback(() => {
         setBusyState("Saving biometrics state");
-        disableBiometicsForSource(currentSourceState.get())
+        disableBiometicsForSource(currentSource)
             .then(() => {
                 setBusyState(null);
                 notifySuccess("Biometrics disabled", "Successfully disabled biometrics for the current vault");
@@ -101,17 +101,17 @@ export function VaultSettingsScreen({ navigation }) {
                 console.error(err);
                 notifyError("Failed disabling biometrics", err.message);
             });
-    }, [currentSourceState.get()]);
+    }, [currentSource]);
     const handleEnablingBiometrics = useCallback((vaultPassword: string) => {
         setVerifyingBiometricsPassword(false);
         setBusyState("Verifying vault password");
-        verifySourcePassword(currentSourceState.get(), vaultPassword)
+        verifySourcePassword(currentSource, vaultPassword)
             .then(passwordValid => {
                 if (!passwordValid) {
                     throw new Error("Vault password invalid");
                 }
                 setBusyState("Saving biometrics state");
-                return enableBiometricsForSource(currentSourceState.get(), vaultPassword)
+                return enableBiometricsForSource(currentSource, vaultPassword)
             })
             .then(() => {
                 setBusyState(null);
@@ -122,7 +122,7 @@ export function VaultSettingsScreen({ navigation }) {
                 console.error(err);
                 notifyError("Failed enabling biometrics", err.message);
             });
-    }, [currentSourceState.get()]);
+    }, [currentSource]);
     const handleBiometricsAuthentication = useCallback(() => {
         authenticateBiometrics()
             .then(succeeded => {
@@ -148,12 +148,12 @@ export function VaultSettingsScreen({ navigation }) {
     // **
     const handleEasyOTPsActivation = useCallback(async (activated: boolean) => {
         try {
-            await processEasyAccessOTPsForSource(currentSourceState.get(), activated);
+            await processEasyAccessOTPsForSource(currentSource, activated);
         } catch (err) {
             console.error(err);
             notifyError("Failed apply OTP setting", err.message);
         }
-    }, [currentSourceState.get()]);
+    }, [currentSource]);
     const handleEasyOTPsChange = useCallback((isChecked: boolean) => {
         handleEasyOTPsActivation(isChecked)
             .then(() => {
@@ -191,11 +191,11 @@ export function VaultSettingsScreen({ navigation }) {
             if (!isAutofillProviderSet) {
                 await AutoFillBridge.openAutoFillSystemSettings();
             }
-            await storeAutofillCredentials(currentSourceState.get(), true);
+            await storeAutofillCredentials(currentSource, true);
         } else {
-            await removeCredentialsForVault(currentSourceState.get());
+            await removeCredentialsForVault(currentSource);
         }
-    }, [currentSourceState.get()]);
+    }, [currentSource]);
     const handleAutofillEnableChange = useCallback((isChecked: boolean) => {
         handleAutofillActivation(isChecked)
             .then(() => {

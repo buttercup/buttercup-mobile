@@ -2,7 +2,7 @@ import { VaultSourceID } from "buttercup";
 import { getAllSourceIDs, lockVault, onVaultSourcesUpdated } from "./buttercup";
 import { registerActivityCallback } from "./activity";
 import { getEmitter as getConfigEmitter, getVaultConfig } from "./config";
-import { CURRENT_SOURCE } from "../state/vault";
+import { VAULT } from "../state/vault";
 import { navigateBackToRoot } from "../state/navigation";
 
 let __listeners: Record<VaultSourceID, (inactivity: number) => Promise<void>> = {};
@@ -37,7 +37,7 @@ function updateListenerForSource(sourceID: VaultSourceID) {
     if (config?.autoLockEnabled) {
         __listeners[sourceID] = async (inactivity: number) => {
             if (inactivity >= config.autoLockTime) {
-                if (CURRENT_SOURCE.get() === sourceID) {
+                if (VAULT.currentSource === sourceID) {
                     // Navigate back out
                     navigateBackToRoot();
                 }

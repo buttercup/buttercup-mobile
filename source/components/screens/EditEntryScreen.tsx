@@ -1,6 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { FIELD_VALUE_TYPES, EntryID, EntryPropertyType, EntryPropertyValueType, EntryType, createEntryFacade, createFieldDescriptor, setEntryFacadePropertyValueType, EntryFacadeField } from "buttercup";
+import {
+    FIELD_VALUE_TYPES,
+    EntryID,
+    EntryPropertyType,
+    EntryPropertyValueType,
+    EntryType,
+    createEntryFacade,
+    createFieldDescriptor,
+    setEntryFacadePropertyValueType,
+    EntryFacadeField
+} from "buttercup";
 import {
     Button,
     Divider,
@@ -16,14 +26,14 @@ import {
     TopNavigation,
     TopNavigationAction
 } from "@ui-kitten/components";
-import { useState as useHookState } from "@hookstate/core";
+import { useSingleState } from "react-obstate";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { ItemsPrompt, PromptItem } from "../prompts/ItemsPrompt";
 import { notifyError, notifySuccess } from "../../library/notifications";
 import { usePendingOTPs } from "../../hooks/otp";
-import { CURRENT_SOURCE } from "../../state/vault";
-import { GeneratorMode, GENERATOR_MODE, LAST_PASSWORD } from "../../state/generator";
+import { VAULT } from "../../state/vault";
+import { GENERATOR, GeneratorMode } from "../../state/generator";
 import { getEntryFacade, saveExistingEntryChanges, saveNewEntry } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { OTP } from "../../types";
@@ -113,13 +123,13 @@ const styles = StyleSheet.create({
 function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
     const { entryID, items: rawItems, navigation } = props;
     const items = useMemo(() => rawItems.filter(item => !!item), [rawItems]);
-    const generatorModeState = useHookState(GENERATOR_MODE);
+    const [generatorMode, setGeneratorMode] = useSingleState(GENERATOR, "mode");
     const [visible, setVisible] = useState(false);
     const onItemSelect = selected => {
         const item = items[selected.row];
         setVisible(false);
         if (item.slug === "generate-password") {
-            generatorModeState.set(GeneratorMode.EntryProperty);
+            setGeneratorMode(GeneratorMode.EntryProperty);
             navigation.navigate("Modal", { screen: "PasswordGenerator" });
         }
         // if (item.slug === "edit") {
@@ -161,8 +171,8 @@ function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
 
 export function EditEntryScreen({ navigation, route }) {
     const { entryID = null, entryType, groupID } = route?.params ?? {};
-    const currentSourceState = useHookState(CURRENT_SOURCE);
-    const lastPasswordState = useHookState(LAST_PASSWORD);
+    const [currentSource] = useSingleState(VAULT, "currentSource");
+    const [lastPassword, setLastPassword] = useSingleState(GENERATOR, "lastPassword");
     const [entryFacade, setEntryFacade] = useState(null);
     const [changed, setChanged] = useState(false);
     const title = useMemo(() => {
@@ -267,8 +277,8 @@ export function EditEntryScreen({ navigation, route }) {
     const handleSave = useCallback(() => {
         setBusyState("Saving changes");
         const saveWork = entryID
-            ? saveExistingEntryChanges(currentSourceState.get(), entryID, entryFacade)
-            : saveNewEntry(currentSourceState.get(), groupID, entryFacade);
+            ? saveExistingEntryChanges(currentSource, entryID, entryFacade)
+            : saveNewEntry(currentSource, groupID, entryFacade);
         saveWork
             .then(() => {
                 setBusyState(null);
@@ -280,7 +290,7 @@ export function EditEntryScreen({ navigation, route }) {
                 setBusyState(null);
                 notifyError("Failed saving entry", err.message);
             });
-    }, [currentSourceState.get(), entryFacade, groupID, navigation]);
+    }, [currentSource, entryFacade, groupID, navigation]);
     const handleAddOTP = useCallback((item: PromptItem) => {
         handleNewFieldAdd(
             item.title,
@@ -296,17 +306,16 @@ export function EditEntryScreen({ navigation, route }) {
                 type: entryType || EntryType.Login
             }));
         } else {
-            setEntryFacade(getEntryFacade(currentSourceState.get(), entryID));
+            setEntryFacade(getEntryFacade(currentSource, entryID));
         }
-    }, [currentSourceState.get(), entryID, entryType]);
+    }, [currentSource, entryID, entryType]);
     useEffect(() => {
-        const pass = lastPasswordState.get();
-        if (generatePasswordFieldID && pass) {
-            handleFieldValueChange(generatePasswordFieldID, pass);
-            lastPasswordState.set("");
+        if (generatePasswordFieldID && lastPassword) {
+            handleFieldValueChange(generatePasswordFieldID, lastPassword);
+            setLastPassword("");
             setGeneratePasswordFieldID(null);
         }
-    }, [lastPasswordState.get(), generatePasswordFieldID, handleFieldValueChange]);
+    }, [lastPassword, generatePasswordFieldID, handleFieldValueChange]);
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={handleNavigateBack} />;
     const SaveAction = () => <TopNavigationAction disabled={!changed} icon={SaveIcon} onPress={handleSave} />;
     return (
@@ -318,7 +327,7 @@ export function EditEntryScreen({ navigation, route }) {
                     <Input
                         accessoryLeft={TitleIcon}
                         autoCapitalize="sentences"
-                        autoCompleteType="off"
+                        autoComplete="off"
                         onChangeText={handleTitleChange}
                         size="large"
                         value={title}
@@ -335,7 +344,7 @@ export function EditEntryScreen({ navigation, route }) {
                                     <Layout style={styles.inputContainerLayout}>
                                         <Input
                                             autoCapitalize="none"
-                                            autoCompleteType="off"
+                                            autoComplete="off"
                                             autoCorrect={false}
                                             onChangeText={(value: string) => handleFieldValueChange(field.id, value)}
                                             style={{
@@ -366,7 +375,7 @@ export function EditEntryScreen({ navigation, route }) {
                                                     slug: "generate-password",
                                                     icon: "lock-outline",
                                                     onSelect: () => {
-                                                        lastPasswordState.set("");
+                                                        setLastPassword("");
                                                         setGeneratePasswordFieldID(field.id);
                                                     }
                                                 }

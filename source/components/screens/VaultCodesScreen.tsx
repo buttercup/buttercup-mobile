@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import Clipboard from "@react-native-community/clipboard";
+import Clipboard from "@react-native-clipboard/clipboard";
 import { Layout, List, Text } from "@ui-kitten/components";
 import { EmptyState } from "../EmptyState";
 import { ErrorBoundary } from "../ErrorBoundary";

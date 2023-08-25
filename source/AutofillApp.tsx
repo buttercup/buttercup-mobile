@@ -1,8 +1,5 @@
 import React from "react";
-import {
-    StatusBar,
-    useColorScheme
-} from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import * as eva from "@eva-design/eva";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import "./polyfill/textEncoding";
@@ -26,5 +23,5 @@ export function AutofillApp() {
                 </>
             </ErrorBoundary>
         </ApplicationProvider>
-    )
+    );
 }

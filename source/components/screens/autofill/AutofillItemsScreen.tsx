@@ -1,12 +1,12 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Icon, Layout, List, ListItem, Spinner, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
-import { useState as useHookState } from "@hookstate/core";
+import { useSingleState } from "react-obstate";
 import { SearchBar } from "../search/SearchBar";
 import { AutofillContext } from "../../../contexts/autofill";
 import { AutoFillBridge } from "../../../services/autofillBridge";
-import { CURRENT_SOURCE } from "../../../state/vault";
-import { LOGIN_ENTRIES } from "../../../state/autofill";
+import { VAULT } from "../../../state/vault";
+import { AUTOFILL } from "../../../state/autofill";
 import { extractDomain } from "../../../library/url";
 import { IntermediateEntry } from "../../../types";
 
@@ -99,9 +99,9 @@ function termMatchEntries(items: Array<VaultContentsItemDisplay>, term: string):
 }
 
 export function AutofillItemsScreen({ navigation }) {
-    const currentSourceState = useHookState(CURRENT_SOURCE);
-    const loginItemsState = useHookState(LOGIN_ENTRIES);
-    const loginItems = loginItemsState.get()[currentSourceState.get()] as Array<IntermediateEntry>;
+    const [currentSource] = useSingleState(VAULT, "currentSource");
+    const [autofillEntries] = useSingleState(AUTOFILL, "entries");
+    const loginItems = autofillEntries[currentSource] as Array<IntermediateEntry>;
     const [searchTerm, setSearchTerm] = useState("");
     const [nextTerm, setNextTerm] = useState("");
     const {

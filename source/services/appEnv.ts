@@ -1,5 +1,5 @@
 import { gzip, ungzip } from "pako";
-import { WebDAVClient, WebDAVClientOptions, createClient } from "webdav/web";
+import { WebDAVClient, WebDAVClientOptions, createClient } from "webdav";
 import { DropboxClient } from "@buttercup/dropbox-client";
 import * as base64 from "base64-js";
 import { getSharedAppEnv } from "buttercup";

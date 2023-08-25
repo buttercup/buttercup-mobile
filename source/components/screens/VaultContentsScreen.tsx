@@ -1,12 +1,12 @@
 import React, { Fragment, useCallback, useContext, useMemo, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { Divider, Icon, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
-import { useState as useHookState } from "@hookstate/core";
+import { useSingleState } from "react-obstate";
 import { EntryType, ENTRY_TYPES, GroupID } from "buttercup";
 import { VaultContext } from "../../contexts/vault";
 import { useGroupTitle, useVaultContents } from "../../hooks/buttercup";
 import { useTabFocusState } from "../../hooks/vaultTab";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 import { createNewGroup, deleteGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
@@ -29,10 +29,10 @@ export function VaultContentsScreen({ navigation, route }) {
         slug: ENTRY_TYPES[typeKey].slug,
         icon: getIconForEntryType(ENTRY_TYPES[typeKey].slug as EntryType)
     })), []);
-    const currentSourceState = useHookState(CURRENT_SOURCE);
-    const screenTitle = useGroupTitle(currentSourceState.get(), groupID) || "Contents";
-    const deleteTitle = useGroupTitle(currentSourceState.get(), groupID) || "Unknown Group";
-    const contents = useVaultContents(currentSourceState.get(), groupID);
+    const [currentSource] = useSingleState(VAULT, "currentSource");
+    const screenTitle = useGroupTitle(currentSource, groupID) || "Contents";
+    const deleteTitle = useGroupTitle(currentSource, groupID) || "Unknown Group";
+    const contents = useVaultContents(currentSource, groupID);
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const [promptDeleteGroupID, setPromptDeleteGroupID] = useState<GroupID>(null);
     const [promptNewEntryType, setPromptNewEntryType] = useState(false);
@@ -41,7 +41,7 @@ export function VaultContentsScreen({ navigation, route }) {
         setPromptGroupCreate(false);
         let newGroupID: GroupID;
         try {
-            newGroupID = await createNewGroup(currentSourceState.get(), groupName, groupID);
+            newGroupID = await createNewGroup(currentSource, groupName, groupID);
             notifySuccess("Group created", `Group was successfully created: ${groupName}`);
         } catch (err) {
             console.error(err);
@@ -57,12 +57,12 @@ export function VaultContentsScreen({ navigation, route }) {
                 }
             );
         }
-    }, [currentSourceState, groupID]);
+    }, [currentSource, groupID]);
     const handleGroupDelete = useCallback(async () => {
         setBusyState("Deleting group");
         setPromptDeleteGroupID(null);
         try {
-            await deleteGroup(currentSourceState.get(), groupID);
+            await deleteGroup(currentSource, groupID);
             notifySuccess("Group deleted", `Group was successfully deleted: ${deleteTitle}`);
             navigation.goBack();
         } catch (err) {
@@ -71,7 +71,7 @@ export function VaultContentsScreen({ navigation, route }) {
         } finally {
             setBusyState(null);
         }
-    }, [currentSourceState, deleteTitle, groupID, navigation]);
+    }, [currentSource, deleteTitle, groupID, navigation]);
     const handleNewEntryCreate = useCallback((type: EntryType) => {
         setPromptNewEntryType(false);
         navigation.push("EditEntry", { entryID: null, entryType: type, groupID });

@@ -5,8 +5,9 @@ module.exports = {
             "module-resolver",
             {
                 alias: {
-                    buttercup: "buttercup/web"
-                }
+                    // buttercup: "buttercup/web"
+                },
+                extensions: [".tsx", ".ts", ".js", ".jsx", ".json"]
             },
             "react-native-reanimated/plugin" // keep last
         ]

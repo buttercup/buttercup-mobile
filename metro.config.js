@@ -28,6 +28,12 @@ module.exports = mergeConfig(defaultConfig, {
             path: require.resolve("path-browserify"),
             stream: require.resolve("stream-browserify")
         },
-        sourceExts: ["jsx", "js", "ts", "tsx", "svg"]
+        // resolveRequest: (context, moduleName, platform) => {
+        //     if (/react-obstate/.test(moduleName)) {
+        //         console.log("CHECK", moduleName, context);
+        //     }
+        //     return context.resolveRequest(context, moduleName, platform);
+        // },
+        sourceExts: ["jsx", "js", "ts", "tsx", "svg", "cjs", "json"]
     }
 });
