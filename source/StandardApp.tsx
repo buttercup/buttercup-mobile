@@ -51,26 +51,28 @@ export function StandardApp() {
         };
     }, []);
     return (
-        <ApplicationProvider {...eva} theme={isDarkMode ? eva.dark : eva.light}>
+        <>
             <IconRegistry icons={EvaIconsPack} />
-            <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-            {initialised && <AppNavigator eva={eva} />}
-            {!initialised && (
-                <Layout
-                    style={{
-                        flex: 1,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}
-                >
-                    <Spinner size="giant" />
-                </Layout>
-            )}
-            <>
-                <BusyStatus />
-                <Toaster />
-            </>
-        </ApplicationProvider>
+            <ApplicationProvider {...eva} theme={isDarkMode ? eva.dark : eva.light}>
+                <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
+                {initialised && <AppNavigator eva={eva} />}
+                {!initialised && (
+                    <Layout
+                        style={{
+                            flex: 1,
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}
+                    >
+                        <Spinner size="giant" />
+                    </Layout>
+                )}
+                <>
+                    <BusyStatus />
+                    <Toaster />
+                </>
+            </ApplicationProvider>
+        </>
     );
 }
