@@ -2,7 +2,7 @@ import { Linking } from "react-native";
 import Config from "react-native-config";
 import { DatasourceAuthManager, GoogleDriveDatasource, VaultSourceID } from "buttercup";
 import { ERR_REFRESH_FAILED, GoogleToken, OAuth2Client } from "@buttercup/google-oauth2-client";
-import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
+import { GoogleDriveClient } from "@buttercup/googledrive-client";
 import { Layerr } from "layerr";
 import EventEmitter from "eventemitter3";
 import { notifyError, notifySuccess } from "../library/notifications";
@@ -108,12 +108,7 @@ export async function writeNewEmptyVault(
     password: string
 ): Promise<string> {
     const emptyVault = await getEmptyVault(password);
-    const client = createGoogleDriveClient(accessToken);
-    const fileID = await client.putFileContents({
-        contents: emptyVault,
-        id: null,
-        name: filename,
-        parent: parentIdentifier
-    });
+    const client = new GoogleDriveClient(accessToken);
+    const fileID = await client.putFileContents(emptyVault, null, filename, parentIdentifier);
     return fileID;
 }

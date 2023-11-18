@@ -52,7 +52,12 @@ function BottomTabBar({ navigation, state }) {
 
 function TabNavigator() {
     return (
-        <Navigator tabBar={props => <BottomTabBar {...props} />}>
+        <Navigator
+            tabBar={props => <BottomTabBar {...props} />}
+            screenOptions={{
+                headerShown: false
+            }}
+        >
             <Screen name="Groups" component={VaultContentsScreen} />
             <Screen name="Search" component={SearchScreen} />
             <Screen name="Codes" component={VaultCodesScreen} />

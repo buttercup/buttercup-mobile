@@ -1,6 +1,6 @@
 import { AuthType, createClient as createWebDAVClient } from "webdav";
 import { DropboxClient } from "@buttercup/dropbox-client";
-import { createClient as createGoogleDriveClient } from "@buttercup/googledrive-client";
+import { GoogleDriveClient } from "@buttercup/googledrive-client";
 import {
     DropboxInterface,
     FileSystemInterface,
@@ -28,7 +28,7 @@ export async function prepareDropboxInterface(token: string): Promise<void> {
 }
 
 export async function prepareGoogleDriveInterface(token: string): Promise<void> {
-    const googleDriveClient = createGoogleDriveClient(token);
+    const googleDriveClient = new GoogleDriveClient(token);
     __interface = new GoogleDriveInterface({
         googleDriveClient
     });
