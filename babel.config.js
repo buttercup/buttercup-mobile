@@ -8,8 +8,8 @@ module.exports = {
                     // buttercup: "buttercup/web"
                 },
                 extensions: [".tsx", ".ts", ".js", ".jsx", ".json"]
-            },
-            "react-native-reanimated/plugin" // keep last
-        ]
+            }
+        ],
+        "react-native-reanimated/plugin" // keep last
     ]
 };
