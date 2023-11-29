@@ -24,7 +24,7 @@
     "@eva-design/eva": "^2.2.0",
     "@georstat/react-native-image-cache": "^2.9.0",
     "@react-native-async-storage/async-storage": "^1.19.3",
-    "@react-native-clipboard/clipboard": "^1.11.2",
+    "@react-native-clipboard/clipboard": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/slider": "^4.4.3",
     "@react-navigation/bottom-tabs": "^6.5.8",

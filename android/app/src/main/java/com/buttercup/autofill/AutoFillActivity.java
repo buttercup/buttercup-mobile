@@ -11,7 +11,6 @@ import com.facebook.react.bridge.JSIModulePackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.react.PackageList;
 import com.facebook.soloader.SoLoader;
-import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
 import org.spongycastle.jce.provider.BouncyCastleProvider;
 import java.security.Security;
@@ -61,11 +60,6 @@ public class AutoFillActivity extends ReactActivity {
                 @Override
                 protected String getJSMainModuleName() {
                     return "index";
-                }
-
-                @Override
-                protected JSIModulePackage getJSIModulePackage() {
-                    return new ReanimatedJSIModulePackage();
                 }
             };
         }

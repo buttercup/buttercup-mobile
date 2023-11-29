@@ -72,6 +72,8 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     namespace "com.buttercup"
+    testNamespace = "com.buttercup.test"
+
     defaultConfig {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
