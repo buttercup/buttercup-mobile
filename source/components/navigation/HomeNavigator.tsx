@@ -1,12 +1,7 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-    BottomNavigation,
-    BottomNavigationTab,
-    Divider,
-    Icon
-} from "@ui-kitten/components";
+import { BottomNavigation, BottomNavigationTab, Divider, Icon } from "@ui-kitten/components";
 import { AllCodesScreen } from "../screens/AllCodesScreen";
 import { HomeScreen } from "../screens/HomeScreen";
 
@@ -32,14 +27,17 @@ function BottomTabBar({ navigation, state }) {
 
 function TabNavigator() {
     return (
-        <Navigator tabBar={props => <BottomTabBar {...props} />}>
+        <Navigator
+            screenOptions={{ headerShown: false }}
+            tabBar={props => <BottomTabBar {...props} />}
+        >
             <Screen name="Home" component={HomeScreen} />
             <Screen name="Codes" component={AllCodesScreen} />
         </Navigator>
     );
 }
 
-export function HomeNavigator({ navigation }) {
+export function HomeNavigator() {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <TabNavigator />

@@ -37,13 +37,7 @@ const themedStyles = StyleService.create({
 });
 
 export function EmptyState(props: EmptyStateProps) {
-    const {
-        actionText,
-        description,
-        icon,
-        onActionPress,
-        title
-    } = props;
+    const { actionText, description, icon, onActionPress, title } = props;
     const styles = useStyleSheet(themedStyles);
     const iconColour = (styles.icon as any).color;
     const handleActionPress = useCallback(() => {
@@ -51,16 +45,15 @@ export function EmptyState(props: EmptyStateProps) {
     }, [onActionPress]);
     return (
         <View style={styles.container}>
-            {icon && (
-                <Icon name={icon} fill={iconColour} style={styles.icon} />
-            )}
-            <Text category="h6" style={styles.title}>{title}</Text>
-            <Text category="p1" style={styles.description}>{description}</Text>
+            {icon && <Icon name={icon} fill={iconColour} style={styles.icon} />}
+            <Text category="h6" style={styles.title}>
+                {title}
+            </Text>
+            <Text category="p1" style={styles.description}>
+                {description}
+            </Text>
             {actionText && onActionPress && (
-                <Button
-                    onPress={handleActionPress}
-                    style={styles.button}
-                >
+                <Button onPress={handleActionPress} style={styles.button}>
                     {actionText}
                 </Button>
             )}

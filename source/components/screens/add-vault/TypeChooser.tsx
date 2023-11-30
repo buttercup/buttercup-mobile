@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Image, StyleSheet } from "react-native";
-import {
-    IndexPath,
-    Menu,
-    MenuItem
-} from "@ui-kitten/components";
+import { IndexPath, Menu, MenuItem } from "@ui-kitten/components";
 import { VAULT_TYPES } from "../../../library/buttercup";
 
 interface TypeChooserProps {

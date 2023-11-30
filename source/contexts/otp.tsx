@@ -31,15 +31,14 @@ export function OTPProvider(props: OTPProviderProps) {
             clearInterval(interval);
         };
     }, [props.allOTPItems, props.currentSourceOTPItems]);
-    const context: IOTPContext = useMemo(() => ({
-        allOTPCodes,
-        currentSourceOTPCodes
-    }), [
-        currentSourceOTPCodes
-    ]);
-    return (
-        <OTPContext.Provider value={context}>{props.children}</OTPContext.Provider>
+    const context: IOTPContext = useMemo(
+        () => ({
+            allOTPCodes,
+            currentSourceOTPCodes
+        }),
+        [currentSourceOTPCodes]
     );
+    return <OTPContext.Provider value={context}>{props.children}</OTPContext.Provider>;
 }
 
 function updateCode(item: OTP): OTPCode {
@@ -66,9 +65,7 @@ function updateCode(item: OTP): OTPCode {
             valid: false
         };
     }
-    const {
-        image = null
-    } = queryString.parse(search) as {
+    const { image = null } = queryString.parse(search) as {
         image: string;
     };
     return {

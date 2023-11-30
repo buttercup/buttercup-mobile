@@ -1,8 +1,8 @@
 import { randomBytes } from "react-native-randombytes";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { useState as useHookState } from "@hookstate/core";
-import Clipboard from "@react-native-community/clipboard";
+import { useSingleState } from "react-obstate";
+import Clipboard from "@react-native-clipboard/clipboard";
 import Slider from "@react-native-community/slider";
 import {
     Button,
@@ -19,7 +19,7 @@ import {
     TopNavigationAction
 } from "@ui-kitten/components";
 import { notifySuccess } from "../../library/notifications";
-import { GeneratorMode, GENERATOR_MODE, LAST_PASSWORD } from "../../state/generator";
+import { GENERATOR, GeneratorMode } from "../../state/generator";
 
 const MAX_RANDOM_INT = 4294967295;
 const { MONO_FONT } = Platform.select({
@@ -31,8 +31,18 @@ const { MONO_FONT } = Platform.select({
     }
 });
 const OPTIONS = [
-    { key: "uppercase", text: "Uppercase", initial: true, characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-    { key: "lowercase", text: "Lowercase", initial: true, characters: "abcdefghijklmnopqrstuvwxyz" },
+    {
+        key: "uppercase",
+        text: "Uppercase",
+        initial: true,
+        characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    },
+    {
+        key: "lowercase",
+        text: "Lowercase",
+        initial: true,
+        characters: "abcdefghijklmnopqrstuvwxyz"
+    },
     { key: "digits", text: "Digits", initial: true, characters: "0123456789" },
     { key: "space", text: "Space", initial: false, characters: " " },
     { key: "underscoreDash", text: "Underscore / Dash", initial: true, characters: "_-" },
@@ -99,10 +109,14 @@ async function generateRandomBytes(count: number): Promise<Buffer> {
     });
 }
 
-async function generateRandomPassword(selectedOptions: Array<string>, length: number): Promise<string> {
+async function generateRandomPassword(
+    selectedOptions: Array<string>,
+    length: number
+): Promise<string> {
     if (length <= 0) return "";
     const chars = OPTIONS.reduce(
-        (output: string, option) => selectedOptions.includes(option.key) ? `${output}${option.characters}` : output,
+        (output: string, option) =>
+            selectedOptions.includes(option.key) ? `${output}${option.characters}` : output,
         ""
     );
     const output: Array<string> = [];
@@ -116,33 +130,37 @@ async function generateRandomPassword(selectedOptions: Array<string>, length: nu
 }
 
 export function PasswordGeneratorScreen({ navigation }) {
-    const generatorModeState = useHookState(GENERATOR_MODE);
-    const lastPasswordState = useHookState(LAST_PASSWORD);
+    const [generatorMode, setGeneratorMode] = useSingleState(GENERATOR, "mode");
+    const [, setLastPassword] = useSingleState(GENERATOR, "lastPassword");
     const [currentPassword, setCurrentPassword] = useState("th4e_-bqE@?`[dJp5K:c3yn]d;");
     const [selectedModeIndex, setSelectedModeIndex] = useState(0);
-    const initialCheckedOptions = useMemo(() => OPTIONS.reduce(
-        (output, option) => option.initial ? [...output, option.key] : output,
+    const initialCheckedOptions = useMemo(
+        () =>
+            OPTIONS.reduce(
+                (output, option) => (option.initial ? [...output, option.key] : output),
+                []
+            ),
         []
-    ), []);
+    );
     const [checkedOptions, setCheckedOptions] = useState(initialCheckedOptions);
     const [passwordLength, setPasswordLength] = useState(12);
     const [passwordDisplayLength, setPasswordDisplayLength] = useState(12);
-    const toggleOption = useCallback((optionKey: string) => {
-        if (checkedOptions.includes(optionKey)) {
-            setCheckedOptions(checkedOptions.filter(opt => opt !== optionKey));
-        } else {
-            setCheckedOptions([
-                ...checkedOptions,
-                optionKey
-            ]);
-        }
-    }, [checkedOptions]);
+    const toggleOption = useCallback(
+        (optionKey: string) => {
+            if (checkedOptions.includes(optionKey)) {
+                setCheckedOptions(checkedOptions.filter(opt => opt !== optionKey));
+            } else {
+                setCheckedOptions([...checkedOptions, optionKey]);
+            }
+        },
+        [checkedOptions]
+    );
     const generatePassword = useCallback(async () => {
         const randPass = await generateRandomPassword(checkedOptions, passwordLength);
         setCurrentPassword(randPass);
     }, [selectedModeIndex, checkedOptions, passwordLength]);
     const navigateBack = () => {
-        generatorModeState.set(GeneratorMode.Standalone);
+        setGeneratorMode(GeneratorMode.Standalone);
         navigation.goBack();
     };
     const handleGeneratePasswordPress = useCallback(() => {
@@ -154,9 +172,9 @@ export function PasswordGeneratorScreen({ navigation }) {
         Clipboard.setString(currentPassword);
         notifySuccess("Password Copied", `The generated password was copied`);
         navigateBack();
-    }, [currentPassword, lastPasswordState, navigateBack]);
+    }, [currentPassword, navigateBack]);
     const handleSubmitPasswordPress = useCallback(() => {
-        lastPasswordState.set(currentPassword);
+        setLastPassword(currentPassword);
         navigateBack();
     }, [currentPassword, navigateBack]);
     useEffect(() => {
@@ -172,7 +190,9 @@ export function PasswordGeneratorScreen({ navigation }) {
             <Layout level="2" style={styles.container}>
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.scrollInner}>
-                        <Text category="s1" style={styles.sectionTitle}>Select Mode</Text>
+                        <Text category="s1" style={styles.sectionTitle}>
+                            Select Mode
+                        </Text>
                         <Card activeOpacity={1}>
                             <RadioGroup
                                 onChange={index => setSelectedModeIndex(index)}
@@ -182,7 +202,9 @@ export function PasswordGeneratorScreen({ navigation }) {
                                 <Radio disabled>Words</Radio>
                             </RadioGroup>
                         </Card>
-                        <Text category="s1" style={styles.sectionTitle}>Options</Text>
+                        <Text category="s1" style={styles.sectionTitle}>
+                            Options
+                        </Text>
                         <Card activeOpacity={1}>
                             {OPTIONS.map(option => (
                                 <CheckBox
@@ -195,11 +217,13 @@ export function PasswordGeneratorScreen({ navigation }) {
                                 </CheckBox>
                             ))}
                         </Card>
-                        <Text category="s1" style={styles.sectionTitle}>Length</Text>
+                        <Text category="s1" style={styles.sectionTitle}>
+                            Length
+                        </Text>
                         <Card activeOpacity={1}>
                             <View style={styles.lengthContainer}>
                                 <Slider
-                                    style={{width: "85%", height: 40}}
+                                    style={{ width: "85%", height: 40 }}
                                     minimumValue={4}
                                     maximumValue={32}
                                     onValueChange={setPasswordDisplayLength}
@@ -212,7 +236,9 @@ export function PasswordGeneratorScreen({ navigation }) {
                                 <Text style={styles.lengthValue}>{passwordDisplayLength}</Text>
                             </View>
                         </Card>
-                        <Text category="s1" style={styles.sectionTitle}>Output</Text>
+                        <Text category="s1" style={styles.sectionTitle}>
+                            Output
+                        </Text>
                         <Card activeOpacity={1} style={styles.fullLength}>
                             <Input
                                 autoCapitalize="none"
@@ -229,12 +255,31 @@ export function PasswordGeneratorScreen({ navigation }) {
                             />
                         </Card>
                         <Layout level="2" style={styles.controlGroup}>
-                            <Button status="warning" size="large" style={styles.controlButton} onPress={handleGeneratePasswordPress}>Generate</Button>
-                            {generatorModeState.get() === GeneratorMode.Standalone && (
-                                <Button size="large" style={styles.controlButton} onPress={handleCopyPasswordPress}>Copy</Button>
+                            <Button
+                                status="warning"
+                                size="large"
+                                style={styles.controlButton}
+                                onPress={handleGeneratePasswordPress}
+                            >
+                                Generate
+                            </Button>
+                            {generatorMode === GeneratorMode.Standalone && (
+                                <Button
+                                    size="large"
+                                    style={styles.controlButton}
+                                    onPress={handleCopyPasswordPress}
+                                >
+                                    Copy
+                                </Button>
                             )}
-                            {generatorModeState.get() === GeneratorMode.EntryProperty && (
-                                <Button size="large" style={styles.controlButton} onPress={handleSubmitPasswordPress}>Use</Button>
+                            {generatorMode === GeneratorMode.EntryProperty && (
+                                <Button
+                                    size="large"
+                                    style={styles.controlButton}
+                                    onPress={handleSubmitPasswordPress}
+                                >
+                                    Use
+                                </Button>
                             )}
                         </Layout>
                     </View>

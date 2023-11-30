@@ -74,16 +74,12 @@ function normaliseButtercupPath(url: URL) {
 function processButtercupURL(url: URL) {
     switch (normaliseButtercupPath(url)) {
         case "/auth/dropbox": {
-            const {
-                access_token: accessToken
-            } = extractHashProperties(url);
+            const { access_token: accessToken } = extractHashProperties(url);
             getDropboxEmitter().emit("token", { token: accessToken });
             break;
         }
         case "/auth/google": {
-            const {
-                code: authCode
-            } = extractQueryProperties(url);
+            const { code: authCode } = extractQueryProperties(url);
             processGoogleDriveCodeExchange(authCode);
             break;
         }

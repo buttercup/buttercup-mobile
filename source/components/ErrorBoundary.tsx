@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
     }
 });
 
-function stripBlanks(txt = '') {
+function stripBlanks(txt = "") {
     return txt
         .split(/(\r\n|\n)/g)
         .filter(ln => ln.trim().length > 0)
-        .join('\n');
+        .join("\n");
 }
 
 export class ErrorBoundary extends Component {
@@ -53,11 +53,11 @@ export class ErrorBoundary extends Component {
             return this.props.children;
         }
         return (
-            <Card
-                style={styles.card}
-            >
+            <Card style={styles.card}>
                 <Text category="h5">Application Error</Text>
-                <Text category="s1" style={styles.errorTitle}>{this.state.error.toString()}</Text>
+                <Text category="s1" style={styles.errorTitle}>
+                    {this.state.error.toString()}
+                </Text>
                 {this.state.errorStack && (
                     <Text style={styles.errorStack}>{stripBlanks(this.state.errorStack)}</Text>
                 )}

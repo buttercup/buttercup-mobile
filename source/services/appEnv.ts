@@ -1,5 +1,5 @@
 import { gzip, ungzip } from "pako";
-import { WebDAVClient, WebDAVClientOptions, createClient } from "webdav/web";
+import { WebDAVClient, WebDAVClientOptions, createClient } from "webdav";
 import { DropboxClient } from "@buttercup/dropbox-client";
 import * as base64 from "base64-js";
 import { getSharedAppEnv } from "buttercup";
@@ -202,7 +202,8 @@ export function initAppEnv() {
         "encoding/v1/bytesToBase64": encodeBytesToBase64,
         "encoding/v1/textToBase64": encodeTextToBase64,
         "env/v1/isClosedEnv": () => true,
-        "net/dropbox/v1/newClient": (token: string) => new DropboxClient(token, { ...DROPBOX_CLIENT_CONFIG }),
+        "net/dropbox/v1/newClient": (token: string) =>
+            new DropboxClient(token, { ...DROPBOX_CLIENT_CONFIG }),
         "net/webdav/v1/newClient": createPreparedWebDAVClient,
         "rng/v1/uuid": generateUUID
     });

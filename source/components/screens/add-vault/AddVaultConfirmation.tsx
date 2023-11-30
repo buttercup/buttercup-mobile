@@ -1,13 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import {
-    Icon,
-    Input,
-    Layout,
-    List,
-    ListItem,
-    Text
-} from "@ui-kitten/components";
+import { Icon, Input, Layout, List, ListItem, Text } from "@ui-kitten/components";
 import { VAULT_TYPES } from "../../../library/buttercup";
 import { VaultChooserItem } from "../../../types";
 
@@ -46,9 +39,7 @@ function renderItem(props: ConfirmationItem) {
         <ListItem
             title={item.property}
             accessoryLeft={getIcon(item.icon)}
-            accessoryRight={() => (
-                <Text>{item.value}</Text>
-            )}
+            accessoryRight={() => <Text>{item.value}</Text>}
         />
     );
 }
@@ -62,23 +53,26 @@ export function AddVaultConfirmation(props: AddVaultConfirmationProps) {
     useEffect(() => {
         onUpdatePassword(password);
     }, [onUpdatePassword, password]);
-    const data: Array<ConfirmationData> = useMemo(() => [
-        {
-            property: "Vault Name",
-            value: name,
-            icon: "archive-outline"
-        },
-        {
-            property: "Type",
-            value: typeName,
-            icon: "wifi-outline"
-        },
-        {
-            property: "Create New",
-            value: isNew ? "Yes" : "No",
-            icon: "plus-outline"
-        }
-    ], [name]);
+    const data: Array<ConfirmationData> = useMemo(
+        () => [
+            {
+                property: "Vault Name",
+                value: name,
+                icon: "archive-outline"
+            },
+            {
+                property: "Type",
+                value: typeName,
+                icon: "wifi-outline"
+            },
+            {
+                property: "Create New",
+                value: isNew ? "Yes" : "No",
+                icon: "plus-outline"
+            }
+        ],
+        [name]
+    );
     return (
         <>
             <SafeAreaView style={{ flex: 1 }}>

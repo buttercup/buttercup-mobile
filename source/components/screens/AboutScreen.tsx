@@ -84,24 +84,29 @@ export function AboutScreen({ navigation }) {
                                     style={styles.logo}
                                 />
                             </View>
-                            <Text category="h4" style={styles.heading}>Buttercup</Text>
-                            <Text category="s1" style={styles.version}>v{version}</Text>
+                            <Text category="h4" style={styles.heading}>
+                                Buttercup
+                            </Text>
+                            <Text category="s1" style={styles.version}>
+                                v{version}
+                            </Text>
                         </View>
                     )}
                     footer={props => (
                         <View {...props}>
-                            <Button onPress={handleButtercupButtonPress}>
-                                Buttercup Apps
-                            </Button>
+                            <Button onPress={handleButtercupButtonPress}>Buttercup Apps</Button>
                         </View>
                     )}
                     style={styles.card}
                 >
                     <Text category="p1">
-                        Buttercup Password Manager is a cross-platform application suite that provides secure vault access for storing login credentials and other secret information.
+                        Buttercup Password Manager is a cross-platform application suite that
+                        provides secure vault access for storing login credentials and other secret
+                        information.
                     </Text>
                     <Text category="p1" style={styles.paragraph}>
-                        Compliment this mobile app with the Desktop application and Browser Extension, available below.
+                        Compliment this mobile app with the Desktop application and Browser
+                        Extension, available below.
                     </Text>
                 </Card>
             </Layout>

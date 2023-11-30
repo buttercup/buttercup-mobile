@@ -47,7 +47,7 @@ const BackIcon = props => <Icon {...props} name="arrow-back" />;
 const styles = StyleSheet.create({
     contentContainer: {
         paddingHorizontal: 8,
-        paddingVertical: 4,
+        paddingVertical: 4
     },
     noVaultsLayout: {
         height: "100%"
@@ -63,7 +63,11 @@ function prepareListContents(items: Array<VaultDetails>): Array<VaultItemDisplay
     }));
 }
 
-function renderItem(info: RenderInfo, onItemPress: (item: VaultItemDisplay) => void, navigation: any) {
+function renderItem(
+    info: RenderInfo,
+    onItemPress: (item: VaultItemDisplay) => void,
+    navigation: any
+) {
     const { item } = info;
     return (
         <ListItem
@@ -78,9 +82,7 @@ function renderItem(info: RenderInfo, onItemPress: (item: VaultItemDisplay) => v
 }
 
 function renderItemIcon(props, icon) {
-    return (
-        <Icon {...props} name={icon} />
-    );
+    return <Icon {...props} name={icon} />;
 }
 
 export function VaultManagementScreen({ navigation }) {
@@ -88,23 +90,32 @@ export function VaultManagementScreen({ navigation }) {
     const preparedContents = useMemo(() => prepareListContents(vaults), [vaults]);
     const [selectedVaultID, setSelectedVaultID] = useState<VaultSourceID>(null);
     const [removeVaultID, setRemoveVaultID] = useState<VaultSourceID>(null);
-    const removeVaultTitle = useMemo(() => removeVaultID ? vaults.find(v => v.id === removeVaultID).name : "", [removeVaultID]);
+    const removeVaultTitle = useMemo(
+        () => (removeVaultID ? vaults.find(v => v.id === removeVaultID).name : ""),
+        [removeVaultID]
+    );
     const [renameVaultID, setRenameVaultID] = useState<VaultSourceID>(null);
-    const renameVaultTitle = useMemo(() => renameVaultID ? vaults.find(v => v.id === renameVaultID).name : "", [renameVaultID]);
+    const renameVaultTitle = useMemo(
+        () => (renameVaultID ? vaults.find(v => v.id === renameVaultID).name : ""),
+        [renameVaultID]
+    );
     const navigateBack = useCallback(() => {
         navigation.goBack();
     }, [navigation]);
     const handleVaultPress = useCallback((vault: VaultItemDisplay) => {
         setSelectedVaultID(vault.source.id);
     }, []);
-    const handleVaultOptionSelect = useCallback((item: PromptItem) => {
-        if (item.slug === "remove") {
-            setRemoveVaultID(selectedVaultID);
-        } else if (item.slug === "rename") {
-            setRenameVaultID(selectedVaultID);
-        }
-        setSelectedVaultID(null);
-    }, [selectedVaultID]);
+    const handleVaultOptionSelect = useCallback(
+        (item: PromptItem) => {
+            if (item.slug === "remove") {
+                setRemoveVaultID(selectedVaultID);
+            } else if (item.slug === "rename") {
+                setRenameVaultID(selectedVaultID);
+            }
+            setSelectedVaultID(null);
+        },
+        [selectedVaultID]
+    );
     const handleVaultRemoval = useCallback(async () => {
         try {
             await removeVaultSource(removeVaultID);
@@ -116,20 +127,23 @@ export function VaultManagementScreen({ navigation }) {
             setRemoveVaultID(null);
         }
     }, [removeVaultID, removeVaultTitle]);
-    const handleVaultRename = useCallback(async (newName: string) => {
-        try {
-            if (!newName.trim()) {
-                throw new Error("Vault name cannot be empty");
+    const handleVaultRename = useCallback(
+        async (newName: string) => {
+            try {
+                if (!newName.trim()) {
+                    throw new Error("Vault name cannot be empty");
+                }
+                renameVaultSource(renameVaultID, newName);
+                notifySuccess("Vault renamed", `Successfully renamed: ${newName}`);
+            } catch (err) {
+                console.error(err);
+                notifyError("Failed renaming vault", err.message);
+            } finally {
+                setRenameVaultID(null);
             }
-            renameVaultSource(renameVaultID, newName);
-            notifySuccess("Vault renamed", `Successfully renamed: ${newName}`);
-        } catch (err) {
-            console.error(err);
-            notifyError("Failed renaming vault", err.message);
-        } finally {
-            setRenameVaultID(null);
-        }
-    }, [renameVaultID]);
+        },
+        [renameVaultID]
+    );
     const renderWrapper = useCallback(
         (info: RenderInfo) => renderItem(info, handleVaultPress, navigation),
         [handleVaultPress, navigation]
@@ -140,13 +154,13 @@ export function VaultManagementScreen({ navigation }) {
             <SafeAreaView style={{ flex: 1 }}>
                 <TopNavigation title="Vaults" alignment="center" accessoryLeft={BackAction} />
                 <Divider />
-                {preparedContents.length > 0 && (
+                {(preparedContents.length > 0 && (
                     <List
                         contentContainerStyle={styles.contentContainer}
                         data={preparedContents}
                         renderItem={renderWrapper}
                     />
-                ) || (
+                )) || (
                     <Layout level="2" style={styles.noVaultsLayout}>
                         <EmptyState
                             title="No Vaults"

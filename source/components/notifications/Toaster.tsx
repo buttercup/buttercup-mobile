@@ -30,52 +30,53 @@ const themedStyles = StyleService.create({
 
 export function Toaster() {
     const styles = useStyleSheet(themedStyles);
-    const config = useMemo(() => ({
-        error: (props) => (
-            <BaseToast
-                {...props}
-                style={styles.containerError}
-                contentContainerStyle={styles.contentContainer}
-                text1NumberOfLines={1}
-                text2NumberOfLines={2}
-                text1Style={styles.text1}
-                text2Style={styles.text2}
-                text1={props.text1}
-                text2={props.text2}
-            />
-        ),
-        success: (props) => (
-            <BaseToast
-                {...props}
-                style={styles.containerSuccess}
-                contentContainerStyle={styles.contentContainer}
-                text1NumberOfLines={1}
-                text2NumberOfLines={1}
-                text1Style={styles.text1}
-                text2Style={styles.text2}
-                text1={props.text1}
-                text2={props.text2}
-            />
-        ),
-        warning: (props) => (
-            <BaseToast
-                {...props}
-                style={styles.containerWarning}
-                contentContainerStyle={styles.contentContainer}
-                text1NumberOfLines={1}
-                text2NumberOfLines={2}
-                text1Style={styles.text1}
-                text2Style={styles.text2}
-                text1={props.text1}
-                text2={props.text2}
-            />
-        )
-    }), [styles]);
+    const config = useMemo(
+        () => ({
+            error: props => (
+                <BaseToast
+                    {...props}
+                    style={styles.containerError}
+                    contentContainerStyle={styles.contentContainer}
+                    text1NumberOfLines={1}
+                    text2NumberOfLines={2}
+                    text1Style={styles.text1}
+                    text2Style={styles.text2}
+                    text1={props.text1}
+                    text2={props.text2}
+                />
+            ),
+            success: props => (
+                <BaseToast
+                    {...props}
+                    style={styles.containerSuccess}
+                    contentContainerStyle={styles.contentContainer}
+                    text1NumberOfLines={1}
+                    text2NumberOfLines={1}
+                    text1Style={styles.text1}
+                    text2Style={styles.text2}
+                    text1={props.text1}
+                    text2={props.text2}
+                />
+            ),
+            warning: props => (
+                <BaseToast
+                    {...props}
+                    style={styles.containerWarning}
+                    contentContainerStyle={styles.contentContainer}
+                    text1NumberOfLines={1}
+                    text2NumberOfLines={2}
+                    text1Style={styles.text1}
+                    text2Style={styles.text2}
+                    text1={props.text1}
+                    text2={props.text2}
+                />
+            )
+        }),
+        [styles]
+    );
     return (
         <>
-            <Toast
-                config={config}
-            />
+            <Toast config={config} />
         </>
     );
 }

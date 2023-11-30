@@ -45,6 +45,7 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
+.cxx/
 *.keystore
 !debug.keystore
 
@@ -70,6 +71,12 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+# Metro
+.metro-health-check*
+
+# Testing
+/coverage
 
 # General
 .env

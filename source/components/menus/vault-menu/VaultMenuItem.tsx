@@ -27,7 +27,7 @@ const themedStyles = StyleService.create({
         shadowColor: "border-primary-color-4",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
@@ -130,16 +130,8 @@ const themedStyles = StyleService.create({
 
 export function VaultMenuItem(props: VaultMenuItemProps) {
     const { onActivate, vault } = props;
-    const {
-        authMethod,
-        numEntries,
-        numGroups,
-        offlineAvailable
-    } = useVaultStatistics(vault.id);
-    const {
-        title: vaultTypeName,
-        icon: vaultTypeIcon
-    } = VAULT_TYPES[vault.type];
+    const { authMethod, numEntries, numGroups, offlineAvailable } = useVaultStatistics(vault.id);
+    const { title: vaultTypeName, icon: vaultTypeIcon } = VAULT_TYPES[vault.type];
     const styles = useStyleSheet(themedStyles);
     const unlockedColour = (styles.statusIconUnlocked as any).color;
     const lockedColour = (styles.statusIconLocked as any).color;
@@ -151,19 +143,23 @@ export function VaultMenuItem(props: VaultMenuItemProps) {
     }, [onActivate]);
     return (
         <View style={styles.container}>
-            <TouchableOpacity activeOpacity={0.7} onPress={handleTouchActivation} style={styles.card}>
+            <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={handleTouchActivation}
+                style={styles.card}
+            >
                 <View style={styles.tallContainer}>
-                    <Avatar
-                        size="giant"
-                        source={vaultTypeIcon}
-                        style={styles.avatar}
-                    />
+                    <Avatar size="giant" source={vaultTypeIcon} style={styles.avatar} />
                     <Text category="h5">{vault.name}</Text>
                     <Text category="s2">{vaultTypeName}</Text>
                     <View style={styles.statusContainer}>
                         {vault.state === VaultSourceStatus.Unlocked && (
                             <View style={styles.statusLine}>
-                                <Icon name="unlock" fill={unlockedColour} style={styles.statusIcon} />
+                                <Icon
+                                    name="unlock"
+                                    fill={unlockedColour}
+                                    style={styles.statusIcon}
+                                />
                                 <Text category="s1">Unlocked</Text>
                             </View>
                         )}
@@ -174,28 +170,53 @@ export function VaultMenuItem(props: VaultMenuItemProps) {
                             </View>
                         )}
                         {vault.readOnly && (
-                            <Text category="s2" style={styles.readOnlyMessage}>Read-Only</Text>
+                            <Text category="s2" style={styles.readOnlyMessage}>
+                                Read-Only
+                            </Text>
                         )}
                     </View>
                 </View>
                 <View style={styles.smallContainers}>
                     <View style={[styles.smallContainer, styles.smallContainerAbove]}>
-                        <Text category="h6" style={styles.smallHeading}>{numEntries}</Text>
-                        <Text category="c1" style={styles.smallSubtitle}>Entries</Text>
+                        <Text category="h6" style={styles.smallHeading}>
+                            {numEntries}
+                        </Text>
+                        <Text category="c1" style={styles.smallSubtitle}>
+                            Entries
+                        </Text>
                     </View>
                     <View style={[styles.smallContainer, styles.smallContainerAbove]}>
-                        <Text category="h6" style={styles.smallHeading}>{numGroups}</Text>
-                        <Text category="c1" style={styles.smallSubtitle}>Groups</Text>
+                        <Text category="h6" style={styles.smallHeading}>
+                            {numGroups}
+                        </Text>
+                        <Text category="c1" style={styles.smallSubtitle}>
+                            Groups
+                        </Text>
                     </View>
                     <View style={[styles.smallContainer, styles.vaultFlagsContainer]}>
                         {authMethod === "biometrics" && (
-                            <FingerprintIcon fill={vaultFlagGreenColour} width={20} height={20} style={styles.vaultFlag} />
+                            <FingerprintIcon
+                                fill={vaultFlagGreenColour}
+                                width={20}
+                                height={20}
+                                style={styles.vaultFlag}
+                            />
                         )}
                         {authMethod === "password" && (
-                            <PasswordIcon fill={vaultFlagYellowColour} width={20} height={20} style={styles.vaultFlag} />
+                            <PasswordIcon
+                                fill={vaultFlagYellowColour}
+                                width={20}
+                                height={20}
+                                style={styles.vaultFlag}
+                            />
                         )}
                         {offlineAvailable && (
-                            <WifiOffIcon fill={vaultFlagBlueColour} width={20} height={20} style={styles.vaultFlag} />
+                            <WifiOffIcon
+                                fill={vaultFlagBlueColour}
+                                width={20}
+                                height={20}
+                                style={styles.vaultFlag}
+                            />
                         )}
                     </View>
                 </View>

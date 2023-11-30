@@ -13,8 +13,8 @@ import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { VaultMenu } from "../../menus/VaultMenu";
 import { getCredentialsForVault, getStoredVaults } from "../../../services/intermediateCredentials";
 import { AutoFillBridge } from "../../../services/autofillBridge";
-import { CURRENT_SOURCE } from "../../../state/vault";
-import { LOGIN_ENTRIES } from "../../../state/autofill";
+import { VAULT } from "../../../state/vault";
+import { AUTOFILL } from "../../../state/autofill";
 import { VaultDetails } from "../../../types";
 
 const BCUP_ICON = require("../../../../resources/images/bcup-256.png");
@@ -38,21 +38,24 @@ export function AutofillHomeScreen({ navigation }) {
     const [unlockedVaults, setUnlockedVaults] = useState<Array<VaultSourceID>>([]);
     const handleVaultOpen = useCallback(
         (sourceID: VaultSourceID) => {
-            CURRENT_SOURCE.set(sourceID);
+            VAULT.currentSource = sourceID;
             navigation.navigate("Items");
         },
         [navigation]
     );
-    const handleVaultUnlock = useCallback(async (sourceID: VaultSourceID, password: string) => {
-        const credentials = await getCredentialsForVault(sourceID, password);
-        LOGIN_ENTRIES.set({
-            ...LOGIN_ENTRIES.get(),
-            [sourceID]: credentials
-        });
-        CURRENT_SOURCE.set(sourceID);
-        setUnlockedVaults([...unlockedVaults, sourceID]);
-        navigation.navigate("Items");
-    }, [navigation, unlockedVaults]);
+    const handleVaultUnlock = useCallback(
+        async (sourceID: VaultSourceID, password: string) => {
+            const credentials = await getCredentialsForVault(sourceID, password);
+            AUTOFILL.entries = {
+                ...AUTOFILL.entries,
+                [sourceID]: credentials
+            };
+            VAULT.currentSource = sourceID;
+            setUnlockedVaults([...unlockedVaults, sourceID]);
+            navigation.navigate("Items");
+        },
+        [navigation, unlockedVaults]
+    );
     const cancelAutoFill = useCallback(() => {
         AutoFillBridge.cancelAutoFill();
     }, []);
@@ -60,10 +63,14 @@ export function AutofillHomeScreen({ navigation }) {
         let mounted = true;
         getStoredVaults().then(storedVaults => {
             if (!mounted) return;
-            setVaults(storedVaults.map(vault => ({
-                ...vault,
-                state: unlockedVaults.includes(vault.id) ? VaultSourceStatus.Unlocked : VaultSourceStatus.Locked
-            })));
+            setVaults(
+                storedVaults.map(vault => ({
+                    ...vault,
+                    state: unlockedVaults.includes(vault.id)
+                        ? VaultSourceStatus.Unlocked
+                        : VaultSourceStatus.Locked
+                }))
+            );
         });
         return () => {
             mounted = false;
@@ -75,12 +82,7 @@ export function AutofillHomeScreen({ navigation }) {
             <TopNavigation
                 title={props => (
                     <Layout style={styles.header}>
-                        <Avatar
-                            shape="square"
-                            size="tiny"
-                            source={BCUP_ICON}
-                            style={styles.logo}
-                        />
+                        <Avatar shape="square" size="tiny" source={BCUP_ICON} style={styles.logo} />
                         <Text {...props} category="h5">
                             Buttercup
                         </Text>

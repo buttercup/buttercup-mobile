@@ -63,7 +63,7 @@ export async function initialise(): Promise<void> {
                 );
             } else {
                 // No config, yet
-                const config = __vaultConfigurations[sourceID] = getInitialConfig();
+                const config = (__vaultConfigurations[sourceID] = getInitialConfig());
                 // Write back
                 await storage.setValue(storageKey, JSON.stringify(config));
             }
@@ -77,7 +77,10 @@ export async function initialise(): Promise<void> {
     });
 }
 
-function mergeConfigurations(target: VaultConfiguration, merge: VaultConfiguration): VaultConfiguration {
+function mergeConfigurations(
+    target: VaultConfiguration,
+    merge: VaultConfiguration
+): VaultConfiguration {
     const output = cloneObject(target);
     for (const key in merge) {
         output[key] = merge[key];
@@ -85,9 +88,15 @@ function mergeConfigurations(target: VaultConfiguration, merge: VaultConfigurati
     return output;
 }
 
-export async function updateVaultConfig(sourceID: VaultSourceID, config: VaultConfiguration): Promise<void> {
+export async function updateVaultConfig(
+    sourceID: VaultSourceID,
+    config: VaultConfiguration
+): Promise<void> {
     const storage = getAsyncStorage();
-    const updatedConfig = __vaultConfigurations[sourceID] = mergeConfigurations(getInitialConfig(), config);
+    const updatedConfig = (__vaultConfigurations[sourceID] = mergeConfigurations(
+        getInitialConfig(),
+        config
+    ));
     const storageKey = `${STORAGE_PREFIX_VAULT_CONFIG}${sourceID}`;
     await storage.setValue(storageKey, JSON.stringify(updatedConfig));
     const emitter = getEmitter();

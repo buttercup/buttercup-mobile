@@ -1,12 +1,12 @@
 import React, { Fragment, useCallback, useContext, useMemo, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { Divider, Icon, Layout, TopNavigation, TopNavigationAction } from "@ui-kitten/components";
-import { useState as useHookState } from "@hookstate/core";
+import { useSingleState } from "react-obstate";
 import { EntryType, ENTRY_TYPES, GroupID } from "buttercup";
 import { VaultContext } from "../../contexts/vault";
 import { useGroupTitle, useVaultContents } from "../../hooks/buttercup";
 import { useTabFocusState } from "../../hooks/vaultTab";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 import { createNewGroup, deleteGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
@@ -24,45 +24,49 @@ export function VaultContentsScreen({ navigation, route }) {
     const { groupID = null } = route?.params ?? {};
     useTabFocusState(groupID ? `contents-${groupID}` : "contents", "Vault Contents");
     const { readOnly } = useContext(VaultContext);
-    const entryTypes: Array<PromptItem> = useMemo(() => Object.keys(ENTRY_TYPES).map(typeKey => ({
-        title: ENTRY_TYPES[typeKey].title,
-        slug: ENTRY_TYPES[typeKey].slug,
-        icon: getIconForEntryType(ENTRY_TYPES[typeKey].slug as EntryType)
-    })), []);
-    const currentSourceState = useHookState(CURRENT_SOURCE);
-    const screenTitle = useGroupTitle(currentSourceState.get(), groupID) || "Contents";
-    const deleteTitle = useGroupTitle(currentSourceState.get(), groupID) || "Unknown Group";
-    const contents = useVaultContents(currentSourceState.get(), groupID);
+    const entryTypes: Array<PromptItem> = useMemo(
+        () =>
+            Object.keys(ENTRY_TYPES).map(typeKey => ({
+                title: ENTRY_TYPES[typeKey].title,
+                slug: ENTRY_TYPES[typeKey].slug,
+                icon: getIconForEntryType(ENTRY_TYPES[typeKey].slug as EntryType)
+            })),
+        []
+    );
+    const [currentSource] = useSingleState(VAULT, "currentSource");
+    const screenTitle = useGroupTitle(currentSource, groupID) || "Contents";
+    const deleteTitle = useGroupTitle(currentSource, groupID) || "Unknown Group";
+    const contents = useVaultContents(currentSource, groupID);
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
     const [promptDeleteGroupID, setPromptDeleteGroupID] = useState<GroupID>(null);
     const [promptNewEntryType, setPromptNewEntryType] = useState(false);
-    const handleGroupCreate = useCallback(async (groupName: string) => {
-        setBusyState("Creating group");
-        setPromptGroupCreate(false);
-        let newGroupID: GroupID;
-        try {
-            newGroupID = await createNewGroup(currentSourceState.get(), groupName, groupID);
-            notifySuccess("Group created", `Group was successfully created: ${groupName}`);
-        } catch (err) {
-            console.error(err);
-            notifyError("Failed creating group", err.message);
-        } finally {
-            setBusyState(null);
-        }
-        if (newGroupID) {
-            navigation.push(
-                "VaultContents",
-                {
+    const handleGroupCreate = useCallback(
+        async (groupName: string) => {
+            setBusyState("Creating group");
+            setPromptGroupCreate(false);
+            let newGroupID: GroupID;
+            try {
+                newGroupID = await createNewGroup(currentSource, groupName, groupID);
+                notifySuccess("Group created", `Group was successfully created: ${groupName}`);
+            } catch (err) {
+                console.error(err);
+                notifyError("Failed creating group", err.message);
+            } finally {
+                setBusyState(null);
+            }
+            if (newGroupID) {
+                navigation.push("VaultContents", {
                     groupID: newGroupID
-                }
-            );
-        }
-    }, [currentSourceState, groupID]);
+                });
+            }
+        },
+        [currentSource, groupID]
+    );
     const handleGroupDelete = useCallback(async () => {
         setBusyState("Deleting group");
         setPromptDeleteGroupID(null);
         try {
-            await deleteGroup(currentSourceState.get(), groupID);
+            await deleteGroup(currentSource, groupID);
             notifySuccess("Group deleted", `Group was successfully deleted: ${deleteTitle}`);
             navigation.goBack();
         } catch (err) {
@@ -71,11 +75,14 @@ export function VaultContentsScreen({ navigation, route }) {
         } finally {
             setBusyState(null);
         }
-    }, [currentSourceState, deleteTitle, groupID, navigation]);
-    const handleNewEntryCreate = useCallback((type: EntryType) => {
-        setPromptNewEntryType(false);
-        navigation.push("EditEntry", { entryID: null, entryType: type, groupID });
-    }, [groupID, navigation]);
+    }, [currentSource, deleteTitle, groupID, navigation]);
+    const handleNewEntryCreate = useCallback(
+        (type: EntryType) => {
+            setPromptNewEntryType(false);
+            navigation.push("EditEntry", { entryID: null, entryType: type, groupID });
+        },
+        [groupID, navigation]
+    );
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -98,9 +105,7 @@ export function VaultContentsScreen({ navigation, route }) {
                                 />
                             )}
                         />
-                        {readOnly && (
-                            <ReadOnlyBar />
-                        )}
+                        {readOnly && <ReadOnlyBar />}
                         <Divider />
                     </Fragment>
                 )}

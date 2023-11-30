@@ -1,9 +1,14 @@
-import { createState } from "@hookstate/core";
+import { createStateObject } from "obstate";
 
 export enum GeneratorMode {
     EntryProperty = "entryProperty",
     Standalone = "standalone"
 }
 
-export const GENERATOR_MODE = createState<GeneratorMode>(GeneratorMode.Standalone);
-export const LAST_PASSWORD = createState<string>("");
+export const GENERATOR = createStateObject<{
+    lastPassword: string;
+    mode: GeneratorMode;
+}>({
+    lastPassword: "",
+    mode: GeneratorMode.Standalone
+});

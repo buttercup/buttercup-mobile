@@ -1,4 +1,11 @@
-import { Credentials, DatasourceLoadedData, EncryptedContent, History, TextDatasource, registerDatasource } from "buttercup";
+import {
+    Credentials,
+    DatasourceLoadedData,
+    EncryptedContent,
+    History,
+    TextDatasource,
+    registerDatasource
+} from "buttercup";
 import { readFile, writeFile } from "react-native-fs";
 import path from "path-browserify";
 import { LocalFileSystemInterface } from "./LocalFileInterface";
@@ -14,12 +21,14 @@ export class MobileLocalFileDatasource extends TextDatasource {
     constructor(credentials: Credentials) {
         super(credentials);
         const { data: credentialsData } = credentials.getData() as any;
-        const { datasource: datasourceConfig } = credentialsData as { datasource: DatasourceConfigurationMobileLocalFile };
+        const { datasource: datasourceConfig } = credentialsData as {
+            datasource: DatasourceConfigurationMobileLocalFile;
+        };
         this._filename = prepareFullPath(datasourceConfig.filename);
         this.type = "mobilelocalfile";
     }
 
-    getConfiguration(): { type: string, path: string } {
+    getConfiguration(): { type: string; path: string } {
         return {
             type: this.type,
             path: this._filename

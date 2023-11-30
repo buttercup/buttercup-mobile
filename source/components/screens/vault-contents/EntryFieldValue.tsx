@@ -1,12 +1,6 @@
 import React from "react";
 import { Platform, View } from "react-native";
-import {
-    Icon,
-    Layout,
-    StyleService,
-    Text,
-    useStyleSheet
-} from "@ui-kitten/components";
+import { Icon, Layout, StyleService, Text, useStyleSheet } from "@ui-kitten/components";
 import { EntryPropertyValueType } from "buttercup";
 import { CodeDigits } from "../codes/CodeDigits";
 import { CodeWheel } from "../codes/CodeWheel";
@@ -89,10 +83,7 @@ export function EntryFieldValue(props: FieldValueProps) {
     if (info.valueType === EntryPropertyValueType.Note) {
         return (
             <Layout level="2" style={styles.fieldValueLayoutNote}>
-                <Text
-                    numberOfLines={0}
-                    style={styles.textValue}
-                >
+                <Text numberOfLines={0} style={styles.textValue}>
                     {info.value}
                 </Text>
             </Layout>
@@ -106,29 +97,25 @@ export function EntryFieldValue(props: FieldValueProps) {
                         <Layout style={styles.otpCode}>
                             <CodeDigits code={otp.currentCode} />
                             <View style={styles.otpSpacer} />
-                            <CodeWheel
-                                period={otp.period}
-                                timeLeft={otp.timeLeft}
-                            />
+                            <CodeWheel period={otp.period} timeLeft={otp.timeLeft} />
                         </Layout>
                     )}
-                    {!otp && (
-                        <CodeDigits code="ERROR" />
-                    )}
+                    {!otp && <CodeDigits code="ERROR" />}
                 </>
             )}
             {info.valueType === EntryPropertyValueType.Password && (
                 <>
-                    {showPassword && (
-                        <Text
-                            numberOfLines={1}
-                            style={styles.passwordValue}
-                        >
+                    {(showPassword && (
+                        <Text numberOfLines={1} style={styles.passwordValue}>
                             {info.value}
                         </Text>
-                    ) || (
+                    )) || (
                         <View style={styles.passwordHiddenView}>
-                            <Icon name="lock-outline" fill={(styles.passwordIcon as any).color} style={styles.passwordIcon} />
+                            <Icon
+                                name="lock-outline"
+                                fill={(styles.passwordIcon as any).color}
+                                style={styles.passwordIcon}
+                            />
                             <View style={styles.passwordValueHiddenView} />
                         </View>
                     )}

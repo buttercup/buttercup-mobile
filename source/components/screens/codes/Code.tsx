@@ -90,9 +90,9 @@ export function Code(props: OTPCodeProps) {
         <View style={styles.view}>
             <TouchableOpacity activeOpacity={0.3} onPress={handlePress} style={styles.viewInner}>
                 <View style={styles.iconDefault}>
-                    {code.image && (
+                    {(code.image && (
                         <Image source={{ uri: code.image }} style={styles.image} />
-                    ) || (
+                    )) || (
                         <Icon
                             name={code.sourceID ? "person-done" : "person-add"}
                             fill={iconColour}
@@ -101,14 +101,20 @@ export function Code(props: OTPCodeProps) {
                     )}
                 </View>
                 <View style={styles.contentView}>
-                    {(code.entryTitle || code.otpIssuer) && (
+                    {((code.entryTitle || code.otpIssuer) && (
                         <View>
-                            <Text style={styles.title} category="s1">{code.entryTitle || code.otpIssuer}</Text>
-                            <Text style={styles.subtitle} category="s2">{code.otpTitle}</Text>
+                            <Text style={styles.title} category="s1">
+                                {code.entryTitle || code.otpIssuer}
+                            </Text>
+                            <Text style={styles.subtitle} category="s2">
+                                {code.otpTitle}
+                            </Text>
                         </View>
-                    ) || (
+                    )) || (
                         <View>
-                            <Text style={styles.titleOnly} category="s1">{code.otpTitle}</Text>
+                            <Text style={styles.titleOnly} category="s1">
+                                {code.otpTitle}
+                            </Text>
                         </View>
                     )}
                     <View style={styles.digitsView}>
@@ -117,13 +123,9 @@ export function Code(props: OTPCodeProps) {
                         <CodeDigits code={code.currentCode} />
                     </View>
                 </View>
-                {!last && (
-                    <Divider style={styles.divider} />
-                )}
+                {!last && <Divider style={styles.divider} />}
             </TouchableOpacity>
-            {!last && (
-                <Divider style={styles.divider} />
-            )}
+            {!last && <Divider style={styles.divider} />}
         </View>
     );
 }

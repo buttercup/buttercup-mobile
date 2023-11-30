@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import {
-    Card,
-    Layout,
-    Modal,
-    Spinner,
-    Text
-} from "@ui-kitten/components";
+import { Card, Layout, Modal, Spinner, Text } from "@ui-kitten/components";
 import { useBusyState } from "../../hooks/busyState";
 
 const NOOP = () => {};
@@ -37,17 +31,13 @@ export function BusyStatus() {
             backdropStyle={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
             onBackdropPress={NOOP}
         >
-            <Card
-                disabled
-                style={styles.card}
-            >
+            <Card disabled style={styles.card}>
                 <Layout style={styles.spinnerContainer}>
-                    <Spinner
-                        size="giant"
-                        status="primary"
-                    />
+                    <Spinner size="giant" status="primary" />
                 </Layout>
-                <Text category="s1" style={styles.stateText}>{busyState || ""}</Text>
+                <Text category="s1" style={styles.stateText}>
+                    {busyState || ""}
+                </Text>
             </Card>
         </Modal>
     );

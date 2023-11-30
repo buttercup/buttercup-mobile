@@ -66,10 +66,7 @@ const themedStyles = StyleService.create({
 });
 
 export function ItemsPrompt(props: ItemsPromptProps) {
-    const {
-        onCancel,
-        visible
-    } = props;
+    const { onCancel, visible } = props;
     const styles = useStyleSheet(themedStyles);
     return (
         <Modal
@@ -86,11 +83,7 @@ export function ItemsPrompt(props: ItemsPromptProps) {
 }
 
 function ModalContent(props: ItemsPromptProps) {
-    const {
-        items,
-        onCancel,
-        onSelect
-    } = props;
+    const { items, onCancel, onSelect } = props;
     const styles = useStyleSheet(themedStyles);
     const [selectedIndex, setSelectedIndex] = useState(new IndexPath(-1));
     const insets = useSafeAreaInsets();

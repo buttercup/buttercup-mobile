@@ -1,7 +1,12 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { EntryID, VaultSourceID } from "buttercup";
 import { OTPContext } from "../contexts/otp";
-import { getEmitter as getAllEmitter, getOTPs as getAllOTPs, getPendingOTPs, removePendingOTP } from "../services/otpAll";
+import {
+    getEmitter as getAllEmitter,
+    getOTPs as getAllOTPs,
+    getPendingOTPs,
+    removePendingOTP
+} from "../services/otpAll";
 import { getEmitter, getOTPs } from "../services/otpVault";
 import { OTP, OTPCode } from "../types";
 
@@ -22,18 +27,19 @@ export function useAllOTPItems(): Array<OTP> {
 }
 
 export function useEntryOTPCodes(entryID: EntryID): { [key: string]: OTPCode } {
-    const {
-        currentSourceOTPCodes
-    } = useContext(OTPContext);
-    const entryCodes: { [key: string]: OTPCode } = useMemo(() => currentSourceOTPCodes.reduce(
-        (output, otpCode: OTPCode) => otpCode.entryID === entryID
-            ? ({
-                ...output,
-                [otpCode.entryProperty]: otpCode
-            })
-            : output,
-            {}
-        ),
+    const { currentSourceOTPCodes } = useContext(OTPContext);
+    const entryCodes: { [key: string]: OTPCode } = useMemo(
+        () =>
+            currentSourceOTPCodes.reduce(
+                (output, otpCode: OTPCode) =>
+                    otpCode.entryID === entryID
+                        ? {
+                              ...output,
+                              [otpCode.entryProperty]: otpCode
+                          }
+                        : output,
+                {}
+            ),
         [currentSourceOTPCodes]
     );
     return entryCodes;

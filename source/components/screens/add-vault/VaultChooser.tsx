@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {},
     item: {
-      marginVertical: 4,
+        marginVertical: 4
     },
     pathActionButton: {
         marginTop: 6
@@ -69,9 +69,7 @@ const themedStyles = StyleService.create({
 });
 
 function renderItemIcon(props, icon) {
-    return (
-        <Icon {...props} name={icon} />
-    );
+    return <Icon {...props} name={icon} />;
 }
 
 function resultSorter(a: VaultChooserItem, b: VaultChooserItem): number {
@@ -87,33 +85,35 @@ export function VaultChooser(props: VaultChooserProps) {
     const { onSelectVault } = props;
     const fsInterface = useMemo(getCurrentInterface, []);
     const [items, setItems] = useState<Array<FSItem>>([]);
-    const [currentPath, setCurrentPath] = useState<VaultChooserItem>(fsInterface.getRootPathIdentifier());
+    const [currentPath, setCurrentPath] = useState<VaultChooserItem>(
+        fsInterface.getRootPathIdentifier()
+    );
     const [selectedPath, setSelectedPath] = useState<VaultChooserItem>(null);
     const [parentPaths, setParentPaths] = useState<Array<VaultChooserItem>>([]);
     const [promptNewFile, setPromptNewFile] = useState(false);
     const [promptNewFolder, setPromptNewFolder] = useState(false);
     const themeStyles = useStyleSheet(themedStyles);
-    const handleItemSelect = useCallback((info: VaultChooserListItem) => {
-        if (!info.item.path || info.item.path.type === "directory") {
-            setSelectedPath(null);
-            onSelectVault(null);
-            if (info.item.path === null) {
-                const newParentPaths = [...parentPaths];
-                const parentPath = newParentPaths.pop();
-                setParentPaths(newParentPaths);
-                setCurrentPath(parentPath);
-            } else {
-                setParentPaths([
-                    ...parentPaths,
-                    currentPath
-                ]);
-                setCurrentPath(info.item.path);
+    const handleItemSelect = useCallback(
+        (info: VaultChooserListItem) => {
+            if (!info.item.path || info.item.path.type === "directory") {
+                setSelectedPath(null);
+                onSelectVault(null);
+                if (info.item.path === null) {
+                    const newParentPaths = [...parentPaths];
+                    const parentPath = newParentPaths.pop();
+                    setParentPaths(newParentPaths);
+                    setCurrentPath(parentPath);
+                } else {
+                    setParentPaths([...parentPaths, currentPath]);
+                    setCurrentPath(info.item.path);
+                }
+            } else if (info.item.path.type === "file") {
+                setSelectedPath(info.item.path);
+                onSelectVault(info.item.path);
             }
-        } else if (info.item.path.type === "file") {
-            setSelectedPath(info.item.path);
-            onSelectVault(info.item.path);
-        }
-    }, [onSelectVault, parentPaths]);
+        },
+        [onSelectVault, parentPaths]
+    );
     const handleNewVaultPromptShow = useCallback(() => {
         setPromptNewFile(true);
         onSelectVault(null);
@@ -121,60 +121,70 @@ export function VaultChooser(props: VaultChooserProps) {
     const handleNewFolderPromptShow = useCallback(() => {
         setPromptNewFolder(true);
     }, []);
-    const handleNewVaultPromptSubmission = useCallback((filename: string) => {
-        setPromptNewFile(false);
-        let newVaultFilename = filename;
-        if (/\.bcup$/i.test(newVaultFilename) === false) {
-            newVaultFilename = `${newVaultFilename}.bcup`;
-        }
-        setItems([
-            ...items,
-            {
-                title: newVaultFilename,
-                subtitle: `0 B`,
-                icon: "file-add-outline",
-                path: {
-                    identifier: null,
-                    name: newVaultFilename
-                },
-                isNew: true
+    const handleNewVaultPromptSubmission = useCallback(
+        (filename: string) => {
+            setPromptNewFile(false);
+            let newVaultFilename = filename;
+            if (/\.bcup$/i.test(newVaultFilename) === false) {
+                newVaultFilename = `${newVaultFilename}.bcup`;
             }
-        ]);
-        const result = {
-            name: newVaultFilename,
-            identifier: null,
-            parent: currentPath
-        };
-        setSelectedPath(result);
-        onSelectVault(result);
-    }, [items, currentPath]);
-    const handleNewFolderPromptSubmission = useCallback(async (folderName: string) => {
-        setPromptNewFolder(false);
-        try {
-            setBusyState("Creating directory");
-            await fsInterface.putDirectory(currentPath, { identifier: null, name: folderName });
-            setBusyState(null);
-            // Force refresh
-            setParentPaths([...parentPaths]);
-        } catch (err) {
-            setBusyState(null);
-            console.error(err);
-            notifyError("Folder creation failure", err.message);
-        }
-    }, [fsInterface, currentPath]);
-    const renderItem = useCallback((info: VaultChooserListItem) => {
-        const { item } = info;
-        const isSelected = selectedPath && item.path && item.path.identifier === selectedPath.identifier;
-        return (
-            <ListItem
-                title={item.title}
-                description={item.subtitle}
-                accessoryLeft={props => renderItemIcon(props, item.icon)}
-                onPress={() => handleItemSelect(info)}
-                style={isSelected ? themeStyles.selectedItem : {}}
-            />
-        );
-    }, [handleItemSelect, selectedPath]);
+            setItems([
+                ...items,
+                {
+                    title: newVaultFilename,
+                    subtitle: `0 B`,
+                    icon: "file-add-outline",
+                    path: {
+                        identifier: null,
+                        name: newVaultFilename
+                    },
+                    isNew: true
+                }
+            ]);
+            const result = {
+                name: newVaultFilename,
+                identifier: null,
+                parent: currentPath
+            };
+            setSelectedPath(result);
+            onSelectVault(result);
+        },
+        [items, currentPath]
+    );
+    const handleNewFolderPromptSubmission = useCallback(
+        async (folderName: string) => {
+            setPromptNewFolder(false);
+            try {
+                setBusyState("Creating directory");
+                await fsInterface.putDirectory(currentPath, { identifier: null, name: folderName });
+                setBusyState(null);
+                // Force refresh
+                setParentPaths([...parentPaths]);
+            } catch (err) {
+                setBusyState(null);
+                console.error(err);
+                notifyError("Folder creation failure", err.message);
+            }
+        },
+        [fsInterface, currentPath]
+    );
+    const renderItem = useCallback(
+        (info: VaultChooserListItem) => {
+            const { item } = info;
+            const isSelected =
+                selectedPath && item.path && item.path.identifier === selectedPath.identifier;
+            return (
+                <ListItem
+                    title={item.title}
+                    description={item.subtitle}
+                    accessoryLeft={props => renderItemIcon(props, item.icon)}
+                    onPress={() => handleItemSelect(info)}
+                    style={isSelected ? themeStyles.selectedItem : {}}
+                />
+            );
+        },
+        [handleItemSelect, selectedPath]
+    );
     useEffect(() => {
         setBusyState("Loading folder contents");
         fsInterface
@@ -208,11 +218,11 @@ export function VaultChooser(props: VaultChooserProps) {
     return (
         <>
             <SafeAreaView style={{ flex: 1 }}>
-                {items.length === 0 && currentPath === null && (
+                {(items.length === 0 && currentPath === null && (
                     <View style={themeStyles.noItemsView}>
                         <Text style={themeStyles.noItemsText}>No files here</Text>
                     </View>
-                ) || (
+                )) || (
                     <List
                         style={styles.listContainer}
                         contentContainerStyle={styles.contentContainer}

@@ -10,9 +10,9 @@ import {
     TopNavigationAction
 } from "@ui-kitten/components";
 import { GroupID } from "buttercup";
-import { useState as useHookState } from "@hookstate/core";
+import { useSingleState } from "react-obstate";
 import { useFocusedTab } from "../../hooks/vaultTab";
-import { CURRENT_SOURCE } from "../../state/vault";
+import { VAULT } from "../../state/vault";
 import { createNewGroup } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { notifyError, notifySuccess } from "../../library/notifications";
@@ -52,7 +52,12 @@ function BottomTabBar({ navigation, state }) {
 
 function TabNavigator() {
     return (
-        <Navigator tabBar={props => <BottomTabBar {...props} />}>
+        <Navigator
+            tabBar={props => <BottomTabBar {...props} />}
+            screenOptions={{
+                headerShown: false
+            }}
+        >
             <Screen name="Groups" component={VaultContentsScreen} />
             <Screen name="Search" component={SearchScreen} />
             <Screen name="Codes" component={VaultCodesScreen} />
@@ -65,29 +70,29 @@ export function VaultNavigator({ navigation }) {
     const { readOnly } = useContext(VaultContext);
     const [focusedTab, focusedTabTitle] = useFocusedTab();
     const [promptGroupCreate, setPromptGroupCreate] = useState(false);
-    const currentSourceState = useHookState(CURRENT_SOURCE);
-    const handleGroupCreate = useCallback(async (groupName: string) => {
-        setBusyState("Creating group");
-        setPromptGroupCreate(false);
-        let newGroupID: GroupID;
-        try {
-            newGroupID = await createNewGroup(currentSourceState.get(), groupName);
-            notifySuccess("Group created", `Group was successfully created: ${groupName}`);
-        } catch (err) {
-            console.error(err);
-            notifyError("Failed creating group", err.message);
-        } finally {
-            setBusyState(null);
-        }
-        if (newGroupID) {
-            navigation.push(
-                "VaultContents",
-                {
+    const [currentSource] = useSingleState(VAULT, "currentSource");
+    const handleGroupCreate = useCallback(
+        async (groupName: string) => {
+            setBusyState("Creating group");
+            setPromptGroupCreate(false);
+            let newGroupID: GroupID;
+            try {
+                newGroupID = await createNewGroup(currentSource, groupName);
+                notifySuccess("Group created", `Group was successfully created: ${groupName}`);
+            } catch (err) {
+                console.error(err);
+                notifyError("Failed creating group", err.message);
+            } finally {
+                setBusyState(null);
+            }
+            if (newGroupID) {
+                navigation.push("VaultContents", {
                     groupID: newGroupID
-                }
-            );
-        }
-    }, [currentSourceState]);
+                });
+            }
+        },
+        [currentSource, navigation]
+    );
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -110,9 +115,7 @@ export function VaultNavigator({ navigation }) {
                         </>
                     )}
                 />
-                {readOnly && (
-                    <ReadOnlyBar />
-                )}
+                {readOnly && <ReadOnlyBar />}
                 <Divider />
                 <TabNavigator />
             </SafeAreaView>

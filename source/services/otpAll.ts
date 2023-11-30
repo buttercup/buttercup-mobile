@@ -61,16 +61,15 @@ export async function initialise() {
         ]);
         const unattachedOTPs: Array<OTP> = unattachedRaw ? JSON.parse(unattachedRaw) : [];
         const vaultOTPs: Array<OTP> = vaultsRaw ? JSON.parse(vaultsRaw) : [];
-        __otps = [
-            ...unattachedOTPs,
-            ...vaultOTPs
-        ];
+        __otps = [...unattachedOTPs, ...vaultOTPs];
         sortOTPs();
     });
     __emitter.emit("stored");
 }
 
-export async function removeMissingSources(availableSourceIDs: Array<VaultSourceID>): Promise<void> {
+export async function removeMissingSources(
+    availableSourceIDs: Array<VaultSourceID>
+): Promise<void> {
     __otps = __otps.filter(otp => {
         if (!otp.sourceID) return true;
         return availableSourceIDs.includes(otp.sourceID);
@@ -86,7 +85,10 @@ export async function removePendingOTP(uri: string): Promise<void> {
     await storeOTPs();
 }
 
-export async function removeSourceOTPs(sourceID: VaultSourceID, store: boolean = true): Promise<void> {
+export async function removeSourceOTPs(
+    sourceID: VaultSourceID,
+    store: boolean = true
+): Promise<void> {
     __otps = __otps.filter(otp => otp.sourceID !== sourceID);
     if (store) {
         await storeOTPs();

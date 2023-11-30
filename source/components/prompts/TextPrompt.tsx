@@ -1,12 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-    Button,
-    Card,
-    Input,
-    Modal,
-    Text
-} from "@ui-kitten/components";
+import { Button, Card, Input, Modal, Text } from "@ui-kitten/components";
 import { useKeyboardSize } from "../../hooks/keyboard";
 
 interface TextPromptProps {
@@ -65,31 +59,41 @@ function ModalContent(props: TextPromptProps) {
         onSubmit(value);
         setValue("");
     }, [onSubmit, value]);
-    const renderHeader = useCallback((props) => (
-        <View {...props} style={[props.style, styles.headerLayout]}>
-            <Text category="s1" style={styles.promptText}>{prompt}</Text>
-        </View>
-    ), [prompt]);
-    const renderFooter = useCallback((props) => (
-        <View {...props} style={[props.style, styles.footerLayout]}>
-            <Button
-                disabled={value.trim().length <= 0}
-                onPress={handleSubmission}
-                status="success"
-            >
-                {submitText}
-            </Button>
-            {cancelable && (<Button
-                appearance="ghost"
-                onPress={onCancel}
-                size="small"
-                status="basic"
-                style={styles.cancelButton}
-            >
-                {cancelText}
-            </Button>)}
-        </View>
-    ), [cancelable, cancelText, handleSubmission, onCancel, onSubmit, prompt, submitText, value]);
+    const renderHeader = useCallback(
+        props => (
+            <View {...props} style={[props.style, styles.headerLayout]}>
+                <Text category="s1" style={styles.promptText}>
+                    {prompt}
+                </Text>
+            </View>
+        ),
+        [prompt]
+    );
+    const renderFooter = useCallback(
+        props => (
+            <View {...props} style={[props.style, styles.footerLayout]}>
+                <Button
+                    disabled={value.trim().length <= 0}
+                    onPress={handleSubmission}
+                    status="success"
+                >
+                    {submitText}
+                </Button>
+                {cancelable && (
+                    <Button
+                        appearance="ghost"
+                        onPress={onCancel}
+                        size="small"
+                        status="basic"
+                        style={styles.cancelButton}
+                    >
+                        {cancelText}
+                    </Button>
+                )}
+            </View>
+        ),
+        [cancelable, cancelText, handleSubmission, onCancel, onSubmit, prompt, submitText, value]
+    );
     return (
         <Card
             disabled
@@ -118,11 +122,7 @@ function ModalContent(props: TextPromptProps) {
 }
 
 export function TextPrompt(props: TextPromptProps) {
-    const {
-        cancelable = false,
-        onCancel = NOOP,
-        visible
-    } = props;
+    const { cancelable = false, onCancel = NOOP, visible } = props;
     const handleBackdropPress = useCallback(() => {
         if (cancelable) {
             onCancel();

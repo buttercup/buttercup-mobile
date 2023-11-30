@@ -1,34 +1,41 @@
+const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
+
 /**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
  *
- * @format
+ * @type {import("metro-config").MetroConfig}
  */
 
- const { getDefaultConfig } = require("metro-config");
+// const config = {};
+const defaultConfig = getDefaultConfig(__dirname);
+const {
+    resolver: { assetExts }
+} = defaultConfig;
 
-module.exports = (async () => {
-    const {
-        resolver: { assetExts }
-    } = await getDefaultConfig();
-    return {
-        transformer: {
-            babelTransformerPath: require.resolve("react-native-svg-transformer"),
-            getTransformOptions: async () => ({
-                transform: {
-                    experimentalImportSupport: false,
-                    inlineRequires: true
-                }
-            })
+module.exports = mergeConfig(defaultConfig, {
+    transformer: {
+        babelTransformerPath: require.resolve("react-native-svg-transformer"),
+        getTransformOptions: async () => ({
+            transform: {
+                experimentalImportSupport: false,
+                inlineRequires: true
+            }
+        })
+    },
+    resolver: {
+        assetExts: assetExts.filter(ext => ext !== "svg"),
+        extraNodeModules: {
+            crypto: require.resolve("crypto-browserify"),
+            path: require.resolve("path-browserify"),
+            stream: require.resolve("stream-browserify")
         },
-        resolver: {
-            assetExts: assetExts.filter(ext => ext !== "svg"),
-            extraNodeModules: {
-                crypto: require.resolve("crypto-browserify"),
-                path: require.resolve("path-browserify"),
-                stream: require.resolve("stream-browserify")
-            },
-            sourceExts: ["jsx", "js", "ts", "tsx", "svg"]
-        }
-    };
-})();
+        // resolveRequest: (context, moduleName, platform) => {
+        //     if (/react-obstate/.test(moduleName)) {
+        //         console.log("CHECK", moduleName, context);
+        //     }
+        //     return context.resolveRequest(context, moduleName, platform);
+        // },
+        sourceExts: ["jsx", "js", "ts", "tsx", "svg", "cjs", "json"]
+    }
+});
