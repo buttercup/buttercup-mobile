@@ -10,8 +10,8 @@
 ## About
 This repository holds the source for the Buttercup mobile application, which is available for the following platforms:
 
- * iOS **12+**
- * Android **8.0+**
+ * iOS **13+**
+ * Android **13+**
 
 _Currently only phones are supported, not tablets._
 
