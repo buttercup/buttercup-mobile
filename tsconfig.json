@@ -1,22 +1,20 @@
 {
     "extends": "@tsconfig/react-native/tsconfig.json",
     "compilerOptions": {
-        "target": "esnext",
-        "module": "commonjs",
-        "lib": ["es2017"],
         "allowJs": true,
-        "jsx": "react-native",
-        "noEmit": true,
-        "isolatedModules": true,
-        "strict": false,
-        "moduleResolution": "node",
-        "typeRoots": [
-            "./source/typings"
-        ],
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
+        "isolatedModules": true,
+        "jsx": "react-native",
+        "lib": ["es2017"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noEmit": true,
+        "resolveJsonModule": true,
         "skipLibCheck": true,
-        "resolveJsonModule": true
+        "strict": false,
+        "target": "esnext",
+        "typeRoots": ["./source/typings"]
     },
     "exclude": [
         "node_modules", "babel.config.js", "metro.config.js", "jest.config.js"
