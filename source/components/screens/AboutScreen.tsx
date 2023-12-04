@@ -13,9 +13,9 @@ import {
     TopNavigationAction,
     useStyleSheet
 } from "@ui-kitten/components";
+import BCUP_ICON from "../../../resources/images/bcup-256.png";
 import { version } from "../../../package.json";
 
-const BCUP_ICON = require("../../../resources/images/bcup-256.png");
 const { MONO_FONT } = Platform.select({
     ios: {
         MONO_FONT: "Courier New"

@@ -17,12 +17,13 @@ import { setBusyState } from "../../services/busyState";
 import { lockAllVaults, reset } from "../../services/buttercup";
 import { VAULT } from "../../state/vault";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
+import BCUP_ICON from "../../../resources/images/bcup-256.png";
+
 interface HomeTopBarProps {
     leftMenu?: "vaults" | null;
     navigation: any;
 }
 
-const BCUP_ICON = require("../../../resources/images/bcup-256.png");
 const MENU_ITEMS = [
     { text: "Add Vault", slug: "add", icon: "plus-outline" },
     { text: "Manage Vaults", slug: "manage", icon: "menu-arrow-outline" },

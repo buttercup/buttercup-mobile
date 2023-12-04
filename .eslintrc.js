@@ -5,6 +5,8 @@ module.exports = {
     rules: {
         semi: ["error", "always"],
         quotes: ["error", "double"],
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "react-native/no-inline-styles": "off",
+        "react/no-unstable-nested-components": "off"
     }
 };

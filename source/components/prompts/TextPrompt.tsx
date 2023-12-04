@@ -92,7 +92,7 @@ function ModalContent(props: TextPromptProps) {
                 )}
             </View>
         ),
-        [cancelable, cancelText, handleSubmission, onCancel, onSubmit, prompt, submitText, value]
+        [cancelable, cancelText, handleSubmission, onCancel, submitText, value]
     );
     return (
         <Card
@@ -108,7 +108,7 @@ function ModalContent(props: TextPromptProps) {
         >
             <Input
                 autoCapitalize="none"
-                autoCompleteType="off"
+                autoComplete="off"
                 autoCorrect={false}
                 autoFocus
                 onChangeText={setValue}
@@ -133,6 +133,7 @@ export function TextPrompt(props: TextPromptProps) {
             backdropStyle={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
             onBackdropPress={handleBackdropPress}
             visible={visible}
+            animationType="fade"
         >
             <ModalContent {...props} />
         </Modal>
