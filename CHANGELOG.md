@@ -1,5 +1,17 @@
 # Buttercup Mobile Changelog
 
+## v2.6.1
+_2023-12-06_
+
+ * **Bugfix**:
+   * ([#344](https://github.com/buttercup/buttercup-mobile/issues/344)) Can't save new entry / group
+
+## v2.6.0
+_2023-11-30_
+
+ * Upgraded React-Native
+ * Upgraded Buttercup core internals
+
 ## v2.5.2
 _2022-08-31_
 
