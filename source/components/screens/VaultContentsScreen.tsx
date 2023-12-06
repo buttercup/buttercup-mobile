@@ -60,7 +60,7 @@ export function VaultContentsScreen({ navigation, route }) {
                 });
             }
         },
-        [currentSource, groupID]
+        [currentSource, groupID, navigation]
     );
     const handleGroupDelete = useCallback(async () => {
         setBusyState("Deleting group");
@@ -88,36 +88,34 @@ export function VaultContentsScreen({ navigation, route }) {
     };
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={navigateBack} />;
     return (
-        <>
-            <SafeAreaView style={{ flex: 1 }}>
-                {groupID && (
-                    <Fragment>
-                        <TopNavigation
-                            title={screenTitle}
-                            alignment="center"
-                            accessoryLeft={BackAction}
-                            accessoryRight={() => (
-                                <VaultContentsMenu
-                                    onEntryCreate={() => setPromptNewEntryType(true)}
-                                    onGroupCreate={() => setPromptGroupCreate(true)}
-                                    onGroupDelete={() => setPromptDeleteGroupID(groupID)}
-                                    readOnly={readOnly}
-                                />
-                            )}
-                        />
-                        {readOnly && <ReadOnlyBar />}
-                        <Divider />
-                    </Fragment>
-                )}
-                <Layout style={{ flex: 1 }}>
-                    <VaultContentsList
-                        contents={contents}
-                        groupID={groupID}
-                        navigation={navigation}
-                        type="group"
+        <SafeAreaView style={{ flex: 1 }}>
+            {groupID && (
+                <Fragment>
+                    <TopNavigation
+                        title={screenTitle}
+                        alignment="center"
+                        accessoryLeft={BackAction}
+                        accessoryRight={() => (
+                            <VaultContentsMenu
+                                onEntryCreate={() => setPromptNewEntryType(true)}
+                                onGroupCreate={() => setPromptGroupCreate(true)}
+                                onGroupDelete={() => setPromptDeleteGroupID(groupID)}
+                                readOnly={readOnly}
+                            />
+                        )}
                     />
-                </Layout>
-            </SafeAreaView>
+                    {readOnly && <ReadOnlyBar />}
+                    <Divider />
+                </Fragment>
+            )}
+            <Layout style={{ flex: 1 }}>
+                <VaultContentsList
+                    contents={contents}
+                    groupID={groupID}
+                    navigation={navigation}
+                    type="group"
+                />
+            </Layout>
             <TextPrompt
                 cancelable
                 onCancel={() => setPromptGroupCreate(false)}
@@ -141,6 +139,6 @@ export function VaultContentsScreen({ navigation, route }) {
                 onSelect={(item: PromptItem) => handleNewEntryCreate(item.slug as EntryType)}
                 visible={promptNewEntryType}
             />
-        </>
+        </SafeAreaView>
     );
 }

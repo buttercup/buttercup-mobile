@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Modal, Text } from "@ui-kitten/components";
 
@@ -51,6 +51,19 @@ export function ConfirmPrompt(props: TextPromptProps) {
         title,
         visible
     } = props;
+    const [finalVisible, setFinalVisible] = useState<boolean>(false);
+    useEffect(() => {
+        if (!visible) {
+            setFinalVisible(false);
+            return;
+        }
+        const timer = setTimeout(() => {
+            setFinalVisible(true);
+        }, 250);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [visible]);
     const handleBackdropPress = useCallback(() => {
         if (cancelable) {
             onCancel();
@@ -87,13 +100,13 @@ export function ConfirmPrompt(props: TextPromptProps) {
                 </Button>
             </View>
         ),
-        [cancelable, cancelText, confirmText, handleSubmission, onCancel, onConfirm, prompt]
+        [cancelable, cancelText, confirmText, handleSubmission, onCancel]
     );
     return (
         <Modal
             backdropStyle={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
             onBackdropPress={handleBackdropPress}
-            visible={visible}
+            visible={finalVisible}
         >
             <Card disabled footer={renderFooter} header={renderHeader} style={styles.card}>
                 <Text>{prompt}</Text>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Input, Modal, Text } from "@ui-kitten/components";
 import { useKeyboardSize } from "../../hooks/keyboard";
@@ -123,17 +123,31 @@ function ModalContent(props: TextPromptProps) {
 
 export function TextPrompt(props: TextPromptProps) {
     const { cancelable = false, onCancel = NOOP, visible } = props;
+    const [finalVisible, setFinalVisible] = useState<boolean>(false);
     const handleBackdropPress = useCallback(() => {
         if (cancelable) {
             onCancel();
         }
     }, [cancelable, onCancel]);
+    useEffect(() => {
+        if (!visible) {
+            setFinalVisible(false);
+            return;
+        }
+        const timer = setTimeout(() => {
+            setFinalVisible(true);
+        }, 250);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [visible]);
     return (
         <Modal
             backdropStyle={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
             onBackdropPress={handleBackdropPress}
-            visible={visible}
+            visible={finalVisible}
             animationType="fade"
+            id={props.prompt}
         >
             <ModalContent {...props} />
         </Modal>
