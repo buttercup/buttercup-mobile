@@ -2,8 +2,7 @@ import React, { useCallback } from "react";
 import { AppStateStatus, Image, SafeAreaView, StyleSheet } from "react-native";
 import { Layout } from "@ui-kitten/components";
 import { useAppStateDebouncedCallback } from "../../hooks/app";
-
-const BCUP_LOGO = require("../../../resources/images/bcup-256.png");
+import BCUP_LOGO from "../../../resources/images/bcup-256.png";
 
 const styles = StyleSheet.create({
     container: {

@@ -98,27 +98,25 @@ export function VaultNavigator({ navigation }) {
     };
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={navigateBack} />;
     return (
-        <>
-            <SafeAreaView style={{ flex: 1 }}>
-                <TopNavigation
-                    title={focusedTabTitle}
-                    alignment="center"
-                    accessoryLeft={BackAction}
-                    accessoryRight={() => (
-                        <>
-                            {focusedTab === "contents" && (
-                                <VaultContentsMenu
-                                    onGroupCreate={() => setPromptGroupCreate(true)}
-                                    readOnly={readOnly}
-                                />
-                            )}
-                        </>
-                    )}
-                />
-                {readOnly && <ReadOnlyBar />}
-                <Divider />
-                <TabNavigator />
-            </SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
+            <TopNavigation
+                title={focusedTabTitle}
+                alignment="center"
+                accessoryLeft={BackAction}
+                accessoryRight={() => (
+                    <>
+                        {focusedTab === "contents" && (
+                            <VaultContentsMenu
+                                onGroupCreate={() => setPromptGroupCreate(true)}
+                                readOnly={readOnly}
+                            />
+                        )}
+                    </>
+                )}
+            />
+            {readOnly && <ReadOnlyBar />}
+            <Divider />
+            <TabNavigator />
             <TextPrompt
                 cancelable
                 onCancel={() => setPromptGroupCreate(false)}
@@ -127,6 +125,6 @@ export function VaultNavigator({ navigation }) {
                 submitText="Create"
                 visible={promptGroupCreate}
             />
-        </>
+        </SafeAreaView>
     );
 }

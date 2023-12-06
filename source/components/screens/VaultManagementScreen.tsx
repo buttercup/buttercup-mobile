@@ -63,11 +63,7 @@ function prepareListContents(items: Array<VaultDetails>): Array<VaultItemDisplay
     }));
 }
 
-function renderItem(
-    info: RenderInfo,
-    onItemPress: (item: VaultItemDisplay) => void,
-    navigation: any
-) {
+function renderItem(info: RenderInfo, onItemPress: (item: VaultItemDisplay) => void) {
     const { item } = info;
     return (
         <ListItem
@@ -92,12 +88,12 @@ export function VaultManagementScreen({ navigation }) {
     const [removeVaultID, setRemoveVaultID] = useState<VaultSourceID>(null);
     const removeVaultTitle = useMemo(
         () => (removeVaultID ? vaults.find(v => v.id === removeVaultID).name : ""),
-        [removeVaultID]
+        [removeVaultID, vaults]
     );
     const [renameVaultID, setRenameVaultID] = useState<VaultSourceID>(null);
     const renameVaultTitle = useMemo(
         () => (renameVaultID ? vaults.find(v => v.id === renameVaultID).name : ""),
-        [renameVaultID]
+        [renameVaultID, vaults]
     );
     const navigateBack = useCallback(() => {
         navigation.goBack();
@@ -145,8 +141,8 @@ export function VaultManagementScreen({ navigation }) {
         [renameVaultID]
     );
     const renderWrapper = useCallback(
-        (info: RenderInfo) => renderItem(info, handleVaultPress, navigation),
-        [handleVaultPress, navigation]
+        (info: RenderInfo) => renderItem(info, handleVaultPress),
+        [handleVaultPress]
     );
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={navigateBack} />;
     return (

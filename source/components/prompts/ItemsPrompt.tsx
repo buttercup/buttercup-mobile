@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Icon,
     IndexPath,
@@ -67,13 +67,26 @@ const themedStyles = StyleService.create({
 
 export function ItemsPrompt(props: ItemsPromptProps) {
     const { onCancel, visible } = props;
+    const [finalVisible, setFinalVisible] = useState<boolean>(false);
     const styles = useStyleSheet(themedStyles);
+    useEffect(() => {
+        if (!visible) {
+            setFinalVisible(false);
+            return;
+        }
+        const timer = setTimeout(() => {
+            setFinalVisible(true);
+        }, 250);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [visible]);
     return (
         <Modal
             backdropStyle={styles.modalBackdrop}
             style={styles.modal}
             onBackdropPress={onCancel}
-            visible={visible}
+            visible={finalVisible}
         >
             <SafeAreaProvider>
                 <ModalContent {...props} />

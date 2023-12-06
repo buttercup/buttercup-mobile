@@ -1,16 +1,15 @@
 import { EntryType } from "buttercup";
 import { deepFreeze } from "./freeze";
+import ICON_DROPBOX from "../../resources/images/dropbox-256.png";
+import ICON_GOOGLEDRIVE from "../../resources/images/googledrive-256.png";
+import ICON_LOCAL from "../../resources/images/localfile-512.png";
+import ICON_WEBDAV from "../../resources/images/webdav-256.png";
 
 interface VaultType {
     title: string;
     icon: any;
     enabled: boolean;
 }
-
-const ICON_DROPBOX = require("../../resources/images/dropbox-256.png");
-const ICON_GOOGLEDRIVE = require("../../resources/images/googledrive-256.png");
-const ICON_LOCAL = require("../../resources/images/localfile-512.png");
-const ICON_WEBDAV = require("../../resources/images/webdav-256.png");
 
 const INT_VAULT_TYPES: { [type: string]: VaultType } = {
     webdav: {

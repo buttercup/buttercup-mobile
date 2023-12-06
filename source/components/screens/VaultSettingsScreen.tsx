@@ -69,7 +69,7 @@ function VaultSettingHeader({ subtitle = null, title }) {
     );
 }
 
-export function VaultSettingsScreen({ navigation }) {
+export function VaultSettingsScreen() {
     useTabFocusState("settings", "Vault Settings");
     const [currentSource] = useSingleState(VAULT, "currentSource");
     const vaultConfig = useVaultConfiguration(currentSource);
@@ -167,7 +167,7 @@ export function VaultSettingsScreen({ navigation }) {
                 handleDisablingBiometrics();
             }
         },
-        [handleDisablingBiometrics]
+        [handleBiometricsAuthentication, handleDisablingBiometrics]
     );
     // **
     // ** Easy OTPs
@@ -197,7 +197,7 @@ export function VaultSettingsScreen({ navigation }) {
                     notifyError("Failed modifying OTP setting", err.message);
                 });
         },
-        [handleEasyOTPsActivation, vaultConfig]
+        [handleEasyOTPsActivation, handleUpdateConfig, vaultConfig]
     );
     // **
     // ** Autofill
@@ -252,7 +252,7 @@ export function VaultSettingsScreen({ navigation }) {
                     notifyError("Failed modifying autofill setting", err.message);
                 });
         },
-        [handleAutofillActivation, vaultConfig]
+        [handleAutofillActivation, handleUpdateConfig, vaultConfig]
     );
     // **
     // ** Render

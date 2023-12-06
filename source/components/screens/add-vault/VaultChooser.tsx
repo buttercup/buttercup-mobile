@@ -112,12 +112,12 @@ export function VaultChooser(props: VaultChooserProps) {
                 onSelectVault(info.item.path);
             }
         },
-        [onSelectVault, parentPaths]
+        [currentPath, onSelectVault, parentPaths]
     );
     const handleNewVaultPromptShow = useCallback(() => {
         setPromptNewFile(true);
         onSelectVault(null);
-    }, [items, onSelectVault]);
+    }, [onSelectVault]);
     const handleNewFolderPromptShow = useCallback(() => {
         setPromptNewFolder(true);
     }, []);
@@ -132,7 +132,7 @@ export function VaultChooser(props: VaultChooserProps) {
                 ...items,
                 {
                     title: newVaultFilename,
-                    subtitle: `0 B`,
+                    subtitle: "0 B",
                     icon: "file-add-outline",
                     path: {
                         identifier: null,
@@ -149,7 +149,7 @@ export function VaultChooser(props: VaultChooserProps) {
             setSelectedPath(result);
             onSelectVault(result);
         },
-        [items, currentPath]
+        [items, currentPath, onSelectVault]
     );
     const handleNewFolderPromptSubmission = useCallback(
         async (folderName: string) => {
@@ -166,7 +166,7 @@ export function VaultChooser(props: VaultChooserProps) {
                 notifyError("Folder creation failure", err.message);
             }
         },
-        [fsInterface, currentPath]
+        [fsInterface, currentPath, parentPaths]
     );
     const renderItem = useCallback(
         (info: VaultChooserListItem) => {
@@ -183,7 +183,7 @@ export function VaultChooser(props: VaultChooserProps) {
                 />
             );
         },
-        [handleItemSelect, selectedPath]
+        [handleItemSelect, selectedPath, themeStyles.selectedItem]
     );
     useEffect(() => {
         setBusyState("Loading folder contents");
@@ -216,60 +216,51 @@ export function VaultChooser(props: VaultChooserProps) {
             });
     }, [currentPath, fsInterface, parentPaths]);
     return (
-        <>
-            <SafeAreaView style={{ flex: 1 }}>
-                {(items.length === 0 && currentPath === null && (
-                    <View style={themeStyles.noItemsView}>
-                        <Text style={themeStyles.noItemsText}>No files here</Text>
-                    </View>
-                )) || (
-                    <List
-                        style={styles.listContainer}
-                        contentContainerStyle={styles.contentContainer}
-                        data={items}
-                        renderItem={renderItem}
-                        scrollEnabled={false}
-                    />
-                )}
-                {/* <List
+        <SafeAreaView style={{ flex: 1 }}>
+            {(items.length === 0 && currentPath === null && (
+                <View style={themeStyles.noItemsView}>
+                    <Text style={themeStyles.noItemsText}>No files here</Text>
+                </View>
+            )) || (
+                <List
                     style={styles.listContainer}
                     contentContainerStyle={styles.contentContainer}
                     data={items}
                     renderItem={renderItem}
                     scrollEnabled={false}
-                /> */}
-                <Button
-                    accessoryLeft={AddVaultIcon}
-                    onPress={handleNewVaultPromptShow}
-                    style={styles.pathActionButton}
-                >
-                    New Vault
-                </Button>
-                <Button
-                    accessoryLeft={AddFolderIcon}
-                    onPress={handleNewFolderPromptShow}
-                    style={styles.pathActionButton}
-                >
-                    New Directory
-                </Button>
-                <TextPrompt
-                    cancelable
-                    onCancel={() => setPromptNewFile(false)}
-                    onSubmit={handleNewVaultPromptSubmission}
-                    placeholder="vault.bcup"
-                    prompt="New vault filename"
-                    submitText="Set New Vault"
-                    visible={promptNewFile}
                 />
-                <TextPrompt
-                    cancelable
-                    onCancel={() => setPromptNewFolder(false)}
-                    onSubmit={handleNewFolderPromptSubmission}
-                    prompt="New folder name"
-                    submitText="Create Folder"
-                    visible={promptNewFolder}
-                />
-            </SafeAreaView>
-        </>
+            )}
+            <Button
+                accessoryLeft={AddVaultIcon}
+                onPress={handleNewVaultPromptShow}
+                style={styles.pathActionButton}
+            >
+                New Vault
+            </Button>
+            <Button
+                accessoryLeft={AddFolderIcon}
+                onPress={handleNewFolderPromptShow}
+                style={styles.pathActionButton}
+            >
+                New Directory
+            </Button>
+            <TextPrompt
+                cancelable
+                onCancel={() => setPromptNewFile(false)}
+                onSubmit={handleNewVaultPromptSubmission}
+                placeholder="vault.bcup"
+                prompt="New vault filename"
+                submitText="Set New Vault"
+                visible={promptNewFile}
+            />
+            <TextPrompt
+                cancelable
+                onCancel={() => setPromptNewFolder(false)}
+                onSubmit={handleNewFolderPromptSubmission}
+                prompt="New folder name"
+                submitText="Create Folder"
+                visible={promptNewFolder}
+            />
+        </SafeAreaView>
     );
 }

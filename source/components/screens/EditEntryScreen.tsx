@@ -39,7 +39,7 @@ import { setBusyState } from "../../services/busyState";
 import { OTP } from "../../types";
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
-const DeleteIcon = props => <Icon {...props} name="trash-2-outline" />;
+// const DeleteIcon = props => <Icon {...props} name="trash-2-outline" />;
 const ModifyIcon = props => <Icon {...props} name="settings-outline" />;
 const SaveIcon = props => <Icon {...props} name="save-outline" />;
 const TitleIcon = props => <Icon {...props} name="text-outline" />;
@@ -121,9 +121,9 @@ const styles = StyleSheet.create({
 });
 
 function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
-    const { entryID, items: rawItems, navigation } = props;
+    const { /*entryID,*/ items: rawItems, navigation } = props;
     const items = useMemo(() => rawItems.filter(item => !!item), [rawItems]);
-    const [generatorMode, setGeneratorMode] = useSingleState(GENERATOR, "mode");
+    const [_, setGeneratorMode] = useSingleState(GENERATOR, "mode");
     const [visible, setVisible] = useState(false);
     const onItemSelect = selected => {
         const item = items[selected.row];
@@ -316,7 +316,7 @@ export function EditEntryScreen({ navigation, route }) {
                 setBusyState(null);
                 notifyError("Failed saving entry", err.message);
             });
-    }, [currentSource, entryFacade, groupID, navigation]);
+    }, [currentSource, entryFacade, entryID, groupID, navigation]);
     const handleAddOTP = useCallback(
         (item: PromptItem) => {
             handleNewFieldAdd(
@@ -326,7 +326,7 @@ export function EditEntryScreen({ navigation, route }) {
             );
             removePendingOTP(item.slug);
         },
-        [handleNewFieldAdd]
+        [handleNewFieldAdd, removePendingOTP]
     );
     useEffect(() => {
         if (entryFacade) return;
@@ -339,14 +339,14 @@ export function EditEntryScreen({ navigation, route }) {
         } else {
             setEntryFacade(getEntryFacade(currentSource, entryID));
         }
-    }, [currentSource, entryID, entryType]);
+    }, [currentSource, entryFacade, entryID, entryType]);
     useEffect(() => {
         if (generatePasswordFieldID && lastPassword) {
             handleFieldValueChange(generatePasswordFieldID, lastPassword);
             setLastPassword("");
             setGeneratePasswordFieldID(null);
         }
-    }, [lastPassword, generatePasswordFieldID, handleFieldValueChange]);
+    }, [lastPassword, generatePasswordFieldID, handleFieldValueChange, setLastPassword]);
     const BackAction = () => <TopNavigationAction icon={BackIcon} onPress={handleNavigateBack} />;
     const SaveAction = () => (
         <TopNavigationAction disabled={!changed} icon={SaveIcon} onPress={handleSave} />
@@ -372,7 +372,7 @@ export function EditEntryScreen({ navigation, route }) {
                     />
                     <Divider />
                     {entryFacade &&
-                        entryFacade.fields.map((field: EntryFacadeField, index) =>
+                        entryFacade.fields.map((field: EntryFacadeField) =>
                             (field.property === "title" &&
                                 field.propertyType === EntryPropertyType.Property) ||
                             field.propertyType === EntryPropertyType.Attribute ? null : (

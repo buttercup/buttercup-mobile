@@ -3,6 +3,7 @@ import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { VaultSourceID, VaultSourceStatus } from "buttercup";
 import { Button, Layout, Text, ViewPager } from "@ui-kitten/components";
 import Dots from "react-native-dots-pagination";
+import { Layerr } from "layerr";
 import { TextPrompt } from "../prompts/TextPrompt";
 import { ConfirmPrompt } from "../prompts/ConfirmPrompt";
 import { VaultMenuItem } from "./vault-menu/VaultMenuItem";
@@ -21,9 +22,7 @@ import {
     getBiometricCredentialsForSource
 } from "../../services/biometrics";
 import { VaultDetails } from "../../types";
-import { Layerr } from "layerr";
-
-const BCUP_BENCH_IMG = require("../../../resources/images/bcup-bench.png");
+import BCUP_BENCH_IMG from "../../../resources/images/bcup-bench.png";
 
 export interface VaultMenuProps {
     handleVaultUnlock?: (sourceID: VaultSourceID, password: string) => Promise<void>;
@@ -140,7 +139,7 @@ export function VaultMenu(props: VaultMenuProps) {
                     setUnlockVaultTarget(sourceID);
                 });
         },
-        [onVaultOpen, unlockVaultTarget]
+        [handleVaultUnlock, onVaultOpen, unlockVaultTarget]
     );
     const handleVaultUnlockOfflinePromptComplete = useCallback(() => {
         const { sourceID, password } = offlineVaultTarget;
@@ -155,7 +154,7 @@ export function VaultMenu(props: VaultMenuProps) {
                 notifyError("Failed unlocking vault", err.message);
                 setBusyState(null);
             });
-    }, [offlineVaultTarget]);
+    }, [handleVaultUnlock, offlineVaultTarget, onVaultOpen]);
     const handleVaultPress = useCallback(
         (vault: VaultDetails) => {
             if (vault.state === VaultSourceStatus.Unlocked) {

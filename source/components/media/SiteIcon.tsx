@@ -3,17 +3,17 @@ import { Image, StyleSheet, View } from "react-native";
 import { CachedImage } from "@georstat/react-native-image-cache";
 import { DEFAULT_ENTRY_TYPE, EntryType } from "buttercup";
 
+import ICON_LOGIN from "../../../resources/images/icons/login.png";
+import ICON_WEBSITE from "../../../resources/images/icons/website.png";
+import ICON_NOTE from "../../../resources/images/icons/note.png";
+import ICON_SSH from "../../../resources/images/icons/ssh.png";
+import ICON_CREDITCARD from "../../../resources/images/icons/credit-card.png";
+
 interface SiteIconProps {
     domain?: string;
     size: number;
     type: EntryType;
 }
-
-const ICON_LOGIN = require("../../../resources/images/icons/login.png");
-const ICON_WEBSITE = require("../../../resources/images/icons/website.png");
-const ICON_NOTE = require("../../../resources/images/icons/note.png");
-const ICON_SSH = require("../../../resources/images/icons/ssh.png");
-const ICON_CREDITCARD = require("../../../resources/images/icons/credit-card.png");
 
 const ICON_LOOKUP = "https://icon.buttercup.pw/icon/";
 const ICON_TYPES = {

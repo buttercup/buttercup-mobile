@@ -30,7 +30,7 @@ function MenuButton(props: VaultsContentsMenuProps) {
     const [visible, setVisible] = useState(false);
     const menuItems = useMemo(
         () => (onEntryCreate && onGroupDelete ? MENU_ITEMS : BASE_ITEMS),
-        [onEntryCreate]
+        [onEntryCreate, onGroupDelete]
     );
     const onItemSelect = useCallback(
         selected => {

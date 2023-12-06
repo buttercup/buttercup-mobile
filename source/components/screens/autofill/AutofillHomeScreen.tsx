@@ -16,8 +16,8 @@ import { AutoFillBridge } from "../../../services/autofillBridge";
 import { VAULT } from "../../../state/vault";
 import { AUTOFILL } from "../../../state/autofill";
 import { VaultDetails } from "../../../types";
+import BCUP_ICON from "../../../../resources/images/bcup-256.png";
 
-const BCUP_ICON = require("../../../../resources/images/bcup-256.png");
 const CancelIcon = props => <Icon {...props} name="close-square-outline" />;
 
 const styles = StyleSheet.create({

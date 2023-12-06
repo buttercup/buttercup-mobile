@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { Card, Layout, Modal, Spinner, Text } from "@ui-kitten/components";
 import { useBusyState } from "../../hooks/busyState";
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 
 export function BusyStatus() {
     const busyState: string = useBusyState();
+    if (!busyState) return null;
     return (
         <Modal
             visible={!!busyState}

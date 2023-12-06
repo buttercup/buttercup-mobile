@@ -34,5 +34,5 @@ export function useTabFocusState(slug: string, title: string) {
             __focusedTitle = "";
         }
         events.emit("focused", [__focused, __focusedTitle]);
-    }, [isFocused]);
+    }, [isFocused, slug, title]);
 }
