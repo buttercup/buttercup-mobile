@@ -34,7 +34,6 @@ export function OTPScannerModal({ visible, onBackdropPress, onScan }: OTPScanner
                     style={styles.webview}
                     allowsInlineMediaPlayback
                     onMessage={event => {
-                        console.log(event);
                         onScan(event.nativeEvent.data);
                     }}
                 />
