@@ -5,6 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
+    "build:webview": "node ./scripts/build_qrview.js",
     "format": "prettier --write \"{{source,test}/**/*.{js,ts,jsx,tsx},*.{js,ts,jsx,tsx}}\"",
     "ios": "react-native run-ios --simulator=\"iPhone Xs\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -97,6 +98,7 @@
     "eslint": "^8.55.0",
     "eslint-plugin-prettier": "^5.0.1",
     "jest": "^29.2.1",
+    "jsqr": "^1.4.0",
     "metro-react-native-babel-preset": "^0.77.0",
     "prettier": "^3.1.0",
     "react-native-svg-transformer": "^1.1.0",
