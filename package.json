@@ -9,7 +9,6 @@
     "ios": "react-native run-ios --simulator=\"iPhone Xs\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "pods:install": "cd ios && USE_FABRIC=0 RCT_NEW_ARCH_ENABLED=0 pod install --repo-update && cd -",
-    "postinstall": "npx jetify",
     "start:nocache": "react-native start --reset-cache",
     "start": "react-native start",
     "test": "jest"
@@ -76,7 +75,7 @@
     "url-join": "^4.0.1",
     "use-debounce": "^7.0.1",
     "util": "^0.12.5",
-    "webdav": "^5.3.1"
+    "webdav": "5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",
