@@ -78,8 +78,8 @@ android {
         applicationId "com.buttercup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 139
-        versionName "2.6.1"
+        versionCode 140
+        versionName "2.6.2"
     }
     signingConfigs {
         debug {
