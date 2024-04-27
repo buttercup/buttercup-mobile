@@ -24,18 +24,15 @@ module.exports = mergeConfig(defaultConfig, {
         })
     },
     resolver: {
+        // alias: {
+        //     webdav: require.resolve("webdav/dist/node/index.js")
+        // },
         assetExts: assetExts.filter(ext => ext !== "svg"),
         extraNodeModules: {
             crypto: require.resolve("crypto-browserify"),
             path: require.resolve("path-browserify"),
             stream: require.resolve("stream-browserify")
         },
-        // resolveRequest: (context, moduleName, platform) => {
-        //     if (/react-obstate/.test(moduleName)) {
-        //         console.log("CHECK", moduleName, context);
-        //     }
-        //     return context.resolveRequest(context, moduleName, platform);
-        // },
         sourceExts: ["jsx", "js", "ts", "tsx", "svg", "cjs", "json"]
     }
 });
