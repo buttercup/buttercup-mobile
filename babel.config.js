@@ -6,6 +6,7 @@ module.exports = {
             {
                 alias: {
                     // buttercup: "buttercup/web"
+                    webdav: "webdav/dist/react-native"
                 },
                 extensions: [".tsx", ".ts", ".js", ".jsx", ".json"]
             }
