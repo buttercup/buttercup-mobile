@@ -178,15 +178,6 @@ function GoogleDriveConnection(props: ConnectionDetailsProps) {
                     </Text>
                 )}
             </Layout>
-            <Layout style={styles.options}>
-                <CheckBox
-                    style={styles.checkbox}
-                    checked={fullPermissions}
-                    onChange={nextChecked => setFullPermissions(nextChecked)}
-                >
-                    Grant full permissions
-                </CheckBox>
-            </Layout>
             <Button
                 accessoryRight={<Icon name="flash" />}
                 disabled={status !== GoogleState.Idle}
