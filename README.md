@@ -56,6 +56,11 @@ npm install
 
 Once all dependencies are installed and your target development environments are setup (Xcode for iOS and Android Studio for Android), it should be possible to begin development with virtual devices.
 
+Before starting the application, make sure to build required HTML file for Camera QR Webview with the following command:
+```shell
+npm run build:webview
+```
+
 **Important note about Node.js support**: Development for this project should be performed on Node version 8. Although it may work on versions 6 and newer, we will not be supporting issues raised for these versions. Similarly, we do not currently support NodeJS version 9.
 
 ### iOS development
