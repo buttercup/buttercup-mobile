@@ -205,7 +205,7 @@ export function VaultSettingsScreen() {
     const handleAutofillActivation = useCallback(
         async (activated: boolean): Promise<void> => {
             if (activated) {
-                if (Platform.OS === "android") {
+               if (Platform.OS === "android" && Platform.Version < 29) {
                     const grantedStatus = await PermissionsAndroid.requestMultiple([
                         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
                         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
