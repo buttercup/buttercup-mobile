@@ -80,3 +80,5 @@ buck-out/
 
 # General
 .env
+
+/resources/html/*.html

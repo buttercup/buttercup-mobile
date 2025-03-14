@@ -37,12 +37,14 @@ import { GENERATOR, GeneratorMode } from "../../state/generator";
 import { getEntryFacade, saveExistingEntryChanges, saveNewEntry } from "../../services/buttercup";
 import { setBusyState } from "../../services/busyState";
 import { OTP } from "../../types";
+import { OTPScannerModal } from "../modals/OTPScannerModal";
 
 const BackIcon = props => <Icon {...props} name="arrow-back" />;
 // const DeleteIcon = props => <Icon {...props} name="trash-2-outline" />;
 const ModifyIcon = props => <Icon {...props} name="settings-outline" />;
 const SaveIcon = props => <Icon {...props} name="save-outline" />;
 const TitleIcon = props => <Icon {...props} name="text-outline" />;
+const CameraIcon = props => <Icon {...props} name="camera-outline" />;
 
 interface FieldEditMenuButtonProps {
     entryID: EntryID;
@@ -111,6 +113,11 @@ const styles = StyleSheet.create({
         width: 36,
         height: 20
     },
+    cameraButton: {
+        marginLeft: 6,
+        width: 36,
+        height: 20
+    },
     passwordInput: {
         fontFamily: MONO_FONT
     },
@@ -166,6 +173,28 @@ function FieldEditMenuButton(props: FieldEditMenuButtonProps) {
                 ))}
             </OverflowMenu>
         </Layout>
+    );
+}
+
+function OTPScannerButton({ onScanSuccess }: { onScanSuccess: (data: string) => void }) {
+    const [visible, setVisible] = useState(false);
+    return (
+        <>
+            <OTPScannerModal
+                visible={visible}
+                onBackdropPress={() => setVisible(false)}
+                onScan={response => {
+                    onScanSuccess(response);
+                    setVisible(false);
+                }}
+            />
+            <Button
+                accessoryLeft={CameraIcon}
+                onPress={() => setVisible(true)}
+                status="control"
+                style={styles.cameraButton}
+            />
+        </>
     );
 }
 
@@ -398,6 +427,13 @@ export function EditEntryScreen({ navigation, route }) {
                                                 }}
                                                 value={field.value}
                                             />
+                                            {field.valueType == EntryPropertyValueType.OTP && (
+                                                <OTPScannerButton
+                                                    onScanSuccess={data =>
+                                                        handleFieldValueChange(field.id, data)
+                                                    }
+                                                />
+                                            )}
                                             <FieldEditMenuButton
                                                 entryID={entryID}
                                                 items={[
